@@ -10,7 +10,7 @@
 
 import sgtk
 
-class WidgetFramework(sgtk.platform.Framework):
+class QtWidgetFramework(sgtk.platform.Framework):
     
     ##########################################################################################
     # init and destroy
