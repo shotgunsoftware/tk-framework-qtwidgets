@@ -15,8 +15,9 @@ from .ui.list_widget import Ui_ListWidget
 
 class ListWidget(QtGui.QWidget):
     """
-    Simple list widget which hosts a square thumbnail, header text
-    and body text. It has a fixed size.
+    Simple list *item* widget which hosts a square thumbnail, header text
+    and body text. It has a fixed size. Multiple of these items are typically
+    put together inside a QListView to form a list.
     
     This class is typically used in conjunction with a QT View and the 
     ShotgunDelegate class. 

@@ -40,14 +40,12 @@ class ShotgunOverlayWidget(QtGui.QWidget):
         
         QtGui.QWidget.__init__(self, parent)
         
-        self._parent = parent
-        
         # hook up a listener to the parent window so we 
         # can resize the overlay at the same time as the parent window
         # is being resized.
-        filter = ResizeEventFilter(self._parent)
+        filter = ResizeEventFilter(parent)
         filter.resized.connect(self._on_parent_resized)
-        self._parent.installEventFilter(filter)
+        parent.installEventFilter(filter)
         
         # make it transparent
         self.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
@@ -149,7 +147,7 @@ class ShotgunOverlayWidget(QtGui.QWidget):
         When associated widget is resized this slot is being called.
         """
         # resize overlay
-        self.resize(self._parent.size())
+        self.resize(self.parentWidget().size())
     
     def _on_animation(self):
         """

@@ -54,12 +54,12 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         if self.__selection_model:
             # note! Need to have a model connected to the view in order
             # to have a selection model.
-            self.__selection_model.selectionChanged.connect(self._on_publish_selection)
+            self.__selection_model.selectionChanged.connect(self._on_selection_changed)
         
     ########################################################################################
     # 'private' methods that are not meant to be subclassed or called by a deriving class.
         
-    def _on_publish_selection(self, selected, deselected):
+    def _on_selection_changed(self, selected, deselected):
         """
         Signal triggered when someone changes the selection in the view.
         """
