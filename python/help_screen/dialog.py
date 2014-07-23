@@ -39,6 +39,9 @@ class Dialog(QtGui.QDialog):
     Help screen dialog.
     """
     
+    # direction when turning a page
+    NEXT_PAGE, PREVIOUS_PAGE = range(2)
+    
     def __init__(self, parent, bundle, pixmaps):
         """
         Constructor.
@@ -56,6 +59,8 @@ class Dialog(QtGui.QDialog):
             QtGui.QDialog.__init__(self, parent, QtCore.Qt.SplashScreen | QtCore.Qt.WindowStaysOnTopHint)
         
         self._bundle = bundle
+
+        self.__page_anim_grp = None
 
         # set up the UI
         self.ui = Ui_Dialog() 
@@ -106,87 +111,88 @@ class Dialog(QtGui.QDialog):
         """
         User clicks the left arrow
         """
-        start_index = self.ui.stackedWidget.currentIndex()
-        
-        prev_index = start_index-1
-        
-        if prev_index == 0:
-            # we arrived at the first slide! Hide left arrow
-            self.ui.left_arrow.setVisible(False)
-            self.ui.right_arrow.setVisible(True)
-        else:
-            self.ui.left_arrow.setVisible(True)
-            self.ui.right_arrow.setVisible(True)
-                
-        this_page = self._pages[start_index]
-        prev_page = self._pages[prev_index]
-        
-        # rest positions
-        prev_page.move(prev_page.x()-650, prev_page.y())
-        self.ui.stackedWidget.setCurrentIndex(prev_index)
-        this_page.show()
-        this_page.raise_()       
-        
-        self.anim = QtCore.QPropertyAnimation(this_page, "pos")
-        self.anim.setDuration(600)
-        self.anim.setStartValue(QtCore.QPoint(this_page.x(), this_page.y()))
-        self.anim.setEndValue(QtCore.QPoint(this_page.x()+650, this_page.y()))
-        self.anim.setEasingCurve(QtCore.QEasingCurve.OutCubic)
-
-        self.anim2 = QtCore.QPropertyAnimation(prev_page, "pos")
-        self.anim2.setDuration(600)
-        self.anim2.setStartValue(QtCore.QPoint(prev_page.x()-650, prev_page.y()))
-        self.anim2.setEndValue(QtCore.QPoint(prev_page.x(), prev_page.y()))
-        self.anim2.setEasingCurve(QtCore.QEasingCurve.OutCubic)
-
-        self.grp = QtCore.QParallelAnimationGroup()
-        self.grp.addAnimation(self.anim)
-        self.grp.addAnimation(self.anim2)
-        self.grp.start()
-        
-        
+        self.__turn_page(Dialog.PREVIOUS_PAGE)
         
     def _on_right_arrow_click(self):
         """
         User clicks the right arrow
         """
-        start_index = self.ui.stackedWidget.currentIndex()
-        next_index = start_index + 1
+        self.__turn_page(Dialog.NEXT_PAGE)
+
+    def __turn_page(self, direction=NEXT_PAGE):
+        """
+        Turn the page in the direction specified
         
-        if next_index == (self._num_images - 1):
-            # we arrived at the last slide! Hide right arrow
-            self.ui.right_arrow.setVisible(False)
+        :param direction:    The direction to turn the page
+        """
+        current_index = self.ui.stackedWidget.currentIndex()
+        dst_index = current_index
+        page_offset = 650
+        
+        # depending on the direction, figure out the destination page 
+        # and page offset for animation:
+        if direction == Dialog.NEXT_PAGE:
+            dst_index += 1
+            page_offset = 650
+            
+            # update the arrow visibility so that the right arrow is
+            # hidden if we're on the last page:
+            self.ui.right_arrow.setVisible(dst_index < (self._num_images - 1))
             self.ui.left_arrow.setVisible(True)
         else:
+            # going back a page
+            dst_index -= 1
+            page_offset = -650
+            
+            # update the arrow visibility so that the left arrow is
+            # hidden if we're on the first page:
             self.ui.right_arrow.setVisible(True)
-            self.ui.left_arrow.setVisible(True)
+            self.ui.left_arrow.setVisible(dst_index > 0)
+        
+        if not hasattr(QtCore, "QAbstractAnimation"):
+            # this version of Qt (probably PyQt4) doesn't contain
+            # Q*Animation classes so just change the page:
+            self.ui.stackedWidget.setCurrentIndex(dst_index)
+        else:
+            anim_duration = 600# milliseconds
+            
+            if self.__page_anim_grp and self.__page_anim_grp.state() == QtCore.QAbstractAnimation.Running:
+                # the previous animation hasn't finished yet so jump to the end!
+                self.__page_anim_grp.setCurrentTime(anim_duration)
+            
+            # animate the transition from one page to the next:
+            current_page = self._pages[current_index]
+            dst_page = self._pages[dst_index]
+
+            # reset positions
+            dst_page.move(dst_page.x()+page_offset, dst_page.y())
+            self.ui.stackedWidget.setCurrentIndex(dst_index)
+            # still need to show the current page whilst it transitions
+            current_page.show()
+            current_page.raise_()       
+            
+            # animate the current page away
+            self.__anim = QtCore.QPropertyAnimation(current_page, "pos")
+            self.__anim.setDuration(anim_duration)
+            self.__anim.setStartValue(QtCore.QPoint(current_page.x(), current_page.y()))
+            self.__anim.setEndValue(QtCore.QPoint(current_page.x()-page_offset, current_page.y()))
+            self.__anim.setEasingCurve(QtCore.QEasingCurve.OutCubic)
     
-        
-        this_page = self._pages[start_index]
-        next_page = self._pages[next_index]
-        
-        # rest positions
-        next_page.move(next_page.x()+650, next_page.y())
-        self.ui.stackedWidget.setCurrentIndex(next_index)
-        this_page.show()
-        this_page.raise_()       
-        
-        self.anim = QtCore.QPropertyAnimation(this_page, "pos")
-        self.anim.setDuration(600)
-        self.anim.setStartValue(QtCore.QPoint(this_page.x(), this_page.y()))
-        self.anim.setEndValue(QtCore.QPoint(this_page.x()-650, this_page.y()))
-        self.anim.setEasingCurve(QtCore.QEasingCurve.OutCubic)
-
-        self.anim2 = QtCore.QPropertyAnimation(next_page, "pos")
-        self.anim2.setDuration(600)
-        self.anim2.setStartValue(QtCore.QPoint(next_page.x()+650, next_page.y()))
-        self.anim2.setEndValue(QtCore.QPoint(next_page.x(), next_page.y()))
-        self.anim2.setEasingCurve(QtCore.QEasingCurve.OutCubic)
-
-        self.grp = QtCore.QParallelAnimationGroup()
-        self.grp.addAnimation(self.anim)
-        self.grp.addAnimation(self.anim2)
-        self.grp.start()
+            # animate the new page in:
+            self.__anim2 = QtCore.QPropertyAnimation(dst_page, "pos")
+            self.__anim2.setDuration(anim_duration)
+            self.__anim2.setStartValue(QtCore.QPoint(dst_page.x()+page_offset, dst_page.y()))
+            self.__anim2.setEndValue(QtCore.QPoint(dst_page.x(), dst_page.y()))
+            self.__anim2.setEasingCurve(QtCore.QEasingCurve.OutCubic)
+    
+            # create a parallel animation group so that both pages animate at
+            # the same time:
+            self.__page_anim_grp = QtCore.QParallelAnimationGroup()
+            self.__page_anim_grp.addAnimation(self.__anim)
+            self.__page_anim_grp.addAnimation(self.__anim2)
+            
+            # run the animation/transition
+            self.__page_anim_grp.start()
         
     def _on_doc(self):
         """
