@@ -10,24 +10,25 @@
 
 
 from tank.platform.qt import QtCore, QtGui
-from .ui.file_browser import Ui_Dialog as Browser_Dialog
+from .ui.file_browser import Ui_FileBrowserDialog
 
 
 class FileBrowserDialog(QtGui.QDialog):
+    
+    files_returned = QtCore.Signal(list)
+    
     def __init__(self):
         QtGui.QDialog.__init__(self)
 
         # set up the UI
-        self.ui = Browser_Dialog()
+        self.ui = Ui_FileBrowserDialog()
         self.ui.setupUi(self)
 
-        self.connect(self.ui.load, QtCore.SIGNAL('clicked()'),
-                     self.returnFiles)
-        self.connect(self.ui.cancel, QtCore.SIGNAL('clicked()'),
-                     self.deleteLater)
+        self.ui.load.clicked.connect(self._on_file_load)
+        self.ui.cancel.clicked.connect(self.deleteLater)
     # end __init__
 
-    def returnFiles(self):
+    def _on_file_load(self):
         selected_indexes = self.ui.treeView.selectedIndexes()
         file_paths = []
         for index in selected_indexes:
@@ -36,8 +37,8 @@ class FileBrowserDialog(QtGui.QDialog):
             # end if
         # end for
 
-        self.emit(QtCore.SIGNAL('filesReturned(QStringList)'), file_paths)
+        self.files_returned.emit(file_paths)
         self.deleteLater()
-    # end returnFiles
+    # end _on_file_load
 
 # end FileBrowserDialog
