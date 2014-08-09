@@ -11,11 +11,6 @@ class DirTreeView(QtGui.QTreeView):
             QtCore.QDir.NoDotAndDotDot | QtCore.QDir.AllEntries)
         self.model.setRootPath("/")
 
-        # set up proxy model for sorting
-        #proxyModel = SortProxyModel()
-        #proxyModel.setSourceModel(self.model)
-        #self.setModel(proxyModel)
-
         self.setModel(self.model)
 
         root = self.model.index(0,0)
@@ -27,12 +22,9 @@ class DirTreeView(QtGui.QTreeView):
         self.setColumnHidden(2, True)
         self.setExpandsOnDoubleClick(False)
         self.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
-    # end __init__
-# end DirTreeView
+
 
 class SortProxyModel(QtGui.QSortFilterProxyModel):
     def __init__(self, parent=None):
         super(SortProxyModel, self).__init__(parent)
         self.setDynamicSortFilter(True)
-    # end __init__
-# end SortProxyModel

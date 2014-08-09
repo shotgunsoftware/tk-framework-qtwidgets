@@ -25,8 +25,8 @@ class FileBrowserDialog(QtGui.QDialog):
         self.ui.setupUi(self)
 
         self.ui.load.clicked.connect(self._on_file_load)
-        self.ui.cancel.clicked.connect(self.deleteLater)
-    # end __init__
+        self.ui.cancel.clicked.connect(self._on_cancel)
+
 
     def _on_file_load(self):
         selected_indexes = self.ui.treeView.selectedIndexes()
@@ -34,11 +34,11 @@ class FileBrowserDialog(QtGui.QDialog):
         for index in selected_indexes:
             if index.column() == 0:
                 file_paths.append(self.ui.treeView.model.filePath(index))
-            # end if
-        # end for
 
         self.files_returned.emit(file_paths)
         self.deleteLater()
-    # end _on_file_load
 
-# end FileBrowserDialog
+    
+    def _on_cancel(self):
+        self.files_returned.emit([])
+        self.deleteLater()
