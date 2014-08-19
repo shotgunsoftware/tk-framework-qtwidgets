@@ -16,6 +16,7 @@ from .ui.file_browser import Ui_FileBrowserDialog
 class FileBrowserDialog(QtGui.QDialog):
     
     files_returned = QtCore.Signal(list)
+    cancelled = QtCore.Signal()
     
     def __init__(self):
         QtGui.QDialog.__init__(self)
@@ -36,9 +37,9 @@ class FileBrowserDialog(QtGui.QDialog):
                 file_paths.append(self.ui.treeView.model.filePath(index))
 
         self.files_returned.emit(file_paths)
-        self.deleteLater()
+        self.close()
 
     
     def _on_cancel(self):
-        self.files_returned.emit([])
-        self.deleteLater()
+        self.cancelled.emit()
+        self.close()
