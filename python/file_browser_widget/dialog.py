@@ -27,6 +27,20 @@ class FileBrowserDialog(QtGui.QDialog):
 
         self.ui.load.clicked.connect(self._on_file_load)
         self.ui.cancel.clicked.connect(self._on_cancel)
+        
+        
+    def set_directories_only(self, dirs_only):
+        self.ui.treeView.set_directories_only(dirs_only)
+        
+        
+    def set_single_selection(self, single_selection):
+        self.ui.treeView.set_single_selection(single_selection)
+        
+        
+    def reset(self):
+        self.ui.treeView.collapseAll()
+        root = self.ui.treeView.model.index(0,0)
+        self.ui.treeView.setExpanded(root, True)
 
 
     def _on_file_load(self):
