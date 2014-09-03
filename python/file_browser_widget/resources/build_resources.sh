@@ -26,7 +26,7 @@ function build_qt {
 }
 
 function build_ui {
-    build_qt "pyside-uic --from-imports" "uis/$1.ui" "$1"
+    build_qt "pyside-uic --from-imports" "$1.ui" "$1"
 }  
 
 function build_res {
@@ -39,5 +39,5 @@ echo "building user interfaces..."
 build_ui file_browser
 
 # build resources
-#echo "building resources..."
-#build_res resources
+echo "building resources..."
+build_res resources

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'uis/file_browser.ui'
+# Form implementation generated from reading ui file 'file_browser.ui'
 #
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
@@ -33,9 +33,6 @@ class Ui_FileBrowserDialog(object):
         self.verticalLayout.setContentsMargins(10, 10, 10, -1)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtGui.QLabel(self.verticalLayoutWidget)
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        self.label.setFont(font)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
         self.treeView = DirTreeView(self.verticalLayoutWidget)
@@ -52,13 +49,6 @@ class Ui_FileBrowserDialog(object):
         self.cancel.setObjectName("cancel")
         self.horizontalLayout.addWidget(self.cancel)
         self.load = QtGui.QPushButton(self.verticalLayoutWidget)
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(13)
-        font.setWeight(50)
-        font.setItalic(False)
-        font.setBold(False)
-        self.load.setFont(font)
         self.load.setObjectName("load")
         self.horizontalLayout.addWidget(self.load)
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -72,4 +62,4 @@ class Ui_FileBrowserDialog(object):
         self.cancel.setText(QtGui.QApplication.translate("FileBrowserDialog", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
         self.load.setText(QtGui.QApplication.translate("FileBrowserDialog", "Load", None, QtGui.QApplication.UnicodeUTF8))
 
-from custom_widgets import DirTreeView
+from ..custom_widgets import DirTreeView
