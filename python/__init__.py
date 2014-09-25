@@ -11,4 +11,3 @@
 from . import shotgun_view
 from . import overlay_widget
 from . import help_screen
-from . import file_browser_widget
