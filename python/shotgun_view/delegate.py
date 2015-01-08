@@ -32,7 +32,6 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
     attached to the view *after* the model has been attached. (This is to ensure that it 
     is able to obtain the view's selection model correctly.)
     """
-
     def __init__(self, view):
         """
         Constructor
@@ -42,7 +41,7 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         
         # set up the widget instance we will use 
         # when 'painting' large number of cells 
-        self.__paint_widget = self._create_widget(view)
+        self.__paint_widget = None
         
         # tracks the currently active cell
         self.__current_editor_index = None    
@@ -55,6 +54,10 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
             # note! Need to have a model connected to the view in order
             # to have a selection model.
             self.__selection_model.selectionChanged.connect(self._on_selection_changed)
+            
+    @property
+    def view(self):
+        return self.__view
         
     ########################################################################################
     # 'private' methods that are not meant to be subclassed or called by a deriving class.
@@ -92,10 +95,17 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         with the widget (e.g. click a button for example) and therefore we need
         to have a real widget for this. The widget  
         """
-        w = self._create_widget(parent_widget)
-        self.__editors.append(w)
-        self._on_before_selection(w, model_index, style_options)
-        return w
+        editor_widget = (self._create_editor_widget(model_index, parent_widget)
+                         # and for backwards compatibility:
+                         or self._create_widget(parent_widget))
+        if not editor_widget:
+            return
+        
+        editor_widget.setFocusPolicy(QtCore.Qt.StrongFocus)
+        
+        self.__editors.append(editor_widget)
+        self._on_before_selection(editor_widget, model_index, style_options)
+        return editor_widget
         
     def updateEditorGeometry(self, editor_widget, style_options, model_index):        
         """
@@ -115,36 +125,57 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
 
             # for performance reasons, we are not creating a widget every time
             # but merely moving the same widget around. 
-            # first call out to have the widget set the right values
-            self._on_before_paint(self.__paint_widget, model_index, style_options)
+            paint_widget = self._get_painter_widget(model_index, self.__view)
+            if not paint_widget:
+                # fall back to the old method that just supports a single widget for all
+                # items:
+                if not self.__paint_widget:
+                    self.__paint_widget = self._create_widget(self.__view)
+                paint_widget = self.__paint_widget
+                if not paint_widget:
+                    # can't paint anything without a widget!
+                    return                
+
+            # call out to have the widget set the right values            
+            self._on_before_paint(paint_widget, model_index, style_options)
                     
             # now paint!
             painter.save()
-            self.__paint_widget.resize(style_options.rect.size())
-            painter.translate(style_options.rect.topLeft())
-            # note that we set the render flags NOT to render the background of the widget
-            # this makes it consistent with the way the editor widget is mounted inside 
-            # each element upon hover.
-            
-            # WEIRD! It seems pyside and pyqt actually have different signatures for this method
-            if USING_PYQT:
-                # pyqt is using the flags parameter, which seems inconsistent with QT
-                # http://pyqt.sourceforge.net/Docs/PyQt4/qwidget.html#render            
-                self.__paint_widget.render(painter, 
-                                          QtCore.QPoint(0,0),
-                                          QtGui.QRegion(),
-                                          QtGui.QWidget.DrawChildren)
-            else:
-                # pyside is using the renderFlags parameter which seems correct
-                self.__paint_widget.render(painter, 
-                                          QtCore.QPoint(0,0),
-                                          renderFlags=QtGui.QWidget.DrawChildren)
+            try:
+                paint_widget.resize(style_options.rect.size())
+                painter.translate(style_options.rect.topLeft())
+                # note that we set the render flags NOT to render the background of the widget
+                # this makes it consistent with the way the editor widget is mounted inside 
+                # each element upon hover.
                 
-                
-            painter.restore()
+                # WEIRD! It seems pyside and pyqt actually have different signatures for this method
+                if USING_PYQT:
+                    # pyqt is using the flags parameter, which seems inconsistent with QT
+                    # http://pyqt.sourceforge.net/Docs/PyQt4/qwidget.html#render            
+                    paint_widget.render(painter, 
+                                              QtCore.QPoint(0,0),
+                                              QtGui.QRegion(),
+                                              QtGui.QWidget.DrawChildren)
+                else:
+                    # pyside is using the renderFlags parameter which seems correct
+                    paint_widget.render(painter, 
+                                              QtCore.QPoint(0,0),
+                                              renderFlags=QtGui.QWidget.DrawChildren)
+            finally:
+                painter.restore()
         
     ########################################################################################
     # implemented by deriving classes
+    
+    def _get_painter_widget(self, model_index, parent):
+        """
+        """
+        return None
+    
+    def _create_editor_widget(self, model_index, parent):
+        """
+        """
+        return None
     
     def _create_widget(self, parent):
         """
@@ -154,7 +185,7 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         :param parent: QWidget to parent the widget to
         :returns: QWidget that will be used to paint grid cells in the view. 
         """
-        raise NotImplementedError
+        return None
     
     def _on_before_paint(self, widget, model_index, style_options):
         """

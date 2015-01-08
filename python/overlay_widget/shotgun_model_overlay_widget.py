@@ -74,4 +74,4 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
     def _model_refresh_failed(self, msg):
         """
         """
-        self.show_error_message(msg)      
+        self.show_error_message(msg)
