@@ -8,9 +8,3 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from . import views
-from . import shotgun_view
-from . import overlay_widget
-from . import help_screen
-from . import spinner_widget
-from . import search_widget
