@@ -8,7 +8,10 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from . import views
-from . import shotgun_view
-from . import overlay_widget
-from . import help_screen
+# generic widget delegate
+from .widget_delegate import WidgetDelegate
+
+# grouped list view classes
+from .grouped_list_view import GroupedListView
+from .grouped_list_view_item_delegate import GroupedListViewItemDelegate
+from .group_widget_base import GroupWidgetBase
