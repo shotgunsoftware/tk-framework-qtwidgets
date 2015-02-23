@@ -8,15 +8,58 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+"""
+Custom Qt View that displays items as a grouped list.  The view works with any tree
+based model with the first level of the hierarchy defining the groups and the second
+level defining the items for that group.  Subsequent levels of the hierarchy are ignored.
+
+Items within a group are layed out left-to right and wrap automatically based on the
+view's width.
+
+For example, the following tree model:
+
+- Group 1
+  - Item 1
+  - Item 2
+  - Item 3
+- Group 2
+  - Item 4
+- Group 3
+
+Would look like this in the view:
+
+> Group 1
+-----------------
+[Item 1] [Item 2]
+[Item 3]
+> Group 2
+-----------------
+[Item 4]
+> Group 3
+-----------------
+
+The widgets used for the various groups and items are created through a GroupedListViewItemDelegate
+and this can be overriden to implement custom UI for these elements.
+"""
+
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .grouped_list_view_item_delegate import GroupedListViewItemDelegate
 
 class GroupedListView(QtGui.QAbstractItemView):
     """
+    The main grouped list view class
     """
+    
     class _ItemInfo(object):
+        """
+        class representing the information that needs to be tracked for each item (row)
+        in the model.
+        """
         def __init__(self):
+            """
+            Construction
+            """
             self.rect = QtCore.QRect()              # relative item rect for group header
             self.dirty = True                       # True if data in group or children has changed
             self.collapsed = False                  # True if the group is currently collapsed
@@ -26,6 +69,8 @@ class GroupedListView(QtGui.QAbstractItemView):
     def __init__(self, parent=None):
         """
         Construction
+        
+        :param parent:    The parent QWidget
         """
         QtGui.QAbstractItemView.__init__(self, parent)
         
@@ -39,54 +84,115 @@ class GroupedListView(QtGui.QAbstractItemView):
         # GroupedListViewItemDelegate
         self.setItemDelegate(GroupedListViewItemDelegate(self))
 
+        # keep track of all created group widgets.  The view
+        # will always try to reuse these where possible so the
+        # number of created group widgets will never exceed
+        # the number visible in the viewport  
         self._group_widgets = []
         self._group_widget_rows = {}
         
         self._prev_viewport_sz = QtCore.QSize()
 
+        # initial values for the properties
         self._border = QtCore.QSize(6,6)
         self._group_spacing = 30
         self._item_spacing = QtCore.QSize(4,4)
 
     def setItemDelegate(self, delegate):
         """
+        Overriden from the base class - ensures that the item delegate being
+        set is derived from the GroupedListViewItemDelegate
+        
+        :param delegate:    The item delegate to use for painting, etc.
         """
         if not isinstance(delegate, GroupedListViewItemDelegate):
             raise Exception("Item delegate for this view must be derived from 'GroupedListViewItemDelegate'!")
         QtGui.QAbstractItemView.setItemDelegate(self, delegate)
 
-    @property
-    def border(self):
+    # @property
+    def _get_border(self):
+        """
+        The external border to use for all items in the view
+        """
         return self._border
-    
-    @border.setter
-    def border(self, border_sz):
+    # @border.setter
+    def _set_border(self, border_sz):
         self._border = border_sz
         self._update_all_item_info = True
         self.viewport().update()
+    border = property(_get_border, _set_border)
 
-    @property
-    def group_spacing(self):
+    # @property
+    def _get_group_spacing(self):
+        """
+        The spacing to use between groups when they are collapsed
+        """
         return self._group_spacing
-    
-    @group_spacing.setter
-    def group_spacing(self, spacing):
+    # @group_spacing.setter
+    def _set_group_spacing(self, spacing):
         self._group_spacing = spacing
         self._update_all_item_info = True
         self.viewport().update()
-        
-    @property
-    def item_spacing(self):
+    group_spacing = property(_get_group_spacing, _set_group_spacing)
+
+    # @property
+    def _get_item_spacing(self):
+        """
+        The spacing to use between items in the view
+        """
         return self._item_spacing
-    
-    @item_spacing.setter
-    def item_spacing(self, spacing):
+    # @item_spacing.setter
+    def _set_item_spacing(self, spacing):
         self._item_spacing = spacing
         self._update_all_item_info = True
-        self.viewport().update()        
+        self.viewport().update()
+    item_spacing = property(_get_item_spacing, _set_item_spacing)
+
+    def expand(self, index):
+        """
+        Expand the specified index
+
+        :param index:   The model index to be expanded
+        """
+        self._set_expanded(index, True)
         
+    def collapse(self, index):
+        """
+        Collapse the specified index
+
+        :param index:   The model index to be collapsed
+        """
+        self._set_expanded(index, False)
+    
+    def is_expanded(self, index):
+        """
+        Query if the specified index is expanded or not
+        
+        :param index:   The model index to check
+        :returns:       True if the index is a root index and is expanded,
+                        otherwise False
+        """
+        if not index.isValid() or index.parent() != self.rootIndex():
+            return False
+        row = index.row()
+        if row < len(self._item_info):
+            return not self._item_info[row].collapsed
+        else:
+            return False
+
+    # ----------------------------------------------------------------------------------------------------
+    # Overriden public methods
+
     def edit(self, idx, trigger, event):
         """
+        Override the edit method on the base class to dissalow editing 
+        of group items
+
+        :param idx:     The model index to be edited
+        :param trigger: The trigger that is triggering the edit
+        :param event:   The edit event
+        :returns:       False if the idx is a root item (group), otherwise
+                        the returned value from the base implementation
         """
         if idx.parent() == self.rootIndex():
             # we don't want to allow the regular editing of groups
@@ -94,8 +200,25 @@ class GroupedListView(QtGui.QAbstractItemView):
             return False
         return QtGui.QAbstractItemView.edit(self, idx, trigger, event)
         
-    def set_expanded(self, index, expand):
+    def setModel(self, model):
         """
+        Overrides the base method to make sure the item info gets updated when the model
+        is changed.
+
+        :param model:   The model to set for this view
+        """
+        self._update_all_item_info = True
+        QtGui.QAbstractItemView.setModel(self, model)
+        
+    # ----------------------------------------------------------------------------------------------------
+    # Internal class methods
+
+    def _set_expanded(self, index, expand):
+        """
+        Toggle the expanded state of the specified index
+
+        :param index:   The model index to expand/collapse
+        :param expand:  True if the item should be expanded, otherwise False
         """
         if not index.isValid() or index.parent != self.rootIndex():
             # can only expand valid root indexes!
@@ -107,33 +230,16 @@ class GroupedListView(QtGui.QAbstractItemView):
             self._item_info[row].dirty = True
             self._update_some_item_info = True
             self.viewport().update()
-    
-    def is_expanded(self, index):
-        """
-        """
-        if not index.isValid() or index.parent() != self.rootIndex():
-            return False
-
-        row = index.row()
-        if row < len(self._item_info):
-            return not self._item_info[row].collapsed
-        else:
-            return False
-
-        
-    def setModel(self, model):
-        """
-        Set the model the view will use
-        """
-        self._update_all_item_info = True
-        QtGui.QAbstractItemView.setModel(self, model)
         
     def dataChanged(self, top_left, bottom_right):
         """
-        Called when data in the model has been changed
+        Overriden base class method that gets called when some data in the model attached
+        to this view has been changed.
+
+        :param top_left:        The top-left model index of the data that has changed
+        :param bottom_right:    The bottom-right model index of the data that has changed
         """
         #print "DATA CHANGED [%s] %s -> %s" % (top_left.parent().row(), top_left.row(), bottom_right.row())
-        
         if top_left.parent() == self.rootIndex():
             # data has changed for top-level rows:
             for row in range(top_left.row(), bottom_right.row()+1):
@@ -142,7 +248,7 @@ class GroupedListView(QtGui.QAbstractItemView):
                 self._update_some_item_info = True
         elif top_left.parent().parent() == self.rootIndex():
             # this assumes that all rows from top-left to bottom-right have 
-            # the same parent!
+            # the same parent - this seems to always be the case!
             row = top_left.parent().row()
             if row < len(self._item_info):
                 self._item_info[row].dirty = True
@@ -156,7 +262,12 @@ class GroupedListView(QtGui.QAbstractItemView):
                 
     def rowsInserted(self, parent_index, start, end):
         """
-        Called when rows have been inserted into the model
+        Overriden base method that gets called when new rows have been inserted into
+        the model attached to this view.
+
+        :param parent_index:    The parent model index the rows have been inserted under
+        :param start:           The first row that was inserted
+        :param end:             The last row that was inserted
         """
         #print "ROWS INSERTED [%s] %s -> %s" % (parent_index.row(), start, end)
         
@@ -175,7 +286,7 @@ class GroupedListView(QtGui.QAbstractItemView):
                 else:
                     self._update_all_item_info = True
             else:
-                # something went wrong!
+                # something went wrong so refresh everything!
                 self._update_all_item_info = True
                     
         # make sure we schedule a viewport update so that everything gets updated correctly!
@@ -184,7 +295,12 @@ class GroupedListView(QtGui.QAbstractItemView):
         
     def rowsAboutToBeRemoved(self, parent_index, start, end):
         """
-        Called just before rows are going to be removed from the model
+        Overriden base method that gets called just before rows are removed from
+        the model attached to this view.
+
+        :param parent_index:    The parent model index the rows have been inserted under
+        :param start:           The first row that will be removed
+        :param end:             The last row that will be removed
         """
         #print "ROWS REMOVED [%s] %s -> %s" % (parent_index.row(), start, end)
         
@@ -205,26 +321,34 @@ class GroupedListView(QtGui.QAbstractItemView):
                 # something went wrong!
                 self._update_all_item_info = True        
 
-        # make sure we schedule a viewport update so that everything gets updated correctly!
-        QtGui.QAbstractItemView.rowsAboutToBeRemoved(self, parent_index, start, end)        
+        QtGui.QAbstractItemView.rowsAboutToBeRemoved(self, parent_index, start, end)
 
+        # make sure we schedule a viewport update so that everything gets updated correctly!
         self.viewport().update()
         
     def visualRect(self, index):
         """
-        Return the rectangle occupied by the item for the given 
+        Overriden base method that should return the rectangle occupied by the given 
         index in the viewport
+        
+        :param index:   The model index to return the rectangle for
+        :returns:       A QRect() representing the rectangle this index will occupy 
+                        in the viewport
         """
         rect = QtCore.QRect()
         if index.isValid():
             rect = self._get_item_rect(index)
+            # rectangle should be widget relative, not viewport relative:
             rect = rect.translated(-self.horizontalOffset(), -self.verticalOffset())
         return rect
     
     def isIndexHidden(self, index):
         """
-        Return true if the specified index is hidden (e.g. a collapsed child
-        in a tree view)
+        Overriden base method that returns True if the specified index is hidden (e.g. a 
+        collapsed child in a tree view)
+        
+        :param index:   The model index to query if it's hidden
+        :returns:       True if the index is hidden, False otherwise
         """
         if not index.isValid():
             return False
@@ -249,7 +373,11 @@ class GroupedListView(QtGui.QAbstractItemView):
     
     def scrollTo(self, index, scroll_hint):
         """
-        Scroll to the specified index in the viewport
+        Overriden base method used to scroll to the specified index in the viewport
+        (TODO - implement behaviour specific to the scroll hint)
+
+        :param index:       The model index to scroll to
+        :param scroll_hint: Hint about how the view should scroll - currently ignored!
         """
         viewport_rect = self.viewport().rect()
         
@@ -274,11 +402,17 @@ class GroupedListView(QtGui.QAbstractItemView):
         if dy != 0:
             self.verticalScrollBar().setValue(self.verticalScrollBar().value() + dy)
                          
+        # update the viewport
         self.viewport().update()        
         
     def indexAt(self, point):
         """
-        Return the index for the specified point in the viewport
+        Overriden base method that returns the model index under the specified point in 
+        the viewport
+        
+        :param point:   The QPoint to find the model index for
+        :returns:       The model index for the item under the point or an invalid
+                        QModelIndex() if there isn't one.
         """
         # convert viewport relative point to global point:
         point = point + QtCore.QPoint(self.horizontalOffset(), self.verticalOffset())
@@ -321,49 +455,55 @@ class GroupedListView(QtGui.QAbstractItemView):
             else:
                 y_offset += self._item_spacing.height()
         
-        # no match so return model index
+        # no match so return invalid model index
         return QtCore.QModelIndex()
 
     def moveCursor(self, cursor_action, keyboard_modifiers):
         """
-        Return the index for the item that the specified cursor action will 
-        move to
+        Overriden base method that returns the index for the item that the specified 
+        cursor action will move to
         """
+        # for now, just return the current index!
         index = self.currentIndex()
-        # ...
         return index
-    
+
     def horizontalOffset(self):
         """
-        Return the X offset of the viewport within the ideal sized widget
+        Overriden base method that returns the X offset of the viewport within the ideal 
+        sized widget
+
+        :returns:   The current x-offset based on the horizontal scroll bar value
         """
         return self.horizontalScrollBar().value()
     
     def verticalOffset(self):
         """
-        Return the Y offset of the viewport within the ideal sized widget
+        Overriden base method that returns the Y offset of the viewport within the ideal 
+        sized widget
+
+        :returns:   The current y-offset based on the vertical scroll bar value
         """
         return self.verticalScrollBar().value()    
 
     def scrollContentsBy(self, dx, dy):
         """
-        Scroll the viewport by the specified deltas
+        Overriden base method used to scroll the viewport by the specified deltas
+
+        :param dx:  The horizontal delta to scroll by
+        :param dy:  The vertical delta to scroll by
         """
         self.scrollDirtyRegion(dx, dy)
         self.viewport().scroll(dx, dy)
         self.viewport().update()
 
-    def resizeEvent(self, event):
-        """
-        """
-        # at the moment, recalculating the dimensions is handled at the start of painting so
-        # we don't need to do anything here.  If this causes problems later then we may have
-        # to rethink things!
-        QtGui.QAbstractItemView.resizeEvent(self, event)
-
     def setSelection(self, selection_rect, flags):
         """
-        Set the selection given the selection rectangle and flags
+        Overriden base method used to set the selection given the selection rectangle and flags
+        
+        :param selection_rect:  The selection rectangle that should be used to select any
+                                items contained within
+        :param flags:           Flags that define if the items within the selection rectangle
+                                should be added to, removed from, etc. the current selection
         """
         # convert viewport relative rect to global rect:
         selection_rect = selection_rect.translated(self.horizontalOffset(), self.verticalOffset())
@@ -420,9 +560,12 @@ class GroupedListView(QtGui.QAbstractItemView):
 
     def visualRegionForSelection(self, selection):
         """
-        Return the region in the viewport encompasing all the selected items
+        Overriden base method that returns the region in the viewport encompasing all the 
+        selected items
+
+        :param selection:   The selection to return the region for
+        :returns:           A QRegion representing the region containing all the selected items
         """
-        
         viewport_offset = (-self.horizontalOffset(), -self.verticalOffset())        
         
         region = QtGui.QRegion()
@@ -432,11 +575,13 @@ class GroupedListView(QtGui.QAbstractItemView):
                 rect = self._get_item_rect(index)
                 rect = rect.translated(viewport_offset[0], viewport_offset[1])
                 region += rect
-
         return region        
     
     def paintEvent(self, event):
         """
+        Overriden base method that gets called whenever the view needs repainting.
+        
+        :param event:    The QPaintEvent containing information about the event
         """
         # make sure item rects are up to date:
         self._update_item_info()
@@ -561,6 +706,10 @@ class GroupedListView(QtGui.QAbstractItemView):
 
     def _on_group_expanded_toggled(self, expanded):
         """
+        Slot that gets signalled whenever a group widget is expanded/collapsed.
+        
+        :param expanded:    True if the group widget was expanded, False if it was 
+                            collapsed
         """
         # get the row that is being expanded:
         group_widget = self.sender()
@@ -578,6 +727,8 @@ class GroupedListView(QtGui.QAbstractItemView):
 
     def updateGeometries(self):
         """
+        Overriden base method responsible for updating the horizontal and vertical scroll 
+        bars so that they will correctly scroll the view's viewport.
         """
         # calculate the maximum height of all visible items in the model:
         max_height = 0
@@ -596,6 +747,11 @@ class GroupedListView(QtGui.QAbstractItemView):
 
     def _get_item_rect(self, index):
         """
+        Return the cached item rectangle for the specified model index.
+
+        :param index:   The model index to find the item rectangle for
+        :returns:       A QRect representing the rectangle this index occupies in 
+                        the view.  This rectangle is viewport relative.
         """
         # first, get the row for each level of the hierarchy (bottom to top)
         rows = []
@@ -636,6 +792,10 @@ class GroupedListView(QtGui.QAbstractItemView):
             
     def _update_item_info(self):
         """
+        Update the cached item info when needed.  This updates the item layout for any items that have
+        been 'dirtied' or if the widget size has changed, etc.
+        
+        This is typically run immediately before painting.
         """
         # check to see if the viewport size has changed:
         viewport_sz = self.viewport().size()
@@ -686,7 +846,6 @@ class GroupedListView(QtGui.QAbstractItemView):
             # get the size of the item:
             view_options = base_view_options
             item_size = self.itemDelegate().sizeHint(view_options, index)
-            print item_size
             item_info.rect = QtCore.QRect(self._border.width(), 0, item_size.width(), item_size.height())
     
             # update size info of children:

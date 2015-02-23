@@ -9,21 +9,24 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 """
-
+A simple widget that draws an animated spinner that spins whilst visible.
 """
-
-import time
-import math
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
+import time
+import math
+
 class SpinnerWidget(QtGui.QWidget):
     """
-    A widget that shows an animated spinner whilst visible
+    Spinner widget class
     """
     def __init__(self, parent=None):
         """
+        Construction
+        
+        :param parent:    The parent widget
         """
         QtGui.QWidget.__init__(self, parent)
         
@@ -44,6 +47,8 @@ class SpinnerWidget(QtGui.QWidget):
         
     def paintEvent(self, event):
         """
+        Paint the widget
+        :param event:    The QPaintEvent event
         """
         # call the base paint event:
         QtGui.QWidget.paintEvent(self, event)
@@ -70,6 +75,10 @@ class SpinnerWidget(QtGui.QWidget):
 
     def showEvent(self, event):
         """
+        Called when the widget is being shown - ensures the timer is running
+        so that the animation plays
+        
+        :param event:    The event
         """
         if not self._timer.isActive():
             self._timer.start(1000 / max(1, self.fps))
@@ -77,23 +86,35 @@ class SpinnerWidget(QtGui.QWidget):
     
     def hideEvent(self, event):
         """
+        Called when the widget is being hidden - ensures the timer is stopped
+        to avoid unnecessary painting
+        
+        :param even:    The event
         """
         self._timer.stop()
         QtGui.QWidget.hideEvent(self, event)
 
     def closeEvent(self, event):
         """
+        Called when the widget is being closed - ensures the timer is stopped
+        to avoid unnecessary painting
+        
+        :param even:    The event
         """
         self._timer.stop()
         QtGui.QWidget.closeEvent(self, event)
     
     def _on_timer_timeout(self):
         """
+        Slot triggered when the timer times out and used to trigger a repaint of
+        the widget.
         """
         if not self.isVisible():
+            # nothing to do!
             return
         
-        # calculate the spin angle as a function of the current time so that all spinners appear in sync!
+        # calculate the spin angle as a function of the current time so that all 
+        # spinners appear in sync!
         t = time.time()
         whole_seconds = int(t)
         p = (whole_seconds % self.seconds_per_spin) + (t - whole_seconds)
@@ -105,5 +126,8 @@ class SpinnerWidget(QtGui.QWidget):
         
         self._start_angle = angle
         
-        # trigger a repaint:
+        # trigger a repaint for the widget:
         self.update()
+
+
+

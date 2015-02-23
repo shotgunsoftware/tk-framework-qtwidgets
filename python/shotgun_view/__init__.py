@@ -8,6 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from .delegate import WidgetDelegate
+from .widget_delegate import WidgetDelegate
 from .thumb_widget import ThumbWidget
 from .list_widget import ListWidget
