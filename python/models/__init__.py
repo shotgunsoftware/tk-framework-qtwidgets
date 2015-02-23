@@ -1,4 +1,4 @@
-# Copyright (c) 2013 Shotgun Software Inc.
+# Copyright (c) 2015 Shotgun Software Inc.
 # 
 # CONFIDENTIAL AND PROPRIETARY
 # 
@@ -8,10 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from . import views
-from . import models
-from . import shotgun_view
-from . import overlay_widget
-from . import help_screen
-from . import spinner_widget
-from . import search_widget
+# Proxy model that allows for efficient hierarhcical filtering of a tree-based 
+# source model
+from .hierarchical_filtering_proxy_model import HierarchicalFilteringProxyModel
