@@ -686,7 +686,6 @@ class GroupedListView(QtGui.QAbstractItemView):
             # get the size of the item:
             view_options = base_view_options
             item_size = self.itemDelegate().sizeHint(view_options, index)
-            print item_size
             item_info.rect = QtCore.QRect(self._border.width(), 0, item_size.width(), item_size.height())
     
             # update size info of children:
