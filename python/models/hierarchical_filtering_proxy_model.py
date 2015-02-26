@@ -9,8 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 """
-Proxy model that allows for efficient hierarhcical filtering of a tree-based 
-source model
+Proxy model that provides efficient hierarhcical filtering of a tree-based source model
 """
 
 import sgtk
@@ -18,9 +17,14 @@ from sgtk.platform.qt import QtCore, QtGui
 
 class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     """
+    Inherited from a QSortFilterProxyModel, this class implements filtering across all 
+    levels of the hierarchy in a hierarchical (tree-based) model
     """
+    
     def __init__(self, parent=None):
         """
+        Construction
+        :param parent:    The parent QObject to use for this instance
         """
         QtGui.QSortFilterProxyModel.__init__(self, parent)
         
@@ -31,17 +35,40 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
 
     def _is_item_accepted(self, item, parent_accepted):
         """
+        Override this method to decide if the specified item should be accepted or 
+        not by the filter.
+        
+        This should be overridden instead of filterAcceptsRow in derived classes
+        
+        :param item:            The QStandardItem item
+        :param parent_accepted: True if a parent item has been accepted by the filter
+        :returns:               True if this item should be accepted, otherwise False
         """
         raise NotImplementedError()
 
+    # -------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------
+
     def invalidateFilter(self):
         """
+        Overriden base class method used to invalidate the current filter.
         """
         self._filter_dirty = True
+        # call through to the base class:
         QtGui.QSortFilterProxyModel.invalidateFilter(self)
 
     def filterAcceptsRow(self, src_row, src_parent_idx):
         """
+        Overriden base class method used to determine if a row is accepted by the
+        current filter.
+        
+        This implementation checks both up and down the hierarchy to determine if
+        this row should be accepted.
+
+        :param src_row:         The row in the source model to filter
+        :param src_parent_idx:  The parent index in the source model to filter
+        :returns:               True if the row should be accepted by the filter, False
+                                otherwise
         """
         reg_exp = self.filterRegExp()
         if self._filter_dirty or reg_exp != self._cached_regexp:
@@ -87,12 +114,17 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         if src_item.hasChildren():
             # the parent acceptance doesn't mean that it is filtered out as this
             # depends if there are any children accepted:            
-            return self._is_child_accepted_r(src_item, reg_exp, parent_accepted)
+            return self._is_child_accepted_r(src_item, parent_accepted)
         else:
             return parent_accepted  
 
-    def _is_child_accepted_r(self, item, reg_exp, parent_accepted):
+    def _is_child_accepted_r(self, item, parent_accepted):
         """
+        Recursively check children to see if any of them have been accepted.
+
+        :param item:            The item whose children should be checked
+        :param parent_accepted: True if a parent item has been accepted
+        :returns:               True if a child of the item is accepted by the filter
         """
         # check to see if any children of this item are known to have been accepted:
         child_accepted = self._child_accepted_cache.get(id(item), None)
@@ -113,7 +145,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 self._accepted_cache[id(child_item)] = accepted
 
             if child_item.hasChildren():
-                child_accepted = self._is_child_accepted_r(child_item, reg_exp, accepted)
+                child_accepted = self._is_child_accepted_r(child_item, accepted)
             else:
                 child_accepted = accepted
                 
