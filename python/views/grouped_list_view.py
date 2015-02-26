@@ -458,6 +458,15 @@ class GroupedListView(QtGui.QAbstractItemView):
         # no match so return invalid model index
         return QtCore.QModelIndex()
 
+    def moveCursor(self, cursor_action, keyboard_modifiers):
+        """
+        Overriden base method that returns the index for the item that the specified 
+        cursor action will move to
+        """
+        # for now, just return the current index!
+        index = self.currentIndex()
+        return index
+
     def horizontalOffset(self):
         """
         Overriden base method that returns the X offset of the viewport within the ideal 
