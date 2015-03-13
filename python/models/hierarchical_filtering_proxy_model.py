@@ -11,7 +11,8 @@
 """
 Proxy model that provides efficient hierarhcical filtering of a tree-based source model
 """
-
+import weakref
+    
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
@@ -20,6 +21,11 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     Inherited from a QSortFilterProxyModel, this class implements filtering across all 
     levels of the hierarchy in a hierarchical (tree-based) model
     """
+    
+    # The caches used to optimise filtering use weak refs which will outlive the items
+    # they reference and would lead to an ever-growing cache if not cleaned.  This
+    # value determines how often the caches should be cleaned/trimmed of invalid refs.
+    _MAX_FILTERS_BEFORE_CACHE_CLEAN = 256
     
     def __init__(self, parent=None):
         """
@@ -32,6 +38,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         self._filter_dirty = True
         self._accepted_cache = {}
         self._child_accepted_cache = {}
+        
+        self._filter_count = 0
 
     def _is_item_accepted(self, item, parent_accepted):
         """
@@ -77,6 +85,22 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             self._child_accepted_cache = {}
             self._cached_regexp = reg_exp
             self._filter_dirty = False
+            self._filter_count = 0
+        elif self._filter_count > HierarchicalFilteringProxyModel._MAX_FILTERS_BEFORE_CACHE_CLEAN:
+            # clear out any invalid weak refs from the cache
+            # to ensure it doesn't grow insanely big!
+            new_cache = {}
+            for k, v in self._accepted_cache.iteritems():
+                if k() is not None:
+                    new_cache[k] = v
+            self._accepted_cache = new_cache
+            new_cache = {}
+            for k, v in self._child_accepted_cache.iteritems():
+                if k() is not None:
+                    new_cache[k] = v
+            self._child_accepted_cache = new_cache
+            self._filter_count = 0
+        self._filter_count += 1
         
         # get the source index for the row:
         src_model = self.sourceModel()
@@ -84,7 +108,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         src_item = src_model.itemFromIndex(src_idx)
         
         # first, see if any children of this item are known to already be accepted
-        child_accepted = self._child_accepted_cache.get(id(src_item), None)
+        child_accepted = self._child_accepted_cache.get(weakref.ref(src_item))
         if child_accepted == True:
             # child is accepted so this item must also be accepted
             return True
@@ -97,7 +121,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         parent_accepted = False
         while current_idx and current_idx.isValid():
             item = src_model.itemFromIndex(current_idx)
-            accepted = self._accepted_cache.get(id(item), None)
+            accepted = self._accepted_cache.get(weakref.ref(item))
             if accepted != None:
                 parent_accepted = accepted
                 break
@@ -108,7 +132,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # for sure:
         for item in reversed(upstream_items):
             accepted = self._is_item_accepted(item, parent_accepted)
-            self._accepted_cache[id(item)] = accepted
+            self._accepted_cache[weakref.ref(item)] = accepted
             parent_accepted = accepted
 
         if src_item.hasChildren():
@@ -127,7 +151,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :returns:               True if a child of the item is accepted by the filter
         """
         # check to see if any children of this item are known to have been accepted:
-        child_accepted = self._child_accepted_cache.get(id(item), None)
+        child_accepted = self._child_accepted_cache.get(weakref.ref(item))
         if child_accepted != None:
             # we already computed this so just return the result
             return child_accepted
@@ -138,11 +162,11 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             child_item = item.child(ci)
             
             # check if child item is in cache:
-            accepted = self._accepted_cache.get(id(child_item), None)
+            accepted = self._accepted_cache.get(weakref.ref(child_item))
             if accepted == None:
                 # it's not so lets see if it's accepted and add to the cache:
                 accepted = self._is_item_accepted(child_item, parent_accepted)
-                self._accepted_cache[id(child_item)] = accepted
+                self._accepted_cache[weakref.ref(child_item)] = accepted
 
             if child_item.hasChildren():
                 child_accepted = self._is_child_accepted_r(child_item, accepted)
@@ -154,5 +178,5 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 break
 
         # cache if any children were accepted:
-        self._child_accepted_cache[id(item)] = child_accepted     
+        self._child_accepted_cache[weakref.ref(item)] = child_accepted
         return child_accepted    
