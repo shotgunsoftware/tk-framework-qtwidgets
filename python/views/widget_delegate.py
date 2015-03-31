@@ -191,6 +191,7 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         paint_widget = self._get_painter_widget(model_index, self.parent())
         if not paint_widget:
             return
+        paint_widget.setVisible(False)
 
         # call out to have the widget set the right values            
         self._on_before_paint(paint_widget, model_index, style_options)

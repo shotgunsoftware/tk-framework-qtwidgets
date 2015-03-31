@@ -92,16 +92,21 @@ class SearchWidget(QtGui.QWidget):
         :param text:    The text to use
         """
         self._ui.search_edit.setPlaceholderText(text)
+        
+    def clear(self):
+        """
+        """
+        self._ui.search_edit.setText("")
+        self._clear_btn.hide()
                 
     def _on_clear_clicked(self):
         """
         Slot triggered when the clear button is clicked - clears the text
         and emits the relevant signals.
         """
-        self._ui.search_edit.setText("")
+        self.clear()
         self.search_changed.emit("")
         self.search_edited.emit("")
-        self._clear_btn.hide()
                 
     def _on_text_edited(self):
         """
