@@ -673,8 +673,21 @@ class GroupedListView(QtGui.QAbstractItemView):
                                 continue
                              
                             # set up the rendering options:
-                            option = self.viewOptions()
+                            # (AD) - using self.viewOptions() to get the view style options seems
+                            # to return an invalid item in some versions of PySide/PyQt!  I think
+                            # it's returning a QtGui.QStyleOptionViewItem even though the 
+                            # underlying C++ object is a QtGui.QStyleOptionViewItemV2 or higher.
+                            #
+                            # This would result in option.rect being corrupt immediately after it
+                            # was set below!
+                            #
+                            # creating the object directly and then using initFrom seems to work
+                            # though.
+                            option = QtGui.QStyleOptionViewItem()#self.viewOptions())
+                            option.initFrom(self)
+                            
                             option.rect = child_rect
+                            
                             if self.selectionModel().isSelected(child_index):
                                 option.state |= QtGui.QStyle.State_Selected
                             if child_index == self.currentIndex():
