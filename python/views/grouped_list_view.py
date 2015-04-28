@@ -371,7 +371,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         # default is to show the index:
         return False
     
-    def scrollTo(self, index, scroll_hint):
+    def scrollTo(self, index, scroll_hint=QtGui.QAbstractItemView.EnsureVisible):
         """
         Overriden base method used to scroll to the specified index in the viewport
         (TODO - implement behaviour specific to the scroll hint)
