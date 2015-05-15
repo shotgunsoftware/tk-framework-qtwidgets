@@ -65,6 +65,9 @@ class GroupedListView(QtGui.QAbstractItemView):
             self.collapsed = False                  # True if the group is currently collapsed
             self.child_rects = []                   # List of sizes for all child items relative to the group
             self.child_area_rect = QtCore.QRect()   # total size of child area
+            
+        def __repr__(self):
+            return "%s: %s" % (self.rect, self.child_area_rect)
     
     def __init__(self, parent=None):
         """
@@ -240,6 +243,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         :param bottom_right:    The bottom-right model index of the data that has changed
         """
         #print "DATA CHANGED [%s] %s -> %s" % (top_left.parent().row(), top_left.row(), bottom_right.row())
+        
         if top_left.parent() == self.rootIndex():
             # data has changed for top-level rows:
             for row in range(top_left.row(), bottom_right.row()+1):
@@ -288,7 +292,7 @@ class GroupedListView(QtGui.QAbstractItemView):
             else:
                 # something went wrong so refresh everything!
                 self._update_all_item_info = True
-                    
+
         # make sure we schedule a viewport update so that everything gets updated correctly!
         self.viewport().update()
         QtGui.QAbstractItemView.rowsInserted(self, parent_index, start, end)
@@ -297,6 +301,11 @@ class GroupedListView(QtGui.QAbstractItemView):
         """
         Overriden base method that gets called just before rows are removed from
         the model attached to this view.
+
+        Note, not sure why but this doesn't seem to get called as expected in PyQt!  Because
+        of this there is an extra validation step in self._update_item_info() which may
+        slightly reduce performance in PyQt but as this only happens when items are removed
+        from the model via clearing then hopefully it shouldn't be a big problem!
 
         :param parent_index:    The parent model index the rows have been inserted under
         :param start:           The first row that will be removed
@@ -589,7 +598,9 @@ class GroupedListView(QtGui.QAbstractItemView):
         row_count = self.model().rowCount()
         if row_count != len(self._item_info):
             # this shouldn't ever happen but just incase it does then 
-            # we shouldn't paint anything as it'll probably be wrong!
+            # we shouldn't paint anything as we'll probably get exceptions!
+            bundle = sgtk.platform.current_bundle()
+            bundle.log_warning("Unable to paint the Grouped List View as the internal cache is out of sync!")
             return
 
         # build lookups for the group widgets:
@@ -810,6 +821,12 @@ class GroupedListView(QtGui.QAbstractItemView):
         
         This is typically run immediately before painting.
         """
+        # double check that the item-info list is the correct length.  PyQt doesn't
+        # seem to call 'rowsAboutToBeRemoved' when a model is cleared so this list can 
+        # become out of sync!
+        if self.model().rowCount() != len(self._item_info):
+            self._update_all_item_info = True
+        
         # check to see if the viewport size has changed:
         viewport_sz = self.viewport().size()
         viewport_resized = False
@@ -831,6 +848,10 @@ class GroupedListView(QtGui.QAbstractItemView):
         
         #print "%s, %s, %s, %s" % (self._update_all_item_info, self._update_some_item_info, viewport_resized, self._item_info)
         self._update_all_item_info = self._update_all_item_info or viewport_resized
+        
+        # (AD) TEMP
+        if self._update_all_item_info:
+            self._item_info = []
         
         viewport_width = viewport_sz.width()
         max_width = viewport_width - self._border.width()
