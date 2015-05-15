@@ -180,3 +180,57 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # cache if any children were accepted:
         self._child_accepted_cache[weakref.ref(item)] = child_accepted
         return child_accepted    
+
+    def setSourceModel(self, model):
+        """
+        Overridden base method that we use to keep track of when rows are inserted into the 
+        source model
+
+        :param model:   The source model to track
+        """
+        # if needed, disconnect from the previous source model:
+        prev_source_model = self.sourceModel()
+        if prev_source_model:
+            prev_source_model.rowsInserted.disconnect(self._on_source_model_rows_inserted)
+
+        # call base implementation:
+        QtGui.QSortFilterProxyModel.setSourceModel(self, model)
+
+        # connect to the new model:
+        if model:
+            model.rowsInserted.connect(self._on_source_model_rows_inserted)
+
+    def _on_source_model_rows_inserted(self, parent_idx, start, end):
+        """
+        Slot triggered when rows are inserted into the source model.
+
+        There appears to be a limitation with the QSortFilterProxyModel that breaks sorting
+        of newly added child rows when the parent row has previously been filtered out.  This
+        can happen when the model data is lazy-loaded as the filtering may decide that as
+        there are no valid children, then the parent should be filtered out.  However, when
+        matching children later get added, the parent then matches but the children don't get
+        sorted correctly!
+
+        The workaround is to detect when children are added to a parent that was previously
+        filtered out and force the whole proxy model to be invalidated (so that the filtering
+        and sorting are both applied from scratch).
+
+        The alternative would be to implement our own version of the QSortFilterProxyModel!
+
+        :param parent_idx:  The index of the parent model item
+        :param start:       The first row that was inserted into the source model
+        :param end:         The last row that was inserted into the source model
+        """
+        if not parent_idx.isValid():
+            return
+
+        parent_item = self.sourceModel().itemFromIndex(parent_idx)
+        if not parent_item:
+            return
+
+        accepted = self._accepted_cache.get(weakref.ref(parent_item))
+        if accepted == False:
+            # the parent item has previously been filtered out but adding new children might
+            # change this so lets invalidate everything forcing an update of the proxy model
+            self.invalidate()
+
