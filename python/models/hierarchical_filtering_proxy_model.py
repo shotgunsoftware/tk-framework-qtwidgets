@@ -192,6 +192,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         prev_source_model = self.sourceModel()
         if prev_source_model:
             prev_source_model.rowsInserted.disconnect(self._on_source_model_rows_inserted)
+            prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
 
         # call base implementation:
         QtGui.QSortFilterProxyModel.setSourceModel(self, model)
@@ -199,6 +200,44 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # connect to the new model:
         if model:
             model.rowsInserted.connect(self._on_source_model_rows_inserted)
+            model.dataChanged.connect(self._on_source_model_data_changed)
+
+    def _on_source_model_data_changed(self, start_idx, end_idx):
+        """
+        Slot triggered when data for one or more items in the source model changes.
+
+        Data in the source model changing may mean that the filtering for an item changes.  If this
+        is the case then we need to make sure we clear the item from the caches.
+
+        :param start_idx:   The index of the first row in the range of model items that have changed
+        :param start_idx:   The index of the last row in the range of model items that have changed
+        """
+        parent_idx = start_idx.parent()
+        if parent_idx != end_idx.parent():
+            # this should never happen but just in case indicate that the entire cache should 
+            # be cleared
+            self._filter_dirty = True
+            return
+
+        # clear all rows from the accepted caches
+        for row in range(start_idx.row(), end_idx.row()+1):
+            idx = self.sourceModel().index(row, 0, parent_idx)
+            item = self.sourceModel().itemFromIndex(idx)
+            item_ref = weakref.ref(item)
+            if item_ref in self._child_accepted_cache:
+                del self._child_accepted_cache[item_ref]
+            if item_ref in self._accepted_cache:
+                del self._accepted_cache[item_ref]
+
+        # remove parent hierarchy from caches as well:
+        while parent_idx.isValid():
+            item = self.sourceModel().itemFromIndex(parent_idx)
+            item_ref = weakref.ref(item)
+            if item_ref in self._child_accepted_cache:
+                del self._child_accepted_cache[item_ref]
+            if item_ref in self._accepted_cache:
+                del self._accepted_cache[item_ref]
+            parent_idx = parent_idx.parent()
 
     def _on_source_model_rows_inserted(self, parent_idx, start, end):
         """
