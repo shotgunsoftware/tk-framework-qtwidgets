@@ -21,24 +21,24 @@ class SearchWidget(QtGui.QWidget):
     """
     Search widget class
     """
-    
+
     # emited when the search QTextField is being edited
     search_edited = QtCore.Signal(object)# search text
     # emited when the search QTextField has been changed (e.g. after hitting enter)
     search_changed = QtCore.Signal(object)# search text  
-    
+
     def __init__(self, parent=None):
         """
         Construction
-        
+
         :param parent:    The parent widget
         """
         QtGui.QWidget.__init__(self, parent)
-        
+
         # set up the UI
         self._ui = Ui_SearchWidget()
         self._ui.setupUi(self)
-        
+
         # dynamically create the clear button so that we can place it over the
         # edit widget:
         self._clear_btn = QtGui.QPushButton(self._ui.search_edit)
@@ -68,7 +68,7 @@ class SearchWidget(QtGui.QWidget):
         self._ui.search_edit.textEdited.connect(self._on_text_edited)
         self._ui.search_edit.returnPressed.connect(self._on_return_pressed)
         self._clear_btn.clicked.connect(self._on_clear_clicked)
-                
+
     # @property
     def _get_search_text(self):
         """
@@ -76,29 +76,29 @@ class SearchWidget(QtGui.QWidget):
         """
         text = self._ui.search_edit.text()
         return self._safe_to_string(text)
-
     # @search_text.setter
     def _set_search_text(self, value):
         """
         set the search text on the widget
         """
         self._ui.search_edit.setText(value)
+        self._clear_btn.setVisible(bool(value))
     search_text = property(_get_search_text, _set_search_text)
 
     def set_placeholder_text(self, text):
         """
         Set the placeholder text for the widget
-        
+
         :param text:    The text to use
         """
         self._ui.search_edit.setPlaceholderText(text)
-        
+
     def clear(self):
         """
         """
         self._ui.search_edit.setText("")
         self._clear_btn.hide()
-                
+
     def _on_clear_clicked(self):
         """
         Slot triggered when the clear button is clicked - clears the text
@@ -107,7 +107,7 @@ class SearchWidget(QtGui.QWidget):
         self.clear()
         self.search_changed.emit("")
         self.search_edited.emit("")
-                
+
     def _on_text_edited(self):
         """
         Slot triggered when the text has been edited 
@@ -115,13 +115,13 @@ class SearchWidget(QtGui.QWidget):
         text = self.search_text
         self._clear_btn.setVisible(bool(text))
         self.search_edited.emit(text)
-        
+
     def _on_return_pressed(self):
         """
         Slot triggered when return has been pressed
         """
         self.search_changed.emit(self.search_text)
-        
+
     def _safe_to_string(self, value):
         """
         Safely convert the value to a string - handles
@@ -133,7 +133,7 @@ class SearchWidget(QtGui.QWidget):
         if isinstance(value, str):
             # it's a string anyway so just return
             return value
-        
+
         if isinstance(value, unicode):
             # convert to utf-8
             return value.encode("utf8")
