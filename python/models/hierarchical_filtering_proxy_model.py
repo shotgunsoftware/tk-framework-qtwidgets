@@ -25,6 +25,79 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     # value determines how often the caches should be cleaned/trimmed of invalid indexes.
     _MAX_FILTERS_BEFORE_CACHE_CLEAN = 256
 
+    class _IndexAcceptedCache(object):
+        """
+        Cached 'accepted' values for indexes.  Uses a dictionary that maps the row hierarchy
+        to a tuple containing a QPersistentModelIndex for the index and its accepted value.
+
+        (row, row, row, row) -> (QPersistentModelIndex, accepted)
+
+        When looking up the cached value, the persistent model index is used to ensure that the
+        cache entry is still valid (does it match the index we are searching for).
+
+        Note, this deliberately doesn't use a dictionary indexed by QPersistentModelIndexes as
+        these are not hashable types in earlier versions of PySide!
+        """
+        g_counter = 0
+        def __init__(self):
+            """
+            """
+            self._cache = {}
+
+        def add(self, index, accepted):
+            """
+            """
+            cache_key = self._gen_cache_key(index)
+            self._cache[cache_key] = (QtCore.QPersistentModelIndex(index), accepted)
+
+        def remove(self, index):
+            """
+            """
+            cache_key = self._gen_cache_key(index)
+            if cache_key in self._cache:
+                del self._cache[cache_key]
+
+        def get(self, index):
+            """
+            """
+            cache_key = self._gen_cache_key(index)
+            cache_value = self._cache.get(cache_key)
+            if not cache_value:
+                return None
+
+            p_index, accepted = cache_value
+
+            if p_index == index:
+                # index and cached value are still valid!
+                return accepted
+            else:
+                # row has changed but accepted value is presumably still valid
+                del self._cache[cache_key]
+                self.add(p_index, accepted)
+                return None
+
+        def minimize(self):
+            """
+            """
+            self._cache = dict([(k, v) for k, v in self._cache.iteritems() if v[0].isValid()])
+
+        def clear(self):
+            """
+            """
+            self._cache = {}
+
+        def _gen_cache_key(self, index):
+            """
+            """
+            rows = []
+            parent_idx = index
+            while parent_idx.isValid():
+                rows.append(parent_idx.row())
+                parent_idx = parent_idx.parent()
+
+            return tuple(reversed(rows))
+
+
     def __init__(self, parent=None):
         """
         Construction
@@ -34,8 +107,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
 
         self._cached_regexp = None
         self._filter_dirty = True
-        self._accepted_cache = {}
-        self._child_accepted_cache = {}
+        self._accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
+        self._child_accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
 
         self._filter_count = 0
 
@@ -81,17 +154,15 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         reg_exp = self.filterRegExp()
         if self._filter_dirty or reg_exp != self._cached_regexp:
             # clear the cache as the search filter has changed
-            self._accepted_cache = {}
-            self._child_accepted_cache = {}
+            self._accepted_cache.clear()
+            self._child_accepted_cache.clear()
             self._cached_regexp = reg_exp
             self._filter_dirty = False
             self._filter_count = 0
         elif self._filter_count > HierarchicalFilteringProxyModel._MAX_FILTERS_BEFORE_CACHE_CLEAN:
             # clear out any invalid indexes from the cache to ensure it doesn't grow insanely big!
-            self._accepted_cache = dict([(k, v) for k, v in self._accepted_cache.iteritems() 
-                                            if k.isValid()])
-            self._child_accepted_cache = dict([(k, v) for k, v in self._child_accepted_cache.iteritems() 
-                                                    if k.isValid()])
+            self._accepted_cache.minimize()
+            self._child_accepted_cache.minimize()
             self._filter_count = 0
         self._filter_count += 1
 
@@ -123,7 +194,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # for sure:
         for idx in reversed(upstream_indexes):
             accepted = self._is_row_accepted(idx.row(), idx.parent(), parent_accepted)
-            self._accepted_cache[QtCore.QPersistentModelIndex(idx)] = accepted
+            self._accepted_cache.add(idx, accepted)
             parent_accepted = accepted
 
         if src_model.hasChildren(src_idx):
@@ -159,7 +230,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             if accepted == None:
                 # it's not so lets see if it's accepted and add to the cache:
                 accepted = self._is_row_accepted(child_idx.row(), idx, parent_accepted)
-                self._accepted_cache[QtCore.QPersistentModelIndex(child_idx)] = accepted
+                self._accepted_cache.add(child_idx, accepted)
 
             if model.hasChildren(child_idx):
                 child_accepted = self._is_child_accepted_r(child_idx, accepted)
@@ -171,8 +242,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 break
 
         # cache if any children were accepted:
-        self._child_accepted_cache[QtCore.QPersistentModelIndex(idx)] = child_accepted
-        return child_accepted    
+        self._child_accepted_cache.add(idx, child_accepted)
+        return child_accepted
 
     def setSourceModel(self, model):
         """
@@ -215,17 +286,13 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # clear all rows from the accepted caches
         for row in range(start_idx.row(), end_idx.row()+1):
             idx = self.sourceModel().index(row, 0, parent_idx)
-            if idx in self._child_accepted_cache:
-                del self._child_accepted_cache[idx]
-            if idx in self._accepted_cache:
-                del self._accepted_cache[idx]
+            self._child_accepted_cache.remove(idx)
+            self._accepted_cache.remove(idx)
 
         # remove parent hierarchy from caches as well:
         while parent_idx.isValid():
-            if parent_idx in self._child_accepted_cache:
-                del self._child_accepted_cache[parent_idx]
-            if parent_idx in self._accepted_cache:
-                del self._accepted_cache[parent_idx]
+            self._child_accepted_cache.remove(parent_idx)
+            self._accepted_cache.remove(parent_idx)
             parent_idx = parent_idx.parent()
 
     def _on_source_model_rows_inserted(self, parent_idx, start, end):
