@@ -19,12 +19,6 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     Inherited from a QSortFilterProxyModel, this class implements filtering across all 
     levels of the hierarchy in a hierarchical (tree-based) model
     """
-
-    # The caches used to optimise filtering use QPersistenModelIndexes which will outlive the items
-    # they reference and would lead to an ever-growing cache if not cleaned.  This
-    # value determines how often the caches should be cleaned/trimmed of invalid indexes.
-    _MAX_FILTERS_BEFORE_CACHE_CLEAN = 256
-
     class _IndexAcceptedCache(object):
         """
         Cached 'accepted' values for indexes.  Uses a dictionary that maps the row hierarchy
@@ -44,6 +38,26 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             """
             self._cache = {}
             self.enabled = True
+            self._cache_hits = 0
+            self._cache_misses = 0
+
+        @property
+        def cache_hit_miss_ratio(self):
+            """
+            Useful for debug to see how many cache hits vs misses there are
+            """
+            total_cache_queries = self._cache_hits + self._cache_misses
+            if total_cache_queries > 0:
+                return float(self._cache_hits) / float(total_cache_queries)
+            else:
+                return 0
+            
+        @property
+        def size(self):
+            """
+            Return the current size of the cache
+            """
+            return len(self._cache)
 
         def add(self, index, accepted):
             """
@@ -84,17 +98,20 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             cache_key = self._gen_cache_key(index)
             cache_value = self._cache.get(cache_key)
             if not cache_value:
+                self._cache_misses += 1
                 return None
 
             p_index, accepted = cache_value
 
             if p_index == index:
                 # index and cached value are still valid!
+                self._cache_hits += 1
                 return accepted
             else:
                 # row has changed but accepted value is presumably still valid
-                del self._cache[cache_key]
-                self.add(p_index, accepted)
+                #del self._cache[cache_key]
+                #self.add(p_index, accepted)
+                self._cache_misses += 1
                 return None
 
         def minimize(self):
@@ -122,6 +139,10 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             :param index:   The QModelIndex to generate a cache key for
             :returns:       The key of the index in the cache
             """
+            # ideally we would just use persistent model indexes but these aren't hashable
+            # in early versions of PySide :(
+            #return QtCore.QPersistentModelIndex(index)
+
             # the cache key is a tuple of all the row indexes of the parent
             # hierarchy for the index.  First, find the row indexes:
             rows = []
@@ -145,8 +166,6 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         self._filter_dirty = True
         self._accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
         self._child_accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
-
-        self._filter_count = 0
 
     def enable_caching(self, enable=True):
         """
@@ -210,18 +229,16 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         """
         reg_exp = self.filterRegExp()
         if self._filter_dirty or reg_exp != self._cached_regexp:
+            #print ("Accepted cache (%d) hits: %d%%" 
+            #            % (self._accepted_cache.size, self._accepted_cache.cache_hit_miss_ratio * 100.0))
+            #print ("Child accepted cache (%d) hits: %d%%" 
+            #            % (self._child_accepted_cache.size, self._child_accepted_cache.cache_hit_miss_ratio * 100.0))
+
             # clear the cache as the search filter has changed
             self._accepted_cache.clear()
             self._child_accepted_cache.clear()
             self._cached_regexp = reg_exp
             self._filter_dirty = False
-            self._filter_count = 0
-        elif self._filter_count > HierarchicalFilteringProxyModel._MAX_FILTERS_BEFORE_CACHE_CLEAN:
-            # clear out any invalid indexes from the cache to ensure it doesn't grow insanely big!
-            self._accepted_cache.minimize()
-            self._child_accepted_cache.minimize()
-            self._filter_count = 0
-        self._filter_count += 1
 
         # get the source index for the row:
         src_model = self.sourceModel()
