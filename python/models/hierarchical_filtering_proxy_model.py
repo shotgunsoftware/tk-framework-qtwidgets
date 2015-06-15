@@ -38,28 +38,49 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         Note, this deliberately doesn't use a dictionary indexed by QPersistentModelIndexes as
         these are not hashable types in earlier versions of PySide!
         """
-        g_counter = 0
         def __init__(self):
             """
+            Construction
             """
             self._cache = {}
+            self.enabled = True
 
         def add(self, index, accepted):
             """
+            Add the specified index to the cache together with it's accepted state
+
+            :param index:       The QModelIndex to be added
+            :param accepted:    True if the model index is accepted by the filtering, False if not.
             """
+            if not self.enabled:
+                return
+
             cache_key = self._gen_cache_key(index)
             self._cache[cache_key] = (QtCore.QPersistentModelIndex(index), accepted)
 
         def remove(self, index):
             """
+            Remove the specified index from the cache.
+
+            :param index:   The QModelIndex to remove from the cache
             """
+            if not self.enabled:
+                return
+
             cache_key = self._gen_cache_key(index)
             if cache_key in self._cache:
                 del self._cache[cache_key]
 
         def get(self, index):
             """
+            Get the accepted state for the specified index in the cache.
+
+            :param index:   The QModelIndex to get the accepted state for
+            :returns:       The accepted state if the index was found in the cache, otherwise None
             """
+            if not self.enabled:
+                return None
+
             cache_key = self._gen_cache_key(index)
             cache_value = self._cache.get(cache_key)
             if not cache_value:
@@ -78,23 +99,38 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
 
         def minimize(self):
             """
+            Minimize the size of the cache by removing any entries that are no longer valid
             """
+            if not self.enabled:
+                return
+
             self._cache = dict([(k, v) for k, v in self._cache.iteritems() if v[0].isValid()])
 
         def clear(self):
             """
+            Clear the cache
             """
+            if not self.enabled:
+                return
+
             self._cache = {}
 
         def _gen_cache_key(self, index):
             """
+            Generate the key for the specified index in the cache.
+
+            :param index:   The QModelIndex to generate a cache key for
+            :returns:       The key of the index in the cache
             """
+            # the cache key is a tuple of all the row indexes of the parent
+            # hierarchy for the index.  First, find the row indexes:
             rows = []
             parent_idx = index
             while parent_idx.isValid():
                 rows.append(parent_idx.row())
                 parent_idx = parent_idx.parent()
 
+            # return a tuple of the reversed indexes:
             return tuple(reversed(rows))
 
 
@@ -111,6 +147,19 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         self._child_accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
 
         self._filter_count = 0
+
+    def enable_caching(self, enable=True):
+        """
+        Allow control over enabling/disabling of the accepted cache used to accelerate
+        filtering.  Can be used for debug purposes to ensure the caching isn't the cause
+        of incorrect filtering/sorting or instability!
+
+        :param enable:    True if caching should be enabled, False if it should be disabled. 
+        """
+        self._accepted_cache.clear()
+        self._accepted_cache.enabled = False
+        self._child_accepted_cache.clear()
+        self._child_accepted_cache.enabled = False
 
     def _is_row_accepted(self, src_row, src_parent_idx, parent_accepted):
         """
@@ -129,6 +178,14 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
 
     # -------------------------------------------------------------------------------
     # -------------------------------------------------------------------------------
+
+    def invalidate(self):
+        """
+        Overriden base class method used to invalidate sorting and filtering.
+        """
+        self._filter_dirty = True
+        # call through to the base class:
+        QtGui.QSortFilterProxyModel.invalidate(self)
 
     def invalidateFilter(self):
         """
@@ -191,18 +248,23 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             current_idx = current_idx.parent()
 
         # now update the accepted status for items that we don't know
-        # for sure:
+        # for sure, working from top to bottom in the hierarchy ending
+        # on the index we are checking for:
         for idx in reversed(upstream_indexes):
             accepted = self._is_row_accepted(idx.row(), idx.parent(), parent_accepted)
             self._accepted_cache.add(idx, accepted)
             parent_accepted = accepted
 
-        if src_model.hasChildren(src_idx):
-            # the parent acceptance doesn't mean that it is filtered out as this
-            # depends if there are any children accepted:            
+        if parent_accepted:
+            # the index we are testing was accepted!
+            return True
+        elif src_model.hasChildren(src_idx):
+            # even though the parent wasn't accepted, it may still be needed if one or more
+            # children/grandchildren/etc. are accepted:
             return self._is_child_accepted_r(src_idx, parent_accepted)
         else:
-            return parent_accepted  
+            # index wasn't accepted and has no children
+            return False  
 
     def _is_child_accepted_r(self, idx, parent_accepted):
         """
