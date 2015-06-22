@@ -97,57 +97,61 @@ class ElidedLabel(QtGui.QLabel):
 
         # Use a QTextDocument to measure html/richtext width 
         doc = QtGui.QTextDocument()
-        doc.setHtml(text)
-        doc.setDefaultFont(self.font())
+        try:
+            doc.setHtml(text)
+            doc.setDefaultFont(self.font())
 
-        # if line width is already less than the target width then great!
-        line_width = doc.idealWidth()
-        if line_width <= target_width:
-            return text
+            # if line width is already less than the target width then great!
+            line_width = doc.idealWidth()
+            if line_width <= target_width:
+                return text
 
-        # depending on the elide mode, insert ellipses in the correct place
-        cursor = QtGui.QTextCursor(doc)
-        ellipses = ""
-        if elide_mode != QtCore.Qt.ElideNone:
-            # add the ellipses in the correct place:
-            if elide_mode == QtCore.Qt.ElideLeft:
-                ellipses = "..."
-                cursor.setPosition(0)
-            elif elide_mode == QtCore.Qt.ElideRight:
-                ellipses = "..."
+            # depending on the elide mode, insert ellipses in the correct place
+            cursor = QtGui.QTextCursor(doc)
+            ellipses = ""
+            if elide_mode != QtCore.Qt.ElideNone:
+                # add the ellipses in the correct place:
+                if elide_mode == QtCore.Qt.ElideLeft:
+                    ellipses = "..."
+                    cursor.setPosition(0)
+                elif elide_mode == QtCore.Qt.ElideRight:
+                    ellipses = "..."
+                    char_count = doc.characterCount()
+                    cursor.setPosition(char_count-1)
+                cursor.insertText(ellipses)
+            ellipses_len = len(ellipses)
+
+            # remove characters until the text fits within the target width:
+            while line_width > target_width:
+                # if string is less than the ellipses length then just return
+                # an empty string
                 char_count = doc.characterCount()
-                cursor.setPosition(char_count-1)
-            cursor.insertText(ellipses)
-        ellipses_len = len(ellipses)
+                if char_count <= ellipses_len:
+                    return ""
 
-        # remove characters until the text fits within the target width:
-        while line_width > target_width:
-            # if string is less than the ellipses length then just return
-            # an empty string
-            char_count = doc.characterCount()
-            if char_count <= ellipses_len:
-                return ""
+                # calculate the number of characters to remove - should always remove at least 1
+                # to be sure the text gets shorter!
+                line_width = doc.idealWidth()
+                p = target_width/line_width
+                # play it safe and remove a couple less than the calculated amount
+                chars_to_delete = max(1, char_count - int(float(char_count) * p)-2)
 
-            # calculate the number of characters to remove - should always remove at least 1
-            # to be sure the text gets shorter!
-            line_width = doc.idealWidth()
-            p = target_width/line_width
-            # play it safe and remove a couple less than the calculated amount
-            chars_to_delete = max(1, char_count - int(float(char_count) * p)-2)
+                # remove the characters:
+                if elide_mode == QtCore.Qt.ElideLeft:
+                    cursor.setPosition(ellipses_len)
+                    cursor.setPosition(chars_to_delete + ellipses_len, QtGui.QTextCursor.KeepAnchor)
+                else:
+                    # default is to elide right
+                    cursor.setPosition(char_count - chars_to_delete - ellipses_len - 1)
+                    cursor.setPosition(char_count - ellipses_len - 1, QtGui.QTextCursor.KeepAnchor)
+                cursor.removeSelectedText()
 
-            # remove the characters:
-            if elide_mode == QtCore.Qt.ElideLeft:
-                cursor.setPosition(ellipses_len)
-                cursor.setPosition(chars_to_delete + ellipses_len, QtGui.QTextCursor.KeepAnchor)
-            else:
-                # default is to elide right
-                cursor.setPosition(char_count - chars_to_delete - ellipses_len - 1)
-                cursor.setPosition(char_count - ellipses_len - 1, QtGui.QTextCursor.KeepAnchor)
-            cursor.removeSelectedText()
+                # update line width:
+                line_width = doc.idealWidth()
 
-            # update line width:
-            line_width = doc.idealWidth()
-
-        return doc.toHtml()
+            return doc.toHtml()
+        finally:
+            # clean up the doc:
+            doc.deleteLater()
 
 
