@@ -35,6 +35,5 @@ class Ui_SearchWidget(object):
 
     def retranslateUi(self, SearchWidget):
         SearchWidget.setWindowTitle(QtGui.QApplication.translate("SearchWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.search_edit.setPlaceholderText(QtGui.QApplication.translate("SearchWidget", "Search", None, QtGui.QApplication.UnicodeUTF8))
 
 from . import resources_rc
