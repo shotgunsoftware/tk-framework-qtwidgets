@@ -38,6 +38,7 @@ class SearchWidget(QtGui.QWidget):
         # set up the UI
         self._ui = Ui_SearchWidget()
         self._ui.setupUi(self)
+        self.set_placeholder_text("Search")
 
         # dynamically create the clear button so that we can place it over the
         # edit widget:
@@ -91,7 +92,9 @@ class SearchWidget(QtGui.QWidget):
 
         :param text:    The text to use
         """
-        self._ui.search_edit.setPlaceholderText(text)
+        # Note, setPlaceholderText is only available in recent versions of Qt.
+        if hasattr(self._ui.search_edit, "setPlaceholderText"):
+            self._ui.search_edit.setPlaceholderText(text)
 
     def clear(self):
         """

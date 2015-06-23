@@ -102,8 +102,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 return None
 
             p_index, accepted = cache_value
-
-            if p_index == index:
+            if p_index and p_index == index:
                 # index and cached value are still valid!
                 self._cache_hits += 1
                 return accepted
