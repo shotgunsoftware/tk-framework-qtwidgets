@@ -456,9 +456,10 @@ class GroupedListView(QtGui.QAbstractItemView):
         """
         rect = QtCore.QRect()
         if index.isValid():
-            rect = self._get_item_rect(index)
-            # rectangle should be widget relative, not viewport relative:
-            rect = rect.translated(-self.horizontalOffset(), -self.verticalOffset())
+            item_rect = self._get_item_rect(index)
+            if item_rect.isValid():
+                # rectangle should be widget relative, not viewport relative:
+                rect = item_rect.translated(-self.horizontalOffset(), -self.verticalOffset())
         return rect
 
     def isIndexHidden(self, index):

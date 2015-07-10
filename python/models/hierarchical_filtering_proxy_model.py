@@ -161,10 +161,39 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         """
         QtGui.QSortFilterProxyModel.__init__(self, parent)
 
-        self._cached_regexp = None
         self._filter_dirty = True
         self._accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
         self._child_accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
+
+    def setFilterRegExp(self, reg_exp):
+        """
+        """
+        self._filter_dirty = True
+        QtGui.QSortFilterProxyModel.setFilterRegExp(self, reg_exp)
+
+    def setFilterFixedString(self, pattern):
+        """
+        """
+        self._filter_dirty = True
+        QtGui.QSortFilterProxyModel.setFilterFixedString(self, pattern)
+
+    def setFilterCaseSensitivity(self, cs):
+        """
+        """
+        self._filter_dirty = True
+        QtGui.QSortFilterProxyModel.setFilterCaseSensitivity(self, cs)
+
+    def setFilterKeyColumn(self, column):
+        """
+        """
+        self._filter_dirty = True
+        QtGui.QSortFilterProxyModel.setFilterKeyColumn(self, column)
+
+    def setFilterRole(self, role):
+        """
+        """
+        self._filter_dirty = True
+        QtGui.QSortFilterProxyModel.setFilterRole(self, role)
 
     def enable_caching(self, enable=True):
         """
@@ -227,7 +256,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                                 otherwise
         """
         reg_exp = self.filterRegExp()
-        if self._filter_dirty or reg_exp != self._cached_regexp:
+        if self._filter_dirty:
             #print ("Accepted cache (%d) hits: %d%%" 
             #            % (self._accepted_cache.size, self._accepted_cache.cache_hit_miss_ratio * 100.0))
             #print ("Child accepted cache (%d) hits: %d%%" 
@@ -236,7 +265,6 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             # clear the cache as the search filter has changed
             self._accepted_cache.clear()
             self._child_accepted_cache.clear()
-            self._cached_regexp = reg_exp
             self._filter_dirty = False
 
         # get the source index for the row:
@@ -336,6 +364,11 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             prev_source_model.rowsInserted.disconnect(self._on_source_model_rows_inserted)
             prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
 
+        # clear out the various caches:
+        self._filter_dirty = True
+        self._accepted_cache.clear()
+        self._child_accepted_cache.clear()
+
         # call base implementation:
         QtGui.QSortFilterProxyModel.setSourceModel(self, model)
 
@@ -354,6 +387,9 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :param start_idx:   The index of the first row in the range of model items that have changed
         :param start_idx:   The index of the last row in the range of model items that have changed
         """
+        if self.sender() != self.sourceModel():
+            return
+
         parent_idx = start_idx.parent()
         if parent_idx != end_idx.parent():
             # this should never happen but just in case indicate that the entire cache should 
@@ -394,6 +430,9 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :param start:       The first row that was inserted into the source model
         :param end:         The last row that was inserted into the source model
         """
+        if self.sender() != self.sourceModel():
+            return
+
         if not parent_idx.isValid():
             return
 

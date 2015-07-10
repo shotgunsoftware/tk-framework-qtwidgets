@@ -69,9 +69,11 @@ class SpinnerWidget(QtGui.QWidget):
             
             # draw the arc:    
             painter.drawArc(r, -self._start_angle * 16, self.arc_length * 16)
+            r = None
             
         finally:
-            painter.end()        
+            painter.end()
+            painter = None
 
     def showEvent(self, event):
         """
