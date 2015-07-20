@@ -49,133 +49,6 @@ class GroupedListView(QtGui.QAbstractItemView):
     """
     The main grouped list view class
     """
-    class _Size(object):
-        """
-        Storage for width and height - used instead of QtCore.QSize which
-        was proving unstable in some versions of PySide (e.g. in Nuke 6.3)
-        """
-        def __init__(self, width=None, height=None):
-            """
-            Construction
-
-            :param width:   The width to set
-            :param height:  The height to set
-            """
-            self.width = width
-            self.height = height
-
-        def as_qsize(self):
-            """
-            Return the current width and height as a QtCore.QSize instance.
-
-            :returns:   A QtCore.QSize instance representing this size
-            """
-            if self.width is None or self.height is None:
-                return QtCore.QSize()
-            else:
-                return QtCore.QSize(self.width, self.height)
-
-        def from_qsize(self, qsize):
-            """
-            Set the size from the specified QtCore.QSize instance
-
-            :param qsize:    The QtCore.QSize instance to set the size from
-            """
-            if qsize.isValid():
-                self.width = qsize.width()
-                self.height = qsize.height()
-            else:
-                self.width = None
-                self.height = None
-
-        def __repr__(self):
-            return "Size(%s, %s)" % (self.width, self.height)
-
-    class _Rect(object):
-        """
-        Storage for x, y, width and height - used instead of QtCore.QRect which
-        was proving unstable in some versions of PySide (e.g. in Nuke 6.3)
-        """
-        def __init__(self, x=0, y=0, width=0, height=0):
-            """
-            Construction
-
-            :param x:       The x position of the rectangle
-            :param y:       The y position of the rectangle
-            :param width:   The width of the rectangle
-            :param height:  The height of the rectangle
-            """
-            self.x = x
-            self.y = y
-            self.width = width
-            self.height = height
-
-        @property
-        def left(self):
-            return self.x
-
-        #@property
-        def _get_right(self):
-            return self.x + self.width - 1
-        #@right.setter
-        def _set_right(self, right):
-            """
-            Set the right side of the rectangle by adjusting the width.  Never changes the left x position
-            of the rectangle.
-
-            :param right:    The new position of the right side of the rectangle
-            """
-            self.width =  max(0, right + 1 - self.x)
-        right = property(_get_right, _set_right)
-
-        @property
-        def top(self):
-            return self.y
-
-        #@property
-        def _get_bottom(self):
-            return self.y + self.height - 1
-        #@bottom.setter
-        def _set_bottom(self, bottom):
-            """
-            Set the bottom side of the rectangle by adjusting the height.  Never changes the top y position
-            of the rectangle.
-
-            :param bottom:    The new position of the bottom side of the rectangle
-            """
-            self.height =  max(0, bottom + 1 - self.y)
-        bottom = property(_get_bottom, _set_bottom)
-
-        def as_qrect(self):
-            """
-            Return the current rectangle as a QtCore.QRect instance.
-
-            :returns:   A QtCore.QRect instance representing this size
-            """
-            if self.width == 0 or self.height == 0:
-                return QtCore.QRect()
-            else:
-                return QtCore.QRect(self.x, self.y, self.width, self.height)
-
-        def from_qrect(self, qrect):
-            """
-            Set the rectangle from the specified QtCore.QRect instance
-
-            :param qrect:    The QtCore.QRect instance to set the rectangle from
-            """
-            if qrect.isValid():
-                self.x = qrect.x()
-                self.y = qrect.y()
-                self.width = qrect.width()
-                self.height = qrect.height()
-            else:
-                self.x = 0
-                self.y = 0
-                self.width = 0
-                self.height = 0
-
-        def __repr__(self):
-            return "Rect(%s, %s, %s, %s)" % (self.x, self.y, self.width, self.height)
 
     class _ItemInfo(object):
         """
@@ -186,11 +59,11 @@ class GroupedListView(QtGui.QAbstractItemView):
             """
             Construction
             """
-            self.rect = GroupedListView._Rect()             # relative item rect for group header
-            self.dirty = True                               # True if data in group or children has changed
-            self.collapsed = False                          # True if the group is currently collapsed
-            self.child_rects = []                           # List of sizes for all child items relative to the group
-            self.child_area_rect = GroupedListView._Rect()  # total size of child area
+            self.rect = QtCore.QRect()             # relative item rect for group header
+            self.dirty = True                      # True if data in group or children has changed
+            self.collapsed = False                 # True if the group is currently collapsed
+            self.child_rects = []                  # List of sizes for all child items relative to the group
+            self.child_area_rect = QtCore.QRect()  # total size of child area
 
         def __repr__(self):
             return "%s: %s" % (self.rect, self.child_area_rect)
@@ -215,22 +88,22 @@ class GroupedListView(QtGui.QAbstractItemView):
         self._group_widgets = []
         self._group_widget_rows = {}
 
-        self._prev_viewport_sz = GroupedListView._Size()
+        self._prev_viewport_sz = QtCore.QSize()
 
         # initial values for the properties
-        self._border = GroupedListView._Size(6,6)
+        self._border = QtCore.QSize(6,6)
         self._group_spacing = 30
-        self._item_spacing = GroupedListView._Size(4,4)
+        self._item_spacing = QtCore.QSize(4,4)
 
     # @property
     def _get_border(self):
         """
         The external border to use for all items in the view
         """
-        return self._border.as_qsize()
+        return self._border
     # @border.setter
     def _set_border(self, border_sz):
-        self._border.from_qsize(border_sz)
+        self._border = border_sz
         self._update_all_item_info = True
         self.viewport().update()
     border = property(_get_border, _set_border)
@@ -253,10 +126,10 @@ class GroupedListView(QtGui.QAbstractItemView):
         """
         The spacing to use between items in the view
         """
-        return self._item_spacing.as_qsize()
+        return self._item_spacing
     # @item_spacing.setter
     def _set_item_spacing(self, spacing):
-        self._item_spacing.from_qsize(spacing)
+        self._item_spacing = spacing
         self._update_all_item_info = True
         self.viewport().update()
     item_spacing = property(_get_item_spacing, _set_item_spacing)
@@ -545,13 +418,13 @@ class GroupedListView(QtGui.QAbstractItemView):
             # just in case!
             return QtCore.QModelIndex()
 
-        y_offset = self._border.height
+        y_offset = self._border.height()
         for row, item_info in enumerate(self._item_info):
 
             # get point in local space:
             local_point = point + QtCore.QPoint(0, -y_offset)
 
-            if local_point.y() < item_info.rect.y:
+            if local_point.y() < item_info.rect.y():
                 # point definitely isn't on an item as we'd have found it by now!
                 break
 
@@ -559,24 +432,24 @@ class GroupedListView(QtGui.QAbstractItemView):
             index = self.model().index(row, 0)
 
             # check if the point is within this item:
-            if item_info.rect.as_qrect().contains(local_point):
+            if item_info.rect.contains(local_point):
                 return index 
 
             # update y-offset:
-            y_offset += item_info.rect.height
+            y_offset += item_info.rect.height()
 
             if not item_info.collapsed:
                 # now check children:
                 local_point = point + QtCore.QPoint(0, -y_offset)
                 for child_row, child_rect in enumerate(item_info.child_rects):
-                    if child_rect.as_qrect().contains(local_point):
+                    if child_rect.contains(local_point):
                         # found a hit on a child item
                         return self.model().index(child_row, 0, index)
 
                 # update y-offset                
-                y_offset += item_info.child_area_rect.height + self._group_spacing
+                y_offset += item_info.child_area_rect.height() + self._group_spacing
             else:
-                y_offset += self._item_spacing.height
+                y_offset += self._item_spacing.height()
 
         # no match so return invalid model index
         return QtCore.QModelIndex()
@@ -639,17 +512,17 @@ class GroupedListView(QtGui.QAbstractItemView):
             # just in case!
             return
 
-        y_offset = self._border.height
+        y_offset = self._border.height()
         for row, item_info in enumerate(self._item_info):
 
             # we only allow selection of child items so we can skip testing the group/top level:
-            y_offset += item_info.rect.height
+            y_offset += item_info.rect.height()
 
             if not item_info.collapsed:
                 # check to see if the selection rect intersects the child area:
                 local_selection_rect = selection_rect.translated(0, -y_offset)
 
-                if local_selection_rect.intersects(item_info.child_area_rect.as_qrect()):
+                if local_selection_rect.intersects(item_info.child_area_rect):
                     # we'll need an index for this row:
                     index = self.model().index(row, 0)
 
@@ -657,7 +530,7 @@ class GroupedListView(QtGui.QAbstractItemView):
                     top_left = bottom_right = None
                     for child_row, child_rect in enumerate(item_info.child_rects):
 
-                        if child_rect.as_qrect().intersects(local_selection_rect):
+                        if child_rect.intersects(local_selection_rect):
                             child_index = self.model().index(child_row, 0, index)
                             top_left = top_left or child_index
                             bottom_right = child_index
@@ -668,14 +541,14 @@ class GroupedListView(QtGui.QAbstractItemView):
 
                     if top_left:
                         selection.select(top_left, bottom_right)
-                elif local_selection_rect.bottom() > item_info.child_area_rect.top:
+                elif local_selection_rect.bottom() > item_info.child_area_rect.top():
                     # no need to look any further!
                     pass
 
                 # update y-offset
-                y_offset += item_info.child_area_rect.height + self._group_spacing
+                y_offset += item_info.child_area_rect.height() + self._group_spacing
             else:
-                y_offset += self._item_spacing.height
+                y_offset += self._item_spacing.height()
 
         # update the selection model:
         self.selectionModel().select(selection, flags)
@@ -743,14 +616,14 @@ class GroupedListView(QtGui.QAbstractItemView):
             painter.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.TextAntialiasing)
 
             # keep track of the y-offset as we go:
-            y_offset = self._border.height
+            y_offset = self._border.height()
             for row, item_info in enumerate(self._item_info):
 
                 # get valid model index:
                 index = self.model().index(row, 0, self.rootIndex())
 
                 # get the rectangle and translate into the correct relative location:
-                rect = item_info.rect.as_qrect().translated(viewport_offset[0], viewport_offset[1] + y_offset)
+                rect = item_info.rect.translated(viewport_offset[0], viewport_offset[1] + y_offset)
 
                 # test to see if the rectangle exists within the viewport:
                 grp_widget = group_widgets_by_row.get(row)
@@ -795,7 +668,7 @@ class GroupedListView(QtGui.QAbstractItemView):
                             # figure out index and update rect:
                             child_index = self.model().index(child_row, 0, index)
 
-                            child_rect = child_rect.as_qrect().translated(viewport_offset[0], viewport_offset[1] + y_offset)
+                            child_rect = child_rect.translated(viewport_offset[0], viewport_offset[1] + y_offset)
                             if not child_rect.isValid or not child_rect.intersects(update_rect):
                                 # no need to draw!
                                 continue
@@ -826,9 +699,9 @@ class GroupedListView(QtGui.QAbstractItemView):
                             self.itemDelegate().paint(painter, option, child_index)
 
                     # update the y-offset to include the child area:
-                    y_offset += item_info.child_area_rect.height + self._group_spacing
+                    y_offset += item_info.child_area_rect.height() + self._group_spacing
                 else:
-                    y_offset += self._item_spacing.height
+                    y_offset += self._item_spacing.height()
 
             # hide any group widgets that were not used:
             for w in unused_group_widgets[next_unused_group_widget_idx:]:
@@ -875,9 +748,9 @@ class GroupedListView(QtGui.QAbstractItemView):
         # calculate the maximum height of all visible items in the model:
         max_height = 0
         for item_info in self._item_info:
-            max_height += item_info.rect.height + self._group_spacing
+            max_height += item_info.rect.height() + self._group_spacing
             if not item_info.collapsed:
-                max_height += item_info.child_area_rect.height
+                max_height += item_info.child_area_rect.height()
 
         self.horizontalScrollBar().setSingleStep(30)
         self.horizontalScrollBar().setPageStep(self.viewport().width())
@@ -908,24 +781,24 @@ class GroupedListView(QtGui.QAbstractItemView):
         root_info = self._item_info[root_row]
 
         # and the Y offset for the start of the root item:
-        y_offset = self._border.height
+        y_offset = self._border.height()
         for row_info in self._item_info[:root_row]:
-            y_offset += row_info.rect.height
+            y_offset += row_info.rect.height()
             if not row_info.collapsed:
-                y_offset += row_info.child_area_rect.height
+                y_offset += row_info.child_area_rect.height()
                 y_offset += self._group_spacing
             else:
-                y_offset += self._item_spacing.height
+                y_offset += self._item_spacing.height()
 
         # get the rect for the leaf item:
         rect = QtCore.QRect()
         if len(rows) == 1:
-            rect = root_info.rect.as_qrect()
+            rect = root_info.rect
         else:
-            y_offset += root_info.rect.height
+            y_offset += root_info.rect.height()
             child_row = rows[-2]
             if child_row < len(root_info.child_rects):
-                rect = self._item_info[root_row].child_rects[child_row].as_qrect()
+                rect = self._item_info[root_row].child_rects[child_row]
 
         # and offset the rect by the Y offset:
         rect = rect.translated(0, y_offset)
@@ -954,11 +827,11 @@ class GroupedListView(QtGui.QAbstractItemView):
             scroll_bar_width = self.style().pixelMetric(QtGui.QStyle.PM_ScrollBarExtent)
             viewport_sz.setWidth(viewport_sz.width() - scroll_bar_width)
 
-        if (viewport_sz != self._prev_viewport_sz.as_qsize()):
+        if (viewport_sz != self._prev_viewport_sz):
             # the viewport width has changed so we'll need to update all geometry :(
             viewport_resized = True
             # keep track of the new viewport size for the next time
-            self._prev_viewport_sz.from_qsize(viewport_sz) 
+            self._prev_viewport_sz = viewport_sz 
 
         if not self._update_some_item_info and not self._update_all_item_info and not viewport_resized:
             # nothing to do!
@@ -972,7 +845,7 @@ class GroupedListView(QtGui.QAbstractItemView):
             self._item_info = []
 
         viewport_width = viewport_sz.width()
-        max_width = viewport_width - self._border.width
+        max_width = viewport_width - self._border.width()
         base_view_options = self.viewOptions()
 
         # iterate over root items:
@@ -989,7 +862,7 @@ class GroupedListView(QtGui.QAbstractItemView):
 
             if not self._update_all_item_info and not item_info.dirty:
                 # no need to update item info!
-                max_width = max(max_width, item_info.child_area_rect.width)
+                max_width = max(max_width, item_info.child_area_rect.width())
                 continue
 
             # construct the model index for this row:
@@ -998,13 +871,13 @@ class GroupedListView(QtGui.QAbstractItemView):
             # get the size of the item:
             view_options = base_view_options
             item_size = self.itemDelegate().sizeHint(view_options, index)
-            item_info.rect = GroupedListView._Rect(self._border.width, 0, item_size.width(), item_size.height())
+            item_info.rect = QtCore.QRect(self._border.width(), 0, item_size.width(), item_size.height())
 
             # update size info of children:
             row_height = 0
-            left = self._border.width
+            left = self._border.width()
             x_pos = left
-            y_pos = self._item_spacing.height
+            y_pos = self._item_spacing.height()
             child_rects = []  
             for child_row in range(self.model().rowCount(index)):
                 child_index = self.model().index(child_row, 0, index)
@@ -1021,23 +894,23 @@ class GroupedListView(QtGui.QAbstractItemView):
                     pass
                 else:
                     # start a new row for this item:
-                    y_pos = y_pos + row_height + self._item_spacing.height
+                    y_pos = y_pos + row_height + self._item_spacing.height()
                     row_height = 0
                     x_pos = left
 
                 # store the item rect:
-                child_item_rect = GroupedListView._Rect(x_pos, y_pos, 
+                child_item_rect = QtCore.QRect(x_pos, y_pos, 
                                                child_item_size.width(), 
                                                child_item_size.height())
                 child_rects.append(child_item_rect)
 
                 # keep track of the tallest row item:                
-                row_height = max(row_height, child_item_rect.height)
-                x_pos += self._item_spacing.width + child_item_rect.width
-                max_width = max(child_item_rect.right, max_width)
+                row_height = max(row_height, child_item_rect.height())
+                x_pos += self._item_spacing.width() + child_item_rect.width()
+                max_width = max(child_item_rect.right(), max_width)
 
             item_info.child_rects = child_rects
-            item_info.child_area_rect = GroupedListView._Rect(self._border.width, 0, max_width, y_pos + row_height)
+            item_info.child_area_rect = QtCore.QRect(self._border.width(), 0, max_width, y_pos + row_height)
 
             # reset dirty flag for item:
             item_info.dirty = False
@@ -1050,7 +923,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         if something_updated:
             # update all root level items to be the full width of the viewport:
             for item_info in self._item_info:
-                item_info.rect.right = max_width
+                item_info.rect.setRight(max_width)
             self._max_width = max_width
 
             # update scroll bars for the new dimensions:            

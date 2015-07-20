@@ -37,7 +37,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             Construction
             """
             self._cache = {}
-            self.enabled = True
+            self.enabled = False
             self._cache_hits = 0
             self._cache_misses = 0
 
@@ -395,19 +395,21 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             # this should never happen but just in case indicate that the entire cache should 
             # be cleared
             self._filter_dirty = True
-            return
+        else:
+            # clear all rows from the accepted caches
+            for row in range(start_idx.row(), end_idx.row()+1):
+                idx = self.sourceModel().index(row, 0, parent_idx)
+                self._child_accepted_cache.remove(idx)
+                self._accepted_cache.remove(idx)
+    
+            # remove parent hierarchy from caches as well:
+            while parent_idx.isValid():
+                self._child_accepted_cache.remove(parent_idx)
+                self._accepted_cache.remove(parent_idx)
+                parent_idx = parent_idx.parent()
 
-        # clear all rows from the accepted caches
-        for row in range(start_idx.row(), end_idx.row()+1):
-            idx = self.sourceModel().index(row, 0, parent_idx)
-            self._child_accepted_cache.remove(idx)
-            self._accepted_cache.remove(idx)
-
-        # remove parent hierarchy from caches as well:
-        while parent_idx.isValid():
-            self._child_accepted_cache.remove(parent_idx)
-            self._accepted_cache.remove(parent_idx)
-            parent_idx = parent_idx.parent()
+        # and call invalidate on the base class 
+        QtGui.QSortFilterProxyModel.invalidate(self)
 
     def _on_source_model_rows_inserted(self, parent_idx, start, end):
         """
