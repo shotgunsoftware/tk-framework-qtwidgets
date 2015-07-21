@@ -37,7 +37,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             Construction
             """
             self._cache = {}
-            self.enabled = False
+            self.enabled = True
             self._cache_hits = 0
             self._cache_misses = 0
 
@@ -153,7 +153,6 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             # return a tuple of the reversed indexes:
             return tuple(reversed(rows))
 
-
     def __init__(self, parent=None):
         """
         Construction
@@ -161,39 +160,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         """
         QtGui.QSortFilterProxyModel.__init__(self, parent)
 
-        self._filter_dirty = True
         self._accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
         self._child_accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
-
-    def setFilterRegExp(self, reg_exp):
-        """
-        """
-        self._filter_dirty = True
-        QtGui.QSortFilterProxyModel.setFilterRegExp(self, reg_exp)
-
-    def setFilterFixedString(self, pattern):
-        """
-        """
-        self._filter_dirty = True
-        QtGui.QSortFilterProxyModel.setFilterFixedString(self, pattern)
-
-    def setFilterCaseSensitivity(self, cs):
-        """
-        """
-        self._filter_dirty = True
-        QtGui.QSortFilterProxyModel.setFilterCaseSensitivity(self, cs)
-
-    def setFilterKeyColumn(self, column):
-        """
-        """
-        self._filter_dirty = True
-        QtGui.QSortFilterProxyModel.setFilterKeyColumn(self, column)
-
-    def setFilterRole(self, role):
-        """
-        """
-        self._filter_dirty = True
-        QtGui.QSortFilterProxyModel.setFilterRole(self, role)
 
     def enable_caching(self, enable=True):
         """
@@ -203,10 +171,9 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
 
         :param enable:    True if caching should be enabled, False if it should be disabled. 
         """
-        self._accepted_cache.clear()
-        self._accepted_cache.enabled = False
-        self._child_accepted_cache.clear()
-        self._child_accepted_cache.enabled = False
+        self._dirty_all_accepted()
+        self._accepted_cache.enabled = enable
+        self._child_accepted_cache.enabled = enable
 
     def _is_row_accepted(self, src_row, src_parent_idx, parent_accepted):
         """
@@ -224,13 +191,48 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                                   " in derived classes!")
 
     # -------------------------------------------------------------------------------
-    # -------------------------------------------------------------------------------
+    # Overriden base class methods
+
+    def setFilterRegExp(self, reg_exp):
+        """
+        Overriden base class method to set the filter regular expression
+        """
+        self._dirty_all_accepted()
+        QtGui.QSortFilterProxyModel.setFilterRegExp(self, reg_exp)
+
+    def setFilterFixedString(self, pattern):
+        """
+        Overriden base class method to set the filter fixed string
+        """
+        self._dirty_all_accepted()
+        QtGui.QSortFilterProxyModel.setFilterFixedString(self, pattern)
+
+    def setFilterCaseSensitivity(self, cs):
+        """
+        Overriden base class method to set the filter case sensitivity
+        """
+        self._dirty_all_accepted()
+        QtGui.QSortFilterProxyModel.setFilterCaseSensitivity(self, cs)
+
+    def setFilterKeyColumn(self, column):
+        """
+        Overriden base class method to set the filter key column
+        """
+        self._dirty_all_accepted()
+        QtGui.QSortFilterProxyModel.setFilterKeyColumn(self, column)
+
+    def setFilterRole(self, role):
+        """
+        Overriden base class method to set the filter role
+        """
+        self._dirty_all_accepted()
+        QtGui.QSortFilterProxyModel.setFilterRole(self, role)
 
     def invalidate(self):
         """
         Overriden base class method used to invalidate sorting and filtering.
         """
-        self._filter_dirty = True
+        self._dirty_all_accepted()
         # call through to the base class:
         QtGui.QSortFilterProxyModel.invalidate(self)
 
@@ -238,7 +240,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         """
         Overriden base class method used to invalidate the current filter.
         """
-        self._filter_dirty = True
+        self._dirty_all_accepted()
         # call through to the base class:
         QtGui.QSortFilterProxyModel.invalidateFilter(self)
 
@@ -255,18 +257,6 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :returns:               True if the row should be accepted by the filter, False
                                 otherwise
         """
-        reg_exp = self.filterRegExp()
-        if self._filter_dirty:
-            #print ("Accepted cache (%d) hits: %d%%" 
-            #            % (self._accepted_cache.size, self._accepted_cache.cache_hit_miss_ratio * 100.0))
-            #print ("Child accepted cache (%d) hits: %d%%" 
-            #            % (self._child_accepted_cache.size, self._child_accepted_cache.cache_hit_miss_ratio * 100.0))
-
-            # clear the cache as the search filter has changed
-            self._accepted_cache.clear()
-            self._child_accepted_cache.clear()
-            self._filter_dirty = False
-
         # get the source index for the row:
         src_model = self.sourceModel()
         src_idx = src_model.index(src_row, 0, src_parent_idx)
@@ -310,6 +300,33 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             # index wasn't accepted and has no children
             return False  
 
+    def setSourceModel(self, model):
+        """
+        Overridden base method that we use to keep track of when rows are inserted into the 
+        source model
+
+        :param model:   The source model to track
+        """
+        # if needed, disconnect from the previous source model:
+        prev_source_model = self.sourceModel()
+        if prev_source_model:
+            prev_source_model.rowsInserted.disconnect(self._on_source_model_rows_inserted)
+            prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
+
+        # clear out the various caches:
+        self._dirty_all_accepted()
+
+        # call base implementation:
+        QtGui.QSortFilterProxyModel.setSourceModel(self, model)
+
+        # connect to the new model:
+        if model:
+            model.rowsInserted.connect(self._on_source_model_rows_inserted)
+            model.dataChanged.connect(self._on_source_model_data_changed)
+
+    # -------------------------------------------------------------------------------
+    # Private methods
+
     def _is_child_accepted_r(self, idx, parent_accepted):
         """
         Recursively check children to see if any of them have been accepted.
@@ -351,65 +368,61 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         self._child_accepted_cache.add(idx, child_accepted)
         return child_accepted
 
-    def setSourceModel(self, model):
+    def _dirty_all_accepted(self):
         """
-        Overridden base method that we use to keep track of when rows are inserted into the 
-        source model
-
-        :param model:   The source model to track
+        Dirty/clear the accepted caches
         """
-        # if needed, disconnect from the previous source model:
-        prev_source_model = self.sourceModel()
-        if prev_source_model:
-            prev_source_model.rowsInserted.disconnect(self._on_source_model_rows_inserted)
-            prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
-
-        # clear out the various caches:
-        self._filter_dirty = True
         self._accepted_cache.clear()
         self._child_accepted_cache.clear()
 
-        # call base implementation:
-        QtGui.QSortFilterProxyModel.setSourceModel(self, model)
+    def _dirty_accepted_rows(self, parent_idx, start, end):
+        """
+        Dirty the specified rows from the accepted caches.  This will remove any entries in
+        either the accepted or the child accepted cache that match the start/end rows for the
+        specified parent index.
 
-        # connect to the new model:
-        if model:
-            model.rowsInserted.connect(self._on_source_model_rows_inserted)
-            model.dataChanged.connect(self._on_source_model_data_changed)
+        This also dirties the parent hierarchy to ensure that any filtering is re-calculated for
+        those parent items.
+
+        :param parent_idx:  The parent model index to dirty rows for
+        :param start:       The first row in to dirty
+        :param end:         The last row to dirty
+        """
+        # clear all rows from the accepted caches
+        for row in range(start, end+1):
+            idx = self.sourceModel().index(row, 0, parent_idx)
+            self._child_accepted_cache.remove(idx)
+            self._accepted_cache.remove(idx)
+
+        # remove parent hierarchy from caches as well:
+        while parent_idx.isValid():
+            self._child_accepted_cache.remove(parent_idx)
+            self._accepted_cache.remove(parent_idx)
+            parent_idx = parent_idx.parent()
 
     def _on_source_model_data_changed(self, start_idx, end_idx):
         """
         Slot triggered when data for one or more items in the source model changes.
 
         Data in the source model changing may mean that the filtering for an item changes.  If this
-        is the case then we need to make sure we clear the item from the caches.
+        is the case then we need to make sure we clear any affected entries from the cache
 
         :param start_idx:   The index of the first row in the range of model items that have changed
         :param start_idx:   The index of the last row in the range of model items that have changed
         """
-        if self.sender() != self.sourceModel():
+        if (not start_idx.isValid() or not end_idx.isValid()
+            or start_idx.model() != self.sourceModel() 
+            or end_idx.model() != self.sourceModel()):
+            # invalid input parameters so ignore!
             return
 
         parent_idx = start_idx.parent()
         if parent_idx != end_idx.parent():
-            # this should never happen but just in case indicate that the entire cache should 
-            # be cleared
-            self._filter_dirty = True
-        else:
-            # clear all rows from the accepted caches
-            for row in range(start_idx.row(), end_idx.row()+1):
-                idx = self.sourceModel().index(row, 0, parent_idx)
-                self._child_accepted_cache.remove(idx)
-                self._accepted_cache.remove(idx)
-    
-            # remove parent hierarchy from caches as well:
-            while parent_idx.isValid():
-                self._child_accepted_cache.remove(parent_idx)
-                self._accepted_cache.remove(parent_idx)
-                parent_idx = parent_idx.parent()
+            # this should never happen but just in case, dirty the entire cache:
+            self._dirty_all_accepted()
 
-        # and call invalidate on the base class 
-        QtGui.QSortFilterProxyModel.invalidate(self)
+        # dirty specific rows in the caches:
+        self._dirty_accepted_rows(parent_idx, start_idx.row(), end_idx.row())
 
     def _on_source_model_rows_inserted(self, parent_idx, start, end):
         """
@@ -432,15 +445,11 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :param start:       The first row that was inserted into the source model
         :param end:         The last row that was inserted into the source model
         """
-        if self.sender() != self.sourceModel():
+        if (not parent_idx.isValid()
+            or parent_idx.model() != self.sourceModel()):
+            # invalid input parameters so ignore!
             return
 
-        if not parent_idx.isValid():
-            return
-
-        accepted = self._accepted_cache.get(parent_idx)
-        if accepted == False:
-            # the parent item has previously been filtered out but adding new children might
-            # change this so lets invalidate everything forcing an update of the proxy model
-            self.invalidate()
+        # dirty specific rows in the caches:
+        self._dirty_accepted_rows(parent_idx, start, end)
 
