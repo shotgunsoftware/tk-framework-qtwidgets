@@ -48,12 +48,6 @@ class EditSelectedWidgetDelegate(WidgetDelegate):
         Constructor
 
         :param view:                        The parent view for this delegate
-        :param edit_on_selection_changed:   If set to True then an interactive editor will 
-                                            be created for the selected item as soon as the 
-                                            item is selected. 
-                                            Note that the view must be initialised with the 
-                                            model before creation of this delegate for this 
-                                            to work correctly!
         """
         WidgetDelegate.__init__(self, view)
 
