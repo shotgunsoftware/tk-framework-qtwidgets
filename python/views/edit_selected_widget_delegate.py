@@ -11,23 +11,23 @@
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-from ..views.widget_delegate import WidgetDelegate as WidgetDelegateBase
+from .widget_delegate import WidgetDelegate
 
-class WidgetDelegate(WidgetDelegateBase):
+class EditSelectedWidgetDelegate(WidgetDelegate):
     """
     Custom delegate that provides a simple mechanism where an actual widget (editor) is 
     presented for the selected item whilst all other items are simply drawn with a single
     widget.
-        
+
     This class can be used in conjunction with the various widgets found as part of the 
     framework module (for example list_widget and thumb_widget).
-    
+
     You use this class by subclassing it and implementing the methods:
-    
+
     - _get_painter_widget()     - return the widget to be used to paint an index
     - _on_before_paint()        - set up the widget with the specific data ready to be painted
     - sizeHint()                - return the size of the widget to be used in the view
-    
+
     If you want to have an interactive widget (editor) for the selected item
     then you will also need to implement:
     - _create_editor_widget()   - return a unique editor instance to be used for editing
@@ -38,8 +38,8 @@ class WidgetDelegate(WidgetDelegateBase):
     instead of the separate _get_painter_widget() & _create_editor_widget() methods
     - _create_widget()          - create a widget to be used for both painting and editing 
                                   of all items
-    
-    Note! In order for this class to handle selection correctly, it needs to be 
+
+    Note: In order for this class to handle selection correctly, it needs to be 
     attached to the view *after* the model has been attached. (This is to ensure that it 
     is able to obtain the view's selection model correctly.)
     """
@@ -55,26 +55,26 @@ class WidgetDelegate(WidgetDelegateBase):
                                             model before creation of this delegate for this 
                                             to work correctly!
         """
-        WidgetDelegateBase.__init__(self, view)
+        WidgetDelegate.__init__(self, view)
 
         # tracks the currently active cell
-        self.__current_editor_index = None    
-        
+        self.__current_editor_index = None
+
         # note! Need to have a model connected to the view in order
         # to have a selection model.
         self.__selection_model = view.selectionModel()
         if self.__selection_model:
             self.__selection_model.selectionChanged.connect(self._on_selection_changed)
-        
+
     ########################################################################################
     # implemented by deriving classes
-            
+
     def _on_before_selection(self, widget, model_index, style_options):
         """
         This method is called just before a cell is selected. This method should 
         configure values on the widget (such as labels, thumbnails etc) based on the 
         data contained in the model index parameter which is being passed.
-        
+
         :param widget: The QWidget (constructed in _create_widget()) which will 
                        be used to paint the cell. 
         :param model_index: QModelIndex object representing the data of the object that is 
@@ -82,29 +82,32 @@ class WidgetDelegate(WidgetDelegateBase):
         :param style_options: QStyleOptionViewItem object containing specifics about the 
                               view related state of the cell.
         """
-        pass        
-        
+        pass
+
     ########################################################################################
     # 'private' methods that are not meant to be subclassed or called by a deriving class.
-        
+
     def _on_selection_changed(self, selected, deselected):
         """
         Signal triggered when someone changes the selection in the view.
+
+        :param selected:    A list of the indexes in the model that were selected
+        :param deselected:  A list of the indexes in the model that were deselected
         """
         # clean up        
         if self.__current_editor_index:
             self.parent().closePersistentEditor(self.__current_editor_index)
             self.__current_editor_index = None
-        
+
         selected_indexes = selected.indexes()
-        
+
         if len(selected_indexes) > 0:
             # get the currently selected model index
             model_index = selected_indexes[0]
             # create an editor widget that we use for the selected item
             self.__current_editor_index = model_index
             # this will trigger the call to createEditor
-            self.parent().openPersistentEditor(model_index)        
+            self.parent().openPersistentEditor(model_index)
 
     def createEditor(self, parent_widget, style_options, model_index):
         """
@@ -112,17 +115,24 @@ class WidgetDelegate(WidgetDelegateBase):
         called when an "editor" is set up - the editor is set up 
         via the openPersistentEditor call and is created upon selection
         of an item.
-        
+
         Normally, for performance, when we draw hundreds of grid cells, 
         we use the same Qwidget as a brush and simply use it to paint.
-        
+
         For the currently selected cell however, we need to be able to interact
         with the widget (e.g. click a button for example) and therefore we need
         to have a real widget for this.
+
+        :param parent_widget:   The parent widget to use for the new editor widget
+        :param style_options:   The style options to use when creating the editor
+        :param model_index:     The index in the data model that will be edited 
+                                using this editor
+        :returns:               An editor widget that will be used to edit this 
+                                index
         """
         # create the editor by calling the base method:
-        editor_widget = WidgetDelegateBase.createEditor(self, parent_widget, style_options, model_index)
-                
+        editor_widget = WidgetDelegate.createEditor(self, parent_widget, style_options, model_index)
+
         # and set it up to operate on the index:
         self._on_before_selection(editor_widget, model_index, style_options)
         return editor_widget
@@ -134,8 +144,9 @@ class WidgetDelegate(WidgetDelegateBase):
         :param painter:         The painter instance to use when painting
         :param style_options:   The style options to use when painting
         :param model_index:     The index in the data model that needs to be painted
-        """        
+        """
         if model_index == self.__current_editor_index:
+            # avoid painting the index twice!
             return
-        WidgetDelegateBase.paint(self, painter, style_options, model_index)
+        WidgetDelegate.paint(self, painter, style_options, model_index)
 

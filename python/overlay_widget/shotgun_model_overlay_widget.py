@@ -24,20 +24,20 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
     """
     Overlay widget class
     """
-    
+
     def __init__(self, sg_model, parent=None):
         """
         Construction
-        
+
         :param sg_model:    Shotgun model that this widget should connect to
         :param parent:      The parent QWidget this widget should be parented to
         """
         ShotgunOverlayWidget.__init__(self, parent)
-        
+
         # connect up to signals being emitted from Shotgun model:
         self._model = None
         self._connect_to_model(sg_model)
-        
+
     def set_model(self, sg_model):
         """
         Set the model this widget should be connected to
@@ -50,13 +50,13 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
     def _connect_to_model(self, sg_model):
         """
         Connect to the signals emitted by the specified model
-        
+
         :param sg_model:    Shotgun model that this widget should connect to
         """
         if sg_model == self._model:
             # already connected!
             return
-        
+
         if self._model:
             # disconnect from the previous model:
             self._model.query_changed.disconnect(self._model_query_changed)
@@ -64,8 +64,8 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
             self._model.data_refreshed.disconnect(self._model_refreshed)
             self._model.data_refresh_fail.disconnect(self._model_refresh_failed)
             self._model = None
-            self.hide(hide_errors=True)            
-            
+            self.hide(hide_errors=True)
+
         if sg_model:
             # connect to the new model:
             self._model = sg_model
@@ -73,20 +73,20 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
             self._model.data_refreshing.connect(self._model_refreshing)
             self._model.data_refreshed.connect(self._model_refreshed)
             self._model.data_refresh_fail.connect(self._model_refresh_failed)
-            
+
     def _model_query_changed(self):
         """
         Slot signalled when the query changes on the connected Shotgun model
         """
         self.hide(hide_errors=True)
-        
+
     def _model_refreshing(self):
         """
         Slot signalled when the connected Shotgun model starts refreshing
         """
         if not self._model.is_data_cached():
             self.start_spin()
-    
+
     def _model_refreshed(self, data_changed):
         """
         Slot signalled when the data from the connected Shotgun model has 
@@ -95,11 +95,11 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
         :param data_changed:    True if the refresh resulted in the data changing
         """
         self.hide(hide_errors=True)
-    
+
     def _model_refresh_failed(self, msg):
         """
         Slot signalled when the connected Shotgun model refresh fails
-        
+
         :param msg:    The reason the refresh failed
         """
         self.show_error_message(msg)

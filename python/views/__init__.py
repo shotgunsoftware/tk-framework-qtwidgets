@@ -12,6 +12,6 @@
 from .widget_delegate import WidgetDelegate
 
 # grouped list view classes
-from .grouped_list_view import GroupedListView
-from .grouped_list_view_item_delegate import GroupedListViewItemDelegate
-from .group_widget_base import GroupWidgetBase
+from .grouped_list_view.grouped_list_view import GroupedListView
+from .grouped_list_view.grouped_list_view_item_delegate import GroupedListViewItemDelegate
+from .grouped_list_view.group_widget_base import GroupWidgetBase
