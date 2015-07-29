@@ -17,20 +17,23 @@ from sgtk.platform.qt import QtCore, QtGui
 class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     """
     Inherited from a QSortFilterProxyModel, this class implements filtering across all 
-    levels of the hierarchy in a hierarchical (tree-based) model
+    levels of a hierarchy in a hierarchical (tree-based) model and provides a simple
+    interface for derived classes so that all they need to do is filter a single item
+    as requested.
     """
     class _IndexAcceptedCache(object):
         """
-        Cached 'accepted' values for indexes.  Uses a dictionary that maps the row hierarchy
-        to a tuple containing a QPersistentModelIndex for the index and its accepted value.
+        Cached 'accepted' values for indexes.  Uses a dictionary that maps a key to a tuple 
+        containing a QPersistentModelIndex for the index and its accepted value.
 
-        (row, row, row, row) -> (QPersistentModelIndex, accepted)
+            key -> (QPersistentModelIndex, accepted)
 
-        When looking up the cached value, the persistent model index is used to ensure that the
-        cache entry is still valid (does it match the index we are searching for).
+        In recent versions of PySide, the key is just a QPersistentModelIndex which has the
+        advantage that cache entries don't become invalid when rows are added/moved.  
 
-        Note, this deliberately doesn't use a dictionary indexed by QPersistentModelIndexes as
-        these are not hashable types in earlier versions of PySide!
+        In older versions of PySide this isn't possible as QPersistentModelIndex isn't hashable 
+        so instead a tuple of the row hierarchy is used and then when looking up the cached value, 
+        the persistent model index is used to ensure that the cache entry is still valid.
         """
         def __init__(self):
             """
@@ -40,6 +43,16 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             self.enabled = True
             self._cache_hits = 0
             self._cache_misses = 0
+
+            # ideally we'd use QPersistentModelIndexes to key into the cache but these 
+            # aren't hashable in earlier versions of PySide!
+            self._use_persistent_index_keys = True
+            try:
+                # wouldn't it be nice if there were an in-built mechanism to test if a type was
+                # hashable!
+                hash(QtCore.QPersistentModelIndex())
+            except:
+                self._use_persistent_index_keys = False
 
         @property
         def cache_hit_miss_ratio(self):
@@ -51,7 +64,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 return float(self._cache_hits) / float(total_cache_queries)
             else:
                 return 0
-            
+
         @property
         def size(self):
             """
@@ -70,7 +83,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 return
 
             cache_key = self._gen_cache_key(index)
-            self._cache[cache_key] = (QtCore.QPersistentModelIndex(index), accepted)
+            p_index = cache_key if self._use_persistent_index_keys else QtCore.QPersistentModelIndex(index)
+            self._cache[cache_key] = (p_index, accepted)
 
         def remove(self, index):
             """
@@ -107,9 +121,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 self._cache_hits += 1
                 return accepted
             else:
-                # row has changed but accepted value is presumably still valid
-                #del self._cache[cache_key]
-                #self.add(p_index, accepted)
+                # row has changed so results are bad!
                 self._cache_misses += 1
                 return None
 
@@ -140,7 +152,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             """
             # ideally we would just use persistent model indexes but these aren't hashable
             # in early versions of PySide :(
-            #return QtCore.QPersistentModelIndex(index)
+            if self._use_persistent_index_keys:
+                return QtCore.QPersistentModelIndex(index)
 
             # the cache key is a tuple of all the row indexes of the parent
             # hierarchy for the index.  First, find the row indexes:

@@ -10,6 +10,7 @@
 
 # generic widget delegate
 from .widget_delegate import WidgetDelegate
+from .edit_selected_widget_delegate import EditSelectedWidgetDelegate
 
 # grouped list view classes
 from .grouped_list_view.grouped_list_view import GroupedListView
