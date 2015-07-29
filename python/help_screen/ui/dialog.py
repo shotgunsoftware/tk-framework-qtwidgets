@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialog.ui'
 #
-#      by: pyside-uic 0.2.13 running on PySide 1.1.0
+#      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -13,7 +13,7 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(784, 483)
         Dialog.setStyleSheet("#Dialog {\n"
-"background-image: url(:/tk_framework_shotgunutils.help_screen/bg.png); \n"
+"background-image: url(:/tk_framework_qtwidgets.help_screen/bg.png); \n"
 "}\n"
 "\n"
 "")
@@ -31,18 +31,18 @@ class Ui_Dialog(object):
         self.left_arrow.setMinimumSize(QtCore.QSize(34, 34))
         self.left_arrow.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.left_arrow.setStyleSheet("QToolButton{\n"
-"background-image: url(:/tk_framework_shotgunutils.help_screen/left_arrow.png);\n"
+"background-image: url(:/tk_framework_qtwidgets.help_screen/left_arrow.png);\n"
 "border: none;\n"
 "background-color: none;\n"
 "}\n"
 "\n"
 "\n"
 "QToolButton:hover{\n"
-"background-image: url(:/tk_framework_shotgunutils.help_screen/left_arrow_hover.png);\n"
+"background-image: url(:/tk_framework_qtwidgets.help_screen/left_arrow_hover.png);\n"
 "}\n"
 "\n"
 "QToolButton:Pressed {\n"
-"background-image: url(:/tk_framework_shotgunutils.help_screen/left_arrow_pressed.png);\n"
+"background-image: url(:/tk_framework_qtwidgets.help_screen/left_arrow_pressed.png);\n"
 "}\n"
 "")
         self.left_arrow.setText("")
@@ -96,18 +96,18 @@ class Ui_Dialog(object):
         self.right_arrow.setMinimumSize(QtCore.QSize(34, 34))
         self.right_arrow.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.right_arrow.setStyleSheet("QToolButton{\n"
-"background-image: url(:/tk_framework_shotgunutils.help_screen/right_arrow.png);\n"
+"background-image: url(:/tk_framework_qtwidgets.help_screen/right_arrow.png);\n"
 "border: none;\n"
 "background-color: none;\n"
 "}\n"
 "\n"
 "\n"
 "QToolButton:hover{\n"
-"background-image: url(:/tk_framework_shotgunutils.help_screen/right_arrow_hover.png);\n"
+"background-image: url(:/tk_framework_qtwidgets.help_screen/right_arrow_hover.png);\n"
 "}\n"
 "\n"
 "QToolButton:Pressed {\n"
-"background-image: url(:/tk_framework_shotgunutils.help_screen/right_arrow_pressed.png);\n"
+"background-image: url(:/tk_framework_qtwidgets.help_screen/right_arrow_pressed.png);\n"
 "}\n"
 "")
         self.right_arrow.setText("")

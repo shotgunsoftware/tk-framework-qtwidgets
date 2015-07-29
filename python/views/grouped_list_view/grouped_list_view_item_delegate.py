@@ -15,7 +15,7 @@ Custom item delegate for use with the GroupedListView
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
 
-from .widget_delegate import WidgetDelegate
+from ..widget_delegate import WidgetDelegate
 from .group_widget import GroupWidget
 
 class GroupedListViewItemDelegate(WidgetDelegate):

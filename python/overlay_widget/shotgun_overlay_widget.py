@@ -19,54 +19,47 @@ class ShotgunOverlayWidget(QtGui.QWidget):
     This is used by the for example the Shotgun model to indicate when data is being loaded in;
     Whenever data is fetched, the overlay widget is added on top of the specified
     QWidget so that the model can gracefully indicate that data is being fetched.
-    
-    The caller does not need to worry about anything - all they need to do is 
-    to pass a widget to the model constructor and this widget will get the overlay
-    added on top.   
 
     The overlay can also used by the calling code to report errors and display info.
     """
-    
+
     MODE_OFF = 0
     MODE_SPIN = 1
     MODE_ERROR = 2
     MODE_INFO_TEXT = 3
     MODE_INFO_PIXMAP = 4
-    
+
     def __init__(self, parent=None):
         """
         Constructor
         """
-        
         QtGui.QWidget.__init__(self, parent)
-        
+
         # hook up a listener to the parent window so we 
         # can resize the overlay at the same time as the parent window
         # is being resized.
         filter = ResizeEventFilter(parent)
         filter.resized.connect(self._on_parent_resized)
         parent.installEventFilter(filter)
-        
+
         # make it transparent
         self.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
-        
+
         # turn off the widget
         self.setVisible(False)
         self._mode = self.MODE_OFF
-        
+
         # setup spinner timer
         self._timer = QtCore.QTimer(self)
         self._timer.timeout.connect(self._on_animation)
         self._spin_angle = 0
-        
+
         self._message_pixmap = None
         self._message = None
-        self._sg_icon = QtGui.QPixmap(":/tk_framework_shotgunutils.shotgun_model/sg_logo.png")
+        self._sg_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.overlay_widget/sg_logo.png")
  
-        
     ############################################################################################
     # public interface
-    
     def start_spin(self):
         """
         Turn on spinning
@@ -78,7 +71,7 @@ class ShotgunOverlayWidget(QtGui.QWidget):
     def show_error_message(self, msg):
         """
         Display an error message.
-        
+
         :param msg: message to display
         """
         self._timer.stop()
@@ -91,7 +84,7 @@ class ShotgunOverlayWidget(QtGui.QWidget):
         """
         Show an info message. If an error is being shown, 
         the info message will not be replacing the error.
-        
+
         :param msg: message to display
         :returns: true if message was displayed, false otherwise
         """
@@ -104,13 +97,13 @@ class ShotgunOverlayWidget(QtGui.QWidget):
             self._mode = self.MODE_INFO_TEXT
             self.repaint()
             return True
-        
+
     def show_message_pixmap(self, pixmap):
         """
         Show an info message in the form of a pixmap.
         If an error is being shown, the info message 
         will not be replacing the error.
-        
+
         :param pixamp: image to display
         :returns: true if pixmap was displayed, false otherwise        
         """
@@ -127,7 +120,7 @@ class ShotgunOverlayWidget(QtGui.QWidget):
     def hide(self, hide_errors=True):
         """
         Hide the overlay.
-        
+
         :param hide_errors: if set to False, errors are not hidden.
         """
         if hide_errors == False and self._mode == self.MODE_ERROR:
@@ -137,7 +130,6 @@ class ShotgunOverlayWidget(QtGui.QWidget):
         self._mode = self.MODE_OFF
         self.setVisible(False)
  
-        
     ############################################################################################
     # internal methods
  
@@ -148,7 +140,7 @@ class ShotgunOverlayWidget(QtGui.QWidget):
         """
         # resize overlay
         self.resize(self.parentWidget().size())
-    
+
     def _on_animation(self):
         """
         Spinner async callback to help animate the progress spinner.
@@ -164,7 +156,7 @@ class ShotgunOverlayWidget(QtGui.QWidget):
         """
         if self._mode == self.MODE_OFF:
             return
-        
+
         painter = QtGui.QPainter()
         painter.begin(self)
         try:
@@ -177,53 +169,48 @@ class ShotgunOverlayWidget(QtGui.QWidget):
 
             # now draw different things depending on mode
             if self._mode == self.MODE_SPIN:
-                
+
                 # show the spinner
                 painter.translate((painter.device().width() / 2) - 40, 
                                   (painter.device().height() / 2) - 40)
-                
+
                 pen = QtGui.QPen(QtGui.QColor("#424141"))
                 pen.setWidth(3)
                 painter.setPen(pen)
                 painter.drawPixmap( QtCore.QPoint(8, 24), self._sg_icon)
-    
+
                 r = QtCore.QRectF(0.0, 0.0, 80.0, 80.0)
                 start_angle = (0 + self._spin_angle) * 4 * 16
                 span_angle = 340 * 16 
-    
+
                 painter.drawArc(r, start_angle, span_angle)
-            
+
             elif self._mode == self.MODE_INFO_TEXT:
                 # show text in the middle
                 pen = QtGui.QPen(QtGui.QColor("#888888"))
-                painter.setPen(pen)            
+                painter.setPen(pen)
                 text_rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
                 text_flags = QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter | QtCore.Qt.TextWordWrap
-                painter.drawText(text_rect, text_flags, self._message)            
-                
+                painter.drawText(text_rect, text_flags, self._message)
+
             elif self._mode == self.MODE_ERROR:
                 # show error text in the center
                 pen = QtGui.QPen(QtGui.QColor("#C8534A"))
                 painter.setPen(pen)            
                 text_rect = QtCore.QRect(0, 0, painter.device().width(), painter.device().height())
                 text_flags = QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter | QtCore.Qt.TextWordWrap
-                painter.drawText(text_rect, text_flags, self._message)            
+                painter.drawText(text_rect, text_flags, self._message)
 
             elif self._mode == self.MODE_INFO_PIXMAP:
                 # draw image
                 painter.translate((painter.device().width() / 2) - (self._message_pixmap.width()/2), 
                                   (painter.device().height() / 2) - (self._message_pixmap.height()/2) )
-                
+
                 painter.drawPixmap( QtCore.QPoint(0, 0), self._message_pixmap)
-                
-            
+
         finally:
             painter.end()
-        
-        
-        
-        
-        
+
 class ResizeEventFilter(QtCore.QObject):
     """
     Event filter which emits a resized signal whenever
@@ -239,4 +226,4 @@ class ResizeEventFilter(QtCore.QObject):
             self.resized.emit()
         # pass it on!
         return False
-        
+
