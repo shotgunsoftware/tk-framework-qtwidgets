@@ -86,7 +86,10 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         # the default implementation just uses the internal __paint_widget 
         # (creating it if needed) for backwards compatibility
         if not self.__paint_widget or not self.__paint_widget():
-            self.__paint_widget = weakref.ref(self._create_widget(parent))
+            paint_widget = self._create_widget(parent)
+            if not paint_widget:
+                return None
+            self.__paint_widget = weakref.ref(paint_widget)
         return self.__paint_widget()
 
     def _create_editor_widget(self, model_index, style_options, parent):
@@ -194,6 +197,8 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         # but merely moving the same widget around. 
         paint_widget = self._get_painter_widget(model_index, self.parent())
         if not paint_widget:
+            # just paint using the base implementation:
+            QtGui.QStyledItemDelegate.paint(self, painter, style_options, model_index)
             return
 
         # make sure that the widget that is just used for painting isn't visible otherwise

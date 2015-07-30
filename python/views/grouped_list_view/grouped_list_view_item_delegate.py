@@ -20,7 +20,10 @@ from .group_widget import GroupWidget
 
 class GroupedListViewItemDelegate(WidgetDelegate):
     """
-    Delegate class
+    Base delegate class for a delegate specifically to be used by a GroupedListView.
+
+    The delegate provides a method to return a group widget in addition to the regular
+    delegate methods.
     """
     def __init__(self, view):
         """
@@ -28,20 +31,20 @@ class GroupedListViewItemDelegate(WidgetDelegate):
         :param view:    The view this delegate is operating on
         """
         WidgetDelegate.__init__(self, view)
-        
+
         self._calc_group_widget = None
-        
+
     def create_group_widget(self, parent):
         """
         Create a group header widget for the grouped list view
-        
+
         :param parent:  The parent QWidget to use for the new group widget
         :returns:       A widget derived from GroupWidgetBase that will
                         be used for a group in the grouped list view
         """
         # base implementation just returns the default group widget
         return GroupWidget(parent)
-    
+
     def sizeHint(self, style_options, model_index):
         """
         Overriden base method returns the size hint for the specified model index
@@ -53,17 +56,17 @@ class GroupedListViewItemDelegate(WidgetDelegate):
         """
         if model_index.parent() == self.view.rootIndex():
             # the index is a root/group item:
-            
+
             # get the expanded state of this group in the view:
             expanded = self.view.is_expanded(model_index)
-            
+
             # we use a single group widget to track the size:
             # (TODO) - this won't work if different group widgets
             # are created for different groups!
             if not self._calc_group_widget:
                 self._calc_group_widget = self.create_group_widget(self.view)
                 self._calc_group_widget.setVisible(False)
-                                
+
             # update the widget and return the size:
             self._calc_group_widget.set_expanded(expanded)
             self._calc_group_widget.set_item(model_index)
