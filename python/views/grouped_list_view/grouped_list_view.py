@@ -45,6 +45,8 @@ and this can be overriden to implement custom UI for these elements.
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
+from .grouped_list_view_item_delegate import GroupedListViewItemDelegate
+
 class GroupedListView(QtGui.QAbstractItemView):
     """
     The main grouped list view class
@@ -62,7 +64,10 @@ class GroupedListView(QtGui.QAbstractItemView):
             self.rect = QtCore.QRect()             # relative item rect for group header
             self.dirty = True                      # True if data in group or children has changed
             self.collapsed = False                 # True if the group is currently collapsed
-            self.child_rects = []                  # List of sizes for all child items relative to the group
+            self.child_info = []                   # List of tuples containing (row, column, size) where row and
+                                                   # column are the relative row and column in the visual grid and 
+                                                   # size is the visual size of the child for all child items in
+                                                   # the group
             self.child_area_rect = QtCore.QRect()  # total size of child area
 
         def __repr__(self):
@@ -94,6 +99,9 @@ class GroupedListView(QtGui.QAbstractItemView):
         self._border = QtCore.QSize(6,6)
         self._group_spacing = 30
         self._item_spacing = QtCore.QSize(4,4)
+
+        # default item delegate:
+        self._default_item_delegate = GroupedListViewItemDelegate(self)
 
     # @property
     def _get_border(self):
@@ -168,6 +176,20 @@ class GroupedListView(QtGui.QAbstractItemView):
 
     # ----------------------------------------------------------------------------------------------------
     # Overriden public methods
+
+    def itemDelegate(self):
+        """
+        Overriden base method that returns the item delegate to be used for items in this
+        view.  This will return the default item delegate if a delegate deriving from
+        GroupedListViewItemDelegate hasn't been set for the view.
+
+        :returns:   A GroupedListViewItemDelegate instance
+        """
+        delegate = QtGui.QAbstractItemView.itemDelegate(self)
+        if not isinstance(delegate, GroupedListViewItemDelegate):
+            # just return the defauly item delegate:
+            delegate = self._default_item_delegate
+        return delegate
 
     def edit(self, idx, trigger, event):
         """
@@ -441,7 +463,7 @@ class GroupedListView(QtGui.QAbstractItemView):
             if not item_info.collapsed:
                 # now check children:
                 local_point = point + QtCore.QPoint(0, -y_offset)
-                for child_row, child_rect in enumerate(item_info.child_rects):
+                for child_row, (_, _, child_rect) in enumerate(item_info.child_info):
                     if child_rect.contains(local_point):
                         # found a hit on a child item
                         return self.model().index(child_row, 0, index)
@@ -457,11 +479,120 @@ class GroupedListView(QtGui.QAbstractItemView):
     def moveCursor(self, cursor_action, keyboard_modifiers):
         """
         Overriden base method that returns the index for the item that the specified 
-        cursor action will move to
+        cursor action will move to.
+
+        Currently handles up, down, left, right, next and previous actions and only
+        moves between leaf items in the view, skipping group items.  This could be
+        extended in future to treat groups in the same way the regular tree view works
+        (e.g. left/right == collapes/expand).
+
+        :param cursor_action:       The action to use when moving the cursor.
+        :param keyboard_modifiers:  Any keyboard modifiers that are currentlt active.
+        :returns:                   The QModelIndex of the item the cursor should be
+                                    moved to.
         """
-        # for now, just return the current index!
         index = self.currentIndex()
+
+        # check that the item info is up-to-date:
+        if len(self._item_info) != self.model().rowCount():
+            return index
+
+        # get the rows for both the index and the parent index:
+        row = index.row()
+        parent_index = index.parent()
+        if not parent_index.isValid() or parent_index.parent() != self.rootIndex():
+            return index
+        parent_row = parent_index.row()
+
+        parent_item_info = self._item_info[parent_row]
+        if len(parent_item_info.child_info) != self.model().rowCount(parent_index):
+            return index
+
+        # find the neighbouring row information based on the direction:
+        if (cursor_action == QtGui.QAbstractItemView.MoveLeft
+            or cursor_action == QtGui.QAbstractItemView.MovePrevious):
+            # move to the left of the current item in the same visual row if possible.  If the
+            # cursor is at the start of the row then we do nothing.
+            if (row < len(parent_item_info.child_info)
+                and parent_item_info.child_info[row][0] == parent_item_info.child_info[row-1][0]):
+                # just move left 1
+                row -= 1
+        elif (cursor_action == QtGui.QAbstractItemView.MoveRight
+              or cursor_action == QtGui.QAbstractItemView.MoveNext):
+            # move to the right of the current item in the same visual row if possible.  If the
+            # cursor is at the end of the row then we do nothing.
+            if ((row + 1) < len(self._item_info[parent_row].child_info)
+                and parent_item_info.child_info[row][0] == parent_item_info.child_info[row+1][0]):
+                # just move right 1:
+                row += 1
+        elif cursor_action == QtGui.QAbstractItemView.MoveUp:
+            # move to the same column in the visible visual row above the current item if possible.  If we
+            # are on the top visible row in the view then this will do nothing.
+            layout_row, layout_column, _ = parent_item_info.child_info[row]
+            if layout_row > 0:
+                # move up a row within the same group:
+                for ri, (r, c, _) in enumerate(reversed(parent_item_info.child_info[:row])):
+                    if r == layout_row-1 and c <= layout_column:
+                        row = row-1-ri
+                        break
+            else:
+                # see if we have a visible previous group we can move up to:
+                prev_item_info = None
+                prev_parent_row = 0
+                for ii, info in enumerate(reversed(self._item_info[:parent_row])):
+                    if not info.collapsed and info.child_info:
+                        # we can move up to this group!
+                        prev_item_info = info
+                        prev_parent_row = parent_row-1-ii
+                        break
+                if prev_item_info:
+                    # try to move up to the last row of the previous group:
+                    for ri, (r, c, _) in enumerate(reversed(prev_item_info.child_info)):
+                        if (r == 0 and c <= layout_column) or (r > 0 and c == layout_column):
+                            parent_row = prev_parent_row
+                            row = len(prev_item_info.child_info)-1-ri
+                            break
+
+        elif cursor_action == QtGui.QAbstractItemView.MoveDown:
+            # move to the same column in the visible visual row below the current item if possible.  If we
+            # are on the bottom visible row in the view then this will do nothing.
+            layout_row, layout_column, _ = parent_item_info.child_info[row]
+            last_layout_row, last_layout_column, _ = parent_item_info.child_info[-1]
+            if layout_row < last_layout_row:
+                # move down a row within the same group:
+                for ri, (r, c, _) in enumerate(parent_item_info.child_info[row:]):
+                    if ((r == last_layout_row and c == min(layout_column, last_layout_column))
+                        or r > layout_row and c == layout_column):
+                        row = row + ri
+                        break
+            else:
+                # see if we have a visible following group we can move down to:
+                next_item_info = None
+                next_parent_row = 0
+                for ii, info in enumerate(self._item_info[parent_row+1:]):
+                    if not info.collapsed and info.child_info:
+                        # we can move down to this group!
+                        next_item_info = info
+                        next_parent_row = parent_row + 1 + ii
+                        break
+                if next_item_info:
+                    last_layout_row, last_layout_column, _ = next_item_info.child_info[-1]
+                    # try to move down to the first row of the next group:
+                    for ri, (r, c, _) in enumerate(next_item_info.child_info):
+                        if ((r == last_layout_row and c == min(layout_column, last_layout_column))
+                            or c == layout_column):
+                            parent_row = next_parent_row
+                            row = ri
+                            break
+
+        # build a new index based on the new row and parent row:
+        if parent_row >= 0 and parent_row < self.model().rowCount():
+            parent_index = self.model().index(parent_row, 0)
+            if row >= 0 and row < self.model().rowCount(parent_index):
+                index = self.model().index(row, 0, parent_index)
+
         return index
+
 
     def horizontalOffset(self):
         """
@@ -528,7 +659,7 @@ class GroupedListView(QtGui.QAbstractItemView):
 
                     # need to iterate through and check all child items:
                     top_left = bottom_right = None
-                    for child_row, child_rect in enumerate(item_info.child_rects):
+                    for child_row, (_, _, child_rect) in enumerate(item_info.child_info):
 
                         if child_rect.intersects(local_selection_rect):
                             child_index = self.model().index(child_row, 0, index)
@@ -662,9 +793,9 @@ class GroupedListView(QtGui.QAbstractItemView):
                 if not item_info.collapsed:
                     # draw any children:
                     num_child_rows = self.model().rowCount(index)
-                    if len(item_info.child_rects) == num_child_rows:
+                    if len(item_info.child_info) == num_child_rows:
                         # draw all children
-                        for child_row, child_rect in enumerate(item_info.child_rects):
+                        for child_row, (_, _, child_rect) in enumerate(item_info.child_info):
                             # figure out index and update rect:
                             child_index = self.model().index(child_row, 0, index)
 
@@ -797,8 +928,8 @@ class GroupedListView(QtGui.QAbstractItemView):
         else:
             y_offset += root_info.rect.height()
             child_row = rows[-2]
-            if child_row < len(root_info.child_rects):
-                rect = self._item_info[root_row].child_rects[child_row]
+            if child_row < len(root_info.child_info):
+                rect = self._item_info[root_row].child_info[child_row][2]
 
         # and offset the rect by the Y offset:
         rect = rect.translated(0, y_offset)
@@ -875,10 +1006,12 @@ class GroupedListView(QtGui.QAbstractItemView):
 
             # update size info of children:
             row_height = 0
+            relative_column = 0
+            relative_row = 0
             left = self._border.width()
             x_pos = left
             y_pos = self._item_spacing.height()
-            child_rects = []  
+            child_info = []
             for child_row in range(self.model().rowCount(index)):
                 child_index = self.model().index(child_row, 0, index)
 
@@ -897,19 +1030,22 @@ class GroupedListView(QtGui.QAbstractItemView):
                     y_pos = y_pos + row_height + self._item_spacing.height()
                     row_height = 0
                     x_pos = left
+                    relative_column = 0
+                    relative_row += 1
 
                 # store the item rect:
                 child_item_rect = QtCore.QRect(x_pos, y_pos, 
                                                child_item_size.width(), 
                                                child_item_size.height())
-                child_rects.append(child_item_rect)
+                child_info.append((relative_row, relative_column, child_item_rect))
 
                 # keep track of the tallest row item:                
                 row_height = max(row_height, child_item_rect.height())
                 x_pos += self._item_spacing.width() + child_item_rect.width()
                 max_width = max(child_item_rect.right(), max_width)
+                relative_column += 1
 
-            item_info.child_rects = child_rects
+            item_info.child_info = child_info
             item_info.child_area_rect = QtCore.QRect(self._border.width(), 0, max_width, y_pos + row_height)
 
             # reset dirty flag for item:
