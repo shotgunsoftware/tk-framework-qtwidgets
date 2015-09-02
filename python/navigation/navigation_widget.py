@@ -27,8 +27,7 @@ class NavigationWidget(QtGui.QWidget):
     # the 'previous'/[<] or 'next'/[>] buttons.
     navigate = QtCore.Signal(object)# destination to navigate to
 
-    # Signal emitted whenever the 'home'/[H] buttons is
-    # pressed
+    # Signal emitted whenever the 'home'/[H] button is pressed
     home_clicked = QtCore.Signal()
 
     class _DestinationInfo(object):

@@ -29,11 +29,12 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             key -> (QPersistentModelIndex, accepted)
 
         In recent versions of PySide, the key is just a QPersistentModelIndex which has the
-        advantage that cache entries don't become invalid when rows are added/moved.  
+        advantage that cache entries don't become invalid when rows are added/moved.
 
-        In older versions of PySide this isn't possible as QPersistentModelIndex isn't hashable 
-        so instead a tuple of the row hierarchy is used and then when looking up the cached value, 
-        the persistent model index is used to ensure that the cache entry is still valid.
+        In older versions of PySide (e.g. in 1.0.9 used by Nuke 6/7/8/9) this isn't possible 
+        as QPersistentModelIndex isn't hashable so instead a tuple of the row hierarchy is used 
+        and then when looking up the cached value, the persistent model index is used to ensure 
+        that the cache entry is still valid.
         """
         def __init__(self):
             """
@@ -184,6 +185,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
 
         :param enable:    True if caching should be enabled, False if it should be disabled. 
         """
+        # clear the accepted cache - this will make sure we don't use out-of-date 
+        # information from the cache
         self._dirty_all_accepted()
         self._accepted_cache.enabled = enable
         self._child_accepted_cache.enabled = enable
