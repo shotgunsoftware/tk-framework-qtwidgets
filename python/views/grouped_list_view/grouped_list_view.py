@@ -887,7 +887,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         self.horizontalScrollBar().setPageStep(self.viewport().width())
         self.horizontalScrollBar().setRange(0, max(0, self._max_width - self.viewport().width()))
 
-        self.verticalScrollBar().setSingleStep(30)#00)# TODO - make this more intelligent!
+        self.verticalScrollBar().setSingleStep(30) # TODO - make this more intelligent!
         self.verticalScrollBar().setPageStep(self.viewport().height())
         self.verticalScrollBar().setRange(0, max(0, max_height - self.viewport().height()))
 
@@ -971,7 +971,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         #print "%s, %s, %s, %s" % (self._update_all_item_info, self._update_some_item_info, viewport_resized, self._item_info)
         self._update_all_item_info = self._update_all_item_info or viewport_resized
 
-        # (AD) TEMP
+        # if we're updating all item info then may as well clear the existing list:
         if self._update_all_item_info:
             self._item_info = []
 
