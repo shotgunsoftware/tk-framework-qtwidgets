@@ -29,7 +29,7 @@ class ShotgunOverlayWidget(QtGui.QWidget):
     MODE_INFO_TEXT = 3
     MODE_INFO_PIXMAP = 4
 
-    def __init__(self, parent=None):
+    def __init__(self, parent):
         """
         Constructor
         """
