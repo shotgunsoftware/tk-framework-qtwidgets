@@ -30,7 +30,7 @@ def show_help_screen(parent, bundle, pixmaps):
     :type pixmaps: List of :class:`PySide.QtGui.QPixmap`  
     """
     gui = Dialog(parent, bundle, pixmaps)
-    gui.setWindowTitle("Toolkit Help")    
+    gui.setWindowTitle("Toolkit Help")
     gui.show()
     # attach the object to the main parent object - this is
     # to help older versions of PySide which get confused

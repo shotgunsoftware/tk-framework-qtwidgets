@@ -59,7 +59,7 @@ API Reference
 
 .. note::
 
-    Import the help screen module using the following statement::
+    Import the module into your Toolkit App using the following statement::
 
         help_screen = sgtk.platform.import_framework("tk-framework-qtwidgets", "help_screen")
 

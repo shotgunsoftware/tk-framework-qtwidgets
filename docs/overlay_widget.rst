@@ -13,8 +13,11 @@ can easily be placed on top of any other :class:`PySide.QtGui.QWidget` to indica
 and potentially report messages back to the user. Once you have instantiated and
 placed it on top of another widget, you can execute various methods to control its state.
 
+
+
+
 Sample Code
-======================================
+--------------------------------------
 
 The following sample code shows how to import the overlay module,
 connect it to a widget and then control the overlay state::
@@ -40,16 +43,27 @@ connect it to a widget and then control the overlay state::
 Please note that the example above is crude and for heavy computational work we recommend
 an asynchronous approach with a worker thread for better UI responsiveness.
 
-
-API Reference
-======================================
-
 .. note::
 
-    Import the help screen module using the following statement::
+    Import the module into your Toolkit App using the following statement::
 
-        help_screen = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
+        overlay_widget = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
+
+
+ShotgunOverlayWidget
+======================================
 
 .. currentmodule:: overlay_widget
 
 .. autoclass:: ShotgunOverlayWidget
+    :members:
+    :inherited-members:
+    :exclude-members: paintEvent
+
+ShotgunModelOverlayWidget
+======================================
+
+
+.. autoclass:: ShotgunModelOverlayWidget
+    :members:
+    :exclude-members: paintEvent
