@@ -20,9 +20,12 @@ You simply provide it with a list of transparent bitmaps sized 650x400 and it wi
 create a slideshow with animated transitions and a link to the bundle's associated
 documentation (retrieved from the manifest).
 
-The `help_screen` module contains a single method that takes care of everything.
+Sample Code
+======================================
+
+The ``help_screen`` module contains a single method that takes care of everything.
 Simply create the number of 650x400 images that you want and export them as transparent
-pngs and ensure that the background is transparent (this is not a strict requirement,
+``png`` files and ensure that the background is transparent (this is not a strict requirement,
 but it will most likely look strange with a non-transparent background). Add the
 images to the QT resource section of your app and then execute the following code
 to launch the help screen::
@@ -54,9 +57,11 @@ to launch the help screen::
 API Reference
 ======================================
 
-Import the help screen module using the following statement:
+.. note::
 
-    help_screen = sgtk.platform.import_framework("tk-framework-qtwidgets", "help_screen")
+    Import the help screen module using the following statement::
+
+        help_screen = sgtk.platform.import_framework("tk-framework-qtwidgets", "help_screen")
 
 .. currentmodule:: help_screen
 
