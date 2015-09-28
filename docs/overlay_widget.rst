@@ -1,38 +1,55 @@
-############
+Spinner and text overlay widget
+######################################
+
+
 Introduction
-############
+======================================
 
-**Server API - for making changes and for complex searches**
+.. image:: images/overlay_overview.png
+    :width: 650px
 
-The server API connects to a database storage. When you perform an operation
-on the ``tank.server`` API, the system will connect to a database and query the database
-for information.
+The progress overlay module provides a standardized progress overlay widget which
+can easily be placed on top of any other :class:`PySide.QtGui.QWidget` to indicate that work is happening
+and potentially report messages back to the user. Once you have instantiated and
+placed it on top of another widget, you can execute various methods to control its state.
 
-The server API also lets you manipulate data, either by deleting, updating or creating it.
+Sample Code
+======================================
+
+The following sample code shows how to import the overlay module,
+connect it to a widget and then control the overlay state::
+
+	# example of how the overlay can be used within your app code
+
+	# import the module - note that this is using the special
+	# import_framework code so it won't work outside an app
+	overlay = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
+
+	# now inside your app constructor, create an overlay and parent it to something
+	self._overlay = overlay.ShotgunOverlayWidget(my_widget)
+
+	# now you can use the overlay to report things to the user
+	try:
+	   self._overlay.start_spin()
+	   run_some_code_here()
+	except Exception, e:
+	   self._overlay.show_error_message("An error was reported: %s" % e)
+	finally:
+	   self._overlay.hide()
+
+Please note that the example above is crude and for heavy computational work we recommend
+an asynchronous approach with a worker thread for better UI responsiveness.
+
+
+API Reference
+======================================
 
 .. note::
 
-	To quickly just get a label, asset or revision object from its address, just
-	do a ``tank.server.find("address")``
+    Import the help screen module using the following statement::
 
+        help_screen = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
 
-Caching Policy
-==============
-All objects returned by the server API are being disconnected from their source when
-they leave the API. Any changes made to the data is not reflected in any returned objects.
+.. currentmodule:: overlay_widget
 
-
-Tank Publishing Classes
-==============================================
-
-The following sections outlines and demonstrates all the various items which can be created in tank.
-The principle to create something in tank is the same for all types of objects; instantiate a Publisher
-object, specify the necessary parameters for the object and then publish it. THe publish method will
-carry out the necessary transactions and operations and once this function completes, the object
-exists in the tank system.
-
-The publishing process is introspective, meaning that its possible to query a publishing object
-for its required or optional parameters. The publisher can also be used to validate values to make
-sure that they are in the correct range, follow the correct naming conventions etc. All publishers
-share the same interface - so the code to create a new label is rougly the same
-as the code to create a new revision.
+.. autoclass:: ShotgunOverlayWidget
