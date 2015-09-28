@@ -6,7 +6,7 @@ Introduction
 ======================================
 
 .. image:: images/overlay_overview.png
-    :width: 650px
+
 
 The progress overlay module provides a standardized progress overlay widget which
 can easily be placed on top of any other :class:`PySide.QtGui.QWidget` to indicate that work is happening
@@ -22,23 +22,23 @@ Sample Code
 The following sample code shows how to import the overlay module,
 connect it to a widget and then control the overlay state::
 
-	# example of how the overlay can be used within your app code
+    # example of how the overlay can be used within your app code
 
-	# import the module - note that this is using the special
-	# import_framework code so it won't work outside an app
-	overlay = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
+    # import the module - note that this is using the special
+    # import_framework code so it won't work outside an app
+    overlay = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
 
-	# now inside your app constructor, create an overlay and parent it to something
-	self._overlay = overlay.ShotgunOverlayWidget(my_widget)
+    # now inside your app constructor, create an overlay and parent it to something
+    self._overlay = overlay.ShotgunOverlayWidget(my_widget)
 
-	# now you can use the overlay to report things to the user
-	try:
-	   self._overlay.start_spin()
-	   run_some_code_here()
-	except Exception, e:
-	   self._overlay.show_error_message("An error was reported: %s" % e)
-	finally:
-	   self._overlay.hide()
+    # now you can use the overlay to report things to the user
+    try:
+       self._overlay.start_spin()
+       run_some_code_here()
+    except Exception, e:
+       self._overlay.show_error_message("An error was reported: %s" % e)
+    finally:
+       self._overlay.hide()
 
 Please note that the example above is crude and for heavy computational work we recommend
 an asynchronous approach with a worker thread for better UI responsiveness.
