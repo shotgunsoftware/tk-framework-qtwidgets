@@ -21,7 +21,7 @@ create a slideshow with animated transitions and a link to the bundle's associat
 documentation (retrieved from the manifest).
 
 Sample Code
-======================================
+---------------------------------------
 
 The ``help_screen`` module contains a single method that takes care of everything.
 Simply create the number of 650x400 images that you want and export them as transparent

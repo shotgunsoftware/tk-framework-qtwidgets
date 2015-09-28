@@ -1,14 +1,5 @@
 Shotgun Version Playback Widget
 #############################################
 
-Introduction
-======================================
-todo: add docs
-
-Sample Code
-======================================
-todo: add docs
-
-API Reference
-======================================
-todo: add docs
+.. image:: images/version_label.png
+    :width: 650px
