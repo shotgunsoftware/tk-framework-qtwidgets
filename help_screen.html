@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Help Screen Popup &mdash; Shotgun Pipeline Toolkit v2.4.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Shotgun Pipeline Toolkit v2.4.2 documentation" href="index.html"/>
+        <link rel="next" title="Spinner and text overlay widget" href="overlay_widget.html"/>
+        <link rel="prev" title="Shotgun Global Search Widget" href="global_search_widget.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Shotgun Pipeline Toolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v2.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Help Screen Popup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sample-code">Sample Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-reference">API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_label.html">Shotgun Version Playback Widget</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Shotgun Pipeline Toolkit</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Help Screen Popup</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="help-screen-popup">
+<h1>Help Screen Popup<a class="headerlink" href="#help-screen-popup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/help_overview.png"><img alt="_images/help_overview.png" src="_images/help_overview.png" style="width: 650px;" /></a>
+<p>The help popup is a window which presents a series of help images to the user,
+typically displayed at startup, to help introduce new feature or a new application
+to a user. The information is presented as an interactive slide show where the user
+can easily navigate between sides.</p>
+<a class="reference internal image-reference" href="_images/help_aspects.png"><img alt="_images/help_aspects.png" src="_images/help_aspects.png" style="width: 650px;" /></a>
+<p>You simply provide it with a list of transparent bitmaps sized 650x400 and it will
+create a slideshow with animated transitions and a link to the bundle&#8217;s associated
+documentation (retrieved from the manifest).</p>
+</div>
+<div class="section" id="sample-code">
+<h2>Sample Code<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">help_screen</span></code> module contains a single method that takes care of everything.
+Simply create the number of 650x400 images that you want and export them as transparent
+<code class="docutils literal"><span class="pre">png</span></code> files and ensure that the background is transparent (this is not a strict requirement,
+but it will most likely look strange with a non-transparent background). Add the
+images to the QT resource section of your app and then execute the following code
+to launch the help screen:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># example of how the help screen can be used within your app code</span>
+
+<span class="c"># import the module - note that this is using the special</span>
+<span class="c"># import_framework code so it won&#39;t work outside an app</span>
+<span class="n">help_screen</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s">&quot;help_screen&quot;</span><span class="p">)</span>
+
+<span class="c"># generate pixmaps of the help screen resources we want to display</span>
+<span class="n">help_pix</span> <span class="o">=</span> <span class="p">[</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s">&quot;:/res/help_1.png&quot;</span><span class="p">),</span>
+             <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s">&quot;:/res/help_2.png&quot;</span><span class="p">),</span>
+             <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s">&quot;:/res/help_3.png&quot;</span><span class="p">),</span>
+             <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s">&quot;:/res/help_4.png&quot;</span><span class="p">)</span> <span class="p">]</span>
+
+<span class="c"># get the current app object</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+
+<span class="c"># get the current QT UI window</span>
+<span class="n">window</span> <span class="o">=</span> <span class="n">current_dialog_object</span><span class="o">.</span><span class="n">window</span><span class="p">()</span>
+
+<span class="c"># and present the help screen. This is a non-blocking call</span>
+<span class="c"># and the application flow will continue</span>
+<span class="n">help_screen</span><span class="o">.</span><span class="n">show_help_screen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">(),</span> <span class="n">app</span><span class="p">,</span> <span class="n">help_pix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Import the module into your Toolkit App using the following statement:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">help_screen</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s">&quot;help_screen&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="function">
+<dt id="help_screen.show_help_screen">
+<code class="descclassname">help_screen.</code><code class="descname">show_help_screen</code><span class="sig-paren">(</span><em>parent</em>, <em>bundle</em>, <em>pixmaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/help_screen/dialog.html#show_help_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#help_screen.show_help_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show help screen window.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a>) &#8211; Parent window. The help screen will be centered on top of this window.</li>
+<li><strong>bundle</strong> (<a class="reference external" href="http://shotgunsoftware.github.io/tk-core/core_api.html#sgtk.platform.Application" title="(in Shotgun Pipeline Toolkit vv1.2.3)"><code class="xref py py-class docutils literal"><span class="pre">sgtk.platform.Application</span></code></a>, 
+<code class="xref py py-class docutils literal"><span class="pre">sgtk.platform.Engine</span></code> or 
+<code class="xref py py-class docutils literal"><span class="pre">sgtk.platform.Framework</span></code>) &#8211; Bundle object to associate with</li>
+<li><strong>pixmaps</strong> (List of <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QPixmap</span></code></a>) &#8211; List of images, all 650x400 px</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="overlay_widget.html" class="btn btn-neutral float-right" title="Spinner and text overlay widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="global_search_widget.html" class="btn btn-neutral" title="Shotgun Global Search Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'v2.4.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

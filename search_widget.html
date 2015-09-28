@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. Introduction &mdash; Shotgun Pipeline Toolkit v1.2.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Shotgun Pipeline Toolkit v1.2.3 documentation" href="index.html"/>
+        <link rel="prev" title="2. Introduction" href="overlay_widget.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Shotgun Pipeline Toolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="help_screen.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">2. Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">3. Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#caching-policy">3.1. Caching Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tank-publishing-classes">3.2. Tank Publishing Classes</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Shotgun Pipeline Toolkit</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>3. Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>3. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p><strong>Server API - for making changes and for complex searches</strong></p>
+<p>The server API connects to a database storage. When you perform an operation
+on the <code class="docutils literal"><span class="pre">tank.server</span></code> API, the system will connect to a database and query the database
+for information.</p>
+<p>The server API also lets you manipulate data, either by deleting, updating or creating it.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To quickly just get a label, asset or revision object from its address, just
+do a <code class="docutils literal"><span class="pre">tank.server.find(&quot;address&quot;)</span></code></p>
+</div>
+<div class="section" id="caching-policy">
+<h2>3.1. Caching Policy<a class="headerlink" href="#caching-policy" title="Permalink to this headline">¶</a></h2>
+<p>All objects returned by the server API are being disconnected from their source when
+they leave the API. Any changes made to the data is not reflected in any returned objects.</p>
+<a class="reference internal image-reference" href="images/model_classes.png"><img alt="images/model_classes.png" src="images/model_classes.png" style="width: 650px;" /></a>
+</div>
+<div class="section" id="tank-publishing-classes">
+<h2>3.2. Tank Publishing Classes<a class="headerlink" href="#tank-publishing-classes" title="Permalink to this headline">¶</a></h2>
+<p>The following sections outlines and demonstrates all the various items which can be created in tank.
+The principle to create something in tank is the same for all types of objects; instantiate a Publisher
+object, specify the necessary parameters for the object and then publish it. THe publish method will
+carry out the necessary transactions and operations and once this function completes, the object
+exists in the tank system.</p>
+<p>The publishing process is introspective, meaning that its possible to query a publishing object
+for its required or optional parameters. The publisher can also be used to validate values to make
+sure that they are in the correct range, follow the correct naming conventions etc. All publishers
+share the same interface - so the code to create a new label is rougly the same
+as the code to create a new revision.</p>
+<dl class="class">
+<dt id="search_widget.SearchWidget">
+<em class="property">class </em><code class="descclassname">search_widget.</code><code class="descname">SearchWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/search_widget/search_widget.html#SearchWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#search_widget.SearchWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search widget class</p>
+<dl class="method">
+<dt id="search_widget.SearchWidget.set_placeholder_text">
+<code class="descname">set_placeholder_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/search_widget/search_widget.html#SearchWidget.set_placeholder_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#search_widget.SearchWidget.set_placeholder_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the placeholder text for the widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="search_widget.SearchWidget.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/search_widget/search_widget.html#SearchWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#search_widget.SearchWidget.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/search_widget/search_widget.html#SearchWidget.clear"><span class="viewcode-link">[source]</span></a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="search_widget.SearchWidget.search_text">
+<code class="descname">search_text</code><a class="headerlink" href="#search_widget.SearchWidget.search_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the search text from the widget</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">set_placeholder_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/search_widget/search_widget.html#SearchWidget.set_placeholder_text"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Set the placeholder text for the widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="overlay_widget.html" class="btn btn-neutral" title="2. Introduction" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'v1.2.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
