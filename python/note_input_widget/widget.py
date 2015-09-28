@@ -55,8 +55,8 @@ class NoteInputWidget(QtGui.QWidget):
         
         # set up some handy references
         self._app = sgtk.platform.current_bundle()        
-        self._camera_icon = QtGui.QIcon(QtGui.QPixmap(":/tk_multi_infopanel_note_input_widget/camera_hl.png"))
-        self._trash_icon = QtGui.QIcon(QtGui.QPixmap(":/tk_multi_infopanel_note_input_widget/trash.png"))
+        self._camera_icon = QtGui.QIcon(QtGui.QPixmap(":/tk_framework_qtwidgets_note_input_widget/camera_hl.png"))
+        self._trash_icon = QtGui.QIcon(QtGui.QPixmap(":/tk_framework_qtwidgets_note_input_widget/trash.png"))
         
         # initialize state variables
         self._processing_id = None      # async task id

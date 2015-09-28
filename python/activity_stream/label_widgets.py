@@ -63,7 +63,7 @@ class LargeAttachmentThumbnail(ClickableTextLabel):
             self.setMinimumSize(QtCore.QSize(256, 144))
             self.setMaximumSize(QtCore.QSize(256, 144))
             self.setText("")
-            self.setPixmap(QtGui.QPixmap(":/tk_multi_infopanel_activity_stream/rect_256x144.png"))
+            self.setPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets_activity_stream/rect_256x144.png"))
         
         else:
             # no thumbnail for this guy
@@ -142,7 +142,7 @@ class SmallAttachmentThumbnail(ClickableTextLabel):
         self.setScaledContents(True)
         self.setText("")
         self.setToolTip("Click to show a larger thumbnail.")
-        self.setPixmap(QtGui.QPixmap(":/tk_multi_infopanel_activity_stream/attachment_icon_192px.png"))
+        self.setPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets_activity_stream/attachment_icon_192px.png"))
         self._data = data
         
     def set_thumbnail(self, image):

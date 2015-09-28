@@ -16,3 +16,8 @@ from . import spinner_widget
 from . import search_widget
 from . import elided_label
 from . import navigation
+from . import note_input_widget
+from . import activity_stream
+from . import global_search_widget
+from . import sceen_grab
+from . import version_label

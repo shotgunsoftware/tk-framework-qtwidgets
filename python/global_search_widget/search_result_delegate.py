@@ -60,7 +60,7 @@ class SearchResultDelegate(shotgun_view.WidgetDelegate):
                                    ]
 
         if entity_type in entity_types_with_icons:        
-            url = ":/tk_multi_infopanel_global_search_widget/entity_icons/icon_%s_dark.png" % entity_type
+            url = ":/tk_framework_qtwidgets_global_search_widget/entity_icons/icon_%s_dark.png" % entity_type
         else:
             url = None
             

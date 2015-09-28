@@ -27,7 +27,7 @@ class Ui_SearchResultWidget(object):
         self.thumbnail.setMinimumSize(QtCore.QSize(48, 38))
         self.thumbnail.setMaximumSize(QtCore.QSize(48, 38))
         self.thumbnail.setText("")
-        self.thumbnail.setPixmap(QtGui.QPixmap(":/tk_multi_infopanel_global_search_widget/rect_512x400.png"))
+        self.thumbnail.setPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets_global_search_widget/rect_512x400.png"))
         self.thumbnail.setScaledContents(True)
         self.thumbnail.setAlignment(QtCore.Qt.AlignCenter)
         self.thumbnail.setObjectName("thumbnail")

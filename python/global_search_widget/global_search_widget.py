@@ -51,7 +51,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         
         self._processing_id = None
         self._thumb_map = {}
-        self._default_icon = QtGui.QPixmap(":/tk_multi_infopanel_global_search_widget/rect_512x400.png")
+        self._default_icon = QtGui.QPixmap(":/tk_framework_qtwidgets_global_search_widget/rect_512x400.png")
                 
         # configure our popup completer
         self._completer = QtGui.QCompleter(self)
