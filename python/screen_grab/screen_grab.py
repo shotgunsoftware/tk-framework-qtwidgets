@@ -189,7 +189,7 @@ def screen_capture_file(output_path=None):
     Modally display the screen capture tool, saving to a file.
     
     :param output_path: Path to save to. If no path is specified,
-    a temp path is generated.
+                        a temp path is generated.
     :returns: path where screenshot was saved.
     """
     if output_path is None:
