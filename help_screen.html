@@ -1,5 +1,7 @@
 
 
+
+
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -8,10 +10,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Help Screen Popup &mdash; Shotgun Pipeline Toolkit v2.4.2 documentation</title>
+  <title>Help Screen Popup &mdash; tk-framework-qtwidgets v2.4.2 documentation</title>
   
 
   
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
   
 
   
@@ -30,7 +34,7 @@
   
 
   
-    <link rel="top" title="Shotgun Pipeline Toolkit v2.4.2 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.4.2 documentation" href="index.html"/>
         <link rel="next" title="Spinner and text overlay widget" href="overlay_widget.html"/>
         <link rel="prev" title="Shotgun Global Search Widget" href="global_search_widget.html"/> 
 
@@ -48,21 +52,20 @@
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search">
           
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='_static/logo@2x.png'/>
+    
 
           
-            <a href="index.html" class="icon icon-home"> Shotgun Pipeline Toolkit
+            <a href="index.html" class="icon icon-home"> tk-framework-qtwidgets
           
 
           
           </a>
 
-          
-            
-            
-              <div class="version">
-                v2.4.2
-              </div>
-            
           
 
           
@@ -75,18 +78,22 @@
 </div>
 
           
+
         </div>
 
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
+    
             
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Help Screen Popup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sample-code">Sample Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sample-code">Sample Code</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#api-reference">API Reference</a></li>
 </ul>
 </li>
@@ -97,6 +104,32 @@
 
             
           
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> v2.4.2.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
         </div>
       </div>
     </nav>
@@ -106,7 +139,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Shotgun Pipeline Toolkit</a>
+        <a href="index.html">tk-framework-qtwidgets</a>
       </nav>
 
 
@@ -139,18 +172,17 @@
 <h1>Help Screen Popup<a class="headerlink" href="#help-screen-popup" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<a class="reference internal image-reference" href="_images/help_overview.png"><img alt="_images/help_overview.png" src="_images/help_overview.png" style="width: 650px;" /></a>
+<img alt="_images/help_overview.png" src="_images/help_overview.png" />
 <p>The help popup is a window which presents a series of help images to the user,
 typically displayed at startup, to help introduce new feature or a new application
 to a user. The information is presented as an interactive slide show where the user
 can easily navigate between sides.</p>
-<a class="reference internal image-reference" href="_images/help_aspects.png"><img alt="_images/help_aspects.png" src="_images/help_aspects.png" style="width: 650px;" /></a>
+<img alt="_images/help_aspects.png" src="_images/help_aspects.png" />
 <p>You simply provide it with a list of transparent bitmaps sized 650x400 and it will
 create a slideshow with animated transitions and a link to the bundle&#8217;s associated
 documentation (retrieved from the manifest).</p>
-</div>
 <div class="section" id="sample-code">
-<h2>Sample Code<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h2>
+<h3>Sample Code<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">help_screen</span></code> module contains a single method that takes care of everything.
 Simply create the number of 650x400 images that you want and export them as transparent
 <code class="docutils literal"><span class="pre">png</span></code> files and ensure that the background is transparent (this is not a strict requirement,
@@ -179,6 +211,7 @@ to launch the help screen:</p>
 <span class="c"># and the application flow will continue</span>
 <span class="n">help_screen</span><span class="o">.</span><span class="n">show_help_screen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">(),</span> <span class="n">app</span><span class="p">,</span> <span class="n">help_pix</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="api-reference">
@@ -236,8 +269,7 @@ to launch the help screen:</p>
         &copy; Copyright 2015, Autodesk.
 
     </p>
-  </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  </div> 
 
 </footer>
 
