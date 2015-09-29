@@ -14,10 +14,10 @@ from sgtk.platform.qt import QtCore, QtGui
 # import the shotgun_model and view modules from the shotgun utils framework
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 shotgun_view = sgtk.platform.import_framework("tk-framework-qtwidgets", "shotgun_view")
+shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 from .search_result_widget import SearchResultWidget 
 
-from ...modules.schema import CachedShotgunSchema
 
 class SearchResultDelegate(shotgun_view.WidgetDelegate):
     """
@@ -60,7 +60,7 @@ class SearchResultDelegate(shotgun_view.WidgetDelegate):
                                    ]
 
         if entity_type in entity_types_with_icons:        
-            url = ":/tk_framework_qtwidgets_global_search_widget/entity_icons/icon_%s_dark.png" % entity_type
+            url = ":/tk_framework_qtwidgets.global_search_widget/entity_icons/icon_%s_dark.png" % entity_type
         else:
             url = None
             
@@ -129,7 +129,7 @@ class SearchResultDelegate(shotgun_view.WidgetDelegate):
             #  'type': 'Version', 
             #  'id': 99}            
 
-            entity_type_display_name = CachedShotgunSchema.get_type_display_name(data["type"])
+            entity_type_display_name = shotgun_globals.get_type_display_name(data["type"])
 
             content = ""
             et_url = self._url_for_entity_type(data["type"])
@@ -154,7 +154,7 @@ class SearchResultDelegate(shotgun_view.WidgetDelegate):
                     # present type name name
                     link_entity_type = links[0]
                                         
-                    content += "<br>%s %s" % (CachedShotgunSchema.get_type_display_name(link_entity_type), links[1])
+                    content += "<br>%s %s" % (shotgun_globals.get_type_display_name(link_entity_type), links[1])
             
             widget.set_text(content)
         

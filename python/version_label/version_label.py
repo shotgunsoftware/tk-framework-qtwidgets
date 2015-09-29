@@ -37,8 +37,8 @@ class VersionLabel(QtGui.QLabel):
         :param parent: QT parent object
         """
         QtGui.QLabel.__init__(self, parent)
-        self._play_icon = QtGui.QPixmap(":/tk_framework_qtwidgets_version_label/play_icon.png")
-        self._play_icon_inactive = QtGui.QPixmap(":/tk_framework_qtwidgets_version_label/play_icon_inactive.png")
+        self._play_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.version_label/play_icon.png")
+        self._play_icon_inactive = QtGui.QPixmap(":/tk_framework_qtwidgets.version_label/play_icon_inactive.png")
         self._sg_data = None
         self._hover = False
         self._active = False

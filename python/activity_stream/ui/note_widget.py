@@ -23,7 +23,7 @@ class Ui_NoteWidget(object):
         self.user_thumb.setMinimumSize(QtCore.QSize(50, 50))
         self.user_thumb.setMaximumSize(QtCore.QSize(50, 50))
         self.user_thumb.setText("")
-        self.user_thumb.setPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets_activity_stream/default_user.png"))
+        self.user_thumb.setPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets.activity_stream/default_user.png"))
         self.user_thumb.setScaledContents(True)
         self.user_thumb.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.user_thumb.setObjectName("user_thumb")

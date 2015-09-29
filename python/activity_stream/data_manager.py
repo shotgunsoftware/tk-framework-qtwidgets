@@ -64,7 +64,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         self._app = sgtk.platform.current_bundle()
 
         # default not found/loading thumb
-        self._default_icon = QtGui.QPixmap(":/tk_framework_qtwidgets_global_search_widget/rect_512x400.png")
+        self._default_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.global_search_widget/rect_512x400.png")
 
         # cache path on disk
         self._cache_path = os.path.join(self._app.cache_location, 

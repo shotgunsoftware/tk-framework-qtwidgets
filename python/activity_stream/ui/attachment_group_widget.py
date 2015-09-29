@@ -20,7 +20,7 @@ class Ui_AttachmentGroupWidget(object):
         self.attachments_label.setMinimumSize(QtCore.QSize(100, 16))
         self.attachments_label.setMaximumSize(QtCore.QSize(100, 16))
         self.attachments_label.setText("")
-        self.attachments_label.setPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets_activity_stream/attachments.png"))
+        self.attachments_label.setPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets.activity_stream/attachments.png"))
         self.attachments_label.setScaledContents(True)
         self.attachments_label.setObjectName("attachments_label")
         self.verticalLayout.addWidget(self.attachments_label)
