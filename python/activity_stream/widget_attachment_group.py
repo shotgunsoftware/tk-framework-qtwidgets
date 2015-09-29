@@ -106,7 +106,7 @@ class AttachmentGroupWidget(QtGui.QWidget):
         elif offset == self.OFFSET_SMALL_THUMB:
             self.ui.verticalLayout.setContentsMargins(36, 6, 0, 0)
         else:
-            self._app.log_warning("Unknown offset for attachment group")
+            self._bundle.log_warning("Unknown offset for attachment group")
         
     def set_thumbnail(self, data):
         """

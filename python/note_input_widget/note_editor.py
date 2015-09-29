@@ -270,7 +270,7 @@ class NoteEditor(QtGui.QTextEdit):
         uid = shotgun_model.sanitize_qt(uid) # qstring on pyqt, str on pyside
         msg = shotgun_model.sanitize_qt(msg)
         if self._processing_id == uid:
-            self._app.log_warning("Could not retrieve search results: %s" % msg)
+            self._bundle.log_warning("Could not retrieve search results: %s" % msg)
     
     def __on_worker_signal(self, uid, request_type, data):
         """
@@ -355,5 +355,5 @@ class NoteEditor(QtGui.QTextEdit):
         # will reside outside our span in the richtext structure.
         tc.insertHtml("<span id='%s' "
                       "style='color: %s'>%s</span> " % (self._create_sg_markup_id(data), 
-                                                        self._app.style_constants["SG_HIGHLIGHT_COLOR"],
+                                                        self._bundle.style_constants["SG_HIGHLIGHT_COLOR"],
                                                         data["name"]))

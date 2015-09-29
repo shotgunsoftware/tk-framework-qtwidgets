@@ -67,7 +67,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         self._default_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.global_search_widget/rect_512x400.png")
 
         # cache path on disk
-        self._cache_path = os.path.join(self._app.cache_location, 
+        self._cache_path = os.path.join(self._bundle.cache_location, 
                                          "activity_stream_v%s.sqlite" % self.DATBASE_FORMAT_VERSION)
 
         # set up a data retriever
@@ -119,7 +119,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         self._entity_type = "Note"
         self._entity_id = note_id
         
-        self._app.log_debug("Loading cached note data for %s" % note_id)
+        self._bundle.log_debug("Loading cached note data for %s" % note_id)
 
         # load note thread only
         note_data = self.__get_note_thread_data(note_id)
@@ -145,18 +145,18 @@ class ActivityStreamDataHandler(QtCore.QObject):
         self._entity_type = entity_type
         self._entity_id = entity_id
         
-        self._app.log_debug("Loading max %s cached activity stream data entries "
+        self._bundle.log_debug("Loading max %s cached activity stream data entries "
                             "for %s %s" % (limit, self._entity_type, self._entity_id))
 
         time_before = time.time()
-        self._app.log_debug("Loading cached data...")
+        self._bundle.log_debug("Loading cached data...")
         
         # load activity stream and associated notes
         (self._activity_data, self._note_threads) = self.__get_db_activity_stream_records(self._entity_type, 
                                                                                           self._entity_id,
                                                                                           limit)
         time_diff = (time.time() - time_before)
-        self._app.log_debug("...loading complete! %s "
+        self._bundle.log_debug("...loading complete! %s "
                             "events and %s notes loaded in "
                             "%4fs" % (len(self._activity_data), len(self._note_threads), time_diff))
             
@@ -304,7 +304,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                                         "thumbnail_type": self.THUMBNAIL_CREATED_BY}
 
             else:
-                self._app.log_warning("No thumbnail found for this note!")
+                self._bundle.log_warning("No thumbnail found for this note!")
             
         elif created_by and created_by.get("image"):
             # for all other activities, the thumbnail reflects who
@@ -356,7 +356,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             table_names = [x[0] for x in ret.fetchall()]
             
             if len(table_names) == 0:
-                self._app.log_debug("Creating schema in sqlite db.")
+                self._bundle.log_debug("Creating schema in sqlite db.")
                 
                 # we have a brand new database. Create all tables and indices
                 c.executescript("""
@@ -410,7 +410,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 
         except:
             # supress and continue
-            self._app.log_exception("Could not load activity stream data "
+            self._bundle.log_exception("Could not load activity stream data "
                                     "from cache database %s" % self._cache_path)
         finally:
             try:
@@ -419,7 +419,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 if connection:
                     connection.close()
             except:
-                self._app.log_exception("Could not close database handle")
+                self._bundle.log_exception("Could not close database handle")
             
         return note_data
        
@@ -491,7 +491,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             
         except:
             # supress and continue
-            self._app.log_exception("Could not load activity stream data "
+            self._bundle.log_exception("Could not load activity stream data "
                                     "from cache database %s" % self._cache_path)
         finally:
             try:
@@ -500,7 +500,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 if connection:
                     connection.close()
             except:
-                self._app.log_exception("Could not close database handle")
+                self._bundle.log_exception("Could not close database handle")
             
         return (activities, notes)
             
@@ -510,7 +510,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         Adds a number of records to the activity db. If they 
         already exist, they are not re-added
         """
-        self._app.log_debug("Updating database with %s new events" % len(events))
+        self._bundle.log_debug("Updating database with %s new events" % len(events))
         connection = None
         cursor = None
         try:
@@ -542,7 +542,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             
         except:
             # supress and continue
-            self._app.log_exception("Could not add activity stream data "
+            self._bundle.log_exception("Could not add activity stream data "
                                     "to cache database %s" % self._cache_path)
         finally:
             try:
@@ -551,8 +551,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 if connection:
                     connection.close()
             except:
-                self._app.log_exception("Could not close database handle")
-        self._app.log_debug("...update complete")
+                self._bundle.log_exception("Could not close database handle")
+        self._bundle.log_debug("...update complete")
             
     def __db_insert_note_update(self, update_id, note_id, data):
         """
@@ -561,7 +561,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         :param update_id: Activity stream id to update. If None, only
                           the note will be rebuilt in the database.
         """
-        self._app.log_debug("Adding note %s to database, "
+        self._bundle.log_debug("Adding note %s to database, "
                             "linking it to event %s" % (note_id, update_id))
         connection = None
         cursor = None
@@ -596,7 +596,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             
         except:
             # supress and continue
-            self._app.log_exception("Could not add note data "
+            self._bundle.log_exception("Could not add note data "
                                     "to cache database %s" % self._cache_path)
         finally:
             try:
@@ -605,7 +605,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 if connection:
                     connection.close()
             except:
-                self._app.log_exception("Could not close database handle")
+                self._bundle.log_exception("Could not close database handle")
             
     ###########################################################################
     # private methods        
@@ -690,16 +690,16 @@ class ActivityStreamDataHandler(QtCore.QObject):
         msg = shotgun_model.sanitize_qt(msg)
         
         if self._processing_id == uid:
-            self._app.log_warning("Could not retrieve activity stream "
+            self._bundle.log_warning("Could not retrieve activity stream "
                                   "data from Shotgun: %s" % msg)
 
         if uid in self._note_map:
-            self._app.log_warning("Could not retrieve note "
+            self._bundle.log_warning("Could not retrieve note "
                                   "data from Shotgun: %s" % msg)
 
         if uid in self._thumb_map:
             # one of the jobs we are tracking
-            self._app.log_warning("Could not retrieve thumbnail "
+            self._bundle.log_warning("Could not retrieve thumbnail "
                                   "data from Shotgun: %s" % msg)
 
     
@@ -747,7 +747,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # main activity stream data has arrived
             updates = data["return_value"]["updates"]
             
-            self._app.log_debug("Received %s activity stream updates." % len(updates))
+            self._bundle.log_debug("Received %s activity stream updates." % len(updates))
                         
             # save to disk
             self.__db_insert_activity_updates(self._entity_type, self._entity_id, updates)
@@ -770,11 +770,11 @@ class ActivityStreamDataHandler(QtCore.QObject):
                     update["update_type"] == "create_reply":
                     
                     note_id = update["primary_entity"]["id"]
-                    self._app.log_debug("Requesting note thread download "
+                    self._bundle.log_debug("Requesting note thread download "
                                         "for note %s" % note_id)
                     # kick off async data request from shotgun 
                     data = {"note_id": note_id }
-                    self._app.log_debug("Requesting async data for note id %s" % note_id)
+                    self._bundle.log_debug("Requesting async data for note id %s" % note_id)
                     note_uid = self._sg_data_retriever.execute_method(self._get_note_thread, data)        
 
                     # map the unique id with the update id so we can merge the 
@@ -782,13 +782,13 @@ class ActivityStreamDataHandler(QtCore.QObject):
                     self._note_map[note_uid] = {"update_id": activity_id, 
                                                 "note_id": note_id}
             
-            self._app.log_debug("Processed %s updates" % len(updates))
+            self._bundle.log_debug("Processed %s updates" % len(updates))
             
             # emit signal
             new_ids = [x["id"] for x in updates]
             # sort them in ascending order
             new_ids = sorted(new_ids)
-            self._app.log_debug("emit update_arrived signal for %s ids" % len(new_ids))
+            self._bundle.log_debug("emit update_arrived signal for %s ids" % len(new_ids))
             self.update_arrived.emit(new_ids)
             
             
@@ -797,7 +797,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # we got a note id back!
             update_id = self._note_map[uid]["update_id"]
             note_id = self._note_map[uid]["note_id"]
-            self._app.log_debug("Received note reply info for note id %s, update %s" % (note_id, update_id))
+            self._bundle.log_debug("Received note reply info for note id %s, update %s" % (note_id, update_id))
             
             # data is a list of entities, stored inside a "return_value" key
             note_thread_list = data["return_value"]

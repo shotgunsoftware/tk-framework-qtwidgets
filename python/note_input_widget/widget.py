@@ -120,13 +120,13 @@ class NoteInputWidget(QtGui.QWidget):
         a screenshot should be taken or that it should be cleared.
         """
         
-        screen_grab = self._app.import_module("screen_grab")
+        screen_grab = self._bundle.import_module("screen_grab")
         
         if self._pixmap is None:
             # no pixmap exists - screengrab mode
-            self._app.log_debug("Prompting for screenshot...")
+            self._bundle.log_debug("Prompting for screenshot...")
             self._pixmap = screen_grab.screen_capture()
-            self._app.log_debug("Got screenshot %sx%s" % (self._pixmap.width(), 
+            self._bundle.log_debug("Got screenshot %sx%s" % (self._pixmap.width(), 
                                                           self._pixmap.height()))
             
             thumb = self.__format_thumbnail(self._pixmap)
@@ -169,7 +169,7 @@ class NoteInputWidget(QtGui.QWidget):
         data["text"] = self.ui.text_entry.toPlainText()
         data["recipient_links"] = self.ui.text_entry.get_recipient_links()
         data["entity"] = {"id": self._entity_id, "type": self._entity_type }
-        data["project"] = self._app.context.project
+        data["project"] = self._bundle.context.project
         # ask the data retriever to execute an async callback
         self._processing_id = self.__sg_data_retriever.execute_method(self._async_submit, data)
         
@@ -312,7 +312,7 @@ class NoteInputWidget(QtGui.QWidget):
         #
         # Tomoko's Note on aaa_00010_F004_C003_0228F8_v000 and aaa_00010
         # First name's Note on [list of entities]
-        current_user = sgtk.util.get_current_user(self._app.sgtk)
+        current_user = sgtk.util.get_current_user(self._bundle.sgtk)
         if current_user:
             if current_user.get("firstname"):
                 # not all core versions support firstname,
@@ -356,9 +356,9 @@ class NoteInputWidget(QtGui.QWidget):
             
             # create file entity and upload file
             if os.path.exists(png_path):
-                self._app.log_debug("Uploading attachment (%s bytes)..." % os.path.getsize(png_path))
+                self._bundle.log_debug("Uploading attachment (%s bytes)..." % os.path.getsize(png_path))
                 sg.upload(parent_entity["type"], parent_entity["id"], png_path)
-                self._app.log_debug("Upload complete!")            
+                self._bundle.log_debug("Upload complete!")            
                 os.remove(png_path)
         
     def __on_worker_failure(self, uid, msg):
@@ -372,7 +372,7 @@ class NoteInputWidget(QtGui.QWidget):
         msg = shotgun_model.sanitize_qt(msg)
 
         if self._processing_id == uid:        
-            self._app.log_error("Could not create note/reply: %s" % msg)
+            self._bundle.log_error("Could not create note/reply: %s" % msg)
             full_msg = "Could not submit note update: %s" % msg
             QtGui.QMessageBox.critical(None, "Shotgun Error", msg)
     
@@ -394,7 +394,7 @@ class NoteInputWidget(QtGui.QWidget):
             # all done!
             self.__overlay.hide()
             self.clear()
-            self._app.log_debug("Update call complete! Return data: %s" % data)
+            self._bundle.log_debug("Update call complete! Return data: %s" % data)
             self.data_updated.emit()
             
         
@@ -485,7 +485,7 @@ class NoteInputWidget(QtGui.QWidget):
             self.setMaximumSize(QtCore.QSize(16777215, 120))
              
         else:
-            self._app.log_warning("cannot adjust unknown ui mode.")             
+            self._bundle.log_warning("cannot adjust unknown ui mode.")             
               
     def clear(self):
         """

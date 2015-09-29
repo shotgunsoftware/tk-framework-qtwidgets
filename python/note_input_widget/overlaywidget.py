@@ -111,7 +111,7 @@ class SmallOverlayWidget(QtGui.QWidget):
             painter.translate((painter.device().width() / 2) - 10, 
                               (painter.device().height() / 2) - 10)
             
-            pen = QtGui.QPen(QtGui.QColor(self._app.style_constants["SG_HIGHLIGHT_COLOR"]))
+            pen = QtGui.QPen(QtGui.QColor(self._bundle.style_constants["SG_HIGHLIGHT_COLOR"]))
             pen.setWidth(1)
             painter.setPen(pen)
 

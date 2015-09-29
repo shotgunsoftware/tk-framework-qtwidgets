@@ -121,7 +121,7 @@ class LargeAttachmentThumbnail(ClickableTextLabel):
         # https://manne-dev-1.shotgunstudio.com/file_serve/attachment/259/screencapture_3bVvcA.png
         
         file_name = self._data["this_file"]["name"]
-        url = "%s/file_serve/attachment/%s/%s" % (self._app.sgtk.shotgun_url, self._data["id"], file_name)
+        url = "%s/file_serve/attachment/%s/%s" % (self._bundle.sgtk.shotgun_url, self._data["id"], file_name)
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
         
         

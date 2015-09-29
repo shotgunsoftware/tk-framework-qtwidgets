@@ -90,10 +90,10 @@ class ReplyListWidget(QtGui.QWidget):
         
         :param sg_entity_dict: Shotgun link dictionary with keys type and id.
         """
-        self._app.log_debug("Loading replies for %s" % sg_entity_dict)
+        self._bundle.log_debug("Loading replies for %s" % sg_entity_dict)
         
         if sg_entity_dict["type"] != "Note":
-            self._app.log_error("Can only show replies for Notes.")
+            self._bundle.log_error("Can only show replies for Notes.")
             return
 
         # first ask the data manager to load up cached 
@@ -126,7 +126,7 @@ class ReplyListWidget(QtGui.QWidget):
                         in the data manager.
         """
         
-        self._app.log_debug("Retrieved new data notification for "
+        self._bundle.log_debug("Retrieved new data notification for "
                             "activity id %s, note id %s" % (activity_id, note_id))
         
         # set note content            
@@ -195,7 +195,7 @@ class ReplyListWidget(QtGui.QWidget):
                                   "attachment_data": attachment_data}
                     attachment_requests.append(ag_request)
     
-            self._app.log_debug("Request thumbnails...")
+            self._bundle.log_debug("Request thumbnails...")
             
             for attachment_req in attachment_requests:
                 self._data_manager.request_attachment_thumbnail(-1, 
@@ -236,14 +236,14 @@ class ReplyListWidget(QtGui.QWidget):
             # make the window visible again and trigger a redraw
             self.setVisible(True)
             
-        self._app.log_debug("...done")
+        self._bundle.log_debug("...done")
 
         
     def _clear(self):
         """
         Clear the widget. This will remove all items from the UI
         """
-        self._app.log_debug("Clearing UI...")
+        self._bundle.log_debug("Clearing UI...")
         
         for x in self._general_widgets + self._reply_widgets + self._attachment_group_widgets.values():
             # remove widget from layout:

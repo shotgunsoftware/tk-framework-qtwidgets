@@ -130,7 +130,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         try:
             self._completer.activated[QtCore.QModelIndex].disconnect(self._on_completer_select)
         except:
-            self._app.log_debug("Could not disconnect global search activated "
+            self._bundle.log_debug("Could not disconnect global search activated "
                                 "signal prior to reconnect. Looks like this connection "
                                 "must have been discarded at some point along the way.")
                 
@@ -171,8 +171,8 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         
         # constrain by project in the search
         project_ids = []
-        if self._app.context.project:
-            project_ids.append(self._app.context.project["id"])
+        if self._bundle.context.project:
+            project_ids.append(self._bundle.context.project["id"])
         
         # run the query
         sg_data = sg.text_search(data["text"], entity_types, project_ids)
@@ -188,7 +188,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         uid = shotgun_model.sanitize_qt(uid) # qstring on pyqt, str on pyside
         msg = shotgun_model.sanitize_qt(msg)
         if self._processing_id == uid:
-            self._app.log_warning("Could not retrieve search results: %s" % msg)
+            self._bundle.log_warning("Could not retrieve search results: %s" % msg)
     
     def __on_worker_signal(self, uid, request_type, data):
         """

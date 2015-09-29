@@ -101,7 +101,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         :param sg_entity_dict: Dictionary with keys type and id.
         """
-        self._app.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
+        self._bundle.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
         # clean up everything first
         self._clear()
         
@@ -123,7 +123,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             self.ui.note_widget.setVisible(True)
 
         # now load cached data for the given entity
-        self._app.log_debug("Setting up db manager....")
+        self._bundle.log_debug("Setting up db manager....")
         ids_to_process = self._data_manager.load_activity_data(self._entity_type, 
                                                                self._entity_id,
                                                                self.MAX_STREAM_LENGTH)
@@ -143,7 +143,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         # before we begin widget operations, turn off visibility
         # of the whole widget in order to avoid recomputes
-        self._app.log_debug("Start building widgets based on cached data...")
+        self._bundle.log_debug("Start building widgets based on cached data...")
         self.setVisible(False)
         try:
 
@@ -152,7 +152,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             # it consumes all unused space. This is to keep other
             # widgets from growing when there are only a few widgets
             # available in the scroll area.
-            self._app.log_debug("Adding expanding base widget...")            
+            self._bundle.log_debug("Adding expanding base widget...")            
             
             expanding_widget = QtGui.QLabel(self)
             self.ui.activity_stream_layout.addWidget(expanding_widget)
@@ -171,7 +171,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     
             # ids are returned in async order. Now pop them onto the activity stream,
             # old items first order...
-            self._app.log_debug("Adding activity widgets...")
+            self._bundle.log_debug("Adding activity widgets...")
             for activity_id in ids_to_process:
                 w = self._create_activity_widget(activity_id)
                 # note that not all activity data entries generate
@@ -196,7 +196,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             
             # last, create "loading" widget
             # to put at the top of the list
-            self._app.log_debug("Adding loading widget...")
+            self._bundle.log_debug("Adding loading widget...")
             self._loading_widget = QtGui.QLabel(self)
             self._loading_widget.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
             self._loading_widget.setText("Loading data from Shotgun...") 
@@ -206,7 +206,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         finally:
             # make the window visible again and trigger a redraw
             self.setVisible(True)
-            self._app.log_debug("...UI building complete!")
+            self._bundle.log_debug("...UI building complete!")
                 
         ###############################################################
         # Phase 2 - request additional data.
@@ -214,7 +214,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         # the ui - this is to minimise the risk of GIL signal issues
                 
         # request thumbs
-        self._app.log_debug("Request thumbnails...")
+        self._bundle.log_debug("Request thumbnails...")
         for activity_id in ids_to_process:
             self._data_manager.request_activity_thumbnails(activity_id)
         
@@ -236,12 +236,12 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                           reply_user["id"],
                                                           reply_user["image"])
         
-        self._app.log_debug("...done")
+        self._bundle.log_debug("...done")
         
         # and now request an update check
-        self._app.log_debug("Ask db manager to ask shotgun for updates...")
+        self._bundle.log_debug("Ask db manager to ask shotgun for updates...")
         self._data_manager.rescan()
-        self._app.log_debug("...done")
+        self._bundle.log_debug("...done")
             
     ############################################################################
     # internals
@@ -263,7 +263,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Clear the widget. This will remove all items the UI
         """
-        self._app.log_debug("Clearing UI...")
+        self._bundle.log_debug("Clearing UI...")
         # before we begin widget operations, turn off visibility
         # of the whole widget in order to avoid recomputes        
         self.setVisible(False)
@@ -272,10 +272,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         self.ui.activity_stream_scroll_area.verticalScrollBar().setValue(0)
         
         try:
-            self._app.log_debug("Clear loading widget")
+            self._bundle.log_debug("Clear loading widget")
             self._clear_loading_widget()
 
-            self._app.log_debug("Removing all widget items")
+            self._bundle.log_debug("Removing all widget items")
             for x in self._widgets.values():
                 # remove widget from layout:
                 self.ui.activity_stream_layout.removeWidget(x)
@@ -284,10 +284,10 @@ class ActivityStreamWidget(QtGui.QWidget):
                 # mark it to be deleted when event processing returns to the main loop
                 x.deleteLater()
         
-            self._app.log_debug("Clearing python data structures")
+            self._bundle.log_debug("Clearing python data structures")
             self._widgets = {}
     
-            self._app.log_debug("Removing expanding widget")
+            self._bundle.log_debug("Removing expanding widget")
             for w in self._other_widgets:
                 self.ui.activity_stream_layout.removeWidget(w)
                 w.setParent(None)
@@ -303,12 +303,12 @@ class ActivityStreamWidget(QtGui.QWidget):
         Remove the loading widget from the widget list
         """
         if self._loading_widget:
-            self._app.log_debug("Cleaning the loading widget")
+            self._bundle.log_debug("Cleaning the loading widget")
             self.ui.activity_stream_layout.removeWidget(self._loading_widget)
             self._loading_widget.setParent(None)
             self._loading_widget.deleteLater()
             self._loading_widget = None
-            self._app.log_debug("...done")
+            self._bundle.log_debug("...done")
         
     def _populate_note_widget(self, note_widget, activity_id, note_id):
         """
@@ -408,7 +408,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             widget = ValueUpdateWidget(self)
             
         else:
-            self._app.log_debug("Activity type not supported and will not be "
+            self._bundle.log_debug("Activity type not supported and will not be "
                                 "rendered: %s" % data["update_type"])
         
         # initialize the widget
@@ -424,7 +424,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         New activity items have arrived from from the data manager
         """
-        self._app.log_debug("Process new data slot called "
+        self._bundle.log_debug("Process new data slot called "
                             "for %s activity events" % len(activity_ids))
                 
         # remove the "loading please wait .... widget
@@ -449,28 +449,28 @@ class ActivityStreamWidget(QtGui.QWidget):
         # and we pop them on to the widget
 
         if len(activity_ids) > self.MAX_STREAM_LENGTH:
-            self._app.log_debug("Capping the %s new activity items down to "
+            self._bundle.log_debug("Capping the %s new activity items down to "
                                 "%s items" % (len(activity_ids), self.MAX_STREAM_LENGTH))
         
             # transform [10,11,12,13,14,15,16,17] -> [15,16,17]
             activity_ids = activity_ids[-self.MAX_STREAM_LENGTH:]
         
         for activity_id in activity_ids:
-            self._app.log_debug("Creating new widget...")
+            self._bundle.log_debug("Creating new widget...")
             w = self._create_activity_widget(activity_id)
             if w:            
                 self._widgets[activity_id] = w
-                self._app.log_debug("Adding %s to layout" % w)
+                self._bundle.log_debug("Adding %s to layout" % w)
                 self.ui.activity_stream_layout.addWidget(w)        
                 # add special blue border to indicate that this is a new arrival
                 w.setStyleSheet("QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }")
         
         # when everything is loaded in, load the thumbs
-        self._app.log_debug("Requesting thumbnails")
+        self._bundle.log_debug("Requesting thumbnails")
         for activity_id in activity_ids:
             self._data_manager.request_activity_thumbnails(activity_id)
                 
-        self._app.log_debug("Process new data complete.")
+        self._bundle.log_debug("Process new data complete.")
 
         # turn off the overlay in case it is spinning
         # (which only happens on a full load)
@@ -535,6 +535,6 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Called when someone clicks 'show activity stream in shotgun'
         """
-        url = "%s/detail/%s/%s" % (self._app.sgtk.shotgun_url, self._entity_type, self._entity_id)
+        url = "%s/detail/%s/%s" % (self._bundle.sgtk.shotgun_url, self._entity_type, self._entity_id)
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
 

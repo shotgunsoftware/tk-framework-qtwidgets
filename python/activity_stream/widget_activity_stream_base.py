@@ -130,7 +130,7 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
             entity_id = int(entity_id)
             self.entity_requested.emit(entity_type, entity_id)
         except:
-            self._app.log_warning("Could not parse url '%s'" % url)
+            self._bundle.log_warning("Could not parse url '%s'" % url)
 
         
     def _set_timestamp(self, data, label):
@@ -189,7 +189,7 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
                         color: %s'>%s</a>
                   """ % (entity_type, 
                          entity_id,
-                         self._app.style_constants["SG_HIGHLIGHT_COLOR"], 
+                         self._bundle.style_constants["SG_HIGHLIGHT_COLOR"], 
                          name)
         return str_val
     
