@@ -1,0 +1,379 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>QT Widget delegates &mdash; tk-framework-qtwidgets v2.4.2 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets v2.4.2 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='_static/logo@2x.png'/>
+    
+
+          
+            <a href="index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_label.html">Shotgun Version Playback Widget</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> v2.4.2.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>QT Widget delegates</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qt-widget-delegates">
+<h1>QT Widget delegates<a class="headerlink" href="#qt-widget-delegates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The widget delegates module makes it easy to create custom UI experiences that are
+using data from the Shotgun Model.</p>
+<p>If you feel that the visuals that you get back from a standard
+<cite>QTreeView</cite> or <cite>QListView</cite> are not sufficient for your needs,
+these view utilities provide a collection of tools to help you quickly build
+consistent and nice looking user QT Views. These are typically used in conjunction
+with the <cite>ShotgunModel</cite> but this is not a requirement.</p>
+<ul class="simple">
+<li>The <cite>WidgetDelegate</cite> helper class makes it easy to connect a <cite>QWidget</cite> of
+your choosing with a QT View. The <cite>WidgetDelegate</cite> will use your specified
+widget when the view is drawn and updated. This allows for full control
+of the visual appearance of any view.</li>
+<li>For consistency reasons we also supply a couple of simple widget classes
+that are meant to be used in conjunction with the <cite>WidgetDelegate</cite>. By
+using these widgets in your code you get the same look and feel as all
+other apps that use the widgets.</li>
+</ul>
+<p>QT allows for customization of cell contents inside of its standard view classes through the use of so called
+<em>delegate</em> classes (see <a class="reference external" href="http://qt-project.org/doc/qt-4.8/model-view-programming.html#delegate-classes">http://qt-project.org/doc/qt-4.8/model-view-programming.html#delegate-classes</a>),
+however this can be cumbersome and difficult to get right. In an attempt to simplify the process of
+view customization, the Shotgun Qt Widgets framework contains classes for making it easy to plugin in standard <cite>QWidgets</cite>
+and use these as &#8220;brushes&#8221; when QT is drawing its views. You can then quickly produce UI in for example the QT designer,
+hook up the data exchange between your model class and the widget in a delegate and quickly have some nice custom
+looking user interfaces!</p>
+<p>&lt;center&gt;
+&lt;img src=&#8217;widget_classes.png&#8217; class=&#8217;drop-shadow&#8217;&gt;
+&lt;/center&gt;</p>
+<p>The principle is that you derive a custom delegate class from the <cite>WidgetDelegate</cite> that is contained in the framework.
+This class contains for simple methods that you need to implement. As part of this you can also control the flow of
+data from the model into the widget each time it is being drawn, allowing for complex data to be easily passed from
+Shotgun via the model into your widget.
+For consistency, the framework also contains a number of standard widgets. Using these will provide you with a
+consistent looking set of visual components.</p>
+<p>The following example shows some of the basic around using this delegate class with the Shotgun Model.</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python</p>
+<p># import the shotgun_model and view modules from the corresponding frameworks
+shotgun_model = tank.platform.import_framework(&#8220;tk-framework-shotgunutils&#8221;, &#8220;shotgun_model&#8221;)
+shotgun_view = tank.platform.import_framework(&#8220;tk-framework-qtwidgets&#8221;, &#8220;shotgun_view&#8221;)</p>
+<dl class="docutils">
+<dt>class ExampleDelegate(shotgun_view.WidgetDelegate):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Shows an example how to use a shotgun_view.ListWidget in a std view.
+&#8220;&#8221;&#8220;</p>
+<dl class="last docutils">
+<dt>def __init__(self, view):</dt>
+<dd>&#8220;&#8221;&#8221;
+Constructor
+&#8220;&#8221;&#8221;
+shotgun_view.WidgetDelegate.__init__(self, view)</dd>
+<dt>def _create_widget(self, parent):</dt>
+<dd>&#8220;&#8221;&#8221;
+Returns the widget to be used when creating items
+&#8220;&#8221;&#8221;
+return shotgun_view.ListWidget(parent)</dd>
+<dt>def _on_before_paint(self, widget, model_index, style_options):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Called when a cell is being painted.
+&#8220;&#8221;&#8221;
+# extract the standard icon associated with the item
+icon = model_index.data(QtCore.Qt.DecorationRole)
+thumb = icon.pixmap(512)
+widget.set_thumbnail(thumb)</p>
+<p># get the shotgun query data for this model item
+sg_item = shotgun_model.get_sg_data(model_index)</p>
+<p># get values and populate widget
+version_str = &#8220;Version %03d&#8221; % sg_item.get(&#8220;version_number&#8221;)
+created_str = sg_item.get(&#8220;created_at&#8221;)
+desc_str = sg_item.get(&#8220;description&#8221;)
+author_str = &#8220;%s&#8221; % sg_item.get(&#8220;created_by&#8221;).get(&#8220;name&#8221;)</p>
+<p class="last">header_str = &#8220;&lt;b&gt;%s&lt;/b&gt;&#8221; % (version_str)
+body_str = &#8220;&lt;b&gt;%s&lt;/b&gt; &amp;mdash; %s&lt;br&gt;&lt;br&gt;&lt;small&gt;%s&lt;/small&gt;&#8221; % (author_str, desc_str, created_str)
+widget.set_text(header_str, body_str)</p>
+</dd>
+<dt>def _on_before_selection(self, widget, model_index, style_options):</dt>
+<dd>&#8220;&#8221;&#8221;
+Called when a cell is being selected.
+&#8220;&#8221;&#8221;
+# do std drawing first
+self._on_before_paint(widget, model_index, style_options)
+widget.set_selected(True)</dd>
+<dt>def sizeHint(self, style_options, model_index):</dt>
+<dd>&#8220;&#8221;&#8221;
+Base the size on the icon size property of the view
+&#8220;&#8221;&#8221;
+return shotgun_view.ListWidget.calculate_size()</dd>
+</dl>
+</dd>
+</dl>
+<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+<p>The next section contains the detailed API reference for the delegate system.</p>
+<p>## Class WidgetDelegate API Reference</p>
+<p>Convenience wrapper that makes it straight forward to use
+widgets inside of delegates.
+This class is basically an adapter which lets you connect a
+view (<cite>QAbstractItemView</cite>) with a <cite>QWidget</cite> of choice. This widget
+is used to &#8220;paint&#8221; the view when it is being rendered.
+This class can be used in conjunction with the various widgets found
+as part of the framework module (for example list_widget and thumb_widget).
+You use this class by subclassing it and implementing the three methods
+<cite>_create_widget()</cite>, <cite>_on_before_paint()</cite>, <cite>_on_before_selection()</cite> and <cite>sizeHint()</cite>.</p>
+<p>Note! In order for this class to handle selection correctly, it needs to be
+attached to the view <em>after</em> the model has been attached. (This is to ensure that it
+is able to obtain the view&#8217;s selection model correctly.)</p>
+<p>### WidgetDelegate Constructor</p>
+<p>Class constructor.</p>
+<p><strong>Constructor Parameters</strong></p>
+<ul class="simple">
+<li><cite>QWidget view</cite> - The view upon which the delegate should operate.</li>
+</ul>
+<p>### _create_widget()</p>
+<p>This needs to be implemented by any deriving classes.
+Should return a <cite>QWidget</cite> that will be used when grid cells are drawn.</p>
+<p><code class="docutils literal"><span class="pre">`</span>
+<span class="pre">delegate_obj._create_widget(</span> <span class="pre">parent</span> <span class="pre">)</span>
+<span class="pre">`</span></code></p>
+<p><strong>Parameters &amp; Return Value</strong></p>
+<ul class="simple">
+<li><cite>QWidget parent</cite> - QWidget to parent the widget to.</li>
+<li><strong>Returns:</strong> QWidget that will be used to paint grid cells in the view.</li>
+</ul>
+<p>### _on_before_paint()</p>
+<p>This needs to be implemented by any deriving classes.
+This is called just before a cell is painted. This method should configure values
+on the widget (such as labels, thumbnails etc) based on the data contained
+in the model index parameter which is being passed.</p>
+<p><code class="docutils literal"><span class="pre">`</span>
+<span class="pre">delegate_obj._on_before_paint(</span> <span class="pre">widget,</span> <span class="pre">model_index,</span> <span class="pre">style_options</span> <span class="pre">)</span>
+<span class="pre">`</span></code></p>
+<p><strong>Parameters &amp; Return Value</strong></p>
+<ul class="simple">
+<li><cite>QWidget widget</cite> - The QWidget (constructed in <cite>_create_widget()</cite>) which will
+be used to paint the cell.</li>
+<li><cite>QModelIndex index</cite> - QModelIndex object representing the data of the object that is about to be drawn.</li>
+<li><cite>QStyleOptionViewItem style_options</cite> - QStyleOptionViewItem object containing specifics about the
+view related state of the cell.</li>
+</ul>
+<p>### _on_before_selection()</p>
+<p>This needs to be implemented by any deriving classes.
+This method is called just before a cell is selected. This method should
+configure values on the widget (such as labels, thumbnails etc) based on the
+data contained in the model index parameter which is being passed.</p>
+<p><code class="docutils literal"><span class="pre">`</span>
+<span class="pre">delegate_obj._on_before_selection(</span> <span class="pre">widget,</span> <span class="pre">model_index,</span> <span class="pre">style_options</span> <span class="pre">)</span>
+<span class="pre">`</span></code></p>
+<p><strong>Parameters &amp; Return Value</strong></p>
+<ul class="simple">
+<li><cite>QWidget widget</cite> - The QWidget (constructed in <cite>_create_widget()</cite>) which will
+be used to paint the cell.</li>
+<li><cite>QModelIndex index</cite> - QModelIndex object representing the data of the object that is about to be drawn.</li>
+<li><cite>QStyleOptionViewItem style_options</cite> - QStyleOptionViewItem object containing specifics about the
+view related state of the cell.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'v2.4.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
