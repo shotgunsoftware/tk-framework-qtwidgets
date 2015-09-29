@@ -20,11 +20,7 @@ from sgtk.platform.qt import QtCore, QtGui
 from sgtk import TankError
 
 from .ui.note_input_widget import Ui_NoteInputWidget
-from .overlaywidget import SmallOverlayWidget
-from .. import screen_grab  
- 
-
- 
+from .overlaywidget import SmallOverlayWidget  
  
  
 class NoteInputWidget(QtGui.QWidget):
@@ -123,6 +119,9 @@ class NoteInputWidget(QtGui.QWidget):
         Screenshot button is clicked. This either means that 
         a screenshot should be taken or that it should be cleared.
         """
+        
+        screen_grab = self._app.import_module("screen_grab")
+        
         if self._pixmap is None:
             # no pixmap exists - screengrab mode
             self._app.log_debug("Prompting for screenshot...")
