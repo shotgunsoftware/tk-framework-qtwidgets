@@ -12,7 +12,8 @@ from sgtk.platform.qt import QtCore, QtGui
 
 import sgtk
 import datetime
-from ...modules.schema import CachedShotgunSchema
+
+shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 class ActivityStreamBaseWidget(QtGui.QWidget):
     """
@@ -200,7 +201,8 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         :param data: activity stream data chunk
         :returns: string with url
         """
-        entity_type_display_name = CachedShotgunSchema.get_type_display_name(entity["type"])
+        
+        entity_type_display_name = shotgun_globals.get_type_display_name(entity["type"])
         
         if entity["type"] == self._entity_type and entity["id"] == self._entity_id and this_syntax:
             # special case - we are looking at "this" entity

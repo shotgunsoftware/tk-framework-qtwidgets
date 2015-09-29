@@ -13,7 +13,7 @@ from sgtk.platform.qt import QtCore, QtGui
 from .widget_activity_stream_base import ActivityStreamBaseWidget
 from .ui.reply_widget import Ui_ReplyWidget
 
-from ... import utils
+from . import utils
 
 class ReplyWidget(ActivityStreamBaseWidget):
     """

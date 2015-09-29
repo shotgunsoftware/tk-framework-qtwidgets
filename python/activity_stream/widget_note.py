@@ -22,10 +22,10 @@ from .widget_reply import ReplyWidget
 from .label_widgets import ClickableTextLabel
 
 from .widget_attachment_group import AttachmentGroupWidget
-from ...modules.schema import CachedShotgunSchema
+shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 from .data_manager import ActivityStreamDataHandler
-from ... import utils
+from . import utils
 
 class NoteWidget(ActivityStreamBaseWidget):
     """
@@ -187,7 +187,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         # format note links
         html_chunks = []
         for link in links:
-            entity_type_display_name = CachedShotgunSchema.get_type_display_name(link["type"])
+            entity_type_display_name = shotgun_globals.get_type_display_name(link["type"])
             chunk = """
                 <tr><td bgcolor=#666666>
                     <a href='%s:%s' style='text-decoration: none; color: #dddddd'>%s <b>%s</b></a>

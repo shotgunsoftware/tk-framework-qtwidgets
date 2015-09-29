@@ -85,5 +85,5 @@ class Ui_NewItemWidget(object):
         self.footer.setText(QtGui.QApplication.translate("NewItemWidget", "description", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..label_widgets import UserThumbnail
-from ...version_label import VersionLabel
+from ..qtwidgets import VersionLabel
 from . import resources_rc

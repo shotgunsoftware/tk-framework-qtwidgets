@@ -46,5 +46,5 @@ class Ui_ActivityStreamWidget(object):
     def retranslateUi(self, ActivityStreamWidget):
         ActivityStreamWidget.setWindowTitle(QtGui.QApplication.translate("ActivityStreamWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
 
-from ...note_input_widget import NoteInputWidget
+from ..qtwidgets import NoteInputWidget
 from . import resources_rc

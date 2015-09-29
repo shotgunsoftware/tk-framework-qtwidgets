@@ -8,6 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
 from .widget_activity_stream_base import ActivityStreamBaseWidget
@@ -15,9 +16,9 @@ from .ui.value_update_widget import Ui_ValueUpdateWidget
 
 from .data_manager import ActivityStreamDataHandler
 
-from ...modules.schema import CachedShotgunSchema
+shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
-from ... import utils
+from . import utils
 
 class ValueUpdateWidget(ActivityStreamBaseWidget):
     """
@@ -100,14 +101,14 @@ class ValueUpdateWidget(ActivityStreamBaseWidget):
             removed = data["meta"].get("removed") or []
 
             # set the first line with summary
-            field_display_name = CachedShotgunSchema.get_field_display_name(entity_type, field_name)
+            field_display_name = shotgun_globals.get_field_display_name(entity_type, field_name)
             full_str = "<b>%s</b> changed on %s" % (field_display_name, entity_url)
             
             # set the second line with details around the update
             if new_value:
                 # a simple data type value was updated
                 if field_name == "sg_status_list":
-                    new_value = CachedShotgunSchema.get_status_display_name(new_value)
+                    new_value = shotgun_globals.get_status_display_name(new_value)
 
                 self.ui.footer.setText("New <b>%s</b>: %s" % (field_display_name, new_value))
             

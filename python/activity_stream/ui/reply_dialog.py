@@ -31,4 +31,4 @@ class Ui_ReplyDialog(object):
         ReplyDialog.setWindowTitle(QtGui.QApplication.translate("ReplyDialog", "Reply", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("ReplyDialog", "<big>Please enter a Reply:</big>", None, QtGui.QApplication.UnicodeUTF8))
 
-from ...note_input_widget import NoteInputWidget
+from ..qtwidgets import NoteInputWidget
