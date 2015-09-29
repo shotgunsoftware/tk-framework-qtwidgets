@@ -16,8 +16,6 @@ shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "sho
 
 from sgtk.platform.qt import QtCore, QtGui
  
-from .search_result_delegate import SearchResultDelegate
- 
 class GlobalSearchWidget(QtGui.QLineEdit):
     """
     A QLineEdit which is connected to the Shotgun global search.
@@ -118,6 +116,10 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         
         # tell completer to render matches using our delegate
         # configure how the popup should look
+        
+        # deferred import to help documentation generation.
+        from .search_result_delegate import SearchResultDelegate
+        
         self._popup = self._completer.popup()
         self._delegate = SearchResultDelegate(self._popup)
         self._completer.popup().setItemDelegate(self._delegate)

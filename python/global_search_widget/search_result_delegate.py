@@ -13,13 +13,15 @@ from sgtk.platform.qt import QtCore, QtGui
  
 # import the shotgun_model and view modules from the shotgun utils framework
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
-shotgun_view = sgtk.platform.import_framework("tk-framework-qtwidgets", "shotgun_view")
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+
+
+views = sgtk.platform.current_bundle().import_module("views")
 
 from .search_result_widget import SearchResultWidget 
 
 
-class SearchResultDelegate(shotgun_view.WidgetDelegate):
+class SearchResultDelegate(views.WidgetDelegate):
     """
     Delegate which renders search match entries in the global 
     search completer.
@@ -31,7 +33,7 @@ class SearchResultDelegate(shotgun_view.WidgetDelegate):
         
         :param view: The view where this delegate is being used
         """                
-        shotgun_view.WidgetDelegate.__init__(self, view)
+        views.WidgetDelegate.__init__(self, view)
         
         
     def _url_for_entity_type(self, entity_type):

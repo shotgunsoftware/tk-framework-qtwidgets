@@ -17,3 +17,4 @@ Contents:
    overlay_widget
    screen_grab
    version_label
+   note_input_widget
