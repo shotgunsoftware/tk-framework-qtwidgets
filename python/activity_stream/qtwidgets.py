@@ -15,18 +15,8 @@ easily from with Qt Designer
 
 import sgtk
 
-# version label
-NoteInputWidget = None
-try:
-    note_input_widget = sgtk.platform.current_bundle().import_module("note_input_widget")
-    NoteInputWidget = note_input_widget.NoteInputWidget
-except:
-    pass
+note_input_widget = sgtk.platform.current_bundle().import_module("note_input_widget")
+NoteInputWidget = note_input_widget.NoteInputWidget
 
-# version label
-VersionLabel = None
-try:
-    version_label = sgtk.platform.current_bundle().import_module("version_label")
-    VersionLabel = version_label.VersionLabel
-except:
-    pass
+version_label = sgtk.platform.current_bundle().import_module("version_label")
+VersionLabel = version_label.VersionLabel
