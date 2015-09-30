@@ -84,6 +84,6 @@ class Ui_NewItemWidget(object):
         self.date.setText(QtGui.QApplication.translate("NewItemWidget", "3 days ago", None, QtGui.QApplication.UnicodeUTF8))
         self.footer.setText(QtGui.QApplication.translate("NewItemWidget", "description", None, QtGui.QApplication.UnicodeUTF8))
 
-from ..label_widgets import UserThumbnail
 from ..qtwidgets import VersionLabel
+from ..label_widgets import UserThumbnail
 from . import resources_rc
