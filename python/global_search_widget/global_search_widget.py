@@ -43,7 +43,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         QtGui.QLineEdit.__init__(self, parent)
 
         # set up some handy references
-        self._app = sgtk.platform.current_bundle()
+        self._bundle = sgtk.platform.current_bundle()
         
         self.__sg_data_retriever = None
         

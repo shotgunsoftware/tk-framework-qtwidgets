@@ -25,7 +25,7 @@ class SmallOverlayWidget(QtGui.QWidget):
         
         QtGui.QWidget.__init__(self, parent)
         
-        self._app = sgtk.platform.current_bundle()
+        self._bundle = sgtk.platform.current_bundle()
         
         # hook up a listener to the parent window so we 
         # can resize the overlay at the same time as the parent window

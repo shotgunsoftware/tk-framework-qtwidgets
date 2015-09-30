@@ -61,7 +61,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         QtCore.QObject.__init__(self, parent)
         
         # set up some handy references
-        self._app = sgtk.platform.current_bundle()
+        self._bundle = sgtk.platform.current_bundle()
 
         # default not found/loading thumb
         self._default_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.global_search_widget/rect_512x400.png")

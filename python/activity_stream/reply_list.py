@@ -59,7 +59,7 @@ class ReplyListWidget(QtGui.QWidget):
         self._reply_widgets = []
         self._attachment_group_widgets = {}
         
-        self._app = sgtk.platform.current_bundle()
+        self._bundle = sgtk.platform.current_bundle()
         
         # apply styling
         self._load_stylesheet()

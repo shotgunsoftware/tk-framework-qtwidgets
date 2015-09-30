@@ -36,7 +36,7 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         self._entity_id = None
         self._target_entity_type = None
         self._target_entity_id = None
-        self._app = sgtk.platform.current_bundle()  
+        self._bundle = sgtk.platform.current_bundle()  
         
     ##############################################################################
     # public interface

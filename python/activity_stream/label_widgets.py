@@ -50,7 +50,7 @@ class LargeAttachmentThumbnail(ClickableTextLabel):
         :param parent: QT parent object
         """
         ClickableTextLabel.__init__(self, parent)
-        self._app = sgtk.platform.current_bundle()
+        self._bundle = sgtk.platform.current_bundle()
         
         # store shotgun data
         self._data = data

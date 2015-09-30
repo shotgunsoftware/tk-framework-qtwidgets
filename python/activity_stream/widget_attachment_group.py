@@ -37,7 +37,7 @@ class AttachmentGroupWidget(QtGui.QWidget):
         self.ui = Ui_AttachmentGroupWidget() 
         self.ui.setupUi(self)
         
-        self._app = sgtk.platform.current_bundle()
+        self._bundle = sgtk.platform.current_bundle()
         
         self._large_thumbnails = {}
         self._small_thumbnails = {}

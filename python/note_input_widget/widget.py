@@ -12,7 +12,7 @@ import os
 import sgtk
 import tempfile
 
-shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
+# local import to avoid cyclic references
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 
 from sgtk.platform.qt import QtCore, QtGui
@@ -50,7 +50,7 @@ class NoteInputWidget(QtGui.QWidget):
         self._load_stylesheet()
         
         # set up some handy references
-        self._app = sgtk.platform.current_bundle()        
+        self._bundle = sgtk.platform.current_bundle()        
         self._camera_icon = QtGui.QIcon(QtGui.QPixmap(":/tk_framework_qtwidgets.note_input_widget/camera_hl.png"))
         self._trash_icon = QtGui.QIcon(QtGui.QPixmap(":/tk_framework_qtwidgets.note_input_widget/trash.png"))
         

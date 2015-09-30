@@ -22,8 +22,6 @@ from .widget_value_update import ValueUpdateWidget
 from .dialog_reply import ReplyDialog
 
 from .data_manager import ActivityStreamDataHandler
- 
-overlay_module = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
 
 from .overlaywidget import SmallOverlayWidget
  
@@ -47,7 +45,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         # first, call the base class and let it do its thing.
         QtGui.QWidget.__init__(self, parent)
-        self._app = sgtk.platform.current_bundle()
+        self._bundle = sgtk.platform.current_bundle()
         
         # now load in the UI that was created in the UI designer
         self.ui = Ui_ActivityStreamWidget() 
@@ -57,6 +55,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._load_stylesheet()
 
         # keep an overlay for loading
+        overlay_module = self._bundle.import_module("overlay_widget")
         self.__overlay = overlay_module.ShotgunOverlayWidget(self)
         self.__small_overlay = SmallOverlayWidget(self)
 

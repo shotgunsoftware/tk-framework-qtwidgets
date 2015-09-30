@@ -36,7 +36,7 @@ class NoteEditor(QtGui.QTextEdit):
         QtGui.QTextEdit.__init__(self, parent)
         
         # set up some handy references
-        self._app = sgtk.platform.current_bundle()      
+        self._bundle = sgtk.platform.current_bundle()      
         
         # the currently processing async autocompleting lookup
         self._processing_id = None
