@@ -40,9 +40,8 @@ class ReplyListWidget(QtGui.QWidget):
     
     def __init__(self, parent):
         """
-        Constructor
-        
         :param parent: QT parent object
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
 
         # first, call the base class and let it do its thing.
@@ -77,6 +76,10 @@ class ReplyListWidget(QtGui.QWidget):
         """
         Set an async data retreiver object to use with this 
         widget.
+
+        :param data_retriever: Data retriever object to use for fetching information
+                               from Shotugn.
+        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` 
         """
         self._data_manager.set_data_retriever(data_retriever)
         self._data_retriever = data_retriever

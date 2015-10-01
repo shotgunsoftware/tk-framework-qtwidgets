@@ -7,13 +7,12 @@
 # By accessing, using, copying or modifying this work you indicate your 
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
-
+"""
+A collection of various subclassed QLabels used by the activity stream UI
+"""
 from sgtk.platform.qt import QtCore, QtGui
-
 from . import utils
-
 import sgtk
-
 
 class ClickableTextLabel(QtGui.QLabel):
     """
@@ -24,8 +23,9 @@ class ClickableTextLabel(QtGui.QLabel):
     def __init__(self, parent):
         """
         Constructor
-        
+
         :param parent: QT parent object
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
         QtGui.QLabel.__init__(self, parent)
         self.setCursor(QtCore.Qt.PointingHandCursor)
@@ -48,6 +48,7 @@ class LargeAttachmentThumbnail(ClickableTextLabel):
         Constructor
         
         :param parent: QT parent object
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
         ClickableTextLabel.__init__(self, parent)
         self._bundle = sgtk.platform.current_bundle()
@@ -77,6 +78,12 @@ class LargeAttachmentThumbnail(ClickableTextLabel):
         
         
     def set_thumbnail(self, image):
+        """
+        Specify associated thumbnail
+        
+        :param image: Thumbnail
+        :type image: :class:`PySide.QtGui.QPixmap`
+        """
         thumb = utils.create_rectangular_256x144_thumbnail(image)
         self.setPixmap(thumb)
 
@@ -134,6 +141,7 @@ class SmallAttachmentThumbnail(ClickableTextLabel):
         Constructor
         
         :param parent: QT parent object
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
         ClickableTextLabel.__init__(self, parent)
         
@@ -146,6 +154,12 @@ class SmallAttachmentThumbnail(ClickableTextLabel):
         self._data = data
         
     def set_thumbnail(self, image):
+        """
+        Specify associated thumbnail
+        
+        :param image: Thumbnail
+        :type image: :class:`PySide.QtGui.QPixmap`
+        """        
         thumb = utils.create_square_48_thumbnail(image)
         self.setPixmap(thumb)
 
@@ -165,6 +179,7 @@ class UserThumbnail(ClickableTextLabel):
         Constructor
         
         :param parent: QT parent object
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
         ClickableTextLabel.__init__(self, parent)
         # make this user clickable

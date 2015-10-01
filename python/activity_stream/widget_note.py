@@ -35,9 +35,8 @@ class NoteWidget(ActivityStreamBaseWidget):
     
     def __init__(self, parent):
         """
-        Constructor
-        
         :param parent: QT parent object
+        :type parent: :class:`PySide.QtGui.QWidget`        
         """
         # first, call the base class and let it do its thing.
         ActivityStreamBaseWidget.__init__(self, parent)

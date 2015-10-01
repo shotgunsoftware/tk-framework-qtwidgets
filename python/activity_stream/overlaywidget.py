@@ -13,16 +13,16 @@ from sgtk.platform.qt import QtCore, QtGui
 
 class SmallOverlayWidget(QtGui.QWidget):
     """
-    Simple spinner widget
+    Simple overlay widget that darkens the background
+    and prints a simple text.
     """
     MODE_OFF = 0
     MODE_ON = 1
     
-    def __init__(self, parent=None):
+    def __init__(self, parent):
         """
         Constructor
         """
-        
         QtGui.QWidget.__init__(self, parent)
         
         self._bundle = sgtk.platform.current_bundle()

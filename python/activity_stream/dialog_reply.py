@@ -19,9 +19,12 @@ class ReplyDialog(QtGui.QDialog):
     
     def __init__(self, parent, data_retriever, note_id):
         """
-        Constructor
-        
         :param parent: QT parent object
+        :type parent: :class:`PySide.QtGui.QWidget`
+        :param data_retriever: Data retriever object to use for fetching information
+                               from Shotugn.
+        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`
+        :param note_id: Id for note to reply to 
         """
         # first, call the base class and let it do its thing.
         QtGui.QDialog.__init__(self, parent)
@@ -36,13 +39,18 @@ class ReplyDialog(QtGui.QDialog):
         self.ui.note_widget.set_current_entity("Note", note_id)
         
         self.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.FramelessWindowHint)        
-
         
     def close_after_create(self):
+        """
+        Callback called after successful reply
+        """ 
         self.setResult(QtGui.QDialog.Accepted)
         self.close()
         
     def close_after_cancel(self):
+        """
+        Callback called after cancel
+        """
         self.setResult(QtGui.QDialog.Rejected)
         self.close()
 

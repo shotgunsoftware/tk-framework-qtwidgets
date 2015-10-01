@@ -51,9 +51,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
     
     def __init__(self, parent):
         """
-        Constructor
-        
         :param parent: QT parent object
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
 
         # first, call the base class and let it do its thing.
@@ -79,6 +78,10 @@ class ActivityStreamDataHandler(QtCore.QObject):
         """
         Set the async data retriever that is used to load data.
         This needs to happen prior to running any updates.
+        
+        :param data_retriever: Data retriever object to use for fetching information
+                               from Shotugn.
+        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         
         """
         self._sg_data_retriever = data_retriever
         self._sg_data_retriever.work_completed.connect(self.__on_worker_signal)
@@ -86,7 +89,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
     def __reset(self):
         """
-        Reset all values
+        Reset all internal state. 
         """        
         if self._sg_data_retriever:
             self._sg_data_retriever.clear()
@@ -165,7 +168,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
     def rescan(self):
         """
-        Check for updates
+        Check for updates asynchronously.
         """
         if self._entity_type == "Note":
             
@@ -196,22 +199,28 @@ class ActivityStreamDataHandler(QtCore.QObject):
     def get_activity_data(self, activity_id):
         """
         Returns the data for a given activity id,
-        none if the data has not been cached.
+        
+        :returns: raw shotgun activity data dictionary or none 
+                  if the data has not been cached.
         """
         return self._activity_data.get(activity_id)
 
     def get_note(self, note_id):
         """
-        Returns the note data for a given activity id,
-        none if the data has not been cached.
+        Returns the note data for a given note id
+
+        :returns: raw shotgun activity data dictionary or none 
+                  if the data has not been cached.
+        
         """
         return self._note_threads.get(note_id)
         
     def request_user_thumbnail(self, entity_type, entity_id, url):
         """
-        Request the thumbnail for a given user.
+        Request thumbnail asynchronously for the given user.
+        
         Once the thumbnail is available, a thumbnail_arrived
-        will be emitted
+        will be emitted.
         
         :param entity_type: ClientUser, ApiUser or HumanUser
         :param entity_id: Shotgun id
@@ -231,6 +240,10 @@ class ActivityStreamDataHandler(QtCore.QObject):
         """
         Given shotgun data for an attachment, schedule a thumbnail 
         download. 
+
+        :param activity_id: activity id
+        :param attachment_group_id: attachment group id
+        :param sg_data: Shotgun data
         """
         uid = self._sg_data_retriever.request_thumbnail(sg_data["image"], 
                                                         sg_data["type"], 
@@ -387,7 +400,10 @@ class ActivityStreamDataHandler(QtCore.QObject):
  
     def __get_note_thread_data(self, note_id):
         """
-        Load note data from the db
+        Load note data from the db.
+        
+        :param note_id: Note id to load data for
+        :returns: shotgun data dictionary
         """
         note_data = None
         connection = None

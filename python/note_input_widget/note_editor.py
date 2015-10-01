@@ -64,6 +64,10 @@ class NoteEditor(QtGui.QTextEdit):
     def set_data_retriever(self, data_retriever):
         """
         Create a separate sg data handler for submission
+        
+        :param data_retriever: Data retriever object to use for fetching information
+                               from Shotugn.
+        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         
         """
         self.__sg_data_retriever = data_retriever
         self.__sg_data_retriever.work_completed.connect(self.__on_worker_signal)

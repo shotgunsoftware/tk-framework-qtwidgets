@@ -38,7 +38,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     def __init__(self, parent):
         """
         :param parent: QT parent object
-        :type parent: 
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
         # first, call the base class and let it do its thing.
         QtGui.QWidget.__init__(self, parent)
@@ -81,7 +81,12 @@ class ActivityStreamWidget(QtGui.QWidget):
         
     def set_data_retriever(self, data_retriever):
         """
-        Set an async data retreiver object to use with this widget.
+        Set an async data retreiver object to use with this widget. Data calls
+        to Shotgun will be send through this object.
+        
+        :param data_retriever: Data retriever object to use for fetching information
+                               from Shotugn.
+        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` 
         """
         self._data_retriever = data_retriever
         self._data_manager.set_data_retriever(data_retriever)
@@ -93,9 +98,9 @@ class ActivityStreamWidget(QtGui.QWidget):
     def load_data(self, sg_entity_dict):
         """
         Reset the state of the widget and then load up the data
-        for the given entity.
+        for a given entity.
         
-        :param sg_entity_dict: Dictionary with keys type and id.
+        :param sg_entity_dict: Dictionary with keys type and id
         """
         self._bundle.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
         # clean up everything first
@@ -376,7 +381,11 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Create a widget for a given activity id
         If the activity id is not supported by the implementation, 
-        returns None
+        returns None. This can for example happen if the type of
+        data returned by the activity stream doesn't have a 
+        suitable widget implemented.
+
+        :returns: Activity widget object or None
         """
         data = self._data_manager.get_activity_data(activity_id)
         
@@ -418,7 +427,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         
     def _process_new_data(self, activity_ids):
         """
-        New activity items have arrived from from the data manager
+        Process new activity ids as they arrive from
+        the data manager.
+        
+        :param activity_ids: List of activity ids
         """
         self._bundle.log_debug("Process new data slot called "
                             "for %s activity events" % len(activity_ids))
@@ -512,7 +524,6 @@ class ActivityStreamWidget(QtGui.QWidget):
         reply_dialog.move(x_pos, y_pos)
         
         # and pop it
-        
         try:
             self.__small_overlay.show()
             if reply_dialog.exec_() == QtGui.QDialog.Accepted:
@@ -522,7 +533,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         
     def _on_note_submitted(self):
         """
-        called when a note has finished submitting
+        Called when a note has finished submitting
         """
         # kick the data manager to rescan for changes
         self._data_manager.rescan()

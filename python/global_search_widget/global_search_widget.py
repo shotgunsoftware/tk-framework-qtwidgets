@@ -34,9 +34,8 @@ class GlobalSearchWidget(QtGui.QLineEdit):
     
     def __init__(self, parent):
         """
-        Constructor
-        
         :param parent: Qt parent object
+        :type parent: :class:`PySide.QtGui.QWidget`        
         """
  
         # first, call the base class and let it do its thing.

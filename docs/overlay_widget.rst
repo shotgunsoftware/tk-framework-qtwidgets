@@ -63,7 +63,6 @@ ShotgunOverlayWidget
 ShotgunModelOverlayWidget
 ======================================
 
-
 .. autoclass:: ShotgunModelOverlayWidget
     :members:
     :exclude-members: paintEvent

@@ -41,4 +41,16 @@ Using widgets with QT Designer
 
 If you are dropping the widgets into QT Designer directly, there isn't an option to
 run the ``import_framework`` method. In this case, we recommend adding imports to a wrapper
-file 
+file and place that next to your other python files. You can for example call this file
+``qtwidgets.py`` and then do the imports in this file::
+
+    import sgtk
+
+    note_input_widget = sgtk.platform.current_bundle().import_module("note_input_widget")
+    NoteInputWidget = note_input_widget.NoteInputWidget
+
+    version_label = sgtk.platform.current_bundle().import_module("version_label")
+    VersionLabel = version_label.VersionLabel
+
+In your designer generated ``.ui`` files, you can now reference these widgets as if they were
+local to your project.
