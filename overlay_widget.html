@@ -213,9 +213,135 @@ an asynchronous approach with a worker thread for better UI responsiveness.</p>
 </div>
 <div class="section" id="shotgunoverlaywidget">
 <h2>ShotgunOverlayWidget<a class="headerlink" href="#shotgunoverlaywidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="overlay_widget.ShotgunOverlayWidget">
+<em class="property">class </em><code class="descclassname">overlay_widget.</code><code class="descname">ShotgunOverlayWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overlay widget that can be placed on top over any QT widget.
+Once you have placed the overlay widget, you can use it to 
+display information, errors, a spinner etc.</p>
+<p>This is for example used by the 
+<a class="reference external" href="http://shotgunsoftware.github.io/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunOverlayModel" title="(in Shotgun Pipeline Toolkit vv2.4.2)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunOverlayModel</span></code></a> 
+to indicate when data is being loaded from Shotgun.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a>) &#8211; Widget to attach the overlay to</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="overlay_widget.ShotgunOverlayWidget.hide">
+<code class="descname">hide</code><span class="sig-paren">(</span><em>hide_errors=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.hide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.hide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the overlay.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hide_errors</strong> &#8211; If set to False, errors are not hidden.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="overlay_widget.ShotgunOverlayWidget.show_error_message">
+<code class="descname">show_error_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.show_error_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.show_error_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables the overlay and displays an
+a error message centered in the middle of the overlay.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; Message to display</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="overlay_widget.ShotgunOverlayWidget.show_message">
+<code class="descname">show_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.show_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.show_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a message centered on the overlay.
+If an error is already being displayed by the overlay at this point, 
+nothing will happen.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; Message to display</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if message was displayed, False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="overlay_widget.ShotgunOverlayWidget.show_message_pixmap">
+<code class="descname">show_message_pixmap</code><span class="sig-paren">(</span><em>pixmap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.show_message_pixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.show_message_pixmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show an info message in the form of a pixmap.
+If an error is already being displayed by the overlay, 
+the pixmap will not be shown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pixamp</strong> &#8211; Image to display</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if pixmap was displayed, False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="overlay_widget.ShotgunOverlayWidget.start_spin">
+<code class="descname">start_spin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.start_spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.start_spin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables the overlay and shows an animated spinner.</p>
+<p>If you want to stop the spinning, call <a class="reference internal" href="#overlay_widget.ShotgunOverlayWidget.hide" title="overlay_widget.ShotgunOverlayWidget.hide"><code class="xref py py-meth docutils literal"><span class="pre">hide()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="shotgunmodeloverlaywidget">
 <h2>ShotgunModelOverlayWidget<a class="headerlink" href="#shotgunmodeloverlaywidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="overlay_widget.ShotgunModelOverlayWidget">
+<em class="property">class </em><code class="descclassname">overlay_widget.</code><code class="descname">ShotgunModelOverlayWidget</code><span class="sig-paren">(</span><em>sg_model</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_model_overlay_widget.html#ShotgunModelOverlayWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunModelOverlayWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience class specifically designed to work with a  
+<a class="reference external" href="http://shotgunsoftware.github.io/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in Shotgun Pipeline Toolkit vv2.4.2)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>.</p>
+<p>By using this class, multiple overlay widgets can be
+easily created and connected to the same shotgun model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sg_model</strong> (<a class="reference external" href="http://shotgunsoftware.github.io/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in Shotgun Pipeline Toolkit vv2.4.2)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>) &#8211; Shotgun model that this widget should connect to</li>
+<li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a>) &#8211; Widget to attach the overlay to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="overlay_widget.ShotgunModelOverlayWidget.set_model">
+<code class="descname">set_model</code><span class="sig-paren">(</span><em>sg_model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_model_overlay_widget.html#ShotgunModelOverlayWidget.set_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunModelOverlayWidget.set_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the model this widget should be connected to</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_model</strong> (<a class="reference external" href="http://shotgunsoftware.github.io/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in Shotgun Pipeline Toolkit vv2.4.2)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>) &#8211; Shotgun model that this widget should connect to</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

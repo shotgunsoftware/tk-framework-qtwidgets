@@ -1,0 +1,500 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>global_search_widget.global_search_widget &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='./_static/logo@2x.png'/>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Version Playback Widget</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>global_search_widget.global_search_widget</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for global_search_widget.global_search_widget</h1><div class="highlight"><pre>
+<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c"># </span>
+<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c"># </span>
+<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+
+<span class="n">shotgun_data</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s">&quot;shotgun_data&quot;</span><span class="p">)</span>
+<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s">&quot;shotgun_model&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+ 
+<div class="viewcode-block" id="GlobalSearchWidget"><a class="viewcode-back" href="../../global_search_widget.html#global_search_widget.GlobalSearchWidget">[docs]</a><span class="k">class</span> <span class="nc">GlobalSearchWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A QLineEdit which is connected to the Shotgun global search.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># custom roles for the model that tracks the auto completion results</span>
+    <span class="n">SG_DATA_ROLE</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">MODE_ROLE</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">2</span>
+    
+    <span class="c"># different items in the auto complete list can have </span>
+    <span class="c"># a different meaning, so track those here too</span>
+    <span class="p">(</span><span class="n">MODE_LOADING</span><span class="p">,</span> <span class="n">MODE_NOT_FOUND</span><span class="p">,</span> <span class="n">MODE_RESULT</span><span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    
+    <span class="c"># emitted when shotgun has been updated</span>
+    <span class="n">entity_selected</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        </span>
+<span class="sd">        :param parent: Qt parent object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+ 
+        <span class="c"># first, call the base class and let it do its thing.</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="c"># set up some handy references</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thumb_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s">&quot;:/tk_framework_qtwidgets.global_search_widget/rect_512x400.png&quot;</span><span class="p">)</span>
+                
+        <span class="c"># configure our popup completer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCompleter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">setMaxVisibleItems</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">setCaseSensitivity</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CaseInsensitive</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">setCompletionMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QCompleter</span><span class="o">.</span><span class="n">UnfilteredPopupCompletion</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCompleter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="p">)</span>
+
+        <span class="c"># configure popup data source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_model</span><span class="p">()</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">)</span>        
+        
+        <span class="c"># hook up completer and trigger reload on keypress</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">textEdited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_text_changed</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="GlobalSearchWidget.set_data_retriever"><a class="viewcode-back" href="../../global_search_widget.html#global_search_widget.GlobalSearchWidget.set_data_retriever">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_retriever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_retriever</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a separate sg data handler for sg queries</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="n">data_retriever</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_signal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_failure</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_failure</span><span class="p">)</span>
+           
+    <span class="c">############################################################################</span>
+    <span class="c"># internal methods</span>
+                </div>
+    <span class="k">def</span> <span class="nf">_clear_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">add_loading_item</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears the current data in the model.</span>
+<span class="sd">        </span>
+<span class="sd">        :param add_loading_item: if true, a &quot;loading please wait&quot; item will</span>
+<span class="sd">                                 be added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># clear model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="n">add_loading_item</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="s">&quot;Loading data...&quot;</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_LOADING</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_on_text_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback that fires when the user types something into</span>
+<span class="sd">        the text editor.</span>
+<span class="sd">        </span>
+<span class="sd">        :param text: current contents of editor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="c"># global search wont work with shorter than 3 len strings</span>
+            <span class="c"># for these cases, clear the auto completer model fully</span>
+            <span class="c"># there is no more work to do</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clear_model</span><span class="p">(</span><span class="n">add_loading_item</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">return</span>
+        
+        <span class="c"># now we are about to populate the model with data </span>
+        <span class="c"># and therefore trigger the completer to pop up.</span>
+        <span class="c">#</span>
+        <span class="c"># The completer seems to have some internal properties</span>
+        <span class="c"># which are transitory and won&#39;t last between sessions.</span>
+        <span class="c"># for these, we have to set them up every time the </span>
+        <span class="c"># completion process is about to start it seems.</span>
+        
+        <span class="c"># tell completer to render matches using our delegate</span>
+        <span class="c"># configure how the popup should look</span>
+        
+        <span class="c"># deferred import to help documentation generation.</span>
+        <span class="kn">from</span> <span class="nn">.search_result_delegate</span> <span class="kn">import</span> <span class="n">SearchResultDelegate</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">popup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span> <span class="o">=</span> <span class="n">SearchResultDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_popup</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">popup</span><span class="p">()</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span><span class="p">)</span>
+        
+        <span class="c"># try to disconnect and reconnect the activated signal</span>
+        <span class="c"># it seems this signal is lost every time the widget</span>
+        <span class="c"># looses focus.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">activated</span><span class="p">[</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">]</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_completer_select</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Could not disconnect global search activated &quot;</span>
+                                <span class="s">&quot;signal prior to reconnect. Looks like this connection &quot;</span>
+                                <span class="s">&quot;must have been discarded at some point along the way.&quot;</span><span class="p">)</span>
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">activated</span><span class="p">[</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_completer_select</span><span class="p">)</span>
+        
+        <span class="c"># now clear the model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_model</span><span class="p">()</span>
+
+        <span class="c"># clear download queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        
+        <span class="c"># clear thumbnail map</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thumb_map</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c"># kick off async data request from shotgun </span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_do_sg_global_search</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>        
+        
+    <span class="k">def</span> <span class="nf">_do_sg_global_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Actual payload for creating things in shotgun.</span>
+<span class="sd">        Note: This runs in a different thread and cannot access</span>
+<span class="sd">        any QT UI components.</span>
+<span class="sd">        </span>
+<span class="sd">        :param sg: Shotgun instance</span>
+<span class="sd">        :param data: data dictionary passed in from _submit()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">entity_types</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;Asset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;Shot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;Task&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;HumanUser&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&quot;sg_status_list&quot;</span><span class="p">,</span> <span class="s">&quot;is&quot;</span><span class="p">,</span> <span class="s">&quot;act&quot;</span><span class="p">]]</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;Group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;ClientUser&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&quot;sg_status_list&quot;</span><span class="p">,</span> <span class="s">&quot;is&quot;</span><span class="p">,</span> <span class="s">&quot;act&quot;</span><span class="p">]]</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;ApiUser&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;Version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">entity_types</span><span class="p">[</span><span class="s">&quot;PublishedFile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c"># constrain by project in the search</span>
+        <span class="n">project_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span><span class="p">:</span>
+            <span class="n">project_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">])</span>
+        
+        <span class="c"># run the query</span>
+        <span class="n">sg_data</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">text_search</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;text&quot;</span><span class="p">],</span> <span class="n">entity_types</span><span class="p">,</span> <span class="n">project_ids</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sg_data</span>
+        
+    <span class="k">def</span> <span class="nf">__on_worker_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronous callback - the worker thread errored.</span>
+<span class="sd">        </span>
+<span class="sd">        :param uid: Unique id for request that failed</span>
+<span class="sd">        :param msg: Error message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span> <span class="c"># qstring on pyqt, str on pyside</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">==</span> <span class="n">uid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s">&quot;Could not retrieve search results: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__on_worker_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">request_type</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Signaled whenever the worker completes something.</span>
+<span class="sd">        This method will dispatch the work to different methods</span>
+<span class="sd">        depending on what async task has completed.</span>
+
+<span class="sd">        :param uid: Unique id for request</span>
+<span class="sd">        :param request_type: String identifying the request class</span>
+<span class="sd">        :param data: the data that was returned </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span> <span class="c"># qstring on pyqt, str on pyside</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumb_map</span><span class="p">:</span>
+            <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">thumbnail</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumb_map</span><span class="p">[</span><span class="n">uid</span><span class="p">][</span><span class="s">&quot;item&quot;</span><span class="p">]</span>
+                <span class="n">thumb</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="o">.</span><span class="n">fromImage</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">)</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">thumb</span><span class="p">)</span>
+        
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">==</span> <span class="n">uid</span><span class="p">:</span>
+            <span class="c"># all done!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clear_model</span><span class="p">(</span><span class="n">add_loading_item</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            
+            <span class="n">matches</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;return_value&quot;</span><span class="p">][</span><span class="s">&quot;matches&quot;</span><span class="p">]</span> 
+            
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="s">&quot;No matches found!&quot;</span><span class="p">)</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_NOT_FOUND</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                
+            <span class="c"># insert new data into model</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">])</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_RESULT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>                
+                
+                <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_for_qt_model</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> 
+                             <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
+                
+                <span class="n">item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_default_icon</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">]:</span>
+                    <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">request_thumbnail</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">],</span> 
+                                                                    <span class="n">d</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">],</span> 
+                                                                    <span class="n">d</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">],</span> 
+                                                                    <span class="s">&quot;image&quot;</span><span class="p">,</span>
+                                                                    <span class="n">load_image</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_thumb_map</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;item&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">}</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            
+        
+        
+    <span class="k">def</span> <span class="nf">_on_completer_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fires when an item in the completer is selected.</span>
+<span class="sd">        This will emit an entity_selected signal for the</span>
+<span class="sd">        global search widget</span>
+<span class="sd">        </span>
+<span class="sd">        :param model_index: QModelIndex describing the current item</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="c"># make sure that the user selected an actual shotgun item.</span>
+        <span class="c"># if they just selected the &quot;no items found&quot; or &quot;loading please hold&quot;</span>
+        <span class="c"># items, just ignore it.</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">get_sanitized_data</span><span class="p">(</span><span class="n">model_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_RESULT</span><span class="p">:</span>
+
+            <span class="c"># get the payload</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">get_sanitized_data</span><span class="p">(</span><span class="n">model_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
+
+            <span class="c"># Example of data stored in the data role:</span>
+            <span class="c">#</span>
+            <span class="c"># {&#39;status&#39;: &#39;vwd&#39;, </span>
+            <span class="c">#  &#39;name&#39;: &#39;bunny_010_0050_comp_v001&#39;, </span>
+            <span class="c">#  &#39;links&#39;: [&#39;Shot&#39;, &#39;bunny_010_0050&#39;], </span>
+            <span class="c">#  &#39;image&#39;: &#39;https://xxx&#39;, </span>
+            <span class="c">#  &#39;project_id&#39;: 65, </span>
+            <span class="c">#  &#39;type&#39;: &#39;Version&#39;, </span>
+            <span class="c">#  &#39;id&#39;: 99}            </span>
+            
+            <span class="c"># send out new signal</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entity_selected</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">])</span>
+        </div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'sg_panel_widgets',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

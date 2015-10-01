@@ -1,0 +1,425 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='./_static/logo@2x.png'/>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Version Playback Widget</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>screen_grab.screen_grab</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for screen_grab.screen_grab</h1><div class="highlight"><pre>
+<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c"># </span>
+<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c"># </span>
+<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+
+<span class="k">class</span> <span class="nc">ScreenGrabber</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A transparent tool dialog for selecting an area (QRect) on the screen.</span>
+
+<span class="sd">    This tool does not by itself perform a screen capture. The resulting</span>
+<span class="sd">    capture rect can be used (e.g. with the get_desktop_pixmap function) to</span>
+<span class="sd">    blit the selected portion of the screen into a pixmap.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ScreenGrabber</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_opacity</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FramelessWindowHint</span> <span class="o">|</span>
+                            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowStaysOnTopHint</span> <span class="o">|</span>
+                            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomizeWindowHint</span> <span class="o">|</span>
+                            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Tool</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WA_TranslucentBackground</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CrossCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMouseTracking</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
+        <span class="n">desktop</span><span class="o">.</span><span class="n">resized</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fit_screen_geometry</span><span class="p">)</span>
+        <span class="n">desktop</span><span class="o">.</span><span class="n">screenCountChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fit_screen_geometry</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">capture_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The resulting QRect from a previous capture operation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span>
+
+    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Paint event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># Convert click and current mouse positions to local space.</span>
+        <span class="n">mouse_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QCursor</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
+        <span class="n">click_pos</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">click_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span><span class="p">)</span>
+
+        <span class="n">painter</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Draw background. Aside from aesthetics, this makes the full</span>
+        <span class="c"># tool region accept mouse events.</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opacity</span><span class="p">))</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">())</span>
+
+        <span class="c"># Clear the capture area</span>
+        <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">click_pos</span><span class="p">,</span> <span class="n">mouse_pos</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setCompositionMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">CompositionMode_Clear</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">capture_rect</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setCompositionMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">CompositionMode_SourceOver</span><span class="p">)</span>
+
+        <span class="n">pen</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DotLine</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+        <span class="c"># Draw cropping markers at click position</span>
+        <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
+                             <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span>
+                             <span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">())</span>
+
+        <span class="c"># Draw cropping markers at current mouse position</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
+                         <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span>
+                         <span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Key press event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># for some reason I am not totally sure about, it looks like</span>
+        <span class="c"># pressing escape while this dialog is active crashes Maya.</span>
+        <span class="c"># I tried subclassing closeEvent, but it looks like the crashing</span>
+        <span class="c"># is triggered before the code reaches this point.</span>
+        <span class="c"># by sealing the keypress event and not allowing any further processing</span>
+        <span class="c"># of the escape key (or any other key for that matter), the </span>
+        <span class="c"># behaviour can be successfully avoided.</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mouse click event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">evt</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span><span class="p">:</span>
+            <span class="c"># Begin click drag operation</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">globalPos</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">mouseReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Mouse release event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">evt</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># End click drag operation and commit the current capture rect</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span><span class="p">,</span>
+                                              <span class="n">evt</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">mouseMoveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mouse move event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fit_screen_geometry</span><span class="p">()</span>
+        <span class="c"># Start fade in animation</span>
+        <span class="n">fade_anim</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;_opacity_anim_prop&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">fade_anim</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_opacity</span><span class="p">)</span>
+        <span class="n">fade_anim</span><span class="o">.</span><span class="n">setEndValue</span><span class="p">(</span><span class="mi">127</span><span class="p">)</span>
+        <span class="n">fade_anim</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+        <span class="n">fade_anim</span><span class="o">.</span><span class="n">setEasingCurve</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">OutCubic</span><span class="p">)</span>
+        <span class="n">fade_anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QAbstractAnimation</span><span class="o">.</span><span class="n">DeleteWhenStopped</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Animation callback for opacity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_opacity</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Animation callback for opacity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opacity</span>
+
+    <span class="n">_opacity_anim_prop</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Property</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">_get_opacity</span><span class="p">,</span> <span class="n">_set_opacity</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_fit_screen_geometry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Compute the union of all screen geometries, and resize to fit.</span>
+        <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
+        <span class="n">workspace_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">desktop</span><span class="o">.</span><span class="n">screenCount</span><span class="p">()):</span>
+            <span class="n">workspace_rect</span> <span class="o">=</span> <span class="n">workspace_rect</span><span class="o">.</span><span class="n">united</span><span class="p">(</span><span class="n">desktop</span><span class="o">.</span><span class="n">screenGeometry</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">workspace_rect</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_desktop_pixmap"><a class="viewcode-back" href="../../screen_grab.html#screen_grab.get_desktop_pixmap">[docs]</a><span class="k">def</span> <span class="nf">get_desktop_pixmap</span><span class="p">(</span><span class="n">rect</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs a screen capture on the specified QRect, returning a QPixmap.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="o">.</span><span class="n">grabWindow</span><span class="p">(</span><span class="n">desktop</span><span class="o">.</span><span class="n">winId</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
+                                    <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="screen_capture"><a class="viewcode-back" href="../../screen_grab.html#screen_grab.screen_capture">[docs]</a><span class="k">def</span> <span class="nf">screen_capture</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modally display the screen capture tool, returning a QPixmap.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tool</span> <span class="o">=</span> <span class="n">ScreenGrabber</span><span class="p">()</span>
+    <span class="n">tool</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">get_desktop_pixmap</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="n">capture_rect</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="screen_capture_file"><a class="viewcode-back" href="../../screen_grab.html#screen_grab.screen_capture_file">[docs]</a><span class="k">def</span> <span class="nf">screen_capture_file</span><span class="p">(</span><span class="n">output_path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modally display the screen capture tool, saving to a file.</span>
+<span class="sd">    </span>
+<span class="sd">    :param output_path: Path to save to. If no path is specified,</span>
+<span class="sd">                        a temp path is generated.</span>
+<span class="sd">    :returns: path where screenshot was saved.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s">&quot;.png&quot;</span><span class="p">,</span>
+                                                  <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;screencapture_&quot;</span><span class="p">,</span>
+                                                  <span class="n">delete</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">screen_capture</span><span class="p">()</span>
+    <span class="n">pixmap</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_path</span>
+</pre></div></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'sg_panel_widgets',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

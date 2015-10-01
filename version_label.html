@@ -163,6 +163,35 @@
   <div class="section" id="shotgun-version-playback-widget">
 <h1>Shotgun Version Playback Widget<a class="headerlink" href="#shotgun-version-playback-widget" title="Permalink to this headline">¶</a></h1>
 <img alt="_images/version_label.png" src="_images/version_label.png" />
+<dl class="class">
+<dt id="version_label.VersionLabel">
+<em class="property">class </em><code class="descclassname">version_label.</code><code class="descname">VersionLabel</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_label/version_label.html#VersionLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_label.VersionLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclassed QLabel that displays a playback icon
+centered above the existing pixmap.</p>
+<p>By populating an instance with shotgun version data
+via the set_shotgun_data() method, the version label
+will look at the data and determine whether a playback 
+icon should be displayed or not. In the case an icon is
+displayed, a playback_clicked signal may be emitted.</p>
+<p>This signal passes the same shotgun version data back
+to the caller.</p>
+<p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> &#8211; QT parent object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="version_label.VersionLabel.set_shotgun_data">
+<code class="descname">set_shotgun_data</code><span class="sig-paren">(</span><em>sg_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_label/version_label.html#VersionLabel.set_shotgun_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_label.VersionLabel.set_shotgun_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets version data associated with this label</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
