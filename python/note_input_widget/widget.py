@@ -92,7 +92,7 @@ class NoteInputWidget(QtGui.QWidget):
         Create a separate sg data handler for submission.
         
         :param data_retriever: Data retriever object to use for fetching information
-                               from Shotugn.
+                               from Shotgun.
         :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         
         """
         self.__sg_data_retriever = data_retriever

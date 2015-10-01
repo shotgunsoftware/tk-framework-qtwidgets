@@ -8,4 +8,5 @@ Shotgun Note editor widget
 .. currentmodule:: note_input_widget
 
 .. autoclass:: NoteInputWidget
+    :show-inheritance:
     :members:

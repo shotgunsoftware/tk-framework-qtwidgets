@@ -43,12 +43,6 @@ connect it to a widget and then control the overlay state::
 Please note that the example above is crude and for heavy computational work we recommend
 an asynchronous approach with a worker thread for better UI responsiveness.
 
-.. note::
-
-    Import the module into your Toolkit App using the following statement::
-
-        overlay_widget = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
-
 
 ShotgunOverlayWidget
 ======================================
@@ -56,6 +50,7 @@ ShotgunOverlayWidget
 .. currentmodule:: overlay_widget
 
 .. autoclass:: ShotgunOverlayWidget
+    :show-inheritance:
     :members:
     :inherited-members:
     :exclude-members: paintEvent
@@ -64,5 +59,6 @@ ShotgunModelOverlayWidget
 ======================================
 
 .. autoclass:: ShotgunModelOverlayWidget
+    :show-inheritance:
     :members:
     :exclude-members: paintEvent

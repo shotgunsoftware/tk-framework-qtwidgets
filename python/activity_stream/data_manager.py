@@ -80,7 +80,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         This needs to happen prior to running any updates.
         
         :param data_retriever: Data retriever object to use for fetching information
-                               from Shotugn.
+                               from Shotgun.
         :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         
         """
         self._sg_data_retriever = data_retriever

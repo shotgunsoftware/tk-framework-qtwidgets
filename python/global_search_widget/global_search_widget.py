@@ -18,7 +18,11 @@ from sgtk.platform.qt import QtCore, QtGui
  
 class GlobalSearchWidget(QtGui.QLineEdit):
     """
-    A QLineEdit which is connected to the Shotgun global search.
+    A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates
+    a global search input box with auto completion.
+    
+    :signal entity_selected(str, int): Fires when someone selects an entity inside
+            the search results. The returned parameters are entity type and entity id.
     """
     
     # custom roles for the model that tracks the auto completion results
@@ -35,7 +39,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
     def __init__(self, parent):
         """
         :param parent: Qt parent object
-        :type parent: :class:`PySide.QtGui.QWidget`        
+        :type parent: :class:`~PySide.QtGui.QWidget`        
         """
  
         # first, call the base class and let it do its thing.
@@ -67,7 +71,12 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         
     def set_data_retriever(self, data_retriever):
         """
-        Create a separate sg data handler for sg queries
+        Set an async data retreiver object to use with this widget. Data calls
+        to Shotgun will be send through this object.
+        
+        :param data_retriever: Data retriever object to use for fetching information
+                               from Shotgun.
+        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` 
         """
         self.__sg_data_retriever = data_retriever
         self.__sg_data_retriever.work_completed.connect(self.__on_worker_signal)
@@ -76,7 +85,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
     ############################################################################
     # internal methods
                 
-    def _clear_model(self, add_loading_item = True):
+    def _clear_model(self, add_loading_item=True):
         """
         Clears the current data in the model.
         

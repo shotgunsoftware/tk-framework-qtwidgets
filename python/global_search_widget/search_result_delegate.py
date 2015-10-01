@@ -29,8 +29,6 @@ class SearchResultDelegate(views.WidgetDelegate):
 
     def __init__(self, view):
         """
-        Constructor
-        
         :param view: The view where this delegate is being used
         """                
         views.WidgetDelegate.__init__(self, view)

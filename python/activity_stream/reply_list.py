@@ -26,13 +26,16 @@ from .overlaywidget import SmallOverlayWidget
  
 class ReplyListWidget(QtGui.QWidget):
     """
-    Top level widget that displays a note conversation.
-    
+    QT Widget that displays a note conversation, 
+    including attachments and the ability to reply.
+
     This will first render the body of the note, including the attachments,
-    and then subsequent replies.
+    and then subsequent replies. This widget uses the same
+    widgets, data backend and visual components as the 
+    activity stream.
     
-    The same widgets that are being used in the activity stream are
-    being reused in this widget.
+    :signal entity_requested(str, int): Fires when someone clicks an entity inside
+            the activity stream. The returned parameters are entity type and entity id.
     """
     
     # when someone clicks a link or similar
@@ -41,7 +44,7 @@ class ReplyListWidget(QtGui.QWidget):
     def __init__(self, parent):
         """
         :param parent: QT parent object
-        :type parent: :class:`PySide.QtGui.QWidget`
+        :type parent: :class:`~PySide.QtGui.QWidget`
         """
 
         # first, call the base class and let it do its thing.
@@ -78,7 +81,7 @@ class ReplyListWidget(QtGui.QWidget):
         widget.
 
         :param data_retriever: Data retriever object to use for fetching information
-                               from Shotugn.
+                               from Shotgun.
         :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` 
         """
         self._data_manager.set_data_retriever(data_retriever)

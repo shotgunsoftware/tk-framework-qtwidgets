@@ -22,7 +22,7 @@ class ReplyDialog(QtGui.QDialog):
         :param parent: QT parent object
         :type parent: :class:`PySide.QtGui.QWidget`
         :param data_retriever: Data retriever object to use for fetching information
-                               from Shotugn.
+                               from Shotgun.
         :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`
         :param note_id: Id for note to reply to 
         """

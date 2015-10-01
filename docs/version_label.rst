@@ -8,4 +8,5 @@ Shotgun Version Playback Widget
 .. currentmodule:: version_label
 
 .. autoclass:: VersionLabel
+    :show-inheritance:
     :members: set_shotgun_data

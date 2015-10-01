@@ -33,6 +33,7 @@ ActivityStreamWidget
 .. currentmodule:: activity_stream
 
 .. autoclass:: ActivityStreamWidget
+    :show-inheritance:
     :members:
     :inherited-members:
 
@@ -42,5 +43,6 @@ ReplyListWidget
 .. currentmodule:: activity_stream
 
 .. autoclass:: ReplyListWidget
+    :show-inheritance:
     :members:
     :inherited-members:

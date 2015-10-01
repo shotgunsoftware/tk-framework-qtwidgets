@@ -20,8 +20,8 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
     Base class for all activity stream widget types
     """
 
-    # signal that fire when things are clicked
     entity_requested = QtCore.Signal(str, int)
+    
     playback_requested = QtCore.Signal(dict)
     
     def __init__(self, parent):

@@ -26,19 +26,24 @@ from .overlaywidget import SmallOverlayWidget
 class ActivityStreamWidget(QtGui.QWidget):
     """
     QT Widget that displays the Shotgun activity stream for an entity.
+    
+    :signal entity_requested(str, int): Fires when someone clicks an entity inside
+            the activity stream. The returned parameters are entity type and entity id.
+    :signal playback_requested(dict): Fires when someone clicks the playback url
+            on a version. Returns a shotgun dictionary with information
+            about the version.
     """
     
     # max number of items to show in the activity stream.
     MAX_STREAM_LENGTH = 20
-    
-    # when someone clicks a link or similar
     entity_requested = QtCore.Signal(str, int)
-    playback_requested = QtCore.Signal(dict)    
+    playback_requested = QtCore.Signal(dict)   
+     
     
     def __init__(self, parent):
         """
         :param parent: QT parent object
-        :type parent: :class:`PySide.QtGui.QWidget`
+        :type parent: :class:`~PySide.QtGui.QWidget`
         """
         # first, call the base class and let it do its thing.
         QtGui.QWidget.__init__(self, parent)
@@ -85,7 +90,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         to Shotgun will be send through this object.
         
         :param data_retriever: Data retriever object to use for fetching information
-                               from Shotugn.
+                               from Shotgun.
         :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` 
         """
         self._data_retriever = data_retriever

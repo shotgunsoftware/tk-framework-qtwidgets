@@ -57,12 +57,6 @@ to launch the help screen::
 API Reference
 ======================================
 
-.. note::
-
-    Import the module into your Toolkit App using the following statement::
-
-        help_screen = sgtk.platform.import_framework("tk-framework-qtwidgets", "help_screen")
-
 .. currentmodule:: help_screen
 
 .. autofunction:: show_help_screen

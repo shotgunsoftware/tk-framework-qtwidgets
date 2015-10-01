@@ -11,12 +11,15 @@ Contents:
    :maxdepth: 2
 
    activity_stream
+   elided_label
    global_search_widget
    help_screen
+   models
+   note_input_widget
    overlay_widget
    screen_grab
    version_label
-   note_input_widget
+
 
 
 Importing widgets into your app
