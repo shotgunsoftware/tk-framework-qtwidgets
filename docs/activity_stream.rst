@@ -1,9 +1,16 @@
 Shotgun Activity Stream Widget
 #############################################
 
-.. image:: images/activity_stream.png
+Introduction
+======================================
+
+The activity stream widget is a QT widget that renders the activity stream for a
+given Shotgun entity. The functionality is similar to that in the Shotgun activity stream,
+
+.. image:: images/activity_stream_1.png
 
 
+.. image:: images/activity_stream_2.png
 
 
 

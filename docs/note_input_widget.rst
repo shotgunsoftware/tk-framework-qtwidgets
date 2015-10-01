@@ -1,11 +1,11 @@
-Shotgun Version Playback Widget
+Shotgun Note editor widget
 #############################################
 
-.. image:: images/version_label.png
+.. image:: images/note_reply.png
 
 
 
 .. currentmodule:: note_input_widget
 
 .. autoclass:: NoteInputWidget
-    :members: 
+    :members:

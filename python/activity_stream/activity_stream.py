@@ -20,14 +20,12 @@ from .widget_new_item import NewItemWidget, SimpleNewItemWidget
 from .widget_note import NoteWidget
 from .widget_value_update import ValueUpdateWidget
 from .dialog_reply import ReplyDialog
-
 from .data_manager import ActivityStreamDataHandler
-
 from .overlaywidget import SmallOverlayWidget
  
 class ActivityStreamWidget(QtGui.QWidget):
     """
-    Widget that displays the Shotgun activity stream for an entity.
+    QT Widget that displays the Shotgun activity stream for an entity.
     """
     
     # max number of items to show in the activity stream.
@@ -39,9 +37,8 @@ class ActivityStreamWidget(QtGui.QWidget):
     
     def __init__(self, parent):
         """
-        Constructor
-        
         :param parent: QT parent object
+        :type parent: 
         """
         # first, call the base class and let it do its thing.
         QtGui.QWidget.__init__(self, parent)
