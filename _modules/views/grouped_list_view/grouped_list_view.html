@@ -1,0 +1,1292 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>views.grouped_list_view.grouped_list_view &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='./_static/logo@2x.png'/>
+    
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../note_input_widget.html">Shotgun Note editor widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>views.grouped_list_view.grouped_list_view</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for views.grouped_list_view.grouped_list_view</h1><div class="highlight"><pre>
+<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c"># </span>
+<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c"># </span>
+<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="kn">from</span> <span class="nn">.grouped_list_view_item_delegate</span> <span class="kn">import</span> <span class="n">GroupedListViewItemDelegate</span>
+
+<div class="viewcode-block" id="GroupedListView"><a class="viewcode-back" href="../../../views.html#views.GroupedListView">[docs]</a><span class="k">class</span> <span class="nc">GroupedListView</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Custom Qt View that displays items as a grouped list.  The view works with any tree</span>
+<span class="sd">    based model with the first level of the hierarchy defining the groups and the second</span>
+<span class="sd">    level defining the items for that group.  Subsequent levels of the hierarchy are ignored.</span>
+<span class="sd">    </span>
+<span class="sd">    Items within a group are layed out left-to right and wrap automatically based on the</span>
+<span class="sd">    view&#39;s width.</span>
+<span class="sd">    </span>
+<span class="sd">    For example, the following tree model::</span>
+<span class="sd">    </span>
+<span class="sd">        - Group 1</span>
+<span class="sd">          - Item 1</span>
+<span class="sd">          - Item 2</span>
+<span class="sd">          - Item 3</span>
+<span class="sd">        - Group 2</span>
+<span class="sd">          - Item 4</span>
+<span class="sd">        - Group 3</span>
+<span class="sd">    </span>
+<span class="sd">    Would look like this in the view::</span>
+<span class="sd">    </span>
+<span class="sd">        &gt; Group 1</span>
+<span class="sd">        -----------------</span>
+<span class="sd">        [Item 1] [Item 2]</span>
+<span class="sd">        [Item 3]</span>
+<span class="sd">        &gt; Group 2</span>
+<span class="sd">        -----------------</span>
+<span class="sd">        [Item 4]</span>
+<span class="sd">        &gt; Group 3</span>
+<span class="sd">        -----------------</span>
+<span class="sd">    </span>
+<span class="sd">    The widgets used for the various groups and items are created through a GroupedListViewItemDelegate</span>
+<span class="sd">    and this can be overriden to implement custom UI for these elements.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">_ItemInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        class representing the information that needs to be tracked for each item (row)</span>
+<span class="sd">        in the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Construction</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>             <span class="c"># relative item rect for group header</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="bp">True</span>                      <span class="c"># True if data in group or children has changed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">collapsed</span> <span class="o">=</span> <span class="bp">False</span>                 <span class="c"># True if the group is currently collapsed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child_info</span> <span class="o">=</span> <span class="p">[]</span>                   <span class="c"># List of tuples containing (row, column, size) where row and</span>
+                                                   <span class="c"># column are the relative row and column in the visual grid and </span>
+                                                   <span class="c"># size is the visual size of the child for all child items in</span>
+                                                   <span class="c"># the group</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child_area_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>  <span class="c"># total size of child area</span>
+
+        <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_area_rect</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param parent: The parent QWidget</span>
+<span class="sd">        :type parent:  :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_width</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c"># keep track of all created group widgets.  The view</span>
+        <span class="c"># will always try to reuse these where possible so the</span>
+        <span class="c"># number of created group widgets will never exceed</span>
+        <span class="c"># the number visible in the viewport  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group_widgets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group_widget_rows</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prev_viewport_sz</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">()</span>
+
+        <span class="c"># initial values for the properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_border</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span> <span class="o">=</span> <span class="mi">30</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="c"># default item delegate:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_item_delegate</span> <span class="o">=</span> <span class="n">GroupedListViewItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="c"># @property</span>
+    <span class="k">def</span> <span class="nf">_get_border</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The external border to use for all items in the view</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_border</span>
+    <span class="c"># @border.setter</span>
+    <span class="k">def</span> <span class="nf">_set_border</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">border_sz</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_border</span> <span class="o">=</span> <span class="n">border_sz</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="n">border</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_border</span><span class="p">,</span> <span class="n">_set_border</span><span class="p">)</span>
+
+    <span class="c"># @property</span>
+    <span class="k">def</span> <span class="nf">_get_group_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The spacing to use between groups when they are collapsed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span>
+    
+    <span class="c"># @group_spacing.setter</span>
+    <span class="k">def</span> <span class="nf">_set_group_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span> <span class="o">=</span> <span class="n">spacing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="n">group_spacing</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_group_spacing</span><span class="p">,</span> <span class="n">_set_group_spacing</span><span class="p">)</span>
+
+    <span class="c"># @property</span>
+    <span class="k">def</span> <span class="nf">_get_item_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The spacing to use between items in the view</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span>
+    <span class="c"># @item_spacing.setter</span>
+    <span class="k">def</span> <span class="nf">_set_item_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span> <span class="o">=</span> <span class="n">spacing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="n">item_spacing</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_item_spacing</span><span class="p">,</span> <span class="n">_set_item_spacing</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GroupedListView.expand"><a class="viewcode-back" href="../../../views.html#views.GroupedListView.expand">[docs]</a>    <span class="k">def</span> <span class="nf">expand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Expand the specified index</span>
+
+<span class="sd">        :param index:   The model index to be expanded</span>
+<span class="sd">        :type index:    :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_expanded</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="GroupedListView.collapse"><a class="viewcode-back" href="../../../views.html#views.GroupedListView.collapse">[docs]</a>    <span class="k">def</span> <span class="nf">collapse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Collapse the specified index</span>
+
+<span class="sd">        :param index:   The model index to be collapsed</span>
+<span class="sd">        :type index:    :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_expanded</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="GroupedListView.is_expanded"><a class="viewcode-back" href="../../../views.html#views.GroupedListView.is_expanded">[docs]</a>    <span class="k">def</span> <span class="nf">is_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Query if the specified index is expanded or not</span>
+
+<span class="sd">        :param index:   The model index to check</span>
+<span class="sd">        :type index:    :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        :returns:       True if the index is a root index and is expanded,</span>
+<span class="sd">                        otherwise False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">collapsed</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c"># ----------------------------------------------------------------------------------------------------</span>
+    <span class="c"># Overriden public methods</span>
+</div>
+    <span class="k">def</span> <span class="nf">itemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that returns the item delegate to be used for items in this</span>
+<span class="sd">        view.  This will return the default item delegate if a delegate deriving from</span>
+<span class="sd">        GroupedListViewItemDelegate hasn&#39;t been set for the view.</span>
+
+<span class="sd">        :returns:   A class:`GroupedListViewItemDelegate` instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">delegate</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">delegate</span><span class="p">,</span> <span class="n">GroupedListViewItemDelegate</span><span class="p">):</span>
+            <span class="c"># just return the defauly item delegate:</span>
+            <span class="n">delegate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_item_delegate</span>
+        <span class="k">return</span> <span class="n">delegate</span>
+
+    <span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the edit method on the base class to dissalow editing </span>
+<span class="sd">        of group items</span>
+
+<span class="sd">        :param idx:     The model index to be edited</span>
+<span class="sd">        :param trigger: The trigger that is triggering the edit</span>
+<span class="sd">        :param event:   The edit event</span>
+<span class="sd">        :returns:       False if the idx is a root item (group), otherwise</span>
+<span class="sd">                        the returned value from the base implementation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">idx</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="c"># we don&#39;t want to allow the regular editing of groups</span>
+            <span class="c"># needs to be driven by role though!</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overrides the base method to make sure the item info gets updated when the model</span>
+<span class="sd">        is changed.</span>
+
+<span class="sd">        :param model:   The model to set for this view</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="c"># ----------------------------------------------------------------------------------------------------</span>
+    <span class="c"># Internal class methods</span>
+
+    <span class="k">def</span> <span class="nf">_set_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">expand</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Toggle the expanded state of the specified index</span>
+
+<span class="sd">        :param index:   The model index to expand/collapse</span>
+<span class="sd">        :param expand:  True if the item should be expanded, otherwise False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="c"># can only expand valid root indexes!</span>
+            <span class="k">return</span> 
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">collapsed</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">expand</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">dataChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_left</span><span class="p">,</span> <span class="n">bottom_right</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method that gets called when some data in the model attached</span>
+<span class="sd">        to this view has been changed.</span>
+
+<span class="sd">        :param top_left:        The top-left model index of the data that has changed</span>
+<span class="sd">        :param bottom_right:    The bottom-right model index of the data that has changed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#print &quot;DATA CHANGED [%s] %s -&gt; %s&quot; % (top_left.parent().row(), top_left.row(), bottom_right.row())</span>
+
+        <span class="k">if</span> <span class="n">top_left</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="c"># data has changed for top-level rows:</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">top_left</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">bottom_right</span><span class="o">.</span><span class="n">row</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="n">top_left</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="c"># this assumes that all rows from top-left to bottom-right have </span>
+            <span class="c"># the same parent - this seems to always be the case!</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">top_left</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># make sure we schedule a viewport update so that everything gets updated correctly!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">dataChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_left</span><span class="p">,</span> <span class="n">bottom_right</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rowsInserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that gets called when new rows have been inserted into</span>
+<span class="sd">        the model attached to this view.</span>
+
+<span class="sd">        :param parent_index:    The parent model index the rows have been inserted under</span>
+<span class="sd">        :param start:           The first row that was inserted</span>
+<span class="sd">        :param end:             The last row that was inserted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#print &quot;ROWS INSERTED [%s] %s -&gt; %s&quot; % (parent_index.row(), start, end)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parent_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+                <span class="c"># inserting root level rows:</span>
+                <span class="n">new_rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">GroupedListView</span><span class="o">.</span><span class="n">_ItemInfo</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">end</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">start</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_rows</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">elif</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+                <span class="c"># inserting group level rows:</span>
+                <span class="n">parent_row</span> <span class="o">=</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">parent_row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">parent_row</span><span class="p">]</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="bp">True</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># something went wrong so refresh everything!</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># make sure we schedule a viewport update so that everything gets updated correctly!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">rowsInserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rowsAboutToBeRemoved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that gets called just before rows are removed from</span>
+<span class="sd">        the model attached to this view.</span>
+
+<span class="sd">        Note, not sure why but this doesn&#39;t seem to get called as expected in PyQt!  Because</span>
+<span class="sd">        of this there is an extra validation step in self._update_item_info() which may</span>
+<span class="sd">        slightly reduce performance in PyQt but as this only happens when items are removed</span>
+<span class="sd">        from the model via clearing then hopefully it shouldn&#39;t be a big problem!</span>
+
+<span class="sd">        :param parent_index:    The parent model index the rows have been inserted under</span>
+<span class="sd">        :param start:           The first row that will be removed</span>
+<span class="sd">        :param end:             The last row that will be removed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#print &quot;ROWS REMOVED [%s] %s -&gt; %s&quot; % (parent_index.row(), start, end)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parent_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+                <span class="c"># removing root level rows:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">end</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">elif</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+                <span class="c"># inserting group level rows:</span>
+                <span class="n">parent_row</span> <span class="o">=</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">parent_row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">parent_row</span><span class="p">]</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="bp">True</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># something went wrong!</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>        
+
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">rowsAboutToBeRemoved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+        <span class="c"># make sure we schedule a viewport update so that everything gets updated correctly!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">visualRect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that should return the rectangle occupied by the given </span>
+<span class="sd">        index in the viewport</span>
+
+<span class="sd">        :param index:   The model index to return the rectangle for</span>
+<span class="sd">        :returns:       A QRect() representing the rectangle this index will occupy </span>
+<span class="sd">                        in the viewport</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">item_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_rect</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+                <span class="c"># rectangle should be widget relative, not viewport relative:</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">translated</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontalOffset</span><span class="p">(),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">verticalOffset</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">rect</span>
+
+    <span class="k">def</span> <span class="nf">isIndexHidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that returns True if the specified index is hidden (e.g. a </span>
+<span class="sd">        collapsed child in a tree view)</span>
+
+<span class="sd">        :param index:   The model index to query if it&#39;s hidden</span>
+<span class="sd">        :returns:       True if the index is hidden, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="n">parent_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> 
+        <span class="k">if</span> <span class="n">parent_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="c"># root items are never hidden:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="c"># grandchildren are always hidden:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">collapsed</span><span class="p">:</span>
+                <span class="c"># parent is collapsed so item is hidden</span>
+                <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="c"># default is to show the index:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">scrollTo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">scroll_hint</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">EnsureVisible</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method used to scroll to the specified index in the viewport</span>
+<span class="sd">        (TODO - implement behaviour specific to the scroll hint)</span>
+
+<span class="sd">        :param index:       The model index to scroll to</span>
+<span class="sd">        :param scroll_hint: Hint about how the view should scroll - currently ignored!</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">viewport_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span>
+
+        <span class="n">item_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_rect</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">item_rect</span> <span class="o">=</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">translated</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontalOffset</span><span class="p">(),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">verticalOffset</span><span class="p">())</span>
+
+        <span class="n">dx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">left</span><span class="p">():</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">-</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">right</span><span class="p">():</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">item_rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span> <span class="o">-</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span>
+                     <span class="n">item_rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">-</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">left</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">dx</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">horizontalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">+</span> <span class="n">dx</span><span class="p">)</span>
+
+        <span class="n">dy</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">top</span><span class="p">():</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">-</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">():</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">item_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span> <span class="o">-</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">(),</span>
+                     <span class="n">item_rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">-</span> <span class="n">viewport_rect</span><span class="o">.</span><span class="n">top</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">dy</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">+</span> <span class="n">dy</span><span class="p">)</span>
+
+        <span class="c"># update the viewport</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">indexAt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that returns the model index under the specified point in </span>
+<span class="sd">        the viewport</span>
+
+<span class="sd">        :param point:   The QPoint to find the model index for</span>
+<span class="sd">        :returns:       The model index for the item under the point or an invalid</span>
+<span class="sd">                        QModelIndex() if there isn&#39;t one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+
+        <span class="c"># convert viewport relative point to global point:</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="n">point</span> <span class="o">+</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontalOffset</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">verticalOffset</span><span class="p">())</span>
+
+        <span class="n">num_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_rows</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">():</span>
+            <span class="c"># just in case!</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+
+        <span class="n">y_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_border</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">item_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+
+            <span class="c"># get point in local space:</span>
+            <span class="n">local_point</span> <span class="o">=</span> <span class="n">point</span> <span class="o">+</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">y_offset</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">local_point</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">item_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">():</span>
+                <span class="c"># point definitely isn&#39;t on an item as we&#39;d have found it by now!</span>
+                <span class="k">break</span>
+
+            <span class="c"># ok, we&#39;ll need an index for this row:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="c"># check if the point is within this item:</span>
+            <span class="k">if</span> <span class="n">item_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">local_point</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">index</span> 
+
+            <span class="c"># update y-offset:</span>
+            <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">item_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">item_info</span><span class="o">.</span><span class="n">collapsed</span><span class="p">:</span>
+                <span class="c"># now check children:</span>
+                <span class="n">local_point</span> <span class="o">=</span> <span class="n">point</span> <span class="o">+</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">y_offset</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">child_row</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">child_rect</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">child_rect</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">local_point</span><span class="p">):</span>
+                        <span class="c"># found a hit on a child item</span>
+                        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">child_row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+                <span class="c"># update y-offset                </span>
+                <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">item_info</span><span class="o">.</span><span class="n">child_area_rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y_offset</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+        <span class="c"># no match so return invalid model index</span>
+        <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">moveCursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor_action</span><span class="p">,</span> <span class="n">keyboard_modifiers</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that returns the index for the item that the specified </span>
+<span class="sd">        cursor action will move to.</span>
+
+<span class="sd">        Currently handles up, down, left, right, next and previous actions and only</span>
+<span class="sd">        moves between leaf items in the view, skipping group items.  This could be</span>
+<span class="sd">        extended in future to treat groups in the same way the regular tree view works</span>
+<span class="sd">        (e.g. left/right == collapes/expand).</span>
+
+<span class="sd">        :param cursor_action:       The action to use when moving the cursor.</span>
+<span class="sd">        :param keyboard_modifiers:  Any keyboard modifiers that are currentlt active.</span>
+<span class="sd">        :returns:                   The QModelIndex of the item the cursor should be</span>
+<span class="sd">                                    moved to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+
+        <span class="c"># check that the item info is up-to-date:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">index</span>
+
+        <span class="c"># get the rows for both the index and the parent index:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="n">parent_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">index</span>
+        <span class="n">parent_row</span> <span class="o">=</span> <span class="n">parent_index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+
+        <span class="n">parent_item_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">parent_row</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">parent_index</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">index</span>
+
+        <span class="c"># find the neighbouring row information based on the direction:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cursor_action</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">MoveLeft</span>
+            <span class="ow">or</span> <span class="n">cursor_action</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">MovePrevious</span><span class="p">):</span>
+            <span class="c"># move to the left of the current item in the same visual row if possible.  If the</span>
+            <span class="c"># cursor is at the start of the row then we do nothing.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="c"># just move left 1</span>
+                <span class="n">row</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">cursor_action</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">MoveRight</span>
+              <span class="ow">or</span> <span class="n">cursor_action</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">MoveNext</span><span class="p">):</span>
+            <span class="c"># move to the right of the current item in the same visual row if possible.  If the</span>
+            <span class="c"># cursor is at the end of the row then we do nothing.</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">parent_row</span><span class="p">]</span><span class="o">.</span><span class="n">child_info</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="c"># just move right 1:</span>
+                <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">cursor_action</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">MoveUp</span><span class="p">:</span>
+            <span class="c"># move to the same column in the visible visual row above the current item if possible.  If we</span>
+            <span class="c"># are on the top visible row in the view then this will do nothing.</span>
+            <span class="n">layout_row</span><span class="p">,</span> <span class="n">layout_column</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">layout_row</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c"># move up a row within the same group:</span>
+                <span class="k">for</span> <span class="n">ri</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[:</span><span class="n">row</span><span class="p">])):</span>
+                    <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">layout_row</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="n">layout_column</span><span class="p">:</span>
+                        <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">ri</span>
+                        <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># see if we have a visible previous group we can move up to:</span>
+                <span class="n">prev_item_info</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="n">prev_parent_row</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[:</span><span class="n">parent_row</span><span class="p">])):</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">info</span><span class="o">.</span><span class="n">collapsed</span> <span class="ow">and</span> <span class="n">info</span><span class="o">.</span><span class="n">child_info</span><span class="p">:</span>
+                        <span class="c"># we can move up to this group!</span>
+                        <span class="n">prev_item_info</span> <span class="o">=</span> <span class="n">info</span>
+                        <span class="n">prev_parent_row</span> <span class="o">=</span> <span class="n">parent_row</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">ii</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">prev_item_info</span><span class="p">:</span>
+                    <span class="c"># try to move up to the last row of the previous group:</span>
+                    <span class="k">for</span> <span class="n">ri</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">prev_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="n">layout_column</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="n">layout_column</span><span class="p">):</span>
+                            <span class="n">parent_row</span> <span class="o">=</span> <span class="n">prev_parent_row</span>
+                            <span class="n">row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prev_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">ri</span>
+                            <span class="k">break</span>
+
+        <span class="k">elif</span> <span class="n">cursor_action</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">MoveDown</span><span class="p">:</span>
+            <span class="c"># move to the same column in the visible visual row below the current item if possible.  If we</span>
+            <span class="c"># are on the bottom visible row in the view then this will do nothing.</span>
+            <span class="n">layout_row</span><span class="p">,</span> <span class="n">layout_column</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+            <span class="n">last_layout_row</span><span class="p">,</span> <span class="n">last_layout_column</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">layout_row</span> <span class="o">&lt;</span> <span class="n">last_layout_row</span><span class="p">:</span>
+                <span class="c"># move down a row within the same group:</span>
+                <span class="k">for</span> <span class="n">ri</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="p">:]):</span>
+                    <span class="k">if</span> <span class="p">((</span><span class="n">r</span> <span class="o">==</span> <span class="n">last_layout_row</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">layout_column</span><span class="p">,</span> <span class="n">last_layout_column</span><span class="p">))</span>
+                        <span class="ow">or</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="n">layout_row</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="n">layout_column</span><span class="p">):</span>
+                        <span class="n">row</span> <span class="o">=</span> <span class="n">row</span> <span class="o">+</span> <span class="n">ri</span>
+                        <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># see if we have a visible following group we can move down to:</span>
+                <span class="n">next_item_info</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="n">next_parent_row</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">parent_row</span><span class="o">+</span><span class="mi">1</span><span class="p">:]):</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">info</span><span class="o">.</span><span class="n">collapsed</span> <span class="ow">and</span> <span class="n">info</span><span class="o">.</span><span class="n">child_info</span><span class="p">:</span>
+                        <span class="c"># we can move down to this group!</span>
+                        <span class="n">next_item_info</span> <span class="o">=</span> <span class="n">info</span>
+                        <span class="n">next_parent_row</span> <span class="o">=</span> <span class="n">parent_row</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">ii</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">next_item_info</span><span class="p">:</span>
+                    <span class="n">last_layout_row</span><span class="p">,</span> <span class="n">last_layout_column</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">next_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="c"># try to move down to the first row of the next group:</span>
+                    <span class="k">for</span> <span class="n">ri</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">next_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="p">((</span><span class="n">r</span> <span class="o">==</span> <span class="n">last_layout_row</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">layout_column</span><span class="p">,</span> <span class="n">last_layout_column</span><span class="p">))</span>
+                            <span class="ow">or</span> <span class="n">c</span> <span class="o">==</span> <span class="n">layout_column</span><span class="p">):</span>
+                            <span class="n">parent_row</span> <span class="o">=</span> <span class="n">next_parent_row</span>
+                            <span class="n">row</span> <span class="o">=</span> <span class="n">ri</span>
+                            <span class="k">break</span>
+
+        <span class="c"># build a new index based on the new row and parent row:</span>
+        <span class="k">if</span> <span class="n">parent_row</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">parent_row</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">():</span>
+            <span class="n">parent_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">parent_row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">row</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">parent_index</span><span class="p">):</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">parent_index</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">index</span>
+
+
+    <span class="k">def</span> <span class="nf">horizontalOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that returns the X offset of the viewport within the ideal </span>
+<span class="sd">        sized widget</span>
+
+<span class="sd">        :returns:   The current x-offset based on the horizontal scroll bar value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizontalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">verticalOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that returns the Y offset of the viewport within the ideal </span>
+<span class="sd">        sized widget</span>
+
+<span class="sd">        :returns:   The current y-offset based on the vertical scroll bar value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>    
+
+    <span class="k">def</span> <span class="nf">scrollContentsBy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method used to scroll the viewport by the specified deltas</span>
+
+<span class="sd">        :param dx:  The horizontal delta to scroll by</span>
+<span class="sd">        :param dy:  The vertical delta to scroll by</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollDirtyRegion</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">scroll</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection_rect</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method used to set the selection given the selection rectangle and flags</span>
+
+<span class="sd">        :param selection_rect:  The selection rectangle that should be used to select any</span>
+<span class="sd">                                items contained within</span>
+<span class="sd">        :param flags:           Flags that define if the items within the selection rectangle</span>
+<span class="sd">                                should be added to, removed from, etc. the current selection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># convert viewport relative rect to global rect:</span>
+        <span class="n">selection_rect</span> <span class="o">=</span> <span class="n">selection_rect</span><span class="o">.</span><span class="n">translated</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontalOffset</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">verticalOffset</span><span class="p">())</span>
+
+        <span class="c"># now find which item rectangles intersect this rectangle:</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QItemSelection</span><span class="p">()</span>
+
+        <span class="n">num_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_rows</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">():</span>
+            <span class="c"># just in case!</span>
+            <span class="k">return</span>
+
+        <span class="n">y_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_border</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">item_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+
+            <span class="c"># we only allow selection of child items so we can skip testing the group/top level:</span>
+            <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">item_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">item_info</span><span class="o">.</span><span class="n">collapsed</span><span class="p">:</span>
+                <span class="c"># check to see if the selection rect intersects the child area:</span>
+                <span class="n">local_selection_rect</span> <span class="o">=</span> <span class="n">selection_rect</span><span class="o">.</span><span class="n">translated</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">y_offset</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">local_selection_rect</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">item_info</span><span class="o">.</span><span class="n">child_area_rect</span><span class="p">):</span>
+                    <span class="c"># we&#39;ll need an index for this row:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+                    <span class="c"># need to iterate through and check all child items:</span>
+                    <span class="n">top_left</span> <span class="o">=</span> <span class="n">bottom_right</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="k">for</span> <span class="n">child_row</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">child_rect</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">):</span>
+
+                        <span class="k">if</span> <span class="n">child_rect</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">local_selection_rect</span><span class="p">):</span>
+                            <span class="n">child_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">child_row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+                            <span class="n">top_left</span> <span class="o">=</span> <span class="n">top_left</span> <span class="ow">or</span> <span class="n">child_index</span>
+                            <span class="n">bottom_right</span> <span class="o">=</span> <span class="n">child_index</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">top_left</span><span class="p">:</span>
+                                <span class="n">selection</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">top_left</span><span class="p">,</span> <span class="n">bottom_right</span><span class="p">)</span>
+                                <span class="n">top_left</span> <span class="o">=</span> <span class="n">bottom_right</span> <span class="o">=</span> <span class="bp">None</span>
+
+                    <span class="k">if</span> <span class="n">top_left</span><span class="p">:</span>
+                        <span class="n">selection</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">top_left</span><span class="p">,</span> <span class="n">bottom_right</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">local_selection_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">item_info</span><span class="o">.</span><span class="n">child_area_rect</span><span class="o">.</span><span class="n">top</span><span class="p">():</span>
+                    <span class="c"># no need to look any further!</span>
+                    <span class="k">pass</span>
+
+                <span class="c"># update y-offset</span>
+                <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">item_info</span><span class="o">.</span><span class="n">child_area_rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y_offset</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+        <span class="c"># update the selection model:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">visualRegionForSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that returns the region in the viewport encompasing all the </span>
+<span class="sd">        selected items</span>
+
+<span class="sd">        :param selection:   The selection to return the region for</span>
+<span class="sd">        :returns:           A QRegion representing the region containing all the selected items</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">viewport_offset</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontalOffset</span><span class="p">(),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">verticalOffset</span><span class="p">())</span>        
+
+        <span class="n">region</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QRegion</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">index_range</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index_range</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span> <span class="n">index_range</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index_range</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_rect</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">translated</span><span class="p">(</span><span class="n">viewport_offset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">viewport_offset</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">region</span> <span class="o">+=</span> <span class="n">rect</span>
+        <span class="k">return</span> <span class="n">region</span>
+
+    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method that gets called whenever the view needs repainting.</span>
+
+<span class="sd">        :param event:    The QPaintEvent containing information about the event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">():</span>
+            <span class="k">return</span>
+
+        <span class="c"># make sure item rects are up to date:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_item_info</span><span class="p">()</span>
+
+        <span class="n">row_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">row_count</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+            <span class="c"># this shouldn&#39;t ever happen but just incase it does then </span>
+            <span class="c"># we shouldn&#39;t paint anything as we&#39;ll probably get exceptions!</span>
+            <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+            <span class="n">bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s">&quot;Unable to paint the Grouped List View as the internal cache is out of sync!&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c"># build lookups for the group widgets:</span>
+        <span class="n">group_widgets_by_row</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">widget</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_widget_rows</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="n">row_count</span><span class="p">:</span>
+                <span class="n">group_widgets_by_row</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">=</span> <span class="n">widget</span>
+        <span class="n">unused_group_widgets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_widgets</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">widget</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group_widgets_by_row</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">unused_group_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="n">next_unused_group_widget_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group_widget_rows</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">group_widgets_to_resize</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c"># pull out the viewport size and offsets:</span>
+        <span class="n">update_rect</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span>
+        <span class="n">viewport_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span>
+        <span class="n">viewport_offset</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontalOffset</span><span class="p">(),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">verticalOffset</span><span class="p">())</span>
+
+        <span class="c"># start painting:</span>
+        <span class="n">painter</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">())</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setRenderHints</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">TextAntialiasing</span><span class="p">)</span>
+
+            <span class="c"># keep track of the y-offset as we go:</span>
+            <span class="n">y_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_border</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">item_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+
+                <span class="c"># get valid model index:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">())</span>
+
+                <span class="c"># get the rectangle and translate into the correct relative location:</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="n">item_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">translated</span><span class="p">(</span><span class="n">viewport_offset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">viewport_offset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y_offset</span><span class="p">)</span>
+
+                <span class="c"># test to see if the rectangle exists within the viewport:</span>
+                <span class="n">grp_widget</span> <span class="o">=</span> <span class="n">group_widgets_by_row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">rect</span><span class="o">.</span><span class="n">isValid</span> <span class="ow">and</span> <span class="n">rect</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">viewport_rect</span><span class="p">):</span>
+                    <span class="c"># the group widget is visible:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">grp_widget</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">next_unused_group_widget_idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">unused_group_widgets</span><span class="p">):</span>
+                            <span class="n">grp_widget</span> <span class="o">=</span> <span class="n">unused_group_widgets</span><span class="p">[</span><span class="n">next_unused_group_widget_idx</span><span class="p">]</span>
+                            <span class="n">next_unused_group_widget_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c"># need to create a new group widget and hook up the signals:</span>
+                            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">(),</span> <span class="s">&quot;create_group_widget&quot;</span><span class="p">):</span>
+                                <span class="n">grp_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">()</span><span class="o">.</span><span class="n">create_group_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">())</span>
+                            <span class="k">if</span> <span class="n">grp_widget</span><span class="p">:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">_group_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grp_widget</span><span class="p">)</span>
+                                <span class="n">grp_widget</span><span class="o">.</span><span class="n">toggle_expanded</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_group_expanded_toggled</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">grp_widget</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">grp_widget</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span> <span class="o">!=</span> <span class="n">rect</span><span class="p">:</span>
+                            <span class="c"># add widget to list to be resized later:</span>
+                            <span class="n">group_widgets_to_resize</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">grp_widget</span><span class="p">,</span> <span class="n">rect</span><span class="p">))</span>
+
+                        <span class="c"># set up this widget for this index:</span>
+                        <span class="n">grp_widget</span><span class="o">.</span><span class="n">set_expanded</span><span class="p">(</span><span class="ow">not</span> <span class="n">item_info</span><span class="o">.</span><span class="n">collapsed</span><span class="p">)</span>
+                        <span class="n">grp_widget</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                        <span class="n">grp_widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_group_widget_rows</span><span class="p">[</span><span class="n">grp_widget</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+
+                <span class="k">elif</span> <span class="n">grp_widget</span><span class="p">:</span>
+                    <span class="c"># group widget is hidden!</span>
+                    <span class="n">unused_group_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grp_widget</span><span class="p">)</span>
+
+                <span class="c"># add the group rectangle height to the y-offset</span>
+                <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">item_info</span><span class="o">.</span><span class="n">collapsed</span><span class="p">:</span>
+                    <span class="c"># draw any children:</span>
+                    <span class="n">num_child_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">)</span> <span class="o">==</span> <span class="n">num_child_rows</span><span class="p">:</span>
+                        <span class="c"># draw all children</span>
+                        <span class="k">for</span> <span class="n">child_row</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">child_rect</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">):</span>
+                            <span class="c"># figure out index and update rect:</span>
+                            <span class="n">child_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">child_row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+                            <span class="n">child_rect</span> <span class="o">=</span> <span class="n">child_rect</span><span class="o">.</span><span class="n">translated</span><span class="p">(</span><span class="n">viewport_offset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">viewport_offset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y_offset</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">child_rect</span><span class="o">.</span><span class="n">isValid</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">child_rect</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">update_rect</span><span class="p">):</span>
+                                <span class="c"># no need to draw!</span>
+                                <span class="k">continue</span>
+
+                            <span class="c"># set up the rendering options:</span>
+                            <span class="c"># option = self.viewOptions())</span>
+                            <span class="c"># (AD) - using self.viewOptions() to get the view style options seems</span>
+                            <span class="c"># to return an invalid item in some versions of PySide/PyQt!  I think</span>
+                            <span class="c"># it&#39;s returning a QtGui.QStyleOptionViewItem even though the </span>
+                            <span class="c"># underlying C++ object is a QtGui.QStyleOptionViewItemV2 or higher.</span>
+                            <span class="c">#</span>
+                            <span class="c"># This would result in option.rect being corrupt immediately after it</span>
+                            <span class="c"># was set below!</span>
+                            <span class="c">#</span>
+                            <span class="c"># creating the object directly and then using initFrom seems to work</span>
+                            <span class="c"># though.</span>
+                            <span class="n">option</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionViewItem</span><span class="p">()</span>
+                            <span class="n">option</span><span class="o">.</span><span class="n">initFrom</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+                            <span class="n">option</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">child_rect</span>
+
+                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">.</span><span class="n">isSelected</span><span class="p">(</span><span class="n">child_index</span><span class="p">):</span>
+                                <span class="n">option</span><span class="o">.</span><span class="n">state</span> <span class="o">|=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Selected</span>
+                            <span class="k">if</span> <span class="n">child_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">():</span>
+                                <span class="n">option</span><span class="o">.</span><span class="n">state</span> <span class="o">|=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_HasFocus</span>
+
+                            <span class="c"># draw the widget using the item delegate</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">()</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">child_index</span><span class="p">)</span>
+
+                    <span class="c"># update the y-offset to include the child area:</span>
+                    <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">item_info</span><span class="o">.</span><span class="n">child_area_rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">y_offset</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+            <span class="c"># hide any group widgets that were not used:</span>
+            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">unused_group_widgets</span><span class="p">[</span><span class="n">next_unused_group_widget_idx</span><span class="p">:]:</span>
+                <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">isVisible</span><span class="p">():</span>
+                    <span class="n">w</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+
+        <span class="c"># update geometry for any group widgets that need updating</span>
+        <span class="c"># Note, this has to be done after painting has finished otherwise</span>
+        <span class="c"># the resize event gets blocked!</span>
+        <span class="k">for</span> <span class="n">widget</span><span class="p">,</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">group_widgets_to_resize</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+
+        <span class="c"># call the base implementation:</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_group_expanded_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expanded</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot that gets signalled whenever a group widget is expanded/collapsed.</span>
+
+<span class="sd">        :param expanded:    True if the group widget was expanded, False if it was </span>
+<span class="sd">                            collapsed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># get the row that is being expanded:</span>
+        <span class="n">group_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_widget_rows</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">group_widget</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">row</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="c"># toggle collapsed state for item:        </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">collapsed</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">expanded</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># and update the viewport:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">updateGeometries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method responsible for updating the horizontal and vertical scroll </span>
+<span class="sd">        bars so that they will correctly scroll the view&#39;s viewport.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># calculate the maximum height of all visible items in the model:</span>
+        <span class="n">max_height</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">item_info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">:</span>
+            <span class="n">max_height</span> <span class="o">+=</span> <span class="n">item_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">item_info</span><span class="o">.</span><span class="n">collapsed</span><span class="p">:</span>
+                <span class="n">max_height</span> <span class="o">+=</span> <span class="n">item_info</span><span class="o">.</span><span class="n">child_area_rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">horizontalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">horizontalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setPageStep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">horizontalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="c"># TODO - make this more intelligent!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setPageStep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">_get_item_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the cached item rectangle for the specified model index.</span>
+
+<span class="sd">        :param index:   The model index to find the item rectangle for</span>
+<span class="sd">        :returns:       A QRect representing the rectangle this index occupies in </span>
+<span class="sd">                        the view.  This rectangle is viewport relative.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># first, get the row for each level of the hierarchy (bottom to top)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+
+        <span class="c"># find the info for the root item:</span>
+        <span class="n">root_row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">root_row</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
+        <span class="n">root_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">root_row</span><span class="p">]</span>
+
+        <span class="c"># and the Y offset for the start of the root item:</span>
+        <span class="n">y_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_border</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row_info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[:</span><span class="n">root_row</span><span class="p">]:</span>
+            <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">row_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">row_info</span><span class="o">.</span><span class="n">collapsed</span><span class="p">:</span>
+                <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">row_info</span><span class="o">.</span><span class="n">child_area_rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+                <span class="n">y_offset</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y_offset</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+        <span class="c"># get the rect for the leaf item:</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">root_info</span><span class="o">.</span><span class="n">rect</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">root_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+            <span class="n">child_row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">child_row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">root_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">):</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">root_row</span><span class="p">]</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">child_row</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="c"># and offset the rect by the Y offset:</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">translated</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_offset</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rect</span>
+
+    <span class="k">def</span> <span class="nf">_update_item_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the cached item info when needed.  This updates the item layout for any items that have</span>
+<span class="sd">        been &#39;dirtied&#39; or if the widget size has changed, etc.</span>
+
+<span class="sd">        This is typically run immediately before painting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># double check that the item-info list is the correct length.  PyQt doesn&#39;t</span>
+        <span class="c"># seem to call &#39;rowsAboutToBeRemoved&#39; when a model is cleared so this list can </span>
+        <span class="c"># become out of sync!</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># check to see if the viewport size has changed:</span>
+        <span class="n">viewport_sz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="n">viewport_resized</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">isVisible</span><span class="p">():</span>
+            <span class="c"># to avoid unnecessary resizing, we always calculate the viewport width as if</span>
+            <span class="c"># the vertical scroll bar were visible:</span>
+            <span class="n">scroll_bar_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">()</span><span class="o">.</span><span class="n">pixelMetric</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">PM_ScrollBarExtent</span><span class="p">)</span>
+            <span class="n">viewport_sz</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="n">viewport_sz</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="n">scroll_bar_width</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">viewport_sz</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prev_viewport_sz</span><span class="p">):</span>
+            <span class="c"># the viewport width has changed so we&#39;ll need to update all geometry :(</span>
+            <span class="n">viewport_resized</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="c"># keep track of the new viewport size for the next time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prev_viewport_sz</span> <span class="o">=</span> <span class="n">viewport_sz</span> 
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">viewport_resized</span><span class="p">:</span>
+            <span class="c"># nothing to do!</span>
+            <span class="k">return</span>
+
+        <span class="c">#print &quot;%s, %s, %s, %s&quot; % (self._update_all_item_info, self._update_some_item_info, viewport_resized, self._item_info)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="ow">or</span> <span class="n">viewport_resized</span>
+
+        <span class="c"># if we&#39;re updating all item info then may as well clear the existing list:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">viewport_width</span> <span class="o">=</span> <span class="n">viewport_sz</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="n">max_width</span> <span class="o">=</span> <span class="n">viewport_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_border</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="n">base_view_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewOptions</span><span class="p">()</span>
+
+        <span class="c"># iterate over root items:</span>
+        <span class="n">something_updated</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+
+            <span class="c"># get the item info for this row - create it if needed!</span>
+            <span class="n">item_info</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">if</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">):</span>
+                <span class="n">item_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item_info</span> <span class="o">=</span> <span class="n">GroupedListView</span><span class="o">.</span><span class="n">_ItemInfo</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_info</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">item_info</span><span class="o">.</span><span class="n">dirty</span><span class="p">:</span>
+                <span class="c"># no need to update item info!</span>
+                <span class="n">max_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_width</span><span class="p">,</span> <span class="n">item_info</span><span class="o">.</span><span class="n">child_area_rect</span><span class="o">.</span><span class="n">width</span><span class="p">())</span>
+                <span class="k">continue</span>
+
+            <span class="c"># construct the model index for this row:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="c"># get the size of the item:</span>
+            <span class="n">view_options</span> <span class="o">=</span> <span class="n">base_view_options</span>
+            <span class="n">item_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">()</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="n">view_options</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="n">item_info</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_border</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">item_size</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">item_size</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+            <span class="c"># update size info of children:</span>
+            <span class="n">row_height</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">relative_column</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">relative_row</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_border</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+            <span class="n">x_pos</span> <span class="o">=</span> <span class="n">left</span>
+            <span class="n">y_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+            <span class="n">child_info</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">child_row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">index</span><span class="p">)):</span>
+                <span class="n">child_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">child_row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+                <span class="c"># do we need to modify the view options?</span>
+                <span class="n">view_options</span> <span class="o">=</span> <span class="n">base_view_options</span>
+
+                <span class="c"># get the item size:</span>
+                <span class="n">child_item_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">()</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="n">view_options</span><span class="p">,</span> <span class="n">child_index</span><span class="p">)</span>
+
+                <span class="c"># see if it fits in the current row:</span>
+                <span class="k">if</span> <span class="n">x_pos</span> <span class="o">==</span> <span class="n">left</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x_pos</span> <span class="o">+</span> <span class="n">child_item_size</span><span class="o">.</span><span class="n">width</span><span class="p">())</span> <span class="o">&lt;</span> <span class="n">viewport_width</span><span class="p">:</span>
+                    <span class="c"># item will fit in the current row!</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c"># start a new row for this item:</span>
+                    <span class="n">y_pos</span> <span class="o">=</span> <span class="n">y_pos</span> <span class="o">+</span> <span class="n">row_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+                    <span class="n">row_height</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">x_pos</span> <span class="o">=</span> <span class="n">left</span>
+                    <span class="n">relative_column</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">relative_row</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="c"># store the item rect:</span>
+                <span class="n">child_item_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> 
+                                               <span class="n">child_item_size</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> 
+                                               <span class="n">child_item_size</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+                <span class="n">child_info</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">relative_row</span><span class="p">,</span> <span class="n">relative_column</span><span class="p">,</span> <span class="n">child_item_rect</span><span class="p">))</span>
+
+                <span class="c"># keep track of the tallest row item:                </span>
+                <span class="n">row_height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">row_height</span><span class="p">,</span> <span class="n">child_item_rect</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+                <span class="n">x_pos</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="n">child_item_rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+                <span class="n">max_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">child_item_rect</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">max_width</span><span class="p">)</span>
+                <span class="n">relative_column</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">item_info</span><span class="o">.</span><span class="n">child_info</span> <span class="o">=</span> <span class="n">child_info</span>
+            <span class="n">item_info</span><span class="o">.</span><span class="n">child_area_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_border</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_width</span><span class="p">,</span> <span class="n">y_pos</span> <span class="o">+</span> <span class="n">row_height</span><span class="p">)</span>
+
+            <span class="c"># reset dirty flag for item:</span>
+            <span class="n">item_info</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">something_updated</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># reset flags:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_all_item_info</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_some_item_info</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="n">something_updated</span><span class="p">:</span>
+            <span class="c"># update all root level items to be the full width of the viewport:</span>
+            <span class="k">for</span> <span class="n">item_info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">:</span>
+                <span class="n">item_info</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">setRight</span><span class="p">(</span><span class="n">max_width</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_max_width</span> <span class="o">=</span> <span class="n">max_width</span>
+
+            <span class="c"># update scroll bars for the new dimensions:            </span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateGeometries</span><span class="p">()</span>
+</pre></div></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'sg_panel_widgets',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

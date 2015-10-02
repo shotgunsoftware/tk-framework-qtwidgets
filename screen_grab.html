@@ -86,12 +86,16 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="version_label.html">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -162,23 +166,42 @@
             
   <div class="section" id="screen-capture-widget">
 <h1>Screen Capture Widget<a class="headerlink" href="#screen-capture-widget" title="Permalink to this headline">¶</a></h1>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>Import the module into your Toolkit App using the following statement:</p>
-<div class="last highlight-python"><div class="highlight"><pre><span class="n">screen_grab</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s">&quot;screen_grab&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<p>The screen capture widgets makes it easy to take screenshots.
+Similar to pressing CMD+SHIFT+4/CMD+SHIFT+3 on the mac, this widget implements
+several different ways in which the screen can be captured, either via
+a cross hair style selection or by grabbing the entire screen.</p>
 <dl class="function">
 <dt id="screen_grab.get_desktop_pixmap">
 <code class="descclassname">screen_grab.</code><code class="descname">get_desktop_pixmap</code><span class="sig-paren">(</span><em>rect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#get_desktop_pixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.get_desktop_pixmap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs a screen capture on the specified QRect, returning a QPixmap.</p>
+<dd><p>Performs a screen capture on the specified rectangle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rect</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QRect.html#PySide.QtCore.QRect" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QRect</span></code></a>) &#8211; Rectangle to capture</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Captured image</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QPixmap</span></code></a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="screen_grab.screen_capture">
 <code class="descclassname">screen_grab.</code><code class="descname">screen_capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#screen_capture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.screen_capture" title="Permalink to this definition">¶</a></dt>
-<dd><p>Modally display the screen capture tool, returning a QPixmap.</p>
+<dd><p>Modally displays the screen capture tool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Captured screen</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QPixmap</span></code></a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">

@@ -85,12 +85,16 @@
             
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -182,7 +186,11 @@
  
 <div class="viewcode-block" id="GlobalSearchWidget"><a class="viewcode-back" href="../../global_search_widget.html#global_search_widget.GlobalSearchWidget">[docs]</a><span class="k">class</span> <span class="nc">GlobalSearchWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A QLineEdit which is connected to the Shotgun global search.</span>
+<span class="sd">    A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates</span>
+<span class="sd">    a global search input box with auto completion.</span>
+<span class="sd">    </span>
+<span class="sd">    :signal entity_selected(str, int): Fires when someone selects an entity inside</span>
+<span class="sd">            the search results. The returned parameters are entity type and entity id.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="c"># custom roles for the model that tracks the auto completion results</span>
@@ -198,9 +206,8 @@
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Constructor</span>
-<span class="sd">        </span>
 <span class="sd">        :param parent: Qt parent object</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
  
         <span class="c"># first, call the base class and let it do its thing.</span>
@@ -232,7 +239,12 @@
         
 <div class="viewcode-block" id="GlobalSearchWidget.set_data_retriever"><a class="viewcode-back" href="../../global_search_widget.html#global_search_widget.GlobalSearchWidget.set_data_retriever">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_retriever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_retriever</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a separate sg data handler for sg queries</span>
+<span class="sd">        Set an async data retreiver object to use with this widget. Data calls</span>
+<span class="sd">        to Shotgun will be send through this object.</span>
+<span class="sd">        </span>
+<span class="sd">        :param data_retriever: Data retriever object to use for fetching information</span>
+<span class="sd">                               from Shotgun.</span>
+<span class="sd">        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="n">data_retriever</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_signal</span><span class="p">)</span>
@@ -241,7 +253,7 @@
     <span class="c">############################################################################</span>
     <span class="c"># internal methods</span>
                 </div>
-    <span class="k">def</span> <span class="nf">_clear_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">add_loading_item</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_clear_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">add_loading_item</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clears the current data in the model.</span>
 <span class="sd">        </span>

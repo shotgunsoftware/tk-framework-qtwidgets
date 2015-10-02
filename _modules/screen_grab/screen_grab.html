@@ -85,12 +85,16 @@
             
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -333,7 +337,12 @@
 
 <div class="viewcode-block" id="get_desktop_pixmap"><a class="viewcode-back" href="../../screen_grab.html#screen_grab.get_desktop_pixmap">[docs]</a><span class="k">def</span> <span class="nf">get_desktop_pixmap</span><span class="p">(</span><span class="n">rect</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Performs a screen capture on the specified QRect, returning a QPixmap.</span>
+<span class="sd">    Performs a screen capture on the specified rectangle.</span>
+<span class="sd">    </span>
+<span class="sd">    :param rect: Rectangle to capture</span>
+<span class="sd">    :type rect: :class:`~PySide.QtCore.QRect`</span>
+<span class="sd">    :returns: Captured image</span>
+<span class="sd">    :rtype: :class:`~PySide.QtGui.QPixmap`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="o">.</span><span class="n">grabWindow</span><span class="p">(</span><span class="n">desktop</span><span class="o">.</span><span class="n">winId</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
@@ -341,7 +350,10 @@
 </div>
 <div class="viewcode-block" id="screen_capture"><a class="viewcode-back" href="../../screen_grab.html#screen_grab.screen_capture">[docs]</a><span class="k">def</span> <span class="nf">screen_capture</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Modally display the screen capture tool, returning a QPixmap.</span>
+<span class="sd">    Modally displays the screen capture tool.</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Captured screen</span>
+<span class="sd">    :rtype: :class:`~PySide.QtGui.QPixmap`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tool</span> <span class="o">=</span> <span class="n">ScreenGrabber</span><span class="p">()</span>
     <span class="n">tool</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>

@@ -1,0 +1,318 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>views.grouped_list_view.grouped_list_view_item_delegate &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='./_static/logo@2x.png'/>
+    
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../note_input_widget.html">Shotgun Note editor widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>views.grouped_list_view.grouped_list_view_item_delegate</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for views.grouped_list_view.grouped_list_view_item_delegate</h1><div class="highlight"><pre>
+<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c"># </span>
+<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c"># </span>
+<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Custom item delegate for use with the GroupedListView</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
+
+<span class="kn">from</span> <span class="nn">..widget_delegate</span> <span class="kn">import</span> <span class="n">WidgetDelegate</span>
+<span class="kn">from</span> <span class="nn">.group_widget</span> <span class="kn">import</span> <span class="n">GroupWidget</span>
+
+<div class="viewcode-block" id="GroupedListViewItemDelegate"><a class="viewcode-back" href="../../../views.html#views.GroupedListViewItemDelegate">[docs]</a><span class="k">class</span> <span class="nc">GroupedListViewItemDelegate</span><span class="p">(</span><span class="n">WidgetDelegate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base delegate class for a delegate specifically to be used by a :class:`GroupedListView`.</span>
+
+<span class="sd">    The delegate provides a method to return a group widget in addition to the regular</span>
+<span class="sd">    delegate methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param view: The view this delegate is operating on</span>
+<span class="sd">        :type view:  :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">WidgetDelegate</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="GroupedListViewItemDelegate.create_group_widget"><a class="viewcode-back" href="../../../views.html#views.GroupedListViewItemDelegate.create_group_widget">[docs]</a>    <span class="k">def</span> <span class="nf">create_group_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a group header widget for the grouped list view</span>
+
+<span class="sd">        :param parent:  The parent QWidget to use for the new group widget</span>
+<span class="sd">        :type parent:   :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        :returns:       A widget derived from GroupWidgetBase that will</span>
+<span class="sd">                        be used for a group in the grouped list view</span>
+<span class="sd">        :rtype:         :class:`GroupWidgetBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># base implementation just returns the default group widget</span>
+        <span class="k">return</span> <span class="n">GroupWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base method returns the size hint for the specified model index</span>
+
+<span class="sd">        :param style_options:   The style options to use when determining the size</span>
+<span class="sd">        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        </span>
+<span class="sd">        :param model_index:     The index in the model to return the size hint for</span>
+<span class="sd">        :type model_index:      :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        </span>
+<span class="sd">        :returns:               The QSize representing the size for the index in the view</span>
+<span class="sd">        :rtype:                 :class:`~PySide.QtCore.QSize`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">model_index</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">rootIndex</span><span class="p">():</span>
+            <span class="c"># the index is a root/group item:</span>
+
+            <span class="c"># get the expanded state of this group in the view:</span>
+            <span class="n">expanded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">is_expanded</span><span class="p">(</span><span class="n">model_index</span><span class="p">)</span>
+
+            <span class="c"># we use a single group widget to track the size:</span>
+            <span class="c"># (TODO) - this won&#39;t work if different group widgets</span>
+            <span class="c"># are created for different groups!</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_group_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+            <span class="c"># update the widget and return the size:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span><span class="o">.</span><span class="n">set_expanded</span><span class="p">(</span><span class="n">expanded</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span><span class="o">.</span><span class="n">set_item</span><span class="p">(</span><span class="n">model_index</span><span class="p">)</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">layout</span><span class="p">:</span>
+                <span class="c"># this ensures the widget is updated correctly </span>
+                <span class="c"># using it&#39;s internal layout</span>
+                <span class="n">layout</span><span class="o">.</span><span class="n">invalidate</span><span class="p">()</span>
+                <span class="n">layout</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># return the base size hint:</span>
+            <span class="k">return</span> <span class="n">WidgetDelegate</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
+</pre></div></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'sg_panel_widgets',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

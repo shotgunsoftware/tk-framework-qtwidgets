@@ -1,0 +1,700 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>models.hierarchical_filtering_proxy_model &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='./_static/logo@2x.png'/>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>models.hierarchical_filtering_proxy_model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for models.hierarchical_filtering_proxy_model</h1><div class="highlight"><pre>
+<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c"># </span>
+<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c"># </span>
+<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Proxy model that provides efficient hierarhcical filtering of a tree-based source model</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<div class="viewcode-block" id="HierarchicalFilteringProxyModel"><a class="viewcode-back" href="../../models.html#models.HierarchicalFilteringProxyModel">[docs]</a><span class="k">class</span> <span class="nc">HierarchicalFilteringProxyModel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inherited from a :class:`~PySide.QtGui.QSortFilterProxyModel`, this class implements filtering across all </span>
+<span class="sd">    levels of a hierarchy in a hierarchical (tree-based) model and provides a simple</span>
+<span class="sd">    interface for derived classes so that all they need to do is filter a single item</span>
+<span class="sd">    as requested.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    
+    <span class="k">class</span> <span class="nc">_IndexAcceptedCache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cached &#39;accepted&#39; values for indexes.  Uses a dictionary that maps a key to a tuple </span>
+<span class="sd">        containing a QPersistentModelIndex for the index and its accepted value.</span>
+
+<span class="sd">            key -&gt; (QPersistentModelIndex, accepted)</span>
+
+<span class="sd">        In recent versions of PySide, the key is just a QPersistentModelIndex which has the</span>
+<span class="sd">        advantage that cache entries don&#39;t become invalid when rows are added/moved.</span>
+
+<span class="sd">        In older versions of PySide (e.g. in 1.0.9 used by Nuke 6/7/8/9) this isn&#39;t possible </span>
+<span class="sd">        as QPersistentModelIndex isn&#39;t hashable so instead a tuple of the row hierarchy is used </span>
+<span class="sd">        and then when looking up the cached value, the persistent model index is used to ensure </span>
+<span class="sd">        that the cache entry is still valid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Construction</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache_hits</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache_misses</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="c"># ideally we&#39;d use QPersistentModelIndexes to key into the cache but these </span>
+            <span class="c"># aren&#39;t hashable in earlier versions of PySide!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_persistent_index_keys</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c"># wouldn&#39;t it be nice if there were an in-built mechanism to test if a type was</span>
+                <span class="c"># hashable!</span>
+                <span class="nb">hash</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPersistentModelIndex</span><span class="p">())</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_use_persistent_index_keys</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="nd">@property</span>
+        <span class="k">def</span> <span class="nf">cache_hit_miss_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Useful for debug to see how many cache hits vs misses there are</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">total_cache_queries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_hits</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_misses</span>
+            <span class="k">if</span> <span class="n">total_cache_queries</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_hits</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">total_cache_queries</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="nd">@property</span>
+        <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Return the current size of the cache</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">accepted</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Add the specified index to the cache together with it&#39;s accepted state</span>
+
+<span class="sd">            :param index:       The QModelIndex to be added</span>
+<span class="sd">            :param accepted:    True if the model index is accepted by the filtering, False if not.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="n">cache_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_cache_key</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">p_index</span> <span class="o">=</span> <span class="n">cache_key</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_persistent_index_keys</span> <span class="k">else</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPersistentModelIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_index</span><span class="p">,</span> <span class="n">accepted</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Remove the specified index from the cache.</span>
+
+<span class="sd">            :param index:   The QModelIndex to remove from the cache</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="n">cache_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_cache_key</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cache_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Get the accepted state for the specified index in the cache.</span>
+
+<span class="sd">            :param index:   The QModelIndex to get the accepted state for</span>
+<span class="sd">            :returns:       The accepted state if the index was found in the cache, otherwise None</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">None</span>
+
+            <span class="n">cache_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_cache_key</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">cache_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">cache_value</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache_misses</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">return</span> <span class="bp">None</span>
+
+            <span class="n">p_index</span><span class="p">,</span> <span class="n">accepted</span> <span class="o">=</span> <span class="n">cache_value</span>
+            <span class="k">if</span> <span class="n">p_index</span> <span class="ow">and</span> <span class="n">p_index</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="c"># index and cached value are still valid!</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache_hits</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">return</span> <span class="n">accepted</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># row has changed so results are bad!</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache_misses</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="k">def</span> <span class="nf">minimize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Minimize the size of the cache by removing any entries that are no longer valid</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isValid</span><span class="p">()])</span>
+
+        <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Clear the cache</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">def</span> <span class="nf">_gen_cache_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generate the key for the specified index in the cache.</span>
+
+<span class="sd">            :param index:   The QModelIndex to generate a cache key for</span>
+<span class="sd">            :returns:       The key of the index in the cache</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="c"># ideally we would just use persistent model indexes but these aren&#39;t hashable</span>
+            <span class="c"># in early versions of PySide :(</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_persistent_index_keys</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPersistentModelIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+            <span class="c"># the cache key is a tuple of all the row indexes of the parent</span>
+            <span class="c"># hierarchy for the index.  First, find the row indexes:</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">parent_idx</span> <span class="o">=</span> <span class="n">index</span>
+            <span class="k">while</span> <span class="n">parent_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+                <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent_idx</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+                <span class="n">parent_idx</span> <span class="o">=</span> <span class="n">parent_idx</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+
+            <span class="c"># return a tuple of the reversed indexes:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param parent:    The parent QObject to use for this instance</span>
+<span class="sd">        :type parent:     :class:`~PySide.QtGui.QWidget`  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span> <span class="o">=</span> <span class="n">HierarchicalFilteringProxyModel</span><span class="o">.</span><span class="n">_IndexAcceptedCache</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span> <span class="o">=</span> <span class="n">HierarchicalFilteringProxyModel</span><span class="o">.</span><span class="n">_IndexAcceptedCache</span><span class="p">()</span>
+
+<div class="viewcode-block" id="HierarchicalFilteringProxyModel.enable_caching"><a class="viewcode-back" href="../../models.html#models.HierarchicalFilteringProxyModel.enable_caching">[docs]</a>    <span class="k">def</span> <span class="nf">enable_caching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Allow control over enabling/disabling of the accepted cache used to accelerate</span>
+<span class="sd">        filtering.  Can be used for debug purposes to ensure the caching isn&#39;t the cause</span>
+<span class="sd">        of incorrect filtering/sorting or instability!</span>
+
+<span class="sd">        :param enable:    True if caching should be enabled, False if it should be disabled. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># clear the accepted cache - this will make sure we don&#39;t use out-of-date </span>
+        <span class="c"># information from the cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enable</span>
+</div>
+<div class="viewcode-block" id="HierarchicalFilteringProxyModel._is_row_accepted"><a class="viewcode-back" href="../../models.html#models.HierarchicalFilteringProxyModel._is_row_accepted">[docs]</a>    <span class="k">def</span> <span class="nf">_is_row_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_row</span><span class="p">,</span> <span class="n">src_parent_idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override this method to decide if the specified row should be accepted or not by</span>
+<span class="sd">        the filter.</span>
+
+<span class="sd">        This should be overridden instead of filterAcceptsRow in derived classes</span>
+
+<span class="sd">        :param src_row:         The row in the source model to filter</span>
+<span class="sd">        :param src_parent_idx:  The parent QModelIndex instance to filter</span>
+<span class="sd">        :param parent_accepted: True if a parent item has been accepted by the filter</span>
+<span class="sd">        :returns:               True if this index should be accepted, otherwise False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;HierarchicalFilteringProxyModel._is_row_accepted() must be overridden&quot;</span>
+                                  <span class="s">&quot; in derived classes!&quot;</span><span class="p">)</span>
+
+    <span class="c"># -------------------------------------------------------------------------------</span>
+    <span class="c"># Overriden base class methods</span>
+</div>
+    <span class="k">def</span> <span class="nf">setFilterRegExp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reg_exp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method to set the filter regular expression</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterRegExp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reg_exp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setFilterFixedString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method to set the filter fixed string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterFixedString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setFilterCaseSensitivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method to set the filter case sensitivity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterCaseSensitivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setFilterKeyColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method to set the filter key column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterKeyColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setFilterRole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method to set the filter role</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterRole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method used to invalidate sorting and filtering.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+        <span class="c"># call through to the base class:</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">invalidateFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method used to invalidate the current filter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+        <span class="c"># call through to the base class:</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">invalidateFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">filterAcceptsRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_row</span><span class="p">,</span> <span class="n">src_parent_idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overriden base class method used to determine if a row is accepted by the</span>
+<span class="sd">        current filter.</span>
+
+<span class="sd">        This implementation checks both up and down the hierarchy to determine if</span>
+<span class="sd">        this row should be accepted.</span>
+
+<span class="sd">        :param src_row:         The row in the source model to filter</span>
+<span class="sd">        :param src_parent_idx:  The parent index in the source model to filter</span>
+<span class="sd">        :returns:               True if the row should be accepted by the filter, False</span>
+<span class="sd">                                otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># get the source index for the row:</span>
+        <span class="n">src_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
+        <span class="n">src_idx</span> <span class="o">=</span> <span class="n">src_model</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">src_row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">src_parent_idx</span><span class="p">)</span>
+
+        <span class="c"># first, see if any children of this item are known to already be accepted</span>
+        <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">src_idx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">child_accepted</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="c"># child is accepted so this item must also be accepted</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="c"># next, we need to determine if the parent item has been accepted.  To do this,</span>
+        <span class="c"># search up the hierarchy stopping at the first parent that we know for sure if</span>
+        <span class="c"># it has been accepted or not.</span>
+        <span class="n">upstream_indexes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">current_idx</span> <span class="o">=</span> <span class="n">src_idx</span>
+        <span class="n">parent_accepted</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">while</span> <span class="n">current_idx</span> <span class="ow">and</span> <span class="n">current_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">current_idx</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">accepted</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">parent_accepted</span> <span class="o">=</span> <span class="n">accepted</span>
+                <span class="k">break</span>
+            <span class="n">upstream_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_idx</span><span class="p">)</span>
+            <span class="n">current_idx</span> <span class="o">=</span> <span class="n">current_idx</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+
+        <span class="c"># now update the accepted status for items that we don&#39;t know</span>
+        <span class="c"># for sure, working from top to bottom in the hierarchy ending</span>
+        <span class="c"># on the index we are checking for:</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">upstream_indexes</span><span class="p">):</span>
+            <span class="n">accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_row_accepted</span><span class="p">(</span><span class="n">idx</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">idx</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">parent_accepted</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">accepted</span><span class="p">)</span>
+            <span class="n">parent_accepted</span> <span class="o">=</span> <span class="n">accepted</span>
+
+        <span class="k">if</span> <span class="n">parent_accepted</span><span class="p">:</span>
+            <span class="c"># the index we are testing was accepted!</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="n">src_model</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">(</span><span class="n">src_idx</span><span class="p">):</span>
+            <span class="c"># even though the parent wasn&#39;t accepted, it may still be needed if one or more</span>
+            <span class="c"># children/grandchildren/etc. are accepted:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_child_accepted_r</span><span class="p">(</span><span class="n">src_idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># index wasn&#39;t accepted and has no children</span>
+            <span class="k">return</span> <span class="bp">False</span>  
+
+    <span class="k">def</span> <span class="nf">setSourceModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overridden base method that we use to keep track of when rows are inserted into the </span>
+<span class="sd">        source model</span>
+
+<span class="sd">        :param model:   The source model to track</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># if needed, disconnect from the previous source model:</span>
+        <span class="n">prev_source_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">prev_source_model</span><span class="p">:</span>
+            <span class="n">prev_source_model</span><span class="o">.</span><span class="n">rowsInserted</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_rows_inserted</span><span class="p">)</span>
+            <span class="n">prev_source_model</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_data_changed</span><span class="p">)</span>
+
+        <span class="c"># clear out the various caches:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+
+        <span class="c"># call base implementation:</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setSourceModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+        <span class="c"># connect to the new model:</span>
+        <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">rowsInserted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_rows_inserted</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_data_changed</span><span class="p">)</span>
+
+    <span class="c"># -------------------------------------------------------------------------------</span>
+    <span class="c"># Private methods</span>
+
+    <span class="k">def</span> <span class="nf">_is_child_accepted_r</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursively check children to see if any of them have been accepted.</span>
+
+<span class="sd">        :param idx:             The model index whose children should be checked</span>
+<span class="sd">        :param parent_accepted: True if a parent item has been accepted</span>
+<span class="sd">        :returns:               True if a child of the item is accepted by the filter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+
+        <span class="c"># check to see if any children of this item are known to have been accepted:</span>
+        <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">child_accepted</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># we already computed this so just return the result</span>
+            <span class="k">return</span> <span class="n">child_accepted</span>
+
+        <span class="c"># need to recursively iterate over children looking for one that is accepted:</span>
+        <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">ci</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">idx</span><span class="p">)):</span>
+            <span class="n">child_idx</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="c"># check if child item is in cache:</span>
+            <span class="n">accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">child_idx</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">accepted</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="c"># it&#39;s not so lets see if it&#39;s accepted and add to the cache:</span>
+                <span class="n">accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_row_accepted</span><span class="p">(</span><span class="n">child_idx</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">child_idx</span><span class="p">,</span> <span class="n">accepted</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">(</span><span class="n">child_idx</span><span class="p">):</span>
+                <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_child_accepted_r</span><span class="p">(</span><span class="n">child_idx</span><span class="p">,</span> <span class="n">accepted</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">child_accepted</span> <span class="o">=</span> <span class="n">accepted</span>
+
+            <span class="k">if</span> <span class="n">child_accepted</span><span class="p">:</span>
+                <span class="c"># found a child that was accepted so we can stop searching</span>
+                <span class="k">break</span>
+
+        <span class="c"># cache if any children were accepted:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">child_accepted</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">child_accepted</span>
+
+    <span class="k">def</span> <span class="nf">_dirty_all_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dirty/clear the accepted caches</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_dirty_accepted_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dirty the specified rows from the accepted caches.  This will remove any entries in</span>
+<span class="sd">        either the accepted or the child accepted cache that match the start/end rows for the</span>
+<span class="sd">        specified parent index.</span>
+
+<span class="sd">        This also dirties the parent hierarchy to ensure that any filtering is re-calculated for</span>
+<span class="sd">        those parent items.</span>
+
+<span class="sd">        :param parent_idx:  The parent model index to dirty rows for</span>
+<span class="sd">        :param start:       The first row in to dirty</span>
+<span class="sd">        :param end:         The last row to dirty</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># clear all rows from the accepted caches</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">parent_idx</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+        <span class="c"># remove parent hierarchy from caches as well:</span>
+        <span class="k">while</span> <span class="n">parent_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">parent_idx</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">parent_idx</span><span class="p">)</span>
+            <span class="n">parent_idx</span> <span class="o">=</span> <span class="n">parent_idx</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_on_source_model_data_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot triggered when data for one or more items in the source model changes.</span>
+
+<span class="sd">        Data in the source model changing may mean that the filtering for an item changes.  If this</span>
+<span class="sd">        is the case then we need to make sure we clear any affected entries from the cache</span>
+
+<span class="sd">        :param start_idx:   The index of the first row in the range of model items that have changed</span>
+<span class="sd">        :param start_idx:   The index of the last row in the range of model items that have changed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">start_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">end_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
+            <span class="ow">or</span> <span class="n">start_idx</span><span class="o">.</span><span class="n">model</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span> 
+            <span class="ow">or</span> <span class="n">end_idx</span><span class="o">.</span><span class="n">model</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()):</span>
+            <span class="c"># invalid input parameters so ignore!</span>
+            <span class="k">return</span>
+
+        <span class="n">parent_idx</span> <span class="o">=</span> <span class="n">start_idx</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">parent_idx</span> <span class="o">!=</span> <span class="n">end_idx</span><span class="o">.</span><span class="n">parent</span><span class="p">():</span>
+            <span class="c"># this should never happen but just in case, dirty the entire cache:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
+
+        <span class="c"># dirty specific rows in the caches:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_accepted_rows</span><span class="p">(</span><span class="n">parent_idx</span><span class="p">,</span> <span class="n">start_idx</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">end_idx</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_on_source_model_rows_inserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot triggered when rows are inserted into the source model.</span>
+
+<span class="sd">        There appears to be a limitation with the QSortFilterProxyModel that breaks sorting</span>
+<span class="sd">        of newly added child rows when the parent row has previously been filtered out.  This</span>
+<span class="sd">        can happen when the model data is lazy-loaded as the filtering may decide that as</span>
+<span class="sd">        there are no valid children, then the parent should be filtered out.  However, when</span>
+<span class="sd">        matching children later get added, the parent then matches but the children don&#39;t get</span>
+<span class="sd">        sorted correctly!</span>
+
+<span class="sd">        The workaround is to detect when children are added to a parent that was previously</span>
+<span class="sd">        filtered out and force the whole proxy model to be invalidated (so that the filtering</span>
+<span class="sd">        and sorting are both applied from scratch).</span>
+
+<span class="sd">        The alternative would be to implement our own version of the QSortFilterProxyModel!</span>
+
+<span class="sd">        :param parent_idx:  The index of the parent model item</span>
+<span class="sd">        :param start:       The first row that was inserted into the source model</span>
+<span class="sd">        :param end:         The last row that was inserted into the source model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">parent_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
+            <span class="ow">or</span> <span class="n">parent_idx</span><span class="o">.</span><span class="n">model</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()):</span>
+            <span class="c"># invalid input parameters so ignore!</span>
+            <span class="k">return</span>
+
+        <span class="c"># dirty specific rows in the caches:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_accepted_rows</span><span class="p">(</span><span class="n">parent_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</pre></div></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'sg_panel_widgets',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

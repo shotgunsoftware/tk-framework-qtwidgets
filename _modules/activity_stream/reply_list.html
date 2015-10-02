@@ -1,0 +1,643 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='./_static/logo@2x.png'/>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>activity_stream.reply_list</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for activity_stream.reply_list</h1><div class="highlight"><pre>
+<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c"># </span>
+<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c"># </span>
+<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="kn">from</span> <span class="nn">.dialog_reply</span> <span class="kn">import</span> <span class="n">ReplyDialog</span>
+
+<span class="kn">from</span> <span class="nn">.ui.reply_list_widget</span> <span class="kn">import</span> <span class="n">Ui_ReplyListWidget</span>
+
+<span class="kn">from</span> <span class="nn">.label_widgets</span> <span class="kn">import</span> <span class="n">ClickableTextLabel</span>
+ 
+<span class="kn">from</span> <span class="nn">.data_manager</span> <span class="kn">import</span> <span class="n">ActivityStreamDataHandler</span>
+<span class="kn">from</span> <span class="nn">.widget_attachment_group</span> <span class="kn">import</span> <span class="n">AttachmentGroupWidget</span>
+<span class="kn">from</span> <span class="nn">.widget_reply</span> <span class="kn">import</span> <span class="n">ReplyWidget</span>
+<span class="kn">from</span> <span class="nn">.overlaywidget</span> <span class="kn">import</span> <span class="n">SmallOverlayWidget</span>
+ 
+<div class="viewcode-block" id="ReplyListWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget">[docs]</a><span class="k">class</span> <span class="nc">ReplyListWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    QT Widget that displays a note conversation, </span>
+<span class="sd">    including attachments and the ability to reply.</span>
+
+<span class="sd">    This will first render the body of the note, including the attachments,</span>
+<span class="sd">    and then subsequent replies. This widget uses the same</span>
+<span class="sd">    widgets, data backend and visual components as the </span>
+<span class="sd">    activity stream.</span>
+<span class="sd">    </span>
+<span class="sd">    :signal entity_requested(str, int): Fires when someone clicks an entity inside</span>
+<span class="sd">            the activity stream. The returned parameters are entity type and entity id.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># when someone clicks a link or similar</span>
+    <span class="n">entity_requested</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param parent: QT parent object</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># first, call the base class and let it do its thing.</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        
+        <span class="c"># now load in the UI that was created in the UI designer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_ReplyListWidget</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_note_id</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+        
+        <span class="c"># apply styling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_stylesheet</span><span class="p">()</span>
+        
+        <span class="c"># small overlay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span> <span class="o">=</span> <span class="n">SmallOverlayWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="c"># create a data manager to handle backend</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span> <span class="o">=</span> <span class="n">ActivityStreamDataHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">thumbnail_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_thumbnail</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_note</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="ReplyListWidget.set_data_retriever"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget.set_data_retriever">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_retriever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_retriever</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set an async data retreiver object to use with this </span>
+<span class="sd">        widget.</span>
+
+<span class="sd">        :param data_retriever: Data retriever object to use for fetching information</span>
+<span class="sd">                               from Shotgun.</span>
+<span class="sd">        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">set_data_retriever</span><span class="p">(</span><span class="n">data_retriever</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span> <span class="o">=</span> <span class="n">data_retriever</span>
+        
+    <span class="c">##########################################################################################</span>
+    <span class="c"># public interface</span>
+        </div>
+<div class="viewcode-block" id="ReplyListWidget.load_data"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load replies for a given entity.</span>
+<span class="sd">        </span>
+<span class="sd">        :param sg_entity_dict: Shotgun link dictionary with keys type and id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Loading replies for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">sg_entity_dict</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">sg_entity_dict</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;Note&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="s">&quot;Can only show replies for Notes.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c"># first ask the data manager to load up cached </span>
+        <span class="c"># information about our note </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="n">sg_entity_dict</span>
+        <span class="n">note_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">load_note_data</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
+
+        <span class="c"># now attempt to render the note based on cached data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_note</span><span class="p">(</span><span class="n">activity_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">note_id</span><span class="o">=</span><span class="n">note_id</span><span class="p">)</span>
+        
+        <span class="c"># and read in any updates in the background</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
+
+
+    <span class="c">##########################################################################################</span>
+    <span class="c"># internal methods</span>
+</div>
+    <span class="k">def</span> <span class="nf">_process_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback that gets executed when note data arrives from</span>
+<span class="sd">        the data manager.</span>
+<span class="sd">        </span>
+<span class="sd">        :param activiy_id: Activity stream id that this note is </span>
+<span class="sd">                           associated with. Note that in this case,</span>
+<span class="sd">                           when we have requested a note outside</span>
+<span class="sd">                           the context of the activity stream, this</span>
+<span class="sd">                           value is undefined.</span>
+<span class="sd">        :param note_id: Note id for the note for which data is available</span>
+<span class="sd">                        in the data manager.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Retrieved new data notification for &quot;</span>
+                            <span class="s">&quot;activity id </span><span class="si">%s</span><span class="s">, note id </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">))</span>
+        
+        <span class="c"># set note content            </span>
+        <span class="n">note_thread_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">get_note</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">note_thread_data</span><span class="p">:</span>            
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build_replies</span><span class="p">(</span><span class="n">note_thread_data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_replies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_thread_data</span><span class="p">):</span>
+
+        <span class="c"># before we begin widget operations, turn off visibility</span>
+        <span class="c"># of the whole widget in order to avoid recomputes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            
+            <span class="c">###############################################################</span>
+            <span class="c"># Phase 1 - render the UI.</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clear</span><span class="p">()</span>
+    
+            <span class="n">note_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span>            
+            <span class="n">attachment_requests</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="c"># first display the content of the note</span>
+            <span class="n">note_data</span> <span class="o">=</span> <span class="n">note_thread_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            
+            <span class="n">note_content</span> <span class="o">=</span> <span class="n">note_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;content&quot;</span><span class="p">)</span> <span class="ow">or</span> \
+                           <span class="s">&quot;This note does not have any content associated.&quot;</span> 
+            
+            <span class="n">content_widget</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">content_widget</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">content_widget</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">note_content</span><span class="p">)</span>
+            <span class="n">content_widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s">&quot;note_content_label&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">content_widget</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content_widget</span><span class="p">)</span>
+            
+            <span class="c"># we have cached note data</span>
+            <span class="n">replies_and_attachments</span> <span class="o">=</span> <span class="n">note_thread_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> 
+                        
+            <span class="c"># now add replies</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_replies_and_attachments</span><span class="p">(</span><span class="n">replies_and_attachments</span><span class="p">)</span>
+            
+            <span class="c"># add a reply button and connect it</span>
+            <span class="n">reply_button</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_reply_button</span><span class="p">()</span>
+            <span class="n">reply_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_reply_clicked</span><span class="p">(</span><span class="n">note_id</span><span class="p">))</span>
+    
+            <span class="c"># add a proxy widget that should expand to fill all white</span>
+            <span class="c"># space available</span>
+            <span class="n">expanding_widget</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">expanding_widget</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">setStretchFactor</span><span class="p">(</span><span class="n">expanding_widget</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expanding_widget</span><span class="p">)</span>
+    
+            <span class="c">###############################################################</span>
+            <span class="c"># Phase 2 - request additional data.</span>
+            <span class="c"># note that we don&#39;t interleave these requests with building</span>
+            <span class="c"># the ui - this is to minimise the risk of GIL signal issues</span>
+    
+            <span class="c"># get all attachment data</span>
+            <span class="c"># can request thumbnails post UI build</span>
+            <span class="k">for</span> <span class="n">attachment_group_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">agw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="p">[</span><span class="n">attachment_group_id</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">attachment_data</span> <span class="ow">in</span> <span class="n">agw</span><span class="o">.</span><span class="n">get_data</span><span class="p">():</span>                        
+                    <span class="n">ag_request</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;attachment_group_id&quot;</span><span class="p">:</span> <span class="n">attachment_group_id</span><span class="p">,</span> 
+                                  <span class="s">&quot;attachment_data&quot;</span><span class="p">:</span> <span class="n">attachment_data</span><span class="p">}</span>
+                    <span class="n">attachment_requests</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ag_request</span><span class="p">)</span>
+    
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Request thumbnails...&quot;</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">attachment_req</span> <span class="ow">in</span> <span class="n">attachment_requests</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_attachment_thumbnail</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> 
+                                                                <span class="n">attachment_req</span><span class="p">[</span><span class="s">&quot;attachment_group_id&quot;</span><span class="p">],</span> 
+                                                                <span class="n">attachment_req</span><span class="p">[</span><span class="s">&quot;attachment_data&quot;</span><span class="p">])</span>
+            
+            <span class="c"># now go through the shotgun data</span>
+            <span class="c"># for each reply, request a thumbnail.</span>
+            <span class="n">requested_items</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">replies_and_attachments</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Reply&quot;</span><span class="p">:</span>
+                    <span class="c"># note that the reply data structure is special:</span>
+                    <span class="c"># the &#39;user&#39; key is not a normal sg link dict, </span>
+                    <span class="c"># but contains an additional image field to describe</span>
+                    <span class="c"># the thumbnail:</span>
+                    <span class="c"># </span>
+                    <span class="c"># {&#39;content&#39;: &#39;Reply content...&#39;, </span>
+                    <span class="c">#  &#39;created_at&#39;: 1438649419.0, </span>
+                    <span class="c">#  &#39;type&#39;: &#39;Reply&#39;, </span>
+                    <span class="c">#  &#39;id&#39;: 73, </span>
+                    <span class="c">#  &#39;user&#39;: {&#39;image&#39;: &#39;...&#39;, </span>
+                    <span class="c">#           &#39;type&#39;: &#39;HumanUser&#39;, </span>
+                    <span class="c">#           &#39;id&#39;: 38, </span>
+                    <span class="c">#           &#39;name&#39;: &#39;Manne Ohrstrom&#39;}}]</span>
+                    <span class="n">reply_author</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span>
+                    
+                    <span class="n">uniqueness_key</span> <span class="o">=</span> <span class="p">(</span><span class="n">reply_author</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">],</span> <span class="n">reply_author</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">uniqueness_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">requested_items</span><span class="p">:</span>
+                        <span class="c"># this thumbnail has not been requested yet    </span>
+                        <span class="k">if</span> <span class="n">reply_author</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;image&quot;</span><span class="p">):</span>
+                            <span class="c"># there is a thumbnail for this user!</span>
+                            <span class="n">requested_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uniqueness_key</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_user_thumbnail</span><span class="p">(</span><span class="n">reply_author</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">],</span> 
+                                                                      <span class="n">reply_author</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">],</span>
+                                                                      <span class="n">reply_author</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">])</span>
+            
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c"># make the window visible again and trigger a redraw</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;...done&quot;</span><span class="p">)</span>
+
+        
+    <span class="k">def</span> <span class="nf">_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear the widget. This will remove all items from the UI</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Clearing UI...&quot;</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="c"># remove widget from layout:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="c"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+            <span class="c"># mark it to be deleted when event processing returns to the main loop</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span> <span class="o">=</span> <span class="p">{}</span>    
+        
+    <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads in a stylesheet from disk</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s">&quot;style.qss&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">qss_file</span><span class="p">,</span> <span class="s">&quot;rt&quot;</span><span class="p">)</span>
+            <span class="n">qss_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="c"># apply to widget (and all its children)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">qss_data</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+    <span class="k">def</span> <span class="nf">_add_reply_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a reply button to the stream of widgets</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reply_button</span> <span class="o">=</span> <span class="n">ClickableTextLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">reply_button</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="o">|</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span><span class="p">)</span>
+        <span class="n">reply_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;Reply to this Note&quot;</span><span class="p">)</span>
+        <span class="n">reply_button</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s">&quot;reply_button&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">reply_button</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reply_button</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reply_button</span>
+
+    <span class="k">def</span> <span class="nf">_add_attachment_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attachments</span><span class="p">,</span> <span class="n">after_note</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add an attachments group to the stream of widgets</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">curr_attachment_group_widget_id</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="p">)</span>
+        <span class="n">attachment_group</span> <span class="o">=</span> <span class="n">AttachmentGroupWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attachments</span><span class="p">)</span>        
+        
+        <span class="c"># show an &#39;ATTACHMENTS&#39; header</span>
+        <span class="n">attachment_group</span><span class="o">.</span><span class="n">show_attachments_label</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>        
+        
+        
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">attachment_group</span><span class="o">.</span><span class="n">OFFSET_NONE</span> <span class="k">if</span> <span class="n">after_note</span> <span class="k">else</span> <span class="n">attachment_group</span><span class="o">.</span><span class="n">OFFSET_LARGE_THUMB</span>        
+        <span class="n">attachment_group</span><span class="o">.</span><span class="n">adjust_left_offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">attachment_group</span><span class="p">)</span>
+        
+        <span class="c"># add it to our mapping dict and increment the counter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="p">[</span><span class="n">curr_attachment_group_widget_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">attachment_group</span>
+        
+    <span class="k">def</span> <span class="nf">_add_replies_and_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">replies_and_attachments</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add replies and attachment widgets to the stream of widgets</span>
+<span class="sd">        </span>
+<span class="sd">        :param replies_and_attachments: List of Shotgun data dictionary.</span>
+<span class="sd">               These are eithere reply entities or attachment entities.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">current_attachments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">attachment_is_directly_after_note</span> <span class="o">=</span> <span class="bp">True</span>
+        
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">replies_and_attachments</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Reply&quot;</span><span class="p">:</span>
+                
+                <span class="c"># first, wrap up attachments</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_attachments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>                    
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_add_attachment_group</span><span class="p">(</span><span class="n">current_attachments</span><span class="p">,</span> <span class="n">attachment_is_directly_after_note</span><span class="p">)</span>
+                    <span class="n">current_attachments</span> <span class="o">=</span> <span class="p">[]</span>
+                                                
+                <span class="n">w</span> <span class="o">=</span> <span class="n">ReplyWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">adjust_thumb_style</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">LARGE_USER_THUMB</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">set_info</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+                <span class="c"># ensure navigation requests from replies bubble up</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">entity_requested</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">entity_requested</span><span class="o">.</span><span class="n">emit</span><span class="p">)</span>
+                <span class="c"># next bunch of attachments will be after a reply</span>
+                <span class="c"># rather than directly under the note</span>
+                <span class="c"># (this affects the visual style)</span>
+                <span class="n">attachment_is_directly_after_note</span> <span class="o">=</span> <span class="bp">False</span>
+                
+            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Attachment&quot;</span> <span class="ow">and</span> <span class="n">item</span><span class="p">[</span><span class="s">&quot;this_file&quot;</span><span class="p">][</span><span class="s">&quot;link_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;upload&quot;</span><span class="p">:</span>
+                <span class="n">current_attachments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        
+        <span class="c"># see if there are still open attachments</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_attachments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_attachment_group</span><span class="p">(</span><span class="n">current_attachments</span><span class="p">,</span> <span class="n">attachment_is_directly_after_note</span><span class="p">)</span>
+            <span class="n">current_attachments</span> <span class="o">=</span> <span class="p">[]</span>            
+
+    <span class="k">def</span> <span class="nf">_process_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback that gets called when a new thumbnail is available.</span>
+<span class="sd">        Populate the UI with the given thumbnail</span>
+<span class="sd">        </span>
+<span class="sd">        :param data: dictionary with keys:</span>
+<span class="sd">                     - thumbnail_type: thumbnail enum constant:</span>
+<span class="sd">                            ActivityStreamDataHandler.THUMBNAIL_CREATED_BY</span>
+<span class="sd">                            ActivityStreamDataHandler.THUMBNAIL_ENTITY</span>
+<span class="sd">                            ActivityStreamDataHandler.THUMBNAIL_ATTACHMENT</span>
+<span class="sd">                     - activity_id: Activity stream id that this update relates</span>
+<span class="sd">                       to. Note requests (which don&#39;t have an associated </span>
+<span class="sd">                       id, will use -1 to indicate this). </span>
+<span class="sd">                     </span>
+<span class="sd">        </span>
+<span class="sd">        QImage with thumbnail data</span>
+<span class="sd">        :param thumbnail_type: thumbnail enum constant:</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">thumbnail_type</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;thumbnail_type&quot;</span><span class="p">]</span>
+        <span class="n">activity_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;activity_id&quot;</span><span class="p">]</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">thumbnail_type</span> <span class="o">==</span> <span class="n">ActivityStreamDataHandler</span><span class="o">.</span><span class="n">THUMBNAIL_ATTACHMENT</span> <span class="ow">and</span> <span class="n">activity_id</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">group_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;attachment_group_id&quot;</span><span class="p">]</span>
+            <span class="n">attachment_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="p">[</span><span class="n">group_id</span><span class="p">]</span>
+            <span class="n">attachment_group</span><span class="o">.</span><span class="n">set_thumbnail</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">thumbnail_type</span> <span class="o">==</span> <span class="n">ActivityStreamDataHandler</span><span class="o">.</span><span class="n">THUMBNAIL_USER</span><span class="p">:</span>
+            <span class="c"># a thumbnail for a user possibly for one of our replies</span>
+            <span class="k">for</span> <span class="n">reply_widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">reply_widget</span><span class="o">.</span><span class="n">thumbnail_populated</span><span class="p">:</span>
+                    <span class="c"># already set</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;entity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">reply_widget</span><span class="o">.</span><span class="n">created_by</span><span class="p">:</span>
+                    <span class="n">reply_widget</span><span class="o">.</span><span class="n">set_thumbnail</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_reply_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback when someone clicks reply to note</span>
+<span class="sd">        </span>
+<span class="sd">        :param note_id: Note id to reply to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c"># TODO - refactor to avoid having this code in two places</span>
+        
+        <span class="c"># create reply dialog window</span>
+        <span class="n">reply_dialog</span> <span class="o">=</span> <span class="n">ReplyDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="p">,</span> <span class="n">note_id</span><span class="p">)</span>
+        
+        <span class="c"># position the reply modal dialog above the activity stream scroll area</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_scroll_area</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
+        <span class="n">x_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_scroll_area</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span>         
+        <span class="n">y_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_scroll_area</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">20</span>
+        <span class="n">reply_dialog</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">)</span>
+        
+        <span class="c"># show the dialog, and while it&#39;s showing,</span>
+        <span class="c"># enable a transparent overlay on top of the existing replies</span>
+        <span class="c"># in order to make the reply window stand out.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">reply_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        
+        </div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'sg_panel_widgets',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

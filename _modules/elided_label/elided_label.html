@@ -1,0 +1,387 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>elided_label.elided_label &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <img style='width: 191px; 
+                height: 60px; 
+                border-radius: 0px; 
+                padding: 0px;' 
+         src='./_static/logo@2x.png'/>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    This documentation is part of the Shotgun Pipeline Toolkit. 
+    For more information, please visit 
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>elided_label.elided_label</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for elided_label.elided_label</h1><div class="highlight"><pre>
+<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c"># </span>
+<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c"># </span>
+<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A QLabel that elides text and adds ellipses if the text doesn&#39;t fit</span>
+<span class="sd">correctly within the widget frame.  Handles rich-text.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<div class="viewcode-block" id="ElidedLabel"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel">[docs]</a><span class="k">class</span> <span class="nc">ElidedLabel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Label that gracefully handles when the text doesn&#39;t fit </span>
+<span class="sd">    within the given space. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param parent:  The parent QWidget</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`     </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elide_mode</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+    <span class="c">#@property</span>
+    <span class="k">def</span> <span class="nf">_get_elide_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns current elide mode </span>
+
+<span class="sd">        :returns:   The current elide mode, either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_mode</span>
+    
+    <span class="k">def</span> <span class="nf">_set_elide_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the current elide mode.</span>
+
+<span class="sd">        :param value:   The elide mode to use - must be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideLeft</span>
+            <span class="ow">and</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;elide_mode must be set to either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elide_mode</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span>
+    
+    <span class="c">#: Property to get or set the elide mode. The value provided </span>
+    <span class="c">#: should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</span>
+    <span class="n">elide_mode</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_elide_mode</span><span class="p">,</span> <span class="n">_set_elide_mode</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ElidedLabel.text"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.text">[docs]</a>    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overridden base method to return the original unmodified text</span>
+
+<span class="sd">        :returns:   The original unmodified text</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span>
+</div>
+<div class="viewcode-block" id="ElidedLabel.setText"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.setText">[docs]</a>    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overridden base method to set the text on the label</span>
+
+<span class="sd">        :param text:    The text to set on the label</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overridden base method called when the widget is resized.</span>
+
+<span class="sd">        :param event:    The resize event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_elided_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the elided text on the label</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_mode</span><span class="p">)</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">elide_mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Elide the specified text using the specified mode</span>
+
+<span class="sd">        :param text:        The text to elide</span>
+<span class="sd">        :param elide_mode:  The elide mode to use</span>
+<span class="sd">        :returns:           The elided text.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># target width is the label width:</span>
+        <span class="n">target_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+
+        <span class="c"># Use a QTextDocument to measure html/richtext width </span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextDocument</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">setDefaultFont</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">())</span>
+
+            <span class="c"># if line width is already less than the target width then great!</span>
+            <span class="n">line_width</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">line_width</span> <span class="o">&lt;=</span> <span class="n">target_width</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">text</span>
+
+            <span class="c"># depending on the elide mode, insert ellipses in the correct place</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+            <span class="n">ellipses</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">elide_mode</span> <span class="o">!=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideNone</span><span class="p">:</span>
+                <span class="c"># add the ellipses in the correct place:</span>
+                <span class="k">if</span> <span class="n">elide_mode</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideLeft</span><span class="p">:</span>
+                    <span class="n">ellipses</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
+                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">elide_mode</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span><span class="p">:</span>
+                    <span class="n">ellipses</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
+                    <span class="n">char_count</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">characterCount</span><span class="p">()</span>
+                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">char_count</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">insertText</span><span class="p">(</span><span class="n">ellipses</span><span class="p">)</span>
+            <span class="n">ellipses_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ellipses</span><span class="p">)</span>
+
+            <span class="c"># remove characters until the text fits within the target width:</span>
+            <span class="k">while</span> <span class="n">line_width</span> <span class="o">&gt;</span> <span class="n">target_width</span><span class="p">:</span>
+                <span class="c"># if string is less than the ellipses length then just return</span>
+                <span class="c"># an empty string</span>
+                <span class="n">char_count</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">characterCount</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">char_count</span> <span class="o">&lt;=</span> <span class="n">ellipses_len</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s">&quot;&quot;</span>
+
+                <span class="c"># calculate the number of characters to remove - should always remove at least 1</span>
+                <span class="c"># to be sure the text gets shorter!</span>
+                <span class="n">line_width</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">()</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">target_width</span><span class="o">/</span><span class="n">line_width</span>
+                <span class="c"># play it safe and remove a couple less than the calculated amount</span>
+                <span class="n">chars_to_delete</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">char_count</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">char_count</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+                <span class="c"># remove the characters:</span>
+                <span class="k">if</span> <span class="n">elide_mode</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideLeft</span><span class="p">:</span>
+                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">ellipses_len</span><span class="p">)</span>
+                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">chars_to_delete</span> <span class="o">+</span> <span class="n">ellipses_len</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">KeepAnchor</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c"># default is to elide right</span>
+                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">char_count</span> <span class="o">-</span> <span class="n">chars_to_delete</span> <span class="o">-</span> <span class="n">ellipses_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">char_count</span> <span class="o">-</span> <span class="n">ellipses_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">KeepAnchor</span><span class="p">)</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">removeSelectedText</span><span class="p">()</span>
+
+                <span class="c"># update line width:</span>
+                <span class="n">line_width</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">toHtml</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c"># clean up the doc:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+</pre></div></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'sg_panel_widgets',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

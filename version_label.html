@@ -33,7 +33,7 @@
 
   
     <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="index.html"/>
-        <link rel="next" title="Shotgun Version Playback Widget" href="note_input_widget.html"/>
+        <link rel="next" title="View Related Classes" href="views.html"/>
         <link rel="prev" title="Screen Capture Widget" href="screen_grab.html"/> 
 
   
@@ -86,12 +86,16 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -162,19 +166,35 @@
             
   <div class="section" id="shotgun-version-playback-widget">
 <h1>Shotgun Version Playback Widget<a class="headerlink" href="#shotgun-version-playback-widget" title="Permalink to this headline">¶</a></h1>
+<p>The version label is a simple QLabel override which
+makes it easy to indicate that a thumbnail can be played back:</p>
 <img alt="_images/version_label.png" src="_images/version_label.png" />
+<p>The widget takes care of analyzing provided shotgun data, and in
+case the data contains playable media, the playback icon will
+automatically appear.</p>
 <dl class="class">
 <dt id="version_label.VersionLabel">
 <em class="property">class </em><code class="descclassname">version_label.</code><code class="descname">VersionLabel</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_label/version_label.html#VersionLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_label.VersionLabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subclassed QLabel that displays a playback icon
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QLabel.html#PySide.QtGui.QLabel" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QLabel</span></code></a></p>
+<p>Subclassed <code class="docutils literal"><span class="pre">QLabel</span></code> that displays a playback icon
 centered above the existing pixmap.</p>
 <p>By populating an instance with shotgun version data
-via the set_shotgun_data() method, the version label
+via the <a class="reference internal" href="#version_label.VersionLabel.set_shotgun_data" title="version_label.VersionLabel.set_shotgun_data"><code class="xref any py py-meth docutils literal"><span class="pre">set_shotgun_data()</span></code></a> method, the version label
 will look at the data and determine whether a playback 
 icon should be displayed or not. In the case an icon is
 displayed, a playback_clicked signal may be emitted.</p>
-<p>This signal passes the same shotgun version data back
-to the caller.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal playback_clicked(dict):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The playback icon was clicked. 
+This signal passes the shotgun version data specified in
+via the <a class="reference internal" href="#version_label.VersionLabel.set_shotgun_data" title="version_label.VersionLabel.set_shotgun_data"><code class="xref any py py-meth docutils literal"><span class="pre">set_shotgun_data()</span></code></a> method back
+to the caller.</td>
+</tr>
+</tbody>
+</table>
 <p>Constructor</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -187,7 +207,15 @@ to the caller.</p>
 <dl class="method">
 <dt id="version_label.VersionLabel.set_shotgun_data">
 <code class="descname">set_shotgun_data</code><span class="sig-paren">(</span><em>sg_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_label/version_label.html#VersionLabel.set_shotgun_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_label.VersionLabel.set_shotgun_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets version data associated with this label</p>
+<dd><p>Sets version data associated with this label.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_data</strong> &#8211; Shotgun version data, including quicktime fields.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -201,7 +229,7 @@ to the caller.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="note_input_widget.html" class="btn btn-neutral float-right" title="Shotgun Version Playback Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="views.html" class="btn btn-neutral float-right" title="View Related Classes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="screen_grab.html" class="btn btn-neutral" title="Screen Capture Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

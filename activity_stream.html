@@ -33,7 +33,7 @@
 
   
     <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="index.html"/>
-        <link rel="next" title="Shotgun Global Search Widget" href="global_search_widget.html"/>
+        <link rel="next" title="Auto-Elide label" href="elided_label.html"/>
         <link rel="prev" title="The QT Widgets Framework" href="index.html"/> 
 
   
@@ -86,16 +86,24 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">Shotgun Activity Stream Widget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#caching-policy">Caching policy</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#activitystreamwidget">ActivityStreamWidget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#replylistwidget">ReplyListWidget</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="version_label.html">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -166,12 +174,141 @@
             
   <div class="section" id="shotgun-activity-stream-widget">
 <h1>Shotgun Activity Stream Widget<a class="headerlink" href="#shotgun-activity-stream-widget" title="Permalink to this headline">¶</a></h1>
-<img alt="_images/activity_stream.png" src="_images/activity_stream.png" />
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The activity stream widget is a QT widget that renders the activity stream for a
+given Shotgun entity. The functionality is similar to that in the activity stream
+found inside the Shotgun web application. Publishes and Versions show up with thumbnails,
+optionally with playback links. Notes show up with replies and attachments and you can
+reply to notes directly in the activity stream.</p>
+<img alt="_images/activity_stream_1.png" src="_images/activity_stream_1.png" />
+<p>In addition to an activity stream widget, this module also contains a widget for
+displaying notes and replies. This uses the same data backend as the activity stream
+and has a similar look and feel.</p>
+<img alt="_images/activity_stream_2.png" src="_images/activity_stream_2.png" />
+<div class="section" id="caching-policy">
+<h3>Caching policy<a class="headerlink" href="#caching-policy" title="Permalink to this headline">¶</a></h3>
+<p>All the content in the activity stream is cached and when you request the activity
+stream for an entity, the widget requests only the changes since the last update. The
+data is cached in a shared manner, meaning that a project, shot and task may be showing
+the same updates in their respective streams - and in this case, those updates are only
+pulled down once.</p>
+</div>
+</div>
 <div class="section" id="activitystreamwidget">
 <h2>ActivityStreamWidget<a class="headerlink" href="#activitystreamwidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="activity_stream.ActivityStreamWidget">
+<em class="property">class </em><code class="descclassname">activity_stream.</code><code class="descname">ActivityStreamWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<p>QT Widget that displays the Shotgun activity stream for an entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_requested(str, int):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when someone clicks an entity inside
+the activity stream. The returned parameters are entity type and entity id.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal playback_requested(dict):</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Fires when someone clicks the playback url
+on a version. Returns a shotgun dictionary with information
+about the version.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; QT parent object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.load_data">
+<code class="descname">load_data</code><span class="sig-paren">(</span><em>sg_entity_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the state of the widget and then load up the data
+for a given entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_entity_dict</strong> &#8211; Dictionary with keys type and id</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.set_data_retriever">
+<code class="descname">set_data_retriever</code><span class="sig-paren">(</span><em>data_retriever</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.set_data_retriever"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.set_data_retriever" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set an async data retreiver object to use with this widget. Data calls
+to Shotgun will be send through this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_retriever</strong> (<a class="reference external" href="http://shotgunsoftware.github.io/tk-framework-shotgunutils/shotgun_data.html#shotgun_data.ShotgunDataRetriever" title="(in Shotgun Pipeline Toolkit vv2.4.2)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunDataRetriever</span></code></a>) &#8211; Data retriever object to use for fetching information
+from Shotgun.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="replylistwidget">
 <h2>ReplyListWidget<a class="headerlink" href="#replylistwidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="activity_stream.ReplyListWidget">
+<em class="property">class </em><code class="descclassname">activity_stream.</code><code class="descname">ReplyListWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/reply_list.html#ReplyListWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ReplyListWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<p>QT Widget that displays a note conversation, 
+including attachments and the ability to reply.</p>
+<p>This will first render the body of the note, including the attachments,
+and then subsequent replies. This widget uses the same
+widgets, data backend and visual components as the 
+activity stream.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_requested(str, int):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when someone clicks an entity inside
+the activity stream. The returned parameters are entity type and entity id.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; QT parent object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="activity_stream.ReplyListWidget.load_data">
+<code class="descname">load_data</code><span class="sig-paren">(</span><em>sg_entity_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/reply_list.html#ReplyListWidget.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ReplyListWidget.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load replies for a given entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_entity_dict</strong> &#8211; Shotgun link dictionary with keys type and id.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ReplyListWidget.set_data_retriever">
+<code class="descname">set_data_retriever</code><span class="sig-paren">(</span><em>data_retriever</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/reply_list.html#ReplyListWidget.set_data_retriever"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ReplyListWidget.set_data_retriever" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set an async data retreiver object to use with this 
+widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_retriever</strong> (<a class="reference external" href="http://shotgunsoftware.github.io/tk-framework-shotgunutils/shotgun_data.html#shotgun_data.ShotgunDataRetriever" title="(in Shotgun Pipeline Toolkit vv2.4.2)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunDataRetriever</span></code></a>) &#8211; Data retriever object to use for fetching information
+from Shotgun.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -182,7 +319,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="global_search_widget.html" class="btn btn-neutral float-right" title="Shotgun Global Search Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="elided_label.html" class="btn btn-neutral float-right" title="Auto-Elide label" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="The QT Widgets Framework" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

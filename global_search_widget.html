@@ -34,7 +34,7 @@
   
     <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="index.html"/>
         <link rel="next" title="Help Screen Popup" href="help_screen.html"/>
-        <link rel="prev" title="Shotgun Activity Stream Widget" href="activity_stream.html"/> 
+        <link rel="prev" title="Auto-Elide label" href="elided_label.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -86,12 +86,16 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="version_label.html">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -162,24 +166,43 @@
             
   <div class="section" id="shotgun-global-search-widget">
 <h1>Shotgun Global Search Widget<a class="headerlink" href="#shotgun-global-search-widget" title="Permalink to this headline">¶</a></h1>
+<p>The QT global search widget is similar to the global search
+found in Shotgun. It returns a number of matches based on a text
+that is being typed in by the user.</p>
 <img alt="_images/global_search.png" src="_images/global_search.png" />
+<p>Once a user selects an object, a signal fires to indicate the request.</p>
 <dl class="class">
 <dt id="global_search_widget.GlobalSearchWidget">
 <em class="property">class </em><code class="descclassname">global_search_widget.</code><code class="descname">GlobalSearchWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>A QLineEdit which is connected to the Shotgun global search.</p>
-<p>Constructor</p>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QLineEdit.html#PySide.QtGui.QLineEdit" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QLineEdit</span></code></a></p>
+<p>A QT Widget deriving from <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QLineEdit.html#PySide.QtGui.QLineEdit" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QLineEdit</span></code></a> that creates
+a global search input box with auto completion.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> &#8211; Qt parent object</td>
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_selected(str, int):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when someone selects an entity inside
+the search results. The returned parameters are entity type and entity id.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; Qt parent object</td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
 <dt id="global_search_widget.GlobalSearchWidget.set_data_retriever">
 <code class="descname">set_data_retriever</code><span class="sig-paren">(</span><em>data_retriever</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget.set_data_retriever"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget.set_data_retriever" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a separate sg data handler for sg queries</p>
+<dd><p>Set an async data retreiver object to use with this widget. Data calls
+to Shotgun will be send through this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_retriever</strong> (<a class="reference external" href="http://shotgunsoftware.github.io/tk-framework-shotgunutils/shotgun_data.html#shotgun_data.ShotgunDataRetriever" title="(in Shotgun Pipeline Toolkit vv2.4.2)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunDataRetriever</span></code></a>) &#8211; Data retriever object to use for fetching information
+from Shotgun.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -196,7 +219,7 @@
         <a href="help_screen.html" class="btn btn-neutral float-right" title="Help Screen Popup" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="activity_stream.html" class="btn btn-neutral" title="Shotgun Activity Stream Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="elided_label.html" class="btn btn-neutral" title="Auto-Elide label" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

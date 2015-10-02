@@ -85,12 +85,16 @@
             
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -189,7 +193,12 @@
  
 <div class="viewcode-block" id="NoteInputWidget"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget">[docs]</a><span class="k">class</span> <span class="nc">NoteInputWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Widget that can be used for note and thumbnail input and creation.</span>
+<span class="sd">    Note creation and reply widget with built in screen capture capabilites.</span>
+<span class="sd">    </span>
+<span class="sd">    :signal data_updated: Emitted when a note has been successfully created or </span>
+<span class="sd">        replied to. </span>
+<span class="sd">    :signal close_clicked: Emitted if a user chooses to cancel the note </span>
+<span class="sd">        creation by clicking the X button.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">_EDITOR_WIDGET_INDEX</span> <span class="o">=</span> <span class="mi">0</span>
@@ -202,7 +211,8 @@
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Constructor</span>
+<span class="sd">        :param parent:   The parent QWidget for this control</span>
+<span class="sd">        :type parent:    :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># first, call the base class and let it do its thing.</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
@@ -253,7 +263,11 @@
         </div>
 <div class="viewcode-block" id="NoteInputWidget.set_data_retriever"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.set_data_retriever">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_retriever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_retriever</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a separate sg data handler for submission</span>
+<span class="sd">        Specify the asynchronous data handler to use for shotgun communication.</span>
+<span class="sd">        </span>
+<span class="sd">        :param data_retriever: Data retriever object to use for fetching information</span>
+<span class="sd">                               from Shotgun.</span>
+<span class="sd">        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="n">data_retriever</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_signal</span><span class="p">)</span>
@@ -266,12 +280,12 @@
     <span class="c">###########################################################################</span>
     <span class="c"># internal methods</span>
 </div>
-<div class="viewcode-block" id="NoteInputWidget.mousePressEvent"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.mousePressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        User clicks the preview part of the widget</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_editor</span><span class="p">()</span>
-</div>
+
     <span class="k">def</span> <span class="nf">_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cancel editing, no questions asked </span>
@@ -653,7 +667,7 @@
               
 <div class="viewcode-block" id="NoteInputWidget.clear"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Clear any input and state        </span>
+<span class="sd">        Clear any input and state and return the widget to its &quot;closed&quot; mode.   </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
@@ -677,7 +691,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the current entity that this widget is linked against</span>
 <span class="sd">        </span>
-<span class="sd">        :param entity_link: Std entity link dictionary with type and id</span>
+<span class="sd">        :param entity_type: Shotgun entity type</span>
+<span class="sd">        :param entity_id: Shotgun entity id</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="n">entity_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="n">entity_id</span>

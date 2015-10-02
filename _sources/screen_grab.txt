@@ -1,17 +1,10 @@
 Screen Capture Widget
 #############################################
 
-
-
-
-
-
-
-.. note::
-
-    Import the module into your Toolkit App using the following statement::
-
-        screen_grab = sgtk.platform.import_framework("tk-framework-qtwidgets", "screen_grab")
+The screen capture widgets makes it easy to take screenshots.
+Similar to pressing CMD+SHIFT+4/CMD+SHIFT+3 on the mac, this widget implements
+several different ways in which the screen can be captured, either via
+a cross hair style selection or by grabbing the entire screen.
 
 .. currentmodule:: screen_grab
 

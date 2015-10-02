@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Version Playback Widget &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  <title>Shotgun Note editor widget &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
   
 
   
@@ -33,7 +33,8 @@
 
   
     <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="index.html"/>
-        <link rel="prev" title="Shotgun Version Playback Widget" href="version_label.html"/> 
+        <link rel="next" title="Spinner and text overlay widget" href="overlay_widget.html"/>
+        <link rel="prev" title="Navigation Widgets" href="navigation.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,12 +86,16 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="version_label.html">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -147,7 +152,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Shotgun Version Playback Widget</li>
+    <li>Shotgun Note editor widget</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -159,18 +164,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="shotgun-version-playback-widget">
-<h1>Shotgun Version Playback Widget<a class="headerlink" href="#shotgun-version-playback-widget" title="Permalink to this headline">¶</a></h1>
-<img alt="_images/version_label.png" src="_images/version_label.png" />
+  <div class="section" id="shotgun-note-editor-widget">
+<h1>Shotgun Note editor widget<a class="headerlink" href="#shotgun-note-editor-widget" title="Permalink to this headline">¶</a></h1>
+<p>The note editor widget makes it easy to add notes in Toolkit.</p>
+<img alt="_images/note_reply.png" src="_images/note_reply.png" />
+<p>You can use the widget either to create or reply to notes. The editor
+includes screen grabbing capabilities and a user name auto completer.
+If you start typing &#64;xyz, an auto completer will kick in and show matching
+groups and users. Once added to the note text, these users will automatically
+be included in the TO list in the case of a new note and in the CC list in the
+case of a reply.</p>
 <dl class="class">
 <dt id="note_input_widget.NoteInputWidget">
 <em class="property">class </em><code class="descclassname">note_input_widget.</code><code class="descname">NoteInputWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Widget that can be used for note and thumbnail input and creation.</p>
-<p>Constructor</p>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<p>Note creation and reply widget with built in screen capture capabilites.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal data_updated:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Emitted when a note has been successfully created or 
+replied to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal close_clicked:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Emitted if a user chooses to cancel the note 
+creation by clicking the X button.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The parent QWidget for this control</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.clear">
 <code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear any input and state</p>
+<dd><p>Clear any input and state and return the widget to its &#8220;closed&#8221; mode.</p>
 </dd></dl>
 
 <dl class="method">
@@ -178,12 +206,6 @@
 <code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>disconnect and prepare for this object
 to be garbage collected</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="note_input_widget.NoteInputWidget.mousePressEvent">
-<code class="descname">mousePressEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.mousePressEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.mousePressEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>User clicks the preview part of the widget</p>
 </dd></dl>
 
 <dl class="method">
@@ -201,7 +223,11 @@ where a user can type in stuff</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entity_link</strong> &#8211; Std entity link dictionary with type and id</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entity_type</strong> &#8211; Shotgun entity type</li>
+<li><strong>entity_id</strong> &#8211; Shotgun entity id</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -210,7 +236,16 @@ where a user can type in stuff</p>
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.set_data_retriever">
 <code class="descname">set_data_retriever</code><span class="sig-paren">(</span><em>data_retriever</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.set_data_retriever"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.set_data_retriever" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a separate sg data handler for submission</p>
+<dd><p>Specify the asynchronous data handler to use for shotgun communication.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_retriever</strong> (<a class="reference external" href="http://shotgunsoftware.github.io/tk-framework-shotgunutils/shotgun_data.html#shotgun_data.ShotgunDataRetriever" title="(in Shotgun Pipeline Toolkit vv2.4.2)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunDataRetriever</span></code></a>) &#8211; Data retriever object to use for fetching information
+from Shotgun.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -224,8 +259,10 @@ where a user can type in stuff</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="overlay_widget.html" class="btn btn-neutral float-right" title="Spinner and text overlay widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="version_label.html" class="btn btn-neutral" title="Shotgun Version Playback Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="navigation.html" class="btn btn-neutral" title="Navigation Widgets" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

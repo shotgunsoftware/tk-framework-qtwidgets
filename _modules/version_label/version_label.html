@@ -85,12 +85,16 @@
             
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../version_label.html">Shotgun Version Playback Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
             
@@ -178,17 +182,19 @@
 
 <div class="viewcode-block" id="VersionLabel"><a class="viewcode-back" href="../../version_label.html#version_label.VersionLabel">[docs]</a><span class="k">class</span> <span class="nc">VersionLabel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Subclassed QLabel that displays a playback icon</span>
+<span class="sd">    Subclassed ``QLabel`` that displays a playback icon</span>
 <span class="sd">    centered above the existing pixmap.</span>
 <span class="sd">    </span>
 <span class="sd">    By populating an instance with shotgun version data</span>
-<span class="sd">    via the set_shotgun_data() method, the version label</span>
+<span class="sd">    via the :any:`set_shotgun_data()` method, the version label</span>
 <span class="sd">    will look at the data and determine whether a playback </span>
 <span class="sd">    icon should be displayed or not. In the case an icon is</span>
 <span class="sd">    displayed, a playback_clicked signal may be emitted. </span>
 <span class="sd">    </span>
-<span class="sd">    This signal passes the same shotgun version data back</span>
-<span class="sd">    to the caller.   </span>
+<span class="sd">    :signal playback_clicked(dict): The playback icon was clicked. </span>
+<span class="sd">        This signal passes the shotgun version data specified in</span>
+<span class="sd">        via the :any:`set_shotgun_data()` method back</span>
+<span class="sd">        to the caller.   </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="c"># signal fires when the play button was clicked</span>
@@ -209,7 +215,9 @@
 
 <div class="viewcode-block" id="VersionLabel.set_shotgun_data"><a class="viewcode-back" href="../../version_label.html#version_label.VersionLabel.set_shotgun_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_shotgun_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets version data associated with this label</span>
+<span class="sd">        Sets version data associated with this label.</span>
+<span class="sd">        </span>
+<span class="sd">        :param sg_data: Shotgun version data, including quicktime fields.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data</span> <span class="o">=</span> <span class="n">sg_data</span>
         
