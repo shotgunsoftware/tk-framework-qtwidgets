@@ -8,19 +8,15 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Navigation widget containing previous, home and next buttons: [<][H][>].  The
-widget keeps track of the current location within a list and emits signals
-whenever the user navigates via one of the buttons.
-"""
-
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.navigation_widget import Ui_NavigationWidget
 
 class NavigationWidget(QtGui.QWidget):
     """
-    Implementation of the NavigationWidget class
+    Navigation widget containing previous, home and next buttons: [H][<][>].  The
+    widget keeps track of the current location within a list and emits signals
+    whenever the user navigates via one of the buttons.
     """
 
     # Signal emitted whenever the user navigates using 
@@ -36,8 +32,6 @@ class NavigationWidget(QtGui.QWidget):
         """
         def __init__(self, label, destination):
             """
-            Construction
-
             :param label:       The label to be used for this destination
             :param destination: The destination
             """
@@ -46,9 +40,8 @@ class NavigationWidget(QtGui.QWidget):
 
     def __init__(self, parent=None):
         """
-        Construction
-
         :param parent:  The parent QWidget
+        :type parent:   :class:`~PySide.QtGui.QWidget`        
         """
         QtGui.QWidget.__init__(self, parent)
 

@@ -24,7 +24,7 @@ class ElidedLabel(QtGui.QLabel):
     def __init__(self, parent=None):
         """
         :param parent:  The parent QWidget
-        :type parent: :class:`~PySide.QtGui.QWidget`        
+        :type parent: :class:`~PySide.QtGui.QWidget`     
         """
         QtGui.QLabel.__init__(self, parent)
 

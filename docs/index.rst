@@ -15,6 +15,7 @@ Contents:
    global_search_widget
    help_screen
    models
+   navigation
    note_input_widget
    overlay_widget
    screen_grab

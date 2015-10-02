@@ -33,4 +33,4 @@ class Ui_BreadcrumbWidget(object):
         BreadcrumbWidget.setWindowTitle(QtGui.QApplication.translate("BreadcrumbWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.path_label.setText(QtGui.QApplication.translate("BreadcrumbWidget", "I <span style=\'color:#2C93E2\'>&#9656;</span> Am <span style=\'color:#2C93E2\'>&#9656;</span> Groot", None, QtGui.QApplication.UnicodeUTF8))
 
-from ...elided_label import ElidedLabel
+from ..qtwidgets import ElidedLabel

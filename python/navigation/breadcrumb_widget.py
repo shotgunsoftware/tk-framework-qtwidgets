@@ -44,9 +44,8 @@ class BreadcrumbWidget(QtGui.QWidget):
     """
     def __init__(self, parent=None):
         """
-        Construction
-
         :param parent:   The parent QWidget for this control
+        :type parent:    :class:`~PySide.QtGui.QWidget`
         """
         QtGui.QWidget.__init__(self, parent)
 
@@ -63,6 +62,7 @@ class BreadcrumbWidget(QtGui.QWidget):
 
         :param breadcrumbs: A list of breadcrumbs.  Each breadcrumb instance should derive 
                             from the Breadcrumb class
+        :type breadcrumbs: list of :class:`Breadcrumb`
         """
         # build a single path from the list of crumbs:
         path = "<span style='color:#2C93E2'> &#9656; </span>".join([crumb.label for crumb in breadcrumbs])
