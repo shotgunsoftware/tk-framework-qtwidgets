@@ -3,8 +3,7 @@ Auto-Elide label
 
 
 This simple yet commonly used class helps add an elide (a "..." at the end)
-to words when they don't fit within a given space. The ``ElidedLabel`` class
-derives from ``QLabel``.
+to words when they don't fit within a given space. 
 
 .. currentmodule:: elided_label
 

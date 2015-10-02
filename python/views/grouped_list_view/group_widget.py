@@ -48,6 +48,7 @@ class GroupWidget(GroupWidgetBase):
         with.
 
         :param model_idx:   The index of the item in the model
+        :type model_idx:    :class:`~PySide.QtCore.QModelIndex`
         """
         label = model_idx.data()
         self._cb.setText(label)
