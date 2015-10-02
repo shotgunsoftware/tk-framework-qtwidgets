@@ -17,6 +17,7 @@ Contents:
    note_input_widget
    overlay_widget
    screen_grab
+   spinner_widget
    version_label
    views
 
