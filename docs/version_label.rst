@@ -1,7 +1,7 @@
 Shotgun Version Playback Widget
 #############################################
 
-The version label is a simple QLabel override which
+The version label is a simple ``QLabel`` override which
 makes it easy to indicate that a thumbnail can be played back:
 
 .. image:: images/version_label.png

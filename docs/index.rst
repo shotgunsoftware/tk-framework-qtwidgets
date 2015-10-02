@@ -30,7 +30,7 @@ which handles automatic reload and resource management behind the scenes::
 
     overlay_widget = sgtk.platform.import_framework("tk-framework-qtwidgets", "overlay_widget")
 
-These imports work just like the normal ``import`` call in python and we recommmend
+These imports work just like the normal ``import`` call in python and we recommend
 that they are placed at the top of the file.
 
 Once you have imported the module, you can access the class or objects inside::

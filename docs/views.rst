@@ -157,7 +157,7 @@ the UI. A custom QT view - :class:`GroupedListView` - is the main component. The
 expects a tree-like model structure with two levels, a grouping level and a data level.
 
 When the data is loaded in, it will use a special delegate to render the grouping level
-of the tree structure. You can customize this delegate easily by provding your own widget.
+of the tree structure. You can customize this delegate easily by providing your own widget.
 This widget needs to be able to react to expansion signals sent from the model so that it
 can change its appearance when the view decides to expand and contract the section.
 
