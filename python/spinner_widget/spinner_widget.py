@@ -8,10 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-A simple widget that draws an animated spinner that spins whilst visible.
-"""
-
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
@@ -20,13 +16,12 @@ import math
 
 class SpinnerWidget(QtGui.QWidget):
     """
-    Spinner widget class
+    A simple widget that draws an animated spinner that spins whilst visible.
     """
     def __init__(self, parent=None):
         """
-        Construction
-
         :param parent:    The parent widget
+        :type parent:     :class:`~PySide.QtGui.QWidget`
         """
         QtGui.QWidget.__init__(self, parent)
 
