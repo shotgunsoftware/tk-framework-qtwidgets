@@ -1,8 +1,6 @@
 The QT Widgets Framework
 ####################################################
 
-
-
 The QT Widgets Framework contains a collection of QT UI Related modules.
 
 Contents:
@@ -20,8 +18,7 @@ Contents:
    overlay_widget
    screen_grab
    version_label
-
-
+   views
 
 Importing widgets into your app
 =============================================

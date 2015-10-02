@@ -19,35 +19,33 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
     """
     Convenience wrapper that makes it straight forward to use widgets inside of delegates.
 
-    This class is basically an adapter which lets you connect a view (QAbstractItemView) 
-    with a QWidget of choice. This widget is used to "paint" the view when it is being 
+    This class is basically an adapter which lets you connect a view (:class:`~PySide.QtGui.QAbstractItemView`) 
+    with a :class:`~PySide.QtGui.QWidget` of choice. This widget is used to "paint" the view when it is being 
     rendered. When editing the item in the view, this class will create an editor widget
     as defined by the class.
 
     You use this class by subclassing it and implementing the methods:
 
-    - _get_painter_widget()     - return the widget to be used to paint an index
-    - _on_before_paint()        - set up the widget with the specific data ready to be painted
-    - sizeHint()                - return the size of the widget to be used in the view
+    - :meth:`_get_painter_widget()` - return the widget to be used to paint an index
+    - :meth:`_on_before_paint()` - set up the widget with the specific data ready to be painted
+    - :meth:`~PySide.QtGui.QAbstractItemDelegate.sizeHint()` - return the size of the widget to be used in the view
 
     If you want to provide an editor using the same widgetry then implement the following:
 
-    - _create_editor_widget()   - return a unique editor instance to be used for editing
-                                  the specific index - style options should be applied to
-                                  the editor at this point.
-    - setEditorData()           - populate the editor with data from the model
-    - setModelData()            - apply the data from the editor back to the model
+    - :meth:`_create_editor_widget()` - return a unique editor instance to be used for editing
+      the specific index - style options should be applied to the editor at this point.
+    - :meth:`setEditorData()` - populate the editor with data from the model
+    - :meth:`setModelData()` - apply the data from the editor back to the model
 
-    If you are using the same widget for all items then you can just implement this method
-    instead of the separate _get_painter_widget() & _create_editor_widget() methods
-    - _create_widget()          - create a widget to be used for both painting and editing 
-                                  of all items
+    .. note:: If you are using the same widget for all items then you can just implement 
+              the :meth:`_create_widget()` method instead of the separate :meth:`_get_painter_widget()` 
+              and :meth:`_create_editor_widget()` methods.
+    
     """
     def __init__(self, view):
         """
-        Constructor
-
-        :param view:    The parent view for this delegate
+        :param view: The parent view for this delegate
+        :type view:  :class:`~PySide.QtGui.QWidget`
         """
         QtGui.QStyledItemDelegate.__init__(self, view)
 
@@ -64,9 +62,10 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
     def view(self):
         """
         Return the parent view of this delegate.  This is just a wrapper
-        for returning self.parent() but makes calling code easier to read!
+        for returning ``self.parent()`` but makes calling code easier to read!
 
-        :returns:   The parent view this delegate was created for
+        :returns: The parent view this delegate was created for
+        :rtype:   :class:`~PySide.QtGui.QWidget`
         """
         return self.parent()
 
@@ -80,8 +79,11 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         the lifetime of the widget.
 
         :param model_index: The index of the item in the model to return a widget for
+        :type model_index:  :class:`~PySide.QtCore.QModelIndex`
         :param parent:      The parent view that the widget should be parented to
-        :returns:           A QWidget to be used for painting the current index 
+        :type parent:       :class:`~PySide.QtGui.QWidget`
+        :returns:           A QWidget to be used for painting the current index
+        :rtype:             :class:`~PySide.QtGui.QWidget`
         """
         # the default implementation just uses the internal __paint_widget 
         # (creating it if needed) for backwards compatibility
@@ -99,9 +101,16 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         release all handles to it.
 
         :param model_index:     The index of the item in the model to return a widget for
+        :type model_index:      :class:`~PySide.QtCore.QModelIndex`
+        
         :param style_options:   Specifies the current Qt style options for this index
+        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`
+        
         :param parent:          The parent view that the widget should be parented to
+        :type parent:           :class:`~PySide.QtGui.QWidget`
+        
         :returns:               A QWidget to be used for editing the current index
+        :rtype:                 :class:`~PySide.QtGui.QWidget`
         """
         # the default implementation just calls _create_widget for backwards
         # compatibility.
@@ -117,21 +126,29 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
 
         :param widget: The QWidget (constructed in _create_widget()) which will 
                        be used to paint the cell. 
-        :param model_index: QModelIndex object representing the data of the object that is 
+        :type parent:  :class:`~PySide.QtGui.QWidget`
+        
+        :param model_index: object representing the data of the object that is 
                             about to be drawn.
-        :param style_options: QStyleOptionViewItem object containing specifics about the 
+        :type model_index:  :class:`~PySide.QtCore.QModelIndex`
+        
+        :param style_options: Object containing specifics about the 
                               view related state of the cell.
+        :type style_options:  :class:`~PySide.QtGui.QStyleOptionViewItem`
         """
         raise NotImplementedError
 
     def _create_widget(self, parent):
         """
         This needs to be implemented by any deriving classes unless the separate
-        methods '_get_painter_widget()' and '_create_editor_widget()' are implemented
-        instead.
+        methods :meth:`_get_painter_widget()` and :meth:`_create_editor_widget()` 
+        are implemented instead.
 
         :param parent:  QWidget to parent the widget to
-        :returns:       QWidget that will be used to paint grid cells in the view. 
+        :type parent:   :class:`~PySide.QtGui.QWidget`
+        
+        :returns:       QWidget that will be used to paint grid cells in the view.
+        :rtype:         :class:`~PySide.QtGui.QWidget` 
         """
         return None
 
@@ -153,6 +170,7 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         to have a real widget for this.
 
         :param parent_widget:   The parent widget to use for the new editor widget
+        
         :param style_options:   The style options to use when creating the editor
         :param model_index:     The index in the data model that will be edited 
                                 using this editor

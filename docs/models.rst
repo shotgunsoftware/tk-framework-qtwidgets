@@ -1,4 +1,4 @@
-QT Models
+Model Related Classes
 ######################################
 
 The ``models`` module contains QT Models and model related classes that
