@@ -17,6 +17,10 @@ class NavigationWidget(QtGui.QWidget):
     Navigation widget containing previous, home and next buttons: [H][<][>].  The
     widget keeps track of the current location within a list and emits signals
     whenever the user navigates via one of the buttons.
+    
+    :signal home_clicked: Emitted when someone clicks the home button
+    :signal navigate: Emitted when someone clicks the next or prev buttons.
+        A navigation object is passed with the signal.
     """
 
     # Signal emitted whenever the user navigates using 

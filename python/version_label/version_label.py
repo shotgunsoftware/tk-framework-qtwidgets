@@ -14,17 +14,19 @@ from .ui import resources_rc
 
 class VersionLabel(QtGui.QLabel):
     """
-    Subclassed QLabel that displays a playback icon
+    Subclassed ``QLabel`` that displays a playback icon
     centered above the existing pixmap.
     
     By populating an instance with shotgun version data
-    via the set_shotgun_data() method, the version label
+    via the :any:`set_shotgun_data()` method, the version label
     will look at the data and determine whether a playback 
     icon should be displayed or not. In the case an icon is
     displayed, a playback_clicked signal may be emitted. 
     
-    This signal passes the same shotgun version data back
-    to the caller.   
+    :signal playback_clicked: The playback icon was clicked. 
+        This signal passes the shotgun version data specified in
+        via the :any:`set_shotgun_data()` method back
+        to the caller.   
     """
     
     # signal fires when the play button was clicked
@@ -45,7 +47,9 @@ class VersionLabel(QtGui.QLabel):
 
     def set_shotgun_data(self, sg_data):
         """
-        Sets version data associated with this label
+        Sets version data associated with this label.
+        
+        :param sg_data: Shotgun version data, including quicktime fields.
         """
         self._sg_data = sg_data
         

@@ -169,7 +169,12 @@ class ScreenGrabber(QtGui.QDialog):
 
 def get_desktop_pixmap(rect):
     """
-    Performs a screen capture on the specified QRect, returning a QPixmap.
+    Performs a screen capture on the specified rectangle.
+    
+    :param rect: Rectangle to capture
+    :type rect: :class:`~PySide.QtCore.QRect`
+    :returns: Captured image
+    :rtype: :class:`~PySide.QtGui.QPixmap`
     """
     desktop = QtGui.QApplication.instance().desktop()
     return QtGui.QPixmap.grabWindow(desktop.winId(), rect.x(), rect.y(),
@@ -177,7 +182,10 @@ def get_desktop_pixmap(rect):
 
 def screen_capture():
     """
-    Modally display the screen capture tool, returning a QPixmap.
+    Modally displays the screen capture tool.
+    
+    :returns: Captured screen
+    :rtype: :class:`~PySide.QtGui.QPixmap`
     """
     tool = ScreenGrabber()
     tool.exec_()

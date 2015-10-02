@@ -25,7 +25,12 @@ from .overlaywidget import SmallOverlayWidget
  
 class NoteInputWidget(QtGui.QWidget):
     """
-    Widget that can be used for note and thumbnail input and creation.
+    Note creation and reply widget with built in screen capture capabilites.
+    
+    :signal data_updated: Emitted when a note has been successfully created or 
+        replied to. 
+    :signal close_clicked: Emitted if a user chooses to cancel the note 
+        creation by clicking the X button.
     """
     
     _EDITOR_WIDGET_INDEX = 0
@@ -38,7 +43,8 @@ class NoteInputWidget(QtGui.QWidget):
     
     def __init__(self, parent):
         """
-        Constructor
+        :param parent:   The parent QWidget for this control
+        :type parent:    :class:`~PySide.QtGui.QWidget`
         """
         # first, call the base class and let it do its thing.
         QtGui.QWidget.__init__(self, parent)
@@ -89,7 +95,7 @@ class NoteInputWidget(QtGui.QWidget):
         
     def set_data_retriever(self, data_retriever):
         """
-        Create a separate sg data handler for submission.
+        Specify the asynchronous data handler to use for shotgun communication.
         
         :param data_retriever: Data retriever object to use for fetching information
                                from Shotgun.
@@ -493,7 +499,7 @@ class NoteInputWidget(QtGui.QWidget):
               
     def clear(self):
         """
-        Clear any input and state        
+        Clear any input and state and return the widget to its "closed" mode.   
         """
         self.ui.text_entry.clear()
 
@@ -517,7 +523,8 @@ class NoteInputWidget(QtGui.QWidget):
         """
         Specify the current entity that this widget is linked against
         
-        :param entity_link: Std entity link dictionary with type and id
+        :param entity_type: Shotgun entity type
+        :param entity_id: Shotgun entity id
         """
         self._entity_type = entity_type
         self._entity_id = entity_id
