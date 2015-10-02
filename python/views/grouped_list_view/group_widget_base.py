@@ -16,7 +16,7 @@ class GroupWidgetBase(QtGui.QWidget):
     Base interface for a group widget that will be used in the
     :class:`GroupedListView` custom view
     
-    :signal toggle_expanded: Emitted when the group's expansion
+    :signal toggle_expanded(bool): Emitted when the group's expansion
                              state is toggled. Includes a boolean
                              to indicate if the group is expanded or not.
     

@@ -23,7 +23,7 @@ class VersionLabel(QtGui.QLabel):
     icon should be displayed or not. In the case an icon is
     displayed, a playback_clicked signal may be emitted. 
     
-    :signal playback_clicked: The playback icon was clicked. 
+    :signal playback_clicked(dict): The playback icon was clicked. 
         This signal passes the shotgun version data specified in
         via the :any:`set_shotgun_data()` method back
         to the caller.   

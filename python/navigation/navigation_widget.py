@@ -19,7 +19,7 @@ class NavigationWidget(QtGui.QWidget):
     whenever the user navigates via one of the buttons.
     
     :signal home_clicked: Emitted when someone clicks the home button
-    :signal navigate: Emitted when someone clicks the next or prev buttons.
+    :signal navigate(bj): Emitted when someone clicks the next or prev buttons.
         A navigation object is passed with the signal.
     """
 
