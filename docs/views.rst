@@ -152,8 +152,35 @@ collapsible sections.
 
 .. image:: images/grouped_list_view.png
 
+The grouped list view uses the :class:`WidgetDelegate` system in order to render
+the UI. A custom QT view - :class:`GroupedListView` - is the main component. The view
+expects a tree-like model structure with two levels, a grouping level and a data level.
 
+When the data is loaded in, it will use a special delegate to render the grouping level
+of the tree structure. You can customize this delegate easily by provding your own widget.
+This widget needs to be able to react to expansion signals sent from the model so that it
+can change its appearance when the view decides to expand and contract the section.
 
+The grouping delegate is typically designed as a header-like object. It shouldn't *contain*
+any of its child items but rather act as a *partition* between groups. The collapse/expanded
+state can for example be indicated by an arrow that is either pointing down or sideways. The
+main view logic will take care of hiding any child objects.
+
+If you want to create your own appearance, you can follow these rough steps:
+
+- First, design a grouping widget and make sure it derives from :class:`GroupWidgetBase`.
+
+- Make sure it implements the :meth:`GroupWidgetBase.set_expanded()` for handling its expanded state
+  and :meth:`GroupWidgetBase.set_item()` to receive data from the model about what text to display etc.
+
+- Now, derive from the :class:`GroupedListViewItemDelegate` class and implement the factory method
+  :meth:`GroupedListViewItemDelegate.create_group_widget()` to return your custom grouping widget.
+
+- If you want the child items to be rendered via custom widget delegates, you can modify your
+  derived class at this point to do that too.
+
+- Lastly, pass your delegate to the view via the standard QT
+  :meth:`PySide.QtGui.QAbstractItemView.setItemDelegate()` call to bind it to the view.
 
 
 GroupedListView
