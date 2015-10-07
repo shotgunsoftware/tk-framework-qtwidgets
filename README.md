@@ -2,6 +2,7 @@
 This repository is a part of the Shotgun Pipeline Toolkit.
 
 - For more information about this app and for release notes, *see the wiki section*.
+- For API Reference, see http://shotgunsoftware.github.io/tk-framework-qtwidgets
 - For general information and documentation, click here: https://support.shotgunsoftware.com/entries/95441257
 - For information about Shotgun in general, click here: http://www.shotgunsoftware.com/toolkit
 
