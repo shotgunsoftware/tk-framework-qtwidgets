@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -201,7 +201,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_label.html">Shotgun Version Playback Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="views.html#qt-widget-delegate-system">QT Widget Delegate System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="views.html#grouped-list-view">Grouped List View</a></li>
@@ -217,14 +217,14 @@ which handles automatic reload and resource management behind the scenes:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">overlay_widget</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s">&quot;overlay_widget&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>These imports work just like the normal <code class="docutils literal"><span class="pre">import</span></code> call in python and we recommmend
+<p>These imports work just like the normal <code class="docutils literal"><span class="pre">import</span></code> call in python and we recommend
 that they are placed at the top of the file.</p>
 <p>Once you have imported the module, you can access the class or objects inside:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">my_overlay</span> <span class="o">=</span> <span class="n">overlay</span><span class="o">.</span><span class="n">ShotgunOverlayWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="using-widgets-with-qt-designer">
-<h3>Using widgets with QT Designer<a class="headerlink" href="#using-widgets-with-qt-designer" title="Permalink to this headline">¶</a></h3>
+<span id="widgets-in-designer"></span><h3>Using widgets with QT Designer<a class="headerlink" href="#using-widgets-with-qt-designer" title="Permalink to this headline">¶</a></h3>
 <p>If you are dropping the widgets into QT Designer directly, there isn&#8217;t an option to
 run the <code class="docutils literal"><span class="pre">import_framework</span></code> method. In this case, we recommend adding imports to a wrapper
 file and place that next to your other python files. You can for example call this file

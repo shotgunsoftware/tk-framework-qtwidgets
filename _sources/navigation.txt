@@ -7,7 +7,7 @@ be used to track navigation and state.
 .. image:: images/navigation.png
 
 The breadcrumbs widget is a standard widget that displays a history
-of things separated by arrows. This class utilises the :class:`~elided_label.ElidedLabel` widget
+of things separated by arrows. This class utilizes the :class:`~elided_label.ElidedLabel` widget
 to ensure that names are reduced down nicely in the case there ins't enough
 space to display the entire history.
 
