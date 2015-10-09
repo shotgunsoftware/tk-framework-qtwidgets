@@ -18,7 +18,7 @@ Contents:
    overlay_widget
    screen_grab
    spinner_widget
-   version_label
+   playback_label
    views
 
 Importing widgets into your app
@@ -37,6 +37,7 @@ Once you have imported the module, you can access the class or objects inside::
 
     my_overlay = overlay.ShotgunOverlayWidget(self)
 
+.. _widgets-in-designer:
 
 Using widgets with QT Designer
 ----------------------------------------------------

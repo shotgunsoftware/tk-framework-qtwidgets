@@ -9,4 +9,4 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 
-from .version_label import VersionLabel
+from .playback_label import ShotgunPlaybackLabel

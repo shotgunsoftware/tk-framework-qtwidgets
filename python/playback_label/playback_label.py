@@ -12,20 +12,24 @@ from sgtk.platform.qt import QtCore, QtGui
 
 from .ui import resources_rc
 
-class VersionLabel(QtGui.QLabel):
+class ShotgunPlaybackLabel(QtGui.QLabel):
     """
     Subclassed ``QLabel`` that displays a playback icon
-    centered above the existing pixmap.
+    centered above its content.  
+    
+    While it is technically possible to use
+    this label with text based content, we strongly recommend
+    using it with a pixmap. Typically this is a Shotgun thumbnail.    
     
     By populating an instance with shotgun version data
-    via the :any:`set_shotgun_data()` method, the version label
+    via the :meth:`set_shotgun_data()` method, the label
     will look at the data and determine whether a playback 
     icon should be displayed or not. In the case an icon is
     displayed, a playback_clicked signal may be emitted. 
     
     :signal playback_clicked(dict): The playback icon was clicked. 
         This signal passes the shotgun version data specified in
-        via the :any:`set_shotgun_data()` method back
+        via the :meth:`set_shotgun_data()` method back
         to the caller.   
     """
     
@@ -43,35 +47,48 @@ class VersionLabel(QtGui.QLabel):
         self._play_icon_inactive = QtGui.QPixmap(":/tk_framework_qtwidgets.version_label/play_icon_inactive.png")
         self._sg_data = None
         self._hover = False
-        self._active = False
+        self._playable = False
 
     def set_shotgun_data(self, sg_data):
         """
-        Sets version data associated with this label.
+        Sets shotgun data associated with this label.
+        This data will be used to drive the logic which is
+        used to determine if the label should exhibit the playback icon or not.
         
-        :param sg_data: Shotgun version data, including quicktime fields.
+        If you for example are passing a Shotgun data dictionary reprensenting
+        a version, make sure to include the various quicktime and frame fields.
+        
+        :param sg_data: Shotgun data dictionary
         """
         self._sg_data = sg_data
         
         # based on the data, figure out if the icon should be active or not
-        self._active = False
+        self._playable = False
         
         if sg_data and sg_data.get("type") == "Version":
             # versions are supported
             if sg_data.get("sg_uploaded_movie"):
-                self._active = True
+                self._playable = True
         
-        if self._active:
+        if self._playable:
             self.setCursor(QtCore.Qt.PointingHandCursor)
         else:
             self.unsetCursor() 
+        
+    @property    
+    def playbable(self):
+        """
+        Returns True if the label is playbable given its current Shotgun data.
+        """
+        return self._playable
             
+    
     def enterEvent(self, event):
         """
         Fires when the mouse enters the widget space
         """
         QtGui.QLabel.enterEvent(self, event)
-        if self._active:
+        if self._playable:
             self._hover = True
             self.repaint()
         
@@ -80,7 +97,7 @@ class VersionLabel(QtGui.QLabel):
         Fires when the mouse leaves the widget space
         """
         QtGui.QLabel.leaveEvent(self, event)
-        if self._active:
+        if self._playable:
             self._hover = False
             self.repaint()
 
@@ -89,7 +106,7 @@ class VersionLabel(QtGui.QLabel):
         Fires when the mouse is pressed
         """
         QtGui.QLabel.mousePressEvent(self, event)
-        if self._active and self._hover:
+        if self._playable and self._hover:
             self.playback_clicked.emit(self._sg_data)
         
     def paintEvent(self, event):
@@ -99,7 +116,7 @@ class VersionLabel(QtGui.QLabel):
         # first render the label
         QtGui.QLabel.paintEvent(self, event)
         
-        if self._active:
+        if self._playable:
             # now render a pixmap on top
             painter = QtGui.QPainter()
             painter.begin(self)
