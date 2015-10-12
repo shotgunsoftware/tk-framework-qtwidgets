@@ -59,7 +59,7 @@ class Ui_NewItemWidget(object):
         self.date.setObjectName("date")
         self.horizontalLayout.addWidget(self.date)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.details_thumb = VersionLabel(self.frame)
+        self.details_thumb = ShotgunPlaybackLabel(self.frame)
         self.details_thumb.setMinimumSize(QtCore.QSize(256, 144))
         self.details_thumb.setMaximumSize(QtCore.QSize(256, 144))
         self.details_thumb.setText("")
@@ -84,6 +84,6 @@ class Ui_NewItemWidget(object):
         self.date.setText(QtGui.QApplication.translate("NewItemWidget", "3 days ago", None, QtGui.QApplication.UnicodeUTF8))
         self.footer.setText(QtGui.QApplication.translate("NewItemWidget", "description", None, QtGui.QApplication.UnicodeUTF8))
 
-from ..qtwidgets import VersionLabel
+from ..qtwidgets import ShotgunPlaybackLabel
 from ..label_widgets import UserThumbnail
 from . import resources_rc
