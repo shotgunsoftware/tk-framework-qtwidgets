@@ -175,7 +175,12 @@ class NoteEditor(QtGui.QTextEdit):
             # clear async download queue
             self.__sg_data_retriever.clear()
             
-            # kick off async data request from shotgun 
+            # kick off async data request from shotgun
+            # we request to run an arbitrary method in the worker thread
+            # this  _do_sg_global_search method will be called by the worker 
+            # thread when the worker queue reaches that point and will 
+            # call out to execute it. The data dictionary specified will
+            # be forwarded to the method.
             data = {"text": login_to_search_for}
             self._processing_id = self.__sg_data_retriever.execute_method(self._do_sg_global_search, data)        
             
@@ -251,12 +256,17 @@ class NoteEditor(QtGui.QTextEdit):
 
     def _do_sg_global_search(self, sg, data):
         """
-        Actual payload for creating things in shotgun.
+        Actual payload for running a global search in Shotgun.
+        
         Note: This runs in a different thread and cannot access
-              any QT UI components.
+        any QT UI components. It should not do any logging and should
+        be as minimal as possible.
         
         :param sg: Shotgun instance
-        :param data: data dictionary passed in from _submit()
+        :param data: data dictionary passed in from _submit(). This dict
+            carries the options payload and is forwarded over by the 
+            sg_data.execute_method() method. In our case, the dictionary
+            holds a single 'text' key which contains the search phrase.
         """
         entity_types = {}
         entity_types["HumanUser"] = [["sg_status_list", "is", "act"]]
