@@ -220,7 +220,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span>
 
-    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Paint event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -236,7 +236,7 @@
         <span class="c"># tool region accept mouse events.</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opacity</span><span class="p">))</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">)</span>
-        <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">())</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">())</span>
 
         <span class="c"># Clear the capture area</span>
         <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -250,18 +250,18 @@
 
         <span class="c"># Draw cropping markers at click position</span>
         <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
-                             <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span>
-                             <span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">())</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
+                             <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span>
+                             <span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">())</span>
 
         <span class="c"># Draw cropping markers at current mouse position</span>
-        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
-                         <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
-        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span>
-                         <span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">evt</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">())</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
+                         <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span>
+                         <span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Key press event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -272,34 +272,40 @@
         <span class="c"># by sealing the keypress event and not allowing any further processing</span>
         <span class="c"># of the escape key (or any other key for that matter), the </span>
         <span class="c"># behaviour can be successfully avoided.</span>
+        
+        <span class="c"># TODO: See if we can get the behacior with hitting escape back</span>
+        <span class="c"># maybe by manually handling the closing of the window? I tried </span>
+        <span class="c"># some obvious things and weren&#39;t successful, but didn&#39;t dig very </span>
+        <span class="c"># deep as it felt like a nice-to-have and not a massive priority.</span>
+        
         <span class="k">pass</span>
     
-    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mouse click event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">evt</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span><span class="p">:</span>
             <span class="c"># Begin click drag operation</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">globalPos</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">mouseReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mouseReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">        Mouse release event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">evt</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c"># End click drag operation and commit the current capture rect</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span><span class="p">,</span>
-                                              <span class="n">evt</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+                                              <span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">mouseMoveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mouseMoveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mouse move event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
