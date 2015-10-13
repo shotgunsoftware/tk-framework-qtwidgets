@@ -51,7 +51,7 @@ class ScreenGrabber(QtGui.QDialog):
         """
         return self._capture_rect
 
-    def paintEvent(self, evt):
+    def paintEvent(self, event):
         """
         Paint event
         """
@@ -67,7 +67,7 @@ class ScreenGrabber(QtGui.QDialog):
         # tool region accept mouse events.
         painter.setBrush(QtGui.QColor(0, 0, 0, self._opacity))
         painter.setPen(QtCore.Qt.NoPen)
-        painter.drawRect(evt.rect())
+        painter.drawRect(event.rect())
 
         # Clear the capture area
         if click_pos is not None:
@@ -81,18 +81,18 @@ class ScreenGrabber(QtGui.QDialog):
 
         # Draw cropping markers at click position
         if click_pos is not None:
-            painter.drawLine(evt.rect().left(), click_pos.y(),
-                             evt.rect().right(), click_pos.y())
-            painter.drawLine(click_pos.x(), evt.rect().top(),
-                             click_pos.x(), evt.rect().bottom())
+            painter.drawLine(event.rect().left(), click_pos.y(),
+                             event.rect().right(), click_pos.y())
+            painter.drawLine(click_pos.x(), event.rect().top(),
+                             click_pos.x(), event.rect().bottom())
 
         # Draw cropping markers at current mouse position
-        painter.drawLine(evt.rect().left(), mouse_pos.y(),
-                         evt.rect().right(), mouse_pos.y())
-        painter.drawLine(mouse_pos.x(), evt.rect().top(),
-                         mouse_pos.x(), evt.rect().bottom())
+        painter.drawLine(event.rect().left(), mouse_pos.y(),
+                         event.rect().right(), mouse_pos.y())
+        painter.drawLine(mouse_pos.x(), event.rect().top(),
+                         mouse_pos.x(), event.rect().bottom())
 
-    def keyPressEvent(self, evt):
+    def keyPressEvent(self, event):
         """
         Key press event
         """
@@ -111,32 +111,32 @@ class ScreenGrabber(QtGui.QDialog):
         
         pass
     
-    def mousePressEvent(self, evt):
+    def mousePressEvent(self, event):
         """
         Mouse click event
         """
-        if evt.button() == QtCore.Qt.LeftButton:
+        if event.button() == QtCore.Qt.LeftButton:
             # Begin click drag operation
-            self._click_pos = evt.globalPos()
+            self._click_pos = event.globalPos()
 
-    def mouseReleaseEvent(self, evt):
+    def mouseReleaseEvent(self, event):
         """ 
         Mouse release event
         """
-        if evt.button() == QtCore.Qt.LeftButton and self._click_pos is not None:
+        if event.button() == QtCore.Qt.LeftButton and self._click_pos is not None:
             # End click drag operation and commit the current capture rect
             self._capture_rect = QtCore.QRect(self._click_pos,
-                                              evt.globalPos()).normalized()
+                                              event.globalPos()).normalized()
             self._click_pos = None
         self.close()
 
-    def mouseMoveEvent(self, evt):
+    def mouseMoveEvent(self, event):
         """
         Mouse move event
         """
         self.repaint()
 
-    def showEvent(self, evt):
+    def showEvent(self, event):
         """
         Show event
         """
