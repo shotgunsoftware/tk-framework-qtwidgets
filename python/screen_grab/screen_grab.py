@@ -103,6 +103,12 @@ class ScreenGrabber(QtGui.QDialog):
         # by sealing the keypress event and not allowing any further processing
         # of the escape key (or any other key for that matter), the 
         # behaviour can be successfully avoided.
+        
+        # TODO: See if we can get the behacior with hitting escape back
+        # maybe by manually handling the closing of the window? I tried 
+        # some obvious things and weren't successful, but didn't dig very 
+        # deep as it felt like a nice-to-have and not a massive priority.
+        
         pass
     
     def mousePressEvent(self, evt):
