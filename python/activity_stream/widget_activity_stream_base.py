@@ -137,7 +137,10 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         """
         Set a standard time stamp in the given label 
         """
-        created_at_unixtime = data["created_at"]
+        # it seems some of the activity stream methods return null
+        # time stamps in some cases so make sure those are handled
+        # gracefully rather than assuming created_at always exists
+        created_at_unixtime = data.get("created_at") or 0
         datetime_obj = datetime.datetime.fromtimestamp(created_at_unixtime)
         
         # standard format 
