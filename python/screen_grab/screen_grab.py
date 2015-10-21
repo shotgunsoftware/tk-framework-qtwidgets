@@ -1,16 +1,19 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import tempfile
+import sys
+import os
 
 from sgtk.platform.qt import QtCore, QtGui
+import sgtk
 
 
 class ScreenGrabber(QtGui.QDialog):
@@ -101,16 +104,16 @@ class ScreenGrabber(QtGui.QDialog):
         # I tried subclassing closeEvent, but it looks like the crashing
         # is triggered before the code reaches this point.
         # by sealing the keypress event and not allowing any further processing
-        # of the escape key (or any other key for that matter), the 
+        # of the escape key (or any other key for that matter), the
         # behaviour can be successfully avoided.
-        
+
         # TODO: See if we can get the behacior with hitting escape back
-        # maybe by manually handling the closing of the window? I tried 
-        # some obvious things and weren't successful, but didn't dig very 
+        # maybe by manually handling the closing of the window? I tried
+        # some obvious things and weren't successful, but didn't dig very
         # deep as it felt like a nice-to-have and not a massive priority.
-        
+
         pass
-    
+
     def mousePressEvent(self, event):
         """
         Mouse click event
@@ -120,7 +123,7 @@ class ScreenGrabber(QtGui.QDialog):
             self._click_pos = event.globalPos()
 
     def mouseReleaseEvent(self, event):
-        """ 
+        """
         Mouse release event
         """
         if event.button() == QtCore.Qt.LeftButton and self._click_pos is not None:
@@ -173,10 +176,91 @@ class ScreenGrabber(QtGui.QDialog):
         self.setGeometry(workspace_rect)
 
 
+
+
+class ExternalCaptureThread(QtCore.QThread):
+    """
+    Wrap external screenshot call in a thread just to be on the safe side!
+    This helps avoid the os thinking the application has hung for
+    certain applications (e.g. Softimage on Windows)
+    """
+    def __init__(self, path):
+        """
+        :param path: Path to write the screenshot to
+        """
+        QtCore.QThread.__init__(self)
+        self._path = path
+        self._error = None
+
+    @property
+    def error_message(self):
+        """
+        Error message generated during capture, None if success
+        """
+        return self._error
+
+    def run(self):
+        try:
+            if sys.platform == "darwin":
+                # use built-in screenshot command on the mac
+                ret_code = os.system("screencapture -m -i -s %s" % self._path)
+                if ret_code != 0:
+                    raise sgtk.TankError("Screen capture tool returned error code %s" % ret_code)
+
+            elif sys.platform == "linux2":
+                # use image magick
+                ret_code = os.system("import %s" % self._path)
+                if ret_code != 0:
+                    raise sgtk.TankError("Screen capture tool returned error code %s. "
+                                         "For screen capture to work on Linux, you need to have "
+                                         "the imagemagick 'import' executable installed and "
+                                         "in your PATH." % ret_code)
+
+            else:
+                raise sgtk.TankError("Unsupported platform.")
+        except Exception, e:
+            self._error = str(e)
+
+def _external_screenshot():
+    """
+    Use an external approach for grabbing a screenshot.
+    Linux and macosx support only.
+    
+    :returns: Captured image
+    :rtype: :class:`~PySide.QtGui.QPixmap`
+    """
+    output_path = tempfile.NamedTemporaryFile(suffix=".png",
+                                              prefix="screencapture_",
+                                              delete=False).name
+
+    pm = None
+    try:
+        # do screenshot with thread so we don't block anything
+        screenshot_thread = ExternalCaptureThread(output_path)
+        screenshot_thread.start()
+        while not screenshot_thread.isFinished():
+            screenshot_thread.wait(100)
+            QtGui.QApplication.processEvents()
+
+        if screenshot_thread.error_message:
+            raise sgtk.TankError("Failed to capture "
+                                 "screenshot: %s" % screenshot_thread.error_message)
+
+        # load into pixmap:
+        pm = QtGui.QPixmap(output_path)
+    finally:
+        # remove the temporary file
+        if output_path and os.path.exists(output_path):
+            os.remove(output_path)
+
+    return pm
+
+
+
 def get_desktop_pixmap(rect):
     """
     Performs a screen capture on the specified rectangle.
-    
+
     :param rect: Rectangle to capture
     :type rect: :class:`~PySide.QtCore.QRect`
     :returns: Captured image
@@ -189,23 +273,34 @@ def get_desktop_pixmap(rect):
 def screen_capture():
     """
     Modally displays the screen capture tool.
-    
+
     :returns: Captured screen
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
-    tool = ScreenGrabber()
-    tool.exec_()
-    return get_desktop_pixmap(tool.capture_rect)
+
+    if sys.platform in ["linux2", "darwin"]:
+        # there are known issues with the QT based screen grabbing
+        # on linux - some distros don't have a X11 compositing manager
+        # so transparent windows aren't supported. With macosx there
+        # are known issues with some multi-diplay setups. In both
+        # these cases, fall back onto a traditional approach where
+        # an external application is used to grab the screenshot.  
+        return _external_screenshot()
+    else:
+        tool = ScreenGrabber()
+        tool.exec_()
+        return get_desktop_pixmap(tool.capture_rect)
 
 
 def screen_capture_file(output_path=None):
     """
     Modally display the screen capture tool, saving to a file.
-    
+
     :param output_path: Path to save to. If no path is specified,
                         a temp path is generated.
     :returns: path where screenshot was saved.
     """
+
     if output_path is None:
         output_path = tempfile.NamedTemporaryFile(suffix=".png",
                                                   prefix="screencapture_",
@@ -213,5 +308,3 @@ def screen_capture_file(output_path=None):
     pixmap = screen_capture()
     pixmap.save(output_path)
     return output_path
-
-
