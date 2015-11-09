@@ -20,15 +20,16 @@ from .group_widget import GroupWidget
 
 class GroupedListViewItemDelegate(WidgetDelegate):
     """
-    Base delegate class for a delegate specifically to be used by a GroupedListView.
+    Base delegate class for a delegate specifically to be used by a :class:`GroupedListView`.
 
     The delegate provides a method to return a group widget in addition to the regular
     delegate methods.
     """
+    
     def __init__(self, view):
         """
-        Construction
-        :param view:    The view this delegate is operating on
+        :param view: The view this delegate is operating on
+        :type view:  :class:`~PySide.QtGui.QWidget`
         """
         WidgetDelegate.__init__(self, view)
 
@@ -39,8 +40,10 @@ class GroupedListViewItemDelegate(WidgetDelegate):
         Create a group header widget for the grouped list view
 
         :param parent:  The parent QWidget to use for the new group widget
+        :type parent:   :class:`~PySide.QtGui.QWidget`
         :returns:       A widget derived from GroupWidgetBase that will
                         be used for a group in the grouped list view
+        :rtype:         :class:`GroupWidgetBase`
         """
         # base implementation just returns the default group widget
         return GroupWidget(parent)
@@ -50,9 +53,13 @@ class GroupedListViewItemDelegate(WidgetDelegate):
         Overriden base method returns the size hint for the specified model index
 
         :param style_options:   The style options to use when determining the size
+        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`
+        
         :param model_index:     The index in the model to return the size hint for
-        :returns:               The QSize representing the size for the index in 
-                                the view
+        :type model_index:      :class:`~PySide.QtCore.QModelIndex`
+        
+        :returns:               The QSize representing the size for the index in the view
+        :rtype:                 :class:`~PySide.QtCore.QSize`
         """
         if model_index.parent() == self.view.rootIndex():
             # the index is a root/group item:

@@ -19,35 +19,31 @@ class EditSelectedWidgetDelegate(WidgetDelegate):
     presented for the selected item whilst all other items are simply drawn with a single
     widget.
 
-    This class can be used in conjunction with the various widgets found as part of the 
-    framework module (for example list_widget and thumb_widget).
-
     You use this class by subclassing it and implementing the methods:
 
-    - _get_painter_widget()     - return the widget to be used to paint an index
-    - _on_before_paint()        - set up the widget with the specific data ready to be painted
-    - sizeHint()                - return the size of the widget to be used in the view
+    - :meth:`_get_painter_widget()`     - return the widget to be used to paint an index
+    - :meth:`_on_before_paint()`        - set up the widget with the specific data ready to be painted
+    - :meth:`sizeHint()`                - return the size of the widget to be used in the view
 
     If you want to have an interactive widget (editor) for the selected item
     then you will also need to implement:
-    - _create_editor_widget()   - return a unique editor instance to be used for editing
-    - _on_before_selection()    - set up the widget with the specific data ready for 
-                                  interaction
+    
+    - :meth:`_create_editor_widget()`   - return a unique editor instance to be used for editing
+    - :meth:`_on_before_selection()`    - set up the widget with the specific data ready for 
+      interaction
 
-    If you are using the same widget for all items then you can just implement this method
-    instead of the separate _get_painter_widget() & _create_editor_widget() methods
-    - _create_widget()          - create a widget to be used for both painting and editing 
-                                  of all items
+    .. note:: If you are using the same widget for all items then you can just implement 
+              the :meth:`_create_widget()` method instead of the separate :meth:`_get_painter_widget()` 
+              and :meth:`_create_editor_widget()` methods.
 
-    Note: In order for this class to handle selection correctly, it needs to be 
-    attached to the view *after* the model has been attached. (This is to ensure that it 
-    is able to obtain the view's selection model correctly.)
+    .. note:: In order for this class to handle selection correctly, it needs to be 
+              attached to the view *after* the model has been attached. (This is 
+              to ensure that it is able to obtain the view's selection model correctly.)
     """
     def __init__(self, view):
         """
-        Constructor
-
-        :param view:                        The parent view for this delegate
+        :param view: The parent view for this delegate
+        :type view:  :class:`~PySide.QtGui.QWidget`
         """
         WidgetDelegate.__init__(self, view)
 
@@ -71,10 +67,15 @@ class EditSelectedWidgetDelegate(WidgetDelegate):
 
         :param widget: The QWidget (constructed in _create_widget()) which will 
                        be used to paint the cell. 
+        :type parent:  :class:`~PySide.QtGui.QWidget`
+        
         :param model_index: QModelIndex object representing the data of the object that is 
                             about to be drawn.
-        :param style_options: QStyleOptionViewItem object containing specifics about the 
+        :type model_index:  :class:`~PySide.QtCore.QModelIndex`
+        
+        :param style_options: object containing specifics about the 
                               view related state of the cell.
+        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`
         """
         pass
 
@@ -86,7 +87,9 @@ class EditSelectedWidgetDelegate(WidgetDelegate):
         Signal triggered when someone changes the selection in the view.
 
         :param selected:    A list of the indexes in the model that were selected
+        :type selected:     :class:`~PySide.QtGui.QItemSelection`
         :param deselected:  A list of the indexes in the model that were deselected
+        :type deselected:  :class:`~PySide.QtGui.QItemSelection`
         """
         # clean up        
         if self.__current_editor_index:
@@ -118,11 +121,18 @@ class EditSelectedWidgetDelegate(WidgetDelegate):
         to have a real widget for this.
 
         :param parent_widget:   The parent widget to use for the new editor widget
+        :type parent_widget:    :class:`~PySide.QtGui.QWidget`
+        
         :param style_options:   The style options to use when creating the editor
+        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`
+        
         :param model_index:     The index in the data model that will be edited 
                                 using this editor
+        :type model_index:      :class:`~PySide.QtCore.QModelIndex`
+        
         :returns:               An editor widget that will be used to edit this 
                                 index
+        :rtype:                 :class:`~PySide.QtGui.QWidget`
         """
         # create the editor by calling the base method:
         editor_widget = WidgetDelegate.createEditor(self, parent_widget, style_options, model_index)
@@ -136,8 +146,12 @@ class EditSelectedWidgetDelegate(WidgetDelegate):
         Paint method to handle all cells that are not being currently edited.
 
         :param painter:         The painter instance to use when painting
+        
         :param style_options:   The style options to use when painting
+        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`
+        
         :param model_index:     The index in the data model that needs to be painted
+        :type model_index:      :class:`~PySide.QtCore.QModelIndex`
         """
         if model_index == self.__current_editor_index:
             # avoid painting the index twice!

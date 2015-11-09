@@ -15,12 +15,13 @@ from .ui import resources_rc
 
 class ShotgunOverlayWidget(QtGui.QWidget):
     """
-    Overlay widget that can be placed on top over any other widget. 
-    This is used by the for example the Shotgun model to indicate when data is being loaded in;
-    Whenever data is fetched, the overlay widget is added on top of the specified
-    QWidget so that the model can gracefully indicate that data is being fetched.
-
-    The overlay can also used by the calling code to report errors and display info.
+    Overlay widget that can be placed on top over any QT widget.
+    Once you have placed the overlay widget, you can use it to 
+    display information, errors, a spinner etc.  
+    
+    This is for example used by the 
+    :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunOverlayModel` 
+    to indicate when data is being loaded from Shotgun.
     """
 
     MODE_OFF = 0
@@ -29,9 +30,10 @@ class ShotgunOverlayWidget(QtGui.QWidget):
     MODE_INFO_TEXT = 3
     MODE_INFO_PIXMAP = 4
 
-    def __init__(self, parent=None):
+    def __init__(self, parent):
         """
-        Constructor
+        :param parent: Widget to attach the overlay to
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
         QtGui.QWidget.__init__(self, parent)
 
@@ -62,7 +64,9 @@ class ShotgunOverlayWidget(QtGui.QWidget):
     # public interface
     def start_spin(self):
         """
-        Turn on spinning
+        Enables the overlay and shows an animated spinner.
+        
+        If you want to stop the spinning, call :meth:`hide`. 
         """
         self._timer.start(40)
         self.setVisible(True)
@@ -70,9 +74,10 @@ class ShotgunOverlayWidget(QtGui.QWidget):
 
     def show_error_message(self, msg):
         """
-        Display an error message.
+        Enables the overlay and displays an
+        a error message centered in the middle of the overlay.
 
-        :param msg: message to display
+        :param msg: Message to display
         """
         self._timer.stop()
         self.setVisible(True)
@@ -82,11 +87,12 @@ class ShotgunOverlayWidget(QtGui.QWidget):
  
     def show_message(self, msg):
         """
-        Show an info message. If an error is being shown, 
-        the info message will not be replacing the error.
+        Display a message centered on the overlay.
+        If an error is already being displayed by the overlay at this point, 
+        nothing will happen.
 
-        :param msg: message to display
-        :returns: true if message was displayed, false otherwise
+        :param msg: Message to display
+        :returns: True if message was displayed, False otherwise
         """
         if self._mode == self.MODE_ERROR:
             return False
@@ -101,11 +107,12 @@ class ShotgunOverlayWidget(QtGui.QWidget):
     def show_message_pixmap(self, pixmap):
         """
         Show an info message in the form of a pixmap.
-        If an error is being shown, the info message 
-        will not be replacing the error.
+        If an error is already being displayed by the overlay, 
+        the pixmap will not be shown.
 
-        :param pixamp: image to display
-        :returns: true if pixmap was displayed, false otherwise        
+        :param pixamp: Image to display
+        :type pixmap: :class:`PySide.QtGui.QPixmap`
+        :returns: True if pixmap was displayed, False otherwise        
         """
         if self._mode == self.MODE_ERROR:
             return False
@@ -119,9 +126,9 @@ class ShotgunOverlayWidget(QtGui.QWidget):
 
     def hide(self, hide_errors=True):
         """
-        Hide the overlay.
+        Hides the overlay.
 
-        :param hide_errors: if set to False, errors are not hidden.
+        :param hide_errors: If set to False, errors are not hidden.
         """
         if hide_errors == False and self._mode == self.MODE_ERROR:
             # an error is displayed - leave it up.

@@ -7,41 +7,6 @@
 # By accessing, using, copying or modifying this work you indicate your 
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
-
-"""
-Custom Qt View that displays items as a grouped list.  The view works with any tree
-based model with the first level of the hierarchy defining the groups and the second
-level defining the items for that group.  Subsequent levels of the hierarchy are ignored.
-
-Items within a group are layed out left-to right and wrap automatically based on the
-view's width.
-
-For example, the following tree model:
-
-- Group 1
-  - Item 1
-  - Item 2
-  - Item 3
-- Group 2
-  - Item 4
-- Group 3
-
-Would look like this in the view:
-
-> Group 1
------------------
-[Item 1] [Item 2]
-[Item 3]
-> Group 2
------------------
-[Item 4]
-> Group 3
------------------
-
-The widgets used for the various groups and items are created through a GroupedListViewItemDelegate
-and this can be overriden to implement custom UI for these elements.
-"""
-
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
@@ -49,7 +14,37 @@ from .grouped_list_view_item_delegate import GroupedListViewItemDelegate
 
 class GroupedListView(QtGui.QAbstractItemView):
     """
-    The main grouped list view class
+    Custom Qt View that displays items as a grouped list.  The view works with any tree
+    based model with the first level of the hierarchy defining the groups and the second
+    level defining the items for that group.  Subsequent levels of the hierarchy are ignored.
+    
+    Items within a group are layed out left-to right and wrap automatically based on the
+    view's width.
+    
+    For example, the following tree model::
+    
+        - Group 1
+          - Item 1
+          - Item 2
+          - Item 3
+        - Group 2
+          - Item 4
+        - Group 3
+    
+    Would look like this in the view::
+    
+        > Group 1
+        -----------------
+        [Item 1] [Item 2]
+        [Item 3]
+        > Group 2
+        -----------------
+        [Item 4]
+        > Group 3
+        -----------------
+    
+    The widgets used for the various groups and items are created through a GroupedListViewItemDelegate
+    and this can be overriden to implement custom UI for these elements.
     """
 
     class _ItemInfo(object):
@@ -75,9 +70,8 @@ class GroupedListView(QtGui.QAbstractItemView):
 
     def __init__(self, parent):
         """
-        Construction
-
-        :param parent:    The parent QWidget
+        :param parent: The parent QWidget
+        :type parent:  :class:`~PySide.QtGui.QWidget`
         """
         QtGui.QAbstractItemView.__init__(self, parent)
 
@@ -122,6 +116,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         The spacing to use between groups when they are collapsed
         """
         return self._group_spacing
+    
     # @group_spacing.setter
     def _set_group_spacing(self, spacing):
         self._group_spacing = spacing
@@ -147,6 +142,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         Expand the specified index
 
         :param index:   The model index to be expanded
+        :type index:    :class:`~PySide.QtCore.QModelIndex`
         """
         self._set_expanded(index, True)
 
@@ -155,6 +151,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         Collapse the specified index
 
         :param index:   The model index to be collapsed
+        :type index:    :class:`~PySide.QtCore.QModelIndex`
         """
         self._set_expanded(index, False)
 
@@ -163,6 +160,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         Query if the specified index is expanded or not
 
         :param index:   The model index to check
+        :type index:    :class:`~PySide.QtCore.QModelIndex`
         :returns:       True if the index is a root index and is expanded,
                         otherwise False
         """
@@ -183,7 +181,7 @@ class GroupedListView(QtGui.QAbstractItemView):
         view.  This will return the default item delegate if a delegate deriving from
         GroupedListViewItemDelegate hasn't been set for the view.
 
-        :returns:   A GroupedListViewItemDelegate instance
+        :returns:   A class:`GroupedListViewItemDelegate` instance
         """
         delegate = QtGui.QAbstractItemView.itemDelegate(self)
         if not isinstance(delegate, GroupedListViewItemDelegate):

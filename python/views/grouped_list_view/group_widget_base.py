@@ -8,20 +8,21 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Base interface for a group widget that will be used in the GroupedListView
-custom view
-"""
-
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
 
 class GroupWidgetBase(QtGui.QWidget):
     """
-    Group widget class
+    Base interface for a group widget that will be used in the
+    :class:`GroupedListView` custom view
+    
+    :signal toggle_expanded(bool): Emitted when the group's expansion
+                             state is toggled. Includes a boolean
+                             to indicate if the group is expanded or not.
+    
     """
-    # signal emitted when the group is expanded/collapsed
-    toggle_expanded = QtCore.Signal(bool)# True if expanded, False if collapsed
+    # True if expanded, False if collapsed
+    toggle_expanded = QtCore.Signal(bool)
     
     def set_item(self, model_idx):
         """
@@ -29,6 +30,7 @@ class GroupWidgetBase(QtGui.QWidget):
         implemented in derived classes
 
         :param model_idx:   The index of the item in the model
+        :type model_index:  :class:`~PySide.QtCore.QModelIndex`
         """
         raise NotImplementedError()
         
@@ -39,5 +41,6 @@ class GroupWidgetBase(QtGui.QWidget):
         
         :param expand:  True if the widget should be expanded, False if it
                         should be collapsed.
+        :type expand:   bool
         """
         raise NotImplementedError()

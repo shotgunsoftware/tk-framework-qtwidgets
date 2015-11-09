@@ -18,27 +18,27 @@ from sgtk.platform.qt import QtCore, QtGui
 
 class ElidedLabel(QtGui.QLabel):
     """
-    Implementation of the ElidedLabel class. 
+    Label that gracefully handles when the text doesn't fit 
+    within the given space. 
     """
     def __init__(self, parent=None):
         """
-        Construction
-
         :param parent:  The parent QWidget
+        :type parent: :class:`~PySide.QtGui.QWidget`     
         """
         QtGui.QLabel.__init__(self, parent)
 
         self._elide_mode = QtCore.Qt.ElideRight
         self._actual_text = ""
 
-    #@property
     def _get_elide_mode(self):
         """
-        Get the current elide mode.
+        Returns current elide mode 
 
         :returns:   The current elide mode, either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight 
         """
         return self._elide_mode
+    
     def _set_elide_mode(self, value):
         """
         Set the current elide mode.
@@ -50,11 +50,14 @@ class ElidedLabel(QtGui.QLabel):
             raise ValueError("elide_mode must be set to either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight")
         self._elide_mode = value
         self._update_elided_text()
+    
+    #: Property to get or set the elide mode. The value provided 
+    #: should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight
     elide_mode = property(_get_elide_mode, _set_elide_mode)
 
     def text(self):
         """
-        Overriden base method to return the original unmodified text
+        Overridden base method to return the original unmodified text
 
         :returns:   The original unmodified text
         """
@@ -62,7 +65,7 @@ class ElidedLabel(QtGui.QLabel):
 
     def setText(self, text):
         """
-        Overriden base method to set the text on the label
+        Overridden base method to set the text on the label
 
         :param text:    The text to set on the label
         """
@@ -71,7 +74,7 @@ class ElidedLabel(QtGui.QLabel):
 
     def resizeEvent(self, event):
         """
-        Overriden base method called when the widget is resized.
+        Overridden base method called when the widget is resized.
 
         :param event:    The resize event
         """

@@ -16,11 +16,13 @@ from sgtk.platform.qt import QtCore, QtGui
 
 class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     """
-    Inherited from a QSortFilterProxyModel, this class implements filtering across all 
+    Inherited from a :class:`~PySide.QtGui.QSortFilterProxyModel`, this class implements filtering across all 
     levels of a hierarchy in a hierarchical (tree-based) model and provides a simple
     interface for derived classes so that all they need to do is filter a single item
     as requested.
     """
+    
+    
     class _IndexAcceptedCache(object):
         """
         Cached 'accepted' values for indexes.  Uses a dictionary that maps a key to a tuple 
@@ -169,8 +171,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
 
     def __init__(self, parent=None):
         """
-        Construction
         :param parent:    The parent QObject to use for this instance
+        :type parent:     :class:`~PySide.QtGui.QWidget`  
         """
         QtGui.QSortFilterProxyModel.__init__(self, parent)
 

@@ -7,13 +7,6 @@
 # By accessing, using, copying or modifying this work you indicate your 
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
-
-"""
-Overlay widget specifically designed to work with a shotgun model (from the 
-tk-framework-shotgunutils framework).  Multiple overlay widgets can be
-easily created and connected to the same shotgun model.
-"""
-
 from sgtk.platform.qt import QtCore, QtGui
 
 # load resources
@@ -22,15 +15,19 @@ from .shotgun_overlay_widget import ShotgunOverlayWidget
 
 class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
     """
-    Overlay widget class
+    A convenience class specifically designed to work with a  
+    :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`.
+    
+    By using this class, multiple overlay widgets can be
+    easily created and connected to the same shotgun model.
     """
 
     def __init__(self, sg_model, parent=None):
         """
-        Construction
-
-        :param sg_model:    Shotgun model that this widget should connect to
-        :param parent:      The parent QWidget this widget should be parented to
+        :param sg_model: Shotgun model that this widget should connect to
+        :type sg_model:  :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`
+        :param parent:   Widget to attach the overlay to
+        :type parent:    :class:`PySide.QtGui.QWidget`
         """
         ShotgunOverlayWidget.__init__(self, parent)
 
@@ -43,6 +40,7 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
         Set the model this widget should be connected to
 
         :param sg_model:    Shotgun model that this widget should connect to
+        :type sg_model:  :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`
         """
         self.hide()
         self._connect_to_model(sg_model)
@@ -52,6 +50,7 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
         Connect to the signals emitted by the specified model
 
         :param sg_model:    Shotgun model that this widget should connect to
+        :type sg_model:  :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`
         """
         if sg_model == self._model:
             # already connected!
@@ -76,20 +75,20 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
 
     def _model_query_changed(self):
         """
-        Slot signalled when the query changes on the connected Shotgun model
+        Slot signaled when the query changes on the connected Shotgun model
         """
         self.hide(hide_errors=True)
 
     def _model_refreshing(self):
         """
-        Slot signalled when the connected Shotgun model starts refreshing
+        Slot signaled when the connected Shotgun model starts refreshing
         """
         if not self._model.is_data_cached():
             self.start_spin()
 
     def _model_refreshed(self, data_changed):
         """
-        Slot signalled when the data from the connected Shotgun model has 
+        Slot signaled when the data from the connected Shotgun model has 
         been refreshed
 
         :param data_changed:    True if the refresh resulted in the data changing
@@ -98,7 +97,7 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
 
     def _model_refresh_failed(self, msg):
         """
-        Slot signalled when the connected Shotgun model refresh fails
+        Slot signaled when the connected Shotgun model refresh fails
 
         :param msg:    The reason the refresh failed
         """

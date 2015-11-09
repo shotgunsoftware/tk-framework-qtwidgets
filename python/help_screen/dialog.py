@@ -19,11 +19,18 @@ def show_help_screen(parent, bundle, pixmaps):
     Show help screen window.
     
     :param parent: Parent window. The help screen will be centered on top of this window.
-    :param bundle: Bundle object to associate with (app, engine, framework)
-    :param pixmaps: List of QPixmap objects, all 650x400 px    
+    :type parent: :class:`PySide.QtGui.QWidget`
+    
+    :param bundle: Bundle object to associate with
+    :type bundle: :class:`sgtk.platform.Application`, 
+                  :class:`sgtk.platform.Engine` or 
+                  :class:`sgtk.platform.Framework`
+    
+    :param pixmaps: List of images, all 650x400 px
+    :type pixmaps: List of :class:`PySide.QtGui.QPixmap`  
     """
     gui = Dialog(parent, bundle, pixmaps)
-    gui.setWindowTitle("Toolkit Help")    
+    gui.setWindowTitle("Toolkit Help")
     gui.show()
     # attach the object to the main parent object - this is
     # to help older versions of PySide which get confused
