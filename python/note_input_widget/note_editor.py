@@ -10,7 +10,7 @@
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
- 
+from sgtk import TankError 
  
 
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
@@ -61,15 +61,19 @@ class NoteEditor(QtGui.QTextEdit):
 
         self._completer.activated[QtCore.QModelIndex].connect(self._insert_completion)
 
-    def set_data_retriever(self, data_retriever):
+    def set_bg_task_manager(self, task_manager):
         """
-        Create a separate sg data handler for submission
+        Specify the background task manager to use to pull
+        data in the background. Data calls
+        to Shotgun will be dispatched via this object.
         
-        :param data_retriever: Data retriever object to use for fetching information
-                               from Shotgun.
-        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         
+        :param task_manager: Background task manager to use
+        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
-        self.__sg_data_retriever = data_retriever
+        self.__sg_data_retriever = shotgun_data.ShotgunDataRetriever(self, 
+                                                                     bg_task_manager=task_manager)
+        
+        self.__sg_data_retriever.start()
         self.__sg_data_retriever.work_completed.connect(self.__on_worker_signal)
         self.__sg_data_retriever.work_failure.connect(self.__on_worker_failure)        
 
@@ -78,6 +82,7 @@ class NoteEditor(QtGui.QTextEdit):
         Should be called before the reply widget is closed
         """
         if self.__sg_data_retriever:
+            self.__sg_data_retriever.stop()
             self.__sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
             self.__sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
             self.__sg_data_retriever = None
@@ -173,7 +178,8 @@ class NoteEditor(QtGui.QTextEdit):
             self._clear_model()
     
             # clear async download queue
-            self.__sg_data_retriever.clear()
+            if self.__sg_data_retriever:
+                self.__sg_data_retriever.clear()
             
             # kick off async data request from shotgun
             # we request to run an arbitrary method in the worker thread
@@ -182,7 +188,10 @@ class NoteEditor(QtGui.QTextEdit):
             # call out to execute it. The data dictionary specified will
             # be forwarded to the method.
             data = {"text": login_to_search_for}
-            self._processing_id = self.__sg_data_retriever.execute_method(self._do_sg_global_search, data)        
+            if self.__sg_data_retriever:
+                self._processing_id = self.__sg_data_retriever.execute_method(self._do_sg_global_search, data)
+            else:
+                raise TankError("Please associate this class with a background task processor.")       
             
             # finally, show the completer and make it appear right next to 
             # where the cursor is located.

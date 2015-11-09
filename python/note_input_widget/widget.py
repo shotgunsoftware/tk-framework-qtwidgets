@@ -14,6 +14,7 @@ import tempfile
 
 # local import to avoid cyclic references
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
+shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
 
 from sgtk.platform.qt import QtCore, QtGui
 
@@ -91,21 +92,26 @@ class NoteInputWidget(QtGui.QWidget):
         if self.__sg_data_retriever:
             self.__sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
             self.__sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
+            self.__sg_data_retriever.stop()
             self.__sg_data_retriever = None
         
-    def set_data_retriever(self, data_retriever):
+    def set_bg_task_manager(self, task_manager):
         """
-        Specify the asynchronous data handler to use for shotgun communication.
+        Specify the background task manager to use to pull
+        data in the background. Data calls
+        to Shotgun will be dispatched via this object.
         
-        :param data_retriever: Data retriever object to use for fetching information
-                               from Shotgun.
-        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         
+        :param task_manager: Background task manager to use
+        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
-        self.__sg_data_retriever = data_retriever
+        self.__sg_data_retriever = shotgun_data.ShotgunDataRetriever(self, 
+                                                                     bg_task_manager=task_manager)
+        
+        self.__sg_data_retriever.start()
         self.__sg_data_retriever.work_completed.connect(self.__on_worker_signal)
         self.__sg_data_retriever.work_failure.connect(self.__on_worker_failure)
         
-        self.ui.text_entry.set_data_retriever(data_retriever)
+        self.ui.text_entry.set_bg_task_manager(task_manager)
         
         
         
@@ -181,7 +187,10 @@ class NoteInputWidget(QtGui.QWidget):
         data["entity"] = {"id": self._entity_id, "type": self._entity_type }
         data["project"] = self._bundle.context.project
         # ask the data retriever to execute an async callback
-        self._processing_id = self.__sg_data_retriever.execute_method(self._async_submit, data)
+        if self.__sg_data_retriever:
+            self._processing_id = self.__sg_data_retriever.execute_method(self._async_submit, data)
+        else:
+            raise TankError("Please associate this class with a background task processor.")
         
     def _async_submit(self, sg, data):
         """

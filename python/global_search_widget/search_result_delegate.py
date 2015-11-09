@@ -21,7 +21,7 @@ views = sgtk.platform.current_bundle().import_module("views")
 from .search_result_widget import SearchResultWidget 
 
 
-class SearchResultDelegate(views.WidgetDelegate):
+class SearchResultDelegate(views.EditSelectedWidgetDelegate):
     """
     Delegate which renders search match entries in the global 
     search completer.
@@ -31,7 +31,7 @@ class SearchResultDelegate(views.WidgetDelegate):
         """
         :param view: The view where this delegate is being used
         """                
-        views.WidgetDelegate.__init__(self, view)
+        views.EditSelectedWidgetDelegate.__init__(self, view)
         
         
     def _url_for_entity_type(self, entity_type):

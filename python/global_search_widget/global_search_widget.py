@@ -15,6 +15,7 @@ shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shot
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 
 from sgtk.platform.qt import QtCore, QtGui
+from sgtk import TankError
  
 class GlobalSearchWidget(QtGui.QLineEdit):
     """
@@ -69,18 +70,31 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         # hook up completer and trigger reload on keypress
         self.textEdited.connect(self._on_text_changed)
         
-    def set_data_retriever(self, data_retriever):
+    def set_bg_task_manager(self, task_manager):
         """
-        Set an async data retreiver object to use with this widget. Data calls
-        to Shotgun will be send through this object.
+        Specify the background task manager to use to pull
+        data in the background. Data calls
+        to Shotgun will be dispatched via this object.
         
-        :param data_retriever: Data retriever object to use for fetching information
-                               from Shotgun.
-        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` 
+        :param task_manager: Background task manager to use
+        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
-        self.__sg_data_retriever = data_retriever
+        self.__sg_data_retriever = shotgun_data.ShotgunDataRetriever(self, 
+                                                                     bg_task_manager=task_manager)
+        
+        self.__sg_data_retriever.start()
         self.__sg_data_retriever.work_completed.connect(self.__on_worker_signal)
         self.__sg_data_retriever.work_failure.connect(self.__on_worker_failure)
+           
+    def destroy(self):
+        """
+        Should be called before the widget is closed
+        """
+        if self.__sg_data_retriever:
+            self.__sg_data_retriever.stop()
+            self.__sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
+            self.__sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
+            self.__sg_data_retriever = None
            
     ############################################################################
     # internal methods
@@ -148,7 +162,8 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         self._clear_model()
 
         # clear download queue
-        self.__sg_data_retriever.clear()
+        if self.__sg_data_retriever:
+            self.__sg_data_retriever.clear()
         
         # clear thumbnail map
         self._thumb_map = {}
@@ -160,7 +175,10 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         # call out to execute it. The data dictionary specified will
         # be forwarded to the method.        
         data = {"text": text}
-        self._processing_id = self.__sg_data_retriever.execute_method(self._do_sg_global_search, data)        
+        if self.__sg_data_retriever:
+            self._processing_id = self.__sg_data_retriever.execute_method(self._do_sg_global_search, data)
+        else:
+            raise TankError("Please associate this class with a background task processor.")        
         
     def _do_sg_global_search(self, sg, data):
         """
@@ -253,7 +271,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
                 
                 item.setIcon(self._default_icon)
                 
-                if d["image"]:
+                if d["image"] and self.__sg_data_retriever:
                     uid = self.__sg_data_retriever.request_thumbnail(d["image"], 
                                                                     d["type"], 
                                                                     d["id"], 
