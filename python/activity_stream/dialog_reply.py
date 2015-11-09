@@ -17,15 +17,15 @@ class ReplyDialog(QtGui.QDialog):
     This is used when someone clicks on the reply button for a note.
     """
     
-    def __init__(self, parent, data_retriever, note_id):
+    def __init__(self, parent, bg_task_manager, note_id):
         """
         :param parent: QT parent object
         :type parent: :class:`PySide.QtGui.QWidget`
         :param data_retriever: Data retriever object to use for fetching information
                                from Shotgun.
-        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`
-        :param note_id: Id for note to reply to 
-        """
+        :param bg_task_manager: Background task manager to use
+        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
+        """        
         # first, call the base class and let it do its thing.
         QtGui.QDialog.__init__(self, parent)
         
@@ -33,7 +33,7 @@ class ReplyDialog(QtGui.QDialog):
         self.ui = Ui_ReplyDialog() 
         self.ui.setupUi(self)
         
-        self.ui.note_widget.set_data_retriever(data_retriever)        
+        self.ui.note_widget.set_bg_task_manager(bg_task_manager)        
         self.ui.note_widget.data_updated.connect(self.close_after_create)
         self.ui.note_widget.close_clicked.connect(self.close_after_cancel)
         self.ui.note_widget.set_current_entity("Note", note_id)

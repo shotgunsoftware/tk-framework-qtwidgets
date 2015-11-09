@@ -79,23 +79,30 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._widgets = {}
                 
         # state management
-        self._data_retriever = None
+        self._task_manager = None
         self._sg_entity_dict = None
         self._entity_type = None
         self._entity_id = None
         
-    def set_data_retriever(self, data_retriever):
+    def set_bg_task_manager(self, task_manager):
         """
-        Set an async data retreiver object to use with this widget. Data calls
-        to Shotgun will be send through this object.
+        Specify the background task manager to use to pull
+        data in the background. Data calls
+        to Shotgun will be dispatched via this object.
         
-        :param data_retriever: Data retriever object to use for fetching information
-                               from Shotgun.
-        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` 
+        :param task_manager: Background task manager to use
+        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
-        self._data_retriever = data_retriever
-        self._data_manager.set_data_retriever(data_retriever)
-        self.ui.note_widget.set_data_retriever(data_retriever)
+        self._task_manager = task_manager
+        self._data_manager.set_bg_task_manager(task_manager)
+        self.ui.note_widget.set_bg_task_manager(task_manager)
+        
+    def destroy(self):
+        """
+        Should be called before the widget is closed
+        """
+        self._data_manager.destroy()
+        self._task_manager = None        
         
     ############################################################################
     # public interface
@@ -520,7 +527,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Callback when someone clicks reply on a given note
         """
-        reply_dialog = ReplyDialog(self, self._data_retriever, note_id)
+        reply_dialog = ReplyDialog(self, self._task_manager, note_id)
         
         #position the reply modal dialog above the activity stream scroll area
         pos = self.mapToGlobal(self.ui.activity_stream_scroll_area.pos())

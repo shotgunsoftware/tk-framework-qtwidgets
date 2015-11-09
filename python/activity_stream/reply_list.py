@@ -56,7 +56,7 @@ class ReplyListWidget(QtGui.QWidget):
         
         self._note_id = None
         self._sg_entity_dict = None
-        self._data_retriever = None
+        self._task_manager = None
         self._general_widgets = []
         self._reply_widgets = []
         self._attachment_group_widgets = {}
@@ -75,18 +75,25 @@ class ReplyListWidget(QtGui.QWidget):
         self._data_manager.thumbnail_arrived.connect(self._process_thumbnail)
         self._data_manager.note_arrived.connect(self._process_note)
         
-    def set_data_retriever(self, data_retriever):
+    def set_bg_task_manager(self, task_manager):
         """
-        Set an async data retreiver object to use with this 
-        widget.
-
-        :param data_retriever: Data retriever object to use for fetching information
-                               from Shotgun.
-        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` 
-        """
-        self._data_manager.set_data_retriever(data_retriever)
-        self._data_retriever = data_retriever
+        Specify the background task manager to use to pull
+        data in the background. Data calls
+        to Shotgun will be dispatched via this object.
         
+        :param task_manager: Background task manager to use
+        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
+        """
+        self._data_manager.set_bg_task_manager(task_manager)
+        self._task_manager = task_manager
+        
+    def destroy(self):
+        """
+        Should be called before the widget is closed
+        """
+        self._data_manager.destroy()
+        self._task_manager = None
+                    
     ##########################################################################################
     # public interface
         
@@ -394,7 +401,7 @@ class ReplyListWidget(QtGui.QWidget):
         # TODO - refactor to avoid having this code in two places
         
         # create reply dialog window
-        reply_dialog = ReplyDialog(self, self._data_retriever, note_id)
+        reply_dialog = ReplyDialog(self, self._task_manager, note_id)
         
         # position the reply modal dialog above the activity stream scroll area
         pos = self.mapToGlobal(self.ui.reply_scroll_area.pos())

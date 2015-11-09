@@ -20,7 +20,7 @@ import datetime
 import sqlite3
 
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
-
+shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
  
 class ActivityStreamDataHandler(QtCore.QObject):
     """
@@ -74,18 +74,31 @@ class ActivityStreamDataHandler(QtCore.QObject):
         # set up defaults
         self.__reset()
         
-    def set_data_retriever(self, data_retriever):
+    def set_bg_task_manager(self, task_manager):
         """
-        Set the async data retriever that is used to load data.
-        This needs to happen prior to running any updates.
+        Specify the background task manager to use to pull
+        data in the background. Data calls
+        to Shotgun will be dispatched via this object.
         
-        :param data_retriever: Data retriever object to use for fetching information
-                               from Shotgun.
-        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         
+        :param task_manager: Background task manager to use
+        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
-        self._sg_data_retriever = data_retriever
+        self._sg_data_retriever = shotgun_data.ShotgunDataRetriever(self, 
+                                                                    bg_task_manager=task_manager)        
+        self._sg_data_retriever.start()
         self._sg_data_retriever.work_completed.connect(self.__on_worker_signal)
         self._sg_data_retriever.work_failure.connect(self.__on_worker_failure)
+
+    def destroy(self):
+        """
+        Should be called before the widget is closed
+        """
+        if self.__sg_data_retriever:
+            self.__sg_data_retriever.stop()
+            self.__sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
+            self.__sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
+            self.__sg_data_retriever = None
+
 
     def __reset(self):
         """
@@ -170,6 +183,9 @@ class ActivityStreamDataHandler(QtCore.QObject):
         """
         Check for updates asynchronously.
         """
+        if self._sg_data_retriever is None:
+            return
+        
         if self._entity_type == "Note":
             
             # refresh note
@@ -288,7 +304,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # entry. This ie because when someone replies to a note, the
             # activity will be created by the reply-er but we still want to
             # display the thumbnail of the original author of the note.  
-            if entity.get("user.HumanUser.image"):
+            if entity.get("user.HumanUser.image") and self._sg_data_retriever:
                 uid = self._sg_data_retriever.request_thumbnail(entity["user.HumanUser.image"], 
                                                                 entity["user"]["id"], 
                                                                 entity["user"]["type"], 
@@ -297,7 +313,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 self._thumb_map[uid] = {"activity_id": activity_id, 
                                         "thumbnail_type": self.THUMBNAIL_CREATED_BY}
                 
-            elif entity.get("user.ClientUser.image"):
+            elif entity.get("user.ClientUser.image") and self._sg_data_retriever:
                 uid = self._sg_data_retriever.request_thumbnail(entity["user.ClientUser.image"], 
                                                                 entity["user"]["id"], 
                                                                 entity["user"]["type"], 
@@ -306,7 +322,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 self._thumb_map[uid] = {"activity_id": activity_id, 
                                         "thumbnail_type": self.THUMBNAIL_CREATED_BY}
 
-            elif entity.get("user.ApiUser.image"):
+            elif entity.get("user.ApiUser.image") and self._sg_data_retriever:
                 uid = self._sg_data_retriever.request_thumbnail(entity["user.ApiUser.image"], 
                                                                 entity["user"]["id"], 
                                                                 entity["user"]["type"], 
@@ -318,7 +334,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             else:
                 self._bundle.log_warning("No thumbnail found for this note!")
             
-        elif created_by and created_by.get("image"):
+        elif created_by and created_by.get("image") and self._sg_data_retriever:
             # for all other activities, the thumbnail reflects who
             # created the activity
             uid = self._sg_data_retriever.request_thumbnail(created_by["image"], 
@@ -331,7 +347,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
              
         # see if there is a thumbnail for the main object
         # e.g. for versions and thumbnails
-        if entity and entity.get("image"):
+        if entity and entity.get("image") and self._sg_data_retriever:
             uid = self._sg_data_retriever.request_thumbnail(entity["image"], 
                                                             entity["type"], 
                                                             entity["id"], 
