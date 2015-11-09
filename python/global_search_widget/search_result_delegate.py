@@ -32,40 +32,7 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
         :param view: The view where this delegate is being used
         """                
         views.EditSelectedWidgetDelegate.__init__(self, view)
-        
-        
-    def _url_for_entity_type(self, entity_type):
-        """
-        Given an entity type, return a dark 16x16px icon resource url.
-        Returns None if no icon exists
-        
-        :param entity_type: entity type
-        :returns: resource url or None
-        """
-        entity_types_with_icons = ["Asset", 
-                                   "ClientUser",
-                                   "EventLogEntry",
-                                   "Group",
-                                   "HumanUser",
-                                   "PublishedFile",
-                                   "TankPublishedFile",
-                                   "Note",
-                                   "Playlist",
-                                   "Project",
-                                   "Sequence",
-                                   "Shot",
-                                   "Task",
-                                   "Ticket",
-                                   "Version",
-                                   ]
-
-        if entity_type in entity_types_with_icons:        
-            url = ":/tk_framework_qtwidgets.global_search_widget/entity_icons/icon_%s_dark.png" % entity_type
-        else:
-            url = None
-            
-        return url
-        
+                
     def _create_widget(self, parent):
         """
         Widget factory as required by base class. The base class will call this
@@ -131,8 +98,10 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
 
             entity_type_display_name = shotgun_globals.get_type_display_name(data["type"])
 
+
+
             content = ""
-            et_url = self._url_for_entity_type(data["type"])
+            et_url = shotgun_globals.get_entity_type_icon_url(data["type"])
             if et_url:
                 # present thumbnail icon and name
                 content += "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>" % (et_url, data["name"])
@@ -146,7 +115,7 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
             # note users return weird data so ignore it.
             if links and links[0] != "" and links[0] != "HumanUser" and links[0] != "ClientUser":
                 # there is a referenced entity
-                et_url = self._url_for_entity_type(links[0])
+                et_url = shotgun_globals.get_entity_type_icon_url(links[0])
                 if et_url:
                     # present thumbnail icon and name
                     content += " on <img align=absmiddle src='%s'/>  %s" % (et_url, links[1])

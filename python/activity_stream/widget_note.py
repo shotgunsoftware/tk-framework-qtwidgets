@@ -19,7 +19,7 @@ shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "sho
 
 from .widget_reply import ReplyWidget
 
-from .label_widgets import ClickableTextLabel
+from .label_widgets import ClickableLabel
 
 from .widget_attachment_group import AttachmentGroupWidget
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
@@ -72,7 +72,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         # data being loaded, so add placeholder
         self.ui.content.setText("Hang on, loading note content...")
         
-    def set_thumbnail(self, data):
+    def apply_thumbnail(self, data):
         """
         Populate the UI with the given thumbnail
         
@@ -93,7 +93,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         elif thumbnail_type == ActivityStreamDataHandler.THUMBNAIL_ATTACHMENT and activity_id == self.activity_id:
             group_id = data["attachment_group_id"]
             attachment_group = self.get_attachment_group_widget(group_id)
-            attachment_group.set_thumbnail(data)
+            attachment_group.apply_thumbnail(data)
 
         elif thumbnail_type == ActivityStreamDataHandler.THUMBNAIL_USER:
             # a thumbnail for a user possibly for one of our replies
@@ -106,7 +106,7 @@ class NoteWidget(ActivityStreamBaseWidget):
 
 
     def add_reply_button(self):
-        reply_button = ClickableTextLabel(self)
+        reply_button = ClickableLabel(self)
         reply_button.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop)
         reply_button.setText("Reply to this Note")
         reply_button.setObjectName("reply_button")

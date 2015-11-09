@@ -119,7 +119,7 @@ class NewItemWidget(ActivityStreamBaseWidget):
         self.ui.details_thumb.set_shotgun_data(primary_entity)
             
 
-    def set_thumbnail(self, data):
+    def apply_thumbnail(self, data):
         """
         Populate the UI with the given thumbnail
         
@@ -234,7 +234,7 @@ class SimpleNewItemWidget(ActivityStreamBaseWidget):
         self.ui.header_left.setText(header)
             
 
-    def set_thumbnail(self, data):
+    def apply_thumbnail(self, data):
         """
         Populate the UI with the given thumbnail
         

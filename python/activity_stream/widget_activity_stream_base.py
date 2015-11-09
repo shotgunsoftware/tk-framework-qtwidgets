@@ -70,7 +70,7 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         self._target_entity_id = data["primary_entity"]["id"]
         self._activity_id = data["id"]
         
-    def set_thumbnail(self, data):
+    def apply_thumbnail(self, data):
         """
         Populate the UI with the given thumbnail
         """
@@ -85,37 +85,7 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         Forward any clicks from this widget
         """
         self.entity_requested.emit(self._target_entity_type, self._target_entity_id)
-            
-    def _icon_url_for_entity_type(self, entity_type):
-        """
-        Given an entity type, return a dark 16x16px icon resource url.
-        Returns None if no icon exists
-        
-        :param entity_type: entity type
-        :returns: resource url or None
-        """
-        entity_types_with_icons = ["Asset", 
-                                   "ClientUser",
-                                   "EventLogEntry",
-                                   "Group",
-                                   "HumanUser",
-                                   "Note",
-                                   "Playlist",
-                                   "Project",
-                                   "Sequence",
-                                   "Shot",
-                                   "Task",
-                                   "Ticket",
-                                   "Version",
-                                   ]
-
-        if entity_type in entity_types_with_icons:        
-            url = ":/tk_framework_qtwidgets.activity_stream/entity_icons/icon_%s_dark.png" % entity_type
-        else:
-            url = None
-            
-        return url            
-            
+                        
     def _entity_request_from_url(self, url):
         """
         Helper method.
@@ -209,8 +179,6 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         if entity["type"] == self._entity_type and entity["id"] == self._entity_id and this_syntax:
             # special case - we are looking at "this" entity
             return "this %s" % entity_type_display_name
-
-        icon = self._icon_url_for_entity_type(entity["type"])
 
         if display_type:
             name = "%s %s" % (entity_type_display_name, entity["name"])

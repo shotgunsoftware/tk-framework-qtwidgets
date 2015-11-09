@@ -108,7 +108,7 @@ class AttachmentGroupWidget(QtGui.QWidget):
         else:
             self._bundle.log_warning("Unknown offset for attachment group")
         
-    def set_thumbnail(self, data):
+    def apply_thumbnail(self, data):
         """
         set thumbnail
         """

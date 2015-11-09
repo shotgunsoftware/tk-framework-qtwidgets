@@ -17,7 +17,7 @@ from .dialog_reply import ReplyDialog
 
 from .ui.reply_list_widget import Ui_ReplyListWidget
 
-from .label_widgets import ClickableTextLabel
+from .label_widgets import ClickableLabel
  
 from .data_manager import ActivityStreamDataHandler
 from .widget_attachment_group import AttachmentGroupWidget
@@ -287,7 +287,7 @@ class ReplyListWidget(QtGui.QWidget):
         """
         Add a reply button to the stream of widgets
         """
-        reply_button = ClickableTextLabel(self)
+        reply_button = ClickableLabel(self)
         reply_button.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop)
         reply_button.setText("Reply to this Note")
         reply_button.setObjectName("reply_button")
@@ -380,7 +380,7 @@ class ReplyListWidget(QtGui.QWidget):
         if thumbnail_type == ActivityStreamDataHandler.THUMBNAIL_ATTACHMENT and activity_id == -1:
             group_id = data["attachment_group_id"]
             attachment_group = self._attachment_group_widgets[group_id]
-            attachment_group.set_thumbnail(data)
+            attachment_group.apply_thumbnail(data)
 
         elif thumbnail_type == ActivityStreamDataHandler.THUMBNAIL_USER:
             # a thumbnail for a user possibly for one of our replies

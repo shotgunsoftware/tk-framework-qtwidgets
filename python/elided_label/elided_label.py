@@ -31,7 +31,6 @@ class ElidedLabel(QtGui.QLabel):
         self._elide_mode = QtCore.Qt.ElideRight
         self._actual_text = ""
 
-    #@property
     def _get_elide_mode(self):
         """
         Returns current elide mode 

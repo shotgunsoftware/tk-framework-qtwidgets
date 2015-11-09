@@ -130,7 +130,7 @@ class ValueUpdateWidget(ActivityStreamBaseWidget):
         
         self.ui.header_left.setText(full_str)
         
-    def set_thumbnail(self, data):
+    def apply_thumbnail(self, data):
         """
         Populate the UI with the given thumbnail
         

@@ -14,7 +14,7 @@ from sgtk.platform.qt import QtCore, QtGui
 from . import utils
 import sgtk
 
-class ClickableTextLabel(QtGui.QLabel):
+class ClickableLabel(QtGui.QLabel):
     """
     A label which can be clicked
     """
@@ -38,7 +38,7 @@ class ClickableTextLabel(QtGui.QLabel):
         self.clicked.emit()
     
     
-class LargeAttachmentThumbnail(ClickableTextLabel):
+class LargeAttachmentThumbnail(ClickableLabel):
     """
     A large, clickable attachment thumbnail
     """
@@ -50,7 +50,7 @@ class LargeAttachmentThumbnail(ClickableTextLabel):
         :param parent: QT parent object
         :type parent: :class:`PySide.QtGui.QWidget`
         """
-        ClickableTextLabel.__init__(self, parent)
+        ClickableLabel.__init__(self, parent)
         self._bundle = sgtk.platform.current_bundle()
         
         # store shotgun data
@@ -91,7 +91,7 @@ class LargeAttachmentThumbnail(ClickableTextLabel):
         """
         Fires when the mouse is pressed
         """
-        ClickableTextLabel.mousePressEvent(self, event)        
+        ClickableLabel.mousePressEvent(self, event)        
 
         # {'attachment_links': [{'id': 6105,
         #                        'name': "Manne's Note on bunny_010_0050 - asdasdasdasd",
@@ -132,7 +132,7 @@ class LargeAttachmentThumbnail(ClickableTextLabel):
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
         
         
-class SmallAttachmentThumbnail(ClickableTextLabel):
+class SmallAttachmentThumbnail(ClickableLabel):
     """
     A small, clickable attachment thumbnail
     """    
@@ -143,7 +143,7 @@ class SmallAttachmentThumbnail(ClickableTextLabel):
         :param parent: QT parent object
         :type parent: :class:`PySide.QtGui.QWidget`
         """
-        ClickableTextLabel.__init__(self, parent)
+        ClickableLabel.__init__(self, parent)
         
         self.setMinimumSize(QtCore.QSize(48, 48))
         self.setMaximumSize(QtCore.QSize(48, 48))
@@ -166,7 +166,7 @@ class SmallAttachmentThumbnail(ClickableTextLabel):
 
 
 
-class UserThumbnail(ClickableTextLabel):
+class UserThumbnail(ClickableLabel):
     """
     Subclassed QLabel to represent a shotgun user.
     """
@@ -181,7 +181,7 @@ class UserThumbnail(ClickableTextLabel):
         :param parent: QT parent object
         :type parent: :class:`PySide.QtGui.QWidget`
         """
-        ClickableTextLabel.__init__(self, parent)
+        ClickableLabel.__init__(self, parent)
         # make this user clickable
         self._sg_data = None
             
@@ -199,7 +199,7 @@ class UserThumbnail(ClickableTextLabel):
         """
         Fires when the mouse is pressed
         """
-        ClickableTextLabel.mousePressEvent(self, event)
+        ClickableLabel.mousePressEvent(self, event)
         
         if self._sg_data:
             self.entity_requested.emit(self._sg_data["type"], self._sg_data["id"])

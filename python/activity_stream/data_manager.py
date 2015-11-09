@@ -21,7 +21,46 @@ import sqlite3
 
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
- 
+
+def _db_connect(function):
+    """
+    Decorator helper to use with database methods. This is to reduce
+    code duplication and it passes in a connection and cursor argument
+    to the decorated method. Use it like this:
+    
+        @_db_connect
+        def my_method(self, connection, cursor, note_id):
+            do_stuff
+        
+    The connection and cursor parameters above are added by this decorator,
+    so the calling code should execute the following:
+    
+        do_stuff
+        self.my_method(note_id)
+        do_stuff
+    
+    """
+    def wrap_function(*args, **kwargs):
+        connection = None
+        cursor = None        
+        self = args[0]
+        try:
+            connection = self._init_db()
+            cursor = connection.cursor()
+            new_args = (self, connection, cursor) + args[1:]
+            return function(*new_args, **kwargs)
+        finally:
+            try:
+                if cursor:
+                    cursor.close()
+                if connection:
+                    connection.close()
+            except:
+                self._bundle.log_exception("Could not close database handle")        
+                    
+    return wrap_function
+
+
 class ActivityStreamDataHandler(QtCore.QObject):
     """
     Data retriever and manager for activity stream data
@@ -98,7 +137,6 @@ class ActivityStreamDataHandler(QtCore.QObject):
             self.__sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
             self.__sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
             self.__sg_data_retriever = None
-
 
     def __reset(self):
         """
@@ -360,7 +398,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
     ###########################################################################
     # sqlite database access methods
 
-    def __init_db(self):
+    def _init_db(self):
         """
         Sets up the database if it doesn't exist.
         Returns a handle that must be closed.
@@ -413,75 +451,56 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 c.close()
 
         return connection
- 
-    def __get_note_thread_data(self, note_id):
+  
+    @_db_connect
+    def __get_note_thread_data(self, connection, cursor, note_id):
         """
         Load note data from the db.
         
+        :param connection: Database connection (coming from the decorator)
+        :param cursor: Database cursor (coming from the decorator)
         :param note_id: Note id to load data for
         :returns: shotgun data dictionary
         """
         note_data = None
-        connection = None
-        cursor = None
         try:
-            connection = self.__init_db()
-            cursor = connection.cursor()
-            
-            # get the activity payload for the first X entities
-            # if they have a note thread associated, bring that in too
             res = cursor.execute("SELECT payload FROM note WHERE note_id=?", (note_id,))
-            
-            # read in all records into a list
             res = list(res)
-            
             if len(res) > 0:
                 note_payload = res[0][0]
                 note_data = cPickle.loads(str(note_payload))
-                
         except:
             # supress and continue
             self._bundle.log_exception("Could not load activity stream data "
                                     "from cache database %s" % self._cache_path)
-        finally:
-            try:
-                if cursor:
-                    cursor.close()
-                if connection:
-                    connection.close()
-            except:
-                self._bundle.log_exception("Could not close database handle")
             
         return note_data
        
- 
-    def __get_db_activity_stream_records(self, entity_type, entity_id, limit):
+    @_db_connect
+    def __get_db_activity_stream_records(self, connection, cursor, entity_type, entity_id, limit):
         """
         Returns the cached activity stream for a particular record.
         
+        :param connection: Database connection (coming from the decorator)
+        :param cursor: Database cursor (coming from the decorator)        
         :param entity_type: Entity type to load
         :param entity_id: Entity id to load
         :param limit: Max records to load
         """
         activities = {}
         notes = {}
-        connection = None
-        cursor = None
         try:
-            connection = self.__init_db()
-            cursor = connection.cursor()
-            
             # get the activity payload for the first X entities
             # if they have a note thread associated, bring that in too
             res = cursor.execute("""
-                              SELECT a.activity_id, a.payload, n.note_id, n.payload
-                              FROM activity a
-                              INNER JOIN entity e on e.activity_id = a.activity_id
-                              LEFT OUTER JOIN note n on a.note_id = n.note_id
-                              WHERE e.entity_type=? and e.entity_id=? 
-                              order by a.activity_id desc
-                              LIMIT ?
-                              """, (entity_type, entity_id, limit))
+                SELECT a.activity_id, a.payload, n.note_id, n.payload
+                FROM activity a
+                INNER JOIN entity e on e.activity_id = a.activity_id
+                LEFT OUTER JOIN note n on a.note_id = n.note_id
+                WHERE e.entity_type=? and e.entity_id=? 
+                order by a.activity_id desc
+                LIMIT ?
+                """, (entity_type, entity_id, limit))
             
             for data in res: 
                 activity_id = data[0]
@@ -524,29 +543,23 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # supress and continue
             self._bundle.log_exception("Could not load activity stream data "
                                     "from cache database %s" % self._cache_path)
-        finally:
-            try:
-                if cursor:
-                    cursor.close()
-                if connection:
-                    connection.close()
-            except:
-                self._bundle.log_exception("Could not close database handle")
             
         return (activities, notes)
             
-            
-    def __db_insert_activity_updates(self, entity_type, entity_id, events):
+    @_db_connect
+    def __db_insert_activity_updates(self, connection, cursor, entity_type, entity_id, events):
         """
         Adds a number of records to the activity db. If they 
         already exist, they are not re-added
+        
+        :param connection: Database connection (coming from the decorator)
+        :param cursor: Database cursor (coming from the decorator)        
+        :param entity_type: Entity type to process
+        :param entity_id: Entity id to process
+        :param events: Events to insert
         """
         self._bundle.log_debug("Updating database with %s new events" % len(events))
-        connection = None
-        cursor = None
         try:
-            connection = self.__init_db()
-            cursor = connection.cursor()
             
             for event in events:
                 activity_id = event["id"]
@@ -575,30 +588,24 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # supress and continue
             self._bundle.log_exception("Could not add activity stream data "
                                     "to cache database %s" % self._cache_path)
-        finally:
-            try:
-                if cursor:
-                    cursor.close()
-                if connection:
-                    connection.close()
-            except:
-                self._bundle.log_exception("Could not close database handle")
         self._bundle.log_debug("...update complete")
             
-    def __db_insert_note_update(self, update_id, note_id, data):
+    @_db_connect
+    def __db_insert_note_update(self, connection, cursor, update_id, note_id, data):
         """
         update the sql db with note data
         
+        :param connection: Database connection (coming from the decorator)
+        :param cursor: Database cursor (coming from the decorator)        
         :param update_id: Activity stream id to update. If None, only
                           the note will be rebuilt in the database.
+        :param note_id: Id of note to store
+        :param data: data to store
+        
         """
         self._bundle.log_debug("Adding note %s to database, "
                             "linking it to event %s" % (note_id, update_id))
-        connection = None
-        cursor = None
         try:
-            connection = self.__init_db()
-            cursor = connection.cursor()
             
             # first pickle the note data
             payload = cPickle.dumps(data, cPickle.HIGHEST_PROTOCOL)
@@ -629,14 +636,6 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # supress and continue
             self._bundle.log_exception("Could not add note data "
                                     "to cache database %s" % self._cache_path)
-        finally:
-            try:
-                if cursor:
-                    cursor.close()
-                if connection:
-                    connection.close()
-            except:
-                self._bundle.log_exception("Could not close database handle")
             
     ###########################################################################
     # private methods        

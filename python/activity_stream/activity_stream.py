@@ -75,8 +75,8 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         # keep handles to all widgets to be nice to the GC
         self._loading_widget = None
-        self._other_widgets = []
-        self._widgets = {}
+        self._activity_stream_static_widgets = []
+        self._activity_stream_data_widgets = {}
                 
         # state management
         self._task_manager = None
@@ -170,7 +170,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             expanding_widget = QtGui.QLabel(self)
             self.ui.activity_stream_layout.addWidget(expanding_widget)
             self.ui.activity_stream_layout.setStretchFactor(expanding_widget, 1)
-            self._other_widgets.append(expanding_widget)
+            self._activity_stream_static_widgets.append(expanding_widget)
 
             sg_stream_button = QtGui.QPushButton(self)
             sg_stream_button.setText("Click here to see the Activity stream in Shotgun.")
@@ -180,7 +180,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             sg_stream_button.clicked.connect(self._load_shotgun_activity_stream)
             
             self.ui.activity_stream_layout.addWidget(sg_stream_button)
-            self._other_widgets.append(sg_stream_button)
+            self._activity_stream_static_widgets.append(sg_stream_button)
     
             # ids are returned in async order. Now pop them onto the activity stream,
             # old items first order...
@@ -192,7 +192,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                 if w:
                     # a widget was generated! Insert it into
                     # the widget layouts etc.
-                    self._widgets[activity_id] = w
+                    self._activity_stream_data_widgets[activity_id] = w
                     self.ui.activity_stream_layout.addWidget(w)        
             
                     # run extra init for notes
@@ -208,8 +208,11 @@ class ActivityStreamWidget(QtGui.QWidget):
                         attachment_requests.extend(note_attachment_requests)
             
             # last, create "loading" widget
-            # to put at the top of the list
-            self._bundle.log_debug("Adding loading widget...")
+            # to put at the top of the list.
+            #
+            # We add this into the scroll area so that it scrolls with the
+            # rest of the items in the list.
+            #
             self._loading_widget = QtGui.QLabel(self)
             self._loading_widget.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
             self._loading_widget.setText("Loading data from Shotgun...") 
@@ -289,7 +292,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._clear_loading_widget()
 
             self._bundle.log_debug("Removing all widget items")
-            for x in self._widgets.values():
+            for x in self._activity_stream_data_widgets.values():
                 # remove widget from layout:
                 self.ui.activity_stream_layout.removeWidget(x)
                 # set it's parent to None so that it is removed from the widget hierarchy
@@ -298,14 +301,14 @@ class ActivityStreamWidget(QtGui.QWidget):
                 x.deleteLater()
         
             self._bundle.log_debug("Clearing python data structures")
-            self._widgets = {}
+            self._activity_stream_data_widgets = {}
     
             self._bundle.log_debug("Removing expanding widget")
-            for w in self._other_widgets:
+            for w in self._activity_stream_static_widgets:
                 self.ui.activity_stream_layout.removeWidget(w)
                 w.setParent(None)
                 w.deleteLater()
-            self._other_widgets = []
+            self._activity_stream_static_widgets = []
         
         finally:
             # make the window visible again and trigger a redraw
@@ -316,7 +319,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         Remove the loading widget from the widget list
         """
         if self._loading_widget:
-            self._bundle.log_debug("Cleaning the loading widget")
+            self._bundle.log_debug("Clearing the loading widget")
             self.ui.activity_stream_layout.removeWidget(self._loading_widget)
             self._loading_widget.setParent(None)
             self._loading_widget.deleteLater()
@@ -479,7 +482,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._bundle.log_debug("Creating new widget...")
             w = self._create_activity_widget(activity_id)
             if w:            
-                self._widgets[activity_id] = w
+                self._activity_stream_data_widgets[activity_id] = w
                 self._bundle.log_debug("Adding %s to layout" % w)
                 self.ui.activity_stream_layout.addWidget(w)        
                 # add special blue border to indicate that this is a new arrival
@@ -501,15 +504,15 @@ class ActivityStreamWidget(QtGui.QWidget):
         New thumbnail has arrived from the data manager
         """
         # broadcast to all activity widgets
-        for widget in self._widgets.values():
-            widget.set_thumbnail(data)
+        for widget in self._activity_stream_data_widgets.values():
+            widget.apply_thumbnail(data)
 
     def _process_new_note(self, activity_id, note_id):
         """
         A new note has arrived from the data manager
         """
-        if activity_id in self._widgets:
-            widget = self._widgets[activity_id]
+        if activity_id in self._activity_stream_data_widgets:
+            widget = self._activity_stream_data_widgets[activity_id]
             (reply_users, attachment_requests) = self._populate_note_widget(widget, activity_id, note_id)
             
             # request thumbs
