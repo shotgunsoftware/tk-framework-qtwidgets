@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.1.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -117,7 +117,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    <b>tk-framework-qtwidgets</b> v2.1.0.<br>
     This documentation is part of the Shotgun Pipeline Toolkit. 
     For more information, please visit 
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
@@ -183,6 +183,7 @@
 
 <span class="c"># local import to avoid cyclic references</span>
 <span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s">&quot;shotgun_model&quot;</span><span class="p">)</span>
+<span class="n">shotgun_data</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s">&quot;shotgun_data&quot;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
@@ -260,21 +261,26 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_signal</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_failure</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_failure</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="bp">None</span>
         </div>
-<div class="viewcode-block" id="NoteInputWidget.set_data_retriever"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.set_data_retriever">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_retriever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_retriever</span><span class="p">):</span>
+<div class="viewcode-block" id="NoteInputWidget.set_bg_task_manager"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Specify the asynchronous data handler to use for shotgun communication.</span>
+<span class="sd">        Specify the background task manager to use to pull</span>
+<span class="sd">        data in the background. Data calls</span>
+<span class="sd">        to Shotgun will be dispatched via this object.</span>
 <span class="sd">        </span>
-<span class="sd">        :param data_retriever: Data retriever object to use for fetching information</span>
-<span class="sd">                               from Shotgun.</span>
-<span class="sd">        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`         </span>
+<span class="sd">        :param task_manager: Background task manager to use</span>
+<span class="sd">        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="n">data_retriever</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="n">shotgun_data</span><span class="o">.</span><span class="n">ShotgunDataRetriever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                                                                     <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">task_manager</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_signal</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_failure</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_failure</span><span class="p">)</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">set_data_retriever</span><span class="p">(</span><span class="n">data_retriever</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
         
         
         
@@ -350,7 +356,10 @@
         <span class="n">data</span><span class="p">[</span><span class="s">&quot;entity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">,</span> <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="p">}</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&quot;project&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
         <span class="c"># ask the data retriever to execute an async callback</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_submit</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_submit</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TankError</span><span class="p">(</span><span class="s">&quot;Please associate this class with a background task processor.&quot;</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">_async_submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -729,7 +738,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'sg_panel_widgets',
+            VERSION:'v2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

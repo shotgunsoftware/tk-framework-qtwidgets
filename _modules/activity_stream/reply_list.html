@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.1.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -117,7 +117,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    <b>tk-framework-qtwidgets</b> v2.1.0.<br>
     This documentation is part of the Shotgun Pipeline Toolkit. 
     For more information, please visit 
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
@@ -186,7 +186,7 @@
 
 <span class="kn">from</span> <span class="nn">.ui.reply_list_widget</span> <span class="kn">import</span> <span class="n">Ui_ReplyListWidget</span>
 
-<span class="kn">from</span> <span class="nn">.label_widgets</span> <span class="kn">import</span> <span class="n">ClickableTextLabel</span>
+<span class="kn">from</span> <span class="nn">.label_widgets</span> <span class="kn">import</span> <span class="n">ClickableLabel</span>
  
 <span class="kn">from</span> <span class="nn">.data_manager</span> <span class="kn">import</span> <span class="n">ActivityStreamDataHandler</span>
 <span class="kn">from</span> <span class="nn">.widget_attachment_group</span> <span class="kn">import</span> <span class="n">AttachmentGroupWidget</span>
@@ -225,7 +225,7 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_note_id</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span> <span class="o">=</span> <span class="p">{}</span>
@@ -244,18 +244,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">thumbnail_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_thumbnail</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_note</span><span class="p">)</span>
         
-<div class="viewcode-block" id="ReplyListWidget.set_data_retriever"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget.set_data_retriever">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_retriever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_retriever</span><span class="p">):</span>
+<div class="viewcode-block" id="ReplyListWidget.set_bg_task_manager"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set an async data retreiver object to use with this </span>
-<span class="sd">        widget.</span>
-
-<span class="sd">        :param data_retriever: Data retriever object to use for fetching information</span>
-<span class="sd">                               from Shotgun.</span>
-<span class="sd">        :type data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` </span>
+<span class="sd">        Specify the background task manager to use to pull</span>
+<span class="sd">        data in the background. Data calls</span>
+<span class="sd">        to Shotgun will be dispatched via this object.</span>
+<span class="sd">        </span>
+<span class="sd">        :param task_manager: Background task manager to use</span>
+<span class="sd">        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">set_data_retriever</span><span class="p">(</span><span class="n">data_retriever</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span> <span class="o">=</span> <span class="n">data_retriever</span>
-        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">task_manager</span>
+        </div>
+<div class="viewcode-block" id="ReplyListWidget.destroy"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Should be called before the widget is closed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span>
+                    
     <span class="c">##########################################################################################</span>
     <span class="c"># public interface</span>
         </div>
@@ -449,7 +456,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a reply button to the stream of widgets</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">reply_button</span> <span class="o">=</span> <span class="n">ClickableTextLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">reply_button</span> <span class="o">=</span> <span class="n">ClickableLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">reply_button</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="o">|</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span><span class="p">)</span>
         <span class="n">reply_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;Reply to this Note&quot;</span><span class="p">)</span>
         <span class="n">reply_button</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s">&quot;reply_button&quot;</span><span class="p">)</span>
@@ -542,7 +549,7 @@
         <span class="k">if</span> <span class="n">thumbnail_type</span> <span class="o">==</span> <span class="n">ActivityStreamDataHandler</span><span class="o">.</span><span class="n">THUMBNAIL_ATTACHMENT</span> <span class="ow">and</span> <span class="n">activity_id</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">group_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;attachment_group_id&quot;</span><span class="p">]</span>
             <span class="n">attachment_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="p">[</span><span class="n">group_id</span><span class="p">]</span>
-            <span class="n">attachment_group</span><span class="o">.</span><span class="n">set_thumbnail</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">attachment_group</span><span class="o">.</span><span class="n">apply_thumbnail</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="n">thumbnail_type</span> <span class="o">==</span> <span class="n">ActivityStreamDataHandler</span><span class="o">.</span><span class="n">THUMBNAIL_USER</span><span class="p">:</span>
             <span class="c"># a thumbnail for a user possibly for one of our replies</span>
@@ -563,7 +570,7 @@
         <span class="c"># TODO - refactor to avoid having this code in two places</span>
         
         <span class="c"># create reply dialog window</span>
-        <span class="n">reply_dialog</span> <span class="o">=</span> <span class="n">ReplyDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="p">,</span> <span class="n">note_id</span><span class="p">)</span>
+        <span class="n">reply_dialog</span> <span class="o">=</span> <span class="n">ReplyDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">,</span> <span class="n">note_id</span><span class="p">)</span>
         
         <span class="c"># position the reply modal dialog above the activity stream scroll area</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_scroll_area</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
@@ -614,7 +621,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'sg_panel_widgets',
+            VERSION:'v2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

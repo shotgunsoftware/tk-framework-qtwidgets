@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Global Search Widget &mdash; tk-framework-qtwidgets sg_panel_widgets documentation</title>
+  <title>Shotgun Global Search Widget &mdash; tk-framework-qtwidgets v2.1.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets sg_panel_widgets documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.1.0 documentation" href="index.html"/>
         <link rel="next" title="Help Screen Popup" href="help_screen.html"/>
         <link rel="prev" title="Auto-Elide label" href="elided_label.html"/> 
 
@@ -118,7 +118,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> sg_panel_widgets.<br>
+    <b>tk-framework-qtwidgets</b> v2.1.0.<br>
     This documentation is part of the Shotgun Pipeline Toolkit. 
     For more information, please visit 
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
@@ -191,16 +191,22 @@ the search results. The returned parameters are entity type and entity id.</td>
 </tbody>
 </table>
 <dl class="method">
-<dt id="global_search_widget.GlobalSearchWidget.set_data_retriever">
-<code class="descname">set_data_retriever</code><span class="sig-paren">(</span><em>data_retriever</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget.set_data_retriever"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget.set_data_retriever" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set an async data retreiver object to use with this widget. Data calls
-to Shotgun will be send through this object.</p>
+<dt id="global_search_widget.GlobalSearchWidget.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called before the widget is closed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="global_search_widget.GlobalSearchWidget.set_bg_task_manager">
+<code class="descname">set_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget.set_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the background task manager to use to pull
+data in the background. Data calls
+to Shotgun will be dispatched via this object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_retriever</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_data.html#shotgun_data.ShotgunDataRetriever" title="(in tk-framework-shotgunutils v)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunDataRetriever</span></code></a>) &#8211; Data retriever object to use for fetching information
-from Shotgun.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> &#8211; Background task manager to use</td>
 </tr>
 </tbody>
 </table>
@@ -250,7 +256,7 @@ from Shotgun.</td>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'sg_panel_widgets',
+            VERSION:'v2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
