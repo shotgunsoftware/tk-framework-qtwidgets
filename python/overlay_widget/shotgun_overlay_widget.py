@@ -18,10 +18,6 @@ class ShotgunOverlayWidget(QtGui.QWidget):
     Overlay widget that can be placed on top over any QT widget.
     Once you have placed the overlay widget, you can use it to 
     display information, errors, a spinner etc.  
-    
-    This is for example used by the 
-    :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunOverlayModel` 
-    to indicate when data is being loaded from Shotgun.
     """
 
     MODE_OFF = 0
