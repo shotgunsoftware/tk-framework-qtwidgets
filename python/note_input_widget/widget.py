@@ -102,7 +102,7 @@ class NoteInputWidget(QtGui.QWidget):
         to Shotgun will be dispatched via this object.
         
         :param task_manager: Background task manager to use
-        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
+        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
         self.__sg_data_retriever = shotgun_data.ShotgunDataRetriever(self, 
                                                                      bg_task_manager=task_manager)

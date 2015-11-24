@@ -91,7 +91,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         to Shotgun will be dispatched via this object.
         
         :param task_manager: Background task manager to use
-        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
+        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
         self._task_manager = task_manager
         self._data_manager.set_bg_task_manager(task_manager)

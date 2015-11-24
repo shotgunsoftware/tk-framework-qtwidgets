@@ -21,10 +21,8 @@ class ReplyDialog(QtGui.QDialog):
         """
         :param parent: QT parent object
         :type parent: :class:`PySide.QtGui.QWidget`
-        :param data_retriever: Data retriever object to use for fetching information
-                               from Shotgun.
-        :param bg_task_manager: Background task manager to use
-        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
+        :param bg_task_manager: Task manager to use to fetch sg data.
+        :type  bg_task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """        
         # first, call the base class and let it do its thing.
         QtGui.QDialog.__init__(self, parent)
