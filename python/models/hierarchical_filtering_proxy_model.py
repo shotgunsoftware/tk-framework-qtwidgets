@@ -477,8 +477,8 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         """
         Called when the source model is about to be reset.
         """
-        # QPersistentModelIndex are constantly being tracked by the owning model so that their reference
-        # are always valid even after nodes were removed. Therefore, if a model is about to be reset
+        # QPersistentModelIndex are constantly being tracked by the owning model so that their references
+        # are always valid even after nodes siblings removed. When a model is about to be reset
         # we are guaranteed that the indices won't be valid anymore, so clearning thoses indices now
         # means the source model won't have to keep updating them as the tree is being cleared, thus slowing
         # down the reset.
