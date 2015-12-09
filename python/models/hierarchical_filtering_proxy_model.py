@@ -330,6 +330,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         if prev_source_model:
             prev_source_model.rowsInserted.disconnect(self._on_source_model_rows_inserted)
             prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
+            prev_source_model.modelAboutToBeReset.disconnect(self._on_source_model_about_to_be_reset)
 
         # clear out the various caches:
         self._dirty_all_accepted()
@@ -341,6 +342,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         if model:
             model.rowsInserted.connect(self._on_source_model_rows_inserted)
             model.dataChanged.connect(self._on_source_model_data_changed)
+            model.modelAboutToBeReset.connect(self._on_source_model_about_to_be_reset)
 
     # -------------------------------------------------------------------------------
     # Private methods
@@ -471,3 +473,13 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # dirty specific rows in the caches:
         self._dirty_accepted_rows(parent_idx, start, end)
 
+    def _on_source_model_about_to_be_reset(self):
+        """
+        Called when the source model is about to be reset.
+        """
+        # QPersistentModelIndex are constantly being tracked by the owning model so that their references
+        # are always valid even after nodes siblings removed. When a model is about to be reset
+        # we are guaranteed that the indices won't be valid anymore, so clearning thoses indices now
+        # means the source model won't have to keep updating them as the tree is being cleared, thus slowing
+        # down the reset.
+        self._dirty_all_accepted()
