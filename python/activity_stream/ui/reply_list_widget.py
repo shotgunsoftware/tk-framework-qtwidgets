@@ -17,11 +17,14 @@ class Ui_ReplyListWidget(object):
         self.verticalLayout.setContentsMargins(1, 1, 1, 1)
         self.verticalLayout.setObjectName("verticalLayout")
         self.reply_scroll_area = QtGui.QScrollArea(ReplyListWidget)
+
         self.reply_scroll_area.setWidgetResizable(True)
         self.reply_scroll_area.setObjectName("reply_scroll_area")
+        
         self.reply_widget = QtGui.QWidget()
         self.reply_widget.setGeometry(QtCore.QRect(0, 0, 414, 397))
         self.reply_widget.setObjectName("reply_widget")
+        
         self.reply_layout = QtGui.QVBoxLayout(self.reply_widget)
         self.reply_layout.setObjectName("reply_layout")
         self.reply_scroll_area.setWidget(self.reply_widget)
@@ -29,6 +32,9 @@ class Ui_ReplyListWidget(object):
 
         self.retranslateUi(ReplyListWidget)
         QtCore.QMetaObject.connectSlotsByName(ReplyListWidget)
+
+        # self.reply_scroll_area.setStyleSheet("#reply_scroll_area { background-color: #ff00f0; }\
+        #     #reply_widget { background-color: #00aaff; } ")
 
     def retranslateUi(self, ReplyListWidget):
         ReplyListWidget.setWindowTitle(QtGui.QApplication.translate("ReplyListWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))

@@ -83,6 +83,8 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._sg_entity_dict = None
         self._entity_type = None
         self._entity_id = None
+
+        self.setStyleSheet("#ReplyWidget { border: 4px solid #aaffff; }")
         
     def set_bg_task_manager(self, task_manager):
         """
