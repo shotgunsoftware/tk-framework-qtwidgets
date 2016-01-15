@@ -7,7 +7,7 @@
 # NOT USING QT DESIGNER FOR THIS
 
 from tank.platform.qt import QtCore, QtGui
-from .shot_info_widget import ShotInfoWidget
+from ..shot_info_widget import ShotInfoWidget
 
 class Ui_ActivityStreamWidget(object):
     # make a 418x401 ActivityStreanWidget

@@ -10,17 +10,65 @@ agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 not expressly granted therein are reserved by Shotgun Software Inc.
 */
 
-/*
 
-stewartb - this doesnt seem to be working at all. I might have broken it with the way I'm
-styling widgets or their binary style load from maya is borking it?
 
-*/
-
-QFrame#frame {
-    background-color: rgba(200, 200, 200, 5%);
-    border-radius: 3px;
+QWidget { 
+    font-size: 13px;
+    background: rgb(36,38,41);
+    font-family: Proxima Nova;
+    color: rgb(220,220,220);
+    margin: 0px;
 }
+
+QLabel { 
+    color: rgb(140,140,140);
+}
+
+
+#content { 
+    margin-bottom: 6px;
+}
+
+#header_left {
+    color: rgb(150,100,100);
+} 
+
+#date { font-size: 10px; color: rgb(100,100,100);} 
+
+#links { 
+    font-size: 1px; 
+} 
+
+#design_frame { 
+    border-left: 3px solid #444444;
+} 
+
+/*
+                # self.setStyleSheet("QWidget { font-size: 13px; background: rgb(36,38,41); font-family: Proxima Nova; padding: 1px; padding-left: 4px; margin: 0px;} \
+*/
+#thumbnail { 
+    background: #44aa33;
+    padding: 1px;
+}
+
+#shot_name { 
+    font-size: 15px; 
+    font-weight: normal; 
+    color: rgb(200,200,200);
+    padding: 1px;
+    padding-left: 4px;
+}
+
+#shot_version {
+    padding: 1px;
+    padding-left: 4px;
+}
+
+#shot_details {
+    padding: 1px;
+    padding-left: 0px;
+}
+
 
 QFrame#loading_frame {
     border: none
@@ -38,10 +86,6 @@ QLabel#loading_label {
 
 #reply_button:hover {
     color: rgb(200, 200, 200);
-}
-
-#date {
-    color: rgba(200, 200, 100, 40%);
 }
 
 #full_shotgun_stream_button {

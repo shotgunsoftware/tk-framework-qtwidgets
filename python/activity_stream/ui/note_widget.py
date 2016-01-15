@@ -16,14 +16,12 @@ from tank.platform.qt import QtCore, QtGui
 
 class Ui_NoteWidget(object):
     def setupUi(self, NoteWidget):
-        NoteWidget.setStyleSheet("QWidget { font-size: 12px; background: rgb(36,38,41); font-family: Proxima Nova; color: rgb(220,220,220);  }\
-            QLabel { color: rgb(140,140,140); } \
-            #content { font-size: 12px; margin-bottom: 6px; }\
-            #header_left { font-size: 12px;  color: rgb(150,100,100); } \
-            #date { font-size: 10px; color: rgb(100,100,100);} \
-            #content { font-size: 12px; } \
-            #links { font-size: 0px; } \
-            #design_frame { border-left: 3px solid #444444; } ")
+        # NoteWidget.setStyleSheet("#content { font-size: 12px; margin-bottom: 6px; }\
+        #     #header_left { font-size: 12px;  color: rgb(150,100,100); } \
+        #     #date { font-size: 10px; color: rgb(100,100,100);} \
+        #     #content { font-size: 12px; } \
+        #     #links { font-size: 0px; } \
+        #     #design_frame { border-left: 3px solid #444444; } ")
         NoteWidget.setObjectName("NoteWidget")
         NoteWidget.resize(357, 142)
 
@@ -73,7 +71,7 @@ class Ui_NoteWidget(object):
         #sizePolicy.setVerticalStretch(0)
         #sizePolicy.setHeightForWidth(self.header_left.sizePolicy().hasHeightForWidth())
         #self.header_left.setSizePolicy(sizePolicy)
-        self.header_left.setText("BOOGER")
+        self.header_left.setText("")
         #self.header_left.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         #self.header_left.setWordWrap(True)
         self.header_left.setObjectName("header_left")
@@ -122,7 +120,7 @@ class Ui_NoteWidget(object):
         
 
         self.design_frame = QtGui.QFrame(NoteWidget)
-        self.design_frame.setMinimumSize(QtCore.QSize(10, 240))
+        self.design_frame.setMinimumSize(QtCore.QSize(16, 240))
         self.design_frame.setObjectName("design_frame")
 
 

@@ -84,8 +84,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._entity_type = None
         self._entity_id = None
 
-        self.setStyleSheet("#ReplyWidget { border: 4px solid #aaffff; }")
-        
+
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
@@ -116,6 +115,9 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         :param sg_entity_dict: Dictionary with keys type and id
         """
+        print "LOAD DATA BITCHES"
+        print sg_entity_dict
+
         self._bundle.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
         # clean up everything first
         self._clear()
