@@ -20,7 +20,24 @@ class ShotInfoWidget(QtGui.QWidget):
                 finally:
                     f.close()
 
-        
+        # TODO make sure the entity is a SHOTGUN style entity?
+        def load_data_rv(self, entity):
+                print "LOADING SHOT INFO: %s" % entity
+                #if entity.has_key('shot_name'):
+                if 'shot' in entity:
+                        (yuk,shot_mess,yuk) = entity['shot'].split('|')
+                        s_name = shot_mess.replace('name_', '')
+                        self.shot_name.setText(s_name)
+                #else:
+                #        self.shot_name.setText('NO SHOT NAME')
+                #if entity.has_key('name'):
+                if 'name' in entity:        
+                        self.shot_version.setText(entity['name'])
+                #else:
+                #        self.shot_version.setText("NO VERSION NAME")
+                if 'description' in entity:
+                        self.shot_details.setText(entity['description'])
+
 
         def __init__(self, parent):
                 QtGui.QWidget.__init__(self, parent)
@@ -48,12 +65,12 @@ class ShotInfoWidget(QtGui.QWidget):
                 self.shot_thumbnail.setObjectName("thumbnail")
 
                 self.shot_name = QtGui.QLabel()
-                self.shot_name.setText("08_a-team_007")
+                self.shot_name.setText("NO DATA")
                 self.shot_name.setObjectName("shot_name")
                 self.shot_name.setMinimumSize(QtCore.QSize(200, 16))
 
                 self.shot_version = QtGui.QLabel()
-                self.shot_version.setText("08_a-team_007_COMP_010")
+                self.shot_version.setText("NO DATA")
                 self.shot_version.setObjectName("shot_version")
                 self.shot_version.setMinimumSize(QtCore.QSize(200, 16))
 
@@ -70,7 +87,7 @@ class ShotInfoWidget(QtGui.QWidget):
                 self.shot_hbox.setAlignment(QtCore.Qt.AlignTop)
  
                 self.shot_details = QtGui.QLabel()
-                self.shot_details.setText("Artist name: Lenny Kruss, a really long date and something about pork bellies and brooklyn biodiesel. At least enough to get into a third line here which should be an elipsis button.")
+                self.shot_details.setText("NO DATA")
                 self.shot_details.setObjectName("shot_details")
                 self.shot_details.setWordWrap(True)
 

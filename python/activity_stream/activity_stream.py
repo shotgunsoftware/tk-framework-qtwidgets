@@ -115,9 +115,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         :param sg_entity_dict: Dictionary with keys type and id
         """
-        print "LOAD DATA BITCHES"
-        print sg_entity_dict
-
+ 
         self._bundle.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
         # clean up everything first
         self._clear()
