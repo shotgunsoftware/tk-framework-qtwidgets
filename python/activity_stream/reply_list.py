@@ -74,7 +74,6 @@ class ReplyListWidget(QtGui.QWidget):
         
         self._data_manager.thumbnail_arrived.connect(self._process_thumbnail)
         self._data_manager.note_arrived.connect(self._process_note)
-        self.setStyleSheet("#reply_widget { border: 2px solid #ff00ff; }")
         
         
     def set_bg_task_manager(self, task_manager):

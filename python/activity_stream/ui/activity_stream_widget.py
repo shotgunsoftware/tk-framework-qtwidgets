@@ -4,10 +4,9 @@
 #
 #      by: pyside-uic 0.2.13 running on PySide 1.1.1
 #
-# NOT USING QT DESIGNER FOR THIS
+# *******  NOT USING QT DESIGNER FOR THIS TEMPORARILY
 
 from tank.platform.qt import QtCore, QtGui
-from ..shot_info_widget import ShotInfoWidget
 
 class Ui_ActivityStreamWidget(object):
     # make a 418x401 ActivityStreanWidget
@@ -30,9 +29,6 @@ class Ui_ActivityStreamWidget(object):
         self.verticalLayout.setSpacing(1)
         self.verticalLayout.setContentsMargins(1, 1, 1, 1)
         self.verticalLayout.setObjectName("verticalLayout")
-
-        self.shot_info_widget = ShotInfoWidget(ActivityStreamWidget)
-        self.verticalLayout.addWidget(self.shot_info_widget)
         
         self.activity_stream_scroll_area = QtGui.QScrollArea(ActivityStreamWidget)
         self.activity_stream_scroll_area.setWidgetResizable(True)
@@ -43,7 +39,6 @@ class Ui_ActivityStreamWidget(object):
         self.activity_stream_widget = QtGui.QWidget()
         self.activity_stream_widget.setGeometry(QtCore.QRect(0, 0, 414, 397))
         self.activity_stream_widget.setObjectName("activity_stream_widget")
-        #self.activity_stream_widget.setStyleSheet("QWidget { background: #998833; border: 1px solid #aaaaff; }")
         
         self.verticalLayout_17 = QtGui.QVBoxLayout(self.activity_stream_widget)
         self.verticalLayout_17.setContentsMargins(0, 0, 0, 0)
@@ -69,9 +64,7 @@ class Ui_ActivityStreamWidget(object):
         
         self.activity_stream_scroll_area.setWidget(self.activity_stream_widget)
         
-        self.verticalLayout.addWidget(self.activity_stream_scroll_area)
-        #self.activity_stream_scroll_area.setStyleSheet("QWidget { border: 4px solid #aaffff; }")
-        
+        self.verticalLayout.addWidget(self.activity_stream_scroll_area)        
 
         self.retranslateUi(ActivityStreamWidget)
         QtCore.QMetaObject.connectSlotsByName(ActivityStreamWidget)

@@ -404,7 +404,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         Returns a handle that must be closed.
         """
         connection = sqlite3.connect(self._cache_path)
-        
+
         # this is to handle unicode properly - make sure that sqlite returns 
         # str objects for TEXT fields rather than unicode. Note that any unicode
         # objects that are passed into the database will be automatically
