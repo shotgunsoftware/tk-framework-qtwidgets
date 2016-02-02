@@ -120,7 +120,7 @@ class Ui_NoteWidget(object):
         
 
         self.design_frame = QtGui.QFrame(NoteWidget)
-        self.design_frame.setMinimumSize(QtCore.QSize(16, 240))
+        self.design_frame.setMinimumSize(QtCore.QSize(16, 15))
         self.design_frame.setObjectName("design_frame")
 
 
