@@ -83,7 +83,8 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._sg_entity_dict = None
         self._entity_type = None
         self._entity_id = None
-        
+
+
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
@@ -114,6 +115,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         :param sg_entity_dict: Dictionary with keys type and id
         """
+ 
         self._bundle.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
         # clean up everything first
         self._clear()
