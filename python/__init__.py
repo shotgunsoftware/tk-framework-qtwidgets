@@ -21,5 +21,4 @@ from . import note_input_widget
 from . import activity_stream
 from . import global_search_widget
 from . import screen_grab
-
-
+from . import shotgun_field_widgets
