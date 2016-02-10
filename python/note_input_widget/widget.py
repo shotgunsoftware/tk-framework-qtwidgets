@@ -480,6 +480,15 @@ class NoteInputWidget(QtGui.QWidget):
         
     ###########################################################################
     # public interface
+
+    def allow_screenshots(self, state):
+        """
+        Allows or disallows screenshots.
+
+        :param state: Allow or disallow screenshots.
+        :type  state: :class:`Boolean`
+        """
+        self.ui.screenshot.setVisible(bool(state))
         
     def open_editor(self):
         """

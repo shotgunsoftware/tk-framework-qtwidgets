@@ -17,12 +17,14 @@ class ReplyDialog(QtGui.QDialog):
     This is used when someone clicks on the reply button for a note.
     """
     
-    def __init__(self, parent, bg_task_manager, note_id):
+    def __init__(self, parent, bg_task_manager, note_id, allow_screenshots=True):
         """
         :param parent: QT parent object
         :type parent: :class:`PySide.QtGui.QWidget`
         :param bg_task_manager: Task manager to use to fetch sg data.
-        :type  bg_task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
+        :type  bg_task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager`
+        :param allow_screenshots: Boolean to allow or disallow screenshots, defaults to True.
+        :type  allow_screenshots: :class:`Boolean`
         """        
         # first, call the base class and let it do its thing.
         QtGui.QDialog.__init__(self, parent)
@@ -35,6 +37,7 @@ class ReplyDialog(QtGui.QDialog):
         self.ui.note_widget.data_updated.connect(self.close_after_create)
         self.ui.note_widget.close_clicked.connect(self.close_after_cancel)
         self.ui.note_widget.set_current_entity("Note", note_id)
+        self.ui.note_widget.allow_screenshots(allow_screenshots)
         
         self.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.FramelessWindowHint)        
         
