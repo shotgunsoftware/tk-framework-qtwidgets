@@ -10,14 +10,18 @@
 
 import locale
 from sgtk.platform.qt import QtGui
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
 
 
-class NumberWidget(QtGui.QLabel):
-    def __init__(self, parent=None, value=None):
+class PercentWidget(QtGui.QLabel):
+    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
         QtGui.QLabel.__init__(self, parent)
+        self.set_value(value)
 
-        if value is not None:
-            self.setText(locale.format("%d", value, grouping=True))
+    def set_value(self, value):
+        if value is None:
+            self.clear()
+        else:
+            self.setText(locale.format("%d", value, grouping=True) + "%")
 
-ShotgunFieldFactory.register("number", NumberWidget)
+ShotgunFieldManager.register("percent", PercentWidget)

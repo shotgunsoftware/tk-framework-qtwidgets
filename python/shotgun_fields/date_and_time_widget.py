@@ -11,20 +11,23 @@
 import datetime
 from sgtk.platform.qt import QtGui
 
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
 
 
-class DateWidget(QtGui.QLabel):
-    def __init__(self, parent=None, value=None):
-        QtGui.QLabel.__init__(self, parent)
+class DateAndTimeWidget(QtGui.QLabel):
+    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+        QtGui.QLabel.__init__(self, parent, **kwargs)
+        self.set_value(value)
 
-        if value is not None:
-            date_obj = datetime.datetime.strptime(value, "%Y-%m-%d")
-            self.setText(self._create_human_readable_timestamp(date_obj))
+    def set_value(self, value):
+        if value is None:
+            self.clear()
+        else:
+            self.setText(self._create_human_readable_timestamp(value, " %I:%M%p"))
 
-    def _create_human_readable_timestamp(self, datetime_obj, postfix=""):
+    def _create_human_readable_timestamp(self, dt, postfix=""):
         # get the delta and components
-        delta = datetime.datetime.now(datetime_obj.tzinfo) - datetime_obj
+        delta = datetime.datetime.now(dt.tzinfo) - dt
 
         if delta.days == 1:
             format = "Yesterday%s" % postfix
@@ -35,7 +38,7 @@ class DateWidget(QtGui.QLabel):
         else:
             format = "%%x%s" % postfix
 
-        time_str = datetime_obj.strftime(format)
+        time_str = dt.strftime(format)
         return time_str
 
-ShotgunFieldFactory.register("date", DateWidget)
+ShotgunFieldManager.register("date_time", DateAndTimeWidget)

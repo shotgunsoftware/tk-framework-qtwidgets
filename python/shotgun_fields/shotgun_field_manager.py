@@ -10,13 +10,15 @@
 
 
 import sgtk
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtCore, QtGui
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
-class ShotgunFieldFactory(object):
+class ShotgunFieldManager(QtCore.QObject):
     __FIELD_TYPE_MAP = {}
+
+    initialized = QtCore.Signal()
 
     @classmethod
     def register(cls, field_type, widget_class):
@@ -31,8 +33,39 @@ class ShotgunFieldFactory(object):
             raise ValueError("field_type %s is already registered" % field_type)
         cls.__FIELD_TYPE_MAP[field_type] = widget_class
 
-    @classmethod
-    def supported_fields(cls, sg_entity_type, field_names):
+    def __init__(self, parent=None, bg_task_manager=None):
+        """
+        :param parent: Parent object
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        :param bg_task_manager: Optional Task manager
+        :class bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        """
+        QtCore.QObject.__init__(self, parent)
+
+        self._task_manager = bg_task_manager
+        self._initialized = False
+
+    def __del__(self):
+        if self._initialized:
+            shotgun_globals.unregister_bg_task_manager(self._task_manager)
+
+    def initialize(self):
+        if self._task_manager is None:
+            task_manager = sgtk.platform.import_framework("tk-framework-shotgunutils", "task_manager")
+            self._task_manager = task_manager.BackgroundTaskManager(
+                parent=self,
+                max_threads=1,
+                start_processing=True
+            )
+
+        shotgun_globals.register_bg_task_manager(self._task_manager)
+        self._initialized = True
+        shotgun_globals.run_on_schema_loaded(self.schema_loaded)
+
+    def schema_loaded(self):
+        self.initialized.emit()
+
+    def supported_fields(self, sg_entity_type, field_names):
         """
         Returns the subset of fields from field_names that have an associated widget class.
 
@@ -43,12 +76,11 @@ class ShotgunFieldFactory(object):
         supported_fields = []
         for field_name in field_names:
             data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
-            if data_type in cls.__FIELD_TYPE_MAP:
+            if data_type in self.__FIELD_TYPE_MAP:
                 supported_fields.append(field_name)
         return supported_fields
 
-    @classmethod
-    def get_display_class(cls, sg_entity_type, field_name):
+    def create_widget(self, sg_entity_type, field_name, value=None, parent=None, **kwargs):
         """
         Returns the widget class associated with the field type if it has been registered.
 
@@ -57,12 +89,17 @@ class ShotgunFieldFactory(object):
         :returns: :class:`~PySide.QtGui.QWidget` or None if not found
         """
         data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
-        if data_type not in cls.__FIELD_TYPE_MAP:
-            print " Missing %s" % data_type
-        return cls.__FIELD_TYPE_MAP.get(data_type)
+        if data_type in self.__FIELD_TYPE_MAP:
+            cls = self.__FIELD_TYPE_MAP[data_type]
+            return cls(
+                parent=parent,
+                value=value,
+                bg_task_manager=self._task_manager,
+                **kwargs
+            )
+        return None
 
-    @classmethod
-    def get_label(cls, sg_entity_type, field_name):
+    def create_label(self, sg_entity_type, field_name):
         """
         Returns a widget that can be used as a label for the given field.
 
@@ -75,21 +112,22 @@ class ShotgunFieldFactory(object):
 
 
 # import the actual field types to give them a chance to register
-from .checkbox_widget import CheckBoxWidget
-from .currency_widget import CurrencyWidget
-from .date_widget import DateWidget
-from .date_and_time_widget import DateAndTimeWidget
-from .duration_widget import DurationWidget
-from .entity_widget import EntityWidget
-from .multi_entity_widget import MultiEntityWidget
-from .float_widget import FloatWidget
-from .file_link_widget import FileLinkWidget
-from .footage_widget import FootageWidget
-from .list_widget import ListWidget
-from .number_widget import NumberWidget
-from .percent_widget import PercentWidget
-from .status_list_widget import StatusListWidget
-from .text_widget import TextWidget
-from .timecode_widget import TimecodeWidget
-from .url_template_widget import UrlTemplateWidget
-from .tags_widget import TagsWidget
+from . import checkbox_widget
+from . import currency_widget
+from . import date_and_time_widget
+from . import date_widget
+from . import duration_widget
+from . import entity_widget
+from . import file_link_widget
+from . import float_widget
+from . import footage_widget
+from . import list_widget
+from . import multi_entity_widget
+from . import number_widget
+from . import percent_widget
+from . import status_list_widget
+from . import tags_widget
+from . import text_widget
+from . import thumbnail_widget
+from . import timecode_widget
+from . import url_template_widget

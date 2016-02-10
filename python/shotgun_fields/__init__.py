@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -8,11 +8,5 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from .shotgun_field_factory import ShotgunFieldFactory
-from .label_base_widget import LabelBaseWidget
-
-
-class TimecodeWidget(LabelBaseWidget):
-    pass
-
-ShotgunFieldFactory.register("timecode", TimecodeWidget)
+from . import shotgun_field_manager
+ShotgunFieldManager = shotgun_field_manager.ShotgunFieldManager

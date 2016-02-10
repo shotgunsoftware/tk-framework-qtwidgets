@@ -8,14 +8,16 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from sgtk.platform.qt import QtCore, QtGui
-from .shotgun_field_factory import ShotgunFieldFactory
+from sgtk.platform.qt import QtGui
 
 
-class CheckBoxWidget(QtGui.QCheckBox):
-    def __init__(self, parent=None, value=None):
-        QtGui.QCheckBox.__init__(self, parent)
-        if value:
-            self.setCheckState(QtCore.Qt.Checked)
+class LabelBaseWidget(QtGui.QLabel):
+    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+        QtGui.QLabel.__init__(self, parent, **kwargs)
+        self.set_value(value)
 
-ShotgunFieldFactory.register("checkbox", CheckBoxWidget)
+    def set_value(self, value):
+        if value is None:
+            self.clear()
+        else:
+            self.setText(str(value))

@@ -9,15 +9,20 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from sgtk.platform.qt import QtGui
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
 
 
 class FileLinkWidget(QtGui.QLabel):
-    def __init__(self, parent=None, value=None):
-        QtGui.QLabel.__init__(self, parent)
+    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+        QtGui.QLabel.__init__(self, parent, **kwargs)
         self.setOpenExternalLinks(True)
 
-        if value is not None:
+        self.set_value(value)
+
+    def set_value(self, value):
+        if value is None:
+            self.clear()
+        else:
             str_val = value["name"]
 
             if value["link_type"] in ["web", "upload"]:
@@ -27,4 +32,4 @@ class FileLinkWidget(QtGui.QLabel):
 
             self.setText(str_val)
 
-ShotgunFieldFactory.register("url", FileLinkWidget)
+ShotgunFieldManager.register("url", FileLinkWidget)

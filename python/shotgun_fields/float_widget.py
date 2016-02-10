@@ -8,16 +8,20 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+import locale
 from sgtk.platform.qt import QtGui
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
 
 
-class TagsWidget(QtGui.QLabel):
-    def __init__(self, parent=None, value=None):
-        QtGui.QLabel.__init__(self, parent)
+class FloatWidget(QtGui.QLabel):
+    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+        QtGui.QLabel.__init__(self, parent, **kwargs)
+        self.set_value(value)
 
-        if value is not None:
-            self.setText(", ".join(value))
+    def set_value(self, value):
+        if value is None:
+            self.clear()
+        else:
+            self.setText(locale.format("%.2f", value, grouping=True))
 
-
-ShotgunFieldFactory.register("tag_list", TagsWidget)
+ShotgunFieldManager.register("float", FloatWidget)

@@ -8,15 +8,11 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from sgtk.platform.qt import QtGui
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
+from .label_base_widget import LabelBaseWidget
 
 
-class PercentWidget(QtGui.QLabel):
-    def __init__(self, parent=None, value=None):
-        QtGui.QLabel.__init__(self, parent)
+class TimecodeWidget(LabelBaseWidget):
+    pass
 
-        if value is not None:
-            self.setText("%d%%" % value)
-
-ShotgunFieldFactory.register("percent", PercentWidget)
+ShotgunFieldManager.register("timecode", TimecodeWidget)

@@ -10,16 +10,20 @@
 
 import sgtk
 from sgtk.platform.qt import QtGui
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
 class StatusListWidget(QtGui.QLabel):
-    def __init__(self, parent=None, value=None):
-        QtGui.QLabel.__init__(self, parent)
+    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+        QtGui.QLabel.__init__(self, parent, **kwargs)
+        self.set_value(value)
 
-        if value is not None:
+    def set_value(self, value):
+        if value is None:
+            self.clear()
+        else:
             str_val = shotgun_globals.get_status_display_name(value)
             color_str = shotgun_globals.get_status_color(value)
 
@@ -29,4 +33,4 @@ class StatusListWidget(QtGui.QLabel):
 
             self.setText(str_val)
 
-ShotgunFieldFactory.register("status_list", StatusListWidget)
+ShotgunFieldManager.register("status_list", StatusListWidget)

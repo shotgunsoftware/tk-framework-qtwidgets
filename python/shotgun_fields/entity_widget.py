@@ -10,26 +10,31 @@
 
 import sgtk
 from sgtk.platform.qt import QtGui
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
 class EntityWidget(QtGui.QLabel):
-    def __init__(self, parent=None, value=None):
-        QtGui.QLabel.__init__(self, parent)
+    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+        QtGui.QLabel.__init__(self, parent, **kwargs)
         self.setOpenExternalLinks(True)
 
         self._bundle = sgtk.platform.current_bundle()
 
-        if value is not None:
+        self.set_value(value)
+
+    def set_value(self, value):
+        if value is None:
+            self.clear()
+        else:
             self.setText(self._entity_dict_to_html(value))
 
     def _entity_dict_to_html(self, value):
         str_val = value["name"]
         entity_url = "%sdetail/%s/%d" % (self._bundle.sgtk.shotgun_url, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
-        str_val = "<a href='%s'><img align='absmiddle' src='%s'>%s</a>" % (entity_url, entity_icon_url, str_val)
+        str_val = "<img src='%s'><a href='%s'>%s</a>" % (entity_icon_url, entity_url, str_val)
         return str_val
 
-ShotgunFieldFactory.register("entity", EntityWidget)
+ShotgunFieldManager.register("entity", EntityWidget)

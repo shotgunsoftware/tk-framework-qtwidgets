@@ -10,14 +10,18 @@
 
 import locale
 from sgtk.platform.qt import QtGui
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
 
 
-class FloatWidget(QtGui.QLabel):
-    def __init__(self, parent=None, value=None):
-        QtGui.QLabel.__init__(self, parent)
+class CurrencyWidget(QtGui.QLabel):
+    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+        QtGui.QLabel.__init__(self, parent, **kwargs)
+        self.set_value(value)
 
-        if value is not None:
-            self.setText(locale.format("%f", value, grouping=True))
+    def set_value(self, value):
+        if value is None:
+            self.clear()
+        else:
+            self.setText(locale.currency(value, grouping=True))
 
-ShotgunFieldFactory.register("float", FloatWidget)
+ShotgunFieldManager.register("currency", CurrencyWidget)

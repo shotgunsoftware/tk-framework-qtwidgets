@@ -8,15 +8,13 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from .date_widget import DateWidget
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
+from .label_base_widget import LabelBaseWidget
 
 
-class DateAndTimeWidget(DateWidget):
-    def __init__(self, parent=None, value=None):
-        DateWidget.__init__(self, parent)
+class DurationWidget(LabelBaseWidget):
+    pass
 
-        if value is not None:
-            self.setText(self._create_human_readable_timestamp(value, " %I:%M%p"))
-
-ShotgunFieldFactory.register("date_time", DateAndTimeWidget)
+# wait to register duration field until display options for hours versus days
+# and # of hours in a day are available to the API
+# ShotgunFieldManager.register("duration", DurationWidget)

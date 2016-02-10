@@ -8,11 +8,11 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from .shotgun_field_factory import ShotgunFieldFactory
+from .shotgun_field_manager import ShotgunFieldManager
 from .label_base_widget import LabelBaseWidget
 
 
-class CurrencyWidget(LabelBaseWidget):
+class FootageWidget(LabelBaseWidget):
     pass
 
-ShotgunFieldFactory.register("currency", CurrencyWidget)
+ShotgunFieldManager.register("footage", FootageWidget)
