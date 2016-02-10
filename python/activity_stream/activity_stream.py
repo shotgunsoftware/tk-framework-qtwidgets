@@ -40,10 +40,12 @@ class ActivityStreamWidget(QtGui.QWidget):
     playback_requested = QtCore.Signal(dict)   
      
     
-    def __init__(self, parent):
+    def __init__(self, parent, allow_screenshots=True):
         """
         :param parent: QT parent object
         :type parent: :class:`~PySide.QtGui.QWidget`
+        :param allow_screenshots: Allow or disallow screenshots, defaults to True.
+        :type  allow_screenshots: :class:`Boolean`
         """
         # first, call the base class and let it do its thing.
         QtGui.QWidget.__init__(self, parent)
@@ -52,6 +54,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         # now load in the UI that was created in the UI designer
         self.ui = Ui_ActivityStreamWidget() 
         self.ui.setupUi(self)
+
+        # customizations
+        self._allow_screenshots = allow_screenshots
+        self.ui.note_widget.allow_screenshots(allow_screenshots)
         
         # apply styling
         self._load_stylesheet()
@@ -83,7 +89,6 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._sg_entity_dict = None
         self._entity_type = None
         self._entity_id = None
-
 
     def set_bg_task_manager(self, task_manager):
         """
@@ -532,7 +537,12 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Callback when someone clicks reply on a given note
         """
-        reply_dialog = ReplyDialog(self, self._task_manager, note_id)
+        reply_dialog = ReplyDialog(
+            self,
+            self._task_manager,
+            note_id,
+            allow_screenshots=self._allow_screenshots,
+        )
         
         #position the reply modal dialog above the activity stream scroll area
         pos = self.mapToGlobal(self.ui.activity_stream_scroll_area.pos())
