@@ -8,11 +8,19 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+"""
+Widget that represents the value of a list field in Shotgun
+"""
 from .shotgun_field_manager import ShotgunFieldManager
 from .label_base_widget import LabelBaseWidget
 
 
 class ListWidget(LabelBaseWidget):
+    """
+    Inherited from a :class:`~LabelBaseWidget`, this class is able to
+    display a list field value as returned by the Shotgun API.
+    """
+
     pass
 
 ShotgunFieldManager.register("list", ListWidget)

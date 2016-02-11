@@ -8,16 +8,43 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+"""
+Widget that represents the value of a checkbox field in Shotgun
+"""
 from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_manager import ShotgunFieldManager
 
 
 class CheckBoxWidget(QtGui.QCheckBox):
+    """
+    Inherited from a :class:`~PySide.QtGui.QCheckBox`, this class is able to
+    display a checkbox field value as returned by the Shotgun API.
+    """
+
     def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+        """
+        Constructor for the widget.  This method passes all keyword args except
+        for those below through to the :class:`~PySide.QtGui.QCheckBox` it
+        subclasses.
+
+        :param parent: Parent widget
+        :type parent: :class:`PySide.QtGui.QWidget`
+
+        :param value: The initial value displayed by the widget as described by set_value
+
+        :param bg_task_manager: The task manager the widget will use if it needs to run a task
+        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        """
         QtGui.QCheckBox.__init__(self, parent, **kwargs)
         self.set_value(value)
 
     def set_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value displayed by the widget
+        :type value: Boolean
+        """
         if bool(value):
             self.setCheckState(QtCore.Qt.Checked)
         else:

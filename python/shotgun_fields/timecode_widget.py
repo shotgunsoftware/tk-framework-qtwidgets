@@ -8,11 +8,19 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+"""
+Widget that represents the value of a timecode field in Shotgun
+"""
 from .shotgun_field_manager import ShotgunFieldManager
 from .label_base_widget import LabelBaseWidget
 
 
 class TimecodeWidget(LabelBaseWidget):
+    """
+    Inherited from a :class:`~LabelBaseWidget`, this class is able to
+    display a timecode field value as returned by the Shotgun API.
+    """
+
     pass
 
 ShotgunFieldManager.register("timecode", TimecodeWidget)
