@@ -199,7 +199,8 @@ class ShotgunFieldManager(QtCore.QObject):
             # instantiate the widget
             return cls(
                 parent=parent,
-                value=entity[field_name],
+                entity=entity,
+                field_name=field_name,
                 bg_task_manager=self._task_manager,
                 **kwargs
             )

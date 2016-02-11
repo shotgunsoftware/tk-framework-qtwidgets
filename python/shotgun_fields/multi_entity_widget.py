@@ -21,7 +21,7 @@ class MultiEntityWidget(EntityWidget):
     display a multi_entity field value as returned by the Shotgun API.
     """
 
-    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+    def __init__(self, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
         """
         Constructor for the widget.  This method passes all keyword args except
         for those below through to the :class:`~PySide.QtGui.QLabel` it
@@ -30,13 +30,17 @@ class MultiEntityWidget(EntityWidget):
         :param parent: Parent widget
         :type parent: :class:`PySide.QtGui.QWidget`
 
-        :param value: The initial value displayed by the widget as described by set_value
+        :param entity: The Shotgun entity dictionary to pull the field value from.
+        :type entity: Whatever is returned by the Shotgun API for this field
+
+        :param field_name: Shotgun field name
+        :type field_name: String
 
         :param bg_task_manager: The task manager the widget will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
-        EntityWidget.__init__(self, parent, **kwargs)
-        self.set_value(value)
+        EntityWidget.__init__(self, parent, entity, field_name, bg_task_manager, **kwargs)
+        self.set_value(entity[field_name])
 
     def set_value(self, value):
         """

@@ -24,7 +24,7 @@ class ImageWidget(QtGui.QLabel):
     display an image field value as returned by the Shotgun API.
     """
 
-    def __init__(self, parent=None, value=None, bg_task_manager=None, **kwargs):
+    def __init__(self, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
         """
         Constructor for the widget.  This method passes all keyword args except
         for those below through to the :class:`~PySide.QtGui.QLabel` it
@@ -33,7 +33,11 @@ class ImageWidget(QtGui.QLabel):
         :param parent: Parent widget
         :type parent: :class:`PySide.QtGui.QWidget`
 
-        :param value: The initial value displayed by the widget as described by set_value
+        :param entity: The Shotgun entity dictionary to pull the field value from.
+        :type entity: Whatever is returned by the Shotgun API for this field
+
+        :param field_name: Shotgun field name
+        :type field_name: String
 
         :param bg_task_manager: The task manager the widget will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
@@ -47,14 +51,23 @@ class ImageWidget(QtGui.QLabel):
         self._data_retriever.work_completed.connect(self._on_worker_signal)
         self._data_retriever.work_failure.connect(self._on_worker_failure)
 
-        self.set_value(value)
+        self.set_value(entity[field_name], entity.get("type"), entity.get("id"), field_name)
 
-    def set_value(self, value):
+    def set_value(self, value, entity_type=None, entity_id=None, field_name=None):
         """
         Set the value displayed by the widget.
 
         :param value: The value displayed by the widget
         :type value: A String that is a valid URL for the thumbnail image
+
+        :param entity_type: The type of entity we are retrieving a field from
+        :type entity_type: String
+
+        :param entity_id: The id of the entity the value is for
+        :type entity_id: Integer
+
+        :param field_name: The name of the field the value is for
+        :type field_name: String
         """
         if value is None:
             self.clear()
@@ -63,10 +76,8 @@ class ImageWidget(QtGui.QLabel):
         # queue up the download in the background
         self._task_uid = self._data_retriever.request_thumbnail(
                 value,  # url must still be valid since we don't know the entity this is for
-                None,   # unknown entity_type
-                None,   # unknown entity_id
-                None,   # unknown field
-            )
+                entity_type, entity_id, field_name,
+        )
 
     def _on_worker_signal(self, uid, request_type, data):
         """
