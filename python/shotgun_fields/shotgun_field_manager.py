@@ -51,7 +51,7 @@ with the results of a given Shotgun query is:
             for (i, entity) in enumerate(entities):
                 for (j, field) in enumerate(fields):
                     # create the widget for each field
-                    widget = self._fields_manager.create_widget(entity_type, field, entity[field])
+                    widget = self._fields_manager.create_widget(entity_type, field, entity)
                     if widget is None:
                         # backup in case the manager does not understand this field type
                         widget = QtGui.QLabel("No widget")
@@ -167,9 +167,12 @@ class ShotgunFieldManager(QtCore.QObject):
 
         return supported_fields
 
-    def create_widget(self, sg_entity_type, field_name, value=None, parent=None, **kwargs):
+    def create_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """
         Returns the widget class associated with the field type if it has been registered.
+
+        If the entity is passed in and has the value for the requested field in it then the
+        initial contents of the widget will display that value.
 
         Any keyword args other than those below will be passed to the constructor of whatever
         QWidget the field widget wraps.
@@ -180,8 +183,8 @@ class ShotgunFieldManager(QtCore.QObject):
         :param field_name: Shotgun field name
         :type field_name: String
 
-        :param value: The initial value displayed by the widget as described by set_value
-        :type value: Whatever is returned by the Shotgun API for this field
+        :param entity: The Shotgun entity dictionary to pull the field value from.
+        :type entity: Whatever is returned by the Shotgun API for this field
 
         :param parent: Parent widget
         :type parent: :class:`PySide.QtGui.QWidget`
@@ -196,7 +199,7 @@ class ShotgunFieldManager(QtCore.QObject):
             # instantiate the widget
             return cls(
                 parent=parent,
-                value=value,
+                value=entity[field_name],
                 bg_task_manager=self._task_manager,
                 **kwargs
             )
