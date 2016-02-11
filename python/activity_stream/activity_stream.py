@@ -108,7 +108,27 @@ class ActivityStreamWidget(QtGui.QWidget):
         Should be called before the widget is closed
         """
         self._data_manager.destroy()
-        self._task_manager = None        
+        self._task_manager = None
+
+    ############################################################################
+    # properties
+
+    def _get_allow_screenshots(self):
+        """
+        Whether screenshots are being allowed.
+        """
+        return self._allow_screenshots
+
+    def _set_allow_screenshots(self, state):
+        """
+        Sets whether to allow screenshots.
+
+        :param state: True or False
+        """
+        self._allow_screenshots = bool(state)
+        self.ui.note_widget.allow_screenshots(self._allow_screenshots)
+
+    allow_screenshots = QtCore.Property(bool, _get_allow_screenshots, _set_allow_screenshots)
         
     ############################################################################
     # public interface
