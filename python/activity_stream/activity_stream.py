@@ -40,12 +40,10 @@ class ActivityStreamWidget(QtGui.QWidget):
     playback_requested = QtCore.Signal(dict)   
      
     
-    def __init__(self, parent, allow_screenshots=True):
+    def __init__(self, parent):
         """
         :param parent: QT parent object
         :type parent: :class:`~PySide.QtGui.QWidget`
-        :param allow_screenshots: Allow or disallow screenshots, defaults to True.
-        :type  allow_screenshots: :class:`Boolean`
         """
         # first, call the base class and let it do its thing.
         QtGui.QWidget.__init__(self, parent)
@@ -56,8 +54,8 @@ class ActivityStreamWidget(QtGui.QWidget):
         self.ui.setupUi(self)
 
         # customizations
-        self._allow_screenshots = allow_screenshots
-        self.ui.note_widget.allow_screenshots(allow_screenshots)
+        self._allow_screenshots = True
+        self._show_sg_stream_button = True
         
         # apply styling
         self._load_stylesheet()
@@ -128,7 +126,31 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._allow_screenshots = bool(state)
         self.ui.note_widget.allow_screenshots(self._allow_screenshots)
 
-    allow_screenshots = QtCore.Property(bool, _get_allow_screenshots, _set_allow_screenshots)
+    allow_screenshots = QtCore.Property(
+        bool,
+        _get_allow_screenshots,
+        _set_allow_screenshots,
+    )
+
+    def _get_show_sg_stream_button(self):
+        """
+        Whether the button to navigate to Shotgun is shown in the stream.
+        """
+        return self._show_sg_stream_button
+
+    def _set_show_sg_stream_button(self, state):
+        """
+        Sets whether to show the button to navigate to Shotgun.
+
+        :param state: True or False
+        """
+        self._show_sg_stream_button = bool(state)
+
+    show_sg_stream_button = QtCore.Property(
+        bool,
+        _get_show_sg_stream_button,
+        _set_show_sg_stream_button,
+    )
         
     ############################################################################
     # public interface
@@ -199,15 +221,16 @@ class ActivityStreamWidget(QtGui.QWidget):
             self.ui.activity_stream_layout.setStretchFactor(expanding_widget, 1)
             self._activity_stream_static_widgets.append(expanding_widget)
 
-            sg_stream_button = QtGui.QPushButton(self)
-            sg_stream_button.setText("Click here to see the Activity stream in Shotgun.")
-            sg_stream_button.setObjectName("full_shotgun_stream_button")
-            sg_stream_button.setCursor(QtCore.Qt.PointingHandCursor)
-            sg_stream_button.setFocusPolicy(QtCore.Qt.NoFocus)
-            sg_stream_button.clicked.connect(self._load_shotgun_activity_stream)
-            
-            self.ui.activity_stream_layout.addWidget(sg_stream_button)
-            self._activity_stream_static_widgets.append(sg_stream_button)
+            if self.show_sg_stream_button:
+                sg_stream_button = QtGui.QPushButton(self)
+                sg_stream_button.setText("Click here to see the Activity stream in Shotgun.")
+                sg_stream_button.setObjectName("full_shotgun_stream_button")
+                sg_stream_button.setCursor(QtCore.Qt.PointingHandCursor)
+                sg_stream_button.setFocusPolicy(QtCore.Qt.NoFocus)
+                sg_stream_button.clicked.connect(self._load_shotgun_activity_stream)
+                
+                self.ui.activity_stream_layout.addWidget(sg_stream_button)
+                self._activity_stream_static_widgets.append(sg_stream_button)
     
             # ids are returned in async order. Now pop them onto the activity stream,
             # old items first order...
