@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -13,7 +13,7 @@ Widget that represents the value of an image field in Shotgun
 """
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from .shotgun_field_manager import ShotgunFieldManager
+from .widget_metaclass import ShotgunFieldMeta
 
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
 
@@ -23,61 +23,38 @@ class ImageWidget(QtGui.QLabel):
     Inherited from a :class:`~PySide.QtGui.QLabel`, this class is able to
     display an image field value as returned by the Shotgun API.
     """
+    __metaclass__ = ShotgunFieldMeta
+    _FIELD_TYPE = "image"
 
-    def __init__(self, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
+    def setup_widget(self):
         """
-        Constructor for the widget.  This method passes all keyword args except
-        for those below through to the :class:`~PySide.QtGui.QLabel` it
-        subclasses.
-
-        :param parent: Parent widget
-        :type parent: :class:`PySide.QtGui.QWidget`
-
-        :param entity: The Shotgun entity dictionary to pull the field value from.
-        :type entity: Whatever is returned by the Shotgun API for this field
-
-        :param field_name: Shotgun field name
-        :type field_name: String
-
-        :param bg_task_manager: The task manager the widget will use if it needs to run a task
-        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        Initialize the widget state.  Start up a Shotgun data retriever to download
+        images in the background.
         """
-        QtGui.QLabel.__init__(self, parent, **kwargs)
         self._pixmap = None
 
         # start up a data retriever to fetch the thumbnail in the background
-        self._data_retriever = shotgun_data.ShotgunDataRetriever(bg_task_manager=bg_task_manager)
+        self._data_retriever = shotgun_data.ShotgunDataRetriever(bg_task_manager=self._bg_task_manager)
         self._data_retriever.start()
         self._data_retriever.work_completed.connect(self._on_worker_signal)
         self._data_retriever.work_failure.connect(self._on_worker_failure)
 
-        self.set_value(entity[field_name], entity.get("type"), entity.get("id"), field_name)
+    def _display_default(self):
+        """ Default widget state is empty. """
+        self.clear()
 
-    def set_value(self, value, entity_type=None, entity_id=None, field_name=None):
+    def _display_value(self, value):
         """
         Set the value displayed by the widget.
 
         :param value: The value displayed by the widget
         :type value: A String that is a valid URL for the thumbnail image
-
-        :param entity_type: The type of entity we are retrieving a field from
-        :type entity_type: String
-
-        :param entity_id: The id of the entity the value is for
-        :type entity_id: Integer
-
-        :param field_name: The name of the field the value is for
-        :type field_name: String
         """
-        if value is None:
-            self.clear()
-            return
-
         # queue up the download in the background
+        entity_id = self._entity and self._entity.get("id") or None
+        entity_type = self._entity and self._entity.get("type") or None
         self._task_uid = self._data_retriever.request_thumbnail(
-                value,  # url must still be valid since we don't know the entity this is for
-                entity_type, entity_id, field_name,
-        )
+            value, entity_type, entity_id, self._field_name)
 
     def _on_worker_signal(self, uid, request_type, data):
         """
@@ -151,5 +128,3 @@ class ImageWidget(QtGui.QLabel):
             )
         else:
             QtGui.QLabel.resizeEvent(self, event)
-
-ShotgunFieldManager.register("image", ImageWidget)

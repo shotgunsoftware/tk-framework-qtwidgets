@@ -8,5 +8,4 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from . import shotgun_field_manager
-ShotgunFieldManager = shotgun_field_manager.ShotgunFieldManager
+from .shotgun_field_manager import ShotgunFieldManager

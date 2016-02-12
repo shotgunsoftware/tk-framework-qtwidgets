@@ -8,7 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-
 """
 This module implements a central place to deal with the set of widgets that
 represent the different types of Shotgun fields.
@@ -51,7 +50,7 @@ with the results of a given Shotgun query is:
             for (i, entity) in enumerate(entities):
                 for (j, field) in enumerate(fields):
                     # create the widget for each field
-                    widget = self._fields_manager.create_widget(entity_type, field, entity)
+                    widget = self._fields_manager.create_display_widget(entity_type, field, entity)
                     if widget is None:
                         # backup in case the manager does not understand this field type
                         widget = QtGui.QLabel("No widget")
@@ -111,7 +110,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         :param bg_task_manager: Optional Task manager.  If this is not passed in one will be created
                 when the object is initialized.
-        :class bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
         QtCore.QObject.__init__(self, parent)
 
@@ -119,6 +118,11 @@ class ShotgunFieldManager(QtCore.QObject):
         self._initialized = False
 
     def __del__(self):
+        """
+        Destructor
+
+        Unregister the task_manager
+        """
         if self._initialized:
             shotgun_globals.unregister_bg_task_manager(self._task_manager)
 
@@ -128,6 +132,7 @@ class ShotgunFieldManager(QtCore.QObject):
         will be emitted.
         """
         if self._task_manager is None:
+            # create our own task manager if one wasn't passed in
             task_manager = sgtk.platform.import_framework("tk-framework-shotgunutils", "task_manager")
             self._task_manager = task_manager.BackgroundTaskManager(
                 parent=self,
@@ -135,9 +140,10 @@ class ShotgunFieldManager(QtCore.QObject):
                 start_processing=True
             )
 
+        # let shotgun globals start loading the schema
         shotgun_globals.register_bg_task_manager(self._task_manager)
-        self._initialized = True
         shotgun_globals.run_on_schema_loaded(self.__schema_loaded)
+        self._initialized = True
 
     def __schema_loaded(self):
         """
@@ -152,10 +158,10 @@ class ShotgunFieldManager(QtCore.QObject):
         :param sg_entity_type: Shotgun entity type
         :type sg_entity_type: String
 
-        :param field_names: An array of Shotgun field names
-        :type field_names: Array of String
+        :param field_names: An list of Shotgun field names
+        :type field_names: List of Strings
 
-        :returns: The subset of the field_names array that has associated widget classes.
+        :returns: The subset of field_names that have associated widget classes.
         """
         supported_fields = []
 
@@ -167,7 +173,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         return supported_fields
 
-    def create_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+    def create_display_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """
         Returns the widget class associated with the field type if it has been registered.
 
@@ -204,6 +210,7 @@ class ShotgunFieldManager(QtCore.QObject):
                 bg_task_manager=self._task_manager,
                 **kwargs
             )
+
         return None
 
     def create_label(self, sg_entity_type, field_name):
@@ -222,22 +229,16 @@ class ShotgunFieldManager(QtCore.QObject):
         return QtGui.QLabel(display_name)
 
 # import the actual field types to give them a chance to register
-from . import checkbox_widget
-from . import currency_widget
-from . import date_and_time_widget
-from . import date_widget
-from . import duration_widget
-from . import entity_widget
-from . import file_link_widget
-from . import float_widget
-from . import footage_widget
-from . import list_widget
-from . import multi_entity_widget
-from . import number_widget
-from . import percent_widget
-from . import status_list_widget
-from . import tags_widget
-from . import text_widget
-from . import image_widget
-from . import timecode_widget
+from . import checkbox_widget, currency_widget, date_and_time_widget, date_widget
+from . import entity_widget, file_link_widget, float_widget, footage_widget
+from . import image_widget, list_widget, multi_entity_widget, number_widget
+from . import percent_widget, status_list_widget, tags_widget, text_widget
 from . import url_template_widget
+
+# wait to register timecode field until the fps associated with this field
+# is available from the API
+# from . import timecode_widget
+
+# wait to register duration field until display options for hours versus days
+# and # of hours in a day are available to the API
+# from . import duration_widget

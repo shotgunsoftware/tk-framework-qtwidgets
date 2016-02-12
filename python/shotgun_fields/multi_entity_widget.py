@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -11,7 +11,6 @@
 """
 Widget that represents the value of a multi_entity field in Shotgun
 """
-from .shotgun_field_manager import ShotgunFieldManager
 from .entity_widget import EntityWidget
 
 
@@ -20,38 +19,13 @@ class MultiEntityWidget(EntityWidget):
     Inherited from a :class:`~EntityWidget`, this class is able to
     display a multi_entity field value as returned by the Shotgun API.
     """
+    _FIELD_TYPE = "multi_entity"
 
-    def __init__(self, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
+    def _string_value(self, value):
         """
-        Constructor for the widget.  This method passes all keyword args except
-        for those below through to the :class:`~PySide.QtGui.QLabel` it
-        subclasses.
+        Convert the Shotgun value for this field into a string
 
-        :param parent: Parent widget
-        :type parent: :class:`PySide.QtGui.QWidget`
-
-        :param entity: The Shotgun entity dictionary to pull the field value from.
-        :type entity: Whatever is returned by the Shotgun API for this field
-
-        :param field_name: Shotgun field name
-        :type field_name: String
-
-        :param bg_task_manager: The task manager the widget will use if it needs to run a task
-        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        :param value: The value to convert into a string
+        :type value: A List of Shotgun entity dictionaries, each with keys for at least type, id, and name
         """
-        EntityWidget.__init__(self, parent, entity, field_name, bg_task_manager, **kwargs)
-        self.set_value(entity[field_name])
-
-    def set_value(self, value):
-        """
-        Set the value displayed by the widget.
-
-        :param value: The value displayed by the widget
-        :type value: A list of Shotgun entity dictionaries, each with at least keys for name, type, and id
-        """
-        if value is None:
-            self.clear()
-        else:
-            self.setText(", ".join([self._entity_dict_to_html(entity) for entity in value]))
-
-ShotgunFieldManager.register("multi_entity", MultiEntityWidget)
+        return ", ".join([self._entity_dict_to_html(entity) for entity in value])

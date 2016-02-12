@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -11,8 +11,8 @@
 """
 Widget that represents the value of a duration field in Shotgun
 """
-from .shotgun_field_manager import ShotgunFieldManager
 from .label_base_widget import LabelBaseWidget
+from .widget_metaclass import ShotgunFieldMeta
 
 
 class DurationWidget(LabelBaseWidget):
@@ -20,9 +20,5 @@ class DurationWidget(LabelBaseWidget):
     Inherited from a :class:`~LabelBaseWidget`, this class is able to
     display a duration field value as returned by the Shotgun API.
     """
-
-    pass
-
-# wait to register duration field until display options for hours versus days
-# and # of hours in a day are available to the API
-# ShotgunFieldManager.register("duration", DurationWidget)
+    __metaclass__ = ShotgunFieldMeta
+    _FIELD_TYPE = "duration"

@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -12,49 +12,26 @@
 Widget that represents the value of a date_time field in Shotgun
 """
 import datetime
-from sgtk.platform.qt import QtGui
+from .label_base_widget import LabelBaseWidget
+from .widget_metaclass import ShotgunFieldMeta
 
-from .shotgun_field_manager import ShotgunFieldManager
 
-
-class DateAndTimeWidget(QtGui.QLabel):
+class DateAndTimeWidget(LabelBaseWidget):
     """
-    Inherited from a :class:`~PySide.QtGui.QLabel`, this class is able to
+    Inherited from a :class:`~LabelBaseWidget`, this class is able to
     display a date_time field value as returned by the Shotgun API.
     """
+    __metaclass__ = ShotgunFieldMeta
+    _FIELD_TYPE = "date_time"
 
-    def __init__(self, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
+    def _string_value(self, value):
         """
-        Constructor for the widget.  This method passes all keyword args except
-        for those below through to the :class:`~PySide.QtGui.QLabel` it
-        subclasses.
+        Convert the Shotgun value for this field into a string
 
-        :param parent: Parent widget
-        :type parent: :class:`PySide.QtGui.QWidget`
-
-        :param entity: The Shotgun entity dictionary to pull the field value from.
-        :type entity: Whatever is returned by the Shotgun API for this field
-
-        :param field_name: Shotgun field name
-        :type field_name: String
-
-        :param bg_task_manager: The task manager the widget will use if it needs to run a task
-        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        :param value: The value to convert into a string
+        :type value: :class:`datetime.datetime`
         """
-        QtGui.QLabel.__init__(self, parent, **kwargs)
-        self.set_value(entity[field_name])
-
-    def set_value(self, value):
-        """
-        Set the value displayed by the widget.
-
-        :param value: The value displayed by the widget
-        :type value: :class:`~datetime.datetime`
-        """
-        if value is None:
-            self.clear()
-        else:
-            self.setText(self._create_human_readable_timestamp(value, " %I:%M%p"))
+        return self._create_human_readable_timestamp(value, " %I:%M%p")
 
     def _create_human_readable_timestamp(self, dt, postfix=""):
         """
@@ -86,5 +63,3 @@ class DateAndTimeWidget(QtGui.QLabel):
 
         time_str = dt.strftime(format)
         return time_str
-
-ShotgunFieldManager.register("date_time", DateAndTimeWidget)

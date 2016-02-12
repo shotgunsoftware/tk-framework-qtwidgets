@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -19,36 +19,31 @@ class LabelBaseWidget(QtGui.QLabel):
     Inherited from a :class:`~PySide.QtGui.QLabel`, this class is able to
     display any Shotgun field value than can be directly rendered as a string.
     """
-
-    def __init__(self, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
+    def setup_widget(self):
         """
-        Constructor for the widget.  This method passes all keyword args except
-        for those below through to the :class:`~PySide.QtGui.QLabel` it
-        subclasses.
+        Setup the initial state of the widget.
 
-        :param parent: Parent widget
-        :type parent: :class:`PySide.QtGui.QWidget`
-
-        :param entity: The Shotgun entity dictionary to pull the field value from.
-        :type entity: Whatever is returned by the Shotgun API for this field
-
-        :param field_name: Shotgun field name
-        :type field_name: String
-
-        :param bg_task_manager: The task manager the widget will use if it needs to run a task
-        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        Allow urls in the label to be clicked by default.
         """
-        QtGui.QLabel.__init__(self, parent, **kwargs)
-        self.set_value(entity[field_name])
+        self.setOpenExternalLinks(True)
 
-    def set_value(self, value):
+    def _string_value(self, value):
         """
-        Set the value displayed by the widget.
+        Convert the value to a string for display
 
         :param value: The value displayed by the widget
         :type value: Anything with a __str__ method
         """
-        if value is None:
-            self.clear()
-        else:
-            self.setText(str(value))
+        return str(value)
+
+    def _display_default(self):
+        """ Default widget state is empty. """
+        self.clear()
+
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        self.setText(self._string_value(value))

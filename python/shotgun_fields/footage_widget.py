@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -11,8 +11,8 @@
 """
 Widget that represents the value of a footage field in Shotgun
 """
-from .shotgun_field_manager import ShotgunFieldManager
 from .label_base_widget import LabelBaseWidget
+from .widget_metaclass import ShotgunFieldMeta
 
 
 class FootageWidget(LabelBaseWidget):
@@ -20,7 +20,5 @@ class FootageWidget(LabelBaseWidget):
     Inherited from a :class:`~LabelBaseWidget`, this class is able to
     display a footage field value as returned by the Shotgun API.
     """
-
-    pass
-
-ShotgunFieldManager.register("footage", FootageWidget)
+    __metaclass__ = ShotgunFieldMeta
+    _FIELD_TYPE = "footage"

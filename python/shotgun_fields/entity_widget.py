@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -12,61 +12,35 @@
 Widget that represents the value of an entity field in Shotgun
 """
 import sgtk
-from sgtk.platform.qt import QtGui
-from .shotgun_field_manager import ShotgunFieldManager
+from .label_base_widget import LabelBaseWidget
+from .widget_metaclass import ShotgunFieldMeta
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
-class EntityWidget(QtGui.QLabel):
+class EntityWidget(LabelBaseWidget):
     """
-    Inherited from a :class:`~PySide.QtGui.QLabel`, this class is able to
+    Inherited from a :class:`~LabelBaseWidget`, this class is able to
     display an entity field value as returned by the Shotgun API.
     """
+    __metaclass__ = ShotgunFieldMeta
+    _FIELD_TYPE = "entity"
 
-    def __init__(self, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
+    def _string_value(self, value):
         """
-        Constructor for the widget.  This method passes all keyword args except
-        for those below through to the :class:`~PySide.QtGui.QLabel` it
-        subclasses.
+        Convert the Shotgun value for this field into a string
 
-        :param parent: Parent widget
-        :type parent: :class:`PySide.QtGui.QWidget`
-
-        :param entity: The Shotgun entity dictionary to pull the field value from.
-        :type entity: Whatever is returned by the Shotgun API for this field
-
-        :param field_name: Shotgun field name
-        :type field_name: String
-
-        :param bg_task_manager: The task manager the widget will use if it needs to run a task
-        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        :param value: The value to convert into a string
+        :type value: A Shotgun entity dictionary containing at least keys for type, int, and name
         """
-        QtGui.QLabel.__init__(self, parent, **kwargs)
-        self.setOpenExternalLinks(True)
-
-        self._bundle = sgtk.platform.current_bundle()
-
-        self.set_value(entity[field_name])
-
-    def set_value(self, value):
-        """
-        Set the value displayed by the widget.
-
-        :param value: The value displayed by the widget
-        :type value: Shotgun entity dictionary with at least name, type, and id keys
-        """
-        if value is None:
-            self.clear()
-        else:
-            self.setText(self._entity_dict_to_html(value))
+        return self._entity_dict_to_html(value)
 
     def _entity_dict_to_html(self, value):
         """
         Translate the entity dictionary to html that can be displayed in a
         :class:`~PySide.QtGui.QLabel`.
 
-        :param value: The entity dictionary to conver to html
+        :param value: The entity dictionary to convert to html
         :type value: An entity dictionary containing at least the name, type, and id keys
         """
         str_val = value["name"]
@@ -74,5 +48,3 @@ class EntityWidget(QtGui.QLabel):
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
         str_val = "<img src='%s'><a href='%s'>%s</a>" % (entity_icon_url, entity_url, str_val)
         return str_val
-
-ShotgunFieldManager.register("entity", EntityWidget)
