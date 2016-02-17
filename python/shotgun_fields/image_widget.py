@@ -54,14 +54,15 @@ class ImageWidget(QtGui.QLabel):
         entity_id = self._entity and self._entity.get("id") or None
         entity_type = self._entity and self._entity.get("type") or None
         self._task_uid = self._data_retriever.request_thumbnail(
-            value, entity_type, entity_id, self._field_name)
+            value, entity_type, entity_id, self._field_name, load_image=True)
 
     def _on_worker_signal(self, uid, request_type, data):
         """
         Handle the finished download by updating the image the label displays.
         """
         if uid == self._task_uid:
-            pixmap = QtGui.QPixmap(data["thumb_path"])
+            thumbnail = data["image"]
+            pixmap = QtGui.QPixmap.fromImage(thumbnail)
             self.setPixmap(pixmap)
 
     def _on_worker_failure(self, uid, msg):

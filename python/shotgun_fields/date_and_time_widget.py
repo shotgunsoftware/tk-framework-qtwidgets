@@ -59,6 +59,7 @@ class DateAndTimeWidget(LabelBaseWidget):
         elif delta.days == -1:
             format = "Tomorrow%s" % postfix
         else:
+            # use the date formatting associated with the current locale
             format = "%%x%s" % postfix
 
         time_str = dt.strftime(format)
