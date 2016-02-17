@@ -13,7 +13,7 @@ Widget that represents the value of a date_time field in Shotgun
 """
 import datetime
 from .label_base_widget import LabelBaseWidget
-from .widget_metaclass import ShotgunFieldMeta
+from .shotgun_field_meta import ShotgunFieldMeta
 
 
 class DateAndTimeWidget(LabelBaseWidget):

@@ -13,7 +13,7 @@ Widget that represents the value of an image field in Shotgun
 """
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from .widget_metaclass import ShotgunFieldMeta
+from .shotgun_field_meta import ShotgunFieldMeta
 
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
 
