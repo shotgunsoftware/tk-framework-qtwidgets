@@ -13,7 +13,7 @@ Widget that represents the value of an entity field in Shotgun
 """
 import sgtk
 from .label_base_widget import LabelBaseWidget
-from .widget_metaclass import ShotgunFieldMeta
+from .shotgun_field_meta import ShotgunFieldMeta
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 

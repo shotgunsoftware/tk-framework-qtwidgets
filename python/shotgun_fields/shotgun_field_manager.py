@@ -154,6 +154,7 @@ class ShotgunFieldManager(QtCore.QObject):
     def supported_fields(self, sg_entity_type, field_names):
         """
         Returns the subset of fields from field_names that have an associated widget class.
+        field_names may be in "bubbled" notation, for example "sg_task.Task.assignee".
 
         :param sg_entity_type: Shotgun entity type
         :type sg_entity_type: String
@@ -167,7 +168,12 @@ class ShotgunFieldManager(QtCore.QObject):
 
         # build a list of all the fields whose type is in the field map
         for field_name in field_names:
-            data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
+            # handle bubbled field syntax
+            if "." in field_name:
+                (field_entity_type, short_name) = field_name.split(".")[-2:]
+            else:
+                (field_entity_type, short_name) = (sg_entity_type, field_name)
+            data_type = shotgun_globals.get_data_type(field_entity_type, short_name)
             if data_type in self.__FIELD_TYPE_MAP:
                 supported_fields.append(field_name)
 
@@ -229,11 +235,11 @@ class ShotgunFieldManager(QtCore.QObject):
         return QtGui.QLabel(display_name)
 
 # import the actual field types to give them a chance to register
-from . import checkbox_widget, currency_widget, date_and_time_widget, date_widget
-from . import entity_widget, file_link_widget, float_widget, footage_widget
-from . import image_widget, list_widget, multi_entity_widget, number_widget
-from . import percent_widget, status_list_widget, tags_widget, text_widget
-from . import url_template_widget
+from . import (
+    checkbox_widget, currency_widget, date_and_time_widget, date_widget, entity_widget,
+    file_link_widget, float_widget, footage_widget, image_widget, list_widget, multi_entity_widget,
+    number_widget, percent_widget, status_list_widget, tags_widget, text_widget, url_template_widget
+)
 
 # wait to register timecode field until the fps associated with this field
 # is available from the API

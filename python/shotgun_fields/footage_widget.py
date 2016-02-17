@@ -12,7 +12,7 @@
 Widget that represents the value of a footage field in Shotgun
 """
 from .label_base_widget import LabelBaseWidget
-from .widget_metaclass import ShotgunFieldMeta
+from .shotgun_field_meta import ShotgunFieldMeta
 
 
 class FootageWidget(LabelBaseWidget):

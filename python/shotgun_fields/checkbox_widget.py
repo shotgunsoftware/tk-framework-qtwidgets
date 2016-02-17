@@ -12,7 +12,7 @@
 Widget that represents the value of a checkbox field in Shotgun
 """
 from sgtk.platform.qt import QtCore, QtGui
-from .widget_metaclass import ShotgunFieldMeta
+from .shotgun_field_meta import ShotgunFieldMeta
 
 
 class CheckBoxWidget(QtGui.QCheckBox):
