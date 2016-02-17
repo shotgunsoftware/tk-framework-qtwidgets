@@ -35,14 +35,6 @@ An example of how to use it is:
             # display fields that are displayable by the shotgun field widgets
             return bool(self._field_manager.supported_fields("CustomEntity02", [field]))
 
-        def checked_filter(self, field):
-            # none of the fields are checked
-            return False
-
-        def disabled_filter(self, field):
-            # none of the fields are disabled
-            return False
-
         def open_menu(self, position):
             menu = shotgun_menus.EntityFieldMenu("CustomEntity02")
 
@@ -94,6 +86,7 @@ class EntityFieldMenu(QtGui.QMenu):
         self._field_filter = None
         self._checked_filter = None
         self._disabled_filter = None
+        self._entity_type_filter = None
 
         # prefix for fields if this menu represents an entity bubbled through another field
         self._bubble_base = None
@@ -120,8 +113,9 @@ class EntityFieldMenu(QtGui.QMenu):
         """
         Set the callback used to filter which fields are shown by the menu
 
-        :param field_filter: Callback called for each entity field that returns True if the field
-            should be shown and False if it should not
+        :param field_filter: Callback called for each entity field which returns True if the field
+            should be shown and False if it should not.  The fields will be in "bubbled" notation,
+            for example "sg_sequence.Sequence.code"
         :type field_filter: A method that takes a single field string as its only argument and
             returns a boolean
         """
@@ -132,8 +126,9 @@ class EntityFieldMenu(QtGui.QMenu):
         Set the callback used to set which fields are checked.  By specifying a value other than
         None, all the menu items will be checkable.
 
-        :param checked_filter: Callback called for each entity field that returns True if the field
-            should be checked and False if it should not
+        :param checked_filter: Callback called for each entity field which returns True if the field
+            should be checked and False if it should not.  The fields will be in "bubbled" notation,
+            for example "sg_sequence.Sequence.code"
         :type checked_filter: A method that takes a single field string as its only argument and
             returns a boolean
         """
@@ -143,12 +138,24 @@ class EntityFieldMenu(QtGui.QMenu):
         """
         Set the callback used to filter which fields are disabled
 
-        :param disabled_filter: Callback called for each entity field that returns True if the field
-            should be disabled and False if it should not
+        :param disabled_filter: Callback called for each entity field which returns True if the field
+            should be disabled and False if it should not.  The fields will be in "bubbled" notation,
+            for example "sg_sequence.Sequence.code"
         :type disabled_filter: A method that takes a single field string as its only argument and
             returns a boolean
         """
         self._disabled_filter = disabled_filter
+
+    def set_entity_type_filter(self, entity_type_filter):
+        """
+        Set the callback used to filter what entity types to display in submenus
+
+        :param entity_type_filter: Callback called for each entity type which returns True if the
+            given entity type should be displayed
+        :type entity_type_filter: A method that takes a single entity types string as its only argument
+            and returns a boolean
+        """
+        self._entity_type_filter = entity_type_filter
 
     def add_label(self, title):
         """
@@ -159,8 +166,8 @@ class EntityFieldMenu(QtGui.QMenu):
         """
         # build the label widget
         label = QtGui.QLabel(self)
-        label.setStyleSheet("margin: 0.25em; color: gray;")
-        font_style = "font-variant: small-caps; font-weight: bold; font-size: large"
+        label.setStyleSheet("margin: 0.4em; color: gray;")
+        font_style = "text-transform: uppercase;"
         label.setText("<font style='%s'>%s</font>" % (font_style, title))
 
         # turn it into an action
@@ -200,7 +207,7 @@ class EntityFieldMenu(QtGui.QMenu):
             bubbled_field = self._get_bubbled_name(field)
 
             # apply any needed filtering
-            if self._field_filter is not None and not self._field_filter(bubbled_field):
+            if self._field_filter and not self._field_filter(bubbled_field):
                 continue
 
             # grab display names
@@ -210,14 +217,31 @@ class EntityFieldMenu(QtGui.QMenu):
             # grab info to build bubbled menu
             try:
                 # grab the entity types this field can bubble to
-                valid_types = shotgun_globals.get_valid_types(self._sg_entity_type, field)
-                valid_type_names = [shotgun_globals.get_type_display_name(valid_type) for valid_type in valid_types]
+                entity_types = shotgun_globals.get_valid_types(self._sg_entity_type, field)
 
-                if valid_types:
+                # filter out entities via the registered callback
+                if self._entity_type_filter:
+                    entity_types = [t for t in entity_types if self._entity_type_filter(t)]
+
+                # and filter out any entities that don't have any displayable fields
+                if self._field_filter:
+                    def entity_filter(et):
+                        # get the list of fields for this entity type
+                        fields = shotgun_globals.get_entity_fields(et)
+
+                        # and filter them down with the filter
+                        if self._field_filter:
+                            fields = [f for f in fields if self._field_filter("%s.%s.%s" % (bubbled_field, et, f))]
+
+                        return bool(fields)
+                    entity_types = [et for et in entity_types if entity_filter(et)]
+
+                if entity_types:
                     bubble_fields[field] = {
-                        "valid_types": valid_types,
-                        "valid_type_names": valid_type_names,
                         "name": display_name,
+                        "valid_types": entity_types,
+                        "valid_type_names": [shotgun_globals.get_type_display_name(et) for et in entity_types],
+                        "bubbled_bases": ["%s.%s" % (bubbled_field, et) for et in entity_types],
                     }
             except Exception:
                 # not a field that can be bubbled
@@ -246,26 +270,41 @@ class EntityFieldMenu(QtGui.QMenu):
             self.addSeparator()
             self.add_label("Linked Fields")
             for (field, field_info) in bubble_fields.iteritems():
-                bubble_menu = QtGui.QMenu(field_info["name"])
-                sorted_items = sorted(zip(field_info["valid_type_names"], field_info["valid_types"]))
-                for (name, entity_type) in sorted_items:
-                    entity_menu = EntityFieldMenu(entity_type, parent=self, bg_task_manager=self._task_manager)
+                # pull all the bubbled field data in an order that sorts by display name
+                sorted_items = sorted(
+                    zip(
+                        field_info["valid_type_names"],
+                        field_info["valid_types"],
+                        field_info["bubbled_bases"],
+                    )
+                )
 
-                    # pass on state
+                entity_menus = []
+                for (type_name, entity_type, bubble_base) in sorted_items:
+                    # build the menu for this entity passing on our state
+                    entity_menu = EntityFieldMenu(entity_type, parent=self, bg_task_manager=self._task_manager)
                     entity_menu.set_field_filter(self._field_filter)
                     entity_menu.set_disabled_filter(self._disabled_filter)
                     entity_menu.set_checked_filter(self._checked_filter)
+                    entity_menu._bubble_base = bubble_base
 
-                    if self._bubble_base:
-                        entity_menu._bubble_base = "%s.%s.%s" % (self._bubble_base, field, entity_type)
-                    else:
-                        entity_menu._bubble_base = "%s.%s" % (field, entity_type)
+                    # keep track of the menus we built and what the display name for it would be
+                    entity_menus.append((type_name, entity_menu))
 
-                    entity_menu.setTitle(name)
-                    bubble_menu.addMenu(entity_menu)
-                self.addMenu(bubble_menu)
+                if len(entity_menus) == 1:
+                    # if there is only one type of entity possible, add the menu directly
+                    entity_menu = entity_menus[0][1]
+                    entity_menu.setTitle(field_info["name"])
+                    self.addMenu(entity_menu)
+                elif len(entity_menus) > 1:
+                    # otherwise add an intermediate menu for each possible entity type
+                    bubble_menu = QtGui.QMenu(field_info["name"])
+                    for (type_name, entity_menu) in entity_menus:
+                        entity_menu.setTitle(type_name)
+                        bubble_menu.addMenu(entity_menu)
+                    self.addMenu(bubble_menu)
 
-    def _get_bubbled_name(self, field_name):
+    def _get_bubbled_name(self, field_name, bubble_base=None):
         """
         Translate the given field name into a bubbled name.  This will prepend the bubble string
         that translates the given field name into a string that can be used to reach the field
@@ -274,12 +313,12 @@ class EntityFieldMenu(QtGui.QMenu):
         :param field_name: The non-bubbled Shotgun field name
         :type field_name: String
         """
-        if self._bubble_base:
-            bubbled_field = "%s.%s" % (self._bubble_base, field_name)
-        else:
-            bubbled_field = field_name
+        if bubble_base is None:
+            bubble_base = self._bubble_base
 
-        return bubbled_field
+        if bubble_base:
+            return "%s.%s" % (bubble_base, field_name)
+        return field_name
 
     def _add_qaction(self, field, display_name):
         """
