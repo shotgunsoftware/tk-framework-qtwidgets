@@ -44,7 +44,13 @@ class EntityWidget(LabelBaseWidget):
         :type value: An entity dictionary containing at least the name, type, and id keys
         """
         str_val = value["name"]
-        entity_url = "%sdetail/%s/%d" % (self._bundle.sgtk.shotgun_url, value["type"], value["id"])
+
+        if self._bundle.sgtk.shotgun_url.endswith("/"):
+            url_base = self._bundle.sgtk.shotgun_url
+        else:
+            url_base = "%s/" % self._bundle.sgtk.shotgun_url
+
+        entity_url = "%sdetail/%s/%d" % (url_base, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
         str_val = "<img src='%s'><a href='%s'>%s</a>" % (entity_icon_url, entity_url, str_val)
         return str_val
