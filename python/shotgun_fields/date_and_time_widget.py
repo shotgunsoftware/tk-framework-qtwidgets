@@ -29,8 +29,12 @@ class DateAndTimeWidget(LabelBaseWidget):
         Convert the Shotgun value for this field into a string
 
         :param value: The value to convert into a string
-        :type value: :class:`datetime.datetime`
+        :type value: :class:`datetime.datetime` or a float representing unix time
         """
+        # shotgun_model converts datetimes to floats representing unix time so
+        # handle that as a valid value as well
+        if isinstance(value, float):
+            value = datetime.datetime.fromtimestamp(value)
         return self._create_human_readable_timestamp(value, " %I:%M%p")
 
     def _create_human_readable_timestamp(self, dt, postfix=""):

@@ -15,7 +15,7 @@ represent the different types of Shotgun fields.
 An example of how this functionality can be used to populate a QTableWidget
 with the results of a given Shotgun query is:
 
-    class ExampleDialog(QtGui.QWidget):
+    class ExampleTableWidget(QtGui.QWidget):
         def __init__(self):
             QtGui.QWidget.__init__(self)
 
@@ -63,9 +63,40 @@ with the results of a given Shotgun query is:
             layout = QtGui.QVBoxLayout(self)
             layout.addWidget(table)
             self.setLayout(layout)
+
+Or when using this functionality to display data from a ShotgunModel in a table view:
+
+class ExampleTableView(QtGui.QWidget):
+    def __init__(self):
+        QtGui.QWidget.__init__(self)
+
+        # grab a field manager to get the delegate
+        self.fields_manager = shotgun_fields.ShotgunFieldManager()
+        self.fields_manager.initialized.connect(self.on_initialized)
+        self.fields_manager.initialize()
+
+    def on_initialized(self):
+        entity_type = "Version"
+
+        # grab all displayable fields on the entity type, with "code" first
+        fields = shotgun_globals.get_entity_fields(entity_type)
+        fields = self.fields_manager.supported_fields(entity_type, fields)
+        fields = ["code"] + [f for f in fields if f != "code"]
+
+        # setup the model and view
+        self.model = shotgun_model.SimpleShotgunModel(self)
+        self.model.load_data(entity_type, filters=[], fields=fields, columns=fields)
+        self.table = views.ShotgunTableView(self.fields_manager, parent=self)
+        self.table.setModel(self.model)
+
+        # and layout the dialog
+        layout = QtGui.QVBoxLayout(self)
+        layout.addWidget(self.table)
+        self.setLayout(layout)
 """
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
+from .shotgun_field_delegate import ShotgunFieldDelegate
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
@@ -218,6 +249,29 @@ class ShotgunFieldManager(QtCore.QObject):
             )
 
         return None
+
+    def create_delegate(self, sg_entity_type, field_name, view):
+        """
+        Returns a delegate that can be used in the given view to show data from the given
+        field from the given entity type.  This delegate is designed to be used by items
+        from a shotgun_model's additional columns.  It assumes that the value for the field
+        will be stored in the ShotgunModel.SG_ASSOCIATED_FIELD_ROLE role of its current
+        index.
+
+        :param sg_entity_type: Shotgun entity type
+        :type sg_entity_type: String
+
+        :param field_name: Shotgun field name
+        :type field_name: String
+
+        :param view: The parent view for this delegate
+        :type view:  :class:`~PySide.QtGui.QWidget`
+
+        :returns: A :class:`ShotgunFieldDelegate` configured to represent the given field
+        """
+        display_widget = self.create_display_widget(sg_entity_type, field_name, parent=view)
+        edit_widget = None
+        return ShotgunFieldDelegate(display_widget, edit_widget, view)
 
     def create_label(self, sg_entity_type, field_name):
         """
