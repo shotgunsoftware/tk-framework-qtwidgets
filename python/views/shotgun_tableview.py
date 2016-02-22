@@ -40,6 +40,7 @@ class ShotgunTableView(QtGui.QTableView):
 
         # set the delegates
         columns_and_fields = model.get_additional_column_fields()
-        for (column, field) in columns_and_fields:
-            delegate = self._fields_manager.create_delegate(model.get_entity_type(), field, self)
-            self.setItemDelegateForColumn(column, delegate)
+        for column_info in columns_and_fields:
+            delegate = self._fields_manager.create_delegate(
+                model.get_entity_type(), column_info["field"], self)
+            self.setItemDelegateForColumn(column_info["column_idx"], delegate)

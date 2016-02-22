@@ -82,5 +82,5 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         :type style_options:  :class:`~PySide.QtGui.QStyleOptionViewItem`
         """
         value = model_index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)
-        sanitized_vlue = shotgun_model.sanitize_qt(value)
-        self._display_widget.set_value(sanitized_vlue)
+        sanitized_value = shotgun_model.sanitize_qt(value)
+        self._display_widget.set_value(sanitized_value)
