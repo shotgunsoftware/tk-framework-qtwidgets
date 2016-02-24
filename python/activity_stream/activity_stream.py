@@ -53,6 +53,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         self.ui = Ui_ActivityStreamWidget() 
         self.ui.setupUi(self)
 
+        # The note widget will be turned on when an entity is loaded
+        # if the entity is of an appropriate type.
+        self.ui.note_widget.hide()
+
         # customizations
         self._allow_screenshots = True
         self._show_sg_stream_button = True
@@ -363,6 +367,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         finally:
             # make the window visible again and trigger a redraw
             self.setVisible(True)
+
+            # Since we have no entity loaded, we don't need to show
+            # the note widget.
+            self.ui.note_widget.setVisible(False)
             
     def _clear_loading_widget(self):
         """
