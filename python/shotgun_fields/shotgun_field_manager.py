@@ -23,7 +23,7 @@ with the results of a given Shotgun query is:
             self._app = sgtk.platform.current_bundle()
 
             # initialize the field manager
-            self._fields_manager = shotgun_fields.ShotgunFieldManager()
+            self._fields_manager = shotgun_fields.ShotgunFieldManager(self)
             self._fields_manager.initialized.connect(self.populate_dialog)
             self._fields_manager.initialize()
 
@@ -71,7 +71,7 @@ class ExampleTableView(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
 
         # grab a field manager to get the delegate
-        self.fields_manager = shotgun_fields.ShotgunFieldManager()
+        self.fields_manager = shotgun_fields.ShotgunFieldManager(self)
         self.fields_manager.initialized.connect(self.on_initialized)
         self.fields_manager.initialize()
 
@@ -133,6 +133,7 @@ class ShotgunFieldManager(QtCore.QObject):
         cls.__FIELD_TYPE_MAP[field_type] = widget_class
 
     def __init__(self, parent=None, bg_task_manager=None):
+    def __init__(self, parent, bg_task_manager=None):
         """
         Constructor.
 
