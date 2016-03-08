@@ -132,7 +132,6 @@ class ShotgunFieldManager(QtCore.QObject):
             raise ValueError("field_type %s is already registered" % field_type)
         cls.__FIELD_TYPE_MAP[field_type] = widget_class
 
-    def __init__(self, parent=None, bg_task_manager=None):
     def __init__(self, parent, bg_task_manager=None):
         """
         Constructor.
