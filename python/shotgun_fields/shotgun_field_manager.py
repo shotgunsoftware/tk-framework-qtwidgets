@@ -162,6 +162,10 @@ class ShotgunFieldManager(QtCore.QObject):
         Initialize the task manager.  When initialization is complete the initialized signal
         will be emitted.
         """
+        if self._initialized:
+            # already initialized
+            return
+
         if self._task_manager is None:
             # create our own task manager if one wasn't passed in
             task_manager = sgtk.platform.import_framework("tk-framework-shotgunutils", "task_manager")
