@@ -21,4 +21,4 @@ class FootageWidget(LabelBaseWidget):
     display a footage field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "footage"
+    _DISPLAY_TYPE = "footage"

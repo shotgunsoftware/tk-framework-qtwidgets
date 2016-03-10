@@ -12,6 +12,7 @@
 Widget that represents the value of a status_list field in Shotgun
 """
 import sgtk
+from sgtk.platform.qt import QtGui
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -24,7 +25,7 @@ class StatusListWidget(LabelBaseWidget):
     display a status_list field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "status_list"
+    _DISPLAY_TYPE = "status_list"
 
     def _string_value(self, value):
         """
@@ -41,3 +42,32 @@ class StatusListWidget(LabelBaseWidget):
             str_val = ("<span style='color: rgb(%s)'>&#9608;</span>&nbsp;%s" % (color_str, str_val))
 
         return str_val
+
+
+class ListEditorWidget(QtGui.QComboBox):
+    __metaclass__ = ShotgunFieldMeta
+    _EDITOR_TYPE = "status_list"
+
+    def setup_widget(self):
+        self.addItem("")
+        valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
+        for value in valid_values:
+            self.addItem(shotgun_globals.get_status_display_name(value))
+
+    def _display_default(self):
+        """ Default widget state is empty. """
+        self.setCurrentIndex(0)
+
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        if value is None:
+            self.setCurrentIndex(0)
+
+        display_value = shotgun_globals.get_status_display_name(value)
+        index = self.findText(display_value)
+        if index != -1:
+            self.setCurrentIndex(index)

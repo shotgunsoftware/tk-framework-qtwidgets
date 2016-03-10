@@ -112,27 +112,43 @@ class ShotgunFieldManager(QtCore.QObject):
     """
 
     # dictionary that keeps the mapping from Shotgun data type to widget class
-    __FIELD_TYPE_MAP = {}
+    __DISPLAY_TYPE_MAP = {}
 
     # first when we are ready to manage the widgets
     initialized = QtCore.Signal()
 
     @classmethod
-    def register(cls, field_type, widget_class):
+    def register_display(cls, field_type, widget_class):
         """
-        Register the widget class that will be used for the given Shotgun field type.
+        Register the display widget class that will be used for the given Shotgun field type.
 
         :param field_type: The data type of the field to associate with a type of widget
         :type field_type: String
 
-        :param widget_class: The widget class to associate with the given field type
+        :param widget_class: The display widget class to associate with the given field type
         :type widget_class: :class:`PySide.QtGui.QWidget`
         """
-        if field_type in cls.__FIELD_TYPE_MAP:
-            raise ValueError("field_type %s is already registered" % field_type)
-        cls.__FIELD_TYPE_MAP[field_type] = widget_class
+        if "display" in cls.__DISPLAY_TYPE_MAP.get(field_type, {}):
+            raise ValueError("display widget for field_type %s is already registered" % field_type)
 
-    def __init__(self, parent=None, bg_task_manager=None):
+        cls.__DISPLAY_TYPE_MAP.setdefault(field_type, {})["display"] = widget_class
+
+    @classmethod
+    def register_editor(cls, field_type, widget_class):
+        """
+        Register the editor widget class that will be used for the given Shotgun field type.
+
+        :param field_type: The data type of the field to associate with a type of widget
+        :type field_type: String
+
+        :param widget_class: The display widget class to associate with the given field type
+        :type widget_class: :class:`PySide.QtGui.QWidget`
+        """
+        if "editor" in cls.__DISPLAY_TYPE_MAP.get(field_type, {}):
+            raise ValueError("editor widget for field_type %s is already registered" % field_type)
+
+        cls.__DISPLAY_TYPE_MAP.setdefault(field_type, {})["editor"] = widget_class
+
     def __init__(self, parent, bg_task_manager=None):
         """
         Constructor.
@@ -210,14 +226,29 @@ class ShotgunFieldManager(QtCore.QObject):
             else:
                 (field_entity_type, short_name) = (sg_entity_type, field_name)
             data_type = shotgun_globals.get_data_type(field_entity_type, short_name)
-            if data_type in self.__FIELD_TYPE_MAP:
+            if data_type in self.__DISPLAY_TYPE_MAP:
                 supported_fields.append(field_name)
 
         return supported_fields
 
+    def get_display_class(self, sg_entity_type, field_name):
+        """
+        Returns the class of the display widget associated with the field type if it has been registered.
+
+        :param sg_entity_type: Shotgun entity type
+        :type sg_entity_type: String
+
+        :param field_name: Shotgun field name
+        :type field_name: String
+
+        :returns: :class:`~PySide.QtGui.QWidget` class or None if the field type has no display widget
+        """
+        data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
+        return self.__DISPLAY_TYPE_MAP.get(data_type, {}).get("display")
+
     def create_display_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """
-        Returns the widget class associated with the field type if it has been registered.
+        Returns an instance of the display widget associated with the field type if it has been registered.
 
         If the entity is passed in and has the value for the requested field in it then the
         initial contents of the widget will display that value.
@@ -239,16 +270,69 @@ class ShotgunFieldManager(QtCore.QObject):
 
         :returns: :class:`~PySide.QtGui.QWidget` or None if the field type has no display widget
         """
-        data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
+        cls = self.get_display_class(sg_entity_type, field_name)
 
-        if data_type in self.__FIELD_TYPE_MAP:
-            cls = self.__FIELD_TYPE_MAP[data_type]
-
+        if cls:
             # instantiate the widget
             return cls(
                 parent=parent,
-                entity=entity,
+                entity_type=sg_entity_type,
                 field_name=field_name,
+                entity=entity,
+                bg_task_manager=self._task_manager,
+                **kwargs
+            )
+
+        return None
+
+    def get_editor_class(self, sg_entity_type, field_name):
+        """
+        Returns the class of the editor widget associated with the field type if it has been registered.
+
+        :param sg_entity_type: Shotgun entity type
+        :type sg_entity_type: String
+
+        :param field_name: Shotgun field name
+        :type field_name: String
+
+        :returns: :class:`~PySide.QtGui.QWidget` class or None if the field type has no editor widget
+        """
+        data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
+        return self.__DISPLAY_TYPE_MAP.get(data_type, {}).get("editor")
+
+    def create_editor_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+        """
+        Returns an instance of the editor widget associated with the field type if it has been registered.
+
+        If the entity is passed in and has the value for the requested field in it then the
+        initial contents of the widget will edit that value.
+
+        Any keyword args other than those below will be passed to the constructor of whatever
+        QWidget the field widget wraps.
+
+        :param sg_entity_type: Shotgun entity type
+        :type sg_entity_type: String
+
+        :param field_name: Shotgun field name
+        :type field_name: String
+
+        :param entity: The Shotgun entity dictionary to pull the field value from.
+        :type entity: Whatever is returned by the Shotgun API for this field
+
+        :param parent: Parent widget
+        :type parent: :class:`PySide.QtGui.QWidget`
+
+        :returns: :class:`~PySide.QtGui.QWidget` or None if the field type has no editor widget
+        """
+        cls = self.get_editor_class(sg_entity_type, field_name)
+
+        if cls:
+            # instantiate the widget
+            return cls(
+                parent=parent,
+                entity_type=sg_entity_type,
+                field_name=field_name,
+                entity=entity,
                 bg_task_manager=self._task_manager,
                 **kwargs
             )
@@ -274,9 +358,16 @@ class ShotgunFieldManager(QtCore.QObject):
 
         :returns: A :class:`ShotgunFieldDelegate` configured to represent the given field
         """
-        display_widget = self.create_display_widget(sg_entity_type, field_name, parent=view)
-        edit_widget = None
-        return ShotgunFieldDelegate(display_widget, edit_widget, view)
+        display_class = self.get_display_class(sg_entity_type, field_name)
+        editor_class = self.get_editor_class(sg_entity_type, field_name)
+        return ShotgunFieldDelegate(
+            sg_entity_type,
+            field_name,
+            display_class,
+            editor_class,
+            view,
+            bg_task_manager=self._task_manager
+        )
 
     def create_label(self, sg_entity_type, field_name):
         """

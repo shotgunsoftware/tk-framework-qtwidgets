@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_manager import ShotgunFieldManager
 
 
@@ -20,9 +20,9 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
     Metaclass to implement the default logic common to all Shotgun field widgets.
     This metaclass implements the following behaviors:
 
-    - All classes defined with this metaclass must have a member named _FIELD_TYPE whose value is
-      the string of the field data type that the class will be responsible for displaying.  The class
-      will be registered with the field manager as the widget class for that data type.
+    - All classes defined with this metaclass must have a member named _DISPLAY_TYPE or a member
+      named _EDITOR_TYPE whose value is the string of the field data type that the class will be
+      responsible for displaying.
 
     - No class defined with this metaclass can define its own __init__ method.  The metaclass defines
       an __init__ that takes the following arguments:
@@ -72,35 +72,47 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         Construct the class object for a Shotgun field widget class
         """
         # validate the class definition to make sure it implements the needed interface
-        if "_FIELD_TYPE" not in class_dict:
-            raise ValueError("ShotgunFieldMeta classes must have a _FIELD_TYPE member variable")
+        if ("_DISPLAY_TYPE" not in class_dict) and ("_EDITOR_TYPE" not in class_dict):
+            raise ValueError("ShotgunFieldMeta classes must have a _DISPLAY_TYPE or _EDITOR_TYPE member variable")
         if "__init__" in class_dict:
             raise ValueError("ShotgunFieldMeta classes cannot define their own constructor")
 
         # take over interface methods if they have not already been defined
         mcl.take_over_if_not_defined("setup_widget", mcl.setup_widget, class_dict, parents)
         mcl.take_over_if_not_defined("set_value", mcl.set_value, class_dict, parents)
+        mcl.take_over_if_not_defined("get_value", mcl.get_value, class_dict, parents)
+
+        # register the signal that will be emitted as the value changes
+        class_dict["value_changed"] = QtCore.Signal()
 
         # create the class instance itself
         field_class = super(ShotgunFieldMeta, mcl).__new__(mcl, name, parents, class_dict)
 
-        # register the field type this class implements with the field manager
-        ShotgunFieldManager.register(class_dict["_FIELD_TYPE"], field_class)
+        if "_DISPLAY_TYPE" in class_dict:
+            # register the field type this class implements with the field manager
+            ShotgunFieldManager.register_display(class_dict["_DISPLAY_TYPE"], field_class)
+
+        if "_EDITOR_TYPE" in class_dict:
+            # register the field type this class implements with the field manager
+            ShotgunFieldManager.register_editor(class_dict["_EDITOR_TYPE"], field_class)
 
         return field_class
 
-    def __call__(cls, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
+    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, **kwargs):
         """
         Create an instance of the given class.
 
         :param parent: Parent widget
-        :type parent: :class:`PySide.QtGui.QWidget`
+        :type parent: :class:`~PySide.QtGui.QWidget`
 
-        :param entity: The Shotgun entity dictionary to pull the field value from.
-        :type entity: Whatever is returned by the Shotgun API for this field
+        :param entity_type: Shotgun entity type
+        :type field_name: String
 
         :param field_name: Shotgun field name
         :type field_name: String
+
+        :param entity: The Shotgun entity dictionary to pull the field value from.
+        :type entity: Whatever is returned by the Shotgun API for this field
 
         :param bg_task_manager: The task manager the widget will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
@@ -112,7 +124,9 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         instance = super(ShotgunFieldMeta, cls).__call__(parent=None, **kwargs)
 
         # set the default member variables
+        instance._value = None
         instance._entity = entity
+        instance._entity_type = entity_type
         instance._field_name = field_name
         instance._bg_task_manager = bg_task_manager
         instance._bundle = sgtk.platform.current_bundle()
@@ -166,10 +180,20 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
     def set_value(self, value):
         """
         Set the value displayed by the widget.
+        This will result in value_changed being emitted.
 
         :param value: The value displayed by the widget
         """
+        self._value = value
         if value is None:
             self._display_default()
         else:
             self._display_value(value)
+        self.value_changed.emit()
+
+    @staticmethod
+    def get_value(self):
+        """
+        Get the current value displayed by the widget.
+        """
+        return self._value

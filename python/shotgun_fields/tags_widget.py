@@ -21,7 +21,7 @@ class TagsWidget(LabelBaseWidget):
     display a tag_list field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "tag_list"
+    _DISPLAY_TYPE = "tag_list"
 
     def _string_value(self, value):
         """

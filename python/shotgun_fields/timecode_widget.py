@@ -21,4 +21,4 @@ class TimecodeWidget(LabelBaseWidget):
     display a timecode field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "timecode"
+    _DISPLAY_TYPE = "timecode"

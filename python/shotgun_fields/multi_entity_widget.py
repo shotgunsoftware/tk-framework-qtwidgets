@@ -19,7 +19,7 @@ class MultiEntityWidget(EntityWidget):
     Inherited from a :class:`~EntityWidget`, this class is able to
     display a multi_entity field value as returned by the Shotgun API.
     """
-    _FIELD_TYPE = "multi_entity"
+    _DISPLAY_TYPE = "multi_entity"
 
     def _string_value(self, value):
         """

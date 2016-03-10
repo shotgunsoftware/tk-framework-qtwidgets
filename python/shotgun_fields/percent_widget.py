@@ -22,7 +22,7 @@ class PercentWidget(LabelBaseWidget):
     display a percent field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "percent"
+    _DISPLAY_TYPE = "percent"
 
     def _string_value(self, value):
         """

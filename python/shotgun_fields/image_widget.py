@@ -24,7 +24,7 @@ class ImageWidget(QtGui.QLabel):
     display an image field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "image"
+    _DISPLAY_TYPE = "image"
 
     def setup_widget(self):
         """

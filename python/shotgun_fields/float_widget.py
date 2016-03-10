@@ -12,6 +12,7 @@
 Widget that represents the value of a float field in Shotgun
 """
 import locale
+from sgtk.platform.qt import QtGui
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -22,7 +23,7 @@ class FloatWidget(LabelBaseWidget):
     display a float field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "float"
+    _DISPLAY_TYPE = "float"
 
     def _string_value(self, value):
         """
@@ -32,3 +33,25 @@ class FloatWidget(LabelBaseWidget):
         :type value: Float
         """
         return locale.format("%.2f", value, grouping=True)
+
+
+class FloatEditorWidget(QtGui.QDoubleSpinBox):
+    __metaclass__ = ShotgunFieldMeta
+    _EDITOR_TYPE = "float"
+
+    def setup_widget(self):
+        # Qt Spinner's max/min are int32 max/min values
+        self.setMaximum(float("inf"))
+        self.setMinimum(float("-inf"))
+
+    def _display_default(self):
+        """ Default widget state is empty. """
+        self.clear()
+
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        self.setValue(value)

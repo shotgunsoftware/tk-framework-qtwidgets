@@ -21,4 +21,5 @@ class DurationWidget(LabelBaseWidget):
     display a duration field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "duration"
+    _DISPLAY_TYPE = "duration"
+    _EDITOR_TYPE = "duration"

@@ -21,7 +21,7 @@ class UrlTemplateWidget(LabelBaseWidget):
     display a url_template field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "url_template"
+    _DISPLAY_TYPE = "url_template"
 
     def _string_value(self, value):
         """

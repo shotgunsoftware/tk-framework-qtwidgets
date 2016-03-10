@@ -12,6 +12,7 @@
 Widget that represents the value of a date_time field in Shotgun
 """
 import datetime
+from sgtk.platform.qt import QtGui
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -22,7 +23,7 @@ class DateAndTimeWidget(LabelBaseWidget):
     display a date_time field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "date_time"
+    _DISPLAY_TYPE = "date_time"
 
     def _string_value(self, value):
         """
@@ -68,3 +69,27 @@ class DateAndTimeWidget(LabelBaseWidget):
 
         time_str = dt.strftime(format)
         return time_str
+
+
+class DateAndTimeEditorWidget(QtGui.QDateTimeEdit):
+    __metaclass__ = ShotgunFieldMeta
+    _EDITOR_TYPE = "date_time"
+
+    def setup_widget(self):
+        self.setCalendarPopup(True)
+
+    def _display_default(self):
+        """ Default widget state is empty. """
+        self.clear()
+
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        # shotgun_model converts datetimes to floats representing unix time so
+        # handle that as a valid value as well
+        if isinstance(value, float):
+            value = datetime.datetime.fromtimestamp(value)
+        self.setDateTime(value)

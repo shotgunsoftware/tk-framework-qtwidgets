@@ -21,7 +21,7 @@ class FileLinkWidget(LabelBaseWidget):
     display a url field (also known as a file field) value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "url"
+    _DISPLAY_TYPE = "url"
 
     def _string_value(self, value):
         """
