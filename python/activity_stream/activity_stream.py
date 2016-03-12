@@ -33,7 +33,6 @@ class ActivityStreamWidget(QtGui.QWidget):
             on a version. Returns a shotgun dictionary with information
             about the version.
     """
-    
     # max number of items to show in the activity stream.
     MAX_STREAM_LENGTH = 20
     entity_requested = QtCore.Signal(str, int)

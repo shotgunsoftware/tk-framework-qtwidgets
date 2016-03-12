@@ -36,6 +36,7 @@ class NoteInputWidget(QtGui.QWidget):
     
     _EDITOR_WIDGET_INDEX = 0
     _NEW_NOTE_WIDGET_INDEX = 1
+    _ATTACHMENTS_WIDGET_INDEX = 2
     
     # emitted when shotgun has been updated
     data_updated = QtCore.Signal()
@@ -78,6 +79,9 @@ class NoteInputWidget(QtGui.QWidget):
         self.ui.submit.clicked.connect(self._submit)
         self.ui.close.clicked.connect(self._cancel)
         self.ui.close.clicked.connect(self.close_clicked)
+        self.ui.attach.clicked.connect(self.open_attachments)
+        self.ui.add_attachments.clicked.connect(self._add_attachments)
+        self.ui.close_attachments.clicked.connect(self._cancel_attachments)
 
         # reset state of the UI
         self.clear()
@@ -122,6 +126,12 @@ class NoteInputWidget(QtGui.QWidget):
         """
         User clicks the preview part of the widget
         """
+        self.open_editor()
+
+    def _add_attachments(self):
+        pass
+
+    def _cancel_attachments(self):
         self.open_editor()
 
     def _cancel(self):
@@ -489,6 +499,14 @@ class NoteInputWidget(QtGui.QWidget):
         :type  state: :class:`Boolean`
         """
         self.ui.screenshot.setVisible(bool(state))
+
+    def open_attachments(self):
+        """
+        Sets the attachments editor into its "open mode" which will
+        allow the user to attach files to the note.
+        """
+        self.ui.stacked_widget.setCurrentIndex(self._ATTACHMENTS_WIDGET_INDEX)
+        self._adjust_ui()
         
     def open_editor(self):
         """
@@ -509,6 +527,10 @@ class NoteInputWidget(QtGui.QWidget):
             self.setMaximumSize(QtCore.QSize(16777215, 80))
              
         elif self.ui.stacked_widget.currentIndex() == self._EDITOR_WIDGET_INDEX:
+            self.setMinimumSize(QtCore.QSize(0, 120))
+            self.setMaximumSize(QtCore.QSize(16777215, 120))
+
+        elif self.ui.stacked_widget.currentIndex() == self._ATTACHMENTS_WIDGET_INDEX:
             self.setMinimumSize(QtCore.QSize(0, 120))
             self.setMaximumSize(QtCore.QSize(16777215, 120))
              
