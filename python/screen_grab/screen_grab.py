@@ -15,6 +15,10 @@ import os
 from sgtk.platform.qt import QtCore, QtGui
 import sgtk
 
+# If set to a callable, it will be used when performing a
+# screen grab in place of the default behavior defined in
+# this module.
+SCREEN_GRAB_CALLBACK = None
 
 class ScreenGrabber(QtGui.QDialog):
     """
@@ -270,6 +274,17 @@ def get_desktop_pixmap(rect):
     return QtGui.QPixmap.grabWindow(desktop.winId(), rect.x(), rect.y(),
                                     rect.width(), rect.height())
 
+def override_screen_grab_callback(callback):
+    """
+    Sets the given callable as the preferred routine for
+    performing screen captures via the screen_capture function.
+
+    :param callback:    A Python callable to use as a callback when
+                        performing screen-capture operations.
+    """
+    global SCREEN_GRAB_CALLBACK
+    SCREEN_GRAB_CALLBACK = callback
+
 def screen_capture():
     """
     Modally displays the screen capture tool.
@@ -277,8 +292,9 @@ def screen_capture():
     :returns: Captured screen
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
-
-    if sys.platform in ["linux2", "darwin"]:
+    if SCREEN_GRAB_CALLBACK:
+        return SCREEN_GRAB_CALLBACK()
+    elif sys.platform in ["linux2", "darwin"]:
         # there are known issues with the QT based screen grabbing
         # on linux - some distros don't have a X11 compositing manager
         # so transparent windows aren't supported. With macosx there
