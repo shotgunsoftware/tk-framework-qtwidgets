@@ -620,6 +620,7 @@ class NoteInputWidget(QtGui.QWidget):
 
         self.ui.stacked_widget.setCurrentIndex(self._ATTACHMENTS_WIDGET_INDEX)
         self._adjust_ui()
+        self._add_attachments()
         
     def open_editor(self):
         """
