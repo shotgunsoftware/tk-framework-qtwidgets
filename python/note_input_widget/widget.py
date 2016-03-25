@@ -308,7 +308,7 @@ class NoteInputWidget(QtGui.QWidget):
                       {"addressings_cc": updated_links})
             
         self.__upload_thumbnail(note_link, sg, data)
-        self.__upload_attachments(sg_note_data, sg, data)     
+        self.__upload_attachments(note_link, sg, data)     
                 
         
     def _async_submit_note(self, sg, data):
