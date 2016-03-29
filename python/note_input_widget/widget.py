@@ -461,6 +461,10 @@ class NoteInputWidget(QtGui.QWidget):
         for file_path in data.get("attachments", []):
             if os.path.exists(file_path):
                 self.__upload_file(file_path, parent_entity, sg)
+            else:
+                self._bundle.log_warning(
+                    "File does not exist and will not be uploaded: %s" % file_path
+                )
 
 
     def __upload_file(self, file_path, parent_entity, sg):
