@@ -25,6 +25,11 @@ class ScreenGrabber(QtGui.QDialog):
     blit the selected portion of the screen into a pixmap.
     """
 
+    # If set to a callable, it will be used when performing a
+    # screen grab in place of the default behavior defined in
+    # this module.
+    SCREEN_GRAB_CALLBACK = None
+
     def __init__(self, parent=None):
         """
         Constructor
@@ -138,6 +143,29 @@ class ScreenGrabber(QtGui.QDialog):
         Mouse move event
         """
         self.repaint()
+
+    @classmethod
+    def screen_capture(cls):
+        """
+        Modally displays the screen capture tool.
+
+        :returns: Captured screen
+        :rtype: :class:`~PySide.QtGui.QPixmap`
+        """
+        if cls.SCREEN_GRAB_CALLBACK:
+            return cls.SCREEN_GRAB_CALLBACK()
+        elif sys.platform in ["linux2", "darwin"]:
+            # there are known issues with the QT based screen grabbing
+            # on linux - some distros don't have a X11 compositing manager
+            # so transparent windows aren't supported. With macosx there
+            # are known issues with some multi-diplay setups. In both
+            # these cases, fall back onto a traditional approach where
+            # an external application is used to grab the screenshot.  
+            return _external_screenshot()
+        else:
+            tool = ScreenGrabber()
+            tool.exec_()
+            return get_desktop_pixmap(tool.capture_rect)
 
     def showEvent(self, event):
         """
@@ -270,26 +298,11 @@ def get_desktop_pixmap(rect):
     return QtGui.QPixmap.grabWindow(desktop.winId(), rect.x(), rect.y(),
                                     rect.width(), rect.height())
 
-def screen_capture():
-    """
-    Modally displays the screen capture tool.
 
-    :returns: Captured screen
-    :rtype: :class:`~PySide.QtGui.QPixmap`
-    """
-
-    if sys.platform in ["linux2", "darwin"]:
-        # there are known issues with the QT based screen grabbing
-        # on linux - some distros don't have a X11 compositing manager
-        # so transparent windows aren't supported. With macosx there
-        # are known issues with some multi-diplay setups. In both
-        # these cases, fall back onto a traditional approach where
-        # an external application is used to grab the screenshot.  
-        return _external_screenshot()
-    else:
-        tool = ScreenGrabber()
-        tool.exec_()
-        return get_desktop_pixmap(tool.capture_rect)
+# Backwards compatibility, as this used to be a module-level
+# function but has been moved to being a classmethod on the
+# ScreenGrabber class.
+screen_capture = ScreenGrabber.screen_capture
 
 
 def screen_capture_file(output_path=None):
