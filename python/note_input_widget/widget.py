@@ -195,7 +195,7 @@ class NoteInputWidget(QtGui.QWidget):
         if self._pixmap is None:
             # no pixmap exists - screengrab mode
             self._bundle.log_debug("Prompting for screenshot...")
-            pixmap = screen_grab.screen_capture()
+            pixmap = screen_grab.ScreenGrabber.screen_capture()
 
             # It's possible that there's custom screencapture logic
             # happening and we won't get a pixmap back right away.

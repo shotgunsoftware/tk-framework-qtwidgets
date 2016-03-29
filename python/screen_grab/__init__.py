@@ -10,10 +10,10 @@
 
 
 from .screen_grab import (
+    ScreenGrabber,
     get_desktop_pixmap,
     screen_capture,
-    screen_capture_file,
-    override_screen_grab_callback,
+    screen_capture_file
 )
 
 
