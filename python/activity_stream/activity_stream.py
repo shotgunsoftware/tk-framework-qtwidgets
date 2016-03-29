@@ -33,7 +33,6 @@ class ActivityStreamWidget(QtGui.QWidget):
             on a version. Returns a shotgun dictionary with information
             about the version.
     """
-    
     # max number of items to show in the activity stream.
     MAX_STREAM_LENGTH = 20
     entity_requested = QtCore.Signal(str, int)
@@ -52,6 +51,14 @@ class ActivityStreamWidget(QtGui.QWidget):
         # now load in the UI that was created in the UI designer
         self.ui = Ui_ActivityStreamWidget() 
         self.ui.setupUi(self)
+
+        # The note widget will be turned on when an entity is loaded
+        # if the entity is of an appropriate type.
+        self.ui.note_widget.hide()
+
+        # customizations
+        self._allow_screenshots = True
+        self._show_sg_stream_button = True
         
         # apply styling
         self._load_stylesheet()
@@ -83,7 +90,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._sg_entity_dict = None
         self._entity_type = None
         self._entity_id = None
-        
+
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
@@ -102,7 +109,51 @@ class ActivityStreamWidget(QtGui.QWidget):
         Should be called before the widget is closed
         """
         self._data_manager.destroy()
-        self._task_manager = None        
+        self._task_manager = None
+
+    ############################################################################
+    # properties
+
+    def _get_allow_screenshots(self):
+        """
+        Whether screenshots are being allowed.
+        """
+        return self._allow_screenshots
+
+    def _set_allow_screenshots(self, state):
+        """
+        Sets whether to allow screenshots.
+
+        :param state: True or False
+        """
+        self._allow_screenshots = bool(state)
+        self.ui.note_widget.allow_screenshots(self._allow_screenshots)
+
+    allow_screenshots = QtCore.Property(
+        bool,
+        _get_allow_screenshots,
+        _set_allow_screenshots,
+    )
+
+    def _get_show_sg_stream_button(self):
+        """
+        Whether the button to navigate to Shotgun is shown in the stream.
+        """
+        return self._show_sg_stream_button
+
+    def _set_show_sg_stream_button(self, state):
+        """
+        Sets whether to show the button to navigate to Shotgun.
+
+        :param state: True or False
+        """
+        self._show_sg_stream_button = bool(state)
+
+    show_sg_stream_button = QtCore.Property(
+        bool,
+        _get_show_sg_stream_button,
+        _set_show_sg_stream_button,
+    )
         
     ############################################################################
     # public interface
@@ -114,6 +165,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         :param sg_entity_dict: Dictionary with keys type and id
         """
+ 
         self._bundle.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
         # clean up everything first
         self._clear()
@@ -172,15 +224,16 @@ class ActivityStreamWidget(QtGui.QWidget):
             self.ui.activity_stream_layout.setStretchFactor(expanding_widget, 1)
             self._activity_stream_static_widgets.append(expanding_widget)
 
-            sg_stream_button = QtGui.QPushButton(self)
-            sg_stream_button.setText("Click here to see the Activity stream in Shotgun.")
-            sg_stream_button.setObjectName("full_shotgun_stream_button")
-            sg_stream_button.setCursor(QtCore.Qt.PointingHandCursor)
-            sg_stream_button.setFocusPolicy(QtCore.Qt.NoFocus)
-            sg_stream_button.clicked.connect(self._load_shotgun_activity_stream)
-            
-            self.ui.activity_stream_layout.addWidget(sg_stream_button)
-            self._activity_stream_static_widgets.append(sg_stream_button)
+            if self.show_sg_stream_button:
+                sg_stream_button = QtGui.QPushButton(self)
+                sg_stream_button.setText("Click here to see the Activity stream in Shotgun.")
+                sg_stream_button.setObjectName("full_shotgun_stream_button")
+                sg_stream_button.setCursor(QtCore.Qt.PointingHandCursor)
+                sg_stream_button.setFocusPolicy(QtCore.Qt.NoFocus)
+                sg_stream_button.clicked.connect(self._load_shotgun_activity_stream)
+                
+                self.ui.activity_stream_layout.addWidget(sg_stream_button)
+                self._activity_stream_static_widgets.append(sg_stream_button)
     
             # ids are returned in async order. Now pop them onto the activity stream,
             # old items first order...
@@ -313,6 +366,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         finally:
             # make the window visible again and trigger a redraw
             self.setVisible(True)
+
+            # Since we have no entity loaded, we don't need to show
+            # the note widget.
+            self.ui.note_widget.setVisible(False)
             
     def _clear_loading_widget(self):
         """
@@ -530,7 +587,12 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Callback when someone clicks reply on a given note
         """
-        reply_dialog = ReplyDialog(self, self._task_manager, note_id)
+        reply_dialog = ReplyDialog(
+            self,
+            self._task_manager,
+            note_id,
+            allow_screenshots=self._allow_screenshots,
+        )
         
         #position the reply modal dialog above the activity stream scroll area
         pos = self.mapToGlobal(self.ui.activity_stream_scroll_area.pos())

@@ -96,7 +96,7 @@ class ReplyWidget(ActivityStreamBaseWidget):
         # set standard date field
         self._set_timestamp(data, self.ui.date)
         
-        self.ui.header_left.setText("<big>%s</big>" % entity_url)
+        self.ui.header_left.setText("%s" % entity_url)
         
         self.ui.reply.setText(data["content"])
         
