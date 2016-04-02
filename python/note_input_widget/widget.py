@@ -143,10 +143,7 @@ class NoteInputWidget(QtGui.QWidget):
             "Select files to attach.",
         )
 
-        for file_path in file_paths[0]:
-            self.ui.attachment_list_tree.addTopLevelItem(
-                QtGui.QTreeWidgetItem([file_path])
-            )
+        self.add_files_to_attachments(file_paths[0])
 
     def _remove_selected_attachments(self):
         """
@@ -600,6 +597,17 @@ class NoteInputWidget(QtGui.QWidget):
         
     ###########################################################################
     # public interface
+
+    def add_files_to_attachments(self, file_paths):
+        """
+        Adds the given list of file paths to the attachments list.
+
+        :param file_paths:  A list of file paths to attach.
+        """
+        for file_path in file_paths:
+            self.ui.attachment_list_tree.addTopLevelItem(
+                QtGui.QTreeWidgetItem([file_path])
+            )
 
     def allow_screenshots(self, state):
         """
