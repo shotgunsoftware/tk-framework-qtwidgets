@@ -69,6 +69,7 @@ class NoteInputWidget(QtGui.QWidget):
         self._entity_id = None        # current associated entity 
         self._pixmap = None             # 
         self._attachments = []
+        self._cleanup_after_upload = []
 
         # set up an overlay that spins when note is submitted
         self.__overlay = SmallOverlayWidget(self)
@@ -479,6 +480,13 @@ class NoteInputWidget(QtGui.QWidget):
         sg.upload(parent_entity["type"], parent_entity["id"], str(file_path))
         self._bundle.log_debug("Upload complete!")
 
+        if file_path in self._cleanup_after_upload:
+            self._bundle.log_debug("Cleanup requested post upload: %s" % file_path)
+            try:
+                os.remove(file_path)
+            except Exception:
+                self._bundle.log_warning("Unable to remove file: %s" % file_path)
+
         
     def __upload_thumbnail(self, parent_entity, sg, data):
         
@@ -598,16 +606,22 @@ class NoteInputWidget(QtGui.QWidget):
     ###########################################################################
     # public interface
 
-    def add_files_to_attachments(self, file_paths):
+    def add_files_to_attachments(self, file_paths, cleanup_after_upload=False):
         """
         Adds the given list of file paths to the attachments list.
 
-        :param file_paths:  A list of file paths to attach.
+        :param file_paths:              A list of file paths to attach.
+        :param cleanup_after_upload:    If True, the given files will be
+                                        removed once they are uploaded to
+                                        Shotgun.
         """
         for file_path in file_paths:
             self.ui.attachment_list_tree.addTopLevelItem(
                 QtGui.QTreeWidgetItem([file_path])
             )
+
+        if cleanup_after_upload:
+            self._cleanup_after_upload.extend(file_paths)
 
     def allow_screenshots(self, state):
         """
@@ -678,6 +692,7 @@ class NoteInputWidget(QtGui.QWidget):
         self._processing_id = None
         self._pixmap = None
         self._attachments = []
+        self._cleanup_after_upload = []
         
         # make sure the screenshot button shows the camera icon
         self.ui.thumbnail.hide()
