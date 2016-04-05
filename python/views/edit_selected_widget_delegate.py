@@ -19,6 +19,10 @@ class EditSelectedWidgetDelegate(WidgetDelegate):
     presented for the selected item whilst all other items are simply drawn with a single
     widget.
 
+    :ivar selection_model:      The selection model of the delegate's parent view, if one
+                                existed at the time of the delegate's initialization.
+    :vartype selection_model:   QtGui.QItemSelectionModel
+
     You use this class by subclassing it and implementing the methods:
 
     - :meth:`_get_painter_widget()`     - return the widget to be used to paint an index
@@ -52,9 +56,10 @@ class EditSelectedWidgetDelegate(WidgetDelegate):
 
         # note! Need to have a model connected to the view in order
         # to have a selection model.
-        self.__selection_model = view.selectionModel()
-        if self.__selection_model:
-            self.__selection_model.selectionChanged.connect(self._on_selection_changed)
+        self.selection_model = view.selectionModel()
+
+        if self.selection_model:
+            self.selection_model.selectionChanged.connect(self._on_selection_changed)
 
     ########################################################################################
     # implemented by deriving classes
