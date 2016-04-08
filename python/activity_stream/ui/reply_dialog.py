@@ -20,7 +20,7 @@ class Ui_ReplyDialog(object):
         self.verticalLayout.addWidget(self.label)
         self.note_widget = NoteInputWidget(ReplyDialog)
         self.note_widget.setMinimumSize(QtCore.QSize(0, 40))
-        self.note_widget.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.note_widget.setFocusPolicy(QtCore.Qt.NoFocus)
         self.note_widget.setObjectName("note_widget")
         self.verticalLayout.addWidget(self.note_widget)
 
