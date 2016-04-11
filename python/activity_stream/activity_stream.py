@@ -32,6 +32,9 @@ class ActivityStreamWidget(QtGui.QWidget):
     :signal playback_requested(dict): Fires when someone clicks the playback url
             on a version. Returns a shotgun dictionary with information
             about the version.
+    :ivar reply_dialog: When a ReplyDialog is active it can be accessed here. If there
+                        is no ReplyDialog active, then this will be set to None.
+    :vartype reply_dialog: .dialog_reply.ReplyDialog or None
     """
     # max number of items to show in the activity stream.
     MAX_STREAM_LENGTH = 20
@@ -90,6 +93,9 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._sg_entity_dict = None
         self._entity_type = None
         self._entity_id = None
+
+        # When a ReplyDialog is active it will be stored here.
+        self.reply_dialog = None
 
     def set_bg_task_manager(self, task_manager):
         """
@@ -602,11 +608,13 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         # and pop it
         try:
+            self.reply_dialog = reply_dialog
             self.__small_overlay.show()
             if reply_dialog.exec_() == QtGui.QDialog.Accepted:
                 self.load_data(self._sg_entity_dict)
         finally:
             self.__small_overlay.hide()
+            self.reply_dialog = None
         
     def _on_note_submitted(self):
         """

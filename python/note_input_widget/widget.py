@@ -606,7 +606,7 @@ class NoteInputWidget(QtGui.QWidget):
     ###########################################################################
     # public interface
 
-    def add_files_to_attachments(self, file_paths, cleanup_after_upload=False):
+    def add_files_to_attachments(self, file_paths, cleanup_after_upload=False, apply_attachments=False):
         """
         Adds the given list of file paths to the attachments list.
 
@@ -614,6 +614,14 @@ class NoteInputWidget(QtGui.QWidget):
         :param cleanup_after_upload:    If True, the given files will be
                                         removed once they are uploaded to
                                         Shotgun.
+        :param apply_attachments:       If True, files added to the attachments
+                                        list will be applied and ready for upload.
+                                        This is normally handled by the "check"
+                                        button when accepting user-added files, but
+                                        if this method is used to procedurally add
+                                        attachments then this option must be used to
+                                        ensure that the files end up attached to the
+                                        Note when it is created.
         """
         for file_path in file_paths:
             self.ui.attachment_list_tree.addTopLevelItem(
@@ -622,6 +630,9 @@ class NoteInputWidget(QtGui.QWidget):
 
         if cleanup_after_upload:
             self._cleanup_after_upload.extend(file_paths)
+
+        if apply_attachments:
+            self._attachments.extend([os.path.normpath(f) for f in file_paths])
 
     def allow_screenshots(self, state):
         """
