@@ -58,10 +58,13 @@ class EntityWidget(LabelBaseWidget):
 
 
 class EntityBubble(QtGui.QFrame):
-    remove_clicked = QtCore.Signal()
+    remove_clicked = QtCore.Signal(dict)
 
     def __init__(self, parent=None):
         QtGui.QFrame.__init__(self, parent)
+
+        self.entity = None
+
         self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
 
         self.setObjectName("bubble")
@@ -96,48 +99,144 @@ class EntityBubble(QtGui.QFrame):
         self.close_button.clicked.connect(self._on_close_button_clicked)
 
     def _on_close_button_clicked(self):
-        self.remove_clicked.emit()
-        print "CLOSE"
+        self.remove_clicked.emit(self.entity)
 
     def set_entity(self, entity_dict):
+        self.entity = entity_dict
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(entity_dict["type"])
         self.image_label.setText("<img src='%s'/>" % entity_icon_url)
         self.text_label.setText(entity_dict["name"])
 
 
-class EntityEditorWidget(QtGui.QLineEdit):
+class EntityBubbleTextObject(QtGui.QPyTextObject):
+    ENTITY_PROPERTY = 1
+    OBJECT_TYPE = QtGui.QTextFormat.UserFormat + 1
+
+    USING_PYQT = hasattr(QtCore, "QVariant")
+
+    def __init__(self, parent=None):
+        QtGui.QPyTextObject.__init__(self, parent)
+        self._widget_cache = {}
+
+    def get_widget(self, entity_dict):
+        if entity_dict is None:
+            return None
+
+        key = (entity_dict["type"], entity_dict["name"])
+        if key in self._widget_cache:
+            return self._widget_cache[key]
+
+        self._widget_cache[key] = EntityBubble(self.parent())
+        self._widget_cache[key].set_entity(entity_dict)
+        self._widget_cache[key].remove_clicked.connect(self.parent().on_remove_clicked)
+        return self._widget_cache[key]
+
+    def intrinsicSize(self, doc, pos_in_document, format):
+        entity_dict = format.property(self.ENTITY_PROPERTY)
+        widget = self.get_widget(entity_dict)
+        return widget.sizeHint()
+
+    def drawObject(self, painter, rect, doc, pos_in_document, format):
+        entity_dict = format.property(self.ENTITY_PROPERTY)
+        widget = self.get_widget(entity_dict)
+
+        widget.setGeometry(rect.toRect())
+
+        # now paint!
+        painter.save()
+        try:
+            painter.translate(rect.topLeft().toPoint())
+
+            # WEIRD! It seems pyside and pyqt actually have different signatures for this method
+            if self.USING_PYQT:
+                # pyqt is using the flags parameter, which seems inconsistent with QT
+                # http://pyqt.sourceforge.net/Docs/PyQt4/qwidget.html#render
+                widget.render(
+                    painter,
+                    QtCore.QPoint(0, 0),
+                    QtGui.QRegion(),
+                    QtGui.QWidget.DrawChildren
+                )
+            else:
+                # pyside is using the renderFlags parameter which seems correct
+                widget.render(
+                    painter,
+                    QtCore.QPoint(0, 0),
+                    renderFlags=QtGui.QWidget.DrawChildren
+                )
+        finally:
+            painter.restore()
+
+
+class EntityEditorWidget(QtGui.QTextEdit):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "entity"
 
     def setup_widget(self):
-        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
-        self.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
-        self.container = QtGui.QFrame(self)
-        self.container_layout = FlowLayout(self)
-        self.container_layout.setContentsMargins(3, 3, 3, 3)
-        self.container.setLayout(self.container_layout)
-        self.container.show()
-        self.container.setGeometry(3, 3, self.width() - 3, self.height() - 3)
+        self._formats = {}
+        self.entity_interface = EntityBubbleTextObject(self)
+        self.document().documentLayout().registerHandler(
+            EntityBubbleTextObject.OBJECT_TYPE,
+            self.entity_interface,
+        )
+
+        self.setMouseTracking(True)
+        self.viewport().installEventFilter(self)
 
         for s in ["Bunny", "Dog", "Big Horse"]:
-            b = EntityBubble(self.container)
-            b.set_entity({"type": "Asset", "name": s})
-            self.container_layout.addWidget(b)
+            self.insert_entity({"type": "Asset", "name": s})
 
-    def resizeEvent(self, event):
-        self.container.setGeometry(3, 3, self.width() - 3, self.height() - 3)
-        QtGui.QLineEdit.resizeEvent(self, event)
+    def insert_entity(self, entity_dict):
+        key = (entity_dict["type"], entity_dict["name"])
+        if key in self._formats:
+            return
 
-    def focusInEvent(self, event):
-        last_item = self.container_layout.itemAt(self.container_layout.count() - 1)
-        geo = last_item.geometry()
+        entity_format = QtGui.QTextCharFormat()
+        entity_format.setObjectType(EntityBubbleTextObject.OBJECT_TYPE)
+        entity_format.setProperty(EntityBubbleTextObject.ENTITY_PROPERTY, entity_dict)
+        self._formats[key] = entity_format
 
-        margins = self.textMargins()
-        margins.setLeft(geo.right() + 5)
-        margins.setTop(geo.top())
-        self.setTextMargins(margins)
+        orc = unichr(0xfffc)
+        cursor = self.textCursor()
+        cursor.insertText(orc + " ", entity_format)
+        self.setTextCursor(cursor)
 
-        QtGui.QLineEdit.focusInEvent(self, event)
+    def on_remove_clicked(self, entity_dict):
+        print "REMOVE: %s" % entity_dict
+        key = (entity_dict["type"], entity_dict["name"])
+        format = self._formats.get(key)
+
+        if format is None:
+            return
+
+        text_obj = self.document().objectForFormat(format)
+
+    def eventFilter(self, object, event):
+        if not isinstance(event, QtGui.QMouseEvent):
+            # only pass on mouse events
+            return False
+
+        # for mouse events find the actual widget at the position
+        doc = self.document()
+        cursor_pos = doc.documentLayout().hitTest(event.pos(), QtCore.Qt.ExactHit)
+        format = doc.documentLayout().format(cursor_pos)
+        entity_dict = format.property(EntityBubbleTextObject.ENTITY_PROPERTY)
+        widget = self.entity_interface.get_widget(entity_dict)
+
+        if widget is None:
+            self.viewport().setCursor(QtCore.Qt.IBeamCursor)
+            return False
+
+        self.viewport().setCursor(QtCore.Qt.ArrowCursor)
+
+        if event.type() == QtCore.QEvent.MouseButtonPress:
+            # if we are clicking on the button, do so
+            widget_pos = widget.mapFromParent(event.pos())
+            child_widget = widget.childAt(widget_pos)
+            if isinstance(child_widget, QtGui.QPushButton):
+                child_widget.click()
+
+        return False
 
     def _display_default(self):
         pass
@@ -145,82 +244,3 @@ class EntityEditorWidget(QtGui.QLineEdit):
     def _display_value(self, value):
         # self.bubble_widget.set_entity(value)
         pass
-
-
-class FlowLayout(QtGui.QLayout):
-    def __init__(self, parent=None):
-        super(FlowLayout, self).__init__(parent)
-        self.itemList = []
-
-    def __del__(self):
-        item = self.takeAt(0)
-        while item:
-            item = self.takeAt(0)
-
-    def addItem(self, item):
-        self.itemList.append(item)
-
-    def count(self):
-        return len(self.itemList)
-
-    def itemAt(self, index):
-        try:
-            return self.itemList[index]
-        except IndexError:
-            return None
-
-    def takeAt(self, index):
-        try:
-            return self.itemList.pop(index)
-        except IndexError:
-            return None
-
-    def expandingDirections(self):
-        return QtCore.Qt.Orientations(QtCore.Qt.Orientation(0))
-
-    def hasHeightForWidth(self):
-        return True
-
-    def heightForWidth(self, width):
-        height = self.doLayout(QtCore.QRect(0, 0, width, 0), True)
-        return height
-
-    def setGeometry(self, rect):
-        super(FlowLayout, self).setGeometry(rect)
-        self.doLayout(rect, False)
-
-    def sizeHint(self):
-        return self.minimumSize()
-
-    def minimumSize(self):
-        size = QtCore.QSize()
-
-        for item in self.itemList:
-            size = size.expandedTo(item.minimumSize())
-
-        size += QtCore.QSize(2 * self.contentsMargins().top(), 2 * self.contentsMargins().top())
-        return size
-
-    def doLayout(self, rect, testOnly):
-        x = rect.x()
-        y = rect.y()
-        lineHeight = 0
-
-        for item in self.itemList:
-            wid = item.widget()
-            spaceX = self.spacing() + wid.style().layoutSpacing(QtGui.QSizePolicy.PushButton, QtGui.QSizePolicy.PushButton, QtCore.Qt.Horizontal)
-            spaceY = self.spacing() + wid.style().layoutSpacing(QtGui.QSizePolicy.PushButton, QtGui.QSizePolicy.PushButton, QtCore.Qt.Vertical)
-            nextX = x + item.sizeHint().width() + spaceX
-            if nextX - spaceX > rect.right() and lineHeight > 0:
-                x = rect.x()
-                y = y + lineHeight + spaceY
-                nextX = x + item.sizeHint().width() + spaceX
-                lineHeight = 0
-
-            if not testOnly:
-                item.setGeometry(QtCore.QRect(QtCore.QPoint(x, y), item.sizeHint()))
-
-            x = nextX
-            lineHeight = max(lineHeight, item.sizeHint().height())
-
-        return y + lineHeight - rect.y()
