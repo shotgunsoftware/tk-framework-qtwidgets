@@ -277,7 +277,7 @@ class ShotgunFieldManager(QtCore.QObject):
         edit_widget = None
         return ShotgunFieldDelegate(display_widget, edit_widget, view)
 
-    def create_label(self, sg_entity_type, field_name):
+    def create_label(self, sg_entity_type, field_name, trailing_colon=True):
         """
         Returns a widget that can be used as a label for the given field.
 
@@ -287,9 +287,16 @@ class ShotgunFieldManager(QtCore.QObject):
         :param field_name: Shotgun field name
         :type field_name: String
 
+        :param trailing_colon: Whether to include a trailing colon character
+        :type trailing_colon: Boolean
+
         :returns: :class:`~PySide.QtGui.QLabel`
         """
         display_name = shotgun_globals.get_field_display_name(sg_entity_type, field_name)
+
+        if trailing_colon:
+            display_name = "%s:" % display_name
+
         return QtGui.QLabel(display_name)
 
 # import the actual field types to give them a chance to register
