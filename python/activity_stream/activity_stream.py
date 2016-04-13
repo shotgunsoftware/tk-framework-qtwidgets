@@ -120,6 +120,17 @@ class ActivityStreamWidget(QtGui.QWidget):
     ############################################################################
     # properties
 
+    @property
+    def note_widget(self):
+        """
+        Returns the NoteInputWidget contained within the ActivityStreamWidget.
+        Note that this is the widget used for NEW note input and not Note
+        replies. To get the NoteInputWidget used for Note replies, access can
+        be found via reply_widget.note_widget if a reply widget is currently
+        active.
+        """
+        return self.ui.note_widget
+
     def _get_allow_screenshots(self):
         """
         Whether screenshots are being allowed.
