@@ -203,12 +203,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         # build a list of all the fields whose type is in the field map
         for field_name in field_names:
-            # handle bubbled field syntax
-            if "." in field_name:
-                (field_entity_type, short_name) = field_name.split(".")[-2:]
-            else:
-                (field_entity_type, short_name) = (sg_entity_type, field_name)
-            data_type = shotgun_globals.get_data_type(field_entity_type, short_name)
+            data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
             if data_type in self.__FIELD_TYPE_MAP:
                 supported_fields.append(field_name)
 
