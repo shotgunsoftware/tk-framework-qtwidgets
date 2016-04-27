@@ -13,7 +13,7 @@ Widget that represents the value of a date field in Shotgun
 """
 import datetime
 
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtGui, QtCore
 from .date_and_time_widget import DateAndTimeWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -36,9 +36,11 @@ class DateWidget(DateAndTimeWidget):
         return self._create_human_readable_timestamp(dt)
 
 
-class DateAndTimeEditorWidget(QtGui.QDateEdit):
+class DateEditorWidget(QtGui.QDateEdit):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "date"
+
+    editing_finished = QtCore.Signal()
 
     def setup_widget(self):
         self.setCalendarPopup(True)
@@ -57,3 +59,10 @@ class DateAndTimeEditorWidget(QtGui.QDateEdit):
         # handle that as a valid value as well
         dt = datetime.datetime.strptime(value, "%Y-%m-%d")
         self.setDate(dt)
+
+    def keyPressEvent(self, event):
+
+        if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
+           self.editing_finished.emit()
+        else:
+            super(DateEditorWidget, self).keyPressEvent(event)

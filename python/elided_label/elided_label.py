@@ -31,6 +31,38 @@ class ElidedLabel(QtGui.QLabel):
         self._elide_mode = QtCore.Qt.ElideRight
         self._actual_text = ""
 
+        self.setSizePolicy(
+            QtGui.QSizePolicy.Expanding,
+            QtGui.QSizePolicy.Preferred,
+        )
+
+    def sizeHint(self):
+
+        return QtCore.QSize(
+            self._get_width_hint(),
+            self.height()
+        )
+
+    def _get_width_hint(self):
+
+        if not hasattr(self, '_ideal_width'):
+
+            doc = QtGui.QTextDocument()
+            try:
+                # add the extra space to buffer the width a bit
+                doc.setHtml(self._actual_text + "&nbsp;")
+                doc.setDefaultFont(self.font())
+                width = doc.idealWidth()
+            except Exception:
+                width = self.width()
+            finally:
+                doc.deleteLater()
+
+            self._ideal_width = width
+
+        return self._ideal_width
+
+
     def _get_elide_mode(self):
         """
         Returns current elide mode 
@@ -78,6 +110,7 @@ class ElidedLabel(QtGui.QLabel):
 
         :param event:    The resize event
         """
+
         self._update_elided_text()
 
     def _update_elided_text(self):
@@ -95,6 +128,7 @@ class ElidedLabel(QtGui.QLabel):
         :param elide_mode:  The elide mode to use
         :returns:           The elided text.
         """
+
         # target width is the label width:
         target_width = self.width()
 
@@ -114,11 +148,10 @@ class ElidedLabel(QtGui.QLabel):
             ellipses = ""
             if elide_mode != QtCore.Qt.ElideNone:
                 # add the ellipses in the correct place:
+                ellipses = "..."
                 if elide_mode == QtCore.Qt.ElideLeft:
-                    ellipses = "..."
                     cursor.setPosition(0)
                 elif elide_mode == QtCore.Qt.ElideRight:
-                    ellipses = "..."
                     char_count = doc.characterCount()
                     cursor.setPosition(char_count-1)
                 cursor.insertText(ellipses)
@@ -126,6 +159,9 @@ class ElidedLabel(QtGui.QLabel):
 
             # remove characters until the text fits within the target width:
             while line_width > target_width:
+
+                start_line_width = line_width
+
                 # if string is less than the ellipses length then just return
                 # an empty string
                 char_count = doc.characterCount()
@@ -141,16 +177,22 @@ class ElidedLabel(QtGui.QLabel):
 
                 # remove the characters:
                 if elide_mode == QtCore.Qt.ElideLeft:
-                    cursor.setPosition(ellipses_len)
-                    cursor.setPosition(chars_to_delete + ellipses_len, QtGui.QTextCursor.KeepAnchor)
+                    start = ellipses_len
+                    end = chars_to_delete + ellipses_len
                 else:
                     # default is to elide right
-                    cursor.setPosition(char_count - chars_to_delete - ellipses_len - 1)
-                    cursor.setPosition(char_count - ellipses_len - 1, QtGui.QTextCursor.KeepAnchor)
+                    start = max(0, char_count - chars_to_delete - ellipses_len - 1)
+                    end = max(0, char_count - ellipses_len - 1)
+
+                cursor.setPosition(start)
+                cursor.setPosition(end, QtGui.QTextCursor.KeepAnchor)
                 cursor.removeSelectedText()
 
                 # update line width:
                 line_width = doc.idealWidth()
+
+                if line_width == start_line_width:
+                    break
 
             return doc.toHtml()
         finally:

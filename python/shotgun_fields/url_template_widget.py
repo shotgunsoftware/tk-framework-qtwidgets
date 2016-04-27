@@ -11,11 +11,11 @@
 """
 Widget that represents the value of a url_template field in Shotgun
 """
-from .label_base_widget import LabelBaseWidget
+from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
-class UrlTemplateWidget(LabelBaseWidget):
+class UrlTemplateWidget(ElidedLabelBaseWidget):
     """
     Inherited from a :class:`~LabelBaseWidget`, this class is able to
     display a url_template field value as returned by the Shotgun API.

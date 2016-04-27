@@ -75,18 +75,15 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         :returns:               A QWidget to be used for editing the current index
         :rtype:                 :class:`~PySide.QtGui.QWidget`
         """
-        print "A"
         if not self._editor_class:
             return None
 
-        print "B"
         widget = self._editor_class(
             entity_type=self._entity_type,
             field_name=self._field_name,
             bg_task_manager=self._bg_task_manager,
         )
         widget.setParent(parent)
-        print "C"
         return widget
 
     def _on_before_paint(self, widget, model_index, style_options):

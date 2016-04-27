@@ -13,13 +13,13 @@ Widget that represents the value of an entity field in Shotgun
 """
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from .label_base_widget import LabelBaseWidget
+from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
-class EntityWidget(LabelBaseWidget):
+class EntityWidget(ElidedLabelBaseWidget):
     """
     Inherited from a :class:`~LabelBaseWidget`, this class is able to
     display an entity field value as returned by the Shotgun API.
@@ -53,7 +53,11 @@ class EntityWidget(LabelBaseWidget):
 
         entity_url = "%sdetail/%s/%d" % (url_base, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
-        str_val = "<img src='%s'><a href='%s'>%s</a>" % (entity_icon_url, entity_url, str_val)
+        str_val = (
+            "<img src='%s'>&nbsp;<a href='%s'>%s</a>"
+             % (entity_icon_url, entity_url, str_val)
+        )
+
         return str_val
 
 
@@ -174,17 +178,19 @@ class EntityEditorWidget(QtGui.QTextEdit):
 
     def setup_widget(self):
         self._formats = {}
-        self.entity_interface = EntityBubbleTextObject(self)
-        self.document().documentLayout().registerHandler(
-            EntityBubbleTextObject.OBJECT_TYPE,
-            self.entity_interface,
-        )
 
-        self.setMouseTracking(True)
-        self.viewport().installEventFilter(self)
+        # XXX why crashy crashy?
+        #self.entity_interface = EntityBubbleTextObject(self)
+        #self.document().documentLayout().registerHandler(
+        #    EntityBubbleTextObject.OBJECT_TYPE,
+        #    self.entity_interface,
+        #)
 
-        for s in ["Bunny", "Dog", "Big Horse"]:
-            self.insert_entity({"type": "Asset", "name": s})
+        #self.setMouseTracking(True)
+        #self.viewport().installEventFilter(self)
+
+        #for s in ["Bunny", "Dog", "Big Horse"]:
+        #    self.insert_entity({"type": "Asset", "name": s})
 
     def insert_entity(self, entity_dict):
         key = (entity_dict["type"], entity_dict["name"])

@@ -11,7 +11,7 @@
 """
 Widget that represents the value of a multi_entity field in Shotgun
 """
-from .entity_widget import EntityWidget
+from .entity_widget import EntityWidget, EntityEditorWidget
 
 
 class MultiEntityWidget(EntityWidget):
@@ -29,3 +29,7 @@ class MultiEntityWidget(EntityWidget):
         :type value: A List of Shotgun entity dictionaries, each with keys for at least type, id, and name
         """
         return ", ".join([self._entity_dict_to_html(entity) for entity in value])
+
+class MultiEntityEditorWidget(EntityEditorWidget):
+
+    _EDITOR_TYPE = "multi_entity"

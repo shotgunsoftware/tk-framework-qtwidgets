@@ -12,7 +12,7 @@
 Widget that represents the value of a number field in Shotgun
 """
 import locale
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtGui, QtCore
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -39,6 +39,8 @@ class NumberEditorWidget(QtGui.QSpinBox):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "number"
 
+    editing_finished = QtCore.Signal()
+
     def setup_widget(self):
         # Qt Spinner's max/min are int32 max/min values
         self.setMaximum(2147483647)
@@ -55,3 +57,10 @@ class NumberEditorWidget(QtGui.QSpinBox):
         :param value: The value returned by the Shotgun API to be displayed
         """
         self.setValue(value)
+
+    def keyPressEvent(self, event):
+
+        if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
+           self.editing_finished.emit()
+        else:
+            super(NumberEditorWidget, self).keyPressEvent(event)

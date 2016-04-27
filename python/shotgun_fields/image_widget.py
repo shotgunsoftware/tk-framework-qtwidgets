@@ -15,6 +15,8 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_meta import ShotgunFieldMeta
 
+from .ui import resources_rc
+
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
 
 
@@ -31,6 +33,7 @@ class ImageWidget(QtGui.QLabel):
         Initialize the widget state.  Start up a Shotgun data retriever to download
         images in the background.
         """
+
         self._pixmap = None
 
         # start up a data retriever to fetch the thumbnail in the background
@@ -39,9 +42,18 @@ class ImageWidget(QtGui.QLabel):
         self._data_retriever.work_completed.connect(self._on_worker_signal)
         self._data_retriever.work_failure.connect(self._on_worker_failure)
 
+        self._size_hint = self.size()
+
+        self.setSizePolicy(
+            QtGui.QSizePolicy.Expanding,
+            QtGui.QSizePolicy.Expanding
+        )
+
+        self._display_default()
+
     def _display_default(self):
         """ Default widget state is empty. """
-        self.clear()
+        self.setPixmap(QtGui.QPixmap(":/qtwidgets-shotgun-fields/no_thumbnail.png"))
 
     def _display_value(self, value):
         """
@@ -71,8 +83,7 @@ class ImageWidget(QtGui.QLabel):
         """
         if uid == self._task_uid:
             self.clear()
-            self._pixmap = None
-            self.setText("Error")
+            self.setText("Error loading image.")
             self.setToolTip(msg)
 
     # preserve aspect ratio
@@ -82,10 +93,9 @@ class ImageWidget(QtGui.QLabel):
         its aspect ratio.
         """
         self._pixmap = pixmap
-        QtGui.QLabel.setPixmap(
-            self,
+        super(ImageWidget, self).setPixmap(
             self._pixmap.scaled(
-                self.size(),
+                self._size_hint,
                 QtCore.Qt.KeepAspectRatio,
                 QtCore.Qt.SmoothTransformation
             )
@@ -95,37 +105,46 @@ class ImageWidget(QtGui.QLabel):
         """
         Override the default implementation to return the appropriate height once we scale
         the pixmap to preserve its aspect ratio.
-        """
+       """
         if self._pixmap:
             ratio = float(width) / self._pixmap.width()
             return ratio * self._pixmap.height()
 
         return QtGui.QtLabel.heightForWidth(self, width)
 
+    def minimumSizeHint(self):
+        return QtCore.QSize(12, 12)
+
     def sizeHint(self):
         """
         Override the default implementation to return the appropriate height for the pixmap
         once it has been scaled to preserve its aspect ratio.
         """
+
         if self._pixmap:
-            w = self.width()
+            w = self._size_hint.width()
             return QtCore.QSize(w, self.heightForWidth(w))
 
-        return QtGui.QLabel.sizeHint(self)
+        return super(ImageWidget, self).sizeHint()
 
     def resizeEvent(self, event):
         """
         Override the default implementation to resize the pixmap while preserving its
         aspect ratio.
         """
+
         if self._pixmap:
-            QtGui.QLabel.setPixmap(
-                self,
-                self._pixmap.scaled(
-                    self.size(),
-                    QtCore.Qt.KeepAspectRatio,
-                    QtCore.Qt.SmoothTransformation
-                )
-            )
+            self._size_hint = event.size()
+            self.setPixmap(self._pixmap)
         else:
-            QtGui.QLabel.resizeEvent(self, event)
+            super(ImageWidget, self).resizeEvent(event)
+
+
+#class ImageEditWidget(QtGui.QLabel):
+#    """
+#    Inherited from a :class:`~PySide.QtGui.QLabel`, this class is able to
+#    display an image field value as returned by the Shotgun API.
+#    """
+#    __metaclass__ = ShotgunFieldMeta
+#    _DISPLAY_TYPE = "image"
+

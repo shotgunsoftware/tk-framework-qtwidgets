@@ -38,3 +38,5 @@ class FileLinkWidget(LabelBaseWidget):
             str_val = "<a href='file://%s'>%s</a>" % (value["local_path"], str_val)
 
         return str_val
+
+    # XXX editor

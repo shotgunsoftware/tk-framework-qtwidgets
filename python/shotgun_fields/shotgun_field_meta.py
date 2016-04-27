@@ -13,6 +13,23 @@ from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_manager import ShotgunFieldManager
 
 
+TAKE_OVER_NAMES = []
+
+def take_over(func):
+    """Decorator to accumulate the names of members to take over in derived classes."""
+
+    if hasattr(func, '__name__'):
+        # regular method
+        name = func.__name__
+    elif hasattr(func, '__func__'):
+        # static or class method
+        name = func.__func__.__name__
+    else:
+        raise sgtk.TankError("Don't know how to take over member: %s" % (func,))
+    TAKE_OVER_NAMES.append(name)
+    return func
+
+
 # use type to pull the metaclass for QWidget since Shiboken is not always directly available
 # and it abstracts out any difference between PySide and PyQt
 class ShotgunFieldMeta(type(QtGui.QWidget)):
@@ -67,6 +84,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
       These methods are called by the default implementation of set_value.
     """
+
     def __new__(mcl, name, parents, class_dict):
         """
         Construct the class object for a Shotgun field widget class
@@ -77,10 +95,11 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         if "__init__" in class_dict:
             raise ValueError("ShotgunFieldMeta classes cannot define their own constructor")
 
-        # take over interface methods if they have not already been defined
-        mcl.take_over_if_not_defined("setup_widget", mcl.setup_widget, class_dict, parents)
-        mcl.take_over_if_not_defined("set_value", mcl.set_value, class_dict, parents)
-        mcl.take_over_if_not_defined("get_value", mcl.get_value, class_dict, parents)
+        # take over class members if called out via the @take_over decorator
+        for name in TAKE_OVER_NAMES:
+            if hasattr(mcl, name):
+                member = getattr(mcl, name)
+                mcl.take_over_if_not_defined(name, member, class_dict, parents)
 
         # register the signal that will be emitted as the value changes
         class_dict["value_changed"] = QtCore.Signal()
@@ -98,7 +117,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
         return field_class
 
-    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, **kwargs):
+    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, read_only=True, **kwargs):
         """
         Create an instance of the given class.
 
@@ -117,11 +136,14 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         :param bg_task_manager: The task manager the widget will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
 
+        :param read_only: True if widget should be read only, False otherwise.
+        :type read_only: bool
+
         Additionally pass all other keyword args through to the PySide widget constructor for the
         class' superclass.
         """
         # create the instance passing through just the QWidget compatible arguments
-        instance = super(ShotgunFieldMeta, cls).__call__(parent=None, **kwargs)
+        instance = super(ShotgunFieldMeta, cls).__call__(parent=parent, **kwargs)
 
         # set the default member variables
         instance._value = None
@@ -157,6 +179,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         :param parents: The ancestors of the class being created
         :type parents: List of classes
         """
+
         # first check if the method is directly defined
         if method_name in class_dict:
             return
@@ -169,6 +192,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         # not defined anywhere, take it over
         class_dict[method_name] = method
 
+    @take_over
     @staticmethod
     def setup_widget(self):
         """
@@ -176,6 +200,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         """
         return
 
+    @take_over
     @staticmethod
     def set_value(self, value):
         """
@@ -191,9 +216,11 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
             self._display_value(value)
         self.value_changed.emit()
 
+    @take_over
     @staticmethod
     def get_value(self):
         """
         Get the current value displayed by the widget.
         """
         return self._value
+

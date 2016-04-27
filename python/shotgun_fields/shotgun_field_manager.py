@@ -97,6 +97,7 @@ class ExampleTableView(QtGui.QWidget):
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_delegate import ShotgunFieldDelegate
+from .shotgun_field_editable import ShotgunFieldEditable
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
@@ -231,7 +232,8 @@ class ShotgunFieldManager(QtCore.QObject):
 
         return supported_fields
 
-    def get_display_class(self, sg_entity_type, field_name):
+    @classmethod
+    def get_display_class(cls, sg_entity_type, field_name):
         """
         Returns the class of the display widget associated with the field type if it has been registered.
 
@@ -244,7 +246,7 @@ class ShotgunFieldManager(QtCore.QObject):
         :returns: :class:`~PySide.QtGui.QWidget` class or None if the field type has no display widget
         """
         data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
-        return self.__DISPLAY_TYPE_MAP.get(data_type, {}).get("display")
+        return cls.__DISPLAY_TYPE_MAP.get(data_type, {}).get("display")
 
     def create_display_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """
@@ -270,11 +272,12 @@ class ShotgunFieldManager(QtCore.QObject):
 
         :returns: :class:`~PySide.QtGui.QWidget` or None if the field type has no display widget
         """
-        cls = self.get_display_class(sg_entity_type, field_name)
+        display_cls = self.get_display_class(sg_entity_type, field_name)
 
-        if cls:
+        widget = None
+        if display_cls:
             # instantiate the widget
-            return cls(
+            widget = display_cls(
                 parent=parent,
                 entity_type=sg_entity_type,
                 field_name=field_name,
@@ -283,9 +286,16 @@ class ShotgunFieldManager(QtCore.QObject):
                 **kwargs
             )
 
-        return None
+            editor_cls = self.get_editor_class(sg_entity_type, field_name)
+            if editor_cls == display_cls:
+                # this widget is editable by default. disable it.
+                # XXX probably not best idea. need to be able to set it to read-only
+                widget.setEnabled(False)
 
-    def get_editor_class(self, sg_entity_type, field_name):
+        return widget
+
+    @classmethod
+    def get_editor_class(cls, sg_entity_type, field_name):
         """
         Returns the class of the editor widget associated with the field type if it has been registered.
 
@@ -298,7 +308,7 @@ class ShotgunFieldManager(QtCore.QObject):
         :returns: :class:`~PySide.QtGui.QWidget` class or None if the field type has no editor widget
         """
         data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
-        return self.__DISPLAY_TYPE_MAP.get(data_type, {}).get("editor")
+        return cls.__DISPLAY_TYPE_MAP.get(data_type, {}).get("editor")
 
     def create_editor_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """
@@ -338,6 +348,42 @@ class ShotgunFieldManager(QtCore.QObject):
             )
 
         return None
+
+    def create_editable_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+        """Returns a widget that shows the display widget, but can be edited."""
+        # XXX docs
+
+        display_cls = self.get_display_class(sg_entity_type, field_name)
+        editor_cls = self.get_editor_class(sg_entity_type, field_name)
+
+        # XXX tmp
+        data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
+
+        if not display_cls:
+            # XXX better error
+            print "**** NO DISPLAY: " + data_type + " (" + field_name + ")"
+            return None
+
+        display_widget = self.create_display_widget(sg_entity_type, field_name, entity, parent, **kwargs)
+
+        # XXX doc
+        if editor_cls == display_cls:
+            # if the editor and display are the same, just return the enabled
+            # version of the display widget. currently this would only be the
+            # checkbox widget. may need to revisit this logic for more
+            # sophisticated widgets
+            display_widget.setEnabled(True)
+            return display_widget
+
+        editor_widget = self.create_editor_widget(sg_entity_type, field_name, entity, parent, **kwargs)
+
+        # XXX doc
+        if not editor_widget:
+            print "** NO EDITOR: " + data_type + " (" + field_name + ")"
+            return display_widget
+
+        #print "FOUND EDITOR: " + data_type + " (" + field_name + ")"
+        return ShotgunFieldEditable(display_widget, editor_widget, parent)
 
     def create_delegate(self, sg_entity_type, field_name, view):
         """

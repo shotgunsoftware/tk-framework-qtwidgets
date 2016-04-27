@@ -11,13 +11,13 @@
 """
 Widget that represents the value of a text field in Shotgun
 """
-from .label_base_widget import LabelBaseWidget
+from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 from sgtk.platform.qt import QtCore, QtGui
 
 
-class TextWidget(LabelBaseWidget):
+class TextWidget(ElidedLabelBaseWidget):
     """
     Inherited from a :class:`~LabelBaseWidget`, this class is able to
     display a text field value as returned by the Shotgun API.
@@ -26,12 +26,19 @@ class TextWidget(LabelBaseWidget):
     _DISPLAY_TYPE = "text"
 
 
-class TextEditorWidget(QtGui.QLineEdit):
+class TextEditorWidget(QtGui.QTextEdit):
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "text"
 
+    editing_finished = QtCore.Signal()
+
     def setup_widget(self):
-        self.textChanged.connect(self._on_text_changed)
+
+        self.setSizePolicy(
+            QtGui.QSizePolicy.Expanding,
+            QtGui.QSizePolicy.Expanding
+        )
 
     def _display_default(self):
         """ Default widget state is empty. """
@@ -48,5 +55,3 @@ class TextEditorWidget(QtGui.QLineEdit):
     def _string_value(self, value):
         return str(value)
 
-    def _on_text_changed(self):
-        self._value = str(self.text())

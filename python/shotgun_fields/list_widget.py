@@ -12,7 +12,7 @@
 Widget that represents the value of a list field in Shotgun
 """
 import sgtk
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtGui, QtCore
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -32,10 +32,16 @@ class ListEditorWidget(QtGui.QComboBox):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "list"
 
+    editing_finished = QtCore.Signal()
+
     def setup_widget(self):
         self.addItem("")
         valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
         self.addItems(valid_values)
+
+        self.activated.connect(
+            lambda i: self.editing_finished.emit()
+        )
 
     def _display_default(self):
         """ Default widget state is empty. """

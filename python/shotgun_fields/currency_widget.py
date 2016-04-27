@@ -12,7 +12,7 @@
 Widget that represents the value of a currency field in Shotgun
 """
 import locale
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtGui, QtCore
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -35,15 +35,21 @@ class CurrencyWidget(LabelBaseWidget):
         return locale.currency(value, grouping=True)
 
 
-class FloatEditorWidget(QtGui.QDoubleSpinBox):
+class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "currency"
+
+    editing_finished = QtCore.Signal()
 
     def setup_widget(self):
         # Qt Spinner's max/min are int32 max/min values
         self.setMaximum(float("inf"))
         self.setMinimum(float("-inf"))
         self.setDecimals(2)
+        self.setPrefix(locale.localeconv().get("currency_symbol"))
+
+    def minimumSizeHint(self):
+        return QtCore.QSize(100, 24)
 
     def _display_default(self):
         """ Default widget state is empty. """
@@ -56,3 +62,11 @@ class FloatEditorWidget(QtGui.QDoubleSpinBox):
         :param value: The value returned by the Shotgun API to be displayed
         """
         self.setValue(value)
+
+    def keyPressEvent(self, event):
+
+        if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
+           self.editing_finished.emit()
+        else:
+            super(CurrencyEditorWidget, self).keyPressEvent(event)
+
