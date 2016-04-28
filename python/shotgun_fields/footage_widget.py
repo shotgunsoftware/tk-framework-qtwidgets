@@ -34,11 +34,10 @@ class FootageEditorWidget(QtGui.QLineEdit):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "footage"
 
-    editing_finished = QtCore.Signal()
-
     def setup_widget(self):
+        self.setMinimumWidth(100)
         self.textChanged.connect(self._on_text_changed)
-        self.returnPressed.connect(self.editing_finished.emit)
+        self.returnPressed.connect(self.value_changed.emit)
         self.setValidator(_FootageInputValidator())
 
     def _display_default(self):
@@ -59,6 +58,9 @@ class FootageEditorWidget(QtGui.QLineEdit):
     def _on_text_changed(self):
         self._value = str(self.text())
 
+    def get_value(self):
+        return self.validator().fixup(self.text())
+
 class _FootageInputValidator(QtGui.QValidator):
 
     def fixup(self, input):
@@ -68,6 +70,8 @@ class _FootageInputValidator(QtGui.QValidator):
             input = "%d-%02d" % (feet, frames)
         except ValueError:
             pass
+
+        return input
 
     def validate(self, input, pos):
 

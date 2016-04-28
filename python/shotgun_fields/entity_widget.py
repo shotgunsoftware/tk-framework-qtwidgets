@@ -54,12 +54,89 @@ class EntityWidget(ElidedLabelBaseWidget):
         entity_url = "%sdetail/%s/%d" % (url_base, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
         str_val = (
-            "<img src='%s'>&nbsp;<a href='%s'>%s</a>"
-             % (entity_icon_url, entity_url, str_val)
+            "<img src='%s' height='%s'>&nbsp;<a href='%s'>%s</a>"
+             % (entity_icon_url, self.font().pointSize(), entity_url, str_val)
         )
 
         return str_val
 
+class EntityEditorWidget(QtGui.QTextEdit):
+    __metaclass__ = ShotgunFieldMeta
+    _EDITOR_TYPE = "entity"
+
+    def setup_widget(self):
+        self._formats = {}
+
+        self.entity_interface = EntityBubbleTextObject(self)
+        self.document().documentLayout().registerHandler(
+            EntityBubbleTextObject.OBJECT_TYPE,
+            self.entity_interface,
+        )
+
+        self.setMouseTracking(True)
+        self.viewport().installEventFilter(self)
+
+        for s in ["Bunny", "Dog", "Big Horse"]:
+            self.insert_entity({"type": "Asset", "name": s})
+
+    def insert_entity(self, entity_dict):
+        key = (entity_dict["type"], entity_dict["name"])
+        if key in self._formats:
+            return
+
+        entity_format = QtGui.QTextCharFormat()
+        entity_format.setObjectType(EntityBubbleTextObject.OBJECT_TYPE)
+        entity_format.setProperty(EntityBubbleTextObject.ENTITY_PROPERTY, entity_dict)
+        self._formats[key] = entity_format
+
+        #orc = unichr(0xfffc)
+        cursor = self.textCursor()
+        #cursor.insertText(orc + " ", entity_format)
+        self.setTextCursor(cursor)
+
+    def on_remove_clicked(self, entity_dict):
+        print "REMOVE: %s" % entity_dict
+        key = (entity_dict["type"], entity_dict["name"])
+        format = self._formats.get(key)
+
+        if format is None:
+            return
+
+        text_obj = self.document().objectForFormat(format)
+
+    def eventFilter(self, object, event):
+        if not isinstance(event, QtGui.QMouseEvent):
+            # only pass on mouse events
+            return False
+
+        # for mouse events find the actual widget at the position
+        doc = self.document()
+        cursor_pos = doc.documentLayout().hitTest(event.pos(), QtCore.Qt.ExactHit)
+        format = doc.documentLayout().format(cursor_pos)
+        entity_dict = format.property(EntityBubbleTextObject.ENTITY_PROPERTY)
+        widget = self.entity_interface.get_widget(entity_dict)
+
+        if widget is None:
+            self.viewport().setCursor(QtCore.Qt.IBeamCursor)
+            return False
+
+        self.viewport().setCursor(QtCore.Qt.ArrowCursor)
+
+        if event.type() == QtCore.QEvent.MouseButtonPress:
+            # if we are clicking on the button, do so
+            widget_pos = widget.mapFromParent(event.pos())
+            child_widget = widget.childAt(widget_pos)
+            if isinstance(child_widget, QtGui.QPushButton):
+                child_widget.click()
+
+        return False
+
+    def _display_default(self):
+        pass
+
+    def _display_value(self, value):
+        # self.bubble_widget.set_entity(value)
+        pass
 
 class EntityBubble(QtGui.QFrame):
     remove_clicked = QtCore.Signal(dict)
@@ -172,81 +249,4 @@ class EntityBubbleTextObject(QtGui.QPyTextObject):
             painter.restore()
 
 
-class EntityEditorWidget(QtGui.QTextEdit):
-    __metaclass__ = ShotgunFieldMeta
-    _EDITOR_TYPE = "entity"
 
-    def setup_widget(self):
-        self._formats = {}
-
-        # XXX why crashy crashy?
-        #self.entity_interface = EntityBubbleTextObject(self)
-        #self.document().documentLayout().registerHandler(
-        #    EntityBubbleTextObject.OBJECT_TYPE,
-        #    self.entity_interface,
-        #)
-
-        #self.setMouseTracking(True)
-        #self.viewport().installEventFilter(self)
-
-        #for s in ["Bunny", "Dog", "Big Horse"]:
-        #    self.insert_entity({"type": "Asset", "name": s})
-
-    def insert_entity(self, entity_dict):
-        key = (entity_dict["type"], entity_dict["name"])
-        if key in self._formats:
-            return
-
-        entity_format = QtGui.QTextCharFormat()
-        entity_format.setObjectType(EntityBubbleTextObject.OBJECT_TYPE)
-        entity_format.setProperty(EntityBubbleTextObject.ENTITY_PROPERTY, entity_dict)
-        self._formats[key] = entity_format
-
-        orc = unichr(0xfffc)
-        cursor = self.textCursor()
-        cursor.insertText(orc + " ", entity_format)
-        self.setTextCursor(cursor)
-
-    def on_remove_clicked(self, entity_dict):
-        print "REMOVE: %s" % entity_dict
-        key = (entity_dict["type"], entity_dict["name"])
-        format = self._formats.get(key)
-
-        if format is None:
-            return
-
-        text_obj = self.document().objectForFormat(format)
-
-    def eventFilter(self, object, event):
-        if not isinstance(event, QtGui.QMouseEvent):
-            # only pass on mouse events
-            return False
-
-        # for mouse events find the actual widget at the position
-        doc = self.document()
-        cursor_pos = doc.documentLayout().hitTest(event.pos(), QtCore.Qt.ExactHit)
-        format = doc.documentLayout().format(cursor_pos)
-        entity_dict = format.property(EntityBubbleTextObject.ENTITY_PROPERTY)
-        widget = self.entity_interface.get_widget(entity_dict)
-
-        if widget is None:
-            self.viewport().setCursor(QtCore.Qt.IBeamCursor)
-            return False
-
-        self.viewport().setCursor(QtCore.Qt.ArrowCursor)
-
-        if event.type() == QtCore.QEvent.MouseButtonPress:
-            # if we are clicking on the button, do so
-            widget_pos = widget.mapFromParent(event.pos())
-            child_widget = widget.childAt(widget_pos)
-            if isinstance(child_widget, QtGui.QPushButton):
-                child_widget.click()
-
-        return False
-
-    def _display_default(self):
-        pass
-
-    def _display_value(self, value):
-        # self.bubble_widget.set_entity(value)
-        pass

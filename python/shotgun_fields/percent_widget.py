@@ -40,8 +40,6 @@ class PercentEditorWidget(QtGui.QSpinBox):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "percent"
 
-    editing_finished = QtCore.Signal()
-
     def setup_widget(self):
         # SG min/max values for percentages
         self.setMaximum(999)
@@ -66,7 +64,9 @@ class PercentEditorWidget(QtGui.QSpinBox):
     def keyPressEvent(self, event):
 
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
-           self.editing_finished.emit()
+           self.value_changed.emit()
         else:
             super(PercentEditorWidget, self).keyPressEvent(event)
 
+    def get_value(self):
+        return self.value()

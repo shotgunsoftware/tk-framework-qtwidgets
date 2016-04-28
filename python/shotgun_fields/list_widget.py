@@ -31,8 +31,7 @@ class ListWidget(LabelBaseWidget):
 class ListEditorWidget(QtGui.QComboBox):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "list"
-
-    editing_finished = QtCore.Signal()
+    _IMMEDIATE_APPLY = True
 
     def setup_widget(self):
         self.addItem("")
@@ -40,7 +39,7 @@ class ListEditorWidget(QtGui.QComboBox):
         self.addItems(valid_values)
 
         self.activated.connect(
-            lambda i: self.editing_finished.emit()
+            lambda i: self.value_changed.emit()
         )
 
     def _display_default(self):
@@ -59,3 +58,6 @@ class ListEditorWidget(QtGui.QComboBox):
         index = self.findText(value)
         if index != -1:
             self.setCurrentIndex(index)
+
+    def get_value(self):
+        return self.currentText()

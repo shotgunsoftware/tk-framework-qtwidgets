@@ -97,7 +97,7 @@ class ExampleTableView(QtGui.QWidget):
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_delegate import ShotgunFieldDelegate
-from .shotgun_field_editable import ShotgunFieldEditable
+from .shotgun_field_editable import ShotgunFieldEditable, ShotgunFieldNotEditable
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
@@ -288,9 +288,9 @@ class ShotgunFieldManager(QtCore.QObject):
 
             editor_cls = self.get_editor_class(sg_entity_type, field_name)
             if editor_cls == display_cls:
-                # this widget is editable by default. disable it.
-                # XXX probably not best idea. need to be able to set it to read-only
-                widget.setEnabled(False)
+                # editor and display classes are the same. we need to make sure
+                # we disable editing
+                widget.enable_editing(False)
 
         return widget
 
@@ -334,11 +334,18 @@ class ShotgunFieldManager(QtCore.QObject):
 
         :returns: :class:`~PySide.QtGui.QWidget` or None if the field type has no editor widget
         """
-        cls = self.get_editor_class(sg_entity_type, field_name)
 
-        if cls:
+        #XXX if field is not editable, return the display widget
+        if not shotgun_globals.is_editable(sg_entity_type, field_name):
+            display_widget = self.create_display_widget(sg_entity_type, field_name, entity, parent, **kwargs)
+            return ShotgunFieldNotEditable(display_widget)
+
+        editor_cls = self.get_editor_class(sg_entity_type, field_name)
+
+        widget = None
+        if editor_cls:
             # instantiate the widget
-            return cls(
+            widget = editor_cls(
                 parent=parent,
                 entity_type=sg_entity_type,
                 field_name=field_name,
@@ -347,10 +354,17 @@ class ShotgunFieldManager(QtCore.QObject):
                 **kwargs
             )
 
-        return None
+            display_cls = self.get_display_class(sg_entity_type, field_name)
+            if display_cls == editor_cls:
+                # display and edit classes are the same. we need to make sure
+                # we enable the editing
+                widget.enable_editing(True)
+
+        return widget
 
     def create_editable_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """Returns a widget that shows the display widget, but can be edited."""
+
         # XXX docs
 
         display_cls = self.get_display_class(sg_entity_type, field_name)
@@ -366,13 +380,15 @@ class ShotgunFieldManager(QtCore.QObject):
 
         display_widget = self.create_display_widget(sg_entity_type, field_name, entity, parent, **kwargs)
 
-        # XXX doc
+        #XXX if field is not editable, return the display widget
+        if not shotgun_globals.is_editable(sg_entity_type, field_name):
+            return ShotgunFieldNotEditable(display_widget)
+
+        # XXX document `enable_editing`
         if editor_cls == display_cls:
-            # if the editor and display are the same, just return the enabled
-            # version of the display widget. currently this would only be the
-            # checkbox widget. may need to revisit this logic for more
-            # sophisticated widgets
-            display_widget.setEnabled(True)
+            # if the editor and display are the same, just return the editing
+            # enabled version of the display widget.
+            display_widget.enable_editing(True)
             return display_widget
 
         editor_widget = self.create_editor_widget(sg_entity_type, field_name, entity, parent, **kwargs)

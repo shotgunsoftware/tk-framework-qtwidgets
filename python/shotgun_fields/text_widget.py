@@ -31,13 +31,11 @@ class TextEditorWidget(QtGui.QTextEdit):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "text"
 
-    editing_finished = QtCore.Signal()
-
     def setup_widget(self):
 
         self.setSizePolicy(
             QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Expanding
+            QtGui.QSizePolicy.Preferred
         )
 
     def _display_default(self):
@@ -54,4 +52,7 @@ class TextEditorWidget(QtGui.QTextEdit):
 
     def _string_value(self, value):
         return str(value)
+
+    def get_value(self):
+        return self.toPlainText()
 

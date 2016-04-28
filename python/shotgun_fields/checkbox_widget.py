@@ -47,3 +47,8 @@ class CheckBoxWidget(QtGui.QCheckBox):
         new_value = (state == QtCore.Qt.Checked)
         if self._value != new_value:
             self.set_value(new_value)
+
+    def enable_editing(self, enable):
+        self.setEnabled(enable)
+
+

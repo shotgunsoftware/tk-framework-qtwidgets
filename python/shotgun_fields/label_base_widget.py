@@ -29,6 +29,10 @@ class LabelBaseWidget(QtGui.QLabel):
         Allow urls in the label to be clicked by default.
         """
         self.setOpenExternalLinks(True)
+        self.setSizePolicy(
+            QtGui.QSizePolicy.Expanding,
+            QtGui.QSizePolicy.Preferred,
+        )
 
     def _string_value(self, value):
         """
@@ -64,6 +68,10 @@ class ElidedLabelBaseWidget(ElidedLabel):
         Allow urls in the label to be clicked by default.
         """
         self.setOpenExternalLinks(True)
+        self.setSizePolicy(
+            QtGui.QSizePolicy.Expanding,
+            QtGui.QSizePolicy.Preferred,
+        )
 
     def _string_value(self, value):
         """

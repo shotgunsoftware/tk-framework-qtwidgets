@@ -35,22 +35,28 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         self._editor.done_editing.connect(
             lambda: self.setCurrentWidget(self._display))
 
-        # XXX document the `editing_finished` signal in meta class
-        if hasattr(self._editor.edit_widget, 'editing_finished'):
-            self._editor.edit_widget.editing_finished.connect(
-                lambda: self.setCurrentWidget(self._display)
-            )
+        self._editor.edit_widget.value_changed.connect(self._apply_value)
 
         self.currentChanged.connect(self.on_current_changed)
 
+    def _apply_value(self):
+        new_value = self._editor.edit_widget.get_value()
+        self._display.display_widget.set_value(new_value)
+        self.setCurrentWidget(self._display)
 
     def on_current_changed(self, index):
 
-        for i in range(0, self.count()):
-            if i == index:
-                self.widget(i).show()
-            else:
-                self.widget(i).hide()
+        #for i in range(0, self.count()):
+        #    if i == index:
+        #        self.widget(i).show()
+        #    else:
+        #        self.widget(i).hide()
+
+        self._editor.edit_widget.blockSignals(True)
+        self._editor.edit_widget.set_value(
+            self._display.display_widget.get_value()
+        )
+        self._editor.edit_widget.blockSignals(False)
 
         self.currentWidget().setFocus()
 
@@ -59,6 +65,43 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
 
     def minimumSizeHint(self):
         return self.currentWidget().minimumSizeHint()
+
+class ShotgunFieldNotEditable(QtGui.QWidget):
+
+    def __init__(self, display_widget, parent=None):
+
+        super(ShotgunFieldNotEditable, self).__init__(parent)
+
+        self._display_widget = display_widget
+
+        self._no_edit_lbl = QtGui.QLabel(self)
+        self._no_edit_lbl.setPixmap(
+            QtGui.QPixmap(":/qtwidgets-shotgun-fields/not_editable.png"))
+        self._no_edit_lbl.setFixedSize(QtCore.QSize(16, 16))
+        self._no_edit_lbl.hide()
+
+        spacer = QtGui.QWidget()
+        spacer.setFixedHeight(self._no_edit_lbl.height())
+        spacer.setFixedWidth(4)
+
+        layout = QtGui.QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        layout.addWidget(display_widget)
+        layout.addWidget(spacer)
+        layout.addWidget(self._no_edit_lbl)
+        layout.addStretch(10)
+
+        self.installEventFilter(self)
+
+    def eventFilter(self, obj, event):
+
+        if event.type() == QtCore.QEvent.Enter:
+            self._no_edit_lbl.show()
+        elif event.type() == QtCore.QEvent.Leave:
+            self._no_edit_lbl.hide()
+
+        return False
 
 class _DisplayWidget(QtGui.QWidget):
 
@@ -81,7 +124,7 @@ class _DisplayWidget(QtGui.QWidget):
 
         spacer = QtGui.QWidget()
         spacer.setFixedHeight(self._edit_btn.height())
-        spacer.setFixedWidth(2)
+        spacer.setFixedWidth(4)
 
         layout = QtGui.QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -91,8 +134,7 @@ class _DisplayWidget(QtGui.QWidget):
         layout.addWidget(self._edit_btn)
         layout.addStretch(10)
 
-
-        #self.setMinimumHeight(self._edit_btn.height())
+        self.setMinimumHeight(self._edit_btn.height())
 
         self.installEventFilter(self)
 
@@ -128,15 +170,38 @@ class _EditorWidget(QtGui.QWidget):
         self._done_btn.setFixedSize(QtCore.QSize(16, 16))
         self._done_btn.setFocusPolicy(QtCore.Qt.NoFocus)
 
+        self._apply_btn = QtGui.QPushButton()
+        self._apply_btn.setIcon(QtGui.QIcon(":/qtwidgets-shotgun-fields/apply_value.png"))
+        self._apply_btn.setFixedSize(QtCore.QSize(16, 16))
+        self._apply_btn.setFocusPolicy(QtCore.Qt.NoFocus)
+
         # make sure there's never a bg color or border
         self._done_btn.setStyleSheet("background-color: none; border: none;")
+        self._apply_btn.setStyleSheet("background-color: none; border: none;")
+
+        if self._editor_widget.sizeHint().height() >= 32:
+            btn_layout = QtGui.QVBoxLayout()
+            btn_layout.addWidget(self._done_btn)
+            btn_layout.addStretch()
+            btn_layout.addWidget(self._apply_btn)
+        else:
+            btn_layout = QtGui.QHBoxLayout()
+            btn_layout.addWidget(self._apply_btn)
+            btn_layout.addWidget(self._done_btn)
+            btn_layout.addStretch()
+
+        if hasattr(editor_widget, '_IMMEDIATE_APPLY') and editor_widget._IMMEDIATE_APPLY:
+            # widget is set to immediately apply value. no need to display the btn
+            self._apply_btn.hide()
 
         layout = QtGui.QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(4)
         layout.addWidget(editor_widget)
-        layout.addWidget(self._done_btn)
+        layout.addLayout(btn_layout)
         layout.addStretch()
+
+        layout.setAlignment(self._done_btn, QtCore.Qt.AlignBottom)
 
         #self.setMinimumHeight(self._done_btn.height())
 
@@ -145,6 +210,11 @@ class _EditorWidget(QtGui.QWidget):
         # ---- connect singals
 
         self._done_btn.clicked.connect(lambda: self.done_editing.emit())
+        self._apply_btn.clicked.connect(self._apply_value)
+
+    def _apply_value(self):
+        self.edit_widget.set_value(self.edit_widget.get_value())
+        self.done_editing.emit()
 
     def setFocus(self):
         self._editor_widget.setFocus()

@@ -44,6 +44,7 @@ class DateEditorWidget(QtGui.QDateEdit):
 
     def setup_widget(self):
         self.setCalendarPopup(True)
+        self.setMinimumWidth(100)
 
     def _display_default(self):
         """ Default widget state is empty. """
@@ -66,3 +67,5 @@ class DateEditorWidget(QtGui.QDateEdit):
            self.editing_finished.emit()
         else:
             super(DateEditorWidget, self).keyPressEvent(event)
+
+

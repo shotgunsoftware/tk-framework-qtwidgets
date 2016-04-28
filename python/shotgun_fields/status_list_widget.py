@@ -47,17 +47,18 @@ class StatusListWidget(LabelBaseWidget):
 class StatusListEditorWidget(QtGui.QComboBox):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "status_list"
-
-    editing_finished = QtCore.Signal()
+    _IMMEDIATE_APPLY = True
 
     def setup_widget(self):
         self.addItem("")
+        self.setMinimumWidth(100)
+
         valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
         for value in valid_values:
-            self.addItem(shotgun_globals.get_status_display_name(value))
+            self.addItem(shotgun_globals.get_status_display_name(value), value)
 
         self.activated.connect(
-            lambda i: self.editing_finished.emit()
+            lambda i: self.value_changed.emit()
         )
 
     def _display_default(self):
@@ -77,3 +78,6 @@ class StatusListEditorWidget(QtGui.QComboBox):
         index = self.findText(display_value)
         if index != -1:
             self.setCurrentIndex(index)
+
+    def get_value(self):
+        return self.itemData(self.currentIndex())

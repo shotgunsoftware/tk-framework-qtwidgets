@@ -39,12 +39,11 @@ class FloatEditorWidget(QtGui.QDoubleSpinBox):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "float"
 
-    editing_finished = QtCore.Signal()
-
     def setup_widget(self):
         # Qt Spinner's max/min are int32 max/min values
         self.setMaximum(float("inf"))
         self.setMinimum(float("-inf"))
+        self.setMinimumWidth(100)
 
     def _display_default(self):
         """ Default widget state is empty. """
@@ -61,6 +60,9 @@ class FloatEditorWidget(QtGui.QDoubleSpinBox):
     def keyPressEvent(self, event):
 
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
-           self.editing_finished.emit()
+            self.value_changed.emit()
         else:
             super(FloatEditorWidget, self).keyPressEvent(event)
+
+    def get_value(self):
+        return self.value()

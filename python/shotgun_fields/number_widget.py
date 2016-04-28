@@ -39,12 +39,11 @@ class NumberEditorWidget(QtGui.QSpinBox):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "number"
 
-    editing_finished = QtCore.Signal()
-
     def setup_widget(self):
         # Qt Spinner's max/min are int32 max/min values
         self.setMaximum(2147483647)
         self.setMinimum(-2147483648)
+        self.setMinimumWidth(100)
 
     def _display_default(self):
         """ Default widget state is empty. """
@@ -61,6 +60,9 @@ class NumberEditorWidget(QtGui.QSpinBox):
     def keyPressEvent(self, event):
 
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
-           self.editing_finished.emit()
+           self.value_changed.emit()
         else:
             super(NumberEditorWidget, self).keyPressEvent(event)
+
+    def get_value(self):
+        return self.value()

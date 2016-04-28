@@ -117,7 +117,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
         return field_class
 
-    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, read_only=True, **kwargs):
+    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, **kwargs):
         """
         Create an instance of the given class.
 
@@ -135,9 +135,6 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
         :param bg_task_manager: The task manager the widget will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
-
-        :param read_only: True if widget should be read only, False otherwise.
-        :type read_only: bool
 
         Additionally pass all other keyword args through to the PySide widget constructor for the
         class' superclass.
