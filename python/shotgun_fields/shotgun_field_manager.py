@@ -336,7 +336,7 @@ class ShotgunFieldManager(QtCore.QObject):
         """
 
         #XXX if field is not editable, return the display widget
-        if not shotgun_globals.is_editable(sg_entity_type, field_name):
+        if not shotgun_globals.field_is_editable(sg_entity_type, field_name):
             display_widget = self.create_display_widget(sg_entity_type, field_name, entity, parent, **kwargs)
             return ShotgunFieldNotEditable(display_widget)
 
@@ -381,7 +381,7 @@ class ShotgunFieldManager(QtCore.QObject):
         display_widget = self.create_display_widget(sg_entity_type, field_name, entity, parent, **kwargs)
 
         #XXX if field is not editable, return the display widget
-        if not shotgun_globals.is_editable(sg_entity_type, field_name):
+        if not shotgun_globals.field_is_editable(sg_entity_type, field_name):
             return ShotgunFieldNotEditable(display_widget)
 
         # XXX document `enable_editing`

@@ -34,7 +34,7 @@ class DateAndTimeWidget(LabelBaseWidget):
         """
         # shotgun_model converts datetimes to floats representing unix time so
         # handle that as a valid value as well
-        if isinstance(value, float):
+        if not isinstance(value, datetime.datetime):
             value = datetime.datetime.fromtimestamp(value)
         return self._create_human_readable_timestamp(value, " %I:%M%p")
 
@@ -54,6 +54,7 @@ class DateAndTimeWidget(LabelBaseWidget):
 
         :returns: A String representing dt appropriate for display
         """
+
         # get the delta and components
         delta = datetime.datetime.now(dt.tzinfo) - dt
 
@@ -75,8 +76,6 @@ class DateAndTimeEditorWidget(QtGui.QDateTimeEdit):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "date_time"
 
-    editing_finished = QtCore.Signal()
-
     def setup_widget(self):
         self.setCalendarPopup(True)
         self.setMinimumWidth(100)
@@ -93,14 +92,25 @@ class DateAndTimeEditorWidget(QtGui.QDateTimeEdit):
         """
         # shotgun_model converts datetimes to floats representing unix time so
         # handle that as a valid value as well
-        if isinstance(value, float):
+        if not isinstance(value, datetime.datetime):
             value = datetime.datetime.fromtimestamp(value)
         self.setDateTime(value)
 
     def keyPressEvent(self, event):
 
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
-           self.editing_finished.emit()
+           self.value_changed.emit()
         else:
             super(DateAndTimeEditorWidget, self).keyPressEvent(event)
+
+    def get_value(self):
+
+        value = self.dateTime()
+
+        if hasattr(QtCore, "QVariant"):
+            # pyqt
+            return value.toPyDateTime()
+        else:
+            # pyside
+            return value.toPython()
 

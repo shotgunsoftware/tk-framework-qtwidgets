@@ -15,6 +15,8 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui import resources_rc
 
+# TODO: states for "updating in SG" and "failed to update in SG"
+
 class ShotgunFieldEditable(QtGui.QStackedWidget):
 
     def __init__(self, display_widget, editor_widget, parent=None):
@@ -35,6 +37,7 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         self._editor.done_editing.connect(
             lambda: self.setCurrentWidget(self._display))
 
+        # XXX insert backend update here (don't immediately apply the value)
         self._editor.edit_widget.value_changed.connect(self._apply_value)
 
         self.currentChanged.connect(self.on_current_changed)
@@ -45,12 +48,6 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         self.setCurrentWidget(self._display)
 
     def on_current_changed(self, index):
-
-        #for i in range(0, self.count()):
-        #    if i == index:
-        #        self.widget(i).show()
-        #    else:
-        #        self.widget(i).hide()
 
         self._editor.edit_widget.blockSignals(True)
         self._editor.edit_widget.set_value(
@@ -210,6 +207,7 @@ class _EditorWidget(QtGui.QWidget):
         # ---- connect singals
 
         self._done_btn.clicked.connect(lambda: self.done_editing.emit())
+        # XXX insert backend update here (don't immediately apply the value)
         self._apply_btn.clicked.connect(self._apply_value)
 
     def _apply_value(self):

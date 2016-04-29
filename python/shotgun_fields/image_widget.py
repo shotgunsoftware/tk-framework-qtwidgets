@@ -112,6 +112,7 @@ class ImageWidget(QtGui.QLabel):
             # XXX update in SG first?
             self.setPixmap(QtGui.QPixmap(file_path))
             self._image_url = file_path
+            self.value_changed.emit()
 
     def _on_popup_btn_click(self):
 
@@ -141,6 +142,8 @@ class ImageWidget(QtGui.QLabel):
         self._pixmap = None
         self._image_url = None
         self._update_display()
+        # XXX how will this work with SG uploads?
+        self.value_changed.emit()
 
     def _update_display(self):
         if not self._pixmap:

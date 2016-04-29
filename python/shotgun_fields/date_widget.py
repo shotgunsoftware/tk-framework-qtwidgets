@@ -15,14 +15,13 @@ import datetime
 
 from sgtk.platform.qt import QtGui, QtCore
 from .date_and_time_widget import DateAndTimeWidget
+from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
-class DateWidget(DateAndTimeWidget):
-    """
-    Inherited from a :class:`~DateAndTimeWidget`, this class is able to
-    display a date field value as returned by the Shotgun API.
-    """
+class DateWidget(LabelBaseWidget):
+
+    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "date"
 
     def _string_value(self, value):
@@ -32,8 +31,35 @@ class DateWidget(DateAndTimeWidget):
         :param value: The value to convert into a string
         :type value: A String representing the date in YYYY-MM-DD form
         """
-        dt = datetime.datetime.strptime(value, "%Y-%m-%d")
-        return self._create_human_readable_timestamp(dt)
+        if not isinstance(value, datetime.date):
+            value = datetime.datetime.strptime(value, "%Y-%m-%d").date()
+        return self._create_human_readable_date(value)
+
+    def _create_human_readable_date(self, date):
+        """
+        Return the time represented by the argument as a string where the date portion is
+        displayed as "Yesterday", "Today", or "Tomorrow" if appropriate.
+
+        :param date: The date convert to a string
+        :type date: :class:`datetime.date`
+
+        :returns: A String representing date appropriate for display
+        """
+
+        # get the delta and components
+        delta = datetime.date.today() - date
+
+        if delta.days == 1:
+            date_str = "Yesterday"
+        elif delta.days == 0:
+            date_str = "Today"
+        elif delta.days == -1:
+            date_str = "Tomorrow"
+        else:
+            # use the date formatting associated with the current locale
+            date_str = date.strftime("%x")
+
+        return date_str
 
 
 class DateEditorWidget(QtGui.QDateEdit):
@@ -58,8 +84,9 @@ class DateEditorWidget(QtGui.QDateEdit):
         """
         # shotgun_model converts datetimes to floats representing unix time so
         # handle that as a valid value as well
-        dt = datetime.datetime.strptime(value, "%Y-%m-%d")
-        self.setDate(dt)
+        if not isinstance(value, datetime.date):
+            value = datetime.datetime.strptime(value, "%Y-%m-%d")
+        self.setDate(value)
 
     def keyPressEvent(self, event):
 
@@ -68,4 +95,14 @@ class DateEditorWidget(QtGui.QDateEdit):
         else:
             super(DateEditorWidget, self).keyPressEvent(event)
 
+    def get_value(self):
+
+        value = self.date()
+
+        if hasattr(QtCore, "QVariant"):
+            # pyqt
+            return value.toPyDate()
+        else:
+            # pyside
+            return value.toPython()
 
