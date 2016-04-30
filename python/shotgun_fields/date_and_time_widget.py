@@ -11,9 +11,13 @@
 """
 Widget that represents the value of a date_time field in Shotgun
 """
+import sgtk
 import datetime
+
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+
+shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
 class DateAndTimeWidget(LabelBaseWidget):
@@ -31,40 +35,5 @@ class DateAndTimeWidget(LabelBaseWidget):
         :param value: The value to convert into a string
         :type value: :class:`datetime.datetime` or a float representing unix time
         """
-        # shotgun_model converts datetimes to floats representing unix time so
-        # handle that as a valid value as well
-        if isinstance(value, float):
-            value = datetime.datetime.fromtimestamp(value)
-        return self._create_human_readable_timestamp(value, " %I:%M%p")
+        return shotgun_globals.create_human_readable_timestamp(value, " %I:%M%p")
 
-    def _create_human_readable_timestamp(self, dt, postfix=""):
-        """
-        Return the time represented by the argument as a string where the date portion is
-        displayed as "Yesterday", "Today", or "Tomorrow" if appropriate.
-
-        By default just the date is displayed, but additional formatting can be appended
-        by using the postfix argument.
-
-        :param dt: The date and time to convert to a string
-        :type dt: :class:`datetime.datetime`
-
-        :param postfix: What will be displayed after the date portion of the dt argument
-        :type postfix: A strftime style String
-
-        :returns: A String representing dt appropriate for display
-        """
-        # get the delta and components
-        delta = datetime.datetime.now(dt.tzinfo) - dt
-
-        if delta.days == 1:
-            format = "Yesterday%s" % postfix
-        elif delta.days == 0:
-            format = "Today%s" % postfix
-        elif delta.days == -1:
-            format = "Tomorrow%s" % postfix
-        else:
-            # use the date formatting associated with the current locale
-            format = "%%x%s" % postfix
-
-        time_str = dt.strftime(format)
-        return time_str
