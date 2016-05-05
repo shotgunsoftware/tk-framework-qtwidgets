@@ -94,8 +94,12 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._entity_type = None
         self._entity_id = None
 
-        # When a ReplyDialog is active it will be stored here.
-        self.reply_dialog = None
+        self.reply_dialog = ReplyDialog(
+            self,
+            self._task_manager,
+            note_id=None,
+            allow_screenshots=self._allow_screenshots,
+        )
 
     def set_bg_task_manager(self, task_manager):
         """
@@ -126,8 +130,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         Returns the NoteInputWidget contained within the ActivityStreamWidget.
         Note that this is the widget used for NEW note input and not Note
         replies. To get the NoteInputWidget used for Note replies, access can
-        be found via reply_widget.note_widget if a reply widget is currently
-        active.
+        be found via reply_dialog.note_widget.
         """
         return self.ui.note_widget
 
@@ -604,28 +607,21 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Callback when someone clicks reply on a given note
         """
-        reply_dialog = ReplyDialog(
-            self,
-            self._task_manager,
-            note_id,
-            allow_screenshots=self._allow_screenshots,
-        )
-        
-        #position the reply modal dialog above the activity stream scroll area
+        self.reply_dialog.note_id = note_id
+
+        # Position the reply modal dialog above the activity stream scroll area.
         pos = self.mapToGlobal(self.ui.activity_stream_scroll_area.pos())
-        x_pos = pos.x() + (self.ui.activity_stream_scroll_area.width() / 2) - (reply_dialog.width() / 2) - 10         
-        y_pos = pos.y() + (self.ui.activity_stream_scroll_area.height() / 2) - (reply_dialog.height() / 2) - 20
-        reply_dialog.move(x_pos, y_pos)
+        x_pos = pos.x() + (self.ui.activity_stream_scroll_area.width() / 2) - (self.reply_dialog.width() / 2) - 10         
+        y_pos = pos.y() + (self.ui.activity_stream_scroll_area.height() / 2) - (self.reply_dialog.height() / 2) - 20
+        self.reply_dialog.move(x_pos, y_pos)
         
         # and pop it
         try:
-            self.reply_dialog = reply_dialog
             self.__small_overlay.show()
-            if reply_dialog.exec_() == QtGui.QDialog.Accepted:
+            if self.reply_dialog.exec_() == QtGui.QDialog.Accepted:
                 self.load_data(self._sg_entity_dict)
         finally:
             self.__small_overlay.hide()
-            self.reply_dialog = None
         
     def _on_note_submitted(self):
         """
