@@ -49,11 +49,16 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
 
     def on_current_changed(self, index):
 
-        self._editor.edit_widget.blockSignals(True)
-        self._editor.edit_widget.set_value(
-            self._display.display_widget.get_value()
-        )
-        self._editor.edit_widget.blockSignals(False)
+        if index == self._edit_index:
+            self._editor.edit_widget.blockSignals(True)
+            self._editor.edit_widget.set_value(
+                self._display.display_widget.get_value()
+            )
+            self._editor.edit_widget.blockSignals(False)
+
+            if hasattr(self._editor.edit_widget, '_begin_edit'):
+                # XXX document
+                self._editor.edit_widget._begin_edit()
 
         self.currentWidget().setFocus()
 

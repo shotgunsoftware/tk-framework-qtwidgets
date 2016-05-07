@@ -124,6 +124,7 @@ class ImageWidget(QtGui.QLabel):
 
     def _clear_image(self):
         self._display_default()
+        self.value_changed.emit()
 
     def _replace_image(self):
         self._upload_image()
@@ -142,13 +143,15 @@ class ImageWidget(QtGui.QLabel):
         self._pixmap = None
         self._image_url = None
         self._update_display()
-        # XXX how will this work with SG uploads?
-        self.value_changed.emit()
 
     def _update_display(self):
         if not self._pixmap:
             if self._editable:
-                self.setText("<a href='image::upload'>Upload Image</a>")
+                link_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
+                self.setText(
+                    "<a href='image::upload'><font color='%s'>Upload Image"
+                    "</font></a>" % (link_color,)
+                )
             else:
                 self.setText("No Image")
 

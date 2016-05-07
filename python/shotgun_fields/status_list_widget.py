@@ -81,3 +81,7 @@ class StatusListEditorWidget(QtGui.QComboBox):
 
     def get_value(self):
         return self.itemData(self.currentIndex())
+
+    def _begin_edit(self):
+        self.adjustSize()
+        self.showPopup()

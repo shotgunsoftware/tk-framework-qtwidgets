@@ -11,7 +11,13 @@
 """
 Widget that represents the value of a multi_entity field in Shotgun
 """
-from .entity_widget import EntityWidget, EntityEditorWidget
+
+import sgtk
+
+from .bubble_widget import BubbleEditWidget, BubbleWidget
+from .entity_widget import EntityWidget
+
+shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
 class MultiEntityWidget(EntityWidget):
@@ -30,6 +36,37 @@ class MultiEntityWidget(EntityWidget):
         """
         return ", ".join([self._entity_dict_to_html(entity) for entity in value])
 
-class MultiEntityEditorWidget(EntityEditorWidget):
+class MultiEntityEditorWidget(BubbleEditWidget):
 
     _EDITOR_TYPE = "multi_entity"
+
+    def add_entity(self, entity_dict):
+
+        bubbles = self.get_bubbles()
+        for bubble in bubbles:
+            bubble_entity_dict = bubble.get_data()
+            if (bubble_entity_dict["type"] == entity_dict["type"] and
+                bubble_entity_dict["name"] == entity_dict["name"]):
+                # move the bubble to the end
+                self.remove_bubble(bubble.id)
+                self.add_entity(bubble_entity_dict)
+                return
+
+        entity_icon_url = shotgun_globals.get_entity_type_icon_url(entity_dict["type"])
+
+        entity_bubble = BubbleWidget()
+        entity_bubble.set_data(entity_dict)
+        entity_bubble.set_image(entity_icon_url)
+        entity_bubble.set_text(entity_dict["name"])
+
+        entity_bubble_id = self.add_bubble(entity_bubble)
+
+        return entity_bubble_id
+
+    def _display_default(self):
+        self.clear()
+
+    def _display_value(self, value):
+        self.clear()
+        for entity_dict in value:
+            self.add_entity(entity_dict)

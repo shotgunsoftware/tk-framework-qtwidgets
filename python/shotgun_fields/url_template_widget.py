@@ -11,6 +11,8 @@
 """
 Widget that represents the value of a url_template field in Shotgun
 """
+
+import sgtk
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -30,4 +32,6 @@ class UrlTemplateWidget(ElidedLabelBaseWidget):
         :param value: The value to convert into a string
         :type value: A URL String
         """
-        return "<a href='%s'>%s</a>" % (value, value)
+        link_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
+        return "<a href='%s'><font color='%s'>%s</font></a>" % (
+            value, link_color, value)

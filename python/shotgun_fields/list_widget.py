@@ -61,3 +61,6 @@ class ListEditorWidget(QtGui.QComboBox):
 
     def get_value(self):
         return self.currentText()
+
+    def _begin_edit(self):
+        self.showPopup()

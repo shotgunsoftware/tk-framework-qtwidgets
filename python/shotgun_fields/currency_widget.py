@@ -32,8 +32,12 @@ class CurrencyWidget(LabelBaseWidget):
         :param value: The value to convert into a string
         :type value: Float or Integer
         """
-        return locale.currency(value, grouping=True)
+        try:
+            val = locale.currency(value, grouping=True)
+        except:
+            val = "$%.2f" % (value,)
 
+        return val
 
 class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
     __metaclass__ = ShotgunFieldMeta

@@ -12,6 +12,9 @@
 Widget that represents the value of a url field in Shotgun
 """
 
+import os
+
+import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
 from .label_base_widget import ElidedLabelBaseWidget
@@ -49,6 +52,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         # make sure there's never a bg color or border
         self._popup_btn.setStyleSheet("background-color: none; border: none;")
 
+        # XXX implement all the actions
 
         # actions
         self._upload_action = QtGui.QAction("Upload File", self)
@@ -58,6 +62,22 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         #self._link_action.triggered.connect(self._link_file)
 
         self._local_action = QtGui.QAction("Link to Local File or Directory", self)
+        #self._local_action.triggered.connect(self._link_local)
+
+        self._replace_with_upload_action = QtGui.QAction("Replace with Uploaded File", self)
+        self._replace_with_upload_action.triggered.connect(self._upload_file)
+
+        self._replace_with_link_action = QtGui.QAction("Replace with Web Page Link", self)
+        #self._replace_with_link_action.triggered.connect(self._link_file)
+
+        self._replace_with_local_action = QtGui.QAction("Replace with Local File or Directory", self)
+        #self._replace_with_local_action.triggered.connect(self._link_file)
+
+        self._clear_contents_action = QtGui.QAction("Remove File/Link", self)
+        #self._clear_contents_action.triggered.connect(self._clear_contents)
+
+        self._edit_link_action = QtGui.QAction("Edit Web Page Link", self)
+        #self._edit_link_action.triggered.connect(self._edit_link)
 
         self.installEventFilter(self)
 
@@ -69,10 +89,10 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         self._popup_btn.clicked.connect(self._on_popup_btn_click)
         self.linkActivated.connect(self._on_link_activated)
 
-    def _on_link_activated(self, url):
+    def _display_default(self):
+        self.clear()
 
-        # XXX modify url based on link type
-        print "URL: " + url
+    def _on_link_activated(self, url):
         QtGui.QDesktopServices.openUrl(url)
 
     def _upload_file(self):
@@ -83,34 +103,34 @@ class FileLinkWidget(ElidedLabelBaseWidget):
             options=QtGui.QFileDialog.DontResolveSymlinks,
         )[0]
         if file_path and os.path.exists(file_path):
-            # XXX may not want to replace immediately.
-            # XXX update in SG first?
-            self.setPixmap(QtGui.QPixmap(file_path))
-            self._image_url = file_path
+            self._clear()
+
+            # populte dict to match SG value
+            self.set_value({
+                # XXX
+            })
+
 
     def _on_popup_btn_click(self):
 
         popup_menu = QtGui.QMenu()
-        popup_menu.addAction(self._upload_action)
-        popup_menu.addAction(self._link_action)
-        popup_menu.addAction(self._local_action)
 
-        # when empty:
-            # Upload File
-            # Link to Web Page
-            # Link to Local File or Directory # XXX
+        # XXX introspect self._value dict
 
-        # with uploaded file
-            # Replace with Uploaded File
-            # Replace with Web Page Link
-            # Replace with Local File or Directory # XXX
-            # Remove File/Link
-
-        # with link
-            # Replace with Uploaded File
-            # Edit Web Page Link
-            # Replace with Local File or Directory # XXX
-            # Remove File/Link
+        if self._local_file:
+            popup_menu.addAction(self._replace_with_upload_action)
+            popup_menu.addAction(self._replace_with_link_action)
+            popup_menu.addAction(self._replace_with_local_action)
+            popup_menu.addAction(self._clear_contents_action)
+        elif self._link_url:
+            popup_menu.addAction(self._replace_with_upload_action)
+            popup_menu.addAction(self._edit_link_action)
+            popup_menu.addAction(self._replace_with_local_action)
+            popup_menu.addAction(self._clear_contents_action)
+        else:
+            popup_menu.addAction(self._upload_action)
+            popup_menu.addAction(self._link_action)
+            popup_menu.addAction(self._local_action)
 
         popup_menu.exec_(
             self._popup_btn.mapToGlobal(
@@ -129,15 +149,23 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         :param value: The value to convert into a string
         :type value: A dictionary as returned by the Shotgun API for a url field
         """
-        print "VALUE: " + str(value)
-        str_val = value["name"]
+
+        link_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
 
         if value["link_type"] in ["web", "upload"]:
-            str_val = "<a href='%s'>%s</a>" % (value["url"], str_val)
+            url = value["url"]
+            str_val = value.get("name", url)
+            str_val = "<a href='%s'><font color='%s'>%s</font></a>" % (
+                url, link_color, str_val)
         elif value["link_type"] == "local":
-            str_val = "<a href='file:///%s'>%s</a>" % (value["local_path"], str_val)
+            local_path = value["local_path"]
+            # for file on OS that differs from the current OS, this will
+            # result in the display of the full path rather than just the
+            # file basename.ext (the SG behavior).
+            file_name = os.path.split(local_path)[-1]
+            str_val = "<a href='file:///%s'><font color='%s'>%s</font></a>" % (
+                local_path, link_color, file_name)
 
-        print "VALUE: " + str(value)
         return str_val
 
     def eventFilter(self, obj, event):
@@ -157,5 +185,4 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         if (x + self._popup_btn.width()) > visible_width:
             x = self.visibleRegion().boundingRect().width() - self._popup_btn.width()
         self._popup_btn.move(x, -2)
-
 
