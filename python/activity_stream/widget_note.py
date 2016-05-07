@@ -225,10 +225,10 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._set_timestamp(data, self.ui.date)
         
         # set the main note text
-        self.ui.content.setText(data["content"])
+        self.ui.content.setText(data.get("content", ""))
         
         # format note links        
-        html_link_box_data = data["note_links"] + data["tasks"]
+        html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
         links_html = self.__generate_note_links_table(html_link_box_data)
 
         # self.ui.links.setText(links_html)

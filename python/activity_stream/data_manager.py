@@ -370,7 +370,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                                         "thumbnail_type": self.THUMBNAIL_CREATED_BY}
 
             else:
-                self._bundle.log_warning("No thumbnail found for this note!")
+                self._bundle.log_debug("No thumbnail found for this note!")
             
         elif created_by and created_by.get("image") and self._sg_data_retriever:
             # for all other activities, the thumbnail reflects who

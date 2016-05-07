@@ -46,7 +46,7 @@ class NoteInputWidget(QtGui.QWidget):
     # Emitted when a Note or Reply entity is created. The
     # entity type as a string and id as an int will be
     # provided.
-    entity_created = QtCore.Signal(str, int)
+    entity_created = QtCore.Signal(object)
     
     
     def __init__(self, parent):
@@ -312,7 +312,8 @@ class NoteInputWidget(QtGui.QWidget):
             
         self.__upload_thumbnail(note_link, sg, data)
         self.__upload_attachments(note_link, sg, data)
-        self.entity_created.emit("Reply", sg_reply_data["id"])
+
+        return sg_reply_data
         
     def _async_submit_note(self, sg, data):
         # note - no logging in here, as I am not sure how all 
@@ -449,7 +450,8 @@ class NoteInputWidget(QtGui.QWidget):
         
         self.__upload_thumbnail(sg_note_data, sg, data)
         self.__upload_attachments(sg_note_data, sg, data)
-        self.entity_created.emit("Note", sg_note_data["id"])
+
+        return sg_note_data
 
     def __upload_attachments(self, parent_entity, sg, data):
         """
@@ -545,6 +547,7 @@ class NoteInputWidget(QtGui.QWidget):
             self.clear()
             self._bundle.log_debug("Update call complete! Return data: %s" % data)
             self.data_updated.emit()
+            self.entity_created.emit(data["return_value"])
             
         
     def __format_thumbnail(self, pixmap_obj):
