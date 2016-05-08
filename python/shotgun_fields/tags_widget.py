@@ -11,6 +11,9 @@
 """
 Widget that represents the value of a tag_list field in Shotgun
 """
+
+from sgtk.platform.qt import QtCore, QtGui
+
 from .bubble_widget import BubbleEditWidget, BubbleWidget
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
@@ -42,10 +45,22 @@ class TagsWidget(ElidedLabelBaseWidget):
 
         return "&nbsp;".join(tag_strings)
 
+# XXX exclude this class form sphinx docs
 class TagsEditorWidget(BubbleEditWidget):
 
-    __metaclass__ = ShotgunFieldMeta
+    # TODO: The python API does not currently support add/remove/edit of tags.
+    # Once the api supports tag updates, this class can be further fleshed out
+    # to mimic the editing capabilities available in the web interface.
+
+    # TODO: The following line is commented out so that the class is not
+    # registered as a tag editor. Uncomment when tags are supported.
+    #__metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "tag_list"
+
+    # TODO: some additional validation will need to happen to make sure a valid
+    # tag was entered and that the user can create a tag if one does not exist.
+    # A tag completer would also be useful if matching tag list could be queried
+    # or made available via the cached schema.
 
     def add_tag(self, tag):
 
@@ -67,6 +82,24 @@ class TagsEditorWidget(BubbleEditWidget):
 
         return tag_bubble_id
 
+    def keyPressEvent(self, event):
+
+        if event.key() in [
+            QtCore.Qt.Key_Enter,
+            QtCore.Qt.Key_Return,
+            QtCore.Qt.Key_Tab,
+            QtCore.Qt.Key_Comma,
+            QtCore.Qt.Key_Space,
+        ]:
+            tag = self.get_typed_text()
+            tag.strip()
+            self.add_tag(tag)
+            self.clear_typed_text()
+            event.ignore()
+            return
+
+        super(TagsEditorWidget, self).keyPressEvent(event)
+
     def remove_tag(self, tag):
 
         bubbles = self.get_bubbles()
@@ -86,3 +119,5 @@ class TagsEditorWidget(BubbleEditWidget):
 
     def get_value(self):
         return [b.get_data() for b in self.get_bubbles()]
+
+

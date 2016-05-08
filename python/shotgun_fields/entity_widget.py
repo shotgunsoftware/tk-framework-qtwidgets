@@ -71,9 +71,6 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
     _EDITOR_TYPE = "entity"
     _IMMEDIATE_APPLY = True
 
-    #def _begin_edit(self):
-
-
     def setup_widget(self):
         self.set_bg_task_manager(self._bg_task_manager)
 
@@ -89,6 +86,9 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
             valid_types[entity_type] = []
 
         self.set_searchable_entity_types(valid_types)
+
+    def _begin_edit(self):
+        self.selectAll()
 
     def _display_default(self):
         self.clear()

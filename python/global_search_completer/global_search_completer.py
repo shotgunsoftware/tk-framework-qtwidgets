@@ -19,6 +19,7 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
     # emitted when shotgun has been updated
     entity_selected = QtCore.Signal(str, int)
+    entity_activated = QtCore.Signal(dict)
 
     # custom roles for the model that tracks the auto completion results
     SG_DATA_ROLE = QtCore.Qt.UserRole + 1
@@ -283,7 +284,7 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
                 item.setIcon(self._default_icon)
 
-                if d["image"] and self.__sg_data_retriever:
+                if d.get("image", None) and self.__sg_data_retriever:
                     uid = self.__sg_data_retriever.request_thumbnail(
                         d["image"],
                         d["type"],
@@ -324,4 +325,4 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
             # send out new signal
             self.entity_selected.emit(data["type"], data["id"])
-
+            self.entity_activated.emit(data)

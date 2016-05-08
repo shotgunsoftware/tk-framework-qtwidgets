@@ -140,6 +140,30 @@ class BubbleEditWidget(QtGui.QTextEdit):
 
         return bubbles
 
+    def clear_typed_text(self):
+
+        text = self.toPlainText()
+        cursor = self.textCursor()
+
+        cursor.beginEditBlock()
+
+        # iterate backwards so that indices don't change
+        for i in reversed(range(0, len(text))):
+
+            if text[i] == self.OBJECT_REPLACEMENT_CHAR:
+                continue
+
+            cursor.setPosition(i, QtGui.QTextCursor.MoveAnchor)
+            cursor.movePosition(QtGui.QTextCursor.Right, QtGui.QTextCursor.KeepAnchor)
+            cursor.removeSelectedText()
+
+        cursor.endEditBlock()
+
+    def get_typed_text(self):
+
+        char_list = [c for c in self.toPlainText() if c != self.OBJECT_REPLACEMENT_CHAR]
+        return  "".join(char_list)
+
     def eventFilter(self, object, event):
         if not isinstance(event, QtGui.QMouseEvent):
             # only pass on mouse events
