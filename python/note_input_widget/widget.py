@@ -33,6 +33,9 @@ class NoteInputWidget(QtGui.QWidget):
         replied to. 
     :signal close_clicked: Emitted if a user chooses to cancel the note 
         creation by clicking the X button.
+    :signal entity_created: Emitted when a Shotgun entity is created, which
+        will be either a Note or Reply entity, depending on situation. The
+        entity dictionary, as provided by the API, will be sent.
     """
     
     _EDITOR_WIDGET_INDEX = 0
@@ -42,6 +45,13 @@ class NoteInputWidget(QtGui.QWidget):
     # emitted when shotgun has been updated
     data_updated = QtCore.Signal()
     close_clicked = QtCore.Signal()
+
+    # Emitted when a Note or Reply entity is created. The
+    # entity type as a string and id as an int will be
+    # provided.
+    #
+    # dict(entity_type="Note", id=1234)
+    entity_created = QtCore.Signal(object)
     
     
     def __init__(self, parent):
@@ -284,13 +294,19 @@ class NoteInputWidget(QtGui.QWidget):
         
     def _async_submit_reply(self, sg, data):
         """
-        Create a new reply
+        Provides functionality for creating a new Reply entity
+        asynchronously by providing a signature that is friendly
+        for use with :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`.
+
+        :param sg:      A Shotgun API handle.
+        :param data:    A dictionary as created by :meth:`NoteInputWidget._submit`
+
+        :returns:       A Shotgun entity dictionary for the Reply that was created.
         """
-        
         note_link = data["entity"]
         
         # this is an entity - so create a note and link it
-        sg.create("Reply", {"content": data["text"], "entity": note_link})
+        sg_reply_data = sg.create("Reply", {"content": data["text"], "entity": note_link})
 
         # if there are any recipients, make sure they are added to the note
         # but as CCs
@@ -306,10 +322,21 @@ class NoteInputWidget(QtGui.QWidget):
                       {"addressings_cc": updated_links})
             
         self.__upload_thumbnail(note_link, sg, data)
-        self.__upload_attachments(note_link, sg, data)     
-                
+        self.__upload_attachments(note_link, sg, data)
+
+        return sg_reply_data
         
     def _async_submit_note(self, sg, data):
+        """
+        Provides functionality for creating a new Note entity
+        asynchronously by providing a signature that is friendly
+        for use with :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`.
+
+        :param sg:      A Shotgun API handle.
+        :param data:    A dictionary as created by :meth:`NoteInputWidget._submit`
+
+        :returns:       A Shotgun entity dictionary for the Note that was created.
+        """
         # note - no logging in here, as I am not sure how all 
         # engines currently react to log_debug() async.
         
@@ -444,7 +471,8 @@ class NoteInputWidget(QtGui.QWidget):
         
         self.__upload_thumbnail(sg_note_data, sg, data)
         self.__upload_attachments(sg_note_data, sg, data)
-        
+
+        return sg_note_data
 
     def __upload_attachments(self, parent_entity, sg, data):
         """
@@ -540,6 +568,7 @@ class NoteInputWidget(QtGui.QWidget):
             self.clear()
             self._bundle.log_debug("Update call complete! Return data: %s" % data)
             self.data_updated.emit()
+            self.entity_created.emit(data["return_value"])
             
         
     def __format_thumbnail(self, pixmap_obj):

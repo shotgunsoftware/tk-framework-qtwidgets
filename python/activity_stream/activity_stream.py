@@ -32,6 +32,9 @@ class ActivityStreamWidget(QtGui.QWidget):
     :signal playback_requested(dict): Fires when someone clicks the playback url
             on a version. Returns a shotgun dictionary with information
             about the version.
+    :signal entity_created(object): Fires when a Note or Reply entity is created by
+            an underlying widget within the activity stream. Returns a Shotgun dictionary
+            with information about the new Entity.
     :ivar reply_dialog: When a ReplyDialog is active it can be accessed here. If there
                         is no ReplyDialog active, then this will be set to None.
     :vartype reply_dialog: .dialog_reply.ReplyDialog or None
@@ -39,9 +42,15 @@ class ActivityStreamWidget(QtGui.QWidget):
     # max number of items to show in the activity stream.
     MAX_STREAM_LENGTH = 20
     entity_requested = QtCore.Signal(str, int)
-    playback_requested = QtCore.Signal(dict)   
-     
-    
+    playback_requested = QtCore.Signal(dict)
+
+    # Emitted when a Note or Reply entity is created. The
+    # entity type as a string and id as an int will be
+    # provided.
+    #
+    # dict(entity_type="Note", id=1234)
+    entity_created = QtCore.Signal(object)
+
     def __init__(self, parent):
         """
         :param parent: QT parent object
@@ -82,6 +91,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._data_manager.update_arrived.connect(self._process_new_data)
         self._data_manager.thumbnail_arrived.connect(self._process_thumbnail)
         self.ui.note_widget.data_updated.connect(self._on_note_submitted)
+        self.ui.note_widget.entity_created.connect(self._on_entity_created)
         
         # keep handles to all widgets to be nice to the GC
         self._loading_widget = None
@@ -94,8 +104,17 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._entity_type = None
         self._entity_id = None
 
-        # When a ReplyDialog is active it will be stored here.
-        self.reply_dialog = None
+        # We'll be keeping a persistent reply dialog available because
+        # we need to connect to a signal that it's emitting. It's easiest
+        # to do that if we're dealing with an object that persists.
+        self.reply_dialog = ReplyDialog(
+            self,
+            self._task_manager,
+            note_id=None,
+            allow_screenshots=self._allow_screenshots,
+        )
+
+        self.reply_dialog.note_widget.entity_created.connect(self._on_entity_created)
 
     def set_bg_task_manager(self, task_manager):
         """
@@ -123,26 +142,21 @@ class ActivityStreamWidget(QtGui.QWidget):
     @property
     def note_widget(self):
         """
-        Returns the NoteInputWidget contained within the ActivityStreamWidget.
-        Note that this is the widget used for NEW note input and not Note
-        replies. To get the NoteInputWidget used for Note replies, access can
-        be found via reply_widget.note_widget if a reply widget is currently
-        active.
+        Returns the :class:`~note_input_widget.NoteInputWidget` contained within
+        the ActivityStreamWidget. Note that this is the widget used for NEW note
+        input and not Note replies. To get the NoteInputWidget used for Note
+        replies, access can be found via :meth:`ReplyDialog.note_widget`.
         """
         return self.ui.note_widget
 
     def _get_allow_screenshots(self):
         """
-        Whether screenshots are being allowed.
+        Whether this activity stream is allowed to give the user access to a
+        button that performs screenshot operations.
         """
         return self._allow_screenshots
 
     def _set_allow_screenshots(self, state):
-        """
-        Sets whether to allow screenshots.
-
-        :param state: True or False
-        """
         self._allow_screenshots = bool(state)
         self.ui.note_widget.allow_screenshots(self._allow_screenshots)
 
@@ -599,33 +613,36 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self._data_manager.request_user_thumbnail(reply_user["type"], 
                                                           reply_user["id"], 
                                                           reply_user["image"])
+
+    def _on_entity_created(self, entity):
+        """
+        Callback when an entity is created by an underlying widget.
+
+        :param entity:  The Shotgun entity that was created.
+        """
+        self.entity_created.emit(entity)
             
     def _on_reply_clicked(self, note_id):
         """
         Callback when someone clicks reply on a given note
+
+        :param note_id: The id of the Shotgun Note entity being replied to.
         """
-        reply_dialog = ReplyDialog(
-            self,
-            self._task_manager,
-            note_id,
-            allow_screenshots=self._allow_screenshots,
-        )
-        
-        #position the reply modal dialog above the activity stream scroll area
+        self.reply_dialog.note_id = note_id
+
+        # Position the reply modal dialog above the activity stream scroll area.
         pos = self.mapToGlobal(self.ui.activity_stream_scroll_area.pos())
-        x_pos = pos.x() + (self.ui.activity_stream_scroll_area.width() / 2) - (reply_dialog.width() / 2) - 10         
-        y_pos = pos.y() + (self.ui.activity_stream_scroll_area.height() / 2) - (reply_dialog.height() / 2) - 20
-        reply_dialog.move(x_pos, y_pos)
+        x_pos = pos.x() + (self.ui.activity_stream_scroll_area.width() / 2) - (self.reply_dialog.width() / 2) - 10         
+        y_pos = pos.y() + (self.ui.activity_stream_scroll_area.height() / 2) - (self.reply_dialog.height() / 2) - 20
+        self.reply_dialog.move(x_pos, y_pos)
         
         # and pop it
         try:
-            self.reply_dialog = reply_dialog
             self.__small_overlay.show()
-            if reply_dialog.exec_() == QtGui.QDialog.Accepted:
+            if self.reply_dialog.exec_() == QtGui.QDialog.Accepted:
                 self.load_data(self._sg_entity_dict)
         finally:
             self.__small_overlay.hide()
-            self.reply_dialog = None
         
     def _on_note_submitted(self):
         """

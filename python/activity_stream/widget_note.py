@@ -224,11 +224,18 @@ class NoteWidget(ActivityStreamBaseWidget):
         # date of activity)
         self._set_timestamp(data, self.ui.date)
         
-        # set the main note text
-        self.ui.content.setText(data["content"])
+        # Set the main note text. For this, and for the note links and
+        # task keys below, we are treating it with kids gloves to make
+        # sure that we don't end up raising a KeyError in a way that
+        # makes it to the user. This is due to the possibility of having
+        # a malformed Cut entity in Shotgun and SHOULD be handled at a
+        # higher level than this widget, but we're still going to be
+        # careful here, because we saw this bug crop up during Cut Support
+        # QA.
+        self.ui.content.setText(data.get("content", ""))
         
         # format note links        
-        html_link_box_data = data["note_links"] + data["tasks"]
+        html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
         links_html = self.__generate_note_links_table(html_link_box_data)
 
         # self.ui.links.setText(links_html)
