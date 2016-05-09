@@ -71,6 +71,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         # customizations
         self._allow_screenshots = True
         self._show_sg_stream_button = True
+        self._version_items_playable = True
         
         # apply styling
         self._load_stylesheet()
@@ -184,6 +185,24 @@ class ActivityStreamWidget(QtGui.QWidget):
         bool,
         _get_show_sg_stream_button,
         _set_show_sg_stream_button,
+    )
+
+    def _get_version_items_playable(self):
+        """
+        Whether the label representing a created Version entity is shown
+        as being "playable" within the UI. If True, then a play icon is
+        visible over the thumbnail image, and no icon overlay is shown
+        when False.
+        """
+        return self._version_items_playable
+
+    def _set_version_items_playable(self, state):
+        self._version_items_playable = bool(state)
+
+    version_items_playable = QtCore.Property(
+        bool,
+        _get_version_items_playable,
+        _set_version_items_playable,
     )
         
     ############################################################################
@@ -500,6 +519,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             if data["primary_entity"]["type"] in ["Version", "PublishedFile", "TankPublishedFile"]:
                 # full on 'new item' widget with thumbnail, description etc.
                 widget = NewItemWidget(self)
+                widget.interactive = self.version_items_playable
             
             elif data["primary_entity"]["type"] == "Note":
                 # new note
