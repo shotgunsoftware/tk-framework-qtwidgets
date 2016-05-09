@@ -48,7 +48,7 @@ class ReplyDialog(QtGui.QDialog):
     @property
     def note_widget(self):
         """
-        Returns the underlying note_input_widget.NoteInputWidget.
+        Returns the underlying :class:`~note_input_widget.NoteInputWidget`.
         """
         return self.ui.note_widget
 
