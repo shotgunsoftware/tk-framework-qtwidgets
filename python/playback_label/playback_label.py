@@ -94,10 +94,10 @@ class ShotgunPlaybackLabel(QtGui.QLabel):
     def _set_interactive(self, state):
         self._interactive = bool(state)
 
-        if not self._interactive:
-            self.unsetCursor()
-        elif self.playable:
+        if self.playable and self._interactive:
             self.setCursor(QtCore.Qt.PointingHandCursor)
+        else:
+            self.unsetCursor() 
 
     interactive = QtCore.Property(
         bool,
