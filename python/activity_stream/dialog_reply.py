@@ -23,6 +23,8 @@ class ReplyDialog(QtGui.QDialog):
         :type parent: :class:`PySide.QtGui.QWidget`
         :param bg_task_manager: Task manager to use to fetch sg data.
         :type  bg_task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager`
+        :param note_id: The entity id number of the Note entity being replied to.
+        :type  note_id: :class:`int`
         :param allow_screenshots: Boolean to allow or disallow screenshots, defaults to True.
         :type  allow_screenshots: :class:`Boolean`
         """        

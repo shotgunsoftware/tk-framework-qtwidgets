@@ -33,6 +33,9 @@ class NoteInputWidget(QtGui.QWidget):
         replied to. 
     :signal close_clicked: Emitted if a user chooses to cancel the note 
         creation by clicking the X button.
+    :signal entity_created: Emitted when a Shotgun entity is created, which
+        will be either a Note or Reply entity, depending on situation. The
+        entity dictionary, as provided by the API, will be sent.
     """
     
     _EDITOR_WIDGET_INDEX = 0
@@ -46,6 +49,8 @@ class NoteInputWidget(QtGui.QWidget):
     # Emitted when a Note or Reply entity is created. The
     # entity type as a string and id as an int will be
     # provided.
+    #
+    # dict(entity_type="Note", id=1234)
     entity_created = QtCore.Signal(object)
     
     
@@ -289,9 +294,15 @@ class NoteInputWidget(QtGui.QWidget):
         
     def _async_submit_reply(self, sg, data):
         """
-        Create a new reply
+        Provides functionality for creating a new Reply entity
+        asynchronously by providing a signature that is friendly
+        for use with :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`.
+
+        :param sg:      A Shotgun API handle.
+        :param data:    A dictionary as created by :meth:`NoteInputWidget._submit`
+
+        :returns:       A Shotgun entity dictionary for the Reply that was created.
         """
-        
         note_link = data["entity"]
         
         # this is an entity - so create a note and link it
@@ -316,6 +327,16 @@ class NoteInputWidget(QtGui.QWidget):
         return sg_reply_data
         
     def _async_submit_note(self, sg, data):
+        """
+        Provides functionality for creating a new Note entity
+        asynchronously by providing a signature that is friendly
+        for use with :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`.
+
+        :param sg:      A Shotgun API handle.
+        :param data:    A dictionary as created by :meth:`NoteInputWidget._submit`
+
+        :returns:       A Shotgun entity dictionary for the Note that was created.
+        """
         # note - no logging in here, as I am not sure how all 
         # engines currently react to log_debug() async.
         
