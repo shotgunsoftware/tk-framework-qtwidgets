@@ -48,6 +48,7 @@ class ShotgunPlaybackLabel(QtGui.QLabel):
         self._sg_data = None
         self._hover = False
         self._playable = False
+        self._interactive = True
 
     def set_shotgun_data(self, sg_data):
         """
@@ -70,25 +71,46 @@ class ShotgunPlaybackLabel(QtGui.QLabel):
             if sg_data.get("sg_uploaded_movie"):
                 self._playable = True
         
-        if self._playable:
+        if self.playable and self.interactive:
             self.setCursor(QtCore.Qt.PointingHandCursor)
         else:
             self.unsetCursor() 
         
     @property    
-    def playbable(self):
+    def playable(self):
         """
-        Returns True if the label is playbable given its current Shotgun data.
+        Returns True if the label is playable given its current Shotgun data.
         """
         return self._playable
-            
+
+    def _get_interactive(self):
+        """
+        Whether a playable label is interactive. If it is not, then the play
+        icon will not be overlayed on the thumbnail image, and the playback
+        signal will not be emitted on click event.
+        """
+        return self._interactive
+
+    def _set_interactive(self, state):
+        self._interactive = bool(state)
+
+        if not self._interactive:
+            self.unsetCursor()
+        elif self.playable:
+            self.setCursor(QtCore.Qt.PointingHandCursor)
+
+    interactive = QtCore.Property(
+        bool,
+        _get_interactive,
+        _set_interactive,
+    )
     
     def enterEvent(self, event):
         """
         Fires when the mouse enters the widget space
         """
         QtGui.QLabel.enterEvent(self, event)
-        if self._playable:
+        if self.playable and self.interactive:
             self._hover = True
             self.repaint()
         
@@ -97,7 +119,7 @@ class ShotgunPlaybackLabel(QtGui.QLabel):
         Fires when the mouse leaves the widget space
         """
         QtGui.QLabel.leaveEvent(self, event)
-        if self._playable:
+        if self.playable and self.interactive:
             self._hover = False
             self.repaint()
 
@@ -106,7 +128,7 @@ class ShotgunPlaybackLabel(QtGui.QLabel):
         Fires when the mouse is pressed
         """
         QtGui.QLabel.mousePressEvent(self, event)
-        if self._playable and self._hover:
+        if self.playable and self._hover and self.interactive:
             self.playback_clicked.emit(self._sg_data)
         
     def paintEvent(self, event):
@@ -116,7 +138,7 @@ class ShotgunPlaybackLabel(QtGui.QLabel):
         # first render the label
         QtGui.QLabel.paintEvent(self, event)
         
-        if self._playable:
+        if self.playable and self.interactive:
             # now render a pixmap on top
             painter = QtGui.QPainter()
             painter.begin(self)
