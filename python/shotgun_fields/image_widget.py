@@ -32,12 +32,20 @@ class ImageWidget(QtGui.QLabel):
         images in the background.
         """
         self._pixmap = None
+        self._image_file_path = None
 
         # start up a data retriever to fetch the thumbnail in the background
         self._data_retriever = shotgun_data.ShotgunDataRetriever(bg_task_manager=self._bg_task_manager)
         self._data_retriever.start()
         self._data_retriever.work_completed.connect(self._on_worker_signal)
         self._data_retriever.work_failure.connect(self._on_worker_failure)
+
+    @property
+    def image_file_path(self):
+        """
+        The path to the image file on disk that was loaded and displayed.
+        """
+        return self._image_file_path
 
     def _display_default(self):
         """ Default widget state is empty. """
@@ -62,6 +70,7 @@ class ImageWidget(QtGui.QLabel):
         """
         if uid == self._task_uid:
             thumbnail = data["image"]
+            self._image_file_path = data["thumb_path"]
             pixmap = QtGui.QPixmap.fromImage(thumbnail)
             self.setPixmap(pixmap)
 
