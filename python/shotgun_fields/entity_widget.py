@@ -74,18 +74,36 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
     def setup_widget(self):
         self.set_bg_task_manager(self._bg_task_manager)
 
+        self._types = shotgun_globals.get_valid_types(
+            self._entity_type, self._field_name)
+
         valid_types = {}
 
         # get this field's schema
-        for entity_type in shotgun_globals.get_valid_types(self._entity_type, self._field_name):
-            # Can't search for project?
-            # XXX why can't
+        for entity_type in self._types:
             if entity_type == "Project":
+                # there is currently an issue querying Project entities via the
+                # python API's text search. for now, do not restrict the editor.
                 continue
-            # XXX default filters?
-            valid_types[entity_type] = []
+            else:
+                valid_types[entity_type] = []
 
         self.set_searchable_entity_types(valid_types)
+
+        self.completer().entity_activated.connect(self._on_entity_activated)
+
+    def _on_entity_activated(self, entity_type, entity_id, entity_name):
+
+        if entity_type in self._types:
+            self._value = {
+                "type": entity_type,
+                "id": entity_id,
+                "name": entity_name,
+            }
+            self.value_changed.emit()
+        else:
+            self._display_value(self._value)
+            self._begin_edit()
 
     def _begin_edit(self):
         self.selectAll()

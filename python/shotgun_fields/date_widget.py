@@ -66,8 +66,6 @@ class DateEditorWidget(QtGui.QDateEdit):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "date"
 
-    editing_finished = QtCore.Signal()
-
     def setup_widget(self):
         self.setCalendarPopup(True)
         self.setMinimumWidth(100)
@@ -91,7 +89,7 @@ class DateEditorWidget(QtGui.QDateEdit):
     def keyPressEvent(self, event):
 
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
-           self.editing_finished.emit()
+           self.value_changed.emit()
         else:
             super(DateEditorWidget, self).keyPressEvent(event)
 

@@ -54,7 +54,7 @@ class TagsEditorWidget(BubbleEditWidget):
 
     # TODO: The following line is commented out so that the class is not
     # registered as a tag editor. Uncomment when tags are supported.
-    #__metaclass__ = ShotgunFieldMeta
+    __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "tag_list"
 
     # TODO: some additional validation will need to happen to make sure a valid

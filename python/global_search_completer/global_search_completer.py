@@ -19,7 +19,7 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
     # emitted when shotgun has been updated
     entity_selected = QtCore.Signal(str, int)
-    entity_activated = QtCore.Signal(dict)
+    entity_activated = QtCore.Signal(str, int, str)
 
     # custom roles for the model that tracks the auto completion results
     SG_DATA_ROLE = QtCore.Qt.UserRole + 1
@@ -72,6 +72,43 @@ class GlobalSearchCompleter(QtGui.QCompleter):
             self.__sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
             self.__sg_data_retriever = None
 
+    def get_current_result(self):
+        model_index = self.popup().currentIndex()
+        return self.get_result(model_index)
+
+    def get_result(self, model_index):
+
+        # make sure that the user selected an actual shotgun item.
+        # if they just selected the "no items found" or "loading please hold"
+        # items, just ignore it.
+        mode = shotgun_model.get_sanitized_data(model_index, self.MODE_ROLE)
+        if mode == self.MODE_RESULT:
+
+            # get the payload
+            data = shotgun_model.get_sanitized_data(model_index, self.SG_DATA_ROLE)
+
+            # Example of data stored in the data role:
+            #
+            # {'status': 'vwd',
+            #  'name': 'bunny_010_0050_comp_v001',
+            #  'links': ['Shot', 'bunny_010_0050'],
+            #  'image': 'https://xxx',
+            #  'project_id': 65,
+            #  'type': 'Version',
+            #  'id': 99}
+
+            # NOTE: this data format differs from what is typically returned by
+            # the shotgun python-api. this data may be formalized at some point
+            # but for now, only expose the minimum information.
+
+            return {
+                "type": data["type"],
+                "id": data["id"],
+                "name": data["name"],
+            }
+        else:
+            return None
+
     def search(self, text):
         """
         Triggers the popup to display results based on the supplied text.
@@ -108,7 +145,6 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         # looses focus.
         try:
             self.activated[QtCore.QModelIndex].disconnect(self._on_select)
-            # XXX
         except:
             self._bundle.log_debug(
                 "Could not disconnect global search activated signal prior to "
@@ -304,25 +340,9 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         :param model_index: QModelIndex describing the current item
         """
-        # make sure that the user selected an actual shotgun item.
-        # if they just selected the "no items found" or "loading please hold"
-        # items, just ignore it.
-        mode = shotgun_model.get_sanitized_data(model_index, self.MODE_ROLE)
-        if mode == self.MODE_RESULT:
-
-            # get the payload
-            data = shotgun_model.get_sanitized_data(model_index, self.SG_DATA_ROLE)
-
-            # Example of data stored in the data role:
-            #
-            # {'status': 'vwd',
-            #  'name': 'bunny_010_0050_comp_v001',
-            #  'links': ['Shot', 'bunny_010_0050'],
-            #  'image': 'https://xxx',
-            #  'project_id': 65,
-            #  'type': 'Version',
-            #  'id': 99}
-
-            # send out new signal
+        data = self.get_result(model_index)
+        if data:
             self.entity_selected.emit(data["type"], data["id"])
-            self.entity_activated.emit(data)
+            self.entity_activated.emit(data["type"], data["id"], data["name"])
+
+

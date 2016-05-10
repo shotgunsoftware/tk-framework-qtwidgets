@@ -102,6 +102,10 @@ class ElidedLabel(QtGui.QLabel):
 
         :param text:    The text to set on the label
         """
+        # clear out the ideal width so that the widget can recalculate based on
+        # the new text
+        if hasattr(self, '_ideal_width'):
+            del self._ideal_width
         self._actual_text = text
         self._update_elided_text()
 

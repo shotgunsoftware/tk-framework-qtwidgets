@@ -10,15 +10,18 @@ Contents:
 
    activity_stream
    elided_label
+   global_search_completer
    global_search_widget
    help_screen
    models
    navigation
    note_input_widget
    overlay_widget
-   screen_grab
-   spinner_widget
    playback_label
+   screen_grab
+   shotgun_fields
+   shotgun_menu
+   spinner_widget
    views
 
 Importing widgets into your app

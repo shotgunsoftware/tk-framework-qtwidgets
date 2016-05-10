@@ -38,6 +38,18 @@ class TextEditorWidget(QtGui.QTextEdit):
             QtGui.QSizePolicy.Preferred
         )
 
+    def keyPressEvent(self, event):
+
+        if event.key() in [
+            QtCore.Qt.Key_Enter,
+            QtCore.Qt.Key_Return
+        ] and event.modifiers() & QtCore.Qt.ControlModifier:
+            self.value_changed.emit()
+            event.ignore()
+            return
+
+        super(TextEditorWidget, self).keyPressEvent(event)
+
     def _display_default(self):
         """ Default widget state is empty. """
         self.clear()

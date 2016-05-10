@@ -67,12 +67,26 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         self._completer.entity_activated.connect(self._on_entity_activated)
 
     def add_entity(self, entity_dict):
+        """
+
+        :param entity_dict:
+        :return:
+
+        The `entity_dict` must include the following fields:
+
+            {
+                "type": "Asset",
+                "id": 12345,
+                "name": "Teapot",
+            }
+
+        """
 
         bubbles = self.get_bubbles()
         for bubble in bubbles:
             bubble_entity_dict = bubble.get_data()
             if (bubble_entity_dict["type"] == entity_dict["type"] and
-                bubble_entity_dict["name"] == entity_dict["name"]):
+                bubble_entity_dict["id"] == entity_dict["id"]):
                 # move the bubble to the end
                 self.remove_bubble(bubble.id)
                 self.add_entity(bubble_entity_dict)
@@ -89,6 +103,47 @@ class MultiEntityEditorWidget(BubbleEditWidget):
 
         return entity_bubble_id
 
+    def get_value(self):
+        return [b.get_data() for b in self.get_bubbles()]
+
+    def focusInEvent(self, event):
+        """
+        Event that fires when the widget receives focus.
+        """
+        # "remind" the completer what widget it operates on
+        # apparently this is needed - see
+        # http://doc.qt.io/qt-4.8/qt-tools-customcompleter-example.html
+        self._completer.setWidget(self)
+        self._show_completer()
+        super(MultiEntityEditorWidget, self).focusInEvent(event)
+
+    def hideEvent(self, event):
+        self._hide_completer()
+        super(MultiEntityEditorWidget, self).hideEvent(event)
+
+    def keyPressEvent(self, event):
+
+        if event.key() in [
+            QtCore.Qt.Key_Enter,
+            QtCore.Qt.Key_Return
+        ] and event.modifiers() & QtCore.Qt.ControlModifier:
+            self.value_changed.emit()
+            event.ignore()
+            return
+        elif event.key() in [
+            QtCore.Qt.Key_Enter,
+            QtCore.Qt.Key_Return,
+            QtCore.Qt.Key_Tab,
+        ]:
+            entity_dict = self._completer.get_current_result()
+            if entity_dict:
+                self.add_entity(entity_dict)
+                self.clear_typed_text()
+            event.ignore()
+            return
+
+        super(MultiEntityEditorWidget, self).keyPressEvent(event)
+
     def _display_default(self):
         self.clear()
 
@@ -97,23 +152,28 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         for entity_dict in value:
             self.add_entity(entity_dict)
 
-    def _on_entity_activated(self, entity):
+    def _on_entity_activated(self, type, id, name):
+        entity_dict = {"type": type, "id": id, "name": name}
         self._completer.popup().hide()
         self.clear_typed_text()
-        self.add_entity(entity)
+        self.add_entity(entity_dict)
 
     def _on_text_changed(self):
+        self._show_completer()
 
-        if self.isVisible():
-            typed_text = self.get_typed_text()
-
+    def _show_completer(self):
+        typed_text = self.get_typed_text()
+        if self.isVisible() and typed_text:
             rect = self.cursorRect()
             rect.setWidth(self.width())
             rect.moveLeft(self.rect().left())
             rect.moveTop(rect.top() + 6)
+            self._completer.setCompletionPrefix(typed_text)
             self._completer.complete(rect)
             self._completer.search(typed_text)
 
+    def _hide_completer(self):
+        self._completer.popup().hide()
 
 
 

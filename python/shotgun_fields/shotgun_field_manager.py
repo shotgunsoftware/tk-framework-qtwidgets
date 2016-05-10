@@ -248,7 +248,70 @@ class ShotgunFieldManager(QtCore.QObject):
         data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
         return cls.__DISPLAY_TYPE_MAP.get(data_type, {}).get("display")
 
-    def create_display_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+    @classmethod
+    def get_editor_class(cls, sg_entity_type, field_name):
+        """
+        Returns the class of the editor widget associated with the field type if it has been registered.
+
+        :param sg_entity_type: Shotgun entity type
+        :type sg_entity_type: String
+
+        :param field_name: Shotgun field name
+        :type field_name: String
+
+        :returns: :class:`~PySide.QtGui.QWidget` class or None if the field type has no editor widget
+        """
+        data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
+        return cls.__DISPLAY_TYPE_MAP.get(data_type, {}).get("editor")
+
+    def create_widget(self, sg_entity_type, field_name, entity=None, parent=None, edit=None, **kwargs):
+        """
+        Returns a widget associated with the entity and field type if a
+        corresponding widget class been registered.
+
+        If the entity is passed in and has the value for the requested field in
+        it then the initial contents of the widget will display that value.
+
+        Any keyword args other than those below will be passed to the
+        constructor of whatever QWidget the field widget wraps.
+
+        By default the returned widget will be an 'editable' widget (edit=None),
+        which, when hovered, will display a button or menu to allow editing of
+        the field's value. To return a display only widget, supply the
+        `edit=False` keyword argument. To return an edit only widget, use
+        `edit=True`. If a field has no editor, or is not editable in Shotgun,
+        a display widget will be returned regardless of the `edit` keyword
+        argument.
+
+        :param sg_entity_type: Shotgun entity type
+        :type sg_entity_type: str
+
+        :param field_name: Shotgun field name
+        :type field_name: str
+
+        :param entity: The Shotgun entity dictionary to pull the field value from.
+        :type entity: dict
+
+        :param parent: Parent widget
+        :type parent: :class:`PySide.QtGui.QWidget`
+
+        :param edit: Specifies the type of widget to return
+        :type parent: bool
+
+        :returns: :class:`~PySide.QtGui.QWidget` or None if the field type has no display widget
+        """
+
+        if edit is None:
+            return self._create_editable_widget(
+                sg_entity_type, field_name, entity, parent, **kwargs)
+        elif edit:
+            return self._create_editor_widget(
+                sg_entity_type, field_name, entity, parent, **kwargs)
+        else:
+            return self._create_display_widget(
+                sg_entity_type, field_name, entity, parent, **kwargs)
+
+    def _create_display_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """
         Returns an instance of the display widget associated with the field type if it has been registered.
 
@@ -294,23 +357,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         return widget
 
-    @classmethod
-    def get_editor_class(cls, sg_entity_type, field_name):
-        """
-        Returns the class of the editor widget associated with the field type if it has been registered.
-
-        :param sg_entity_type: Shotgun entity type
-        :type sg_entity_type: String
-
-        :param field_name: Shotgun field name
-        :type field_name: String
-
-        :returns: :class:`~PySide.QtGui.QWidget` class or None if the field type has no editor widget
-        """
-        data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
-        return cls.__DISPLAY_TYPE_MAP.get(data_type, {}).get("editor")
-
-    def create_editor_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+    def _create_editor_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """
         Returns an instance of the editor widget associated with the field type if it has been registered.
 
@@ -362,7 +409,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         return widget
 
-    def create_editable_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+    def _create_editable_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
         """Returns a widget that shows the display widget, but can be edited."""
 
         # XXX docs
@@ -378,7 +425,7 @@ class ShotgunFieldManager(QtCore.QObject):
             print "**** NO DISPLAY: " + data_type + " (" + field_name + ")"
             return None
 
-        display_widget = self.create_display_widget(sg_entity_type, field_name, entity, parent, **kwargs)
+        display_widget = self._create_display_widget(sg_entity_type, field_name, entity, parent, **kwargs)
 
         #XXX if field is not editable, return the display widget
         if not shotgun_globals.field_is_editable(sg_entity_type, field_name):
@@ -391,7 +438,7 @@ class ShotgunFieldManager(QtCore.QObject):
             display_widget.enable_editing(True)
             return display_widget
 
-        editor_widget = self.create_editor_widget(sg_entity_type, field_name, entity, parent, **kwargs)
+        editor_widget = self._create_editor_widget(sg_entity_type, field_name, entity, parent, **kwargs)
 
         # XXX doc
         if not editor_widget:
