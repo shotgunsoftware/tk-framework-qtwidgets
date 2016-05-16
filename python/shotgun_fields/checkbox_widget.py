@@ -8,47 +8,66 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of a checkbox field in Shotgun
-"""
 from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
 class CheckBoxWidget(QtGui.QCheckBox):
     """
-    Inherited from a :class:`~PySide.QtGui.QCheckBox`, this class is able to
-    display a checkbox field value as returned by the Shotgun API.
+    Displays a ``checkbox`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "checkbox"
     _EDITOR_TYPE = "checkbox"
 
+    def enable_editing(self, enable):
+        """
+        Enable or disable editing of the widget.
+
+        This is provided as required for widgets that are used as both editor
+        and display.
+
+        :param bool enable: ``True`` to enable, ``False`` to disable
+        """
+        self.setEnabled(enable)
+
     def setup_widget(self):
-        self.stateChanged.connect(self.on_state_changed)
+        """
+        Prepare the widget for display.
+
+        Called by the metaclass during initialization.
+        """
+        self.stateChanged.connect(self._on_state_changed)
+
 
     def _display_default(self):
-        """ Default widget state is unchecked. """
+        """
+        Display the default value of the widget.
+        """
         self.setCheckState(QtCore.Qt.Unchecked)
 
     def _display_value(self, value):
         """
-        Take the value as returned by the Shotgun API and display it.
+        Displays the value as returned by the Shotgun API.
 
-        :param value: The value displayed by the widget
-        :type value: Boolean
+        :param bool value: The value displayed by the widget
         """
+
+        # check or uncheck the widget
         if bool(value):
             self.setCheckState(QtCore.Qt.Checked)
         else:
             self.setCheckState(QtCore.Qt.Unchecked)
 
-    def on_state_changed(self, state):
+    def _on_state_changed(self, state):
+        """
+        Update the stored value as the widget state is changed
+
+        :param int state: Qt enum for check/unchecked
+        """
+
         new_value = (state == QtCore.Qt.Checked)
         if self._value != new_value:
+            # set the value internally
             self.set_value(new_value)
-
-    def enable_editing(self, enable):
-        self.setEnabled(enable)
-
 

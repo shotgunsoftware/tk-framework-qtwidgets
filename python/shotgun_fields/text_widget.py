@@ -8,9 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of a text field in Shotgun
-"""
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -19,27 +16,35 @@ from sgtk.platform.qt import QtCore, QtGui
 
 class TextWidget(ElidedLabelBaseWidget):
     """
-    Inherited from a :class:`~LabelBaseWidget`, this class is able to
-    display a text field value as returned by the Shotgun API.
+    Display a ``text`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "text"
 
 
 class TextEditorWidget(QtGui.QTextEdit):
-
+    """
+    Allows editing of a ``text`` field value as returned by the Shotgun API.
+    """
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "text"
 
-    def setup_widget(self):
-
-        self.setSizePolicy(
-            QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Preferred
-        )
+    def get_value(self):
+        """
+        :return: The internal value being displayed by the widget.
+        """
+        return self.toPlainText()
 
     def keyPressEvent(self, event):
+        """
+        Provides shortcuts for applying modified values.
 
+        :param event: The key press event object
+        :type event: :class:`~PySide.QtGui.QKeyEvent`
+
+        Ctrl+Enter or Ctrl+Return will trigger the emission of the ``value_changed``
+        signal.
+        """
         if event.key() in [
             QtCore.Qt.Key_Enter,
             QtCore.Qt.Key_Return
@@ -50,8 +55,21 @@ class TextEditorWidget(QtGui.QTextEdit):
 
         super(TextEditorWidget, self).keyPressEvent(event)
 
+    def setup_widget(self):
+        """
+        Prepare the widget for display.
+
+        Called by the metaclass during initialization.
+        """
+        self.setSizePolicy(
+            QtGui.QSizePolicy.Expanding,
+            QtGui.QSizePolicy.Preferred
+        )
+
     def _display_default(self):
-        """ Default widget state is empty. """
+        """
+        Display the default value of the widget.
+        """
         self.clear()
 
     def _display_value(self, value):
@@ -63,8 +81,10 @@ class TextEditorWidget(QtGui.QTextEdit):
         self.setText(self._string_value(value))
 
     def _string_value(self, value):
-        return str(value)
+        """
+        Ensure the value to be displayed is a string.
 
-    def get_value(self):
-        return self.toPlainText()
+        :param value: The value from Shotgun
+        """
+        return str(value)
 

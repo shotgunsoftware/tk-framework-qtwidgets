@@ -8,18 +8,13 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of a duration field in Shotgun
-"""
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
 class DurationWidget(LabelBaseWidget):
     """
-    Inherited from a :class:`~LabelBaseWidget`, this class is able to
-    display a duration field value as returned by the Shotgun API.
+    Display a ``duration`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "duration"
-    _EDITOR_TYPE = "duration"

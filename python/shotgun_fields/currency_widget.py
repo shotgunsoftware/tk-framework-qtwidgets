@@ -8,9 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of a currency field in Shotgun
-"""
 import locale
 from sgtk.platform.qt import QtGui, QtCore
 from .label_base_widget import LabelBaseWidget
@@ -19,8 +16,7 @@ from .shotgun_field_meta import ShotgunFieldMeta
 
 class CurrencyWidget(LabelBaseWidget):
     """
-    Inherited from a :class:`~LabelBaseWidget`, this class is able to
-    display a currency field value as returned by the Shotgun API.
+    Display a ``currency`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "currency"
@@ -30,7 +26,7 @@ class CurrencyWidget(LabelBaseWidget):
         Convert the Shotgun value for this field into a string
 
         :param value: The value to convert into a string
-        :type value: Float or Integer
+        :type value: :obj:`int` or :obj:`float`
         """
         try:
             val = locale.currency(value, grouping=True)
@@ -40,19 +36,58 @@ class CurrencyWidget(LabelBaseWidget):
         return val
 
 class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
+    """
+    Allows editing of a ``currency`` field value as returned by the Shotgun API.
+
+    Pressing ``Enter`` or ``Return`` when the widget has focus will cause the
+    value to be applied and the ``value_changed`` signal to be emitted.
+    """
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "currency"
 
+    def get_value(self):
+        """
+        :return: The internal value being displayed by the widget.
+        """
+        return self.value()
+
+    def keyPressEvent(self, event):
+        """
+        Provides shortcuts for applying modified values.
+
+        :param event: The key press event object
+        :type event: :class:`~PySide.QtGui.QKeyEvent`
+        """
+
+        # if the user presses enter or return, apply the value
+        if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
+            self.value_changed.emit()
+        else:
+            super(CurrencyEditorWidget, self).keyPressEvent(event)
+
     def setup_widget(self):
-        # Qt Spinner's max/min are int32 max/min values
+        """
+        Prepare the widget for display.
+
+        Called by the metaclass during initialization.
+        """
+
+        try:
+            prefix = locale.localeconv().get("currency_symbol")
+        except:
+            prefix = "$"
+
+        # set the default state of the widget
         self.setMaximum(float("inf"))
         self.setMinimum(float("-inf"))
         self.setDecimals(2)
-        self.setPrefix(locale.localeconv().get("currency_symbol"))
+        self.setPrefix(prefix)
         self.setMinimumWidth(100)
 
     def _display_default(self):
-        """ Default widget state is empty. """
+        """
+        Display the default value of the widget.
+        """
         self.clear()
 
     def _display_value(self, value):
@@ -63,12 +98,3 @@ class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
         """
         self.setValue(value)
 
-    def keyPressEvent(self, event):
-
-        if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
-            self.value_changed.emit()
-        else:
-            super(CurrencyEditorWidget, self).keyPressEvent(event)
-
-    def get_value(self):
-        return self.value()

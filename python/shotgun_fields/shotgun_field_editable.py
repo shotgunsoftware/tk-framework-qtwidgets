@@ -8,9 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-# XXX docs
-
-
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui import resources_rc
@@ -18,9 +15,22 @@ from .ui import resources_rc
 # TODO: states for "updating in SG" and "failed to update in SG"
 
 class ShotgunFieldEditable(QtGui.QStackedWidget):
+    """
+    Wraps ``DISPLAY`` and ``EDITOR`` widgets into a :class:`~PySide.QtGui.QStackedWidget`
+    instance to allow toggling between the two modes.
+    """
 
     def __init__(self, display_widget, editor_widget, parent=None):
+        """
+        Initialize the editable widget with the display and editor instances.
 
+        :param display_widget: The ``DISPLAY`` widget instance
+        :type display_widget: :class:`~PySide.QtGui.QWidget`
+        :param editor_widget: The ``EDITOR`` widget instance
+        :type editor_widget: :class:`~PySide.QtGui.QWidget`
+        :param parent: The parent widget or ``None``
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        """
         super(ShotgunFieldEditable, self).__init__(parent)
 
         self._display = _DisplayWidget(display_widget)
@@ -37,17 +47,37 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         self._editor.done_editing.connect(
             lambda: self.setCurrentWidget(self._display))
 
-        # XXX insert backend update here (don't immediately apply the value)
+        # TODO: insert backend update here (don't immediately apply the value)
         self._editor.edit_widget.value_changed.connect(self._apply_value)
 
-        self.currentChanged.connect(self.on_current_changed)
+        self.currentChanged.connect(self._on_current_changed)
+
+    def minimumSizeHint(self):
+        """
+        Returns the minimum size hint for the currently displayed widget
+        """
+        return self.currentWidget().minimumSizeHint()
+
+    def sizeHint(self):
+        """
+        Returns the size hint for the currently displayed widget
+        """
+        return self.currentWidget().sizeHint()
 
     def _apply_value(self):
+        """
+        Apply the editor's current value to the display widget and finish editing.
+        """
         new_value = self._editor.edit_widget.get_value()
         self._display.display_widget.set_value(new_value)
         self.setCurrentWidget(self._display)
 
-    def on_current_changed(self, index):
+    def _on_current_changed(self, index):
+        """
+        Primarily used to ensure focus and to make sure the display/edit widgets are in sync.
+
+        :param int index: The index of the newly current widget in the stack.
+        """
 
         if index == self._edit_index:
             self._editor.edit_widget.blockSignals(True)
@@ -57,25 +87,33 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
             self._editor.edit_widget.blockSignals(False)
 
             if hasattr(self._editor.edit_widget, '_begin_edit'):
-                # XXX document
                 self._editor.edit_widget._begin_edit()
 
         self.currentWidget().setFocus()
 
-    def sizeHint(self):
-        return self.currentWidget().sizeHint()
-
-    def minimumSizeHint(self):
-        return self.currentWidget().minimumSizeHint()
 
 class ShotgunFieldNotEditable(QtGui.QWidget):
+    """
+    Simplified wrapper that indicates a field is not editable.
+
+    Adds a "no edit" icon when the supplied ``DISPLAY`` widget is hovered.
+    """
 
     def __init__(self, display_widget, parent=None):
+        """
+        Initialize the widget.
+
+        :param display_widget: The ``DISPLAY`` widget instance
+        :type display_widget: :class:`~PySide.QtGui.QWidget`
+        :param parent: The parent widget or ``None``
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        """
 
         super(ShotgunFieldNotEditable, self).__init__(parent)
 
         self._display_widget = display_widget
 
+        # this is the "no edit" label that will show on hover
         self._no_edit_lbl = QtGui.QLabel(self)
         self._no_edit_lbl.setPixmap(
             QtGui.QPixmap(":/qtwidgets-shotgun-fields/not_editable.png"))
@@ -97,7 +135,9 @@ class ShotgunFieldNotEditable(QtGui.QWidget):
         self.installEventFilter(self)
 
     def eventFilter(self, obj, event):
-
+        """
+        Filter mouse enter/leave events in order to show/hide the "no edit" label.
+        """
         if event.type() == QtCore.QEvent.Enter:
             self._no_edit_lbl.show()
         elif event.type() == QtCore.QEvent.Leave:
@@ -105,11 +145,24 @@ class ShotgunFieldNotEditable(QtGui.QWidget):
 
         return False
 
+
 class _DisplayWidget(QtGui.QWidget):
+    """
+    A wrapper around a display widget with a hoverable "edit" button.
+    """
 
     edit_requested = QtCore.Signal()
 
     def __init__(self, display_widget, parent=None):
+        """
+        Initialize the wrapper widget.
+
+        :param display_widget: The ``DISPLAY`` widget instance
+        :type display_widget: :class:`~PySide.QtGui.QWidget`
+        :param parent: The parent widget instance or None
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        :return:
+        """
 
         super(_DisplayWidget, self).__init__(parent)
 
@@ -145,6 +198,9 @@ class _DisplayWidget(QtGui.QWidget):
         self._edit_btn.clicked.connect(lambda: self.edit_requested.emit())
 
     def eventFilter(self, obj, event):
+        """
+        Filter out mouse enter/leave events in order to show/hide the edit button.
+        """
 
         if event.type() == QtCore.QEvent.Enter:
             self._edit_btn.show()
@@ -155,14 +211,30 @@ class _DisplayWidget(QtGui.QWidget):
 
     @property
     def display_widget(self):
+        """Convenience property to access the display widget"""
         return self._display_widget
 
+
 class _EditorWidget(QtGui.QWidget):
+    """
+    Wrapper around the editor widget to display "done" and "apply" buttons
+
+    :signal: ``done_editing()`` emitted when the editor is ready to be closed
+
+    """
 
     done_editing = QtCore.Signal()
 
     def __init__(self, editor_widget, parent=None):
+        """
+        Initialize the wrapper widget.
 
+        :param editor_widget: The ``EDITOR`` widget instance
+        :type editor_widget: :class:`~PySide.QtGui.QWidget`
+        :param parent: The parent widget instance or None
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        :return:
+        """
         super(_EditorWidget, self).__init__(parent)
         self._editor_widget = editor_widget
         self._editor_widget.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -212,18 +284,12 @@ class _EditorWidget(QtGui.QWidget):
         # ---- connect singals
 
         self._done_btn.clicked.connect(lambda: self.done_editing.emit())
-        # XXX insert backend update here (don't immediately apply the value)
         self._apply_btn.clicked.connect(self._apply_value)
 
-    def _apply_value(self):
-        self.edit_widget.set_value(self.edit_widget.get_value())
-        self.done_editing.emit()
-
-    def setFocus(self):
-        self._editor_widget.setFocus()
-
     def eventFilter(self, obj, event):
-
+        """
+        Capture the Escape key to emit the ``done_editing`` signal.
+        """
         if event.type() == QtCore.QEvent.KeyPress:
             if event.key() == QtCore.Qt.Key_Escape:
                 self.done_editing.emit()
@@ -231,7 +297,24 @@ class _EditorWidget(QtGui.QWidget):
 
         return False
 
+    def setFocus(self):
+        """
+        Override the default behavior to give focus to the editor widget.
+        """
+        self._editor_widget.setFocus()
+
     @property
     def edit_widget(self):
+        """Convenience property to access the editor widget"""
         return self._editor_widget
+
+    def _apply_value(self):
+        """
+        Called when the "apply" button is clicked.
+
+        Make sure the edit widget's value is updated and emit the
+        ``done_editing`` signal.
+        """
+        self.edit_widget.set_value(self.edit_widget.get_value())
+        self.done_editing.emit()
 

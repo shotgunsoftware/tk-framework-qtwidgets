@@ -8,10 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of a url_template field in Shotgun
-"""
-
 import sgtk
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
@@ -19,8 +15,7 @@ from .shotgun_field_meta import ShotgunFieldMeta
 
 class UrlTemplateWidget(ElidedLabelBaseWidget):
     """
-    Inherited from a :class:`~LabelBaseWidget`, this class is able to
-    display a url_template field value as returned by the Shotgun API.
+    Display a ``url_template`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "url_template"
@@ -29,8 +24,7 @@ class UrlTemplateWidget(ElidedLabelBaseWidget):
         """
         Convert the Shotgun value for this field into a string
 
-        :param value: The value to convert into a string
-        :type value: A URL String
+        :param str value: The url value to convert into a string
         """
         link_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
         return "<a href='%s'><font color='%s'>%s</font></a>" % (

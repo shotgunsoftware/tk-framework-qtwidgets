@@ -200,9 +200,9 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         limit the breadth of the widget's search.
 
         Use this method to override the default searchable entity types
-        dictionary which looks like this:
+        dictionary which looks like this::
 
-        {
+          {
             "Asset": [],
             "Shot": [],
             "Task": [],
@@ -212,9 +212,10 @@ class GlobalSearchCompleter(QtGui.QCompleter):
             "ApiUser": [],
             "Version": [],
             "PublishedFile": [],
-        }
+          }
 
         :param types_dict: A dictionary of searchable types with optional filters
+
         """
         self._entity_search_criteria = types_dict
 

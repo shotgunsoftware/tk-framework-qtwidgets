@@ -20,7 +20,6 @@ Contents:
    playback_label
    screen_grab
    shotgun_fields
-   shotgun_menu
    spinner_widget
    views
 

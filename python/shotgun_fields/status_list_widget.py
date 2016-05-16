@@ -8,9 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of a status_list field in Shotgun
-"""
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
 from .label_base_widget import LabelBaseWidget
@@ -21,8 +18,7 @@ shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "s
 
 class StatusListWidget(LabelBaseWidget):
     """
-    Inherited from a :class:`~LabelBaseWidget`, this class is able to
-    display a status_list field value as returned by the Shotgun API.
+    Display a ``status_list`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "status_list"
@@ -31,8 +27,7 @@ class StatusListWidget(LabelBaseWidget):
         """
         Convert the Shotgun value for this field into a string
 
-        :param value: The value to convert into a string
-        :type value: String that is a valid Shotgun status code
+        :param str value: valid Shotgun status code
         """
         str_val = shotgun_globals.get_status_display_name(value)
         color_str = shotgun_globals.get_status_color(value)
@@ -45,11 +40,25 @@ class StatusListWidget(LabelBaseWidget):
 
 
 class StatusListEditorWidget(QtGui.QComboBox):
+    """
+    Allows editing of a ``status_list`` field value as returned by the Shotgun API.
+    """
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "status_list"
     _IMMEDIATE_APPLY = True
 
+    def get_value(self):
+        """
+        :return: The internal value being displayed by the widget.
+        """
+        return self.itemData(self.currentIndex())
+
     def setup_widget(self):
+        """
+        Prepare the widget for display
+
+        Called by the metaclass during initialization.
+        """
         self.addItem("")
         self.setMinimumWidth(100)
 
@@ -61,8 +70,17 @@ class StatusListEditorWidget(QtGui.QComboBox):
             lambda i: self.value_changed.emit()
         )
 
+    def _begin_edit(self):
+        """
+        Prepare the widget for editing by showing the popup
+        """
+        self.adjustSize()
+        self.showPopup()
+
     def _display_default(self):
-        """ Default widget state is empty. """
+        """
+        Display the default value of the widget.
+        """
         self.setCurrentIndex(0)
 
     def _display_value(self, value):
@@ -79,9 +97,3 @@ class StatusListEditorWidget(QtGui.QComboBox):
         if index != -1:
             self.setCurrentIndex(index)
 
-    def get_value(self):
-        return self.itemData(self.currentIndex())
-
-    def _begin_edit(self):
-        self.adjustSize()
-        self.showPopup()

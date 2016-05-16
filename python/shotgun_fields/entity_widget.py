@@ -8,9 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of an entity field in Shotgun
-"""
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
@@ -23,20 +20,10 @@ global_search_widget = sgtk.platform.current_bundle().import_module("global_sear
 
 class EntityWidget(ElidedLabelBaseWidget):
     """
-    Inherited from a :class:`~LabelBaseWidget`, this class is able to
-    display an entity field value as returned by the Shotgun API.
+    Display an ``entity`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "entity"
-
-    def _string_value(self, value):
-        """
-        Convert the Shotgun value for this field into a string
-
-        :param value: The value to convert into a string
-        :type value: A Shotgun entity dictionary containing at least keys for type, int, and name
-        """
-        return self._entity_dict_to_html(value)
 
     def _entity_dict_to_html(self, value):
         """
@@ -44,7 +31,8 @@ class EntityWidget(ElidedLabelBaseWidget):
         :class:`~PySide.QtGui.QLabel`.
 
         :param value: The entity dictionary to convert to html
-        :type value: An entity dictionary containing at least the name, type, and id keys
+        :type value: An entity dictionary containing at least the name, type,
+            and id keys
         """
         str_val = value["name"]
 
@@ -65,13 +53,32 @@ class EntityWidget(ElidedLabelBaseWidget):
 
         return str_val
 
-class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
+    def _string_value(self, value):
+        """
+        Convert the Shotgun value for this field into a string
 
+        :param value: The value to convert into a string
+        :type value: A Shotgun entity dictionary containing at least keys for
+            type, int, and name
+        """
+        return self._entity_dict_to_html(value)
+
+
+class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
+    """
+    Allows editing of a ``entity`` field value as returned by the Shotgun API.
+    """
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "entity"
     _IMMEDIATE_APPLY = True
 
     def setup_widget(self):
+        """
+        Prepare the widget for display.
+
+        Called by the metaclass during initialization. Sets the bg task manager
+        for the completer and sets the entity type(s) to be searched.
+        """
         self.set_bg_task_manager(self._bg_task_manager)
 
         self._types = shotgun_globals.get_valid_types(
@@ -92,8 +99,35 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
 
         self.completer().entity_activated.connect(self._on_entity_activated)
 
-    def _on_entity_activated(self, entity_type, entity_id, entity_name):
+    def _begin_edit(self):
+        """
+        Prepare the widget for editing by selecting the current text.
+        """
+        self.selectAll()
 
+    def _display_default(self):
+        """
+        Display the default value of the widget.
+        """
+        self.clear()
+
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        self.clear()
+        self.setText(str(value["name"]))
+
+    def _on_entity_activated(self, entity_type, entity_id, entity_name):
+        """
+        Handle an entity being activated by the completer.
+
+        :param str entity_type: The type of activated entity.
+        :param int entity_id: The id of the activated entity.
+        :param str entity_name: The name of the activated entity.
+        """
         if entity_type in self._types:
             self._value = {
                 "type": entity_type,
@@ -104,14 +138,4 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
         else:
             self._display_value(self._value)
             self._begin_edit()
-
-    def _begin_edit(self):
-        self.selectAll()
-
-    def _display_default(self):
-        self.clear()
-
-    def _display_value(self, value):
-        self.clear()
-        self.setText(str(value["name"]))
 

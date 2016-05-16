@@ -289,6 +289,8 @@ class BubbleTextObject(QtGui.QPyTextObject):
 
     def add_bubble(self, bubble_widget):
 
+        # the widget may have been added and removed
+
         bubble_id = self._next_id
         self._next_id += 1
 
