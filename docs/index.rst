@@ -21,6 +21,7 @@ Contents:
    screen_grab
    shotgun_fields
    spinner_widget
+   playback_label
    views
 
 Importing widgets into your app
