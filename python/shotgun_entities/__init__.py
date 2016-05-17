@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 # 
 # CONFIDENTIAL AND PROPRIETARY
 # 
@@ -8,8 +8,5 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-# Proxy model that allows for efficient hierarhcical filtering of a tree-based 
-# source model
-from .hierarchical_filtering_proxy_model import HierarchicalFilteringProxyModel
-from .simple_tooltip_model import SimpleTooltipModel
-from .shotgun_sort_filter_proxy_model import ShotgunSortFilterProxyModel
+from .card_widget import ShotgunEntityCardWidget
+from .card_delegate import ShotgunEntityCardDelegate
