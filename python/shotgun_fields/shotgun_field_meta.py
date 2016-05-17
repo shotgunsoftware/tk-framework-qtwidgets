@@ -96,6 +96,9 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         * ``set_value(self, value)``: called during construction after
           ``setup_widget`` returns. Responsible for setting the initial contents
           of the widget.
+        * ``get_value()``: Returns the internal value stored for the widget. This
+          value should match the format and type of data associated with the widget's
+          field in Shotgun, as returned by the python API.
 
     - If ``set_value`` is not defined, then the class must implement the following methods:
         * ``_display_default(self)``: Set the widget to display its "blank" state

@@ -33,7 +33,8 @@ Field Widget Metaclass
 ======================
 
 All field widgets use the :class:`.ShotgunFieldMeta` class as their ``__metaclass__``
-in order to provide a consistent API across widgets of different types.
+in order to provide a consistent API across widgets of different types and to
+register imported classes with the :class:`.ShotgunFieldManager`.
 
 .. currentmodule:: shotgun_fields.shotgun_field_meta
 
@@ -130,7 +131,8 @@ Duration
 .. note::
 
     There are no widgets available for the ``duration`` field yet since there
-    is not yet API support for display options like hours vs. days.
+    is not yet API support for display options like hours vs. days, numbers of
+    hours in a workday, etc.
 
 ----
 
@@ -155,7 +157,9 @@ Entity
 File Link
 ---------
 
-.. image:: images/field_file_link.png
+.. warning:: this section is still under construction
+
+.. .. image:: images/field_file_link.png
 
 .. currentmodule:: shotgun_fields.file_link_widget
 
@@ -372,17 +376,16 @@ Url Template
 Editable Widgets
 ================
 
-.. image:: images/field_url_template.png
-
 Requesting the ``EDITABLE`` type for a field via the manager will return a
 ``ShotgunFieldEditable`` instance. This widget is a stacked widget that includes
-both the display and editor currency widgets. Clicking on the pencil icon while
-hovering over the display widget will swap the display widget for the editor.
+both the display and editor currency widgets. You can see examples of the
+editable widgets at the bottom of each screenshot above.
 
-When the editor is visible, clicking the ``X`` icon will switch back to the display
-widget and revert any changes made in the editor. If the check mark icon is clicked,
-the changes will be applied and the the display widget will be shown with the new
-value.
+Clicking on the pencil icon while hovering over the display widget will swap
+the display widget for the editor. When the editor is visible, clicking the
+``X`` icon will switch back to the display widget and revert any changes made
+in the editor. If the check mark icon is clicked, the changes will be applied
+and the the display widget will be shown with the new value.
 
 .. currentmodule:: shotgun_fields.shotgun_field_editable
 
@@ -409,7 +412,9 @@ Base Classes
 Bubble Widget
 -------------
 
-.. image:: images/base_bubble_widget.png
+The ``BubbleEditWidget`` class is used as a base class for editing a list of
+objects. The :class:`.MultiEntityEditorWidget` is a subclass of the
+``BubbleEditWidget``.
 
 .. currentmodule:: shotgun_fields.bubble_widget
 
@@ -420,7 +425,9 @@ Bubble Widget
 Label Base Widget
 -----------------
 
-.. image:: images/base_label.png
+The ``LabelBaseWidget`` provides a very simple base class for many of the display
+widgets above. It provides the basic interface required by classes using the
+:class:`.ShotgunFieldMeta` ``__metaclass__``.
 
 .. currentmodule:: shotgun_fields.label_base_widget
 
@@ -432,7 +439,9 @@ Label Base Widget
 Elided Label Base Widget
 ------------------------
 
-.. image:: images/base_elided_label.png
+The ``ElidedLabelBaseWidget`` is nearly identical to the ``LabelBaseWidget``
+except that it will elide its display text when the text is too long to display
+in the layout.
 
 .. autoclass:: ElidedLabelBaseWidget
     :show-inheritance:
@@ -444,7 +453,7 @@ Elided Label Base Widget
 Field Widget Delegates
 ======================
 
-.. image:: images/field_delegates.png
+.. TODO
 
 .. currentmodule:: shotgun_fields.shotgun_field_delegate
 

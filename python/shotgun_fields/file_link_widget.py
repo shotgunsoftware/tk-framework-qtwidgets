@@ -25,6 +25,21 @@ class FileLinkWidget(ElidedLabelBaseWidget):
     _DISPLAY_TYPE = "url"
     _EDITOR_TYPE = "url"
 
+    def enable_editing(self, enable):
+        self._editable = enable
+        self._update_btn_position()
+
+    def eventFilter(self, obj, event):
+
+        if obj == self and self._editable:
+            if event.type() == QtCore.QEvent.Enter:
+                self._update_btn_position()
+                self._popup_btn.show()
+            elif event.type() == QtCore.QEvent.Leave:
+                self._popup_btn.hide()
+
+        return False
+
     def setup_widget(self):
         """
         Initialize the widget state.
@@ -91,22 +106,6 @@ class FileLinkWidget(ElidedLabelBaseWidget):
     def _on_link_activated(self, url):
         QtGui.QDesktopServices.openUrl(url)
 
-    def _upload_file(self):
-
-        file_path = QtGui.QFileDialog.getOpenFileName(
-            self,
-            caption="Replace Image",
-            options=QtGui.QFileDialog.DontResolveSymlinks,
-        )[0]
-        if file_path and os.path.exists(file_path):
-            self._clear()
-
-            # populte dict to match SG value
-            self.set_value({
-                # XXX
-            })
-
-
     def _on_popup_btn_click(self):
 
         popup_menu = QtGui.QMenu()
@@ -134,10 +133,6 @@ class FileLinkWidget(ElidedLabelBaseWidget):
             )
         )
 
-    def enable_editing(self, enable):
-        self._editable = enable
-        self._update_btn_position()
-
     def _string_value(self, value):
         """
         Convert the Shotgun value for this field into a string
@@ -164,21 +159,25 @@ class FileLinkWidget(ElidedLabelBaseWidget):
 
         return str_val
 
-    def eventFilter(self, obj, event):
-
-        if obj == self and self._editable:
-            if event.type() == QtCore.QEvent.Enter:
-                self._update_btn_position()
-                self._popup_btn.show()
-            elif event.type() == QtCore.QEvent.Leave:
-                self._popup_btn.hide()
-
-        return False
-
     def _update_btn_position(self):
         x = self.line_width + 4
         visible_width = self.visibleRegion().boundingRect().width()
         if (x + self._popup_btn.width()) > visible_width:
             x = self.visibleRegion().boundingRect().width() - self._popup_btn.width()
         self._popup_btn.move(x, -2)
+
+    def _upload_file(self):
+
+        file_path = QtGui.QFileDialog.getOpenFileName(
+            self,
+            caption="Replace Image",
+            options=QtGui.QFileDialog.DontResolveSymlinks,
+        )[0]
+        if file_path and os.path.exists(file_path):
+            self._clear()
+
+            # populte dict to match SG value
+            self.set_value({
+                # XXX
+            })
 
