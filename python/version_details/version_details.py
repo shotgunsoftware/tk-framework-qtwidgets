@@ -8,6 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+import os
 import json
 import sgtk
 
@@ -78,6 +79,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
+        self._load_stylesheet()
 
         # Show the "empty" image that tells the user that no Version
         # is active.
@@ -413,6 +415,23 @@ class VersionDetailsWidget(QtGui.QWidget):
 
     ##########################################################################
     # internal utilities
+
+    def _load_stylesheet(self):
+        """
+        Loads in the widget's master stylesheet from disk.
+        """
+        qss_file = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "style.qss"
+        )
+        try:
+            f = open(qss_file, "rt")
+            qss_data = sgtk.platform.current_bundle().engine._resolve_sg_stylesheet_tokens(
+                f.read(),
+            )
+            self.setStyleSheet(qss_data)
+        finally:
+            f.close()
 
     def _entity_created(self, entity):
         """
