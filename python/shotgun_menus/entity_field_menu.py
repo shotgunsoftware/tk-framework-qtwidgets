@@ -52,12 +52,12 @@ An example of how to use it is:
 import sgtk
 from sgtk.platform.qt import QtGui
 
-from .shotgun_menu import ShotgunMenuBase
+from .shotgun_menu import ShotgunMenu
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
-class EntityFieldMenu(ShotgunMenuBase):
+class EntityFieldMenu(ShotgunMenu):
     """
     A menu that automatically displays the fields for a given Shotgun entity.
 

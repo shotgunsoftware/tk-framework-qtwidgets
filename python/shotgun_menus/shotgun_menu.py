@@ -11,10 +11,28 @@
 from sgtk.platform.qt import QtGui
 
 
-class ShotgunMenuBase(QtGui.QMenu):
+class ShotgunMenu(QtGui.QMenu):
     """
     A base class with support for easily adding labels and groups of actions
     with a consistent styling.
+
+    Usage Example::
+
+        shotgun_menus = sgtk.platform.import_framework("tk-framework-qtwidgets", "shotgun_menus")
+        ShotgunMenu = shotgun_menus.ShotgunMenu
+
+        # ...
+
+        action1 = QtGui.QAction("Action 1", self)
+        action2 = QtGui.QAction("Action 2", self)
+        submenu = QtGui.QMenu("Submenu", self)
+
+        menu = ShotgunMenu(self)
+        menu.add_group([action1, action2, submenu], "My Actions")
+
+    .. image:: images/shotgun_menus_example.png
+
+    Image shows the results of the ``ShotgunMenu`` created in the example.
     """
 
     def add_group(self, items, title=None, separator=True):
@@ -29,12 +47,14 @@ class ShotgunMenuBase(QtGui.QMenu):
         argument. A separator will not be included if the group is added to an
         empty menu.
 
+        A list of all actions, including separator, label, and menu actions,
+        in the order added, will be returned.
+
         :param list items: A list of actions and/or menus to add to this menu
         :param str title: Optional text to use in a label at the top of the group
         :param bool separator: Add a separator if ``True`` (default), don't add if ``False``
 
-        :returns: A list of all added actions including separator, label and menu
-            actions if appropriate.
+        :returns: A list of added :class:`~PySide.QtGui.QAction` objects
         :rtype: :obj:`list`
         """
 

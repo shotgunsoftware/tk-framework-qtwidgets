@@ -11,12 +11,12 @@ building menus that interact with Shotgun.
 
 ----
 
-Shotgun Menu Base
------------------
+Shotgun Menu
+------------
 
 .. currentmodule:: shotgun_menus
 
-.. autoclass:: ShotgunMenuBase
+.. autoclass:: ShotgunMenu
     :show-inheritance:
     :members:
 
