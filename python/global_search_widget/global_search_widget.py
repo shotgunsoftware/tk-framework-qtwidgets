@@ -19,7 +19,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
     A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates
     a global search input box with auto completion.
     
-    :signal entity_selected(str, int): Fires when someone selects an entity inside
+    :signal: ``entity_selected(str, int)`` - Fires when someone selects an entity inside
             the search results. The returned parameters are entity type and entity id.
     """
 

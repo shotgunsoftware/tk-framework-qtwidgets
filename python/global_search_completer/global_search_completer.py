@@ -15,7 +15,20 @@ shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shot
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 
 class GlobalSearchCompleter(QtGui.QCompleter):
+    """
 
+    A standalone ``QCompleter`` class for matching SG entities to typed text.
+
+    :signal: ``entity_selected(str, int)`` - Provided for backward compatibility.
+      ``entity_activated`` is emitted at the same time with an additional ``name``
+      value. Fires when someone selects an entity inside the search results. The
+      returned parameters are entity ``type`` and entity ``id``.
+
+    :signal: ``entity_activated(str, int, str)`` - Fires when someone activates an
+      entity inside the search results. Essentially the same as ``entity_selected``
+      only the parameters returned are ``type``, ``id`` **and** ``name``.
+
+    """
 
     # emitted when shotgun has been updated
     entity_selected = QtCore.Signal(str, int)

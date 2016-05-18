@@ -507,4 +507,4 @@ from . import (
 
 # TODO: wait to register duration field until display options for hours versus
 # days and of hours in a day are available to the API
-from . import duration_widget
+# from . import duration_widget
