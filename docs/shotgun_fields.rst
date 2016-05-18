@@ -409,18 +409,36 @@ that the field is not editable.
 Base Classes
 ============
 
-Bubble Widget
--------------
+The following classes are used as base classes in one or more field widgets and
+may prove useful when diving into the details of a widget's implementation.
+
+Bubble Edit Widget
+------------------
+
+.. currentmodule:: shotgun_fields.bubble_widget
 
 The ``BubbleEditWidget`` class is used as a base class for editing a list of
 objects. The :class:`.MultiEntityEditorWidget` is a subclass of the
 ``BubbleEditWidget``.
 
-.. currentmodule:: shotgun_fields.bubble_widget
-
 .. autoclass:: BubbleEditWidget
     :show-inheritance:
     :members:
+    :exclude-members: eventFilter
+
+----
+
+Bubble Widget
+-------------
+
+This class represents individual "bubbles" managed within a ``BubbleEditWidget``
+subclasses.
+
+.. autoclass:: BubbleWidget
+    :show-inheritance:
+    :members:
+
+----
 
 Label Base Widget
 -----------------
@@ -435,6 +453,8 @@ widgets above. It provides the basic interface required by classes using the
     :show-inheritance:
     :members:
     :exclude-members: setup_widget
+
+----
 
 Elided Label Base Widget
 ------------------------
@@ -469,6 +489,7 @@ Example Code
 .. code-block:: python
     :linenos:
     :caption: Populate a QTableWidget with the results of a Shotgun query
+    :emphasize-lines: 9-11,39-40
 
     class ExampleTableWidget(QtGui.QWidget):
         def __init__(self):
@@ -526,6 +547,7 @@ Example Code
 .. code-block:: python
     :linenos:
     :caption: Display data from a ShotgunModel in a TableView
+    :emphasize-lines: 6-8,15,21
 
     class ExampleTableView(QtGui.QWidget):
         def __init__(self):
@@ -555,3 +577,17 @@ Example Code
             layout.addWidget(self.table)
             self.setLayout(layout)
 
+TODOs & Known Issues
+====================
+
+- Pressing ``Enter`` or ``Return`` in an entity editor does not always apply the completed value
+- Bubble widget does not display characters properly in some scenarios
+- Timecode & Duration widgets are on hold until python API changes make them feasible
+- Tag edit widget partially done but also awaiting python API edit ability
+- ``ElidedLabel`` causes draw lagging when used in editable widget in Grid/Form layout
+- Global completer with QTextEdit, clicking on popup item does not emit activated (keyboard nav works fine)
+- The note input widget should be updated to use the global completer
+- The status list widget editor should also use colors for visual hint like display widget
+- Retrieving reliable field delegates from the field manager is in progress
+- Editor interaction with the shotgun model is still to come
+- shotgun model to auto update SG on changes still to come
