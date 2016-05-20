@@ -13,7 +13,7 @@ class Ui_VersionDetailsWidget(object):
         VersionDetailsWidget.setObjectName("VersionDetailsWidget")
         VersionDetailsWidget.resize(390, 737)
         self.verticalLayout_17 = QtGui.QVBoxLayout(VersionDetailsWidget)
-        self.verticalLayout_17.setSpacing(0)
+        self.verticalLayout_17.setSpacing(2)
         self.verticalLayout_17.setContentsMargins(5, 0, 5, 0)
         self.verticalLayout_17.setObjectName("verticalLayout_17")
         self.details_title_bar = QtGui.QFrame(VersionDetailsWidget)

@@ -60,12 +60,13 @@ class VersionDetailsWidget(QtGui.QWidget):
     # along.
     entity_created = QtCore.Signal(object)
 
-    def __init__(self, parent, bg_task_manager):
+    def __init__(self, bg_task_manager=None, parent=None, entity=None):
         """
         Constructs a new :class:`~VersionDetailsWidget` object.
 
         :param parent:          The widget's parent.
         :param bg_task_manager: A :class:`~BackgroundTaskManager` object.
+        :param entity:          A Shotgun Version entity dictionary.
         """
         super(VersionDetailsWidget, self).__init__(parent)
 
@@ -79,7 +80,6 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
-        self._load_stylesheet()
 
         # Show the "empty" image that tells the user that no Version
         # is active.
@@ -207,7 +207,13 @@ class VersionDetailsWidget(QtGui.QWidget):
         # double click of the window, which won't go through our button.
         self.ui.float_button.clicked.connect(self._toggle_floating)
         self.ui.close_button.clicked.connect(self._hide_dock)
-        self.parent().dockLocationChanged.connect(self._dock_location_changed)
+
+        try:
+            self.parent().dockLocationChanged.connect(self._dock_location_changed)
+        except Exception:
+            # If we're not in a dock widget, then we shouldn't show the
+            # title bar with dock and close buttons.
+            self.show_title_bar(False)
 
         # We will be passing up our own signal when note and reply entities
         # are created.
@@ -221,6 +227,12 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._setup_fields_menu()
         self._setup_version_list_fields_menu()
         self._setup_version_sort_by_menu()
+
+        if entity:
+            self.load_data(entity)
+
+        self._load_stylesheet()
+        self.show_title_bar(False)
 
     ##########################################################################
     # properties
@@ -412,6 +424,9 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.pin_button.setIcon(QtGui.QIcon(":/tk-rv-shotgunreview/tack_up.png"))
             if self._requested_entity:
                 self.load_data(self._requested_entity)
+
+    def show_title_bar(self, state):
+        self.ui.details_title_bar.setVisible(state)
 
     ##########################################################################
     # internal utilities
@@ -698,16 +713,16 @@ class VersionDetailsWidget(QtGui.QWidget):
         descending.setCheckable(True)
         descending.setChecked(True)
 
-        up_icon = QtGui.QIcon(":tk-rv-shotgunreview/sort_up.png")
+        up_icon = QtGui.QIcon(":version_details/sort_up.png")
         up_icon.addPixmap(
-            QtGui.QPixmap(":tk-rv-shotgunreview/sort_up_on.png"),
+            QtGui.QPixmap(":version_details/sort_up_on.png"),
             QtGui.QIcon.Active,
             QtGui.QIcon.On,
         )
 
-        down_icon = QtGui.QIcon(":tk-rv-shotgunreview/sort_down.png")
+        down_icon = QtGui.QIcon(":version_details/sort_down.png")
         down_icon.addPixmap(
-            QtGui.QPixmap(":tk-rv-shotgunreview/sort_down_on.png"),
+            QtGui.QPixmap(":version_details/sort_down_on.png"),
             QtGui.QIcon.Active,
             QtGui.QIcon.On,
         )
