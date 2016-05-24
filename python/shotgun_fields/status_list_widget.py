@@ -91,9 +91,12 @@ class StatusListEditorWidget(QtGui.QComboBox):
         """
         if value is None:
             self.setCurrentIndex(0)
+            return
 
         display_value = shotgun_globals.get_status_display_name(value)
         index = self.findText(display_value)
         if index != -1:
             self.setCurrentIndex(index)
+        else:
+            self.setCurrentIndex(0)
 

@@ -14,7 +14,7 @@ from sgtk.platform.qt import QtCore, QtGui
 
 class BubbleWidget(QtGui.QFrame):
     """
-    This class represents a drawable "bubble" ot display in a :class:`.BubbleEditWidget`
+    This class represents a drawable "bubble" to display in a :class:`.BubbleEditWidget`
 
     This widget will stores data for the object it represents. The data can be set
     and accessed via the respective ``get_data()`` and ``set_data()`` methods.
@@ -161,7 +161,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
 
         super(BubbleEditWidget, self).__init__(parent)
 
-        self._formats = {}
+        self._char_formats = {}
 
         self._bubble_text_object = _BubbleTextObject(self)
         self.document().documentLayout().registerHandler(
@@ -183,22 +183,22 @@ class BubbleEditWidget(QtGui.QTextEdit):
         bubble_id = self._bubble_text_object.add_bubble(bubble)
 
         # create a character format for the bubble
-        format = QtGui.QTextCharFormat()
-        format.setObjectType(self._bubble_text_object.OBJECT_TYPE)
-        format.setProperty(self._bubble_text_object.BUBBLE_DATA_PROPERTY, bubble_id)
+        char_format = QtGui.QTextCharFormat()
+        char_format.setObjectType(self._bubble_text_object.OBJECT_TYPE)
+        char_format.setProperty(self._bubble_text_object.BUBBLE_DATA_PROPERTY, bubble_id)
 
-        # keep a reference to the format so that we can map a cursor to this
+        # keep a reference to the char format so that we can map a cursor to this
         # bubble later on
-        self._formats[bubble_id] = format
+        self._char_formats[bubble_id] = char_format
 
         bubble.remove_clicked.connect(
             lambda: self.remove_bubble(bubble_id)
         )
 
-        # insert the bubble character into the text editor and format it properly
+        # insert the bubble character into the text editor and char format it properly
         cursor = self.textCursor()
         cursor.beginEditBlock()
-        cursor.insertText(self._OBJECT_REPLACEMENT_CHAR, format)
+        cursor.insertText(self._OBJECT_REPLACEMENT_CHAR, char_format)
         cursor.endEditBlock()
         self.setTextCursor(cursor)
 
@@ -208,15 +208,14 @@ class BubbleEditWidget(QtGui.QTextEdit):
         """
         Clears all bubbles from the editor.
         """
-        for format in self._formats.values():
-            del format
+        for char_format in self._char_formats.values():
+            del char_format
         self._bubble_text_object.clear()
         super(BubbleEditWidget, self).clear()
 
     def clear_typed_text(self):
         """
         Clears only typed text (not bubbles) from the editor.
-        :return:
         """
 
         text = self.toPlainText()
@@ -264,8 +263,8 @@ class BubbleEditWidget(QtGui.QTextEdit):
         # for mouse events find the actual widget at the position
         doc = self.document()
         cursor_pos = doc.documentLayout().hitTest(edit_pos, QtCore.Qt.ExactHit)
-        format = doc.documentLayout().format(cursor_pos)
-        bubble_id = format.property(_BubbleTextObject.BUBBLE_DATA_PROPERTY)
+        char_format = doc.documentLayout().format(cursor_pos)
+        bubble_id = char_format.property(_BubbleTextObject.BUBBLE_DATA_PROPERTY)
         bubble = self.get_bubble(bubble_id)
 
         if bubble is None:
@@ -295,22 +294,22 @@ class BubbleEditWidget(QtGui.QTextEdit):
         :rtype: :class:`.BubbleWidget`
         """
 
-        if not bubble_id in self._formats:
+        if not bubble_id in self._char_formats:
             return None
 
         text = self.toPlainText()
         cursor = self.textCursor()
 
         # loop over each character until a replacement character with a known
-        # format that matches the supplied id is found.
-        for i in range(0, len(text)):
-            if not text[i] == self._OBJECT_REPLACEMENT_CHAR:
+        # char format that matches the supplied id is found.
+        for i in xrange(0, len(text)):
+            if text[i] != self._OBJECT_REPLACEMENT_CHAR:
                 continue
 
             cursor.setPosition(i+1, QtGui.QTextCursor.MoveAnchor)
-            format = cursor.charFormat()
+            char_format = cursor.charFormat()
 
-            if not self._formats[bubble_id] == format:
+            if self._char_formats[bubble_id] != char_format:
                 continue
 
             # bubble is in the text
@@ -329,25 +328,25 @@ class BubbleEditWidget(QtGui.QTextEdit):
         text = self.toPlainText()
         cursor = self.textCursor()
 
-        formats = []
+        char_formats = []
         bubbles = []
 
-        # find formats for bubbles in the text editor
+        # find char formats for bubbles in the text editor
         for i in range(0, len(text)):
-            if not text[i] == self._OBJECT_REPLACEMENT_CHAR:
+            if text[i] != self._OBJECT_REPLACEMENT_CHAR:
                 continue
 
             cursor.setPosition(i+1, QtGui.QTextCursor.MoveAnchor)
-            format = cursor.charFormat()
+            char_format = cursor.charFormat()
 
-            if not format in self._formats.values():
+            if not char_format in self._char_formats.values():
                 continue
 
-            formats.append(format)
+            char_formats.append(char_format)
 
-        # get the corresponding bubbles for each found format
-        for bubble_id in self._formats:
-            if self._formats[bubble_id] in formats:
+        # get the corresponding bubbles for each found char format
+        for bubble_id in self._char_formats:
+            if self._char_formats[bubble_id] in char_formats:
                 bubbles.append(self.get_bubble(bubble_id))
 
         return bubbles
@@ -380,13 +379,13 @@ class BubbleEditWidget(QtGui.QTextEdit):
         # locate the bubble by iterating over each character in the editor.
         # when the match is found, remove it.
         for i in range(0, len(text)):
-            if not text[i] == self._OBJECT_REPLACEMENT_CHAR:
+            if text[i] != self._OBJECT_REPLACEMENT_CHAR:
                 continue
 
             cursor.setPosition(i+1, QtGui.QTextCursor.MoveAnchor)
-            format = cursor.charFormat()
+            char_format = cursor.charFormat()
 
-            if not self._formats[bubble_id] == format:
+            if self._char_formats[bubble_id] != char_format:
                 continue
 
             # we found the bubble's object character.
@@ -395,7 +394,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
             cursor.removeSelectedText()
             cursor.endEditBlock()
 
-            del self._formats[bubble_id]
+            del self._char_formats[bubble_id]
 
             self.update()
             return
@@ -447,11 +446,11 @@ class _BubbleTextObject(QtGui.QPyTextObject):
         """Forget about all the known widgets."""
         self._bubbles = {}
 
-    def drawObject(self, painter, rect, doc, pos_in_document, format):
-        """Draw the appropriate widget based on the supplied format."""
+    def drawObject(self, painter, rect, doc, pos_in_document, char_format):
+        """Draw the appropriate widget based on the supplied char format."""
 
         # determine the bubble to draw
-        bubble_id = format.property(self.BUBBLE_DATA_PROPERTY)
+        bubble_id = char_format.property(self.BUBBLE_DATA_PROPERTY)
         bubble = self.get_bubble(bubble_id)
         bubble.setGeometry(rect.toRect())
 
@@ -488,8 +487,8 @@ class _BubbleTextObject(QtGui.QPyTextObject):
 
         return None
 
-    def intrinsicSize(self, doc, pos_in_document, format):
-        """Returns the ``sizeHint`` for the bubble widget for the supplied format."""
-        bubble_id = format.property(self.BUBBLE_DATA_PROPERTY)
+    def intrinsicSize(self, doc, pos_in_document, char_format):
+        """Returns the ``sizeHint`` for the bubble widget for the supplied char format."""
+        bubble_id = char_format.property(self.BUBBLE_DATA_PROPERTY)
         bubble = self.get_bubble(bubble_id)
         return bubble.sizeHint()

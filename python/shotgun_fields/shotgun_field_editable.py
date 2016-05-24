@@ -85,11 +85,13 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         """
 
         if index == self._edit_index:
-            self._editor.edit_widget.blockSignals(True)
-            self._editor.edit_widget.set_value(
-                self._display.display_widget.get_value()
-            )
-            self._editor.edit_widget.blockSignals(False)
+            try:
+                self._editor.edit_widget.blockSignals(True)
+                self._editor.edit_widget.set_value(
+                    self._display.display_widget.get_value()
+                )
+            finally:
+                self._editor.edit_widget.blockSignals(False)
 
             if hasattr(self._editor.edit_widget, '_begin_edit'):
                 self._editor.edit_widget._begin_edit()
@@ -269,7 +271,7 @@ class _EditorWidget(QtGui.QWidget):
             btn_layout.addWidget(self._done_btn)
             btn_layout.addStretch()
 
-        if hasattr(editor_widget, '_IMMEDIATE_APPLY') and editor_widget._IMMEDIATE_APPLY:
+        if getattr(editor_widget, '_IMMEDIATE_APPLY', None):
             # widget is set to immediately apply value. no need to display the btn
             self._apply_btn.hide()
 
@@ -281,8 +283,6 @@ class _EditorWidget(QtGui.QWidget):
         layout.addStretch()
 
         layout.setAlignment(self._done_btn, QtCore.Qt.AlignBottom)
-
-        #self.setMinimumHeight(self._done_btn.height())
 
         self.installEventFilter(self)
 

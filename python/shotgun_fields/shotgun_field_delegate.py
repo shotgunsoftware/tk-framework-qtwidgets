@@ -111,7 +111,8 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         widget.set_value(sanitized_value)
 
     def setModelData(self, editor, model, index):
-        print "setModelData: %s" % editor.get_value()
+        pass
+        #print "setModelData: %s" % editor.get_value()
 
     def editorEvent(self, event, model, option, index):
         # print "EDITOR EVENT: %s" % event

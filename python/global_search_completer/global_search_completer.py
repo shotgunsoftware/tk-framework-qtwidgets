@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -189,7 +189,7 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         # looses focus.
         try:
             self.activated[QtCore.QModelIndex].disconnect(self._on_select)
-        except:
+        except Exception:
             self._bundle.log_debug(
                 "Could not disconnect global search activated signal prior to "
                 "reconnect. Looks like this connection must have been "
@@ -200,10 +200,6 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         # now clear the model
         self._clear_model()
-
-        # clear download queue
-        if self.__sg_data_retriever:
-            self.__sg_data_retriever.clear()
 
         # clear thumbnail map
         self._thumb_map = {}
@@ -216,11 +212,13 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         # be forwarded to the method.
         data = {"text": text}
         if self.__sg_data_retriever:
+            # clear download queue and do the new search
+            self.__sg_data_retriever.clear()
             self._processing_id = self.__sg_data_retriever.execute_method(
                 self._do_sg_global_search, data)
         else:
             raise sgtk.TankError(
-                "Please associate this class with a background task processor.")
+                "Please associate this class with a background task manager.")
 
     def set_bg_task_manager(self, task_manager):
         """
@@ -365,7 +363,7 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
                 item.setIcon(self._default_icon)
 
-                if d.get("image", None) and self.__sg_data_retriever:
+                if d.get("image") and self.__sg_data_retriever:
                     uid = self.__sg_data_retriever.request_thumbnail(
                         d["image"],
                         d["type"],

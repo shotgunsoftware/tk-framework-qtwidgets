@@ -85,29 +85,29 @@ class _FootageInputValidator(QtGui.QValidator):
     A validator for the {feet}-{frames} footage spec.
     """
 
-    def fixup(self, input):
+    def fixup(self, input_str):
         """
         Translate the input string into a valid string if possible.
 
-        :param str input: The input value to translate.
+        :param str input_str: The input value to translate.
 
-        :return: The translated value or the original input if translation is
+        :return: The translated value or the original input string if translation is
             not possible.
         """
         try:
             # translate the input into feet & frames
             (feet, frames) = self._get_feet_frames(input)
-            input = "%d-%02d" % (feet, frames)
+            input_str = "%d-%02d" % (feet, frames)
         except ValueError:
             pass
 
-        return input
+        return input_str
 
-    def validate(self, input, pos):
+    def validate(self, input_str, pos):
         """
-        Validate the input string if it is possible to infer feet and frames.
+        Validate the input_str string if it is possible to infer feet and frames.
 
-        :param input: The input string
+        :param input_str: The input string
         :param pos: The cursor position within the widget
 
         :return: :class:`~PySide.QtGui.QValidator` enum ``Invalid`` or ``Acceptable``
@@ -115,17 +115,17 @@ class _FootageInputValidator(QtGui.QValidator):
         :rtype: int
         """
         try:
-            (feet, frames) = self._get_feet_frames(input)
+            (feet, frames) = self._get_feet_frames(input_str)
         except ValueError:
             return QtGui.QValidator.Invalid
 
         return QtGui.QValidator.Acceptable
 
-    def _get_feet_frames(self, input):
+    def _get_feet_frames(self, input_str):
         """
         Convert the input string into a tuple representing ``feet`` and ``frames``.
 
-        :param str input: A string representing a footage spec.
+        :param str input_str: A string representing a footage spec.
         :return: A tuple of the form ``(feet, frames)`` inferred from the input
             string.
         :rtype tuple:
@@ -133,16 +133,16 @@ class _FootageInputValidator(QtGui.QValidator):
         :raises: ``ValueError`` if feet and frames cannot be inferred.
         """
 
-        input = input.strip()
-        input = input.rstrip("-")
+        input_str = str(input_str)
+        input_str = input_str.strip()
+        input_str = input_str.rstrip("-")
 
-        match = re.match("^\d+$", input)
-        if match:
+        if str.isdigit(input_str):
             # if the value is simply an integer, we can calculate the number of
             # feet (16 frames per foot) and the remaining frames using ``divmod``.
-            return divmod(int(match.group(0)), 16)
+            return divmod(int(input_str), 16)
 
-        match = re.match("^(\d+)-(\d+)$", input)
+        match = re.match("^(\d+)-(\d+)$", input_str)
         if match:
             # the input value is of the form ``{feet}-{frames}``. ensure the
             # frames value is reduced, then compute the total feet and frames.

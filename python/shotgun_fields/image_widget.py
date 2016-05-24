@@ -329,7 +329,7 @@ class ImageWidget(QtGui.QLabel):
             caption="Replace Image",
             options=QtGui.QFileDialog.DontResolveSymlinks,
         )[0]
-        if file_path and os.path.exists(file_path):
+        if file_path:
             self.setPixmap(QtGui.QPixmap(file_path))
             self._image_url = file_path
             self.value_changed.emit()

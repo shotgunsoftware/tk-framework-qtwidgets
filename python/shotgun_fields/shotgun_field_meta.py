@@ -134,8 +134,8 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
         # take over class members if called out via the @take_over decorator
         for member_name in TAKE_OVER_NAMES:
-            if hasattr(mcl, member_name):
-                member = getattr(mcl, member_name)
+            member = getattr(mcl, member_name, None)
+            if member:
                 mcl.take_over_if_not_defined(member_name, member, class_dict, parents)
 
         # register the signal that will be emitted as the value changes

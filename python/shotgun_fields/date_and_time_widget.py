@@ -49,7 +49,7 @@ class DateAndTimeWidget(LabelBaseWidget):
             format = "Tomorrow%s" % postfix
         else:
             # use the date formatting associated with the current locale
-            format = "%%x%s" % postfix
+            format = "%x " + postfix
 
         time_str = dt.strftime(format)
         return time_str
@@ -66,6 +66,15 @@ class DateAndTimeWidget(LabelBaseWidget):
         # handle that as a valid value as well
         if not isinstance(value, datetime.datetime):
             value = datetime.datetime.fromtimestamp(value)
+
+        # return a human readable time format. The postfix formatter used here
+        # is '%I:%M%p' which is:
+        #
+        #   %I = Hour (12-hour clock) as a decimal number [01,12]
+        #   %M = Minute as a decimal number [00,59]
+        #   %p = Locale's equivalent of either AM or PM
+        #
+        # resulting in a value like: 01:37AM
         return self._create_human_readable_timestamp(value, " %I:%M%p")
 
 
@@ -79,18 +88,21 @@ class DateAndTimeEditorWidget(QtGui.QDateTimeEdit):
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "date_time"
 
+    # minimum width just to prevent the widget from being too squished
+    _MINIMUM_WIDTH = 100
+
     def get_value(self):
         """
         :return: The internal value being displayed by the widget.
         """
         value = self.dateTime()
 
-        if hasattr(QtCore, "QVariant"):
-            # pyqt
-            return value.toPyDateTime()
-        else:
+        try:
             # pyside
             return value.toPython()
+        except AttributeError:
+            # pyqt
+            return value.toPyDateTime()
 
     def keyPressEvent(self, event):
         """
@@ -112,7 +124,7 @@ class DateAndTimeEditorWidget(QtGui.QDateTimeEdit):
         Called by the metaclass during initialization.
         """
         self.setCalendarPopup(True)
-        self.setMinimumWidth(100)
+        self.setMinimumWidth(self._MINIMUM_WIDTH)
 
     def _display_default(self):
         """

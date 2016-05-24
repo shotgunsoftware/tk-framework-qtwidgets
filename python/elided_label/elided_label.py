@@ -31,6 +31,7 @@ class ElidedLabel(QtGui.QLabel):
         self._elide_mode = QtCore.Qt.ElideRight
         self._actual_text = ""
         self._line_width = 0
+        self._ideal_width = None
 
         self.setSizePolicy(
             QtGui.QSizePolicy.Expanding,
@@ -48,7 +49,7 @@ class ElidedLabel(QtGui.QLabel):
 
     def _get_width_hint(self):
 
-        if not hasattr(self, '_ideal_width'):
+        if not self._ideal_width:
 
             doc = QtGui.QTextDocument()
             try:
@@ -106,8 +107,7 @@ class ElidedLabel(QtGui.QLabel):
         """
         # clear out the ideal width so that the widget can recalculate based on
         # the new text
-        if hasattr(self, '_ideal_width'):
-            del self._ideal_width
+        self._ideal_width = None
         self._actual_text = text
         self._update_elided_text()
 
@@ -211,5 +211,8 @@ class ElidedLabel(QtGui.QLabel):
 
     @property
     def line_width(self):
+        """
+        (:obj:`int`) width of the line of text in pixels
+        """
         return self._line_width
 

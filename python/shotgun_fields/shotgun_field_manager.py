@@ -209,9 +209,14 @@ class ShotgunFieldManager(QtCore.QObject):
         elif widget_type is self.EDITOR:
             widget = self._create_editor_widget(
                 sg_entity_type, field_name, entity, parent, **kwargs)
-        else:
+        elif widget_type is self.DISPLAY:
             widget = self._create_display_widget(
                 sg_entity_type, field_name, entity, parent, **kwargs)
+        else:
+            raise TypeError(
+                "Unknown widget type supplied to ShotgunFieldManager."
+                "create_widget: %s" % (widget_type,)
+            )
 
         return widget
 
