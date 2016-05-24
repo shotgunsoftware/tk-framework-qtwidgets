@@ -157,15 +157,14 @@ Entity
 File Link
 ---------
 
-.. warning:: this section is still under construction
-
-.. .. image:: images/field_file_link.png
+.. image:: images/field_file_link.png
 
 .. currentmodule:: shotgun_fields.file_link_widget
 
 .. autoclass:: FileLinkWidget
     :show-inheritance:
     :members:
+    :exclude-members: eventFilter
 
 ----
 

@@ -20,6 +20,9 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
     instance to allow toggling between the two modes.
     """
 
+    # TODO: this widget should implement the same interface as regular field widget
+    # it should emit value_changed, have get/set value, etc.
+
     def __init__(self, display_widget, editor_widget, parent=None):
         """
         Initialize the editable widget with the display and editor instances.
@@ -47,8 +50,10 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         self._editor.done_editing.connect(
             lambda: self.setCurrentWidget(self._display))
 
-        # TODO: insert backend update here (don't immediately apply the value)
-        self._editor.edit_widget.value_changed.connect(self._apply_value)
+        ## TODO: insert backend update here (don't immediately apply the value)
+        #self._editor.edit_widget.value_changed.connect(self._apply_value)
+
+        # TODO: forward value_changed signal
 
         self.currentChanged.connect(self._on_current_changed)
 
@@ -64,13 +69,13 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         """
         return self.currentWidget().sizeHint()
 
-    def _apply_value(self):
-        """
-        Apply the editor's current value to the display widget and finish editing.
-        """
-        new_value = self._editor.edit_widget.get_value()
-        self._display.display_widget.set_value(new_value)
-        self.setCurrentWidget(self._display)
+    #def _apply_value(self):
+    #    #"""
+    #    Apply the editor's current value to the display widget and finish editing.
+    #    """
+    #    new_value = self._editor.edit_widget.get_value()
+    #    self._display.display_widget.set_value(new_value)
+    #    self.setCurrentWidget(self._display)
 
     def _on_current_changed(self, index):
         """
@@ -315,6 +320,9 @@ class _EditorWidget(QtGui.QWidget):
         Make sure the edit widget's value is updated and emit the
         ``done_editing`` signal.
         """
+        # TODO: rather than doing this weird setting of its own value, this
+        # should simply emit a 'value_changed' signal. the widgets should be
+        # responsible for storing their own values as they are modified
         self.edit_widget.set_value(self.edit_widget.get_value())
         self.done_editing.emit()
 

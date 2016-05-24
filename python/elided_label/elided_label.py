@@ -39,9 +39,11 @@ class ElidedLabel(QtGui.QLabel):
 
     def sizeHint(self):
 
+        base_size_hint = super(ElidedLabel, self).sizeHint()
+
         return QtCore.QSize(
             self._get_width_hint(),
-            self.height()
+            base_size_hint.height()
         )
 
     def _get_width_hint(self):

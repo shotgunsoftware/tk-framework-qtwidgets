@@ -28,6 +28,11 @@ class GlobalSearchWidget(QtGui.QLineEdit):
 
     def __init__(self, parent):
         """
+        Initialize the widget.
+
+        Uses the ``GlobalSearchCompleter`` as the completer for searching
+        SG entities.
+
         :param parent: Qt parent object
         :type parent: :class:`~PySide.QtGui.QWidget`        
         """

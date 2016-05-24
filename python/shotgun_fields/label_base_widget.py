@@ -69,10 +69,6 @@ class ElidedLabelBaseWidget(elided_label.ElidedLabel):
         Called by the metaclass during initialization.
         """
         self.setOpenExternalLinks(True)
-        self.setSizePolicy(
-            QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Preferred,
-        )
 
     def _display_default(self):
         """

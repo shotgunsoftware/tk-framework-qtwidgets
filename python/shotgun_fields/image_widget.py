@@ -55,7 +55,7 @@ class ImageWidget(QtGui.QLabel):
         :return: True if the event was processed, False otherwise
         """
 
-        if obj == self and self._editable:
+        if obj == self:
             if self._pixmap and event.type() == QtCore.QEvent.Enter:
                 self._popup_btn.show()
             elif self._pixmap and event.type() == QtCore.QEvent.Leave:
@@ -156,10 +156,13 @@ class ImageWidget(QtGui.QLabel):
         self._view_action = QtGui.QAction("View Image", self)
         self._view_action.triggered.connect(self._show_image)
 
-        self._popup_menu = QtGui.QMenu()
-        self._popup_menu.addAction(self._clear_action)
-        self._popup_menu.addAction(self._replace_action)
-        self._popup_menu.addAction(self._view_action)
+        self._popup_edit_menu = QtGui.QMenu()
+        self._popup_edit_menu.addAction(self._clear_action)
+        self._popup_edit_menu.addAction(self._replace_action)
+        self._popup_edit_menu.addAction(self._view_action)
+
+        self._popup_display_menu = QtGui.QMenu()
+        self._popup_display_menu.addAction(self._view_action)
 
         self.installEventFilter(self)
 
@@ -233,7 +236,13 @@ class ImageWidget(QtGui.QLabel):
         """
         Handles displaying the popup menu when the button is clicked.
         """
-        self._popup_menu.exec_(
+
+        if self._editable:
+            menu = self._popup_edit_menu
+        else:
+            menu = self._popup_display_menu
+
+        menu.exec_(
             self._popup_btn.mapToGlobal(
                 QtCore.QPoint(0, self._popup_btn.height())
             )

@@ -16,7 +16,6 @@ shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "sho
 
 class GlobalSearchCompleter(QtGui.QCompleter):
     """
-
     A standalone ``QCompleter`` class for matching SG entities to typed text.
 
     :signal: ``entity_selected(str, int)`` - Provided for backward compatibility.
@@ -27,6 +26,13 @@ class GlobalSearchCompleter(QtGui.QCompleter):
     :signal: ``entity_activated(str, int, str)`` - Fires when someone activates an
       entity inside the search results. Essentially the same as ``entity_selected``
       only the parameters returned are ``type``, ``id`` **and** ``name``.
+
+    :modes: ``MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT`` - Used to identify the
+        mode of an item in the completion list
+
+    :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
+    :model role: ``MODE_ROLE`` - Stores the mode of an item in the completion
+        list (see modes above)
 
     """
 
@@ -43,6 +49,12 @@ class GlobalSearchCompleter(QtGui.QCompleter):
     (MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT) = range(3)
 
     def __init__(self, parent=None):
+        """
+        Initialize the completer.
+
+        :param parent: Parent widget
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        """
 
         super(GlobalSearchCompleter, self).__init__(parent)
 
@@ -63,6 +75,8 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         self.setModel(QtGui.QStandardItemModel(self))
         self._clear_model()
 
+        # the default entity search criteria. The calling code can override these
+        # criterial by calling ``set_searchable_entity_types``.
         self._entity_search_criteria = {
             "Asset": [],
             "Shot": [],
@@ -86,10 +100,27 @@ class GlobalSearchCompleter(QtGui.QCompleter):
             self.__sg_data_retriever = None
 
     def get_current_result(self):
+        """
+        Returns the result from the current item in the completer popup or ``None``
+        if there is no current item.
+
+        :returns: The entity dict for the current result
+        :rtype: :obj:`dict`: or ``None``
+        """
         model_index = self.popup().currentIndex()
         return self.get_result(model_index)
 
     def get_result(self, model_index):
+        """
+        Return the entity data for the supplied model index or None if there is
+        no data for the supplied index.
+
+        :param model_index: The index of the model to return the result for.
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
+
+        :return: The entity dict for the supplied model index.
+        :rtype: :obj:`dict`: or ``None``
+        """
 
         # make sure that the user selected an actual shotgun item.
         # if they just selected the "no items found" or "loading please hold"
