@@ -16,46 +16,12 @@ from .shotgun_field_meta import ShotgunFieldMeta
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
-
 class DateAndTimeWidget(LabelBaseWidget):
     """
     Display a ``date_time`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "date_time"
-
-    def _create_human_readable_timestamp(self, dt, postfix=""):
-        """
-        Return the time represented by the argument as a string where the date portion is
-        displayed as "Yesterday", "Today", or "Tomorrow" if appropriate.
-
-        By default just the date is displayed, but additional formatting can be appended
-        by using the postfix argument.
-
-        :param dt: The date and time to convert to a string
-        :type dt: :class:`datetime.datetime`
-
-        :param postfix: What will be displayed after the date portion of the dt argument
-        :type postfix: A strftime style :obj:`str`
-
-        :returns: A String representing dt appropriate for display
-        """
-
-        # get the delta and components
-        delta = datetime.datetime.now(dt.tzinfo) - dt
-
-        if delta.days == 1:
-            format = "Yesterday%s" % postfix
-        elif delta.days == 0:
-            format = "Today%s" % postfix
-        elif delta.days == -1:
-            format = "Tomorrow%s" % postfix
-        else:
-            # use the date formatting associated with the current locale
-            format = "%x " + postfix
-
-        time_str = dt.strftime(format)
-        return time_str
 
     def _display_value(self, value):
         """
@@ -84,7 +50,7 @@ class DateAndTimeWidget(LabelBaseWidget):
         :param value: The value to convert into a string
         :type value: :class:`datetime.datetime` or a float representing unix time
         """
-        value = self._ensure_datetime(value)
+        dt = self._ensure_datetime(value)
 
         # return a human readable time format. The postfix formatter used here
         # is '%I:%M%p' which is:
@@ -94,7 +60,7 @@ class DateAndTimeWidget(LabelBaseWidget):
         #   %p = Locale's equivalent of either AM or PM
         #
         # resulting in a value like: 01:37AM
-        return self._create_human_readable_timestamp(value, postfix=" %I:%M%p")
+        return shotgun_globals.create_human_readable_timestamp(dt, postfix=" %I:%M%p")
 
     def _tooltip_value(self, value, postfix=""):
         """
@@ -103,8 +69,8 @@ class DateAndTimeWidget(LabelBaseWidget):
         :param value: The value to convert into a string
         :type value: :class:`datetime.datetime` or a float representing unix time
         """
-        value = self._ensure_datetime(value)
-        return value.strftime("%x" + postfix)
+        dt = self._ensure_datetime(value)
+        return dt.strftime("%x" + postfix)
 
 
 class DateAndTimeEditorWidget(QtGui.QDateTimeEdit):

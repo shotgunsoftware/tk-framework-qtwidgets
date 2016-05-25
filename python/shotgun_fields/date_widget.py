@@ -10,9 +10,12 @@
 
 import datetime
 
+import sgtk
 from sgtk.platform.qt import QtGui, QtCore
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+
+shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
 class DateWidget(LabelBaseWidget):
@@ -21,32 +24,6 @@ class DateWidget(LabelBaseWidget):
     """
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "date"
-
-    def _create_human_readable_date(self, date):
-        """
-        Return the time represented by the argument as a string where the date portion is
-        displayed as "Yesterday", "Today", or "Tomorrow" if appropriate.
-
-        :param date: The date convert to a string
-        :type date: :class:`datetime.date`
-
-        :returns: A String representing date appropriate for display
-        """
-
-        # get the delta and components
-        delta = datetime.date.today() - date
-
-        if delta.days == 1:
-            date_str = "Yesterday"
-        elif delta.days == 0:
-            date_str = "Today"
-        elif delta.days == -1:
-            date_str = "Tomorrow"
-        else:
-            # use the date formatting associated with the current locale
-            date_str = date.strftime("%x")
-
-        return date_str
 
     def _display_value(self, value):
         """
@@ -72,8 +49,8 @@ class DateWidget(LabelBaseWidget):
         :param value: The value to convert into a string
         :type value: A String representing the date in YYYY-MM-DD form
         """
-        value = self._ensure_date(value)
-        return self._create_human_readable_date(value)
+        date = self._ensure_date(value)
+        return shotgun_globals.create_human_readable_date(date)
 
     def _tooltip_value(self, value):
         """
@@ -82,8 +59,8 @@ class DateWidget(LabelBaseWidget):
         :param value: The value to convert into a string
         :type value: A String representing the date in YYYY-MM-DD form
         """
-        value = self._ensure_date(value)
-        return value.strftime("%x")
+        date = self._ensure_date(value)
+        return date.strftime("%x")
 
 class DateEditorWidget(QtGui.QDateEdit):
     """
