@@ -20,20 +20,30 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
     with indexes from a ShotgunModel where the value of the field is stored in the
     SG_ASSOCIATED_FIELD_ROLE role.
     """
-    def __init__(self, display_widget, editor_widget, view):
+    def __init__(self, sg_entity_type, field_name, display_class, editor_class, view, bg_task_manager=None):
         """
         Constructor
 
-        :param display_widget: A shotgun field :class:`~PySide.QtGui.QWidget` to display the field info
+        :param sg_entity_type: Shotgun entity type
+        :type sg_entity_type: String
 
-        :param editor_widget: A shotgun field :class:`~PySide.QtGui.QWidget` to edit the field info
+        :param field_name: Shotgun field name
+        :type field_name: String
+
+        :param display_class: A shotgun field :class:`~PySide.QtGui.QWidget` to display the field info
+
+        :param editor_class: A shotgun field :class:`~PySide.QtGui.QWidget` to edit the field info
 
         :param view: The parent view for this delegate
         :type view:  :class:`~PySide.QtGui.QWidget`
         """
         views.WidgetDelegate.__init__(self, view)
-        self._display_widget = display_widget
-        self._editor_widget = editor_widget
+
+        self._entity_type = sg_entity_type
+        self._field_name = field_name
+        self._display_class = display_class
+        self._editor_class = editor_class
+        self._bg_task_manager = bg_task_manager
 
     def _create_widget(self, parent):
         """
@@ -43,8 +53,13 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         :returns:       QWidget that will be used to paint grid cells in the view.
         :rtype:         :class:`~PySide.QtGui.QWidget`
         """
-        self._display_widget.setParent(parent)
-        return self._display_widget
+        widget = self._display_class(
+            parent=parent,
+            entity_type=self._entity_type,
+            field_name=self._field_name,
+            bg_task_manager=self._bg_task_manager,
+        )
+        return widget
 
     def _create_editor_widget(self, model_index, style_options, parent):
         """
@@ -60,9 +75,16 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         :returns:               A QWidget to be used for editing the current index
         :rtype:                 :class:`~PySide.QtGui.QWidget`
         """
-        if self._editor_widget:
-            self._editor_widget.setParent(parent)
-        return self._editor_widget
+        if not self._editor_class:
+            return None
+
+        widget = self._editor_class(
+            parent=parent,
+            entity_type=self._entity_type,
+            field_name=self._field_name,
+            bg_task_manager=self._bg_task_manager,
+        )
+        return widget
 
     def _on_before_paint(self, widget, model_index, style_options):
         """
@@ -81,6 +103,16 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
                               view related state of the cell.
         :type style_options:  :class:`~PySide.QtGui.QStyleOptionViewItem`
         """
-        value = model_index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)
+        self.setEditorData(widget, model_index)
+
+    def setEditorData(self, widget, index):
+        value = index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)
         sanitized_value = shotgun_model.sanitize_qt(value)
-        self._display_widget.set_value(sanitized_value)
+        widget.set_value(sanitized_value)
+
+    def setModelData(self, editor, model, index):
+        return editor.get_value()
+
+    def editorEvent(self, event, model, option, index):
+        print "EDITOR EVENT: %s" % event
+        return True

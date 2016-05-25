@@ -19,6 +19,7 @@ from . import elided_label
 from . import navigation
 from . import note_input_widget
 from . import activity_stream
+from . import global_search_completer
 from . import global_search_widget
 from . import screen_grab
 from . import shotgun_fields

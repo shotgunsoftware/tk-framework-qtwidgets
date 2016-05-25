@@ -8,20 +8,62 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of a date field in Shotgun
-"""
 import datetime
 
-from .date_and_time_widget import DateAndTimeWidget
+from sgtk.platform.qt import QtGui, QtCore
+from .label_base_widget import LabelBaseWidget
+from .shotgun_field_meta import ShotgunFieldMeta
 
 
-class DateWidget(DateAndTimeWidget):
+class DateWidget(LabelBaseWidget):
     """
-    Inherited from a :class:`~DateAndTimeWidget`, this class is able to
-    display a date field value as returned by the Shotgun API.
+    Display a ``date`` field value as returned by the Shotgun API.
     """
-    _FIELD_TYPE = "date"
+    __metaclass__ = ShotgunFieldMeta
+    _DISPLAY_TYPE = "date"
+
+    def _create_human_readable_date(self, date):
+        """
+        Return the time represented by the argument as a string where the date portion is
+        displayed as "Yesterday", "Today", or "Tomorrow" if appropriate.
+
+        :param date: The date convert to a string
+        :type date: :class:`datetime.date`
+
+        :returns: A String representing date appropriate for display
+        """
+
+        # get the delta and components
+        delta = datetime.date.today() - date
+
+        if delta.days == 1:
+            date_str = "Yesterday"
+        elif delta.days == 0:
+            date_str = "Today"
+        elif delta.days == -1:
+            date_str = "Tomorrow"
+        else:
+            # use the date formatting associated with the current locale
+            date_str = date.strftime("%x")
+
+        return date_str
+
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        self.setText(self._string_value(value))
+        self.setToolTip(self._tooltip_value(value))
+
+    def _ensure_date(self, value):
+        """
+        Ensures the supplied value is a python date object.
+        """
+        if not isinstance(value, datetime.date):
+            value = datetime.datetime.strptime(value, "%Y-%m-%d").date()
+        return value
 
     def _string_value(self, value):
         """
@@ -30,5 +72,78 @@ class DateWidget(DateAndTimeWidget):
         :param value: The value to convert into a string
         :type value: A String representing the date in YYYY-MM-DD form
         """
-        dt = datetime.datetime.strptime(value, "%Y-%m-%d")
-        return self._create_human_readable_timestamp(dt)
+        value = self._ensure_date(value)
+        return self._create_human_readable_date(value)
+
+    def _tooltip_value(self, value):
+        """
+        Convert the Shotgun value for this field into a tooltip string
+
+        :param value: The value to convert into a string
+        :type value: A String representing the date in YYYY-MM-DD form
+        """
+        value = self._ensure_date(value)
+        return value.strftime("%x")
+
+class DateEditorWidget(QtGui.QDateEdit):
+    """
+    Allows editing of a ``date`` field value as returned by the Shotgun API.
+
+    Pressing ``Enter`` or ``Return`` when the widget has focus will cause the
+    value to be applied and the ``value_changed`` signal to be emitted.
+    """
+    __metaclass__ = ShotgunFieldMeta
+    _EDITOR_TYPE = "date"
+
+    def get_value(self):
+        """
+        :return: The internal value being displayed by the widget.
+        """
+        value = self.date()
+
+        if hasattr(QtCore, "QVariant"):
+            # pyqt
+            return value.toPyDate()
+        else:
+            # pyside
+            return value.toPython()
+
+    def keyPressEvent(self, event):
+        """
+        Provides shortcuts for applying modified values.
+
+        :param event: The key press event object
+        :type event: :class:`~PySide.QtGui.QKeyEvent`
+        """
+        if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
+            self.value_changed.emit()
+        else:
+            super(DateEditorWidget, self).keyPressEvent(event)
+
+    def setup_widget(self):
+        """
+        Prepare the widget for display.
+
+        Called by the metaclass during initialization.
+        """
+        self.setCalendarPopup(True)
+        self.setMinimumWidth(100)
+
+    def _display_default(self):
+        """
+        Display the default value of the widget.
+        """
+        self.clear()
+
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        # shotgun_model converts datetimes to floats representing unix time so
+        # handle that as a valid value as well
+        if not isinstance(value, datetime.date):
+            value = datetime.datetime.strptime(value, "%Y-%m-%d")
+        self.setDate(value)
+

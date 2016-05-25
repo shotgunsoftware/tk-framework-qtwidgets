@@ -67,26 +67,26 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
         :param style_options: QT style options
         """
         # note: local import to avoid cyclic dependencies        
-        from .global_search_widget import GlobalSearchWidget
+        from .global_search_completer import GlobalSearchCompleter
         
-        mode = shotgun_model.get_sanitized_data(model_index, GlobalSearchWidget.MODE_ROLE)
+        mode = shotgun_model.get_sanitized_data(model_index, GlobalSearchCompleter.MODE_ROLE)
         
-        if mode == GlobalSearchWidget.MODE_LOADING:
+        if mode == GlobalSearchCompleter.MODE_LOADING:
             widget.set_text("Hold on, loading search results...")
             widget.set_thumbnail(None)
         
-        elif mode == GlobalSearchWidget.MODE_NOT_FOUND:
+        elif mode == GlobalSearchCompleter.MODE_NOT_FOUND:
             widget.set_text("Sorry, no matches found!")
             widget.set_thumbnail(None)
             
-        elif mode == GlobalSearchWidget.MODE_RESULT:
+        elif mode == GlobalSearchCompleter.MODE_RESULT:
 
             icon = shotgun_model.get_sanitized_data(model_index, QtCore.Qt.DecorationRole)
             if icon:
                 thumb = icon.pixmap(512)
                 widget.set_thumbnail(thumb)
 
-            data = shotgun_model.get_sanitized_data(model_index, GlobalSearchWidget.SG_DATA_ROLE)
+            data = shotgun_model.get_sanitized_data(model_index, GlobalSearchCompleter.SG_DATA_ROLE)
             # Example of data stored in the data role:
             # {'status': 'vwd', 
             #  'name': 'bunny_010_0050_comp_v001', 
