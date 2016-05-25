@@ -48,6 +48,23 @@ class DateWidget(LabelBaseWidget):
 
         return date_str
 
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        self.setText(self._string_value(value))
+        self.setToolTip(self._tooltip_value(value))
+
+    def _ensure_date(self, value):
+        """
+        Ensures the supplied value is a python date object.
+        """
+        if not isinstance(value, datetime.date):
+            value = datetime.datetime.strptime(value, "%Y-%m-%d").date()
+        return value
+
     def _string_value(self, value):
         """
         Convert the Shotgun value for this field into a string
@@ -55,10 +72,18 @@ class DateWidget(LabelBaseWidget):
         :param value: The value to convert into a string
         :type value: A String representing the date in YYYY-MM-DD form
         """
-        if not isinstance(value, datetime.date):
-            value = datetime.datetime.strptime(value, "%Y-%m-%d").date()
+        value = self._ensure_date(value)
         return self._create_human_readable_date(value)
 
+    def _tooltip_value(self, value):
+        """
+        Convert the Shotgun value for this field into a tooltip string
+
+        :param value: The value to convert into a string
+        :type value: A String representing the date in YYYY-MM-DD form
+        """
+        value = self._ensure_date(value)
+        return value.strftime("%x")
 
 class DateEditorWidget(QtGui.QDateEdit):
     """

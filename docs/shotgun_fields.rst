@@ -200,7 +200,7 @@ Footage
 .. autoclass:: FootageEditorWidget
     :show-inheritance:
     :members:
-    :exclude-members: setup_widget
+    :exclude-members: keyPressEvent, setup_widget
 
 ----
 
@@ -590,3 +590,4 @@ TODOs & Known Issues
 - Retrieving reliable field delegates from the field manager is in progress
 - Editor interaction with the shotgun model is still to come
 - shotgun model to auto update SG on changes still to come
+- shotgun tableview using fields widgets still in progress

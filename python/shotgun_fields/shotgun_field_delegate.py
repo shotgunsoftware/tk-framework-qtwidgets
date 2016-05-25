@@ -54,11 +54,11 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         :rtype:         :class:`~PySide.QtGui.QWidget`
         """
         widget = self._display_class(
+            parent=parent,
             entity_type=self._entity_type,
             field_name=self._field_name,
             bg_task_manager=self._bg_task_manager,
         )
-        widget.setParent(parent)
         return widget
 
     def _create_editor_widget(self, model_index, style_options, parent):
@@ -79,11 +79,11 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
             return None
 
         widget = self._editor_class(
+            parent=parent,
             entity_type=self._entity_type,
             field_name=self._field_name,
             bg_task_manager=self._bg_task_manager,
         )
-        widget.setParent(parent)
         return widget
 
     def _on_before_paint(self, widget, model_index, style_options):
@@ -111,9 +111,8 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         widget.set_value(sanitized_value)
 
     def setModelData(self, editor, model, index):
-        pass
-        #print "setModelData: %s" % editor.get_value()
+        return editor.get_value()
 
     def editorEvent(self, event, model, option, index):
-        # print "EDITOR EVENT: %s" % event
+        print "EDITOR EVENT: %s" % event
         return True

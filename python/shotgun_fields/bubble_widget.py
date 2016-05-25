@@ -50,7 +50,8 @@ class BubbleWidget(QtGui.QFrame):
                 border: 1px solid black;
                 border-radius: 5px;
                 background-color: %s;
-            } """ % self.palette().color(QtGui.QPalette.Button).name()
+            }
+            """ % self.palette().color(QtGui.QPalette.Button).name()
         )
 
 

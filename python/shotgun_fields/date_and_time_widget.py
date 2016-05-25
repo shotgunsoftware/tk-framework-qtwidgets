@@ -54,6 +54,26 @@ class DateAndTimeWidget(LabelBaseWidget):
         time_str = dt.strftime(format)
         return time_str
 
+    def _display_value(self, value):
+        """
+        Set the value displayed by the widget.
+
+        :param value: The value returned by the Shotgun API to be displayed
+        """
+        self.setText(self._string_value(value))
+        self.setToolTip(self._tooltip_value(value, postfix=" %I:%M%p"))
+
+    def _ensure_datetime(self, value):
+        """
+        Ensures the supplied value is a python datetime object.
+        """
+
+        # shotgun_model converts datetimes to floats representing unix time so
+        # handle that as a valid value as well
+        if not isinstance(value, datetime.datetime):
+            value = datetime.datetime.fromtimestamp(value)
+        return value
+
     def _string_value(self, value):
         """
         Convert the Shotgun value for this field into a string
@@ -61,11 +81,7 @@ class DateAndTimeWidget(LabelBaseWidget):
         :param value: The value to convert into a string
         :type value: :class:`datetime.datetime` or a float representing unix time
         """
-
-        # shotgun_model converts datetimes to floats representing unix time so
-        # handle that as a valid value as well
-        if not isinstance(value, datetime.datetime):
-            value = datetime.datetime.fromtimestamp(value)
+        value = self._ensure_datetime(value)
 
         # return a human readable time format. The postfix formatter used here
         # is '%I:%M%p' which is:
@@ -75,7 +91,17 @@ class DateAndTimeWidget(LabelBaseWidget):
         #   %p = Locale's equivalent of either AM or PM
         #
         # resulting in a value like: 01:37AM
-        return self._create_human_readable_timestamp(value, " %I:%M%p")
+        return self._create_human_readable_timestamp(value, postfix=" %I:%M%p")
+
+    def _tooltip_value(self, value, postfix=""):
+        """
+        Convert the Shotgun value for this field into a tooltip string
+
+        :param value: The value to convert into a string
+        :type value: :class:`datetime.datetime` or a float representing unix time
+        """
+        value = self._ensure_datetime(value)
+        return value.strftime("%x" + postfix)
 
 
 class DateAndTimeEditorWidget(QtGui.QDateTimeEdit):

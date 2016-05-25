@@ -157,6 +157,11 @@ class ShotgunFieldManager(QtCore.QObject):
         :returns: A :class:`ShotgunFieldDelegate` configured to represent the given field
         """
         display_class = self.get_class(sg_entity_type, field_name)
+
+        if not display_class:
+            from .label_base_widget import LabelBaseWidget
+            display_class = LabelBaseWidget
+
         editor_class = self.get_class(sg_entity_type, field_name, self.EDITOR)
         return ShotgunFieldDelegate(
             sg_entity_type,
@@ -508,8 +513,8 @@ from . import (
 
 # TODO: wait to register timecode field until the fps associated with this field
 #  is available from the API
-# from . import timecode_widget
+from . import timecode_widget
 
 # TODO: wait to register duration field until display options for hours versus
 # days and of hours in a day are available to the API
-# from . import duration_widget
+from . import duration_widget

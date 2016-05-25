@@ -39,6 +39,18 @@ class FootageEditorWidget(QtGui.QLineEdit):
         """
         return self.validator().fixup(self.text())
 
+    def keyPressEvent(self, event):
+        """
+        Provides shortcuts for applying modified values.
+
+        :param event: The key press event object
+        :type event: :class:`~PySide.QtGui.QKeyEvent`
+        """
+        if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
+            self.value_changed.emit()
+        else:
+            super(FootageEditorWidget, self).keyPressEvent(event)
+
     def setup_widget(self):
         """
         Prepare the widget for display.
@@ -96,7 +108,7 @@ class _FootageInputValidator(QtGui.QValidator):
         """
         try:
             # translate the input into feet & frames
-            (feet, frames) = self._get_feet_frames(input)
+            (feet, frames) = self._get_feet_frames(input_str)
             input_str = "%d-%02d" % (feet, frames)
         except ValueError:
             pass

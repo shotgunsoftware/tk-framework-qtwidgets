@@ -51,7 +51,7 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
             lambda: self.setCurrentWidget(self._display))
 
         ## TODO: insert backend update here (don't immediately apply the value)
-        #self._editor.edit_widget.value_changed.connect(self._apply_value)
+        self._editor.edit_widget.value_changed.connect(self._apply_value)
 
         # TODO: forward value_changed signal
 
@@ -69,13 +69,13 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         """
         return self.currentWidget().sizeHint()
 
-    #def _apply_value(self):
-    #    #"""
-    #    Apply the editor's current value to the display widget and finish editing.
-    #    """
-    #    new_value = self._editor.edit_widget.get_value()
-    #    self._display.display_widget.set_value(new_value)
-    #    self.setCurrentWidget(self._display)
+    def _apply_value(self):
+        """
+        Apply the editor's current value to the display widget and finish editing.
+        """
+        new_value = self._editor.edit_widget.get_value()
+        self._display.display_widget.set_value(new_value)
+        self.setCurrentWidget(self._display)
 
     def _on_current_changed(self, index):
         """
