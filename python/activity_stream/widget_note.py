@@ -51,7 +51,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._attachment_group_widgets = {}
                 
         # make sure clicks propagate upwards in the hierarchy
-        self.ui.links.linkActivated.connect(self._entity_request_from_url)
+        # self.ui.links.linkActivated.connect(self._entity_request_from_url)
         self.ui.content.linkActivated.connect(self._entity_request_from_url)
         self.ui.header_left.linkActivated.connect(self._entity_request_from_url)    
         self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))    
@@ -187,9 +187,10 @@ class NoteWidget(ActivityStreamBaseWidget):
         html_chunks = []
         for link in links:
             entity_type_display_name = shotgun_globals.get_type_display_name(link["type"])
+ 
             chunk = """
-                <tr><td bgcolor=#666666>
-                    <a href='%s:%s' style='text-decoration: none; color: #dddddd'>%s <b>%s</b></a>
+                <tr><td bgcolor=#AA6666>
+                    <a href='%s:%s' style='text-decoration: none; color: #ddddff'>%s %s</a>
                 </td></tr>
                 """ % (link["type"], link["id"], entity_type_display_name, link["name"])
             html_chunks.append(chunk)
@@ -217,18 +218,25 @@ class NoteWidget(ActivityStreamBaseWidget):
         entity_url = self._generate_entity_url(data["user"], 
                                                this_syntax=False,
                                                display_type=False)        
-        self.ui.header_left.setText("<big>%s</big>" % entity_url)
+        self.ui.header_left.setText("%s" % entity_url)
         
         # top right is the date of the note (rather than 
         # date of activity)
         self._set_timestamp(data, self.ui.date)
         
-        # set the main note text
-        self.ui.content.setText(data["content"])
+        # Set the main note text. For this, and for the note links and
+        # task keys below, we are treating it with kids gloves to make
+        # sure that we don't end up raising a KeyError in a way that
+        # makes it to the user. This is due to the possibility of having
+        # a malformed Cut entity in Shotgun and SHOULD be handled at a
+        # higher level than this widget, but we're still going to be
+        # careful here, because we saw this bug crop up during Cut Support
+        # QA.
+        self.ui.content.setText(data.get("content", ""))
         
         # format note links        
-        html_link_box_data = data["note_links"] + data["tasks"]
+        html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
         links_html = self.__generate_note_links_table(html_link_box_data)
 
-        self.ui.links.setText(links_html)
+        # self.ui.links.setText(links_html)
 

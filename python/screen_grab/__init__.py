@@ -9,4 +9,11 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 
-from .screen_grab import get_desktop_pixmap, screen_capture, screen_capture_file
+from .screen_grab import (
+    ScreenGrabber,
+    get_desktop_pixmap,
+    screen_capture,
+    screen_capture_file
+)
+
+

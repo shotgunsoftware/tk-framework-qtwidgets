@@ -370,7 +370,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                                         "thumbnail_type": self.THUMBNAIL_CREATED_BY}
 
             else:
-                self._bundle.log_warning("No thumbnail found for this note!")
+                self._bundle.log_debug("No thumbnail found for this note!")
             
         elif created_by and created_by.get("image") and self._sg_data_retriever:
             # for all other activities, the thumbnail reflects who
@@ -404,7 +404,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         Returns a handle that must be closed.
         """
         connection = sqlite3.connect(self._cache_path)
-        
+
         # this is to handle unicode properly - make sure that sqlite returns 
         # str objects for TEXT fields rather than unicode. Note that any unicode
         # objects that are passed into the database will be automatically

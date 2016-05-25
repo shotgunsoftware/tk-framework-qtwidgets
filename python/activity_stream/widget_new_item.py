@@ -35,6 +35,7 @@ class NewItemWidget(ActivityStreamBaseWidget):
         # now load in the UI that was created in the UI designer
         self.ui = Ui_NewItemWidget() 
         self.ui.setupUi(self)
+        self._interactive = True
         
         # thumbnails are hidden by default, only to appear
         # for created objects that have them set 
@@ -43,10 +44,34 @@ class NewItemWidget(ActivityStreamBaseWidget):
         # make sure that click on hyperlinks bubble up
         self.ui.footer.linkActivated.connect(self._entity_request_from_url)
         self.ui.header_left.linkActivated.connect(self._entity_request_from_url)
-        
-        self.ui.details_thumb.playback_clicked.connect(lambda sg_data: self.playback_requested.emit(sg_data))
-        
-        self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))
+        self.ui.details_thumb.playback_clicked.connect(
+            lambda sg_data: self.playback_requested.emit(sg_data)
+        )
+        self.ui.user_thumb.entity_requested.connect(
+            lambda entity_type, entity_id: self.entity_requested.emit(
+                entity_type,
+                entity_id,
+            )
+        )
+
+    ##############################################################################
+    # properties
+
+    def _get_interactive(self):
+        """
+        Whether the new item label is interactive, showing a play icon.
+        """
+        return self._interactive
+
+    def _set_interactive(self, state):
+        self._interactive = bool(state)
+        self.ui.details_thumb.interactive = self._interactive
+
+    interactive = QtCore.Property(
+        bool,
+        _get_interactive,
+        _set_interactive,
+    )
         
     ##############################################################################
     # public interface

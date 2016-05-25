@@ -9,6 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import os
+import os.path
 import sgtk
 import tempfile
 
@@ -32,20 +33,31 @@ class NoteInputWidget(QtGui.QWidget):
         replied to. 
     :signal close_clicked: Emitted if a user chooses to cancel the note 
         creation by clicking the X button.
+    :signal entity_created: Emitted when a Shotgun entity is created, which
+        will be either a Note or Reply entity, depending on situation. The
+        entity dictionary, as provided by the API, will be sent.
     """
     
     _EDITOR_WIDGET_INDEX = 0
     _NEW_NOTE_WIDGET_INDEX = 1
+    _ATTACHMENTS_WIDGET_INDEX = 2
     
     # emitted when shotgun has been updated
     data_updated = QtCore.Signal()
     close_clicked = QtCore.Signal()
+
+    # Emitted when a Note or Reply entity is created. The
+    # entity type as a string and id as an int will be
+    # provided.
+    #
+    # dict(entity_type="Note", id=1234)
+    entity_created = QtCore.Signal(object)
     
     
     def __init__(self, parent):
         """
-        :param parent:   The parent QWidget for this control
-        :type parent:    :class:`~PySide.QtGui.QWidget`
+        :param parent:              The parent QWidget for this control
+        :type parent:               :class:`~PySide.QtGui.QWidget`
         """
         # first, call the base class and let it do its thing.
         QtGui.QWidget.__init__(self, parent)
@@ -66,6 +78,8 @@ class NoteInputWidget(QtGui.QWidget):
         self._entity_type = None        # current associated entity
         self._entity_id = None        # current associated entity 
         self._pixmap = None             # 
+        self._attachments = []
+        self._cleanup_after_upload = []
 
         # set up an overlay that spins when note is submitted
         self.__overlay = SmallOverlayWidget(self)
@@ -78,6 +92,11 @@ class NoteInputWidget(QtGui.QWidget):
         self.ui.submit.clicked.connect(self._submit)
         self.ui.close.clicked.connect(self._cancel)
         self.ui.close.clicked.connect(self.close_clicked)
+        self.ui.attach.clicked.connect(self.open_attachments)
+        self.ui.add_attachments.clicked.connect(self._apply_attachments)
+        self.ui.close_attachments.clicked.connect(self._cancel_attachments)
+        self.ui.add_button.clicked.connect(self._add_attachments)
+        self.ui.remove_button.clicked.connect(self._remove_selected_attachments)
 
         # reset state of the UI
         self.clear()
@@ -95,6 +114,7 @@ class NoteInputWidget(QtGui.QWidget):
             self.__sg_data_retriever.stop()
             self.__sg_data_retriever = None
         
+
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
@@ -124,6 +144,48 @@ class NoteInputWidget(QtGui.QWidget):
         """
         self.open_editor()
 
+    def _add_attachments(self):
+        """
+        Allows the user to browse for files to attach to the Note
+        entity.
+        """
+        file_paths = QtGui.QFileDialog.getOpenFileNames(
+            self,
+            "Select files to attach.",
+        )
+
+        self.add_files_to_attachments(file_paths[0])
+
+    def _remove_selected_attachments(self):
+        """
+        Removes the selected attachments.
+        """
+        for item in self.ui.attachment_list_tree.selectedItems():
+            self.ui.attachment_list_tree.takeTopLevelItem(
+                self.ui.attachment_list_tree.indexOfTopLevelItem(item)
+            )
+
+    def _apply_attachments(self):
+        """
+        Updates the list of file attachments for the Note based
+        on the list of items provided by the user.
+        """
+        self._attachments = []
+
+        for index in range(self.ui.attachment_list_tree.topLevelItemCount()):
+            item = self.ui.attachment_list_tree.topLevelItem(index)
+            file_path = item.text(0)
+            self._attachments.append(file_path)
+
+        self.open_editor()
+
+    def _cancel_attachments(self):
+        """
+        Cancel file attachment and revert to note editing.
+        """
+        self.ui.attachment_list_tree.clear()
+        self.open_editor()
+
     def _cancel(self):
         """
         Cancel editing, no questions asked 
@@ -141,16 +203,18 @@ class NoteInputWidget(QtGui.QWidget):
         if self._pixmap is None:
             # no pixmap exists - screengrab mode
             self._bundle.log_debug("Prompting for screenshot...")
-            self._pixmap = screen_grab.screen_capture()
-            self._bundle.log_debug("Got screenshot %sx%s" % (self._pixmap.width(), 
-                                                          self._pixmap.height()))
+            pixmap = screen_grab.ScreenGrabber.screen_capture()
+
+            # It's possible that there's custom screencapture logic
+            # happening and we won't get a pixmap back right away.
+            # A good example of this is something like RV, which
+            # will handle screenshots itself and provide back the
+            # image asynchronously.
+            if pixmap:
+                self._bundle.log_debug("Got screenshot %sx%s" % (pixmap.width(), 
+                                                                 pixmap.height()))
+                self._set_screenshot_pixmap(pixmap)
             
-            thumb = self.__format_thumbnail(self._pixmap)
-            self.ui.thumbnail.setPixmap(thumb)
-            self.ui.thumbnail.show()
-            # turn the button into a delete screenshot button
-            self.ui.screenshot.setIcon(self._trash_icon)
-            self.ui.screenshot.setToolTip("Remove Screenshot")
         
         else:
             # there is a screenshot - that means the user clicked the trash bit 
@@ -160,6 +224,23 @@ class NoteInputWidget(QtGui.QWidget):
             # turn the button into a screenshot button
             self.ui.screenshot.setIcon(self._camera_icon)
             self.ui.screenshot.setToolTip("Take Screenshot")
+
+
+    def _set_screenshot_pixmap(self, pixmap):
+        """
+        Takes the given QPixmap and sets it to be the thumbnail
+        image of the note input widget.
+
+        :param pixmap:  A QPixmap object containing the screenshot image.
+        """
+        self._pixmap = pixmap
+        thumb = self.__format_thumbnail(pixmap)
+        self.ui.thumbnail.setPixmap(thumb)
+        self.ui.thumbnail.show()
+
+        # turn the button into a delete screenshot button
+        self.ui.screenshot.setIcon(self._trash_icon)
+        self.ui.screenshot.setToolTip("Remove Screenshot")
         
         
     def _submit(self):
@@ -186,6 +267,8 @@ class NoteInputWidget(QtGui.QWidget):
         data["recipient_links"] = self.ui.text_entry.get_recipient_links()
         data["entity"] = {"id": self._entity_id, "type": self._entity_type }
         data["project"] = self._bundle.context.project
+        data["attachments"] = self._attachments
+
         # ask the data retriever to execute an async callback
         if self.__sg_data_retriever:
             self._processing_id = self.__sg_data_retriever.execute_method(self._async_submit, data)
@@ -211,13 +294,19 @@ class NoteInputWidget(QtGui.QWidget):
         
     def _async_submit_reply(self, sg, data):
         """
-        Create a new reply
+        Provides functionality for creating a new Reply entity
+        asynchronously by providing a signature that is friendly
+        for use with :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`.
+
+        :param sg:      A Shotgun API handle.
+        :param data:    A dictionary as created by :meth:`NoteInputWidget._submit`
+
+        :returns:       A Shotgun entity dictionary for the Reply that was created.
         """
-        
         note_link = data["entity"]
         
         # this is an entity - so create a note and link it
-        sg.create("Reply", {"content": data["text"], "entity": note_link})
+        sg_reply_data = sg.create("Reply", {"content": data["text"], "entity": note_link})
 
         # if there are any recipients, make sure they are added to the note
         # but as CCs
@@ -232,11 +321,22 @@ class NoteInputWidget(QtGui.QWidget):
                       note_link["id"], 
                       {"addressings_cc": updated_links})
             
-            
-        self.__upload_thumbnail(note_link, sg, data)        
-                
+        self.__upload_thumbnail(note_link, sg, data)
+        self.__upload_attachments(note_link, sg, data)
+
+        return sg_reply_data
         
     def _async_submit_note(self, sg, data):
+        """
+        Provides functionality for creating a new Note entity
+        asynchronously by providing a signature that is friendly
+        for use with :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`.
+
+        :param sg:      A Shotgun API handle.
+        :param data:    A dictionary as created by :meth:`NoteInputWidget._submit`
+
+        :returns:       A Shotgun entity dictionary for the Note that was created.
+        """
         # note - no logging in here, as I am not sure how all 
         # engines currently react to log_debug() async.
         
@@ -284,7 +384,7 @@ class NoteInputWidget(QtGui.QWidget):
             # if the version has a task, link the task to the note too.  
             sg_version = sg.find_one("Version", 
                                      [["id", "is", entity_link["id"] ]], 
-                                     ["entity", "sg_task", "cached_display_name"])
+                                     ["entity", "sg_task", "cached_display_name", "project"])
             
             # first make a std sg link to the current entity - this to ensure we have a name key present
             note_links += [{"id": entity_link["id"], 
@@ -297,17 +397,27 @@ class NoteInputWidget(QtGui.QWidget):
             
             if sg_version["sg_task"]:
                 note_tasks += [sg_version["sg_task"]]
+
+            # If we weren't able to get a project ID from the context, then
+            # we know we can get it from the Version entity itself.
+            if not project and sg_version["project"]:
+                project = sg_version["project"]
             
         elif entity_link["type"] == "Task":
             # if we are adding a note to a task, link the note to the entity that is linked to the
             # task. The link the task to the note via the task link.
             sg_task = sg.find_one("Task", 
                                   [["id", "is", entity_link["id"] ]], 
-                                  ["entity"])
+                                  ["entity", "project"])
             
             if sg_task["entity"]:
                 # there is an entity link from this task
                 note_links += [sg_task["entity"]]
+
+            # If we didn't get a project ID from the context, then we know we
+            # can get one from the Task entity.
+            if not project and sg_task["project"]:
+                project = sg_task["project"]
             
             # lastly, link the note's task link to this task            
             note_tasks += [entity_link]
@@ -360,7 +470,51 @@ class NoteInputWidget(QtGui.QWidget):
                                           "tasks": note_tasks })
         
         self.__upload_thumbnail(sg_note_data, sg, data)
-        
+        self.__upload_attachments(sg_note_data, sg, data)
+
+        return sg_note_data
+
+    def __upload_attachments(self, parent_entity, sg, data):
+        """
+        Uploads any generic file attachments to Shotgun, parenting
+        them to the Note entity.
+
+        :param parent_entity:   The Note entity to attach the files to in SG.
+        :param sg:              A Shotgun API handle.
+        :param data:            The data dict containing an "attachments" key
+                                housing a list of file paths to attach.
+        """
+        for file_path in data.get("attachments", []):
+            if os.path.exists(file_path):
+                self.__upload_file(file_path, parent_entity, sg)
+            else:
+                self._bundle.log_warning(
+                    "File does not exist and will not be uploaded: %s" % file_path
+                )
+
+
+    def __upload_file(self, file_path, parent_entity, sg):
+        """
+        Uploads any generic file attachments to Shotgun, parenting
+        them to the Note entity.
+
+        :param file_path:       The path to the file to upload to SG.
+        :param parent_entity:   The Note entity to attach the files to in SG.
+        :param sg:              A Shotgun API handle.
+        """
+        self._bundle.log_debug(
+            "Uploading attachments (%s bytes)..." % os.path.getsize(file_path)
+        )
+        sg.upload(parent_entity["type"], parent_entity["id"], str(file_path))
+        self._bundle.log_debug("Upload complete!")
+
+        if file_path in self._cleanup_after_upload:
+            self._bundle.log_debug("Cleanup requested post upload: %s" % file_path)
+            try:
+                os.remove(file_path)
+            except Exception:
+                self._bundle.log_warning("Unable to remove file: %s" % file_path)
+
         
     def __upload_thumbnail(self, parent_entity, sg, data):
         
@@ -375,10 +529,9 @@ class NoteInputWidget(QtGui.QWidget):
             
             # create file entity and upload file
             if os.path.exists(png_path):
-                self._bundle.log_debug("Uploading attachment (%s bytes)..." % os.path.getsize(png_path))
-                sg.upload(parent_entity["type"], parent_entity["id"], png_path)
-                self._bundle.log_debug("Upload complete!")            
+                self.__upload_file(png_path, parent_entity, sg)           
                 os.remove(png_path)
+
         
     def __on_worker_failure(self, uid, msg):
         """
@@ -415,6 +568,7 @@ class NoteInputWidget(QtGui.QWidget):
             self.clear()
             self._bundle.log_debug("Update call complete! Return data: %s" % data)
             self.data_updated.emit()
+            self.entity_created.emit(data["return_value"])
             
         
     def __format_thumbnail(self, pixmap_obj):
@@ -480,6 +634,59 @@ class NoteInputWidget(QtGui.QWidget):
         
     ###########################################################################
     # public interface
+
+    def add_files_to_attachments(self, file_paths, cleanup_after_upload=False, apply_attachments=False):
+        """
+        Adds the given list of file paths to the attachments list.
+
+        :param file_paths:              A list of file paths to attach.
+        :param cleanup_after_upload:    If True, the given files will be
+                                        removed once they are uploaded to
+                                        Shotgun.
+        :param apply_attachments:       If True, files added to the attachments
+                                        list will be applied and ready for upload.
+                                        This is normally handled by the "check"
+                                        button when accepting user-added files, but
+                                        if this method is used to procedurally add
+                                        attachments then this option must be used to
+                                        ensure that the files end up attached to the
+                                        Note when it is created.
+        """
+        for file_path in file_paths:
+            self.ui.attachment_list_tree.addTopLevelItem(
+                QtGui.QTreeWidgetItem([file_path])
+            )
+
+        if cleanup_after_upload:
+            self._cleanup_after_upload.extend(file_paths)
+
+        if apply_attachments:
+            self._attachments.extend([os.path.normpath(f) for f in file_paths])
+
+    def allow_screenshots(self, state):
+        """
+        Allows or disallows screenshots.
+
+        :param state: Allow or disallow screenshots.
+        :type  state: :class:`Boolean`
+        """
+        self.ui.screenshot.setVisible(bool(state))
+
+    def open_attachments(self):
+        """
+        Sets the attachments editor into its "open mode" which will
+        allow the user to attach files to the note.
+        """
+        self.ui.attachment_list_tree.clear()
+
+        for file_path in self._attachments:
+            self.ui.attachment_list_tree.addTopLevelItem(
+                QtGui.QTreeWidgetItem([file_path])
+            )
+
+        self.ui.stacked_widget.setCurrentIndex(self._ATTACHMENTS_WIDGET_INDEX)
+        self._adjust_ui()
+        self._add_attachments()
         
     def open_editor(self):
         """
@@ -502,6 +709,10 @@ class NoteInputWidget(QtGui.QWidget):
         elif self.ui.stacked_widget.currentIndex() == self._EDITOR_WIDGET_INDEX:
             self.setMinimumSize(QtCore.QSize(0, 120))
             self.setMaximumSize(QtCore.QSize(16777215, 120))
+
+        elif self.ui.stacked_widget.currentIndex() == self._ATTACHMENTS_WIDGET_INDEX:
+            self.setMinimumSize(QtCore.QSize(0, 120))
+            self.setMaximumSize(QtCore.QSize(16777215, 120))
              
         else:
             self._bundle.log_warning("cannot adjust unknown ui mode.")             
@@ -511,6 +722,7 @@ class NoteInputWidget(QtGui.QWidget):
         Clear any input and state and return the widget to its "closed" mode.   
         """
         self.ui.text_entry.clear()
+        self.ui.attachment_list_tree.clear()
 
         self.ui.stacked_widget.setCurrentIndex(self._NEW_NOTE_WIDGET_INDEX)
         
@@ -519,6 +731,8 @@ class NoteInputWidget(QtGui.QWidget):
         # reset data state
         self._processing_id = None
         self._pixmap = None
+        self._attachments = []
+        self._cleanup_after_upload = []
         
         # make sure the screenshot button shows the camera icon
         self.ui.thumbnail.hide()

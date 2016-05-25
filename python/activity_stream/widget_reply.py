@@ -58,6 +58,13 @@ class ReplyWidget(ActivityStreamBaseWidget):
             self.ui.user_thumb.setMaximumSize(QtCore.QSize(30, 30))
         else:
             self._bundle.log_warning("Unknown thumb style for reply")
+
+    @property
+    def note_widget(self):
+        """
+        Returns the NoteInputWidget wrapped by the ReplyDialog.
+        """
+        return self.ui.note_widget
         
     @property
     def thumbnail_url(self):
@@ -96,7 +103,7 @@ class ReplyWidget(ActivityStreamBaseWidget):
         # set standard date field
         self._set_timestamp(data, self.ui.date)
         
-        self.ui.header_left.setText("<big>%s</big>" % entity_url)
+        self.ui.header_left.setText("%s" % entity_url)
         
         self.ui.reply.setText(data["content"])
         
