@@ -60,6 +60,10 @@ class VersionDetailsWidget(QtGui.QWidget):
     # along.
     entity_created = QtCore.Signal(object)
 
+    # The int is the id of the Note entity that was selected or deselected.
+    note_selected = QtCore.Signal(int)
+    note_deselected = QtCore.Signal(int)
+
     def __init__(self, bg_task_manager, parent=None, entity=None):
         """
         Constructs a new :class:`~VersionDetailsWidget` object.
@@ -207,6 +211,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.version_info_model.data_refreshed.connect(self._version_entity_data_refreshed)
         self._task_manager.task_group_finished.connect(self.ui.entity_version_view.update)
         self._data_retriever.work_completed.connect(self.__on_worker_signal)
+        self.ui.note_stream_widget.note_selected.connect(self.note_selected.emit)
+        self.ui.note_stream_widget.note_deselected.connect(self.note_deselected.emit)
 
         # We're taking over the responsibility of handling the title bar's
         # typical responsibilities of closing the dock and managing float

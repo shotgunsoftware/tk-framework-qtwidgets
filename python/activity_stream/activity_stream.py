@@ -44,6 +44,10 @@ class ActivityStreamWidget(QtGui.QWidget):
     entity_requested = QtCore.Signal(str, int)
     playback_requested = QtCore.Signal(dict)
 
+    # The int is the Note entity id that was selected or deselected.
+    note_selected = QtCore.Signal(int)
+    note_deselected = QtCore.Signal(int)
+
     # Emitted when a Note or Reply entity is created. The
     # entity type as a string and id as an int will be
     # provided.
@@ -559,8 +563,25 @@ class ActivityStreamWidget(QtGui.QWidget):
             widget.set_info(data)
             widget.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))
             widget.playback_requested.connect(lambda sg_data: self.playback_requested.emit(sg_data))
+
+            if isinstance(widget, NoteWidget):
+                widget.selection_changed.connect(self._note_selected_changed)
                     
         return widget
+
+    def _note_selected_changed(self, selected, note_id):
+        """
+        Handles a change in selection state for a given Note entity id.
+
+        :param selected:    The new selection state of the Note.
+        :type selected:     bool
+        :param note_id:     The Note entity id.
+        :type note_id:      int
+        """
+        if selected:
+            self.note_selected.emit(note_id)
+        else:
+            self.note_deselected.emit(note_id)
         
     def _process_new_data(self, activity_ids):
         """
