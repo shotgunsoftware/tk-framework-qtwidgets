@@ -32,6 +32,8 @@ class NoteWidget(ActivityStreamBaseWidget):
     Widget that represents a Note. This widget in turn contains
     replies and attachments.
     """
+
+    selection_changed = QtCore.Signal(bool, int)
     
     def __init__(self, parent):
         """
@@ -49,12 +51,32 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._general_widgets = []
         self._reply_widgets = []
         self._attachment_group_widgets = {}
+        self._selected = False
+
+        self.set_selected(False)
                 
         # make sure clicks propagate upwards in the hierarchy
         # self.ui.links.linkActivated.connect(self._entity_request_from_url)
         self.ui.content.linkActivated.connect(self._entity_request_from_url)
         self.ui.header_left.linkActivated.connect(self._entity_request_from_url)    
-        self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))    
+        self.ui.user_thumb.entity_requested.connect(
+            lambda entity_type, entity_id: self.entity_requested.emit(
+                entity_type,
+                entity_id
+            )
+        )
+
+    ##############################################################################
+    # properties
+
+    @property
+    def selected(self):
+        """
+        Whether the widget is currently considered to be selected.
+
+        :returns:   bool
+        """
+        return self._selected
 
     ##############################################################################
     # public interface
@@ -108,10 +130,19 @@ class NoteWidget(ActivityStreamBaseWidget):
     def add_reply_button(self):
         reply_button = ClickableLabel(self)
         reply_button.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop)
+        reply_button.setSizePolicy(
+            QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum,
+                QtGui.QSizePolicy.Preferred,
+            )
+        )
+        button_layout = QtGui.QHBoxLayout()
+        self.ui.reply_layout.addLayout(button_layout)
+        button_layout.addStretch(1)
+        button_layout.addWidget(reply_button)
         reply_button.setText("Reply to this Note")
         reply_button.setObjectName("reply_button")
-        self.ui.reply_layout.addWidget(reply_button)
-        self._general_widgets.append(reply_button)
+        self._general_widgets.extend([reply_button, button_layout])
         return reply_button
 
     def get_attachment_group_widget_ids(self):
@@ -127,14 +158,11 @@ class NoteWidget(ActivityStreamBaseWidget):
         """
         Add replies and attachment widgets
         """
-        
         current_attachments = []
         attachment_is_directly_after_note = True
         
         for item in replies_and_attachments:
-            
             if item["type"] == "Reply":
-                    
                 # first, wrap up attachments
                 if len(current_attachments) > 0:                    
                     self._add_attachment_group(current_attachments, attachment_is_directly_after_note)
@@ -151,15 +179,68 @@ class NoteWidget(ActivityStreamBaseWidget):
                 # (this affects the visual style) 
                 attachment_is_directly_after_note = False
 
-                
-                
             if item["type"] == "Attachment" and item["this_file"]["link_type"] == "upload":
                 current_attachments.append(item)
-        
+
         # see if there are still open attachments
         if len(current_attachments) > 0:                    
             self._add_attachment_group(current_attachments, attachment_is_directly_after_note)
-            current_attachments = []                                
+            current_attachments = []
+
+    def set_selected(self, state):
+        """
+        Sets the selection state of the widget.
+
+        :param state:   Whether the widget is to be selected or deselected.
+        :type state:    bool
+        """
+        if bool(state) == self.selected:
+            return
+
+        self._selected = bool(state)
+
+        if self.selected:
+            color = self.palette().color(
+                QtGui.QPalette.Normal,
+                QtGui.QPalette.Highlight
+            )
+            self.setStyleSheet(
+                "#frame { border: 1px solid rgb(%s,%s,%s) }" % (
+                    color.red(),
+                    color.green(),
+                    color.blue()
+                )
+            )
+        else:
+            self.setStyleSheet("#frame { border: 1px solid transparent }")
+
+        self.selection_changed.emit(self.selected, self._note_id)
+
+    def mousePressEvent(self, event):
+        """
+        Overridden method that sets widget focus on mouse press.
+
+        :param event:   The Qt event that was triggered.
+        """
+        self.setFocus()
+
+    def focusInEvent(self, event):
+        """
+        Overridden method that triggers a styling change when the
+        widget comes into focus.
+
+        :param event:   The Qt event that was triggered.
+        """
+        self.set_selected(True)
+
+    def focusOutEvent(self, event):
+        """
+        Overridden method that triggers a styling change when the
+        widget goes out of focus.
+
+        :param event:   The Qt event that was triggered.
+        """
+        self.set_selected(False)
         
     def _add_attachment_group(self, attachments, after_note):
         """
