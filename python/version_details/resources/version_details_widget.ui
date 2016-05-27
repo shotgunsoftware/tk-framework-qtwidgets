@@ -13,9 +13,12 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_17">
    <property name="spacing">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>5</number>
@@ -31,6 +34,12 @@
    </property>
    <item>
     <widget class="QFrame" name="details_title_bar">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>13</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -151,6 +160,9 @@
         <widget class="QTabWidget" name="entity_tab_widget">
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QTabWidget::tab-bar { alignment: center }</string>
          </property>
          <property name="currentIndex">
           <number>0</number>
@@ -354,6 +366,9 @@
              </item>
              <item>
               <widget class="QToolButton" name="more_info_button">
+               <property name="styleSheet">
+                <string notr="true">QToolButton { border: none; background: transparent; }</string>
+               </property>
                <property name="text">
                 <string>More info</string>
                </property>
@@ -370,6 +385,9 @@
              </item>
              <item>
               <widget class="QToolButton" name="more_fields_button">
+               <property name="styleSheet">
+                <string notr="true">QToolButton { border: none; background: transparent; }</string>
+               </property>
                <property name="text">
                 <string>Fields...</string>
                </property>
@@ -407,6 +425,9 @@
                <horstretch>0</horstretch>
                <verstretch>1</verstretch>
               </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">* { background: transparent }</string>
              </property>
             </widget>
            </item>
@@ -456,6 +477,9 @@
                   </property>
                   <item>
                    <widget class="QToolButton" name="version_fields_button">
+                    <property name="styleSheet">
+                     <string notr="true">QToolButton { border: none; background: transparent; }</string>
+                    </property>
                     <property name="text">
                      <string>Fields</string>
                     </property>
@@ -504,6 +528,9 @@
                   </property>
                   <item>
                    <widget class="QToolButton" name="version_sort_button">
+                    <property name="styleSheet">
+                     <string notr="true">QToolButton { border: none; background: transparent; }</string>
+                    </property>
                     <property name="text">
                      <string>Sort</string>
                     </property>

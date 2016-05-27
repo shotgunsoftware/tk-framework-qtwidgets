@@ -109,6 +109,10 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
         # set up a data retriever
         self._sg_data_retriever = None
+
+        # Offered as an option to rescan(), and if True will trigger
+        # a forced requery of activity stream data during rescan.
+        self._force_activity_stream_update = False
                 
         # set up defaults
         self.__reset()
@@ -217,7 +221,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         sorted_keys = sorted(self._activity_data.keys())
         return sorted_keys
 
-    def rescan(self):
+    def rescan(self, force_activity_stream_update=False):
         """
         Check for updates asynchronously.
         """
@@ -247,6 +251,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                     "entity_id": self._entity_id,
                     "highest_id": highest_id
                     }
+            self._force_activity_stream_update = force_activity_stream_update
             self._processing_id = self._sg_data_retriever.execute_method(self._get_activity_stream, data)        
         
 
@@ -560,34 +565,47 @@ class ActivityStreamDataHandler(QtCore.QObject):
         """
         self._bundle.log_debug("Updating database with %s new events" % len(events))
         try:
-            
             for event in events:
                 activity_id = event["id"]
-                
                 payload = cPickle.dumps(event, cPickle.HIGHEST_PROTOCOL)
                 blob = sqlite3.Binary(payload)
+
                 # first insert event
-                sql = """
-                    INSERT INTO activity(activity_id, payload, created_at) 
-                    SELECT ?, ?, datetime('now')
-                    WHERE NOT EXISTS(SELECT activity_id FROM activity WHERE activity_id = ?);                
-                 """
+                if self._force_activity_stream_update:
+                    sql = """
+                        INSERT INTO activity(activity_id, payload, created_at) 
+                        SELECT ?, ?, datetime('now')             
+                    """
+                else:
+                    sql = """
+                        INSERT INTO activity(activity_id, payload, created_at) 
+                        SELECT ?, ?, datetime('now')
+                        WHERE NOT EXISTS(SELECT activity_id FROM activity WHERE activity_id = ?);                
+                     """
                 cursor.execute(sql, (activity_id, blob, activity_id))                
-                
-                # now insert entity record
-                sql = """
-                    INSERT INTO entity (entity_type, entity_id, activity_id, created_at) 
-                    SELECT ?, ?, ?, datetime('now')
-                    WHERE NOT EXISTS(SELECT entity_id FROM entity WHERE entity_type = ? and entity_id = ? and activity_id = ?);                
-                 """
+                if self._force_activity_stream_update:
+                    sql = """
+                        INSERT INTO entity (entity_type, entity_id, activity_id, created_at) 
+                        SELECT ?, ?, ?, datetime('now')               
+                     """
+                else:
+                    # now insert entity record
+                    sql = """
+                        INSERT INTO entity (entity_type, entity_id, activity_id, created_at) 
+                        SELECT ?, ?, ?, datetime('now')
+                        WHERE NOT EXISTS(SELECT entity_id FROM entity WHERE entity_type = ? and entity_id = ? and activity_id = ?);                
+                     """
+
                 cursor.execute(sql, (entity_type, entity_id, activity_id, entity_type, entity_id, activity_id)) 
-            
+
             connection.commit()
-            
         except:
             # supress and continue
             self._bundle.log_exception("Could not add activity stream data "
                                     "to cache database %s" % self._cache_path)
+        finally:
+            self._force_activity_stream_update = False
+
         self._bundle.log_debug("...update complete")
             
     @_db_connect
@@ -705,7 +723,13 @@ class ActivityStreamDataHandler(QtCore.QObject):
                           "TankPublishedFile": ["description", "image", "entity"],
                           }
          
-        sg_data = sg.activity_stream_read(entity_type, entity_id, entity_fields, min_id, limit=self.MAX_ITEMS_TO_GET_FROM_SG)
+        sg_data = sg.activity_stream_read(
+            entity_type,
+            entity_id,
+            entity_fields,
+            min_id,
+            limit=self.MAX_ITEMS_TO_GET_FROM_SG,
+        )
         
         return sg_data
     

@@ -60,7 +60,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     # along.
     entity_created = QtCore.Signal(object)
 
-    def __init__(self, bg_task_manager=None, parent=None, entity=None):
+    def __init__(self, bg_task_manager, parent=None, entity=None):
         """
         Constructs a new :class:`~VersionDetailsWidget` object.
 
@@ -104,15 +104,23 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         # These are the minimum required fields that we need
         # in order to draw all of our widgets with default settings.
-        self._fields = self._settings_manager.retrieve(
+        self._fields = [
+            "image",
+            "user",
+            "project",
+            "code",
+            "id",
+            "entity",
+            "sg_status_list",
+        ]
+
+        prefs_fields = self._settings_manager.retrieve(
             VersionDetailsWidget.FIELDS_PREFS_KEY,
-            [
-                "image",
-                "user",
-                "project",
-            ],
+            [],
             self._settings_manager.SCOPE_ENGINE,
         )
+
+        self._fields.extend([f for f in prefs_fields if f not in self._fields])
 
         # These are the fields that have been given to the info widget
         # at the top of the Notes tab. This represents all fields that
@@ -208,13 +216,6 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.float_button.clicked.connect(self._toggle_floating)
         self.ui.close_button.clicked.connect(self._hide_dock)
 
-        try:
-            self.parent().dockLocationChanged.connect(self._dock_location_changed)
-        except Exception:
-            # If we're not in a dock widget, then we shouldn't show the
-            # title bar with dock and close buttons.
-            self.show_title_bar(False)
-
         # We will be passing up our own signal when note and reply entities
         # are created.
         self.ui.note_stream_widget.entity_created.connect(
@@ -232,7 +233,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.load_data(entity)
 
         self._load_stylesheet()
-        self.show_title_bar(False)
+
+        # This will handle showing or hiding the dock title bar
+        # depending on what the parent is.
+        self.setParent(parent)
 
     ##########################################################################
     # properties
@@ -406,6 +410,24 @@ class VersionDetailsWidget(QtGui.QWidget):
             QtGui.QPixmap(image_path),
         )
 
+    def setParent(self, parent):
+        """
+        Calls the base class' method of the same name, and then checks
+        to see if the parent is a dock widget. If it is, then a custom
+        title bar is made visible.
+        """
+        super(VersionDetailsWidget, self).setParent(parent)
+
+        try:
+            self.parent().dockLocationChanged.connect(self._dock_location_changed)
+            self._dock_location_changed()
+        except Exception:
+            # If we're not in a dock widget, then we shouldn't show the
+            # title bar with dock and close buttons.
+            self.show_title_bar_buttons(False)
+        else:
+            self.show_title_bar_buttons(True)
+
     def set_pinned(self, checked):
         """
         Sets the "pinned" state of the details panel. When the panel is
@@ -419,14 +441,22 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._pinned = checked
 
         if checked:
-            self.ui.pin_button.setIcon(QtGui.QIcon(":/tk-rv-shotgunreview/tack_hover.png"))
+            self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_hover.png"))
         else:
-            self.ui.pin_button.setIcon(QtGui.QIcon(":/tk-rv-shotgunreview/tack_up.png"))
+            self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_up.png"))
             if self._requested_entity:
                 self.load_data(self._requested_entity)
 
-    def show_title_bar(self, state):
-        self.ui.details_title_bar.setVisible(state)
+    def show_title_bar_buttons(self, state):
+        """
+        Sets the visibility of the undock and close buttons in the
+        widget's title bar.
+
+        :param state:   Whether to show or hide the buttons.
+        :type state:    bool
+        """
+        self.ui.float_button.setVisible(state)
+        self.ui.close_button.setVisible(state)
 
     ##########################################################################
     # internal utilities
@@ -498,7 +528,6 @@ class VersionDetailsWidget(QtGui.QWidget):
         to display it.
         """
         entity = self._requested_entity
-
         item = self.version_info_model.item_from_entity(
             "Version",
             entity["id"],
@@ -673,7 +702,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         entity = self.current_entity or {}
         menu = EntityFieldMenu(
             "Version",
-            project_id=entity.get("project", {}).get("id"),
+            # project_id=entity.get("project", {}).get("id"),
         )
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._checked_filter)
@@ -690,7 +719,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         entity = self.current_entity or {}
         menu = EntityFieldMenu(
             "Version",
-            project_id=entity.get("project", {}).get("id"),
+            # project_id=entity.get("project", {}).get("id"),
         )
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._version_list_checked_filter)
@@ -744,7 +773,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             display_name = shotgun_globals.get_field_display_name(
                 "Version",
                 field_name,
-                project_id=entity.get("project", {}).get("id"),
+                # project_id=entity.get("project", {}).get("id"),
             )
 
             action = QtGui.QAction(display_name, self)
@@ -803,6 +832,8 @@ class VersionDetailsWidget(QtGui.QWidget):
             except Exception:
                 pass
 
+        self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
+
     def __on_worker_signal(self, uid, request_type, data):
         """
         Run when a background task completes.
@@ -828,7 +859,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Handles the dock being redocked in some location. This will
         trigger removing the default title bar.
         """
-        self.parent().setTitleBarWidget(QtGui.QWidget(self.parent().parent()))
+        self.parent().setTitleBarWidget(QtGui.QWidget(parent=self))
 
     def _hide_dock(self):
         """

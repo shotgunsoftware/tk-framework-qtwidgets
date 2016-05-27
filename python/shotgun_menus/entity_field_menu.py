@@ -199,7 +199,7 @@ class EntityFieldMenu(QtGui.QMenu):
             # need to wait until there is a schema available before populating the menu
             shotgun_globals.run_on_schema_loaded(
                 self._populate,
-                project_id=self._project_id,
+                # project_id=self._project_id,
             )
             self._initialized = True
 
@@ -211,7 +211,7 @@ class EntityFieldMenu(QtGui.QMenu):
         bubble_fields = {}
 
         # gather needed field info
-        for field in shotgun_globals.get_entity_fields(self._sg_entity_type, project_id=self._project_id):
+        for field in shotgun_globals.get_entity_fields(self._sg_entity_type):
             # convert field to bubbled form
             bubbled_field = self._get_bubbled_name(field)
 
@@ -223,7 +223,7 @@ class EntityFieldMenu(QtGui.QMenu):
             display_name = shotgun_globals.get_field_display_name(
                 self._sg_entity_type,
                 field,
-                project_id=self._project_id,
+                # project_id=self._project_id,
             )
             field_infos.append({"field": field, "name": display_name, "bubbled": bubbled_field})
 
@@ -233,7 +233,7 @@ class EntityFieldMenu(QtGui.QMenu):
                 entity_types = shotgun_globals.get_valid_types(
                     self._sg_entity_type,
                     field,
-                    project_id=self._project_id,
+                    # project_id=self._project_id,
                 )
 
                 # filter out entities via the registered callback
@@ -244,7 +244,7 @@ class EntityFieldMenu(QtGui.QMenu):
                 if self._field_filter:
                     def entity_filter(et):
                         # get the list of fields for this entity type
-                        fields = shotgun_globals.get_entity_fields(et, project_id=self._project_id)
+                        fields = shotgun_globals.get_entity_fields(et)
 
                         # and filter them down with the filter
                         if self._field_filter:
@@ -260,7 +260,7 @@ class EntityFieldMenu(QtGui.QMenu):
                         "valid_type_names": [
                             shotgun_globals.get_type_display_name(
                                 et,
-                                project_id=self._project_id,
+                                # project_id=self._project_id,
                             ) for et in entity_types
                         ],
                         "bubbled_bases": ["%s.%s" % (bubbled_field, et) for et in entity_types],

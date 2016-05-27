@@ -91,8 +91,8 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._data_manager.note_arrived.connect(self._process_new_note)
         self._data_manager.update_arrived.connect(self._process_new_data)
         self._data_manager.thumbnail_arrived.connect(self._process_thumbnail)
-        self.ui.note_widget.data_updated.connect(self._on_note_submitted)
         self.ui.note_widget.entity_created.connect(self._on_entity_created)
+        self.ui.note_widget.data_updated.connect(self.rescan)
         
         # keep handles to all widgets to be nice to the GC
         self._loading_widget = None
@@ -361,6 +361,20 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._bundle.log_debug("Ask db manager to ask shotgun for updates...")
         self._data_manager.rescan()
         self._bundle.log_debug("...done")
+
+    def rescan(self, force_activity_stream_update=False):
+        """
+        Triggers a rescan of the current activity stream data.
+
+        :param force_activity_stream_update:    If True, will force a requery
+                                                of activity stream data, even
+                                                if it is already cached.
+        :type force_activity_stream_update:     bool
+        """
+        # kick the data manager to rescan for changes
+        self._data_manager.rescan(
+            force_activity_stream_update=force_activity_stream_update,
+        )
             
     ############################################################################
     # internals
@@ -663,13 +677,6 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self.load_data(self._sg_entity_dict)
         finally:
             self.__small_overlay.hide()
-        
-    def _on_note_submitted(self):
-        """
-        Called when a note has finished submitting
-        """
-        # kick the data manager to rescan for changes
-        self._data_manager.rescan()
 
     def _load_shotgun_activity_stream(self):
         """
