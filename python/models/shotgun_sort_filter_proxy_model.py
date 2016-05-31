@@ -68,6 +68,9 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
         sg_left = shotgun_model.get_sg_data(left)
         sg_right = shotgun_model.get_sg_data(right)
 
+        if not sg_left or not sg_right:
+            return False
+
         # Sorting by multiple columns, where each column is given a chance
         # to say that the items are out of order. This isn't a stable sort,
         # because we have no way of knowing the current position of left
