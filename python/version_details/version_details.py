@@ -209,8 +209,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         )
         self.ui.version_search.search_edited.connect(self._set_version_list_filter)
         self.version_info_model.data_refreshed.connect(self._version_entity_data_refreshed)
-        self._task_manager.task_group_finished.connect(self.ui.entity_version_view.update)
-        self._data_retriever.work_completed.connect(self.__on_worker_signal)
+        self._task_manager.task_completed.connect(self._on_task_completed)
         self.ui.note_stream_widget.note_selected.connect(self.note_selected.emit)
         self.ui.note_stream_widget.note_deselected.connect(self.note_deselected.emit)
 
@@ -234,9 +233,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._setup_fields_menu()
         self._setup_version_list_fields_menu()
         self._setup_version_sort_by_menu()
-
-        if entity:
-            self.load_data(entity)
+        self.load_data(entity)
 
         self._load_stylesheet()
 
@@ -467,6 +464,15 @@ class VersionDetailsWidget(QtGui.QWidget):
     ##########################################################################
     # internal utilities
 
+    def _on_task_completed(self):
+        """
+        Forces a repaint of certain widgets when background tasks
+        complete.
+        """
+        self.ui.entity_version_view.repaint()
+        self.ui.current_version_card.repaint()
+        self.ui.note_stream_widget.repaint()
+
     def _load_stylesheet(self):
         """
         Loads in the widget's master stylesheet from disk.
@@ -533,43 +539,51 @@ class VersionDetailsWidget(QtGui.QWidget):
         Takes the currently-requested entity and sets various widgets
         to display it.
         """
-        entity = self._requested_entity
-        item = self.version_info_model.item_from_entity(
-            "Version",
-            entity["id"],
-        )
+        try:
+            entity = self._requested_entity
 
-        if not item:
-            return
+            if not entity:
+                return
 
-        sg_data = item.get_sg_data()
-
-        self.ui.current_version_card.entity = sg_data
-        self._more_info_toggled(self.ui.more_info_button.isChecked())
-
-        if sg_data.get("entity"):
-            version_filters = [["entity", "is", sg_data["entity"]]]
-            self.version_model.load_data(
+            item = self.version_info_model.item_from_entity(
                 "Version",
-                filters=version_filters,
-                fields=self._fields,
+                entity["id"],
             )
 
-            self.version_proxy_model.sort(
-                0, 
-                (
-                    QtCore.Qt.AscendingOrder if 
-                    self._sort_versions_ascending else 
-                    QtCore.Qt.DescendingOrder
-                ),
-            )
-        else:
-            self.version_model.clear()
+            if not item:
+                return
 
-        self._current_entity = sg_data
-        self._setup_fields_menu()
-        self._setup_version_list_fields_menu()
-        self._setup_version_sort_by_menu()
+            sg_data = item.get_sg_data()
+
+            self.ui.current_version_card.entity = sg_data
+            self._more_info_toggled(self.ui.more_info_button.isChecked())
+
+            if sg_data.get("entity"):
+                version_filters = [["entity", "is", sg_data["entity"]]]
+                self.version_model.load_data(
+                    "Version",
+                    filters=version_filters,
+                    fields=self._fields,
+                )
+
+                self.version_proxy_model.sort(
+                    0, 
+                    (
+                        QtCore.Qt.AscendingOrder if 
+                        self._sort_versions_ascending else 
+                        QtCore.Qt.DescendingOrder
+                    ),
+                )
+            else:
+                self.version_model.clear()
+
+            self._current_entity = sg_data
+            self._setup_fields_menu()
+            self._setup_version_list_fields_menu()
+            self._setup_version_sort_by_menu()
+        except:
+            import traceback
+            sgtk.platform.current_engine().log_error(traceback.format_exc())
 
     def _version_list_field_menu_triggered(self, action):
         """
@@ -839,23 +853,6 @@ class VersionDetailsWidget(QtGui.QWidget):
                 pass
 
         self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
-
-    def __on_worker_signal(self, uid, request_type, data):
-        """
-        Run when a background task completes.
-
-        :param uid:             The task ID that was completed.
-        :param request_type:    The tasks type.
-        :param data:            The data returned by the task's callable.
-        """
-        if uid == self._upload_uid:
-            # TODO: Need to sort out why annotated attachments don't
-            # show up in the activity stream until a new reply is
-            # made AFTER the upload. This is not resolved by a relaunch
-            # which makes me think that the sqlite db that the activity
-            # stream is running off of is out of sync until it's forced
-            # to refresh due to a new reply being created. <jbee>
-            pass
         
     ##########################################################################
     # docking
