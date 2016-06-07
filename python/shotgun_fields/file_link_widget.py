@@ -302,7 +302,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         :type value: A dictionary as returned by the Shotgun API for a url field
         """
 
-        link_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
+        link_color = sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
 
         if value["link_type"] in ["web", "upload"]:
             url = value["url"]
@@ -417,7 +417,7 @@ class _EditWebLinkDialog(QtGui.QDialog):
             self._display_input.selectAll()
 
         # get the highlight color
-        btn_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
+        btn_color = sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
         btn_palette = self.palette()
         btn_palette.setColor(QtGui.QPalette.Button, btn_color)
 

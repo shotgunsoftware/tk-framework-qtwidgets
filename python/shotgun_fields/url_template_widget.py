@@ -26,6 +26,6 @@ class UrlTemplateWidget(ElidedLabelBaseWidget):
 
         :param str value: The url value to convert into a string
         """
-        link_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
+        link_color = sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
         return "<a href='%s'><font color='%s'>%s</font></a>" % (
             value, link_color, value)

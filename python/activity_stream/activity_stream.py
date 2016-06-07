@@ -115,6 +115,14 @@ class ActivityStreamWidget(QtGui.QWidget):
             allow_screenshots=self._allow_screenshots,
         )
 
+        # We'll allow for a pre-note-creation callback. This is for additional
+        # pre-processing that needs to occur before a Note or Reply is created
+        # in Shotgun. This makes sure that the activity stream data coming down
+        # during the rescan after submission contains anything like additional
+        # attachments that this widget didn't explicitly handle itself prior to
+        # submission.
+        self._pre_submit_callback = None
+
         self.reply_dialog.note_widget.entity_created.connect(self._on_entity_created)
 
     def set_bg_task_manager(self, task_manager):
@@ -150,6 +158,27 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         return self.ui.note_widget
 
+    def _get_pre_submit_callback(self):
+        """
+        The pre-submit callback. This is None if one is not set, or a Python
+        callable if it is. This callable is run prior to submission of a new
+        Note or Reply. Note that the first (and only) argument passed to the
+        callback will be the calling :class:`NoteInputWidget`.
+
+        :returns:   Python callable or None
+        """
+        return self._pre_submit_callback
+
+    def _set_pre_submit_callback(self, callback):
+        self._pre_submit_callback = callback
+        self.reply_dialog.note_widget.pre_submit_callback = callback
+        self.note_widget.pre_submit_callback = callback
+
+    pre_submit_callback = property(
+        _get_pre_submit_callback,
+        _set_pre_submit_callback,
+    )
+
     def _get_allow_screenshots(self):
         """
         Whether this activity stream is allowed to give the user access to a
@@ -161,8 +190,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._allow_screenshots = bool(state)
         self.ui.note_widget.allow_screenshots(self._allow_screenshots)
 
-    allow_screenshots = QtCore.Property(
-        bool,
+    allow_screenshots = property(
         _get_allow_screenshots,
         _set_allow_screenshots,
     )
@@ -181,8 +209,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         self._show_sg_stream_button = bool(state)
 
-    show_sg_stream_button = QtCore.Property(
-        bool,
+    show_sg_stream_button = property(
         _get_show_sg_stream_button,
         _set_show_sg_stream_button,
     )
@@ -199,8 +226,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     def _set_version_items_playable(self, state):
         self._version_items_playable = bool(state)
 
-    version_items_playable = QtCore.Property(
-        bool,
+    version_items_playable = property(
         _get_version_items_playable,
         _set_version_items_playable,
     )
@@ -677,4 +703,3 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         url = "%s/detail/%s/%s" % (self._bundle.sgtk.shotgun_url, self._entity_type, self._entity_id)
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
-

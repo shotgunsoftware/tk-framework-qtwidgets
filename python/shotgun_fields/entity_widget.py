@@ -41,7 +41,7 @@ class EntityWidget(ElidedLabelBaseWidget):
         else:
             url_base = "%s/" % self._bundle.sgtk.shotgun_url
 
-        link_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
+        link_color = sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
 
         entity_url = "%sdetail/%s/%d" % (url_base, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
