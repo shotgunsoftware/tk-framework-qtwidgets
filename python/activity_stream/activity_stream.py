@@ -174,8 +174,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self.reply_dialog.note_widget.pre_submit_callback = callback
         self.note_widget.pre_submit_callback = callback
 
-    pre_submit_callback = QtCore.Property(
-        object,
+    pre_submit_callback = property(
         _get_pre_submit_callback,
         _set_pre_submit_callback,
     )
@@ -191,8 +190,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._allow_screenshots = bool(state)
         self.ui.note_widget.allow_screenshots(self._allow_screenshots)
 
-    allow_screenshots = QtCore.Property(
-        bool,
+    allow_screenshots = property(
         _get_allow_screenshots,
         _set_allow_screenshots,
     )
@@ -211,8 +209,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         self._show_sg_stream_button = bool(state)
 
-    show_sg_stream_button = QtCore.Property(
-        bool,
+    show_sg_stream_button = property(
         _get_show_sg_stream_button,
         _set_show_sg_stream_button,
     )
@@ -229,8 +226,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     def _set_version_items_playable(self, state):
         self._version_items_playable = bool(state)
 
-    version_items_playable = QtCore.Property(
-        bool,
+    version_items_playable = property(
         _get_version_items_playable,
         _set_version_items_playable,
     )
