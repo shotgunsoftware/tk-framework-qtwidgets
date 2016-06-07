@@ -99,6 +99,7 @@ class NoteInputWidget(QtGui.QWidget):
         self.ui.remove_button.clicked.connect(self._remove_selected_attachments)
 
         # reset state of the UI
+        self.pre_submit_callback = None
         self.clear()
         
         
@@ -254,7 +255,10 @@ class NoteInputWidget(QtGui.QWidget):
                                           "Please add some content before submitting.")
             return
         
-        
+        # Call our pre-submit callback if we have one registered.
+        if self.pre_submit_callback:
+            self.pre_submit_callback(self)
+
         # hide hint label for better ux.
         self.ui.hint_label.hide()
         self.__overlay.start_spin()

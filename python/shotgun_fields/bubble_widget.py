@@ -69,7 +69,7 @@ class BubbleWidget(QtGui.QFrame):
 
         # color the text to use the SG highlight color
         text_color = QtGui.QColor(
-            sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
+            sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
         )
         self.text_label = QtGui.QLabel(self)
         palette = self.text_label.palette()

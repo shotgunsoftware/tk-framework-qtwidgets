@@ -310,7 +310,7 @@ class ImageWidget(QtGui.QLabel):
         """
         if not self._pixmap:
             if self._editable:
-                link_color = sgtk.constants.SG_STYLESHEET_CONSTANTS["SG_HIGHLIGHT_COLOR"]
+                link_color = sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
                 self.setText(
                     "<a href='image::upload'><font color='%s'>Upload Image"
                     "</font></a>" % (link_color,)
