@@ -228,16 +228,16 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         # not defined anywhere, take it over
         class_dict[method_name] = method
 
-    @take_over
     @staticmethod
+    @take_over
     def setup_widget(self):
         """
         Default method called to setup the widget.
         """
         return
 
-    @take_over
     @staticmethod
+    @take_over
     def set_value(self, value):
         """
         Set the value displayed by the widget.
@@ -253,8 +253,8 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
             self._display_value(value)
         self.value_changed.emit()
 
-    @take_over
     @staticmethod
+    @take_over
     def get_value(self):
         """
         :return: The internal value being displayed by the widget.
