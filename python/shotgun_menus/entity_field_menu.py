@@ -199,7 +199,7 @@ class EntityFieldMenu(QtGui.QMenu):
             # need to wait until there is a schema available before populating the menu
             shotgun_globals.run_on_schema_loaded(
                 self._populate,
-                # project_id=self._project_id,
+                project_id=self._project_id,
             )
             self._initialized = True
 
@@ -223,7 +223,7 @@ class EntityFieldMenu(QtGui.QMenu):
             display_name = shotgun_globals.get_field_display_name(
                 self._sg_entity_type,
                 field,
-                # project_id=self._project_id,
+                project_id=self._project_id,
             )
             field_infos.append({"field": field, "name": display_name, "bubbled": bubbled_field})
 
@@ -233,7 +233,7 @@ class EntityFieldMenu(QtGui.QMenu):
                 entity_types = shotgun_globals.get_valid_types(
                     self._sg_entity_type,
                     field,
-                    # project_id=self._project_id,
+                    project_id=self._project_id,
                 )
 
                 # filter out entities via the registered callback
@@ -260,7 +260,7 @@ class EntityFieldMenu(QtGui.QMenu):
                         "valid_type_names": [
                             shotgun_globals.get_type_display_name(
                                 et,
-                                # project_id=self._project_id,
+                                project_id=self._project_id,
                             ) for et in entity_types
                         ],
                         "bubbled_bases": ["%s.%s" % (bubbled_field, et) for et in entity_types],

@@ -722,7 +722,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         entity = self.current_entity or {}
         menu = EntityFieldMenu(
             "Version",
-            # project_id=entity.get("project", {}).get("id"),
+            project_id=entity.get("project", {}).get("id"),
         )
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._checked_filter)
@@ -739,7 +739,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         entity = self.current_entity or {}
         menu = EntityFieldMenu(
             "Version",
-            # project_id=entity.get("project", {}).get("id"),
+            project_id=entity.get("project", {}).get("id"),
         )
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._version_list_checked_filter)
@@ -793,7 +793,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             display_name = shotgun_globals.get_field_display_name(
                 "Version",
                 field_name,
-                # project_id=entity.get("project", {}).get("id"),
+                project_id=entity.get("project", {}).get("id"),
             )
 
             action = QtGui.QAction(display_name, self)
