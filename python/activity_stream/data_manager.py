@@ -86,6 +86,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
     
     update_arrived = QtCore.Signal(list)
     note_arrived = QtCore.Signal(int, int)
+    note_thread_arrived = QtCore.Signal(int, object)
     thumbnail_arrived = QtCore.Signal(dict)
     
     def __init__(self, parent):
@@ -116,6 +117,13 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 
         # set up defaults
         self.__reset()
+
+    @property
+    def note_threads(self):
+        """
+        The list of currently-loaded note threads, keyed by Note entity id.
+        """
+        return self._note_threads
         
     def set_bg_task_manager(self, task_manager):
         """
@@ -181,7 +189,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
         # load note thread only
         note_data = self.__get_note_thread_data(note_id)
         if note_data:
-            self._note_threads[note_id] = note_data        
+            self._note_threads[note_id] = note_data
+            self.note_thread_arrived.emit(note_id, note_data)
 
 
     def load_activity_data(self, entity_type, entity_id, limit=200):

@@ -60,6 +60,9 @@ class VersionDetailsWidget(QtGui.QWidget):
     # along.
     entity_created = QtCore.Signal(object)
 
+    # Emitted when an entity is loaded in the panel.
+    entity_loaded = QtCore.Signal(object)
+
     # The int is the id of the Note entity that was selected or deselected.
     note_selected = QtCore.Signal(int)
     note_deselected = QtCore.Signal(int)
@@ -261,6 +264,14 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         return self._pinned
 
+    @property
+    def note_threads(self):
+        """
+        The currently loaded Note threads keyed by Note entity id and
+        containing a list of Shotgun entity dictionaries.
+        """
+        return self.ui.note_stream_widget.note_threads
+
     ##########################################################################
     # public methods
 
@@ -381,6 +392,8 @@ class VersionDetailsWidget(QtGui.QWidget):
             filters=shot_filters,
             fields=self._fields,
         )
+
+        self.entity_loaded.emit(entity)
 
     def save_preferences(self):
         """

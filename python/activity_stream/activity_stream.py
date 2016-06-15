@@ -146,6 +146,14 @@ class ActivityStreamWidget(QtGui.QWidget):
     # properties
 
     @property
+    def note_threads(self):
+        """
+        The currently loaded note threads, keyed by Note entity id and
+        containing a list of Shotgun entity dictionaries.
+        """
+        return self._data_manager.note_threads
+
+    @property
     def note_widget(self):
         """
         Returns the :class:`~note_input_widget.NoteInputWidget` contained within
@@ -166,8 +174,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._allow_screenshots = bool(state)
         self.ui.note_widget.allow_screenshots(self._allow_screenshots)
 
-    allow_screenshots = QtCore.Property(
-        bool,
+    allow_screenshots = property(
         _get_allow_screenshots,
         _set_allow_screenshots,
     )
@@ -186,8 +193,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         self._show_sg_stream_button = bool(state)
 
-    show_sg_stream_button = QtCore.Property(
-        bool,
+    show_sg_stream_button = property(
         _get_show_sg_stream_button,
         _set_show_sg_stream_button,
     )
@@ -204,8 +210,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     def _set_version_items_playable(self, state):
         self._version_items_playable = bool(state)
 
-    version_items_playable = QtCore.Property(
-        bool,
+    version_items_playable = property(
         _get_version_items_playable,
         _set_version_items_playable,
     )
