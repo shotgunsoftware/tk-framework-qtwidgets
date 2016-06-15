@@ -1,0 +1,709 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <a href='http://developer.shotgunsoftware.com'>
+    
+        <img style='width: 191px;
+                height: 60px; 
+                margin: 2px;
+                border-radius: 0px; 
+                padding: 0px;' 
+            src='../../_static/logo@2x.png'/>
+    
+    </a>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
+    
+        This documentation is part of the Shotgun Pipeline Toolkit.
+    
+    For more information, please visit
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>shotgun_fields.file_link_widget</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for shotgun_fields.file_link_widget</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="kn">from</span> <span class="nn">.label_base_widget</span> <span class="kn">import</span> <span class="n">ElidedLabelBaseWidget</span>
+<span class="kn">from</span> <span class="nn">.shotgun_field_meta</span> <span class="kn">import</span> <span class="n">ShotgunFieldMeta</span>
+
+<span class="c1"># ensures access to `link_menu.png`</span>
+<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
+
+
+<div class="viewcode-block" id="FileLinkWidget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.file_link_widget.FileLinkWidget">[docs]</a><span class="k">class</span> <span class="nc">FileLinkWidget</span><span class="p">(</span><span class="n">ElidedLabelBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display a ``url`` field value as returned by the Shotgun API.</span>
+
+<span class="sd">    The ``FileLinkWidget`` represents both the ``DISPLAY`` and ``EDITOR`` widget type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ShotgunFieldMeta</span>
+    <span class="n">_DISPLAY_TYPE</span> <span class="o">=</span> <span class="s2">&quot;url&quot;</span>
+    <span class="n">_EDITOR_TYPE</span> <span class="o">=</span> <span class="s2">&quot;url&quot;</span>
+
+<div class="viewcode-block" id="FileLinkWidget.enable_editing"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.file_link_widget.FileLinkWidget.enable_editing">[docs]</a>    <span class="k">def</span> <span class="nf">enable_editing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable or disable editing of the widget.</span>
+
+<span class="sd">        This is provided as required for widgets that are used as both editor</span>
+<span class="sd">        and display.</span>
+
+<span class="sd">        :param bool enable: ``True`` to enable, ``False`` to disable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span> <span class="o">=</span> <span class="n">enable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_btn_position</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filters out mouse enter/leave events in order to show/hide the edit</span>
+<span class="sd">        menu when the widget is editable.</span>
+
+<span class="sd">        :param obj: The watched object.</span>
+<span class="sd">        :type obj: :class:`~PySide.QtGui.QObject`</span>
+<span class="sd">        :param event: The filtered event.</span>
+<span class="sd">        :type event: :class:`~PySide.QtGui.QEvent`</span>
+
+<span class="sd">        :return: True if the event was processed, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">obj</span> <span class="o">==</span> <span class="bp">self</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Enter</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_btn_position</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Leave</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">False</span>
+
+<div class="viewcode-block" id="FileLinkWidget.setup_widget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.file_link_widget.FileLinkWidget.setup_widget">[docs]</a>    <span class="k">def</span> <span class="nf">setup_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare the widget for display.</span>
+
+<span class="sd">        Called by the metaclass during initialization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/link_menu.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+        <span class="c1"># make sure there&#39;s never a bg color or border</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: none; border: none;&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ---- actions</span>
+
+        <span class="c1"># each of the different types use the same callback, but they display</span>
+        <span class="c1"># different text depending on the current value</span>
+
+        <span class="c1"># upload</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upload_file_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Upload File&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_upload_file_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upload_file</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_upload_file_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Upload New File&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_upload_file_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upload_file</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_upload_file_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Replace with Uploaded File&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_upload_file_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upload_file</span><span class="p">)</span>
+
+        <span class="c1"># web</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_web_page_link_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Link to Web Page&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_web_page_link_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_link</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_web_page_link_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Edit Web Page Link&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_web_page_link_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_link</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_web_page_link_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Replace with Web Page Link&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_web_page_link_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_link</span><span class="p">)</span>
+
+        <span class="c1"># local</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_local_path_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Link to Local File or Directory&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_local_path_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse_local</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_local_path_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Edit Local File or Directory&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_local_path_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse_local</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_local_path_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Replace with Local File or Directory&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_local_path_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse_local</span><span class="p">)</span>
+
+        <span class="c1"># remove</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_link_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Remove File/Link&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_link_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_remove_link</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_default</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_btn_position</span><span class="p">()</span>
+
+        <span class="c1"># ---- connect signals</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_popup_btn_click</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linkActivated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_link_activated</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_browse_local</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Opens a file browser for choosing a local file for the field.</span>
+
+<span class="sd">        If a file is selected, this method emits the ``value_changed`` signal</span>
+<span class="sd">        and upates the stored value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># prompt the user for a file. this always returns a tuple, the second</span>
+        <span class="c1"># value being the path (or None)</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">caption</span><span class="o">=</span><span class="s2">&quot;Link to Local File or Directory&quot;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">DontResolveSymlinks</span><span class="p">,</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># make sure we have a valid path</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="c1"># emit the value changed signal. build a fake value for now that</span>
+        <span class="c1"># will presumably be updated via calling code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="s2">&quot;local&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="s2">&quot;local_path&quot;</span><span class="p">:</span> <span class="n">file_path</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_display_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display the default value of the widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_edit_link</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Opens a custom dialog for the user to input a url and display name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">display</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># get the current url and display if the current link is a web link</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;web&quot;</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="n">display</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="c1"># prompt the user</span>
+        <span class="n">edit_link_dialog</span> <span class="o">=</span> <span class="n">_EditWebLinkDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">edit_link_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Rejected</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="c1"># emit the value changed signal. build a fake value for now that</span>
+        <span class="c1"># will presumably be updated via calling code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">edit_link_dialog</span><span class="o">.</span><span class="n">display</span><span class="p">,</span>
+            <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="s2">&quot;web&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">edit_link_dialog</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_on_link_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Open the displayed link in an appropriate way.</span>
+
+<span class="sd">        Called when a user clicks the link.</span>
+
+<span class="sd">        :param url: The url for the clicked link.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">:</span>
+            <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">link_type</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;link_type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;upload&quot;</span><span class="p">:</span>
+            <span class="c1"># the uploaded urls have timeouts built in. query the current</span>
+            <span class="c1"># value before continuing</span>
+            <span class="n">sg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">shotgun</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                <span class="p">[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+
+            <span class="c1"># SG returns an encoded url already. make sure it doesn&#39;t get</span>
+            <span class="c1"># a second encoding pass (the default translation from python str</span>
+            <span class="c1"># to QUrl seems to assume the str is not encoded).</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="o">.</span><span class="n">fromEncoded</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="c1"># display the url appropriately</span>
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QDesktopServices</span><span class="o">.</span><span class="n">openUrl</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_popup_btn_click</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display a context menu based on the current field value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">popup_menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">:</span>
+            <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">link_type</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">link_type</span><span class="p">:</span>
+            <span class="c1"># no link type, display options for each type</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upload_file_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_web_page_link_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_local_path_action</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s2">&quot;upload&quot;</span><span class="p">:</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_upload_file_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_web_page_link_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_local_path_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_remove_link_action</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s2">&quot;web&quot;</span><span class="p">:</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_upload_file_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_web_page_link_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_local_path_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_remove_link_action</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">link_type</span> <span class="o">==</span> <span class="s2">&quot;local&quot;</span><span class="p">:</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_upload_file_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_web_page_link_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_local_path_action</span><span class="p">)</span>
+            <span class="n">popup_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_remove_link_action</span><span class="p">)</span>
+
+        <span class="c1"># show the menu below the button</span>
+        <span class="n">popup_menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_remove_link</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when user selects the menu option to clear the value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># clear the value of the field, emit the ``value_changed`` signal.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_string_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the Shotgun value for this field into a string</span>
+
+<span class="sd">        :param value: The value to convert into a string</span>
+<span class="sd">        :type value: A dictionary as returned by the Shotgun API for a url field</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">link_color</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">style_constants</span><span class="p">[</span><span class="s2">&quot;SG_HIGHLIGHT_COLOR&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;web&quot;</span><span class="p">,</span> <span class="s2">&quot;upload&quot;</span><span class="p">]:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+            <span class="n">img_src</span> <span class="o">=</span> <span class="s2">&quot;:/qtwidgets-shotgun-fields/link_</span><span class="si">%s</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">],)</span>
+            <span class="n">str_val</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+            <span class="n">str_val</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;&lt;span&gt;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&amp;nbsp;&quot;</span>
+                <span class="s2">&quot;&lt;a href=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&lt;font color=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&lt;/a&gt;&lt;/span&gt;&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">img_src</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">link_color</span><span class="p">,</span> <span class="n">str_val</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;local&quot;</span><span class="p">:</span>
+            <span class="n">local_path</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;local_path&quot;</span><span class="p">]</span>
+            <span class="c1"># for file on OS that differs from the current OS, this will</span>
+            <span class="c1"># result in the display of the full path rather than just the</span>
+            <span class="c1"># file basename.ext (the SG behavior).</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">local_path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">img_src</span> <span class="o">=</span> <span class="s2">&quot;:/qtwidgets-shotgun-fields/link_</span><span class="si">%s</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">],)</span>
+            <span class="n">str_val</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;&lt;span&gt;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&amp;nbsp;&quot;</span>
+                <span class="s2">&quot;&lt;a href=&#39;file:///</span><span class="si">%s</span><span class="s2">&#39;&gt;&lt;font color=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&lt;/a&gt;&lt;/span&gt;&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">img_src</span><span class="p">,</span> <span class="n">local_path</span><span class="p">,</span> <span class="n">link_color</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">str_val</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">str_val</span>
+
+    <span class="k">def</span> <span class="nf">_update_btn_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensures the menu button is displayed properly in relation to the label text.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># `line_width` is the elided width of the line in pixels. use this as a</span>
+        <span class="c1"># starting point for where to place the menu button</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_width</span> <span class="o">+</span> <span class="mi">4</span>
+
+        <span class="c1"># if the label is too wide, move the button inside the visible rectangle</span>
+        <span class="n">visible_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visibleRegion</span><span class="p">()</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">width</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">visible_width</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visibleRegion</span><span class="p">()</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Opens a file browser for uploading a file for the field.</span>
+
+<span class="sd">        If a file is selected, this method emits the ``value_changed`` signal</span>
+<span class="sd">        and upates the stored value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># prompt the user for a file. this always returns a tuple, the second</span>
+        <span class="c1"># value being the path (or None)</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">caption</span><span class="o">=</span><span class="s2">&quot;Choose a File to Upload&quot;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">DontResolveSymlinks</span><span class="p">,</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="n">file_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="c1"># emit the value changed signal. build a fake value for now that</span>
+        <span class="c1"># will presumably be updated via calling code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="s2">&quot;upload&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">file_path</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+
+<span class="k">class</span> <span class="nc">_EditWebLinkDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for prompting the user for link url and aname</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the dialog.</span>
+
+<span class="sd">        :param parent: Optional parent widget</span>
+<span class="sd">        :param url: Optional url to insert it the input</span>
+<span class="sd">        :param display: Optional display name to</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">_EditWebLinkDialog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">350</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="n">display</span><span class="o">=</span> <span class="n">display</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Link to Web Page&quot;</span><span class="p">)</span>
+
+        <span class="c1"># url input</span>
+        <span class="n">url_lbl</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;&lt;h3&gt;Web page address&lt;/h3&gt;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url_input</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url_input</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url_input</span><span class="o">.</span><span class="n">selectAll</span><span class="p">()</span>
+
+        <span class="c1"># display input</span>
+        <span class="n">display_lbl</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Optional display name&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_input</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_display_input</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">display</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_display_input</span><span class="o">.</span><span class="n">selectAll</span><span class="p">()</span>
+
+        <span class="c1"># get the highlight color</span>
+        <span class="n">btn_color</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">style_constants</span><span class="p">[</span><span class="s2">&quot;SG_HIGHLIGHT_COLOR&quot;</span><span class="p">]</span>
+        <span class="n">btn_palette</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span>
+        <span class="n">btn_palette</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Button</span><span class="p">,</span> <span class="n">btn_color</span><span class="p">)</span>
+
+        <span class="c1"># color the button to match the SG version.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Add Link&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">btn_palette</span><span class="p">)</span>
+
+        <span class="n">cancel_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Cancel&quot;</span><span class="p">)</span>
+
+        <span class="c1"># put the buttons together. Didn&#39;t user QDialogButtonBox since can&#39;t</span>
+        <span class="c1"># control the order</span>
+        <span class="n">btn_box</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">btn_box</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
+        <span class="n">btn_box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">cancel_btn</span><span class="p">)</span>
+        <span class="n">btn_box</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">url_lbl</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url_input</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">display_lbl</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_display_input</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">btn_box</span><span class="p">)</span>
+
+        <span class="c1"># signals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url_input</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
+        <span class="n">cancel_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable add link button if the url is valid, disable otherwise</span>
+
+<span class="sd">        :param text: The typed text</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">isValid</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:obj:`str` url entered by the user.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url_input</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:obj:`str` display name entered by the user.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_input</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v2.3.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

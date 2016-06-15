@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>navigation.breadcrumb_widget &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>navigation.breadcrumb_widget &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -56,7 +56,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='../../_static/logo@2x.png'/>
     
     </a>
     
@@ -91,13 +91,17 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
@@ -122,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -174,15 +178,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for navigation.breadcrumb_widget</h1><div class="highlight"><pre>
-<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
-<span class="c"># </span>
-<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c"># </span>
-<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
-<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
-<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Breadcrumb widget that displays a list of breadcrumbs.  This is currently</span>
@@ -212,8 +216,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns:   The label for this breadcrumb</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span></div>
+
 <div class="viewcode-block" id="BreadcrumbWidget"><a class="viewcode-back" href="../../navigation.html#navigation.BreadcrumbWidget">[docs]</a><span class="k">class</span> <span class="nc">BreadcrumbWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the BreadcrumbWidget class</span>
@@ -225,12 +229,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
-        <span class="c"># set up the UI</span>
+        <span class="c1"># set up the UI</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span> <span class="o">=</span> <span class="n">Ui_BreadcrumbWidget</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">path_label</span><span class="o">.</span><span class="n">elide_mode</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideLeft</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">path_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">path_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BreadcrumbWidget.set"><a class="viewcode-back" href="../../navigation.html#navigation.BreadcrumbWidget.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">breadcrumbs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -240,11 +244,11 @@
 <span class="sd">                            from the Breadcrumb class</span>
 <span class="sd">        :type breadcrumbs: list of :class:`Breadcrumb`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># build a single path from the list of crumbs:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;&lt;span style=&#39;color:#2C93E2&#39;&gt; &amp;#9656; &lt;/span&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">crumb</span><span class="o">.</span><span class="n">label</span> <span class="k">for</span> <span class="n">crumb</span> <span class="ow">in</span> <span class="n">breadcrumbs</span><span class="p">])</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;&lt;big&gt;</span><span class="si">%s</span><span class="s">&lt;/big&gt;&quot;</span> <span class="o">%</span> <span class="n">path</span>
+        <span class="c1"># build a single path from the list of crumbs:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&lt;span style=&#39;color:#2C93E2&#39;&gt; &amp;#9656; &lt;/span&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">crumb</span><span class="o">.</span><span class="n">label</span> <span class="k">for</span> <span class="n">crumb</span> <span class="ow">in</span> <span class="n">breadcrumbs</span><span class="p">])</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&lt;big&gt;</span><span class="si">%s</span><span class="s2">&lt;/big&gt;&quot;</span> <span class="o">%</span> <span class="n">path</span>
 
-        <span class="c"># and update the label:</span>
+        <span class="c1"># and update the label:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">path_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div></div>
 </pre></div>
 
@@ -257,7 +261,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -278,7 +282,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

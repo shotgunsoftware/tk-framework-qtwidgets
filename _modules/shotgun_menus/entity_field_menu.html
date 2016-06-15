@@ -1,0 +1,578 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shotgun_menus.entity_field_menu &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <a href='http://developer.shotgunsoftware.com'>
+    
+        <img style='width: 191px;
+                height: 60px; 
+                margin: 2px;
+                border-radius: 0px; 
+                padding: 0px;' 
+            src='../../_static/logo@2x.png'/>
+    
+    </a>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
+    
+        This documentation is part of the Shotgun Pipeline Toolkit.
+    
+    For more information, please visit
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>shotgun_menus.entity_field_menu</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for shotgun_menus.entity_field_menu</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module implements a QMenu subclass that knows how to display all the fields</span>
+<span class="sd">for a given Shotgun entity type.</span>
+
+<span class="sd">An example of how to use it is:</span>
+
+<span class="sd">    class AppDialog(QtGui.QWidget):</span>
+<span class="sd">        def __init__(self):</span>
+<span class="sd">            QtGui.QWidget.__init__(self)</span>
+
+<span class="sd">            # grab a field manager to know what fields are displayable</span>
+<span class="sd">            self._field_manager = shotgun_fields.ShotgunFieldManager()</span>
+
+<span class="sd">            # setup a label to have the fields menu as its context menu</span>
+<span class="sd">            self.label = QtGui.QLabel(&quot;Right click me!&quot;)</span>
+<span class="sd">            self.label.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)</span>
+<span class="sd">            self.label.customContextMenuRequested.connect(self.open_menu)</span>
+
+<span class="sd">            # and layout the dialog</span>
+<span class="sd">            layout = QtGui.QVBoxLayout(self)</span>
+<span class="sd">            layout.addWidget(self.label)</span>
+<span class="sd">            self.setLayout(layout)</span>
+
+<span class="sd">        def field_filter(self, field):</span>
+<span class="sd">            # display fields that are displayable by the shotgun field widgets</span>
+<span class="sd">            return bool(self._field_manager.supported_fields(&quot;CustomEntity02&quot;, [field]))</span>
+
+<span class="sd">        def open_menu(self, position):</span>
+<span class="sd">            menu = shotgun_menus.EntityFieldMenu(&quot;CustomEntity02&quot;)</span>
+
+<span class="sd">            # attach our filters</span>
+<span class="sd">            menu.set_field_filter(self.field_filter)</span>
+<span class="sd">            menu.set_checked_filter(self.checked_filter)</span>
+<span class="sd">            menu.set_disabled_filter(self.disabled_filter)</span>
+
+<span class="sd">            # show the menu and print the result</span>
+<span class="sd">            action = menu.exec_(self.label.mapToGlobal(position))</span>
+<span class="sd">            if action:</span>
+<span class="sd">                # action&#39;s data has the field that was selected</span>
+<span class="sd">                self.do_thing(action.data()[&quot;field&quot;])</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtGui</span>
+
+<span class="kn">from</span> <span class="nn">.shotgun_menu</span> <span class="kn">import</span> <span class="n">ShotgunMenu</span>
+
+<span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="EntityFieldMenu"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu">[docs]</a><span class="k">class</span> <span class="nc">EntityFieldMenu</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A menu that automatically displays the fields for a given Shotgun entity.</span>
+
+<span class="sd">    The QActions for the menu will all have their data set to a dictionary in the form:</span>
+<span class="sd">        {&quot;field&quot;: selected_field}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_AUDIT_FIELDS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;created_by&quot;</span><span class="p">,</span> <span class="s2">&quot;created_at&quot;</span><span class="p">,</span> <span class="s2">&quot;updated_by&quot;</span><span class="p">,</span> <span class="s2">&quot;updated_at&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        :param sg_entity_type: The entity type to build a menu for</span>
+<span class="sd">        :type sg_entity_type: String</span>
+
+<span class="sd">        :param parent: Parent widget</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
+
+<span class="sd">        :param bg_task_manager: The task manager the menu will use if it needs to run a task</span>
+<span class="sd">        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_type</span> <span class="o">=</span> <span class="n">sg_entity_type</span>
+
+        <span class="c1"># default state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_checked_filter</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type_filter</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># prefix for fields if this menu represents an entity bubbled through another field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_base</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_owns_task_manager</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">bg_task_manager</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_owns_task_manager</span> <span class="o">=</span> <span class="bp">True</span>
+
+            <span class="n">task_manager</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;task_manager&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">task_manager</span><span class="o">.</span><span class="n">BackgroundTaskManager</span><span class="p">(</span>
+                <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">max_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">start_processing</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">register_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">)</span>
+
+        <span class="c1"># populate the menu the first time it is shown</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutToShow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_about_to_show</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EntityFieldMenu.set_field_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_field_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_field_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_filter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the callback used to filter which fields are shown by the menu</span>
+
+<span class="sd">        :param field_filter: Callback called for each entity field which returns True if the field</span>
+<span class="sd">            should be shown and False if it should not.  The fields will be in &quot;bubbled&quot; notation,</span>
+<span class="sd">            for example &quot;sg_sequence.Sequence.code&quot;</span>
+<span class="sd">        :type field_filter: A method that takes a single field string as its only argument and</span>
+<span class="sd">            returns a boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span> <span class="o">=</span> <span class="n">field_filter</span></div>
+
+<div class="viewcode-block" id="EntityFieldMenu.set_checked_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_checked_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_checked_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked_filter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the callback used to set which fields are checked.  By specifying a value other than</span>
+<span class="sd">        None, all the menu items will be checkable.</span>
+
+<span class="sd">        :param checked_filter: Callback called for each entity field which returns True if the field</span>
+<span class="sd">            should be checked and False if it should not.  The fields will be in &quot;bubbled&quot; notation,</span>
+<span class="sd">            for example &quot;sg_sequence.Sequence.code&quot;</span>
+<span class="sd">        :type checked_filter: A method that takes a single field string as its only argument and</span>
+<span class="sd">            returns a boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_checked_filter</span> <span class="o">=</span> <span class="n">checked_filter</span></div>
+
+<div class="viewcode-block" id="EntityFieldMenu.set_disabled_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_disabled_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_disabled_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disabled_filter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the callback used to filter which fields are disabled</span>
+
+<span class="sd">        :param disabled_filter: Callback called for each entity field which returns True if the field</span>
+<span class="sd">            should be disabled and False if it should not.  The fields will be in &quot;bubbled&quot; notation,</span>
+<span class="sd">            for example &quot;sg_sequence.Sequence.code&quot;</span>
+<span class="sd">        :type disabled_filter: A method that takes a single field string as its only argument and</span>
+<span class="sd">            returns a boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span> <span class="o">=</span> <span class="n">disabled_filter</span></div>
+
+<div class="viewcode-block" id="EntityFieldMenu.set_entity_type_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_entity_type_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_entity_type_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type_filter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the callback used to filter what entity types to display in submenus</span>
+
+<span class="sd">        :param entity_type_filter: Callback called for each entity type which returns True if the</span>
+<span class="sd">            given entity type should be displayed</span>
+<span class="sd">        :type entity_type_filter: A method that takes a single entity types string as its only argument</span>
+<span class="sd">            and returns a boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type_filter</span> <span class="o">=</span> <span class="n">entity_type_filter</span></div>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Destructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owns_task_manager</span><span class="p">:</span>
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">unregister_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_about_to_show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lazy load the menu.  This is because it is possible to have cycles when traversing</span>
+<span class="sd">        through the possible bubbled fields, so it is impossible to build the entire nested menu.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
+            <span class="c1"># need to wait until there is a schema available before populating the menu</span>
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">run_on_schema_loaded</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_populate</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">_populate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build the menu</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">field_infos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">bubble_fields</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># gather needed field info</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_type</span><span class="p">):</span>
+            <span class="c1"># convert field to bubbled form</span>
+            <span class="n">bubbled_field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_bubbled_name</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+            <span class="c1"># apply any needed filtering</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span><span class="p">(</span><span class="n">bubbled_field</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># grab display names</span>
+            <span class="n">display_name</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_field_display_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_type</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+            <span class="n">field_infos</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="n">field</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">,</span> <span class="s2">&quot;bubbled&quot;</span><span class="p">:</span> <span class="n">bubbled_field</span><span class="p">})</span>
+
+            <span class="c1"># grab info to build bubbled menu</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># grab the entity types this field can bubble to</span>
+                <span class="n">entity_types</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_valid_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_type</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+
+                <span class="c1"># filter out entities via the registered callback</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type_filter</span><span class="p">:</span>
+                    <span class="n">entity_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">entity_types</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type_filter</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+
+                <span class="c1"># and filter out any entities that don&#39;t have any displayable fields</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span><span class="p">:</span>
+                    <span class="k">def</span> <span class="nf">entity_filter</span><span class="p">(</span><span class="n">et</span><span class="p">):</span>
+                        <span class="c1"># get the list of fields for this entity type</span>
+                        <span class="n">fields</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_fields</span><span class="p">(</span><span class="n">et</span><span class="p">)</span>
+
+                        <span class="c1"># and filter them down with the filter</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span><span class="p">:</span>
+                            <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bubbled_field</span><span class="p">,</span> <span class="n">et</span><span class="p">,</span> <span class="n">f</span><span class="p">))]</span>
+
+                        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+                    <span class="n">entity_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">et</span> <span class="k">for</span> <span class="n">et</span> <span class="ow">in</span> <span class="n">entity_types</span> <span class="k">if</span> <span class="n">entity_filter</span><span class="p">(</span><span class="n">et</span><span class="p">)]</span>
+
+                <span class="k">if</span> <span class="n">entity_types</span><span class="p">:</span>
+                    <span class="n">bubble_fields</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">,</span>
+                        <span class="s2">&quot;valid_types&quot;</span><span class="p">:</span> <span class="n">entity_types</span><span class="p">,</span>
+                        <span class="s2">&quot;valid_type_names&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_type_display_name</span><span class="p">(</span><span class="n">et</span><span class="p">)</span> <span class="k">for</span> <span class="n">et</span> <span class="ow">in</span> <span class="n">entity_types</span><span class="p">],</span>
+                        <span class="s2">&quot;bubbled_bases&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bubbled_field</span><span class="p">,</span> <span class="n">et</span><span class="p">)</span> <span class="k">for</span> <span class="n">et</span> <span class="ow">in</span> <span class="n">entity_types</span><span class="p">],</span>
+                    <span class="p">}</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="c1"># not a field that can be bubbled</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># sort by display name</span>
+        <span class="n">field_infos</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+
+        <span class="c1"># add in all fields other than audit fields</span>
+        <span class="n">audit_fields</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">bubbled_actions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">field_info</span> <span class="ow">in</span> <span class="n">field_infos</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;field&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_AUDIT_FIELDS</span><span class="p">:</span>
+                <span class="n">audit_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_info</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">bubbled_actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_get_qaction</span><span class="p">(</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;bubbled&quot;</span><span class="p">],</span> <span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">bubbled_actions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">bubbled_actions</span><span class="p">)</span>
+
+        <span class="c1"># now the audit fields</span>
+        <span class="k">if</span> <span class="n">audit_fields</span><span class="p">:</span>
+            <span class="n">audit_actions</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">field_info</span> <span class="ow">in</span> <span class="n">audit_fields</span><span class="p">:</span>
+                <span class="n">audit_actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_get_qaction</span><span class="p">(</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;field&quot;</span><span class="p">],</span> <span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">audit_actions</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">audit_actions</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Audit Fields&quot;</span><span class="p">)</span>
+
+        <span class="c1"># and finally bubble fields</span>
+        <span class="k">if</span> <span class="n">bubble_fields</span><span class="p">:</span>
+
+            <span class="n">linked_menus</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">field_info</span><span class="p">)</span> <span class="ow">in</span> <span class="n">bubble_fields</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="c1"># pull all the bubbled field data in an order that sorts by display name</span>
+                <span class="n">sorted_items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+                    <span class="nb">zip</span><span class="p">(</span>
+                        <span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;valid_type_names&quot;</span><span class="p">],</span>
+                        <span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;valid_types&quot;</span><span class="p">],</span>
+                        <span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;bubbled_bases&quot;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="n">entity_menus</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">type_name</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">bubble_base</span><span class="p">)</span> <span class="ow">in</span> <span class="n">sorted_items</span><span class="p">:</span>
+                    <span class="c1"># build the menu for this entity passing on our state</span>
+                    <span class="n">entity_menu</span> <span class="o">=</span> <span class="n">EntityFieldMenu</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">)</span>
+                    <span class="n">entity_menu</span><span class="o">.</span><span class="n">set_field_filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span><span class="p">)</span>
+                    <span class="n">entity_menu</span><span class="o">.</span><span class="n">set_disabled_filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span><span class="p">)</span>
+                    <span class="n">entity_menu</span><span class="o">.</span><span class="n">set_checked_filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_checked_filter</span><span class="p">)</span>
+                    <span class="n">entity_menu</span><span class="o">.</span><span class="n">_bubble_base</span> <span class="o">=</span> <span class="n">bubble_base</span>
+
+                    <span class="c1"># keep track of the menus we built and what the display name for it would be</span>
+                    <span class="n">entity_menus</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">type_name</span><span class="p">,</span> <span class="n">entity_menu</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entity_menus</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># if there is only one type of entity possible, add the menu directly</span>
+                    <span class="n">entity_menu</span> <span class="o">=</span> <span class="n">entity_menus</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">entity_menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+                    <span class="n">linked_menus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entity_menu</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">entity_menus</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># otherwise add an intermediate menu for each possible entity type</span>
+                    <span class="n">bubble_menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="p">(</span><span class="n">type_name</span><span class="p">,</span> <span class="n">entity_menu</span><span class="p">)</span> <span class="ow">in</span> <span class="n">entity_menus</span><span class="p">:</span>
+                        <span class="n">entity_menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">type_name</span><span class="p">)</span>
+                        <span class="n">bubble_menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="n">entity_menu</span><span class="p">)</span>
+                    <span class="n">linked_menus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bubble_menu</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">linked_menus</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Linked Fields&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_bubbled_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">bubble_base</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Translate the given field name into a bubbled name.  This will prepend the bubble string</span>
+<span class="sd">        that translates the given field name into a string that can be used to reach the field</span>
+<span class="sd">        from the entity associated with the root menu.</span>
+
+<span class="sd">        :param field_name: The non-bubbled Shotgun field name</span>
+<span class="sd">        :type field_name: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">bubble_base</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">bubble_base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_base</span>
+
+        <span class="k">if</span> <span class="n">bubble_base</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bubble_base</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">field_name</span>
+
+    <span class="k">def</span> <span class="nf">_get_qaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">display_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add an action for the given field to the menu. The data for the action will contain</span>
+<span class="sd">        a dictionary where the selected field is set for the &quot;field&quot; key.</span>
+
+<span class="sd">        :param field: The field to add, in bubbled notation (eg &#39;entity.Shot.code&#39;)</span>
+<span class="sd">        :type field: String</span>
+
+<span class="sd">        :param display_name: The text to display for the action</span>
+<span class="sd">        :type display_name: String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">display_name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">action</span><span class="o">.</span><span class="n">setData</span><span class="p">({</span>
+            <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="n">field</span><span class="p">,</span>
+        <span class="p">})</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_checked_filter</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_checked_filter</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setDisabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">action</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v2.3.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

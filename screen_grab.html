@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Screen Capture Widget &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>Screen Capture Widget &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,9 +32,9 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="index.html"/>
-        <link rel="next" title="Spinner Widget" href="spinner_widget.html"/>
-        <link rel="prev" title="Spinner and text overlay widget" href="overlay_widget.html"/> 
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="index.html"/>
+        <link rel="next" title="Shotgun Field Widgets" href="shotgun_fields.html"/>
+        <link rel="prev" title="Shotgun Playback Label Widget" href="playback_label.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -57,7 +57,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='_static/logo@2x.png'/>
     
     </a>
     
@@ -92,13 +92,17 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
@@ -123,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -152,7 +156,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -198,7 +202,7 @@ a cross hair style selection or by grabbing the entire screen.</p>
 
 <dl class="function">
 <dt id="screen_grab.screen_capture">
-<code class="descclassname">screen_grab.</code><code class="descname">screen_capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#screen_capture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.screen_capture" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">screen_grab.</code><code class="descname">screen_capture</code><span class="sig-paren">(</span><em>cls</em><span class="sig-paren">)</span><a class="headerlink" href="#screen_grab.screen_capture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modally displays the screen capture tool.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -238,10 +242,10 @@ a temp path is generated.</td>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="spinner_widget.html" class="btn btn-neutral float-right" title="Spinner Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="shotgun_fields.html" class="btn btn-neutral float-right" title="Shotgun Field Widgets" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="overlay_widget.html" class="btn btn-neutral" title="Spinner and text overlay widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="playback_label.html" class="btn btn-neutral" title="Shotgun Playback Label Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -250,7 +254,7 @@ a temp path is generated.</td>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -271,7 +275,7 @@ a temp path is generated.</td>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

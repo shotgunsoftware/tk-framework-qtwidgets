@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>View Related Classes &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>View Related Classes &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="index.html"/>
-        <link rel="prev" title="Shotgun Playback Label Widget" href="playback_label.html"/> 
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="index.html"/>
+        <link rel="prev" title="Spinner Widget" href="spinner_widget.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -56,7 +56,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='_static/logo@2x.png'/>
     
     </a>
     
@@ -91,16 +91,20 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">View Related Classes</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">View Related Classes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#qt-widget-delegate-system">QT Widget Delegate System</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#widgetdelegate">WidgetDelegate</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#editselectedwidgetdelegate">EditSelectedWidgetDelegate</a></li>
@@ -135,7 +139,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -164,7 +168,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -196,7 +200,7 @@ using data from the Shotgun Model.</p>
 <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QTreeView.html#PySide.QtGui.QTreeView" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QTreeView</span></code></a> or <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QListView.html#PySide.QtGui.QListView" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QListView</span></code></a> are not sufficient for your needs,
 these view utilities provide a collection of tools to help you quickly build
 consistent and nice looking user QT Views. These are typically used in conjunction
-with the <a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils v)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a> but this is not a requirement.</p>
+with the <a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv4.2.3)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a> but this is not a requirement.</p>
 <p>The widget delegate helper classes makes it easy to connect a <code class="docutils literal"><span class="pre">QWidget</span></code> of
 your choosing with a QT View. The classes will use your specified
 widget as a brush to paint the view is drawn and updated. This allows for full control
@@ -215,9 +219,9 @@ This class contains for simple methods that you need to implement. As part of th
 data from the model into the widget each time it is being drawn, allowing for complex data to be easily passed from
 Shotgun via the model into your widget.</p>
 <p>The following example shows some of the basic around using this delegate class with the Shotgun Model:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># import the shotgun_model and view modules from the corresponding frameworks</span>
-<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">tank</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s">&quot;shotgun_model&quot;</span><span class="p">)</span>
-<span class="n">shotgun_view</span> <span class="o">=</span> <span class="n">tank</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s">&quot;views&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># import the shotgun_model and view modules from the corresponding frameworks</span>
+<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">tank</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span><span class="p">)</span>
+<span class="n">shotgun_view</span> <span class="o">=</span> <span class="n">tank</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s2">&quot;views&quot;</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">ExampleDelegate</span><span class="p">(</span><span class="n">shotgun_view</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="p">):</span>
@@ -232,63 +236,63 @@ Shotgun via the model into your widget.</p>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the widget to be used when drawing items</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># in this example, we use a simple QLabel to illustrate the principle.</span>
-        <span class="c"># for more complex setups, you typically design a more complex widget</span>
-        <span class="c"># and use this factory method to create it.</span>
+        <span class="c1"># in this example, we use a simple QLabel to illustrate the principle.</span>
+        <span class="c1"># for more complex setups, you typically design a more complex widget</span>
+        <span class="c1"># and use this factory method to create it.</span>
         <span class="k">return</span> <span class="n">QLabel</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_before_paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when a cell is about to be painted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># now we need to prepare our QLabel &#39;paintbrush&#39; by setting</span>
-        <span class="c"># some of the data members. The data is being provided from</span>
-        <span class="c"># the underlying model via a model index pointer.</span>
+        <span class="c1"># now we need to prepare our QLabel &#39;paintbrush&#39; by setting</span>
+        <span class="c1"># some of the data members. The data is being provided from</span>
+        <span class="c1"># the underlying model via a model index pointer.</span>
 
-        <span class="c"># note that the widget passed in is typically being reused</span>
-        <span class="c"># across multiple cells in order to avoid creating lots of</span>
-        <span class="c"># widget objects.</span>
+        <span class="c1"># note that the widget passed in is typically being reused</span>
+        <span class="c1"># across multiple cells in order to avoid creating lots of</span>
+        <span class="c1"># widget objects.</span>
 
-        <span class="c"># get the shotgun query data for this model item</span>
+        <span class="c1"># get the shotgun query data for this model item</span>
         <span class="n">sg_item</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">get_sg_data</span><span class="p">(</span><span class="n">model_index</span><span class="p">)</span>
 
-        <span class="c"># get the description</span>
-        <span class="n">desc_str</span> <span class="o">=</span> <span class="n">sg_item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;description&quot;</span><span class="p">)</span>
+        <span class="c1"># get the description</span>
+        <span class="n">desc_str</span> <span class="o">=</span> <span class="n">sg_item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">)</span>
 
-        <span class="c"># populate the QLabel with the description data</span>
+        <span class="c1"># populate the QLabel with the description data</span>
         <span class="n">widget</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">desc_str</span><span class="p">)</span>
 
-        <span class="c"># QLabel is now ready to be used to paint this object on the screen</span>
+        <span class="c1"># QLabel is now ready to be used to paint this object on the screen</span>
 
     <span class="k">def</span> <span class="nf">_on_before_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when a cell is being selected.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># the widget object passed in here will not be used as a</span>
-        <span class="c"># paintbrush but is a proper &quot;live&quot; object. This means</span>
-        <span class="c"># that you can have buttons and other objects that a user</span>
-        <span class="c"># can interact with as part of the widget. For items that</span>
-        <span class="c"># are not selected, these buttons will merely be &#39;drawn&#39;</span>
-        <span class="c"># so they cannot for example exhibit any on-hover behavior.</span>
+        <span class="c1"># the widget object passed in here will not be used as a</span>
+        <span class="c1"># paintbrush but is a proper &quot;live&quot; object. This means</span>
+        <span class="c1"># that you can have buttons and other objects that a user</span>
+        <span class="c1"># can interact with as part of the widget. For items that</span>
+        <span class="c1"># are not selected, these buttons will merely be &#39;drawn&#39;</span>
+        <span class="c1"># so they cannot for example exhibit any on-hover behavior.</span>
 
-        <span class="c"># for selected objects however, the widget is live and</span>
-        <span class="c"># can be interacted with. Therefore, the widget object</span>
-        <span class="c"># in to this method is unique and will not be reused</span>
-        <span class="c"># in other places.</span>
+        <span class="c1"># for selected objects however, the widget is live and</span>
+        <span class="c1"># can be interacted with. Therefore, the widget object</span>
+        <span class="c1"># in to this method is unique and will not be reused</span>
+        <span class="c1"># in other places.</span>
 
-        <span class="c"># do std drawing first</span>
+        <span class="c1"># do std drawing first</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_before_paint</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">)</span>
 
-        <span class="c"># at this point, we can indicate that the widget is</span>
-        <span class="c"># selected, for example by setting the style</span>
-        <span class="n">widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;{background-color: red;}&quot;</span><span class="p">)</span>
+        <span class="c1"># at this point, we can indicate that the widget is</span>
+        <span class="c1"># selected, for example by setting the style</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;{background-color: red;}&quot;</span><span class="p">)</span>
 
 
     <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Base the size on the icon size property of the view</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># hint to the delegate system how much space our widget needs</span>
+        <span class="c1"># hint to the delegate system how much space our widget needs</span>
         <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -330,48 +334,18 @@ and <a class="reference internal" href="#views.WidgetDelegate._create_editor_wid
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="views.WidgetDelegate._create_editor_widget">
-<code class="descname">_create_editor_widget</code><span class="sig-paren">(</span><em>model_index</em>, <em>style_options</em>, <em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/widget_delegate.html#WidgetDelegate._create_editor_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.WidgetDelegate._create_editor_widget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a new editor widget for the specified model index.  The base class is
-responsible for the lifetime of the widget meaning that the derived class should
-release all handles to it.</p>
+<dl class="attribute">
+<dt id="views.WidgetDelegate.view">
+<code class="descname">view</code><a class="headerlink" href="#views.WidgetDelegate.view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the parent view of this delegate.  This is just a wrapper
+for returning <code class="docutils literal"><span class="pre">self.parent()</span></code> but makes calling code easier to read!</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model_index</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QModelIndex</span></code></a>) &#8211; The index of the item in the model to return a widget for</li>
-<li><strong>style_options</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QStyleOptionViewItem.html#PySide.QtGui.QStyleOptionViewItem" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QStyleOptionViewItem</span></code></a>) &#8211; Specifies the current Qt style options for this index</li>
-<li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The parent view that the widget should be parented to</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The parent view this delegate was created for</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A QWidget to be used for editing the current index</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="views.WidgetDelegate._create_widget">
-<code class="descname">_create_widget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/widget_delegate.html#WidgetDelegate._create_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.WidgetDelegate._create_widget" title="Permalink to this definition">¶</a></dt>
-<dd><p>This needs to be implemented by any deriving classes unless the separate
-methods <a class="reference internal" href="#views.WidgetDelegate._get_painter_widget" title="views.WidgetDelegate._get_painter_widget"><code class="xref py py-meth docutils literal"><span class="pre">_get_painter_widget()</span></code></a> and <a class="reference internal" href="#views.WidgetDelegate._create_editor_widget" title="views.WidgetDelegate._create_editor_widget"><code class="xref py py-meth docutils literal"><span class="pre">_create_editor_widget()</span></code></a> 
-are implemented instead.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; QWidget to parent the widget to</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">QWidget that will be used to paint grid cells in the view.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -394,6 +368,33 @@ the lifetime of the widget.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A QWidget to be used for painting the current index</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="views.WidgetDelegate._create_editor_widget">
+<code class="descname">_create_editor_widget</code><span class="sig-paren">(</span><em>model_index</em>, <em>style_options</em>, <em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/widget_delegate.html#WidgetDelegate._create_editor_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.WidgetDelegate._create_editor_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new editor widget for the specified model index.  The base class is
+responsible for the lifetime of the widget meaning that the derived class should
+release all handles to it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model_index</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QModelIndex</span></code></a>) &#8211; The index of the item in the model to return a widget for</li>
+<li><strong>style_options</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QStyleOptionViewItem.html#PySide.QtGui.QStyleOptionViewItem" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QStyleOptionViewItem</span></code></a>) &#8211; Specifies the current Qt style options for this index</li>
+<li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The parent view that the widget should be parented to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A QWidget to be used for editing the current index</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a></p>
@@ -428,18 +429,21 @@ view related state of the cell.</li>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="views.WidgetDelegate.view">
-<code class="descname">view</code><a class="headerlink" href="#views.WidgetDelegate.view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the parent view of this delegate.  This is just a wrapper
-for returning <code class="docutils literal"><span class="pre">self.parent()</span></code> but makes calling code easier to read!</p>
+<dl class="method">
+<dt id="views.WidgetDelegate._create_widget">
+<code class="descname">_create_widget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/widget_delegate.html#WidgetDelegate._create_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.WidgetDelegate._create_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>This needs to be implemented by any deriving classes unless the separate
+methods <a class="reference internal" href="#views.WidgetDelegate._get_painter_widget" title="views.WidgetDelegate._get_painter_widget"><code class="xref py py-meth docutils literal"><span class="pre">_get_painter_widget()</span></code></a> and <a class="reference internal" href="#views.WidgetDelegate._create_editor_widget" title="views.WidgetDelegate._create_editor_widget"><code class="xref py py-meth docutils literal"><span class="pre">_create_editor_widget()</span></code></a> 
+are implemented instead.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The parent view this delegate was created for</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; QWidget to parent the widget to</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">QWidget that will be used to paint grid cells in the view.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -457,6 +461,15 @@ for returning <code class="docutils literal"><span class="pre">self.parent()</sp
 <p>Custom delegate that provides a simple mechanism where an actual widget (editor) is 
 presented for the selected item whilst all other items are simply drawn with a single
 widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><strong>selection_model</strong> (<em>QtGui.QItemSelectionModel</em>) &#8211; The selection model of the delegate&#8217;s parent view, if one
+existed at the time of the delegate&#8217;s initialization.</td>
+</tr>
+</tbody>
+</table>
 <p>You use this class by subclassing it and implementing the methods:</p>
 <ul class="simple">
 <li><a class="reference internal" href="#views.EditSelectedWidgetDelegate._get_painter_widget" title="views.EditSelectedWidgetDelegate._get_painter_widget"><code class="xref py py-meth docutils literal"><span class="pre">_get_painter_widget()</span></code></a>     - return the widget to be used to paint an index</li>
@@ -490,6 +503,48 @@ to ensure that it is able to obtain the view&#8217;s selection model correctly.)
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="views.EditSelectedWidgetDelegate._on_before_selection">
+<code class="descname">_on_before_selection</code><span class="sig-paren">(</span><em>widget</em>, <em>model_index</em>, <em>style_options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/edit_selected_widget_delegate.html#EditSelectedWidgetDelegate._on_before_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.EditSelectedWidgetDelegate._on_before_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called just before a cell is selected. This method should 
+configure values on the widget (such as labels, thumbnails etc) based on the 
+data contained in the model index parameter which is being passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>widget</strong> &#8211; The QWidget (constructed in _create_widget()) which will 
+be used to paint the cell.</li>
+<li><strong>model_index</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QModelIndex</span></code></a>) &#8211; QModelIndex object representing the data of the object that is 
+about to be drawn.</li>
+<li><strong>style_options</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QStyleOptionViewItem.html#PySide.QtGui.QStyleOptionViewItem" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QStyleOptionViewItem</span></code></a>) &#8211; object containing specifics about the 
+view related state of the cell.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="views.EditSelectedWidgetDelegate._on_selection_changed">
+<code class="descname">_on_selection_changed</code><span class="sig-paren">(</span><em>selected</em>, <em>deselected</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/edit_selected_widget_delegate.html#EditSelectedWidgetDelegate._on_selection_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.EditSelectedWidgetDelegate._on_selection_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal triggered when someone changes the selection in the view.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>selected</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QItemSelection.html#PySide.QtGui.QItemSelection" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QItemSelection</span></code></a>) &#8211; A list of the indexes in the model that were selected</li>
+<li><strong>deselected</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QItemSelection.html#PySide.QtGui.QItemSelection" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QItemSelection</span></code></a>) &#8211; A list of the indexes in the model that were deselected</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="views.EditSelectedWidgetDelegate._create_editor_widget">
 <code class="descname">_create_editor_widget</code><span class="sig-paren">(</span><em>model_index</em>, <em>style_options</em>, <em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#views.EditSelectedWidgetDelegate._create_editor_widget" title="Permalink to this definition">¶</a></dt>
@@ -588,48 +643,6 @@ view related state of the cell.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="views.EditSelectedWidgetDelegate._on_before_selection">
-<code class="descname">_on_before_selection</code><span class="sig-paren">(</span><em>widget</em>, <em>model_index</em>, <em>style_options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/edit_selected_widget_delegate.html#EditSelectedWidgetDelegate._on_before_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.EditSelectedWidgetDelegate._on_before_selection" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called just before a cell is selected. This method should 
-configure values on the widget (such as labels, thumbnails etc) based on the 
-data contained in the model index parameter which is being passed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>widget</strong> &#8211; The QWidget (constructed in _create_widget()) which will 
-be used to paint the cell.</li>
-<li><strong>model_index</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QModelIndex</span></code></a>) &#8211; QModelIndex object representing the data of the object that is 
-about to be drawn.</li>
-<li><strong>style_options</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QStyleOptionViewItem.html#PySide.QtGui.QStyleOptionViewItem" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QStyleOptionViewItem</span></code></a>) &#8211; object containing specifics about the 
-view related state of the cell.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="views.EditSelectedWidgetDelegate._on_selection_changed">
-<code class="descname">_on_selection_changed</code><span class="sig-paren">(</span><em>selected</em>, <em>deselected</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/edit_selected_widget_delegate.html#EditSelectedWidgetDelegate._on_selection_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.EditSelectedWidgetDelegate._on_selection_changed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Signal triggered when someone changes the selection in the view.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>selected</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QItemSelection.html#PySide.QtGui.QItemSelection" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QItemSelection</span></code></a>) &#8211; A list of the indexes in the model that were selected</li>
-<li><strong>deselected</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QItemSelection.html#PySide.QtGui.QItemSelection" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QItemSelection</span></code></a>) &#8211; A list of the indexes in the model that were deselected</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="views.EditSelectedWidgetDelegate.view">
 <code class="descname">view</code><a class="headerlink" href="#views.EditSelectedWidgetDelegate.view" title="Permalink to this definition">¶</a></dt>
@@ -691,25 +704,25 @@ level defining the items for that group.  Subsequent levels of the hierarchy are
 <p>Items within a group are layed out left-to right and wrap automatically based on the
 view&#8217;s width.</p>
 <p>For example, the following tree model:</p>
-<div class="highlight-python"><div class="highlight"><pre>- Group 1
-  - Item 1
-  - Item 2
-  - Item 3
-- Group 2
-  - Item 4
-- Group 3
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Group</span> <span class="mi">1</span>
+  <span class="o">-</span> <span class="n">Item</span> <span class="mi">1</span>
+  <span class="o">-</span> <span class="n">Item</span> <span class="mi">2</span>
+  <span class="o">-</span> <span class="n">Item</span> <span class="mi">3</span>
+<span class="o">-</span> <span class="n">Group</span> <span class="mi">2</span>
+  <span class="o">-</span> <span class="n">Item</span> <span class="mi">4</span>
+<span class="o">-</span> <span class="n">Group</span> <span class="mi">3</span>
 </pre></div>
 </div>
 <p>Would look like this in the view:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; Group 1
------------------
-[Item 1] [Item 2]
-[Item 3]
-&gt; Group 2
------------------
-[Item 4]
-&gt; Group 3
------------------
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Group</span> <span class="mi">1</span>
+<span class="o">-----------------</span>
+<span class="p">[</span><span class="n">Item</span> <span class="mi">1</span><span class="p">]</span> <span class="p">[</span><span class="n">Item</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">[</span><span class="n">Item</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;</span> <span class="n">Group</span> <span class="mi">2</span>
+<span class="o">-----------------</span>
+<span class="p">[</span><span class="n">Item</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;</span> <span class="n">Group</span> <span class="mi">3</span>
+<span class="o">-----------------</span>
 </pre></div>
 </div>
 <p>The widgets used for the various groups and items are created through a GroupedListViewItemDelegate
@@ -728,18 +741,16 @@ and this can be overriden to implement custom UI for these elements.</p>
 <dd><p>The external border to use for all items in the view</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="views.GroupedListView.collapse">
-<code class="descname">collapse</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/grouped_list_view/grouped_list_view.html#GroupedListView.collapse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.GroupedListView.collapse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collapse the specified index</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QModelIndex</span></code></a>) &#8211; The model index to be collapsed</td>
-</tr>
-</tbody>
-</table>
+<dl class="attribute">
+<dt id="views.GroupedListView.group_spacing">
+<code class="descname">group_spacing</code><a class="headerlink" href="#views.GroupedListView.group_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The spacing to use between groups when they are collapsed</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="views.GroupedListView.item_spacing">
+<code class="descname">item_spacing</code><a class="headerlink" href="#views.GroupedListView.item_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The spacing to use between items in the view</p>
 </dd></dl>
 
 <dl class="method">
@@ -756,10 +767,18 @@ and this can be overriden to implement custom UI for these elements.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="views.GroupedListView.group_spacing">
-<code class="descname">group_spacing</code><a class="headerlink" href="#views.GroupedListView.group_spacing" title="Permalink to this definition">¶</a></dt>
-<dd><p>The spacing to use between groups when they are collapsed</p>
+<dl class="method">
+<dt id="views.GroupedListView.collapse">
+<code class="descname">collapse</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/grouped_list_view/grouped_list_view.html#GroupedListView.collapse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.GroupedListView.collapse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collapse the specified index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QModelIndex</span></code></a>) &#8211; The model index to be collapsed</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -777,12 +796,6 @@ otherwise False</td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="views.GroupedListView.item_spacing">
-<code class="descname">item_spacing</code><a class="headerlink" href="#views.GroupedListView.item_spacing" title="Permalink to this definition">¶</a></dt>
-<dd><p>The spacing to use between items in the view</p>
 </dd></dl>
 
 </dd></dl>
@@ -847,6 +860,21 @@ to indicate if the group is expanded or not.</td>
 </tbody>
 </table>
 <dl class="method">
+<dt id="views.GroupWidgetBase.set_item">
+<code class="descname">set_item</code><span class="sig-paren">(</span><em>model_idx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/grouped_list_view/group_widget_base.html#GroupWidgetBase.set_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.GroupWidgetBase.set_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the item this widget should be associated with.  This should be 
+implemented in derived classes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_idx</strong> &#8211; The index of the item in the model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="views.GroupWidgetBase.set_expanded">
 <code class="descname">set_expanded</code><span class="sig-paren">(</span><em>expand=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/grouped_list_view/group_widget_base.html#GroupWidgetBase.set_expanded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.GroupWidgetBase.set_expanded" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set if this widget is expanded or not.  This should be implemented 
@@ -857,21 +885,6 @@ in derived classes</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expand</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; True if the widget should be expanded, False if it
 should be collapsed.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="views.GroupWidgetBase.set_item">
-<code class="descname">set_item</code><span class="sig-paren">(</span><em>model_idx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/views/grouped_list_view/group_widget_base.html#GroupWidgetBase.set_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#views.GroupWidgetBase.set_item" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the item this widget should be associated with.  This should be 
-implemented in derived classes</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_idx</strong> &#8211; The index of the item in the model</td>
 </tr>
 </tbody>
 </table>
@@ -891,7 +904,7 @@ implemented in derived classes</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="playback_label.html" class="btn btn-neutral" title="Shotgun Playback Label Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="spinner_widget.html" class="btn btn-neutral" title="Spinner Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -900,7 +913,7 @@ implemented in derived classes</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -921,7 +934,7 @@ implemented in derived classes</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

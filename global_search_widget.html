@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Global Search Widget &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>Shotgun Global Search Widget &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,9 +32,9 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="index.html"/>
         <link rel="next" title="Help Screen Popup" href="help_screen.html"/>
-        <link rel="prev" title="Auto-Elide label" href="elided_label.html"/> 
+        <link rel="prev" title="Shotgun Global Search Completer" href="global_search_completer.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -57,7 +57,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='_static/logo@2x.png'/>
     
     </a>
     
@@ -92,13 +92,17 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
@@ -123,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -152,7 +156,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -189,20 +193,22 @@ a global search input box with auto completion.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_selected(str, int):</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when someone selects an entity inside
+<tr class="field-odd field"><th class="field-name">Signal:</th><td class="field-body"><code class="docutils literal"><span class="pre">entity_selected(str,</span> <span class="pre">int)</span></code> - Fires when someone selects an entity inside
 the search results. The returned parameters are entity type and entity id.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; Qt parent object</td>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="global_search_widget.GlobalSearchWidget.destroy">
-<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget.destroy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Should be called before the widget is closed</p>
-</dd></dl>
-
+<p>Initialize the widget.</p>
+<p>Uses the <code class="docutils literal"><span class="pre">GlobalSearchCompleter</span></code> as the completer for searching
+SG entities.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; Qt parent object</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="global_search_widget.GlobalSearchWidget.set_bg_task_manager">
 <code class="descname">set_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget.set_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
@@ -213,10 +219,33 @@ to Shotgun will be dispatched via this object.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> &#8211; Background task manager to use</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.2.3)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="global_search_widget.GlobalSearchWidget.set_searchable_entity_types">
+<code class="descname">set_searchable_entity_types</code><span class="sig-paren">(</span><em>types_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget.set_searchable_entity_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget.set_searchable_entity_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a dictionary of entity types with optional search filters to
+limit the breadth of the widget&#8217;s search.</p>
+<p>See the documentation for <cite>GlobalSearchCompleter.set_searchable_entity_types</cite>
+for the default values if this method is not called on the widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>types_dict</strong> &#8211; A dictionary of searchable types with optional filters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="global_search_widget.GlobalSearchWidget.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_widget/global_search_widget.html#GlobalSearchWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_widget.GlobalSearchWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called before the widget is closed</p>
 </dd></dl>
 
 </dd></dl>
@@ -233,7 +262,7 @@ to Shotgun will be dispatched via this object.</p>
         <a href="help_screen.html" class="btn btn-neutral float-right" title="Help Screen Popup" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="elided_label.html" class="btn btn-neutral" title="Auto-Elide label" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="global_search_completer.html" class="btn btn-neutral" title="Shotgun Global Search Completer" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -242,7 +271,7 @@ to Shotgun will be dispatched via this object.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -263,7 +292,7 @@ to Shotgun will be dispatched via this object.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

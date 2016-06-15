@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -56,7 +56,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='../../_static/logo@2x.png'/>
     
     </a>
     
@@ -91,13 +91,17 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
@@ -122,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -174,15 +178,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for activity_stream.activity_stream</h1><div class="highlight"><pre>
-<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
-<span class="c"># </span>
-<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c"># </span>
-<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
-<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
-<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -208,58 +212,99 @@
 <span class="sd">    :signal playback_requested(dict): Fires when someone clicks the playback url</span>
 <span class="sd">            on a version. Returns a shotgun dictionary with information</span>
 <span class="sd">            about the version.</span>
+<span class="sd">    :signal entity_created(object): Fires when a Note or Reply entity is created by</span>
+<span class="sd">            an underlying widget within the activity stream. Returns a Shotgun dictionary</span>
+<span class="sd">            with information about the new Entity.</span>
+<span class="sd">    :ivar reply_dialog: When a ReplyDialog is active it can be accessed here. If there</span>
+<span class="sd">                        is no ReplyDialog active, then this will be set to None.</span>
+<span class="sd">    :vartype reply_dialog: .dialog_reply.ReplyDialog or None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c"># max number of items to show in the activity stream.</span>
+    <span class="c1"># max number of items to show in the activity stream.</span>
     <span class="n">MAX_STREAM_LENGTH</span> <span class="o">=</span> <span class="mi">20</span>
     <span class="n">entity_requested</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
-    <span class="n">playback_requested</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>   
-     
-    
+    <span class="n">playback_requested</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="c1"># Emitted when a Note or Reply entity is created. The</span>
+    <span class="c1"># entity type as a string and id as an int will be</span>
+    <span class="c1"># provided.</span>
+    <span class="c1">#</span>
+    <span class="c1"># dict(entity_type=&quot;Note&quot;, id=1234)</span>
+    <span class="n">entity_created</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent: QT parent object</span>
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># first, call the base class and let it do its thing.</span>
+        <span class="c1"># first, call the base class and let it do its thing.</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
         
-        <span class="c"># now load in the UI that was created in the UI designer</span>
+        <span class="c1"># now load in the UI that was created in the UI designer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_ActivityStreamWidget</span><span class="p">()</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># The note widget will be turned on when an entity is loaded</span>
+        <span class="c1"># if the entity is of an appropriate type.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+        <span class="c1"># customizations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_sg_stream_button</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span> <span class="o">=</span> <span class="bp">True</span>
         
-        <span class="c"># apply styling</span>
+        <span class="c1"># apply styling</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_stylesheet</span><span class="p">()</span>
 
-        <span class="c"># keep an overlay for loading</span>
-        <span class="n">overlay_module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s">&quot;overlay_widget&quot;</span><span class="p">)</span>
+        <span class="c1"># keep an overlay for loading</span>
+        <span class="n">overlay_module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;overlay_widget&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span> <span class="o">=</span> <span class="n">overlay_module</span><span class="o">.</span><span class="n">ShotgunOverlayWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span> <span class="o">=</span> <span class="n">SmallOverlayWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="c"># set insertion order into list to be bottom-up</span>
+        <span class="c1"># set insertion order into list to be bottom-up</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">setDirection</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QBoxLayout</span><span class="o">.</span><span class="n">BottomToTop</span><span class="p">)</span>
 
-        <span class="c"># create a data manager to handle backend</span>
+        <span class="c1"># create a data manager to handle backend</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span> <span class="o">=</span> <span class="n">ActivityStreamDataHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="c"># set up signals</span>
+        <span class="c1"># set up signals</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_new_note</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">update_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_new_data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">thumbnail_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_thumbnail</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">data_updated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_note_submitted</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_created</span><span class="p">)</span>
         
-        <span class="c"># keep handles to all widgets to be nice to the GC</span>
+        <span class="c1"># keep handles to all widgets to be nice to the GC</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span> <span class="o">=</span> <span class="p">{}</span>
                 
-        <span class="c"># state management</span>
+        <span class="c1"># state management</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="bp">None</span>
-        
+
+        <span class="c1"># We&#39;ll be keeping a persistent reply dialog available because</span>
+        <span class="c1"># we need to connect to a signal that it&#39;s emitting. It&#39;s easiest</span>
+        <span class="c1"># to do that if we&#39;re dealing with an object that persists.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span> <span class="o">=</span> <span class="n">ReplyDialog</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">,</span>
+            <span class="n">note_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">allow_screenshots</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># We&#39;ll allow for a pre-note-creation callback. This is for additional</span>
+        <span class="c1"># pre-processing that needs to occur before a Note or Reply is created</span>
+        <span class="c1"># in Shotgun. This makes sure that the activity stream data coming down</span>
+        <span class="c1"># during the rescan after submission contains anything like additional</span>
+        <span class="c1"># attachments that this widget didn&#39;t explicitly handle itself prior to</span>
+        <span class="c1"># submission.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_created</span><span class="p">)</span>
+
 <div class="viewcode-block" id="ActivityStreamWidget.set_bg_task_manager"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the background task manager to use to pull</span>
@@ -267,22 +312,108 @@
 <span class="sd">        to Shotgun will be dispatched via this object.</span>
 <span class="sd">        </span>
 <span class="sd">        :param task_manager: Background task manager to use</span>
-<span class="sd">        :type data_retriever: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` </span>
+<span class="sd">        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">task_manager</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
-        </div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span></div>
+        
 <div class="viewcode-block" id="ActivityStreamWidget.destroy"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Should be called before the widget is closed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span></div>
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># properties</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">note_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the :class:`~note_input_widget.NoteInputWidget` contained within</span>
+<span class="sd">        the ActivityStreamWidget. Note that this is the widget used for NEW note</span>
+<span class="sd">        input and not Note replies. To get the NoteInputWidget used for Note</span>
+<span class="sd">        replies, access can be found via :meth:`ReplyDialog.note_widget`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span>
+
+    <span class="k">def</span> <span class="nf">_get_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The pre-submit callback. This is None if one is not set, or a Python</span>
+<span class="sd">        callable if it is. This callable is run prior to submission of a new</span>
+<span class="sd">        Note or Reply. Note that the first (and only) argument passed to the</span>
+<span class="sd">        callback will be the calling :class:`NoteInputWidget`.</span>
+
+<span class="sd">        :returns:   Python callable or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span>
+
+    <span class="k">def</span> <span class="nf">_set_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="n">callback</span>
+
+    <span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_pre_submit_callback</span><span class="p">,</span>
+        <span class="n">_set_pre_submit_callback</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether this activity stream is allowed to give the user access to a</span>
+<span class="sd">        button that performs screenshot operations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span>
+
+    <span class="k">def</span> <span class="nf">_set_allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span><span class="p">)</span>
+
+    <span class="n">allow_screenshots</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_allow_screenshots</span><span class="p">,</span>
+        <span class="n">_set_allow_screenshots</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_show_sg_stream_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the button to navigate to Shotgun is shown in the stream.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_sg_stream_button</span>
+
+    <span class="k">def</span> <span class="nf">_set_show_sg_stream_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets whether to show the button to navigate to Shotgun.</span>
+
+<span class="sd">        :param state: True or False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_sg_stream_button</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="n">show_sg_stream_button</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_show_sg_stream_button</span><span class="p">,</span>
+        <span class="n">_set_show_sg_stream_button</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_version_items_playable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the label representing a created Version entity is shown</span>
+<span class="sd">        as being &quot;playable&quot; within the UI. If True, then a play icon is</span>
+<span class="sd">        visible over the thumbnail image, and no icon overlay is shown</span>
+<span class="sd">        when False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span>
+
+    <span class="k">def</span> <span class="nf">_set_version_items_playable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="n">version_items_playable</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_version_items_playable</span><span class="p">,</span>
+        <span class="n">_set_version_items_playable</span><span class="p">,</span>
+    <span class="p">)</span>
         
-    <span class="c">############################################################################</span>
-    <span class="c"># public interface</span>
-        </div>
+    <span class="c1">############################################################################</span>
+    <span class="c1"># public interface</span>
+        
 <div class="viewcode-block" id="ActivityStreamWidget.load_data"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the state of the widget and then load up the data</span>
@@ -290,163 +421,165 @@
 <span class="sd">        </span>
 <span class="sd">        :param sg_entity_dict: Dictionary with keys type and id</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Setting up activity stream for entity </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">sg_entity_dict</span><span class="p">)</span>
-        <span class="c"># clean up everything first</span>
+ 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Setting up activity stream for entity </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sg_entity_dict</span><span class="p">)</span>
+        <span class="c1"># clean up everything first</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clear</span><span class="p">()</span>
         
-        <span class="c"># change the state</span>
+        <span class="c1"># change the state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="n">sg_entity_dict</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
         
-        <span class="c"># tell our &quot;new note&quot; widget which entity it should link up against </span>
+        <span class="c1"># tell our &quot;new note&quot; widget which entity it should link up against </span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">set_current_entity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> 
                                                <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">)</span>
 
-        <span class="c"># to mimic the behavior in shotgun - which seems quite strange and</span>
-        <span class="c"># inconsistent for users, we need to disable to note dialog for </span>
-        <span class="c"># these cases</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;ApiUser&quot;</span><span class="p">,</span> <span class="s">&quot;HumanUser&quot;</span><span class="p">,</span> <span class="s">&quot;ClientUser&quot;</span><span class="p">]:</span>
+        <span class="c1"># to mimic the behavior in shotgun - which seems quite strange and</span>
+        <span class="c1"># inconsistent for users, we need to disable to note dialog for </span>
+        <span class="c1"># these cases</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ApiUser&quot;</span><span class="p">,</span> <span class="s2">&quot;HumanUser&quot;</span><span class="p">,</span> <span class="s2">&quot;ClientUser&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
-        <span class="c"># now load cached data for the given entity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Setting up db manager....&quot;</span><span class="p">)</span>
+        <span class="c1"># now load cached data for the given entity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Setting up db manager....&quot;</span><span class="p">)</span>
         <span class="n">ids_to_process</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">load_activity_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> 
                                                                <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">,</span>
                                                                <span class="bp">self</span><span class="o">.</span><span class="n">MAX_STREAM_LENGTH</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids_to_process</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c"># nothing cached - show spinner!</span>
-            <span class="c"># NOTE!!!! - cannot use the actual spinning animation because</span>
-            <span class="c"># this triggers the GIL bug where signals from threads</span>
-            <span class="c"># will deadlock the GIL</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="s">&quot;Loading Shotgun Data...&quot;</span><span class="p">)</span>
+            <span class="c1"># nothing cached - show spinner!</span>
+            <span class="c1"># NOTE!!!! - cannot use the actual spinning animation because</span>
+            <span class="c1"># this triggers the GIL bug where signals from threads</span>
+            <span class="c1"># will deadlock the GIL</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span><span class="o">.</span><span class="n">show_message</span><span class="p">(</span><span class="s2">&quot;Loading Shotgun Data...&quot;</span><span class="p">)</span>
 
         <span class="n">all_reply_users</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">attachment_requests</span> <span class="o">=</span> <span class="p">[]</span>
         
-        <span class="c">###############################################################</span>
-        <span class="c"># Phase 1 - render the UI.</span>
+        <span class="c1">###############################################################</span>
+        <span class="c1"># Phase 1 - render the UI.</span>
         
-        <span class="c"># before we begin widget operations, turn off visibility</span>
-        <span class="c"># of the whole widget in order to avoid recomputes</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Start building widgets based on cached data...&quot;</span><span class="p">)</span>
+        <span class="c1"># before we begin widget operations, turn off visibility</span>
+        <span class="c1"># of the whole widget in order to avoid recomputes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Start building widgets based on cached data...&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
 
-            <span class="c"># we are building the widgets bottom up.</span>
-            <span class="c"># first of all, insert a widget that will expand so that </span>
-            <span class="c"># it consumes all unused space. This is to keep other</span>
-            <span class="c"># widgets from growing when there are only a few widgets</span>
-            <span class="c"># available in the scroll area.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Adding expanding base widget...&quot;</span><span class="p">)</span>            
+            <span class="c1"># we are building the widgets bottom up.</span>
+            <span class="c1"># first of all, insert a widget that will expand so that </span>
+            <span class="c1"># it consumes all unused space. This is to keep other</span>
+            <span class="c1"># widgets from growing when there are only a few widgets</span>
+            <span class="c1"># available in the scroll area.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Adding expanding base widget...&quot;</span><span class="p">)</span>            
             
             <span class="n">expanding_widget</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">expanding_widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">setStretchFactor</span><span class="p">(</span><span class="n">expanding_widget</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expanding_widget</span><span class="p">)</span>
 
-            <span class="n">sg_stream_button</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-            <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;Click here to see the Activity stream in Shotgun.&quot;</span><span class="p">)</span>
-            <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s">&quot;full_shotgun_stream_button&quot;</span><span class="p">)</span>
-            <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
-            <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
-            <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_load_shotgun_activity_stream</span><span class="p">)</span>
-            
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">sg_stream_button</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sg_stream_button</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_sg_stream_button</span><span class="p">:</span>
+                <span class="n">sg_stream_button</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Click here to see the Activity stream in Shotgun.&quot;</span><span class="p">)</span>
+                <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;full_shotgun_stream_button&quot;</span><span class="p">)</span>
+                <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+                <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
+                <span class="n">sg_stream_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_load_shotgun_activity_stream</span><span class="p">)</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">sg_stream_button</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sg_stream_button</span><span class="p">)</span>
     
-            <span class="c"># ids are returned in async order. Now pop them onto the activity stream,</span>
-            <span class="c"># old items first order...</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Adding activity widgets...&quot;</span><span class="p">)</span>
+            <span class="c1"># ids are returned in async order. Now pop them onto the activity stream,</span>
+            <span class="c1"># old items first order...</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Adding activity widgets...&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">activity_id</span> <span class="ow">in</span> <span class="n">ids_to_process</span><span class="p">:</span>
                 <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_activity_widget</span><span class="p">(</span><span class="n">activity_id</span><span class="p">)</span>
-                <span class="c"># note that not all activity data entries generate</span>
-                <span class="c"># a widget in our factory method.      </span>
+                <span class="c1"># note that not all activity data entries generate</span>
+                <span class="c1"># a widget in our factory method.      </span>
                 <span class="k">if</span> <span class="n">w</span><span class="p">:</span>
-                    <span class="c"># a widget was generated! Insert it into</span>
-                    <span class="c"># the widget layouts etc.</span>
+                    <span class="c1"># a widget was generated! Insert it into</span>
+                    <span class="c1"># the widget layouts etc.</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="p">[</span><span class="n">activity_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>        
             
-                    <span class="c"># run extra init for notes</span>
-                    <span class="c"># this is to fetch the actual note payload - </span>
-                    <span class="c"># content, replies, attachments etc.</span>
+                    <span class="c1"># run extra init for notes</span>
+                    <span class="c1"># this is to fetch the actual note payload - </span>
+                    <span class="c1"># content, replies, attachments etc.</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">get_activity_data</span><span class="p">(</span><span class="n">activity_id</span><span class="p">)</span>
-                        <span class="n">note_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s">&quot;id&quot;</span><span class="p">]</span>
+                        <span class="n">note_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
                         <span class="p">(</span><span class="n">note_reply_users</span><span class="p">,</span> <span class="n">note_attachment_requests</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_populate_note_widget</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">)</span>
-                        <span class="c"># extend user and attachment requests to our full list</span>
-                        <span class="c"># so that we can request thumbnails for these later...</span>
+                        <span class="c1"># extend user and attachment requests to our full list</span>
+                        <span class="c1"># so that we can request thumbnails for these later...</span>
                         <span class="n">all_reply_users</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">note_reply_users</span><span class="p">)</span>                    
                         <span class="n">attachment_requests</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">note_attachment_requests</span><span class="p">)</span>
             
-            <span class="c"># last, create &quot;loading&quot; widget</span>
-            <span class="c"># to put at the top of the list.</span>
-            <span class="c">#</span>
-            <span class="c"># We add this into the scroll area so that it scrolls with the</span>
-            <span class="c"># rest of the items in the list.</span>
-            <span class="c">#</span>
+            <span class="c1"># last, create &quot;loading&quot; widget</span>
+            <span class="c1"># to put at the top of the list.</span>
+            <span class="c1">#</span>
+            <span class="c1"># We add this into the scroll area so that it scrolls with the</span>
+            <span class="c1"># rest of the items in the list.</span>
+            <span class="c1">#</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignHCenter</span><span class="o">|</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;Loading data from Shotgun...&quot;</span><span class="p">)</span> 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s">&quot;loading_widget&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Loading data from Shotgun...&quot;</span><span class="p">)</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;loading_widget&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">)</span>
         
         <span class="k">finally</span><span class="p">:</span>
-            <span class="c"># make the window visible again and trigger a redraw</span>
+            <span class="c1"># make the window visible again and trigger a redraw</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;...UI building complete!&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...UI building complete!&quot;</span><span class="p">)</span>
                 
-        <span class="c">###############################################################</span>
-        <span class="c"># Phase 2 - request additional data.</span>
-        <span class="c"># note that we don&#39;t interleave these requests with building</span>
-        <span class="c"># the ui - this is to minimise the risk of GIL signal issues</span>
+        <span class="c1">###############################################################</span>
+        <span class="c1"># Phase 2 - request additional data.</span>
+        <span class="c1"># note that we don&#39;t interleave these requests with building</span>
+        <span class="c1"># the ui - this is to minimise the risk of GIL signal issues</span>
                 
-        <span class="c"># request thumbs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Request thumbnails...&quot;</span><span class="p">)</span>
+        <span class="c1"># request thumbs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Request thumbnails...&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">activity_id</span> <span class="ow">in</span> <span class="n">ids_to_process</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_activity_thumbnails</span><span class="p">(</span><span class="n">activity_id</span><span class="p">)</span>
         
         <span class="k">for</span> <span class="n">attachment_req</span> <span class="ow">in</span> <span class="n">attachment_requests</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_attachment_thumbnail</span><span class="p">(</span><span class="n">attachment_req</span><span class="p">[</span><span class="s">&quot;activity_id&quot;</span><span class="p">],</span> 
-                                                            <span class="n">attachment_req</span><span class="p">[</span><span class="s">&quot;attachment_group_id&quot;</span><span class="p">],</span> 
-                                                            <span class="n">attachment_req</span><span class="p">[</span><span class="s">&quot;attachment_data&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_attachment_thumbnail</span><span class="p">(</span><span class="n">attachment_req</span><span class="p">[</span><span class="s2">&quot;activity_id&quot;</span><span class="p">],</span> 
+                                                            <span class="n">attachment_req</span><span class="p">[</span><span class="s2">&quot;attachment_group_id&quot;</span><span class="p">],</span> 
+                                                            <span class="n">attachment_req</span><span class="p">[</span><span class="s2">&quot;attachment_data&quot;</span><span class="p">])</span>
         
-        <span class="c"># now request thumbnails for all usesr who have replied, but </span>
-        <span class="c"># only once per user</span>
+        <span class="c1"># now request thumbnails for all usesr who have replied, but </span>
+        <span class="c1"># only once per user</span>
         <span class="n">reply_users_dup_check</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">reply_user</span> <span class="ow">in</span> <span class="n">all_reply_users</span><span class="p">:</span>
             
-            <span class="n">unique_user</span> <span class="o">=</span> <span class="p">(</span><span class="n">reply_user</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">],</span> <span class="n">reply_user</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">])</span> 
+            <span class="n">unique_user</span> <span class="o">=</span> <span class="p">(</span><span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span> 
             
             <span class="k">if</span> <span class="n">unique_user</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reply_users_dup_check</span><span class="p">:</span> 
                 <span class="n">reply_users_dup_check</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unique_user</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_user_thumbnail</span><span class="p">(</span><span class="n">reply_user</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">],</span> 
-                                                          <span class="n">reply_user</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">],</span>
-                                                          <span class="n">reply_user</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_user_thumbnail</span><span class="p">(</span><span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> 
+                                                          <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                                                          <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;...done&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
         
-        <span class="c"># and now request an update check</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Ask db manager to ask shotgun for updates...&quot;</span><span class="p">)</span>
+        <span class="c1"># and now request an update check</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Ask db manager to ask shotgun for updates...&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;...done&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span></div>
             
-    <span class="c">############################################################################</span>
-    <span class="c"># internals</span>
-        </div>
+    <span class="c1">############################################################################</span>
+    <span class="c1"># internals</span>
+        
     <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in a stylesheet from disk</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s">&quot;style.qss&quot;</span><span class="p">)</span>
+        <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">qss_file</span><span class="p">,</span> <span class="s">&quot;rt&quot;</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">qss_file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
             <span class="n">qss_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="c"># apply to widget (and all its children)</span>
+            <span class="c1"># apply to widget (and all its children)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">qss_data</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -455,31 +588,31 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear the widget. This will remove all items the UI</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Clearing UI...&quot;</span><span class="p">)</span>
-        <span class="c"># before we begin widget operations, turn off visibility</span>
-        <span class="c"># of the whole widget in order to avoid recomputes        </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing UI...&quot;</span><span class="p">)</span>
+        <span class="c1"># before we begin widget operations, turn off visibility</span>
+        <span class="c1"># of the whole widget in order to avoid recomputes        </span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         
-        <span class="c"># scroll to top</span>
+        <span class="c1"># scroll to top</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Clear loading widget&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clear loading widget&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_clear_loading_widget</span><span class="p">()</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Removing all widget items&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Removing all widget items&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                <span class="c"># remove widget from layout:</span>
+                <span class="c1"># remove widget from layout:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-                <span class="c"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
+                <span class="c1"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
                 <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-                <span class="c"># mark it to be deleted when event processing returns to the main loop</span>
+                <span class="c1"># mark it to be deleted when event processing returns to the main loop</span>
                 <span class="n">x</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
         
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Clearing python data structures&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing python data structures&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span> <span class="o">=</span> <span class="p">{}</span>
     
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Removing expanding widget&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Removing expanding widget&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
                 <span class="n">w</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
@@ -487,20 +620,24 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         
         <span class="k">finally</span><span class="p">:</span>
-            <span class="c"># make the window visible again and trigger a redraw</span>
+            <span class="c1"># make the window visible again and trigger a redraw</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="c1"># Since we have no entity loaded, we don&#39;t need to show</span>
+            <span class="c1"># the note widget.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
             
     <span class="k">def</span> <span class="nf">_clear_loading_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove the loading widget from the widget list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Clearing the loading widget&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing the loading widget&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;...done&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">_populate_note_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_widget</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -516,53 +653,53 @@
 <span class="sd">                  of the replies and attachment_requests a list of dicts of </span>
 <span class="sd">                  attahchment request dictionaries</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># set note content            </span>
+        <span class="c1"># set note content            </span>
         <span class="n">note_thread_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">get_note</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
         
         <span class="n">attachment_requests</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">reply_users</span> <span class="o">=</span> <span class="p">[]</span>
         
         <span class="k">if</span> <span class="n">note_thread_data</span><span class="p">:</span>
-            <span class="c"># we have cached note data</span>
+            <span class="c1"># we have cached note data</span>
             <span class="n">note_data</span> <span class="o">=</span> <span class="n">note_thread_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">replies_and_attachments</span> <span class="o">=</span> <span class="n">note_thread_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> 
             
-            <span class="c"># set up the note data first</span>
+            <span class="c1"># set up the note data first</span>
             <span class="n">note_widget</span><span class="o">.</span><span class="n">set_note_info</span><span class="p">(</span><span class="n">note_data</span><span class="p">)</span>
             
-            <span class="c"># now add replies</span>
+            <span class="c1"># now add replies</span>
             <span class="n">note_widget</span><span class="o">.</span><span class="n">add_replies</span><span class="p">(</span><span class="n">replies_and_attachments</span><span class="p">)</span>
             
-            <span class="c"># add a reply button and connect it</span>
+            <span class="c1"># add a reply button and connect it</span>
             <span class="n">reply_button</span> <span class="o">=</span> <span class="n">note_widget</span><span class="o">.</span><span class="n">add_reply_button</span><span class="p">()</span>
             <span class="n">reply_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_reply_clicked</span><span class="p">(</span><span class="n">note_id</span><span class="p">))</span>
 
-            <span class="c"># get list of users who have replied</span>
+            <span class="c1"># get list of users who have replied</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">replies_and_attachments</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Reply&quot;</span><span class="p">:</span>
-                    <span class="c"># note that the reply data structure is special:</span>
-                    <span class="c"># the &#39;user&#39; key is not a normal sg link dict, </span>
-                    <span class="c"># but contains an additional image field to describe</span>
-                    <span class="c"># the thumbnail:</span>
-                    <span class="c"># </span>
-                    <span class="c"># {&#39;content&#39;: &#39;Reply content...&#39;, </span>
-                    <span class="c">#  &#39;created_at&#39;: 1438649419.0, </span>
-                    <span class="c">#  &#39;type&#39;: &#39;Reply&#39;, </span>
-                    <span class="c">#  &#39;id&#39;: 73, </span>
-                    <span class="c">#  &#39;user&#39;: {&#39;image&#39;: &#39;...&#39;, </span>
-                    <span class="c">#           &#39;type&#39;: &#39;HumanUser&#39;, </span>
-                    <span class="c">#           &#39;id&#39;: 38, </span>
-                    <span class="c">#           &#39;name&#39;: &#39;Manne Ohrstrom&#39;}}]</span>
-                    <span class="n">reply_users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Reply&quot;</span><span class="p">:</span>
+                    <span class="c1"># note that the reply data structure is special:</span>
+                    <span class="c1"># the &#39;user&#39; key is not a normal sg link dict, </span>
+                    <span class="c1"># but contains an additional image field to describe</span>
+                    <span class="c1"># the thumbnail:</span>
+                    <span class="c1"># </span>
+                    <span class="c1"># {&#39;content&#39;: &#39;Reply content...&#39;, </span>
+                    <span class="c1">#  &#39;created_at&#39;: 1438649419.0, </span>
+                    <span class="c1">#  &#39;type&#39;: &#39;Reply&#39;, </span>
+                    <span class="c1">#  &#39;id&#39;: 73, </span>
+                    <span class="c1">#  &#39;user&#39;: {&#39;image&#39;: &#39;...&#39;, </span>
+                    <span class="c1">#           &#39;type&#39;: &#39;HumanUser&#39;, </span>
+                    <span class="c1">#           &#39;id&#39;: 38, </span>
+                    <span class="c1">#           &#39;name&#39;: &#39;Manne Ohrstrom&#39;}}]</span>
+                    <span class="n">reply_users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">])</span>
             
-            <span class="c"># get all attachment data</span>
-            <span class="c"># can request thumbnails post UI build</span>
+            <span class="c1"># get all attachment data</span>
+            <span class="c1"># can request thumbnails post UI build</span>
             <span class="k">for</span> <span class="n">attachment_group_id</span> <span class="ow">in</span> <span class="n">note_widget</span><span class="o">.</span><span class="n">get_attachment_group_widget_ids</span><span class="p">():</span>
                 <span class="n">agw</span> <span class="o">=</span> <span class="n">note_widget</span><span class="o">.</span><span class="n">get_attachment_group_widget</span><span class="p">(</span><span class="n">attachment_group_id</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">attachment_data</span> <span class="ow">in</span> <span class="n">agw</span><span class="o">.</span><span class="n">get_data</span><span class="p">():</span>                        
-                    <span class="n">ag_request</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;attachment_group_id&quot;</span><span class="p">:</span> <span class="n">attachment_group_id</span><span class="p">,</span>
-                                  <span class="s">&quot;activity_id&quot;</span><span class="p">:</span> <span class="n">activity_id</span><span class="p">,</span>
-                                  <span class="s">&quot;attachment_data&quot;</span><span class="p">:</span> <span class="n">attachment_data</span><span class="p">}</span>
+                    <span class="n">ag_request</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;attachment_group_id&quot;</span><span class="p">:</span> <span class="n">attachment_group_id</span><span class="p">,</span>
+                                  <span class="s2">&quot;activity_id&quot;</span><span class="p">:</span> <span class="n">activity_id</span><span class="p">,</span>
+                                  <span class="s2">&quot;attachment_data&quot;</span><span class="p">:</span> <span class="n">attachment_data</span><span class="p">}</span>
                     <span class="n">attachment_requests</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ag_request</span><span class="p">)</span>
             
         <span class="k">return</span> <span class="p">(</span><span class="n">reply_users</span><span class="p">,</span> <span class="n">attachment_requests</span><span class="p">)</span>
@@ -582,32 +719,33 @@
         
         <span class="n">widget</span> <span class="o">=</span> <span class="bp">None</span>
         
-        <span class="c"># factory logic</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;create&quot;</span><span class="p">:</span>
+        <span class="c1"># factory logic</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;create&quot;</span><span class="p">:</span>
             
-            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Version&quot;</span><span class="p">,</span> <span class="s">&quot;PublishedFile&quot;</span><span class="p">,</span> <span class="s">&quot;TankPublishedFile&quot;</span><span class="p">]:</span>
-                <span class="c"># full on &#39;new item&#39; widget with thumbnail, description etc.</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Version&quot;</span><span class="p">,</span> <span class="s2">&quot;PublishedFile&quot;</span><span class="p">,</span> <span class="s2">&quot;TankPublishedFile&quot;</span><span class="p">]:</span>
+                <span class="c1"># full on &#39;new item&#39; widget with thumbnail, description etc.</span>
                 <span class="n">widget</span> <span class="o">=</span> <span class="n">NewItemWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">interactive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">version_items_playable</span>
             
-            <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Note&quot;</span><span class="p">:</span>
-                <span class="c"># new note</span>
+            <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Note&quot;</span><span class="p">:</span>
+                <span class="c1"># new note</span>
                 <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                 
             <span class="k">else</span><span class="p">:</span>
-                <span class="c"># minimalistic &#39;new&#39; widget for all other cases</span>
+                <span class="c1"># minimalistic &#39;new&#39; widget for all other cases</span>
                 <span class="n">widget</span> <span class="o">=</span> <span class="n">SimpleNewItemWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                             
-        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;create_reply&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;create_reply&quot;</span><span class="p">:</span>
             <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             
-        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;update&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;update&quot;</span><span class="p">:</span>
             <span class="n">widget</span> <span class="o">=</span> <span class="n">ValueUpdateWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Activity type not supported and will not be &quot;</span>
-                                <span class="s">&quot;rendered: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;update_type&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Activity type not supported and will not be &quot;</span>
+                                <span class="s2">&quot;rendered: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;update_type&quot;</span><span class="p">])</span>
         
-        <span class="c"># initialize the widget</span>
+        <span class="c1"># initialize the widget</span>
         <span class="k">if</span> <span class="n">widget</span><span class="p">:</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">set_host_entity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">)</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">set_info</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -623,63 +761,63 @@
 <span class="sd">        </span>
 <span class="sd">        :param activity_ids: List of activity ids</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Process new data slot called &quot;</span>
-                            <span class="s">&quot;for </span><span class="si">%s</span><span class="s"> activity events&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">activity_ids</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Process new data slot called &quot;</span>
+                            <span class="s2">&quot;for </span><span class="si">%s</span><span class="s2"> activity events&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">activity_ids</span><span class="p">))</span>
                 
-        <span class="c"># remove the &quot;loading please wait .... widget</span>
+        <span class="c1"># remove the &quot;loading please wait .... widget</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clear_loading_widget</span><span class="p">()</span>
         
         
-        <span class="c"># note! For an item which hasn&#39;t been previously been cached or</span>
-        <span class="c"># hasn&#39;t been visited for some time, there may be a lot more than</span>
-        <span class="c"># MAX_STREAM_LENGTH updates. In this case, truncate the stream.</span>
-        <span class="c"># this will result in a UI where you may have a maxmimum of </span>
-        <span class="c"># MAX_STREAM_LENGTH * 2 items (already loaded + new) and there</span>
-        <span class="c"># may be gaps in activity data because we always want to show</span>
-        <span class="c"># the latest data, so when we cull, it happens in the &#39;middle&#39;</span>
-        <span class="c"># of the stream, resulting in existing data, the a potential gap</span>
-        <span class="c"># and then MAX_STREAM_LENGTH items.</span>
-        <span class="c">#</span>
-        <span class="c"># Note that this is in the UI only, so a refresh of the page </span>
-        <span class="c"># would immediately rectify the discrepancy.  </span>
+        <span class="c1"># note! For an item which hasn&#39;t been previously been cached or</span>
+        <span class="c1"># hasn&#39;t been visited for some time, there may be a lot more than</span>
+        <span class="c1"># MAX_STREAM_LENGTH updates. In this case, truncate the stream.</span>
+        <span class="c1"># this will result in a UI where you may have a maxmimum of </span>
+        <span class="c1"># MAX_STREAM_LENGTH * 2 items (already loaded + new) and there</span>
+        <span class="c1"># may be gaps in activity data because we always want to show</span>
+        <span class="c1"># the latest data, so when we cull, it happens in the &#39;middle&#39;</span>
+        <span class="c1"># of the stream, resulting in existing data, the a potential gap</span>
+        <span class="c1"># and then MAX_STREAM_LENGTH items.</span>
+        <span class="c1">#</span>
+        <span class="c1"># Note that this is in the UI only, so a refresh of the page </span>
+        <span class="c1"># would immediately rectify the discrepancy.  </span>
         
-        <span class="c"># load in the new data</span>
-        <span class="c"># the list of ids is delivered in ascending order</span>
-        <span class="c"># and we pop them on to the widget</span>
+        <span class="c1"># load in the new data</span>
+        <span class="c1"># the list of ids is delivered in ascending order</span>
+        <span class="c1"># and we pop them on to the widget</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">activity_ids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_STREAM_LENGTH</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Capping the </span><span class="si">%s</span><span class="s"> new activity items down to &quot;</span>
-                                <span class="s">&quot;</span><span class="si">%s</span><span class="s"> items&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">activity_ids</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_STREAM_LENGTH</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Capping the </span><span class="si">%s</span><span class="s2"> new activity items down to &quot;</span>
+                                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> items&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">activity_ids</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_STREAM_LENGTH</span><span class="p">))</span>
         
-            <span class="c"># transform [10,11,12,13,14,15,16,17] -&gt; [15,16,17]</span>
+            <span class="c1"># transform [10,11,12,13,14,15,16,17] -&gt; [15,16,17]</span>
             <span class="n">activity_ids</span> <span class="o">=</span> <span class="n">activity_ids</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_STREAM_LENGTH</span><span class="p">:]</span>
         
         <span class="k">for</span> <span class="n">activity_id</span> <span class="ow">in</span> <span class="n">activity_ids</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Creating new widget...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Creating new widget...&quot;</span><span class="p">)</span>
             <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_activity_widget</span><span class="p">(</span><span class="n">activity_id</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">w</span><span class="p">:</span>            
                 <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="p">[</span><span class="n">activity_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Adding </span><span class="si">%s</span><span class="s"> to layout&quot;</span> <span class="o">%</span> <span class="n">w</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Adding </span><span class="si">%s</span><span class="s2"> to layout&quot;</span> <span class="o">%</span> <span class="n">w</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>        
-                <span class="c"># add special blue border to indicate that this is a new arrival</span>
-                <span class="n">w</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }&quot;</span><span class="p">)</span>
+                <span class="c1"># add special blue border to indicate that this is a new arrival</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }&quot;</span><span class="p">)</span>
         
-        <span class="c"># when everything is loaded in, load the thumbs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Requesting thumbnails&quot;</span><span class="p">)</span>
+        <span class="c1"># when everything is loaded in, load the thumbs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Requesting thumbnails&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">activity_id</span> <span class="ow">in</span> <span class="n">activity_ids</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_activity_thumbnails</span><span class="p">(</span><span class="n">activity_id</span><span class="p">)</span>
                 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Process new data complete.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Process new data complete.&quot;</span><span class="p">)</span>
 
-        <span class="c"># turn off the overlay in case it is spinning</span>
-        <span class="c"># (which only happens on a full load)</span>
+        <span class="c1"># turn off the overlay in case it is spinning</span>
+        <span class="c1"># (which only happens on a full load)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
             
     <span class="k">def</span> <span class="nf">_process_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        New thumbnail has arrived from the data manager</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># broadcast to all activity widgets</span>
+        <span class="c1"># broadcast to all activity widgets</span>
         <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">apply_thumbnail</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
@@ -691,33 +829,43 @@
             <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="p">[</span><span class="n">activity_id</span><span class="p">]</span>
             <span class="p">(</span><span class="n">reply_users</span><span class="p">,</span> <span class="n">attachment_requests</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_populate_note_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">)</span>
             
-            <span class="c"># request thumbs</span>
+            <span class="c1"># request thumbs</span>
             <span class="k">for</span> <span class="n">attachment_req</span> <span class="ow">in</span> <span class="n">attachment_requests</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_attachment_thumbnail</span><span class="p">(</span><span class="n">attachment_req</span><span class="p">[</span><span class="s">&quot;activity_id&quot;</span><span class="p">],</span> 
-                                                                <span class="n">attachment_req</span><span class="p">[</span><span class="s">&quot;attachment_group_id&quot;</span><span class="p">],</span> 
-                                                                <span class="n">attachment_req</span><span class="p">[</span><span class="s">&quot;attachment_data&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_attachment_thumbnail</span><span class="p">(</span><span class="n">attachment_req</span><span class="p">[</span><span class="s2">&quot;activity_id&quot;</span><span class="p">],</span> 
+                                                                <span class="n">attachment_req</span><span class="p">[</span><span class="s2">&quot;attachment_group_id&quot;</span><span class="p">],</span> 
+                                                                <span class="n">attachment_req</span><span class="p">[</span><span class="s2">&quot;attachment_data&quot;</span><span class="p">])</span>
             
             <span class="k">for</span> <span class="n">reply_user</span> <span class="ow">in</span> <span class="n">reply_users</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_user_thumbnail</span><span class="p">(</span><span class="n">reply_user</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">],</span> 
-                                                          <span class="n">reply_user</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">],</span> 
-                                                          <span class="n">reply_user</span><span class="p">[</span><span class="s">&quot;image&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_user_thumbnail</span><span class="p">(</span><span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> 
+                                                          <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> 
+                                                          <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_on_entity_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback when an entity is created by an underlying widget.</span>
+
+<span class="sd">        :param entity:  The Shotgun entity that was created.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
             
     <span class="k">def</span> <span class="nf">_on_reply_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback when someone clicks reply on a given note</span>
+
+<span class="sd">        :param note_id: The id of the Shotgun Note entity being replied to.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">reply_dialog</span> <span class="o">=</span> <span class="n">ReplyDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">,</span> <span class="n">note_id</span><span class="p">)</span>
-        
-        <span class="c">#position the reply modal dialog above the activity stream scroll area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">note_id</span> <span class="o">=</span> <span class="n">note_id</span>
+
+        <span class="c1"># Position the reply modal dialog above the activity stream scroll area.</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
-        <span class="n">x_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span>         
-        <span class="n">y_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">20</span>
-        <span class="n">reply_dialog</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">)</span>
+        <span class="n">x_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span>         
+        <span class="n">y_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">)</span>
         
-        <span class="c"># and pop it</span>
+        <span class="c1"># and pop it</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">reply_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
@@ -726,16 +874,16 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when a note has finished submitting</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># kick the data manager to rescan for changes</span>
+        <span class="c1"># kick the data manager to rescan for changes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_load_shotgun_activity_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when someone clicks &#39;show activity stream in shotgun&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">/detail/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">shotgun_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">)</span>
-        <span class="n">QtGui</span><span class="o">.</span><span class="n">QDesktopServices</span><span class="o">.</span><span class="n">openUrl</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
-</pre></div></div>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/detail/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">shotgun_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">)</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QDesktopServices</span><span class="o">.</span><span class="n">openUrl</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">url</span><span class="p">))</span></div>
+</pre></div>
 
            </div>
           </div>
@@ -746,7 +894,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -767,7 +915,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>views.grouped_list_view.group_widget_base &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>views.grouped_list_view.group_widget_base &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -56,7 +56,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='../../../_static/logo@2x.png'/>
     
     </a>
     
@@ -91,13 +91,17 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../views.html">View Related Classes</a></li>
@@ -122,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -174,15 +178,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for views.grouped_list_view.group_widget_base</h1><div class="highlight"><pre>
-<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
-<span class="c"># </span>
-<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c"># </span>
-<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
-<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
-<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
@@ -197,7 +201,7 @@
 <span class="sd">                             to indicate if the group is expanded or not.</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c"># True if expanded, False if collapsed</span>
+    <span class="c1"># True if expanded, False if collapsed</span>
     <span class="n">toggle_expanded</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
     
 <div class="viewcode-block" id="GroupWidgetBase.set_item"><a class="viewcode-back" href="../../../views.html#views.GroupWidgetBase.set_item">[docs]</a>    <span class="k">def</span> <span class="nf">set_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_idx</span><span class="p">):</span>
@@ -208,8 +212,8 @@
 <span class="sd">        :param model_idx:   The index of the item in the model</span>
 <span class="sd">        :type model_index:  :class:`~PySide.QtCore.QModelIndex`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
-        </div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+        
 <div class="viewcode-block" id="GroupWidgetBase.set_expanded"><a class="viewcode-back" href="../../../views.html#views.GroupWidgetBase.set_expanded">[docs]</a>    <span class="k">def</span> <span class="nf">set_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set if this widget is expanded or not.  This should be implemented </span>
@@ -231,7 +235,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -252,7 +256,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

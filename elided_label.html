@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Auto-Elide label &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>Auto-Elide label &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="index.html"/>
-        <link rel="next" title="Shotgun Global Search Widget" href="global_search_widget.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="index.html"/>
+        <link rel="next" title="Shotgun Global Search Completer" href="global_search_completer.html"/>
         <link rel="prev" title="Shotgun Activity Stream Widget" href="activity_stream.html"/> 
 
   
@@ -57,7 +57,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='_static/logo@2x.png'/>
     
     </a>
     
@@ -91,14 +91,18 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Auto-Elide label</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
@@ -123,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -152,7 +156,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -175,7 +179,7 @@
   <div class="section" id="auto-elide-label">
 <h1>Auto-Elide label<a class="headerlink" href="#auto-elide-label" title="Permalink to this headline">¶</a></h1>
 <p>This simple yet commonly used class helps add an elide (a &#8221;...&#8221; at the end)
-to words when they don&#8217;t fit within a given space.</p>
+to text when it doesn&#8217;t fit within a given space.</p>
 <dl class="class">
 <dt id="elided_label.ElidedLabel">
 <em class="property">class </em><code class="descclassname">elided_label.</code><code class="descname">ElidedLabel</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elided_label/elided_label.html#ElidedLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elided_label.ElidedLabel" title="Permalink to this definition">¶</a></dt>
@@ -198,20 +202,6 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="elided_label.ElidedLabel.setText">
-<code class="descname">setText</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elided_label/elided_label.html#ElidedLabel.setText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elided_label.ElidedLabel.setText" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overridden base method to set the text on the label</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to set on the label</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="elided_label.ElidedLabel.text">
 <code class="descname">text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elided_label/elided_label.html#ElidedLabel.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elided_label.ElidedLabel.text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overridden base method to return the original unmodified text</p>
@@ -225,6 +215,26 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="elided_label.ElidedLabel.setText">
+<code class="descname">setText</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elided_label/elided_label.html#ElidedLabel.setText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elided_label.ElidedLabel.setText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overridden base method to set the text on the label</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to set on the label</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="elided_label.ElidedLabel.line_width">
+<code class="descname">line_width</code><a class="headerlink" href="#elided_label.ElidedLabel.line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>(<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">int</span></code></a>) width of the line of text in pixels</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -236,7 +246,7 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="global_search_widget.html" class="btn btn-neutral float-right" title="Shotgun Global Search Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="global_search_completer.html" class="btn btn-neutral float-right" title="Shotgun Global Search Completer" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="activity_stream.html" class="btn btn-neutral" title="Shotgun Activity Stream Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -248,7 +258,7 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -269,7 +279,7 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

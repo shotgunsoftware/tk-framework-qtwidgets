@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>playback_label.playback_label &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>playback_label.playback_label &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -56,7 +56,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='../../_static/logo@2x.png'/>
     
     </a>
     
@@ -91,13 +91,17 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
@@ -122,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -174,15 +178,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for playback_label.playback_label</h1><div class="highlight"><pre>
-<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
-<span class="c"># </span>
-<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c"># </span>
-<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
-<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
-<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
@@ -209,7 +213,7 @@
 <span class="sd">        to the caller.   </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="c"># signal fires when the play button was clicked</span>
+    <span class="c1"># signal fires when the play button was clicked</span>
     <span class="n">playback_clicked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
@@ -219,11 +223,12 @@
 <span class="sd">        :param parent: QT parent object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_play_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s">&quot;:/tk_framework_qtwidgets.version_label/play_icon.png&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_play_icon_inactive</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s">&quot;:/tk_framework_qtwidgets.version_label/play_icon_inactive.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_play_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/tk_framework_qtwidgets.version_label/play_icon.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_play_icon_inactive</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/tk_framework_qtwidgets.version_label/play_icon_inactive.png&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interactive</span> <span class="o">=</span> <span class="bp">True</span>
 
 <div class="viewcode-block" id="ShotgunPlaybackLabel.set_shotgun_data"><a class="viewcode-back" href="../../playback_label.html#playback_label.ShotgunPlaybackLabel.set_shotgun_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_shotgun_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -238,33 +243,54 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data</span> <span class="o">=</span> <span class="n">sg_data</span>
         
-        <span class="c"># based on the data, figure out if the icon should be active or not</span>
+        <span class="c1"># based on the data, figure out if the icon should be active or not</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="bp">False</span>
         
-        <span class="k">if</span> <span class="n">sg_data</span> <span class="ow">and</span> <span class="n">sg_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;Version&quot;</span><span class="p">:</span>
-            <span class="c"># versions are supported</span>
-            <span class="k">if</span> <span class="n">sg_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;sg_uploaded_movie&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">sg_data</span> <span class="ow">and</span> <span class="n">sg_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Version&quot;</span><span class="p">:</span>
+            <span class="c1"># versions are supported</span>
+            <span class="k">if</span> <span class="n">sg_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sg_uploaded_movie&quot;</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="bp">True</span>
         
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unsetCursor</span><span class="p">()</span> </div>
+        
+    <span class="nd">@property</span>    
+    <span class="k">def</span> <span class="nf">playable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if the label is playable given its current Shotgun data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span>
+
+    <span class="k">def</span> <span class="nf">_get_interactive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether a playable label is interactive. If it is not, then the play</span>
+<span class="sd">        icon will not be overlayed on the thumbnail image, and the playback</span>
+<span class="sd">        signal will not be emitted on click event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interactive</span>
+
+    <span class="k">def</span> <span class="nf">_set_interactive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interactive</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interactive</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unsetCursor</span><span class="p">()</span> 
-        </div>
-    <span class="nd">@property</span>    
-    <span class="k">def</span> <span class="nf">playbable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns True if the label is playbable given its current Shotgun data.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span>
-            
+
+    <span class="n">interactive</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Property</span><span class="p">(</span>
+        <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">_get_interactive</span><span class="p">,</span>
+        <span class="n">_set_interactive</span><span class="p">,</span>
+    <span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">enterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fires when the mouse enters the widget space</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">enterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
         
@@ -273,7 +299,7 @@
 <span class="sd">        Fires when the mouse leaves the widget space</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">leaveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="bp">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
@@ -282,25 +308,25 @@
 <span class="sd">        Fires when the mouse is pressed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">playback_clicked</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_data</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Render the UI.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># first render the label</span>
+        <span class="c1"># first render the label</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
         
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span><span class="p">:</span>
-            <span class="c"># now render a pixmap on top</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
+            <span class="c1"># now render a pixmap on top</span>
             <span class="n">painter</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="p">()</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="c"># set up semi transparent backdrop</span>
+                <span class="c1"># set up semi transparent backdrop</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span><span class="p">)</span>
                 
-                <span class="c"># draw image</span>
+                <span class="c1"># draw image</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_play_icon</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> 
                                   <span class="p">(</span><span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_play_icon</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span>
                 
@@ -310,8 +336,8 @@
                     <span class="n">painter</span><span class="o">.</span><span class="n">drawPixmap</span><span class="p">(</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_play_icon_inactive</span><span class="p">)</span>
                     
             <span class="k">finally</span><span class="p">:</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
- </div>
+                <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span></div>
+ 
 </pre></div>
 
            </div>
@@ -323,7 +349,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -344,7 +370,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

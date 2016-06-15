@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>elided_label.elided_label &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>elided_label.elided_label &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -56,7 +56,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='../../_static/logo@2x.png'/>
     
     </a>
     
@@ -91,13 +91,17 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
@@ -122,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -174,15 +178,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for elided_label.elided_label</h1><div class="highlight"><pre>
-<span class="c"># Copyright (c) 2015 Shotgun Software Inc.</span>
-<span class="c"># </span>
-<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c"># </span>
-<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
-<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
-<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A QLabel that elides text and adds ellipses if the text doesn&#39;t fit</span>
@@ -205,7 +209,43 @@
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_elide_mode</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_line_width</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ideal_width</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">base_size_hint</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ElidedLabel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_width_hint</span><span class="p">(),</span>
+            <span class="n">base_size_hint</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_width_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ideal_width</span><span class="p">:</span>
+
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextDocument</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># add the extra space to buffer the width a bit</span>
+                <span class="n">doc</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span> <span class="o">+</span> <span class="s2">&quot;&amp;nbsp;&quot;</span><span class="p">)</span>
+                <span class="n">doc</span><span class="o">.</span><span class="n">setDefaultFont</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">())</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">doc</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ideal_width</span> <span class="o">=</span> <span class="n">width</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ideal_width</span>
+
 
     <span class="k">def</span> <span class="nf">_get_elide_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -223,12 +263,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideLeft</span>
             <span class="ow">and</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;elide_mode must be set to either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;elide_mode must be set to either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_elide_mode</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span>
     
-    <span class="c">#: Property to get or set the elide mode. The value provided </span>
-    <span class="c">#: should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</span>
+    <span class="c1">#: Property to get or set the elide mode. The value provided </span>
+    <span class="c1">#: should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</span>
     <span class="n">elide_mode</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_elide_mode</span><span class="p">,</span> <span class="n">_set_elide_mode</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ElidedLabel.text"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.text">[docs]</a>    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -237,23 +277,27 @@
 
 <span class="sd">        :returns:   The original unmodified text</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span></div>
+
 <div class="viewcode-block" id="ElidedLabel.setText"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.setText">[docs]</a>    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overridden base method to set the text on the label</span>
 
 <span class="sd">        :param text:    The text to set on the label</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># clear out the ideal width so that the widget can recalculate based on</span>
+        <span class="c1"># the new text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ideal_width</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span> <span class="o">=</span> <span class="n">text</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span></div>
+
     <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overridden base method called when the widget is resized.</span>
 
 <span class="sd">        :param event:    The resize event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_update_elided_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -271,68 +315,88 @@
 <span class="sd">        :param elide_mode:  The elide mode to use</span>
 <span class="sd">        :returns:           The elided text.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># target width is the label width:</span>
+
+        <span class="c1"># target width is the label width:</span>
         <span class="n">target_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
 
-        <span class="c"># Use a QTextDocument to measure html/richtext width </span>
+        <span class="c1"># Use a QTextDocument to measure html/richtext width </span>
         <span class="n">doc</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextDocument</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">doc</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
             <span class="n">doc</span><span class="o">.</span><span class="n">setDefaultFont</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">())</span>
 
-            <span class="c"># if line width is already less than the target width then great!</span>
+            <span class="c1"># if line width is already less than the target width then great!</span>
             <span class="n">line_width</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">line_width</span> <span class="o">&lt;=</span> <span class="n">target_width</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_line_width</span> <span class="o">=</span> <span class="n">line_width</span>
                 <span class="k">return</span> <span class="n">text</span>
 
-            <span class="c"># depending on the elide mode, insert ellipses in the correct place</span>
+            <span class="c1"># depending on the elide mode, insert ellipses in the correct place</span>
             <span class="n">cursor</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
-            <span class="n">ellipses</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+            <span class="n">ellipses</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
             <span class="k">if</span> <span class="n">elide_mode</span> <span class="o">!=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideNone</span><span class="p">:</span>
-                <span class="c"># add the ellipses in the correct place:</span>
+                <span class="c1"># add the ellipses in the correct place:</span>
+                <span class="n">ellipses</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>
                 <span class="k">if</span> <span class="n">elide_mode</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideLeft</span><span class="p">:</span>
-                    <span class="n">ellipses</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
                     <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">elide_mode</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span><span class="p">:</span>
-                    <span class="n">ellipses</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
                     <span class="n">char_count</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">characterCount</span><span class="p">()</span>
                     <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">char_count</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
                 <span class="n">cursor</span><span class="o">.</span><span class="n">insertText</span><span class="p">(</span><span class="n">ellipses</span><span class="p">)</span>
             <span class="n">ellipses_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ellipses</span><span class="p">)</span>
 
-            <span class="c"># remove characters until the text fits within the target width:</span>
+            <span class="c1"># remove characters until the text fits within the target width:</span>
             <span class="k">while</span> <span class="n">line_width</span> <span class="o">&gt;</span> <span class="n">target_width</span><span class="p">:</span>
-                <span class="c"># if string is less than the ellipses length then just return</span>
-                <span class="c"># an empty string</span>
+
+                <span class="n">start_line_width</span> <span class="o">=</span> <span class="n">line_width</span>
+
+                <span class="c1"># if string is less than the ellipses length then just return</span>
+                <span class="c1"># an empty string</span>
                 <span class="n">char_count</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">characterCount</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">char_count</span> <span class="o">&lt;=</span> <span class="n">ellipses_len</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="s">&quot;&quot;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_line_width</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
-                <span class="c"># calculate the number of characters to remove - should always remove at least 1</span>
-                <span class="c"># to be sure the text gets shorter!</span>
+                <span class="c1"># calculate the number of characters to remove - should always remove at least 1</span>
+                <span class="c1"># to be sure the text gets shorter!</span>
                 <span class="n">line_width</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">()</span>
                 <span class="n">p</span> <span class="o">=</span> <span class="n">target_width</span><span class="o">/</span><span class="n">line_width</span>
-                <span class="c"># play it safe and remove a couple less than the calculated amount</span>
+                <span class="c1"># play it safe and remove a couple less than the calculated amount</span>
                 <span class="n">chars_to_delete</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">char_count</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">char_count</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 
-                <span class="c"># remove the characters:</span>
+                <span class="c1"># remove the characters:</span>
                 <span class="k">if</span> <span class="n">elide_mode</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideLeft</span><span class="p">:</span>
-                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">ellipses_len</span><span class="p">)</span>
-                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">chars_to_delete</span> <span class="o">+</span> <span class="n">ellipses_len</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">KeepAnchor</span><span class="p">)</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="n">ellipses_len</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">chars_to_delete</span> <span class="o">+</span> <span class="n">ellipses_len</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="c"># default is to elide right</span>
-                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">char_count</span> <span class="o">-</span> <span class="n">chars_to_delete</span> <span class="o">-</span> <span class="n">ellipses_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-                    <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">char_count</span> <span class="o">-</span> <span class="n">ellipses_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">KeepAnchor</span><span class="p">)</span>
+                    <span class="c1"># default is to elide right</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">char_count</span> <span class="o">-</span> <span class="n">chars_to_delete</span> <span class="o">-</span> <span class="n">ellipses_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">char_count</span> <span class="o">-</span> <span class="n">ellipses_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">KeepAnchor</span><span class="p">)</span>
                 <span class="n">cursor</span><span class="o">.</span><span class="n">removeSelectedText</span><span class="p">()</span>
 
-                <span class="c"># update line width:</span>
+                <span class="c1"># update line width:</span>
                 <span class="n">line_width</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">()</span>
 
+                <span class="k">if</span> <span class="n">line_width</span> <span class="o">==</span> <span class="n">start_line_width</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_line_width</span> <span class="o">=</span> <span class="n">line_width</span>
             <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">toHtml</span><span class="p">()</span>
         <span class="k">finally</span><span class="p">:</span>
-            <span class="c"># clean up the doc:</span>
+            <span class="c1"># clean up the doc:</span>
             <span class="n">doc</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
-</pre></div></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">line_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        (:obj:`int`) width of the line of text in pixels</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_line_width</span></div>
+
+</pre></div>
 
            </div>
           </div>
@@ -343,7 +407,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -364,7 +428,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

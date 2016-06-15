@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>views.edit_selected_widget_delegate &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>views.edit_selected_widget_delegate &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -56,7 +56,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='../../_static/logo@2x.png'/>
     
     </a>
     
@@ -91,13 +91,17 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
@@ -122,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -174,15 +178,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for views.edit_selected_widget_delegate</h1><div class="highlight"><pre>
-<span class="c"># Copyright (c) 2013 Shotgun Software Inc.</span>
-<span class="c"># </span>
-<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c"># </span>
-<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
-<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
-<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span></span><span class="c1"># Copyright (c) 2013 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
@@ -194,6 +198,10 @@
 <span class="sd">    Custom delegate that provides a simple mechanism where an actual widget (editor) is </span>
 <span class="sd">    presented for the selected item whilst all other items are simply drawn with a single</span>
 <span class="sd">    widget.</span>
+
+<span class="sd">    :ivar selection_model:      The selection model of the delegate&#39;s parent view, if one</span>
+<span class="sd">                                existed at the time of the delegate&#39;s initialization.</span>
+<span class="sd">    :vartype selection_model:   QtGui.QItemSelectionModel</span>
 
 <span class="sd">    You use this class by subclassing it and implementing the methods:</span>
 
@@ -223,17 +231,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">WidgetDelegate</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
 
-        <span class="c"># tracks the currently active cell</span>
+        <span class="c1"># tracks the currently active cell</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__current_editor_index</span> <span class="o">=</span> <span class="bp">None</span>
 
-        <span class="c"># note! Need to have a model connected to the view in order</span>
-        <span class="c"># to have a selection model.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__selection_model</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__selection_model</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__selection_model</span><span class="o">.</span><span class="n">selectionChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_selection_changed</span><span class="p">)</span>
+        <span class="c1"># note! Need to have a model connected to the view in order</span>
+        <span class="c1"># to have a selection model.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selection_model</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span>
 
-    <span class="c">########################################################################################</span>
-    <span class="c"># implemented by deriving classes</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selection_model</span><span class="o">.</span><span class="n">selectionChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_selection_changed</span><span class="p">)</span>
+
+    <span class="c1">########################################################################################</span>
+    <span class="c1"># implemented by deriving classes</span>
 
 <div class="viewcode-block" id="EditSelectedWidgetDelegate._on_before_selection"><a class="viewcode-back" href="../../views.html#views.EditSelectedWidgetDelegate._on_before_selection">[docs]</a>    <span class="k">def</span> <span class="nf">_on_before_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -253,11 +262,11 @@
 <span class="sd">                              view related state of the cell.</span>
 <span class="sd">        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+        <span class="k">pass</span></div>
 
-    <span class="c">########################################################################################</span>
-    <span class="c"># &#39;private&#39; methods that are not meant to be subclassed or called by a deriving class.</span>
-</div>
+    <span class="c1">########################################################################################</span>
+    <span class="c1"># &#39;private&#39; methods that are not meant to be subclassed or called by a deriving class.</span>
+
 <div class="viewcode-block" id="EditSelectedWidgetDelegate._on_selection_changed"><a class="viewcode-back" href="../../views.html#views.EditSelectedWidgetDelegate._on_selection_changed">[docs]</a>    <span class="k">def</span> <span class="nf">_on_selection_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">deselected</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Signal triggered when someone changes the selection in the view.</span>
@@ -267,7 +276,7 @@
 <span class="sd">        :param deselected:  A list of the indexes in the model that were deselected</span>
 <span class="sd">        :type deselected:  :class:`~PySide.QtGui.QItemSelection`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># clean up        </span>
+        <span class="c1"># clean up        </span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current_editor_index</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">closePersistentEditor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__current_editor_index</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__current_editor_index</span> <span class="o">=</span> <span class="bp">None</span>
@@ -275,13 +284,13 @@
         <span class="n">selected_indexes</span> <span class="o">=</span> <span class="n">selected</span><span class="o">.</span><span class="n">indexes</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">selected_indexes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c"># get the currently selected model index</span>
+            <span class="c1"># get the currently selected model index</span>
             <span class="n">model_index</span> <span class="o">=</span> <span class="n">selected_indexes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="c"># create an editor widget that we use for the selected item</span>
+            <span class="c1"># create an editor widget that we use for the selected item</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__current_editor_index</span> <span class="o">=</span> <span class="n">model_index</span>
-            <span class="c"># this will trigger the call to createEditor</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">openPersistentEditor</span><span class="p">(</span><span class="n">model_index</span><span class="p">)</span>
-</div>
+            <span class="c1"># this will trigger the call to createEditor</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">openPersistentEditor</span><span class="p">(</span><span class="n">model_index</span><span class="p">)</span></div>
+
     <span class="k">def</span> <span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_widget</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subclassed implementation from QStyledItemDelegate which is</span>
@@ -310,10 +319,10 @@
 <span class="sd">                                index</span>
 <span class="sd">        :rtype:                 :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># create the editor by calling the base method:</span>
+        <span class="c1"># create the editor by calling the base method:</span>
         <span class="n">editor_widget</span> <span class="o">=</span> <span class="n">WidgetDelegate</span><span class="o">.</span><span class="n">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_widget</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
 
-        <span class="c"># and set it up to operate on the index:</span>
+        <span class="c1"># and set it up to operate on the index:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_before_selection</span><span class="p">(</span><span class="n">editor_widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">editor_widget</span>
 
@@ -330,10 +339,11 @@
 <span class="sd">        :type model_index:      :class:`~PySide.QtCore.QModelIndex`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">model_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current_editor_index</span><span class="p">:</span>
-            <span class="c"># avoid painting the index twice!</span>
+            <span class="c1"># avoid painting the index twice!</span>
             <span class="k">return</span>
-        <span class="n">WidgetDelegate</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
-</pre></div></div>
+        <span class="n">WidgetDelegate</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span></div>
+
+</pre></div>
 
            </div>
           </div>
@@ -344,7 +354,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -365,7 +375,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

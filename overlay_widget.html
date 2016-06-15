@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Spinner and text overlay widget &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>Spinner and text overlay widget &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="index.html"/>
-        <link rel="next" title="Screen Capture Widget" href="screen_grab.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="index.html"/>
+        <link rel="next" title="Shotgun Playback Label Widget" href="playback_label.html"/>
         <link rel="prev" title="Shotgun Note editor widget" href="note_input_widget.html"/> 
 
   
@@ -57,7 +57,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='_static/logo@2x.png'/>
     
     </a>
     
@@ -92,12 +92,13 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Spinner and text overlay widget</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Spinner and text overlay widget</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#sample-code">Sample Code</a></li>
 </ul>
@@ -106,7 +107,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#shotgunmodeloverlaywidget">ShotgunModelOverlayWidget</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
@@ -131,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -160,7 +164,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -193,21 +197,21 @@ placed it on top of another widget, you can execute various methods to control i
 <h3>Sample Code<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h3>
 <p>The following sample code shows how to import the overlay module,
 connect it to a widget and then control the overlay state:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># example of how the overlay can be used within your app code</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># example of how the overlay can be used within your app code</span>
 
-<span class="c"># import the module - note that this is using the special</span>
-<span class="c"># import_framework code so it won&#39;t work outside an app</span>
-<span class="n">overlay</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s">&quot;overlay_widget&quot;</span><span class="p">)</span>
+<span class="c1"># import the module - note that this is using the special</span>
+<span class="c1"># import_framework code so it won&#39;t work outside an app</span>
+<span class="n">overlay</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s2">&quot;overlay_widget&quot;</span><span class="p">)</span>
 
-<span class="c"># now inside your app constructor, create an overlay and parent it to something</span>
+<span class="c1"># now inside your app constructor, create an overlay and parent it to something</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">_overlay</span> <span class="o">=</span> <span class="n">overlay</span><span class="o">.</span><span class="n">ShotgunOverlayWidget</span><span class="p">(</span><span class="n">my_widget</span><span class="p">)</span>
 
-<span class="c"># now you can use the overlay to report things to the user</span>
+<span class="c1"># now you can use the overlay to report things to the user</span>
 <span class="k">try</span><span class="p">:</span>
    <span class="bp">self</span><span class="o">.</span><span class="n">_overlay</span><span class="o">.</span><span class="n">start_spin</span><span class="p">()</span>
    <span class="n">run_some_code_here</span><span class="p">()</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-   <span class="bp">self</span><span class="o">.</span><span class="n">_overlay</span><span class="o">.</span><span class="n">show_error_message</span><span class="p">(</span><span class="s">&quot;An error was reported: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+   <span class="bp">self</span><span class="o">.</span><span class="n">_overlay</span><span class="o">.</span><span class="n">show_error_message</span><span class="p">(</span><span class="s2">&quot;An error was reported: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
 <span class="k">finally</span><span class="p">:</span>
    <span class="bp">self</span><span class="o">.</span><span class="n">_overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 </pre></div>
@@ -234,17 +238,10 @@ display information, errors, a spinner etc.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="overlay_widget.ShotgunOverlayWidget.hide">
-<code class="descname">hide</code><span class="sig-paren">(</span><em>hide_errors=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.hide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.hide" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hides the overlay.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hide_errors</strong> &#8211; If set to False, errors are not hidden.</td>
-</tr>
-</tbody>
-</table>
+<dt id="overlay_widget.ShotgunOverlayWidget.start_spin">
+<code class="descname">start_spin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.start_spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.start_spin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables the overlay and shows an animated spinner.</p>
+<p>If you want to stop the spinning, call <a class="reference internal" href="#overlay_widget.ShotgunOverlayWidget.hide" title="overlay_widget.ShotgunOverlayWidget.hide"><code class="xref py py-meth docutils literal"><span class="pre">hide()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -299,10 +296,17 @@ the pixmap will not be shown.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="overlay_widget.ShotgunOverlayWidget.start_spin">
-<code class="descname">start_spin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.start_spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.start_spin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enables the overlay and shows an animated spinner.</p>
-<p>If you want to stop the spinning, call <a class="reference internal" href="#overlay_widget.ShotgunOverlayWidget.hide" title="overlay_widget.ShotgunOverlayWidget.hide"><code class="xref py py-meth docutils literal"><span class="pre">hide()</span></code></a>.</p>
+<dt id="overlay_widget.ShotgunOverlayWidget.hide">
+<code class="descname">hide</code><span class="sig-paren">(</span><em>hide_errors=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.hide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.hide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the overlay.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hide_errors</strong> &#8211; If set to False, errors are not hidden.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -315,7 +319,7 @@ the pixmap will not be shown.</p>
 <em class="property">class </em><code class="descclassname">overlay_widget.</code><code class="descname">ShotgunModelOverlayWidget</code><span class="sig-paren">(</span><em>sg_model</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_model_overlay_widget.html#ShotgunModelOverlayWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunModelOverlayWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">overlay_widget.shotgun_overlay_widget.ShotgunOverlayWidget</span></code></p>
 <p>A convenience class specifically designed to work with a  
-<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils v)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>.</p>
+<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv4.2.3)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>.</p>
 <p>By using this class, multiple overlay widgets can be
 easily created and connected to the same shotgun model.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -323,7 +327,7 @@ easily created and connected to the same shotgun model.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sg_model</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils v)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>) &#8211; Shotgun model that this widget should connect to</li>
+<li><strong>sg_model</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv4.2.3)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>) &#8211; Shotgun model that this widget should connect to</li>
 <li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a>) &#8211; Widget to attach the overlay to</li>
 </ul>
 </td>
@@ -338,7 +342,7 @@ easily created and connected to the same shotgun model.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_model</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils v)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>) &#8211; Shotgun model that this widget should connect to</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_model</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv4.2.3)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>) &#8211; Shotgun model that this widget should connect to</td>
 </tr>
 </tbody>
 </table>
@@ -356,7 +360,7 @@ easily created and connected to the same shotgun model.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="screen_grab.html" class="btn btn-neutral float-right" title="Screen Capture Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="playback_label.html" class="btn btn-neutral float-right" title="Shotgun Playback Label Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="note_input_widget.html" class="btn btn-neutral" title="Shotgun Note editor widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -368,7 +372,7 @@ easily created and connected to the same shotgun model.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -389,7 +393,7 @@ easily created and connected to the same shotgun model.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

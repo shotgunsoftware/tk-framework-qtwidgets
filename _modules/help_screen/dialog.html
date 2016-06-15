@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>help_screen.dialog &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>help_screen.dialog &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -56,7 +56,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='../../_static/logo@2x.png'/>
     
     </a>
     
@@ -91,13 +91,17 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
@@ -122,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -174,15 +178,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for help_screen.dialog</h1><div class="highlight"><pre>
-<span class="c"># Copyright (c) 2013 Shotgun Software Inc.</span>
-<span class="c"># </span>
-<span class="c"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c"># </span>
-<span class="c"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
-<span class="c"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
-<span class="c"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span></span><span class="c1"># Copyright (c) 2013 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">tank</span>
@@ -206,23 +210,23 @@
 <span class="sd">    :type pixmaps: List of :class:`PySide.QtGui.QPixmap`  </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">gui</span> <span class="o">=</span> <span class="n">Dialog</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">bundle</span><span class="p">,</span> <span class="n">pixmaps</span><span class="p">)</span>
-    <span class="n">gui</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&quot;Toolkit Help&quot;</span><span class="p">)</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Toolkit Help&quot;</span><span class="p">)</span>
     <span class="n">gui</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="c"># attach the object to the main parent object - this is</span>
-    <span class="c"># to help older versions of PySide which get confused</span>
-    <span class="c"># when a PySide object handle is lost but the </span>
-    <span class="c"># underlying QT object persists.</span>
+    <span class="c1"># attach the object to the main parent object - this is</span>
+    <span class="c1"># to help older versions of PySide which get confused</span>
+    <span class="c1"># when a PySide object handle is lost but the </span>
+    <span class="c1"># underlying QT object persists.</span>
     <span class="n">parent</span><span class="o">.</span><span class="n">__help_screen</span> <span class="o">=</span> <span class="n">gui</span>
-    <span class="c"># center on top of parent window</span>
+    <span class="c1"># center on top of parent window</span>
     <span class="n">gui</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">gui</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">window</span><span class="p">()</span><span class="o">.</span><span class="n">frameGeometry</span><span class="p">()</span><span class="o">.</span><span class="n">center</span><span class="p">()</span> <span class="o">-</span> <span class="n">gui</span><span class="o">.</span><span class="n">window</span><span class="p">()</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">center</span><span class="p">())</span>
-    <span class="n">gui</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
-</div>
+    <span class="n">gui</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span></div>
+
 <span class="k">class</span> <span class="nc">Dialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Help screen dialog.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="c"># direction when turning a page</span>
+    <span class="c1"># direction when turning a page</span>
     <span class="n">NEXT_PAGE</span><span class="p">,</span> <span class="n">PREVIOUS_PAGE</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">bundle</span><span class="p">,</span> <span class="n">pixmaps</span><span class="p">):</span>
@@ -234,9 +238,9 @@
 <span class="sd">        :param pixmaps: List of QPixmap objects, all 650x400 px        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># it seems some versions of linux are having issues with the splash screen mode,</span>
-        <span class="c"># so disable this</span>
-        <span class="k">if</span> <span class="s">&quot;linux&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">:</span>
+        <span class="c1"># it seems some versions of linux are having issues with the splash screen mode,</span>
+        <span class="c1"># so disable this</span>
+        <span class="k">if</span> <span class="s2">&quot;linux&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">:</span>
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowStaysOnTopHint</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span> 
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SplashScreen</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowStaysOnTopHint</span><span class="p">)</span>
@@ -245,7 +249,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span> <span class="o">=</span> <span class="bp">None</span>
 
-        <span class="c"># set up the UI</span>
+        <span class="c1"># set up the UI</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_Dialog</span><span class="p">()</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         
@@ -258,20 +262,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">left_arrow</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_left_arrow_click</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">right_arrow</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_right_arrow_click</span><span class="p">)</span>
         
-        <span class="c"># we start at index zero so disable the left arrow</span>
+        <span class="c1"># we start at index zero so disable the left arrow</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">left_arrow</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pixmaps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c"># only one image. So disable the right arrow aswell</span>
+            <span class="c1"># only one image. So disable the right arrow aswell</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">right_arrow</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         
-        <span class="c"># make GC happy</span>
+        <span class="c1"># make GC happy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span> <span class="o">=</span> <span class="p">[]</span>
         
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pixmaps</span><span class="p">:</span>
             
             <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">650</span> <span class="ow">or</span> <span class="n">p</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">400</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">tank</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span><span class="s">&quot;Image not found or image resolution not 650x400px!&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">tank</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Image not found or image resolution not 650x400px!&quot;</span><span class="p">)</span>
             
             <span class="n">page</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
@@ -286,7 +290,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_widgets</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">p</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">layout</span><span class="p">,</span> <span class="n">label</span><span class="p">])</span>
         
-        <span class="c"># set first page</span>
+        <span class="c1"># set first page</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_num_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pixmaps</span><span class="p">)</span>
         
@@ -312,76 +316,76 @@
         <span class="n">dst_index</span> <span class="o">=</span> <span class="n">current_index</span>
         <span class="n">page_offset</span> <span class="o">=</span> <span class="mi">650</span>
         
-        <span class="c"># depending on the direction, figure out the destination page </span>
-        <span class="c"># and page offset for animation:</span>
+        <span class="c1"># depending on the direction, figure out the destination page </span>
+        <span class="c1"># and page offset for animation:</span>
         <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="n">Dialog</span><span class="o">.</span><span class="n">NEXT_PAGE</span><span class="p">:</span>
             <span class="n">dst_index</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">page_offset</span> <span class="o">=</span> <span class="mi">650</span>
             
-            <span class="c"># update the arrow visibility so that the right arrow is</span>
-            <span class="c"># hidden if we&#39;re on the last page:</span>
+            <span class="c1"># update the arrow visibility so that the right arrow is</span>
+            <span class="c1"># hidden if we&#39;re on the last page:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">right_arrow</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">dst_index</span> <span class="o">&lt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_images</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">left_arrow</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c"># going back a page</span>
+            <span class="c1"># going back a page</span>
             <span class="n">dst_index</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="n">page_offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">650</span>
             
-            <span class="c"># update the arrow visibility so that the left arrow is</span>
-            <span class="c"># hidden if we&#39;re on the first page:</span>
+            <span class="c1"># update the arrow visibility so that the left arrow is</span>
+            <span class="c1"># hidden if we&#39;re on the first page:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">right_arrow</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">left_arrow</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">dst_index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
         
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s">&quot;QAbstractAnimation&quot;</span><span class="p">):</span>
-            <span class="c"># this version of Qt (probably PyQt4) doesn&#39;t contain</span>
-            <span class="c"># Q*Animation classes so just change the page:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s2">&quot;QAbstractAnimation&quot;</span><span class="p">):</span>
+            <span class="c1"># this version of Qt (probably PyQt4) doesn&#39;t contain</span>
+            <span class="c1"># Q*Animation classes so just change the page:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">dst_index</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">anim_duration</span> <span class="o">=</span> <span class="mi">600</span><span class="c"># milliseconds</span>
+            <span class="n">anim_duration</span> <span class="o">=</span> <span class="mi">600</span><span class="c1"># milliseconds</span>
             
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">state</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QAbstractAnimation</span><span class="o">.</span><span class="n">Running</span><span class="p">:</span>
-                <span class="c"># the previous animation hasn&#39;t finished yet so jump to the end!</span>
+                <span class="c1"># the previous animation hasn&#39;t finished yet so jump to the end!</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">setCurrentTime</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
             
-            <span class="c"># animate the transition from one page to the next:</span>
+            <span class="c1"># animate the transition from one page to the next:</span>
             <span class="n">current_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">current_index</span><span class="p">]</span>
             <span class="n">dst_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">dst_index</span><span class="p">]</span>
 
-            <span class="c"># reset positions</span>
+            <span class="c1"># reset positions</span>
             <span class="n">dst_page</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span><span class="o">+</span><span class="n">page_offset</span><span class="p">,</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">dst_index</span><span class="p">)</span>
-            <span class="c"># still need to show the current page whilst it transitions</span>
+            <span class="c1"># still need to show the current page whilst it transitions</span>
             <span class="n">current_page</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
             <span class="n">current_page</span><span class="o">.</span><span class="n">raise_</span><span class="p">()</span>       
             
-            <span class="c"># animate the current page away</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">current_page</span><span class="p">,</span> <span class="s">&quot;pos&quot;</span><span class="p">)</span>
+            <span class="c1"># animate the current page away</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">current_page</span><span class="p">,</span> <span class="s2">&quot;pos&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">current_page</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">current_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setEndValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">current_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span><span class="o">-</span><span class="n">page_offset</span><span class="p">,</span> <span class="n">current_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setEasingCurve</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">OutCubic</span><span class="p">)</span>
     
-            <span class="c"># animate the new page in:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">dst_page</span><span class="p">,</span> <span class="s">&quot;pos&quot;</span><span class="p">)</span>
+            <span class="c1"># animate the new page in:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">dst_page</span><span class="p">,</span> <span class="s2">&quot;pos&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span><span class="o">+</span><span class="n">page_offset</span><span class="p">,</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setEndValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setEasingCurve</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">OutCubic</span><span class="p">)</span>
     
-            <span class="c"># create a parallel animation group so that both pages animate at</span>
-            <span class="c"># the same time:</span>
+            <span class="c1"># create a parallel animation group so that both pages animate at</span>
+            <span class="c1"># the same time:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QParallelAnimationGroup</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">addAnimation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">addAnimation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="p">)</span>
             
-            <span class="c"># run the animation/transition</span>
+            <span class="c1"># run the animation/transition</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         
     <span class="k">def</span> <span class="nf">_on_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Launch doc url.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&quot;Opening documentation url </span><span class="si">%s</span><span class="s">...&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">documentation_url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Opening documentation url </span><span class="si">%s</span><span class="s2">...&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">documentation_url</span><span class="p">)</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QDesktopServices</span><span class="o">.</span><span class="n">openUrl</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">documentation_url</span><span class="p">))</span>
         
         
@@ -399,7 +403,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -420,7 +424,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

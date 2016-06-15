@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Playback Label Widget &mdash; tk-framework-qtwidgets v2.2.0 documentation</title>
+  <title>Shotgun Playback Label Widget &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
   
 
   
@@ -32,9 +32,9 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.2.0 documentation" href="index.html"/>
-        <link rel="next" title="View Related Classes" href="views.html"/>
-        <link rel="prev" title="Spinner Widget" href="spinner_widget.html"/> 
+    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="index.html"/>
+        <link rel="next" title="Screen Capture Widget" href="screen_grab.html"/>
+        <link rel="prev" title="Spinner and text overlay widget" href="overlay_widget.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -57,7 +57,7 @@
                 margin: 2px;
                 border-radius: 0px; 
                 padding: 0px;' 
-            src='./_static/logo@2x.png'/>
+            src='_static/logo@2x.png'/>
     
     </a>
     
@@ -92,15 +92,19 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -123,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.2.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -152,7 +156,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -184,26 +188,26 @@ playback action, currently launching Shotgun screening room in a web browser.</p
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In order to use this widget in QT designer, you need to wrap
-the import in a module. For more information on how to do this, see <a class="reference internal" href="index.html#widgets-in-designer"><span>Using widgets with QT Designer</span></a>.</p>
+the import in a module. For more information on how to do this, see <a class="reference internal" href="index.html#widgets-in-designer"><span class="std std-ref">Using widgets with QT Designer</span></a>.</p>
 </div>
 <p>Use the label like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">playback_label</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s">&quot;playback_label&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">playback_label</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s2">&quot;playback_label&quot;</span><span class="p">)</span>
 
-<span class="c"># construct label object</span>
+<span class="c1"># construct label object</span>
 <span class="n">label</span> <span class="o">=</span>  <span class="n">playback_label</span><span class="o">.</span><span class="n">ShotgunPlaybackLabel</span><span class="p">(</span><span class="n">parent_widget</span><span class="p">)</span>
 
-<span class="c"># always use label with a pixmap</span>
+<span class="c1"># always use label with a pixmap</span>
 <span class="n">label</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">some_pixmap_object</span><span class="p">)</span>
 
-<span class="c"># pass a shotgun data dictionary to tell the label what data we are</span>
-<span class="c"># operating on. Make sure to include relevant fields - for example,</span>
-<span class="c"># if you are passing version data, make sure to include media fields</span>
+<span class="c1"># pass a shotgun data dictionary to tell the label what data we are</span>
+<span class="c1"># operating on. Make sure to include relevant fields - for example,</span>
+<span class="c1"># if you are passing version data, make sure to include media fields</span>
 <span class="n">label</span><span class="o">.</span><span class="n">set_shotgun_data</span><span class="p">(</span><span class="n">sg_data</span><span class="p">)</span>
 
-<span class="c"># we can check if an icon is displayed</span>
-<span class="k">print</span> <span class="s">&quot;Playback icon displayed: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">label</span><span class="o">.</span><span class="n">playbable</span>
+<span class="c1"># we can check if an icon is displayed</span>
+<span class="nb">print</span> <span class="s2">&quot;Playback icon displayed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">label</span><span class="o">.</span><span class="n">playbable</span>
 
-<span class="c"># and we can hook it up to other things</span>
+<span class="c1"># and we can hook it up to other things</span>
 <span class="n">label</span><span class="o">.</span><span class="n">playback_clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">some_callback</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -242,12 +246,6 @@ to the caller.</td>
 </tr>
 </tbody>
 </table>
-<dl class="attribute">
-<dt id="playback_label.ShotgunPlaybackLabel.playbable">
-<code class="descname">playbable</code><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel.playbable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if the label is playbable given its current Shotgun data.</p>
-</dd></dl>
-
 <dl class="method">
 <dt id="playback_label.ShotgunPlaybackLabel.set_shotgun_data">
 <code class="descname">set_shotgun_data</code><span class="sig-paren">(</span><em>sg_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/playback_label/playback_label.html#ShotgunPlaybackLabel.set_shotgun_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel.set_shotgun_data" title="Permalink to this definition">¶</a></dt>
@@ -277,10 +275,10 @@ a version, make sure to include the various quicktime and frame fields.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="views.html" class="btn btn-neutral float-right" title="View Related Classes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="screen_grab.html" class="btn btn-neutral float-right" title="Screen Capture Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="spinner_widget.html" class="btn btn-neutral" title="Spinner Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="overlay_widget.html" class="btn btn-neutral" title="Spinner and text overlay widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -289,7 +287,7 @@ a version, make sure to include the various quicktime and frame fields.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Autodesk.
+        &copy; Copyright 2016, Autodesk.
 
     </p>
   </div> 
@@ -310,7 +308,7 @@ a version, make sure to include the various quicktime and frame fields.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.2.0',
+            VERSION:'v2.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
