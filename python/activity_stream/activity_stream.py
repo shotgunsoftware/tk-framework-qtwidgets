@@ -150,6 +150,21 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         The currently loaded note threads, keyed by Note entity id and
         containing a list of Shotgun entity dictionaries.
+
+        Example structure containing a single Note entity:
+            6038: [
+                {
+                    'content': 'This is a test note.',
+                    'created_by': {
+                        'id': 39,
+                        'name': 'Jeff Beeland',
+                        'type': 'HumanUser'
+                    },
+                    'id': 6038,
+                    'sg_metadata': None,
+                    'type': 'Note'
+                }
+            ]
         """
         return self._data_manager.note_threads
 
