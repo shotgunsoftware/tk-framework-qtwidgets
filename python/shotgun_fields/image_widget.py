@@ -29,6 +29,13 @@ class ImageWidget(QtGui.QLabel):
     _DISPLAY_TYPE = "image"
     _EDITOR_TYPE = "image"
 
+    @property
+    def image_url(self):
+        """
+        The string url to the currently loaded image file.
+        """
+        return self._image_url
+
     def enable_editing(self, enable):
         """
         Enable or disable editing of the widget.
