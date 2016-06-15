@@ -47,6 +47,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     # The int is the Note entity id that was selected or deselected.
     note_selected = QtCore.Signal(int)
     note_deselected = QtCore.Signal(int)
+    note_arrived = QtCore.Signal(int)
 
     # Emitted when a Note or Reply entity is created. The
     # entity type as a string and id as an int will be
@@ -668,6 +669,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self._data_manager.request_user_thumbnail(reply_user["type"], 
                                                           reply_user["id"], 
                                                           reply_user["image"])
+        self.note_arrived.emit(note_id)
 
     def _on_entity_created(self, entity):
         """

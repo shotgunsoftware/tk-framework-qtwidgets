@@ -63,6 +63,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     # The int is the id of the Note entity that was selected or deselected.
     note_selected = QtCore.Signal(int)
     note_deselected = QtCore.Signal(int)
+    note_arrived = QtCore.Signal(int)
 
     def __init__(self, bg_task_manager, parent=None, entity=None):
         """
@@ -212,6 +213,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._task_manager.task_completed.connect(self._on_task_completed)
         self.ui.note_stream_widget.note_selected.connect(self.note_selected.emit)
         self.ui.note_stream_widget.note_deselected.connect(self.note_deselected.emit)
+        self.ui.note_stream_widget.note_arrived.connect(self.note_arrived.emit)
 
         # We're taking over the responsibility of handling the title bar's
         # typical responsibilities of closing the dock and managing float
