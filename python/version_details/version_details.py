@@ -51,9 +51,27 @@ settings = sgtk.platform.import_framework(
 )
 
 class VersionDetailsWidget(QtGui.QWidget):
+    """
+    QT Widget that displays details and Note thread data for a given Version
+    entity.
+
+    :signal entity_created(object): Fires when a Note or Reply entity is created by
+            an underlying widget within the activity stream. Passes on a Shotgun
+            entity definition in the form of a dict.
+    :signal entity_loaded(object): Fires when a Version entity has been loaded by
+            the widget. Passes on a Shotgun entity definition in the form of a dict.
+    :signal note_selected(int): Fires when a Note entity is selected in the widget's
+            note thread stream. Passes on the entity id of the selected note.
+    :signal note_deselected(int): Fires when a Note entity is deselected. Passes on
+            the entity id of the selected note.
+    :signal note_arrived(int, object): Fires when a new Note entity arrives and is
+            displayed in the widget's note thread stream. Passes on the entity id
+            and Shotgun entity definition as an int and dict, respectively.
+    """
     FIELDS_PREFS_KEY = "version_details_fields"
     ACTIVE_FIELDS_PREFS_KEY = "version_details_active_fields"
     VERSION_LIST_FIELDS_PREFS_KEY = "version_details_version_list_fields"
+    NOTE_METADATA_FIELD = "sg_metadata"
 
     # Emitted when an entity is created by the panel. The
     # entity type as a string and id as an int are passed
@@ -66,7 +84,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     # The int is the id of the Note entity that was selected or deselected.
     note_selected = QtCore.Signal(int)
     note_deselected = QtCore.Signal(int)
-    note_arrived = QtCore.Signal(int)
+    note_arrived = QtCore.Signal(int, object)
 
     def __init__(self, bg_task_manager, parent=None, entity=None):
         """
@@ -85,6 +103,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._upload_task_ids = []
         self._task_manager = bg_task_manager
         self._version_context_menu_actions = []
+        self._note_metadata_uids = []
+        self._note_fields = [self.NOTE_METADATA_FIELD]
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
@@ -216,7 +236,10 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._task_manager.task_completed.connect(self._on_task_completed)
         self.ui.note_stream_widget.note_selected.connect(self.note_selected.emit)
         self.ui.note_stream_widget.note_deselected.connect(self.note_deselected.emit)
-        self.ui.note_stream_widget.note_arrived.connect(self.note_arrived.emit)
+        self.ui.note_stream_widget.note_arrived.connect(self._process_note_arrival)
+
+        self._data_retriever.work_completed.connect(self.__on_worker_signal)
+        self._data_retriever.work_failure.connect(self.__on_worker_failure)
 
         # We're taking over the responsibility of handling the title bar's
         # typical responsibilities of closing the dock and managing float
@@ -263,6 +286,20 @@ class VersionDetailsWidget(QtGui.QWidget):
         updates, and False if it is not pinned.
         """
         return self._pinned
+
+    def _get_note_fields(self):
+        """
+        The list of Note entity field names that are queried and provided
+        when note_arrived is emitted.
+
+        :returns:   list(str, ...)
+        """
+        return self._note_fields
+
+    def _set_note_fields(self, fields):
+        self._note_fields = list(fields)
+
+    note_fields = property(_get_note_fields, _set_note_fields)
 
     @property
     def note_threads(self):
@@ -408,6 +445,9 @@ class VersionDetailsWidget(QtGui.QWidget):
             fields=self._fields,
         )
 
+        for note_id in self.note_threads.keys():
+            self._process_note_arrival(note_id)
+
         self.entity_loaded.emit(entity)
 
     def save_preferences(self):
@@ -494,14 +534,65 @@ class VersionDetailsWidget(QtGui.QWidget):
     ##########################################################################
     # internal utilities
 
+    def _process_note_arrival(self, note_id):
+        """
+        When a new Note entity arrives from Shotgun in the version details
+        widget, Dynamite is notified and provided the Note entity's metadata.
+
+        :param note_id:     The id of the Note entity.
+        :type note_id:      int
+        """
+        entity_fields = dict(
+            Note=[self.NOTE_METADATA_FIELD],
+            Reply=[self.NOTE_METADATA_FIELD], 
+        )
+
+        self._note_metadata_uids.append(
+            self._data_retriever.execute_find_one(
+                "Note",
+                [["id", "is", note_id]],
+                self.note_fields,
+            )
+        )
+
     def _on_task_completed(self):
         """
-        Forces a repaint of certain widgets when background tasks
-        complete.
+        Signaled whenever the worker completes something. This method will
+        dispatch the work to different methods depending on what async task
+        has completed.
         """
         self.ui.entity_version_view.repaint()
         self.ui.current_version_card.repaint()
         self.ui.note_stream_widget.repaint()
+
+    def __on_worker_signal(self, uid, request_type, data):
+        """
+        Signaled whenever the worker completes something. This method will
+        dispatch the work to different methods depending on what async task
+        has completed.
+
+        :param uid:             Unique id for the request.
+        :type uid:              int
+        :param request_type:    The request class.
+        :type request_type:     str
+        :param data:            The returned data.
+        :type data:             dict 
+        """
+        if uid in self._note_metadata_uids:
+            entity = data["sg"]
+            self.note_arrived.emit(entity["id"], entity)
+
+    def __on_worker_failure(self, uid, msg):
+        """
+        Asynchronous callback - the worker thread errored.
+        
+        :param uid: Unique id for request that failed.
+        :type uid:  int
+        :param msg: The error message.
+        :type msg:  str
+        """
+        if uid in self._note_metadata_uids:
+            sgtk.platform.current_engine().log_error(msg)
 
     def _load_stylesheet(self):
         """
