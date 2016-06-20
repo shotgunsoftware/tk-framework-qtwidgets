@@ -199,7 +199,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
         return field_class
 
-    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, **kwargs):
+    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, delegate=False, **kwargs):
         """
         Create an instance of the given class.
 
@@ -231,6 +231,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         instance._field_name = field_name
         instance._bg_task_manager = bg_task_manager
         instance._bundle = sgtk.platform.current_bundle()
+        instance._delegate = delegate
 
         # do any widget setup that is needed
         instance.setup_widget()
@@ -293,7 +294,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         if value is None:
             self._display_default()
         else:
-            self._display_value(value)
+            self.set_value(value)
         self.value_changed.emit()
 
     @staticmethod

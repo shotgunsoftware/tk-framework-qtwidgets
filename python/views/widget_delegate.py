@@ -85,6 +85,10 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         :returns:           A QWidget to be used for painting the current index
         :rtype:             :class:`~PySide.QtGui.QWidget`
         """
+
+        if not model_index.isValid():
+            return None
+
         # the default implementation just uses the internal __paint_widget 
         # (creating it if needed) for backwards compatibility
         if not self.__paint_widget or not self.__paint_widget():
@@ -114,6 +118,10 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         """
         # the default implementation just calls _create_widget for backwards
         # compatibility.
+
+        if not model_index.isValid():
+            return None
+
         return self._create_widget(parent)
 
     def _on_before_paint(self, widget, model_index, style_options):

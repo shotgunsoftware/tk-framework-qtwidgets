@@ -36,6 +36,13 @@ class ImageWidget(QtGui.QLabel):
         """
         return self._image_url
 
+    def clear(self):
+        self._pixmap = None
+        self._image_url = None
+        if not self._delegate:
+            self._needs_download = True
+        super(ImageWidget, self).clear()
+
     def enable_editing(self, enable):
         """
         Enable or disable editing of the widget.
@@ -104,9 +111,12 @@ class ImageWidget(QtGui.QLabel):
         :type event: :class:`~PySide.QtGui.QResizeEvent`
         """
         if self._pixmap:
-            self._scale_pixmap()
-        else:
-            super(ImageWidget, self).resizeEvent(event)
+            scaled_pixmap = self._scale_pixmap(self._pixmap)
+            self._scaled_width = scaled_pixmap.width()
+            super(ImageWidget, self).setPixmap(scaled_pixmap)
+            self._update_btn_position()
+
+        super(ImageWidget, self).resizeEvent(event)
 
     def setPixmap(self, pixmap):
         """
@@ -116,8 +126,12 @@ class ImageWidget(QtGui.QLabel):
         :param pixmap: The pixmap to set as the current pixmap
         :type pixmap: :class:`~PySide.QtGui.QPixmap`
         """
+
         self._pixmap = pixmap
-        self._scale_pixmap()
+        scaled_pixmap = self._scale_pixmap(pixmap)
+        self._scaled_width = scaled_pixmap.width()
+        super(ImageWidget, self).setPixmap(scaled_pixmap)
+        self._update_btn_position()
 
     def setup_widget(self):
         """
@@ -130,13 +144,18 @@ class ImageWidget(QtGui.QLabel):
         self._editable = False
         self._scaled_width = self.width()
 
-        self.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        if self._delegate:
+            # in delegate mode, the model will handle fetching the data, including
+            # the thumbnail. So we don't need a data retriever.
+            self._needs_download = False
+        else:
+            self._needs_download = True
 
-        # start up a data retriever to fetch the thumbnail in the background
-        self._data_retriever = shotgun_data.ShotgunDataRetriever(bg_task_manager=self._bg_task_manager)
-        self._data_retriever.start()
-        self._data_retriever.work_completed.connect(self._on_worker_signal)
-        self._data_retriever.work_failure.connect(self._on_worker_failure)
+            # start up a data retriever to fetch the thumbnail in the background
+            self._data_retriever = shotgun_data.ShotgunDataRetriever(bg_task_manager=self._bg_task_manager)
+            self._data_retriever.start()
+            self._data_retriever.work_completed.connect(self._on_worker_signal)
+            self._data_retriever.work_failure.connect(self._on_worker_failure)
 
         self.setSizePolicy(
             QtGui.QSizePolicy.Expanding,
@@ -205,8 +224,6 @@ class ImageWidget(QtGui.QLabel):
         Display the default value of the widget.
         """
         self.clear()
-        self._pixmap = None
-        self._image_url = None
         self._update_display()
 
     def _display_value(self, value):
@@ -215,11 +232,17 @@ class ImageWidget(QtGui.QLabel):
 
         :param value: The value returned by the Shotgun API to be displayed
         """
-        # queue up the download in the background
-        entity_id = self._entity and self._entity.get("id") or None
-        entity_type = self._entity and self._entity.get("type") or None
-        self._task_uid = self._data_retriever.request_thumbnail(
-            value, entity_type, entity_id, self._field_name, load_image=True)
+
+        if isinstance(value, QtGui.QPixmap):
+            self.setPixmap(value)
+
+        if self._needs_download:
+            # queue up the download in the background
+            entity_id = self._entity and self._entity.get("id") or None
+            entity_type = self._entity and self._entity.get("type") or None
+            self._task_uid = self._data_retriever.request_thumbnail(
+                value, entity_type, entity_id, self._field_name, load_image=True)
+            self._needs_download = False
 
     def _on_link_activated(self, url):
         """
@@ -258,7 +281,7 @@ class ImageWidget(QtGui.QLabel):
         """
         On failure just display an error and set the toolkit to the error string.
         """
-        if uid == self._task_uid:
+        if str(uid) == self._task_uid:
             self.clear()
             self.setText("Error loading image.")
             self.setToolTip(msg)
@@ -267,7 +290,7 @@ class ImageWidget(QtGui.QLabel):
         """
         Handle the finished download by updating the image the label displays.
         """
-        if uid == self._task_uid:
+        if str(uid) == self._task_uid:
             image = data["image"]
             self._image_url = data["thumb_path"]
             pixmap = QtGui.QPixmap.fromImage(image)
@@ -279,18 +302,15 @@ class ImageWidget(QtGui.QLabel):
         """
         self._upload_image()
 
-    def _scale_pixmap(self):
+    def _scale_pixmap(self, pixmap):
         """
         Scale the pixmap in preparation for display.
         """
-        scaled_pixmap = self._pixmap.scaled(
+        return pixmap.scaled(
             self.size(),
             QtCore.Qt.KeepAspectRatio,
             QtCore.Qt.SmoothTransformation
         )
-        self._scaled_width = scaled_pixmap.width()
-        super(ImageWidget, self).setPixmap(scaled_pixmap)
-        self._update_btn_position()
 
     def _show_image(self):
         """
@@ -315,7 +335,9 @@ class ImageWidget(QtGui.QLabel):
         If no pixmap, display a link to upload if the widget is editable,
         otherwise display a ``No Image`` string.
         """
-        if not self._pixmap:
+        if self._pixmap:
+            self.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        else:
             if self._editable:
                 link_color = sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
                 self.setText(
