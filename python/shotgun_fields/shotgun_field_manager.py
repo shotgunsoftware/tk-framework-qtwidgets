@@ -33,6 +33,11 @@ class ShotgunFieldManager(QtCore.QObject):
     # dictionary that keeps the mapping from Shotgun data type to widget class
     __WIDGET_TYPE_CLS_MAP = {}
 
+    # dictionary that keeps the mapping from Shotgun data type to widget class.
+    # similar to ``__WIDGET_TYPE_CLS_MAP``, but this lookup stores widget classes
+    # for specific entity+field combinations
+    __ENTITY_FIELD_WIDGET_TYPE_CLS_MAP = {}
+
     # fires when we are ready to manage the widgets
     initialized = QtCore.Signal()
 
@@ -69,6 +74,16 @@ class ShotgunFieldManager(QtCore.QObject):
                 (widget_type,)
             )
 
+        # see if theres a widget class registered for this specific entity type
+        # and field combination.
+        entity_field_widget_cls = cls.__ENTITY_FIELD_WIDGET_TYPE_CLS_MAP.\
+            get(sg_entity_type, {}).get(field_name, {}).get(widget_type)
+
+        if entity_field_widget_cls:
+            # found a widget class for the specific entity+field+type combo
+            return entity_field_widget_cls
+
+        # fall back to the widget class for this field's data type
         data_type = shotgun_globals.get_data_type(sg_entity_type, field_name)
         return cls.__WIDGET_TYPE_CLS_MAP.get(data_type, {}).get(widget_type)
 
@@ -80,9 +95,14 @@ class ShotgunFieldManager(QtCore.QObject):
         ``widget_type`` must be one of the enum values ``DISPLAY``, ``EDITOR``, or
         ``EDITABLE`` defined by the manager class.
 
-        This method typically does not need to be called. Widget classes are
+        This method usually does not need to be called. Widget classes are
         typically registered as they are imported (when using the
         :class:`.ShotgunFieldMeta` class).
+
+        If you wish to override widgets at a global level (across all entity types),
+        you can call this method manually. To override a widget for a specific
+        entity and field type combination, call the ``register_entity_field_class()``
+        method.
 
         :param str field_type: The data type of the field to associate with a type of widget
         :param widget_class: The display widget class to associate with the given field type
@@ -94,19 +114,40 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if widget_type not in cls._WIDGET_TYPES:
             raise ValueError(
-                "ShotgunFieldManager unable to register fields of type: %s " %
+                "ShotgunFieldManager unable to register unrecognized widget type: %s " %
                 (widget_type,)
             )
 
-        # TODO: consider removing this restriction if we want to allow developers
-        # to override the default registered widget classes
-        if widget_type in cls.__WIDGET_TYPE_CLS_MAP.get(field_type, {}):
+        cls.__WIDGET_TYPE_CLS_MAP.setdefault(field_type, {})[widget_type] = widget_class
+
+    @classmethod
+    def register_entity_field_class(cls, entity_type, field_name, widget_class, widget_type):
+        """
+        Similar to the ``register_class`` method, but registers a widget to be used
+        with a specific entity type and field. This is provided to allow very specific
+        widget customizations for displaying and editing fields when the default
+        widgets are insufficient.
+
+        Example usage includes ``checkbox`` fields (boolean values) where you may want
+        to display an icon (or not) based on the field value rather than a standard
+        ``QtGui.QCheckbox`` based widget.
+
+        :param str entity_type: The entity type to register the widget class for
+        :param str field_name: The name of the field to register the widget class for
+        :param widget_class: The class of the widget to register for the entity type/field_name
+        :type widget_class: :class:`~PySide.QtGui.QWidget`
+        :param str widget_type: The type of widget to register.
+        """
+
+        if widget_type not in cls._WIDGET_TYPES:
             raise ValueError(
-                "%s widget for field_type %s already registered" %
-                (widget_type, field_type)
+                "ShotgunFieldManager unable to register unrecognized widgets type: %s " %
+                (widget_type,)
             )
 
-        cls.__WIDGET_TYPE_CLS_MAP.setdefault(field_type, {})[widget_type] = widget_class
+        # register with a separate lookup specific to entity+field combo
+        field_map = cls.__ENTITY_FIELD_WIDGET_TYPE_CLS_MAP.setdefault(entity_type, {})
+        field_map.setdefault(field_name, {})[widget_type] = widget_class
 
     ############################################################################
     # special methods
@@ -257,52 +298,50 @@ class ShotgunFieldManager(QtCore.QObject):
         ``widget_type`` must be one of the enum values ``DISPLAY``, ``EDITOR``, or
         ``EDITABLE`` defined by the manager class or ``None``.
 
-        The default is to return a list of field names that have an associated
-        widget of any type registered. If the ``widget_type`` parameter is
-        supplied, then the returned fields will be limited to fields for which the
-        manager can generate widgets of that type.
+        If ``widget_type`` is ``None``, ``DISPLAY`` will be assumed.
 
+        The default is to return a list of field names that have an associated
+        display widget registered.
 
         :param str sg_entity_type: Shotgun entity type
         :param list field_names: An list of (:obj:`str`) Shotgun field names
         :param str widget_type: The type of widget class to check for support.
 
-        :returns: The subset of field_names that have associated widget classes.
+        :returns: The subset of ``field_names`` that have associated widget classes.
         """
         supported_fields = []
 
-        # build a list of all the fields whose type is in the field map
+        widget_type = widget_type or self.DISPLAY
+
+        # go through each of the supplied field names to see if widgets are defined for them
         for field_name in field_names:
+
             # handle bubbled field syntax
             if "." in field_name:
-                (field_entity_type, short_name) = field_name.split(".")[-2:]
+                (resolved_entity_type, resolved_field_name) = field_name.split(".")[-2:]
             else:
-                (field_entity_type, short_name) = (sg_entity_type, field_name)
-            data_type = shotgun_globals.get_data_type(field_entity_type, short_name)
-            if data_type in self.__WIDGET_TYPE_CLS_MAP:
-                if widget_type:
-                    # caller wants to know if which fields are supported for
-                    # a given type (display, editor, editable)
-                    display_cls = self.get_class(
-                        sg_entity_type, field_name, widget_type=self.DISPLAY)
-                    editor_cls = self.get_class(
-                        sg_entity_type, field_name, widget_type=self.EDITOR)
-                    editable_cls = self.get_class(
-                        sg_entity_type, field_name, widget_type=self.EDITABLE)
+                (resolved_entity_type, resolved_field_name) = (sg_entity_type, field_name)
 
-                    if widget_type == self.DISPLAY and display_cls:
-                        supported_fields.append(field_name)
-                    elif widget_type == self.EDITOR and editor_cls:
-                        supported_fields.append(field_name)
-                    elif widget_type == self.EDITABLE:
-                        # if editable class registered, supported. if we have
-                        # both a display and editor clas, then supported.
-                        if editable_cls:
-                            supported_fields.append(field_name)
-                        elif display_cls and editor_cls:
-                            supported_fields.append(field_name)
-                else:
-                    # only wants to know if some widget is registered
+            # see if this entity+field+type combo has a widget registered
+            widget_cls = self.get_class(resolved_entity_type, resolved_field_name, widget_type)
+            if widget_cls:
+                supported_fields.append(field_name)
+                continue
+
+            # if we're here, then no direct widget for the supplied entity+field
+            # or data type. the only other possibility is if this is an editable
+            # widget type request. if so, then the field may be supported by
+            # the default editable widget combining a display & editor. see if
+            # those exist for this entity+field
+            if widget_type == self.EDITABLE:
+
+                display_cls = self.get_class(
+                    resolved_entity_type, resolved_field_name, widget_type=self.DISPLAY)
+
+                editor_cls = self.get_class(
+                    resolved_entity_type, resolved_field_name, widget_type=self.EDITOR)
+
+                if display_cls and editor_cls:
                     supported_fields.append(field_name)
 
         return supported_fields
