@@ -22,6 +22,7 @@ from .widget_value_update import ValueUpdateWidget
 from .dialog_reply import ReplyDialog
 from .data_manager import ActivityStreamDataHandler
 from .overlaywidget import SmallOverlayWidget
+from ..note_input_widget import NoteInputDialog
  
 class ActivityStreamWidget(QtGui.QWidget):
     """
@@ -47,6 +48,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     # The int is the Note entity id that was selected or deselected.
     note_selected = QtCore.Signal(int)
     note_deselected = QtCore.Signal(int)
+    note_arrived = QtCore.Signal(int)
 
     # Emitted when a Note or Reply entity is created. The
     # entity type as a string and id as an int will be
@@ -145,6 +147,29 @@ class ActivityStreamWidget(QtGui.QWidget):
     # properties
 
     @property
+    def note_threads(self):
+        """
+        The currently loaded note threads, keyed by Note entity id and
+        containing a list of Shotgun entity dictionaries.
+
+        Example structure containing a single Note entity:
+            6038: [
+                {
+                    'content': 'This is a test note.',
+                    'created_by': {
+                        'id': 39,
+                        'name': 'Jeff Beeland',
+                        'type': 'HumanUser'
+                    },
+                    'id': 6038,
+                    'sg_metadata': None,
+                    'type': 'Note'
+                }
+            ]
+        """
+        return self._data_manager.note_threads
+
+    @property
     def note_widget(self):
         """
         Returns the :class:`~note_input_widget.NoteInputWidget` contained within
@@ -165,8 +190,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._allow_screenshots = bool(state)
         self.ui.note_widget.allow_screenshots(self._allow_screenshots)
 
-    allow_screenshots = QtCore.Property(
-        bool,
+    allow_screenshots = property(
         _get_allow_screenshots,
         _set_allow_screenshots,
     )
@@ -185,8 +209,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         self._show_sg_stream_button = bool(state)
 
-    show_sg_stream_button = QtCore.Property(
-        bool,
+    show_sg_stream_button = property(
         _get_show_sg_stream_button,
         _set_show_sg_stream_button,
     )
@@ -203,8 +226,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     def _set_version_items_playable(self, state):
         self._version_items_playable = bool(state)
 
-    version_items_playable = QtCore.Property(
-        bool,
+    version_items_playable = property(
         _get_version_items_playable,
         _set_version_items_playable,
     )
@@ -365,6 +387,25 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._bundle.log_debug("Ask db manager to ask shotgun for updates...")
         self._data_manager.rescan()
         self._bundle.log_debug("...done")
+
+    def show_new_note_dialog(self, modal=True):
+        """
+        Shows a dialog that allows the user to input a new note.
+
+        :param modal:   Whether the dialog should be shown modally or not.
+        :type modal:    bool
+        """
+        note_dialog = NoteInputDialog(parent=self)
+        note_dialog.entity_created.connect(self._on_entity_created)
+        note_dialog.data_updated.connect(self.rescan)
+        note_dialog.set_bg_task_manager(self._task_manager)
+        note_dialog.set_current_entity(self._entity_type, self._entity_id)
+
+        if modal:
+            note_dialog.exec_()
+        else:
+            note_dialog.show()
+
 
     def rescan(self, force_activity_stream_update=False):
         """
@@ -668,6 +709,9 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self._data_manager.request_user_thumbnail(reply_user["type"], 
                                                           reply_user["id"], 
                                                           reply_user["image"])
+
+            widget.set_selected(True)
+        self.note_arrived.emit(note_id)
 
     def _on_entity_created(self, entity):
         """
