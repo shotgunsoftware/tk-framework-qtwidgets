@@ -520,6 +520,15 @@ class VersionDetailsWidget(QtGui.QWidget):
             if self._requested_entity:
                 self.load_data(self._requested_entity)
 
+    def show_new_note_dialog(self, modal=True):
+        """
+        Shows a dialog that allows the user to input a new note.
+
+        :param modal:   Whether the dialog should be shown modally or not.
+        :type modal:    bool
+        """
+        self.ui.note_stream_widget.show_new_note_dialog(modal=modal)
+
     def show_title_bar_buttons(self, state):
         """
         Sets the visibility of the undock and close buttons in the

@@ -22,6 +22,7 @@ from .widget_value_update import ValueUpdateWidget
 from .dialog_reply import ReplyDialog
 from .data_manager import ActivityStreamDataHandler
 from .overlaywidget import SmallOverlayWidget
+from ..note_input_widget import NoteInputDialog
  
 class ActivityStreamWidget(QtGui.QWidget):
     """
@@ -387,6 +388,25 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._data_manager.rescan()
         self._bundle.log_debug("...done")
 
+    def show_new_note_dialog(self, modal=True):
+        """
+        Shows a dialog that allows the user to input a new note.
+
+        :param modal:   Whether the dialog should be shown modally or not.
+        :type modal:    bool
+        """
+        note_dialog = NoteInputDialog(parent=self)
+        note_dialog.entity_created.connect(self._on_entity_created)
+        note_dialog.data_updated.connect(self.rescan)
+        note_dialog.set_bg_task_manager(self._task_manager)
+        note_dialog.set_current_entity(self._entity_type, self._entity_id)
+
+        if modal:
+            note_dialog.exec_()
+        else:
+            note_dialog.show()
+
+
     def rescan(self, force_activity_stream_update=False):
         """
         Triggers a rescan of the current activity stream data.
@@ -689,6 +709,8 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self._data_manager.request_user_thumbnail(reply_user["type"], 
                                                           reply_user["id"], 
                                                           reply_user["image"])
+
+            widget.set_selected(True)
         self.note_arrived.emit(note_id)
 
     def _on_entity_created(self, entity):
