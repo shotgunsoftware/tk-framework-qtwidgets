@@ -105,14 +105,13 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         """
         self.setEditorData(widget, model_index)
 
-    def setEditorData(self, widget, index):
-        value = index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)
-        sanitized_value = shotgun_model.sanitize_qt(value)
-        widget.set_value(sanitized_value)
+    #def setEditorData(self, widget, index):
+    #    value = index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)
+    #    sanitized_value = shotgun_model.sanitize_qt(value)
+    #    widget.set_value(sanitized_value)
 
     def setModelData(self, editor, model, index):
         return editor.get_value()
 
-    def editorEvent(self, event, model, option, index):
-        print "EDITOR EVENT: %s" % event
-        return True
+    #def editorEvent(self, event, model, option, index):
+    #    return True
