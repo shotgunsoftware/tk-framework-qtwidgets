@@ -67,6 +67,26 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
             _EDITOR_TYPE = "float"
             # ...
 
+    The widgets shown above will be used by any SG field for the specified type.
+    It is also possible to register widgets that are used only for specific
+    fields on specific entities. To achieve this, use the ``_ENTITY_FIELDS``
+    class memeber to define a list of tuples that explicitly defined the entity
+    fields the widget should be used to display.
+
+    Example::
+
+        class SpecialFloatDisplayWidget(QtGui.QLabel):
+            __metaclass__ = ShotgunFieldMeta
+            _DISPLAY_TYPE = "float"
+            _ENTITY_FIELDS = [
+                ("CustomEntity07", "my_float_field"),
+                ("CustomEntity11", "another_float_field"),
+            ]
+            # ...
+
+    The widget defined above will only be used to display the fields in the
+    ``_ENTITY_FIELDS`` list.
+
     - No class defined with this metaclass can define its own ``__init__`` method.
         * The metaclass defines an ``__init__`` that takes the arguments below
         * The class will pass all other keyword args through to the PySide widget
@@ -144,15 +164,40 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         # create the class instance itself
         field_class = super(ShotgunFieldMeta, mcl).__new__(mcl, name, parents, class_dict)
 
+        # XXX update docs in manager to show how to override entity/field/type
+
+        # widgets can be used for multiple reasons (display, edit, editable, etc).
+        # build a list of the different types for later registration.
+        registration_types = []
+
         if "_DISPLAY_TYPE" in class_dict:
-            # register the field type this class implements with the field manager
-            ShotgunFieldManager.register_class(class_dict["_DISPLAY_TYPE"], field_class,
-                ShotgunFieldManager.DISPLAY)
+            field_type = class_dict["_DISPLAY_TYPE"]
+            widget_type = ShotgunFieldManager.DISPLAY
+            registration_types.append((field_type, widget_type))
 
         if "_EDITOR_TYPE" in class_dict:
-            # register the field type this class implements with the field manager
-            ShotgunFieldManager.register_class(class_dict["_EDITOR_TYPE"], field_class,
-                ShotgunFieldManager.EDITOR)
+            field_type = class_dict["_EDITOR_TYPE"]
+            widget_type = ShotgunFieldManager.EDITOR
+            registration_types.append((field_type, widget_type))
+
+        if "_EDITABLE_TYPE" in class_dict:
+            field_type = class_dict["_EDITABLE_TYPE"]
+            widget_type = ShotgunFieldManager.EDITABLE
+            registration_types.append((field_type, widget_type))
+
+        # register all the types for this widget class
+        for (field_type, widget_type) in registration_types:
+
+            if "_ENTITY_FIELDS" in class_dict:
+                # this is an override widget, meaning it is to be used for specific
+                # entity+field combinations. Loop through those combinations and
+                # register this class for each.
+                for (entity_type, field_name) in class_dict["_ENTITY_FIELDS"]:
+                    ShotgunFieldManager.register_entity_field_class(
+                        entity_type, field_name, field_class, widget_type)
+            else:
+                # this widget is to be used for all fields of a certain type
+                ShotgunFieldManager.register_class(field_type, field_class, widget_type)
 
         return field_class
 
