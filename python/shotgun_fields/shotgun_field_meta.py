@@ -164,8 +164,6 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         # create the class instance itself
         field_class = super(ShotgunFieldMeta, mcl).__new__(mcl, name, parents, class_dict)
 
-        # XXX update docs in manager to show how to override entity/field/type
-
         # widgets can be used for multiple reasons (display, edit, editable, etc).
         # build a list of the different types for later registration.
         registration_types = []
