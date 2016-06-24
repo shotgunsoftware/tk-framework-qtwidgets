@@ -710,7 +710,16 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                           reply_user["id"], 
                                                           reply_user["image"])
 
+            # Ordering here is important. An example of why is that higher
+            # level widgets/apps might be registering a newly-arrived note
+            # with some host application and also listening for selection
+            # signals to notify the same host application of that having
+            # occurred. If the host application doesn't know the note exists,
+            # then telling it the note is selected won't do any good.
+            self.note_arrived.emit(note_id)
             widget.set_selected(True)
+            return
+
         self.note_arrived.emit(note_id)
 
     def _on_entity_created(self, entity):
