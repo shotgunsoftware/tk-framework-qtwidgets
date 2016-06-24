@@ -67,6 +67,9 @@ class VersionDetailsWidget(QtGui.QWidget):
     :signal note_arrived(int, object): Fires when a new Note entity arrives and is
             displayed in the widget's note thread stream. Passes on the entity id
             and Shotgun entity definition as an int and dict, respectively.
+    :signal note_metadata_changed(int, str): Fires when the widget successfully
+            updates a Note entity's metadata field. The Note entity's id and the
+            new metadata are passed on.
     """
     FIELDS_PREFS_KEY = "version_details_fields"
     ACTIVE_FIELDS_PREFS_KEY = "version_details_active_fields"
@@ -85,6 +88,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     note_selected = QtCore.Signal(int)
     note_deselected = QtCore.Signal(int)
     note_arrived = QtCore.Signal(int, object)
+    note_metadata_changed = QtCore.Signal(int, str)
 
     def __init__(self, bg_task_manager, parent=None, entity=None):
         """
@@ -104,6 +108,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._task_manager = bg_task_manager
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
+        self._note_set_metadata_uids = []
         self._note_fields = [self.NOTE_METADATA_FIELD]
 
         self.ui = Ui_VersionDetailsWidget() 
@@ -472,12 +477,27 @@ class VersionDetailsWidget(QtGui.QWidget):
             self._settings_manager.SCOPE_ENGINE,
         )
 
+    def set_note_metadata(self, note_id, metadata):
+        """
+        Sets a Note entity's metadata in Shotgun.
+
+        :param int note_id: The Note entity id.
+        :param str metadata: The metadata to set in Shotgun.
+        """
+        self._note_set_metadata_uids.append(
+            self._data_retriever.execute_update(
+                "Note",
+                note_id,
+                {self.NOTE_METADATA_FIELD:metadata},
+            )
+        )
+
     def set_note_screenshot(self, image_path):
         """
         Takes the given file path to an image and sets the new note
         widget's thumbnail image.
 
-        :param image_path:  A file path to an image file on disk.
+        :param str image_path:  A file path to an image file on disk.
         """
         self.ui.note_stream_widget.note_widget._set_screenshot_pixmap(
             QtGui.QPixmap(image_path),
@@ -590,6 +610,12 @@ class VersionDetailsWidget(QtGui.QWidget):
         if uid in self._note_metadata_uids:
             entity = data["sg"]
             self.note_arrived.emit(entity["id"], entity)
+        elif uid in self._note_set_metadata_uids:
+            entity = data["sg"]
+            self.note_metadata_changed.emit(
+                entity["id"],
+                entity[self.NOTE_METADATA_FIELD],
+            )
 
     def __on_worker_failure(self, uid, msg):
         """
