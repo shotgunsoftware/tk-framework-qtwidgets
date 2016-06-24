@@ -669,51 +669,47 @@ class VersionDetailsWidget(QtGui.QWidget):
         Takes the currently-requested entity and sets various widgets
         to display it.
         """
-        try:
-            entity = self._requested_entity
+        entity = self._requested_entity
 
-            if not entity:
-                return
+        if not entity:
+            return
 
-            item = self.version_info_model.item_from_entity(
+        item = self.version_info_model.item_from_entity(
+            "Version",
+            entity["id"],
+        )
+
+        if not item:
+            return
+
+        sg_data = item.get_sg_data()
+
+        self.ui.current_version_card.entity = sg_data
+        self._more_info_toggled(self.ui.more_info_button.isChecked())
+
+        if sg_data.get("entity"):
+            version_filters = [["entity", "is", sg_data["entity"]]]
+            self.version_model.load_data(
                 "Version",
-                entity["id"],
+                filters=version_filters,
+                fields=self._fields,
             )
 
-            if not item:
-                return
+            self.version_proxy_model.sort(
+                0, 
+                (
+                    QtCore.Qt.AscendingOrder if 
+                    self._sort_versions_ascending else 
+                    QtCore.Qt.DescendingOrder
+                ),
+            )
+        else:
+            self.version_model.clear()
 
-            sg_data = item.get_sg_data()
-
-            self.ui.current_version_card.entity = sg_data
-            self._more_info_toggled(self.ui.more_info_button.isChecked())
-
-            if sg_data.get("entity"):
-                version_filters = [["entity", "is", sg_data["entity"]]]
-                self.version_model.load_data(
-                    "Version",
-                    filters=version_filters,
-                    fields=self._fields,
-                )
-
-                self.version_proxy_model.sort(
-                    0, 
-                    (
-                        QtCore.Qt.AscendingOrder if 
-                        self._sort_versions_ascending else 
-                        QtCore.Qt.DescendingOrder
-                    ),
-                )
-            else:
-                self.version_model.clear()
-
-            self._current_entity = sg_data
-            self._setup_fields_menu()
-            self._setup_version_list_fields_menu()
-            self._setup_version_sort_by_menu()
-        except:
-            import traceback
-            sgtk.platform.current_engine().log_error(traceback.format_exc())
+        self._current_entity = sg_data
+        self._setup_fields_menu()
+        self._setup_version_list_fields_menu()
+        self._setup_version_sort_by_menu()
 
     def _version_list_field_menu_triggered(self, action):
         """
