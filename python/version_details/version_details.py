@@ -346,7 +346,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         for file_path in file_paths:
             self._upload_uid = self._data_retriever.execute_method(
-                self._upload_file,
+                self.__upload_file,
                 dict(
                     file_path=file_path,
                     parent_entity_type=note_entity["type"],
@@ -559,6 +559,29 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         self.ui.float_button.setVisible(state)
         self.ui.close_button.setVisible(state)
+
+    def set_version_thumbnail(self, thumbnail_path, version_id=None):
+        """
+        Sets a Version entity's thumbnail image in Shotgun. If no Version
+        id is provided, the current Version entity will be updated.
+
+        :param str thumbnail_path: The path to the thumbnail file on disk.
+        :param int version_id: The Version entity's id. If not provided
+                               then the current Version entity loaded in
+                               the widget will be used.
+        """
+        if not version_id and not self.current_entity:
+            return
+
+        version_id = version_id or self.current_entity["id"]
+        self._data_retriever.execute_method(
+            self.__upload_thumbnail,
+            dict(
+                entity_type="Version",
+                entity_id=version_id,
+                path=thumbnail_path,
+            ),
+        )
 
     ##########################################################################
     # internal utilities
@@ -982,15 +1005,15 @@ class VersionDetailsWidget(QtGui.QWidget):
         action = menu.exec_(self.ui.entity_version_view.mapToGlobal(point))
         menu.execute_callback(action)
 
-    def _upload_file(self, sg, data):
+    def __upload_file(self, sg, data):
         """
         Uploads any generic file attachments to Shotgun, parenting
         them to the given entity.
 
-        :param sg:      A Shotgun API instance.
-        :param data:    A dictionary containing "parent_entity_type",
-                        "parent_entity_id", "file_path", and
-                        "cleanup_after_upload" keys.
+        :param sg: A Shotgun API instance.
+        :param dict data: A dictionary containing "parent_entity_type",
+                          "parent_entity_id", "file_path", and
+                          "cleanup_after_upload" keys.
         """
         sg.upload(
             data["parent_entity_type"],
@@ -1005,6 +1028,34 @@ class VersionDetailsWidget(QtGui.QWidget):
                 pass
 
         self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
+
+    def __upload_thumbnail(self, sg, data):
+        """
+        Uploads an image file as a thumbnail for the given entity. This
+        is intended to be used with the execute_method call from a Shotgun
+        data retriever object.
+
+        The data dictionary will take the following form:
+            dict(
+                entity_type=str,
+                entity_id=int,
+                path=str,
+            )
+
+        :param sg: A Shotgun API instance.
+        :param dict data: A dictionary of data passed through from the
+                          Shotgun data retriever.
+        """
+        sg.upload_thumbnail(
+            data["entity_type"],
+            data["entity_id"],
+            data["path"],
+        )
+
+        self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
+        self.ui.current_version_card.thumbnail.setPixmap(
+            QtGui.QPixmap(data["path"])
+        )
         
     ##########################################################################
     # docking
