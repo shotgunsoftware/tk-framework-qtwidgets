@@ -218,6 +218,8 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         :param bg_task_manager: The task manager the widget will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
 
+        :param bool delegate: True if the widget field widget is being used as a delegate, False otherwise.
+
         Additionally pass all other keyword args through to the PySide widget constructor for the
         class' superclass.
         """
@@ -294,7 +296,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         if value is None:
             self._display_default()
         else:
-            self.set_value(value)
+            self._display_value(value)
         self.value_changed.emit()
 
     @staticmethod

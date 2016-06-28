@@ -76,8 +76,12 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         self._popup_btn = QtGui.QPushButton(self)
         self._popup_btn.setIcon(QtGui.QIcon(":/qtwidgets-shotgun-fields/link_menu.png"))
         self._popup_btn.setFixedSize(QtCore.QSize(18, 12))
-        self._popup_btn.setFocusPolicy(QtCore.Qt.NoFocus)
         self._popup_btn.hide()
+
+        if not self._delegate:
+            # not sure why, but when the widget is being used in a delegate,
+            # this causes editor to close immediately when clicked.
+            self._popup_btn.setFocusPolicy(QtCore.Qt.NoFocus)
 
         # make sure there's never a bg color or border
         self._popup_btn.setStyleSheet("background-color: none; border: none;")

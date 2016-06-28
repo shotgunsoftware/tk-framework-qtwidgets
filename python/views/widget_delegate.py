@@ -166,11 +166,11 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
     def createEditor(self, parent_widget, style_options, model_index):
         """
         Subclassed implementation from QStyledItemDelegate which is
-        called when an "editor" is set up - the editor is set up 
+        called when an "editor" is set up - the editor is set up
         via the openPersistentEditor call and is created upon selection
         of an item.
 
-        Normally, for performance, when we draw hundreds of grid cells, 
+        Normally, for performance, when we draw hundreds of grid cells,
         we use the same Qwidget as a brush and simply use it to paint.
 
         For the currently selected cell however, we need to be able to interact
@@ -178,11 +178,11 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         to have a real widget for this.
 
         :param parent_widget:   The parent widget to use for the new editor widget
-        
+
         :param style_options:   The style options to use when creating the editor
-        :param model_index:     The index in the data model that will be edited 
+        :param model_index:     The index in the data model that will be edited
                                 using this editor
-        :returns:               An editor widget that will be used to edit this 
+        :returns:               An editor widget that will be used to edit this
                                 index
         """
         # allow derived class to create the editor widget:

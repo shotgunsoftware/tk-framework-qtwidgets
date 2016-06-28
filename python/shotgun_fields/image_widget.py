@@ -145,8 +145,9 @@ class ImageWidget(QtGui.QLabel):
         self._scaled_width = self.width()
 
         if self._delegate:
-            # in delegate mode, the model will handle fetching the data, including
-            # the thumbnail. So we don't need a data retriever.
+            # in delegate mode. that means this widget is being used to display
+            # multiple entitie's image fields. so setting up a data retriever to
+            # download for a specific entity is pointless.
             self._needs_download = False
         else:
             self._needs_download = True
@@ -166,8 +167,12 @@ class ImageWidget(QtGui.QLabel):
         self._popup_btn = QtGui.QPushButton(self)
         self._popup_btn.setIcon(QtGui.QIcon(":/qtwidgets-shotgun-fields/image_menu.png"))
         self._popup_btn.setFixedSize(QtCore.QSize(18, 12))
-        self._popup_btn.setFocusPolicy(QtCore.Qt.NoFocus)
         self._popup_btn.hide()
+
+        if not self._delegate:
+            # not sure why, but when the widget is being used in a delegate,
+            # this causes editor to close immediately when clicked.
+            self._popup_btn.setFocusPolicy(QtCore.Qt.NoFocus)
 
         # make sure there's never a bg color or border
         self._popup_btn.setStyleSheet("background-color: none; border: none;")
@@ -182,6 +187,9 @@ class ImageWidget(QtGui.QLabel):
         self._view_action = QtGui.QAction("View Image", self)
         self._view_action.triggered.connect(self._show_image)
 
+        self._upload_action = QtGui.QAction("Upload Thumbnail", self)
+        self._upload_action.triggered.connect(self._upload_image)
+
         self._popup_edit_menu = QtGui.QMenu()
         self._popup_edit_menu.addAction(self._clear_action)
         self._popup_edit_menu.addAction(self._replace_action)
@@ -189,6 +197,9 @@ class ImageWidget(QtGui.QLabel):
 
         self._popup_display_menu = QtGui.QMenu()
         self._popup_display_menu.addAction(self._view_action)
+
+        self._popup_upload_menu = QtGui.QMenu()
+        self._popup_upload_menu.addAction(self._upload_action)
 
         self.installEventFilter(self)
 
@@ -216,8 +227,10 @@ class ImageWidget(QtGui.QLabel):
         """
         Clear the widget of the current image, displaying the default value.
         """
+        self._value = None
         self._display_default()
         self.value_changed.emit()
+        self._update_display()
 
     def _display_default(self):
         """
@@ -267,7 +280,10 @@ class ImageWidget(QtGui.QLabel):
         """
 
         if self._editable:
-            menu = self._popup_edit_menu
+            if self._pixmap:
+                menu = self._popup_edit_menu
+            else:
+                menu = self._popup_upload_menu
         else:
             menu = self._popup_display_menu
 
@@ -314,9 +330,41 @@ class ImageWidget(QtGui.QLabel):
 
     def _show_image(self):
         """
-        The user requested to show the file. Forward to desktop services.
+        The user requested to show the file.
+
+        Display the image in a transient, modeless QDialog.
         """
-        QtGui.QDesktopServices.openUrl("file:///%s" % (self._image_url))
+
+        # don't continue unless there's somethign to show
+        if not self._pixmap:
+            return
+
+        if self._image_url:
+            # try to use the path if there is one
+            display_pixmap = QtGui.QPixmap(self._image_url)
+        else:
+            # may only have the pixmap (delegates)
+            display_pixmap = QtGui.QPixmap(self._pixmap)
+
+        # construct the dialog, display label, and a button box to close it.
+
+        img_dialog = QtGui.QDialog(self)
+        img_dialog.setWindowTitle(
+            "Viewing: %s %s" % (self._entity_type, self._field_name)
+        )
+
+        lbl = QtGui.QLabel()
+        lbl.setPixmap(display_pixmap)
+
+        btn_box = QtGui.QDialogButtonBox(QtGui.QDialogButtonBox.Ok)
+
+        layout = QtGui.QVBoxLayout(img_dialog)
+        layout.addWidget(lbl)
+        layout.addWidget(btn_box)
+
+        btn_box.accepted.connect(img_dialog.accept)
+
+        img_dialog.show()
 
     def _update_btn_position(self):
         """
@@ -332,20 +380,16 @@ class ImageWidget(QtGui.QLabel):
 
     def _update_display(self):
         """
-        If no pixmap, display a link to upload if the widget is editable,
-        otherwise display a ``No Image`` string.
+        If no pixmap, display the button with options.
         """
         if self._pixmap:
             self.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         else:
             if self._editable:
-                link_color = sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
-                self.setText(
-                    "<a href='image::upload'><font color='%s'>Upload Image"
-                    "</font></a>" % (link_color,)
-                )
+                self._popup_btn.show()
+                self.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
             else:
-                self.setText("No Image")
+                self.setText("")
 
     def _upload_image(self):
         """
@@ -360,5 +404,6 @@ class ImageWidget(QtGui.QLabel):
         if file_path:
             self.setPixmap(QtGui.QPixmap(file_path))
             self._image_url = file_path
+            self._value = file_path
             self.value_changed.emit()
 
