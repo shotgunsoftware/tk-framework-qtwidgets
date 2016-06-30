@@ -52,6 +52,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._reply_widgets = []
         self._attachment_group_widgets = {}
         self._selected = False
+        self._attachments = []
 
         self.set_selected(False)
                 
@@ -68,6 +69,39 @@ class NoteWidget(ActivityStreamBaseWidget):
 
     ##############################################################################
     # properties
+
+    @property
+    def attachments(self):
+        """
+        Returns a list of attachment entities as returned from the
+        Shotgun Python API.
+
+        Example:
+        [
+            {'attachment_links': [{'id': 6043,
+                                   'name': "Jeff's Note on Buck_rig_v01, Buck - Test!",
+                                   'type': 'Note'}],
+             'created_at': 1467064531.0,
+             'created_by': {'id': 39, 'name': 'Jeff Beeland', 'type': 'HumanUser'},
+             'id': 597,
+             'image': 'https://abc.shotgunstudio.com/thumbnail/api_image/7207?AccessKeyId=123&Expires=123&Signature=123',
+             'this_file': {'content_type': 'image/png',
+                           'id': 597,
+                           'link_type': 'upload',
+                           'name': 'test.png',
+                           'type': 'Attachment',
+                           'url': 'https://abc.shotgunstudio.com/file_serve/attachment/597'},
+             'type': 'Attachment'}
+        ]
+        """
+        return self._attachments
+
+    @property
+    def note_id(self):
+        """
+        The Note entity id that this widget is representing.
+        """
+        return self._note_id
 
     @property
     def selected(self):
@@ -181,6 +215,7 @@ class NoteWidget(ActivityStreamBaseWidget):
 
             if item["type"] == "Attachment" and item["this_file"]["link_type"] == "upload":
                 current_attachments.append(item)
+                self._attachments.append(item)
 
         # see if there are still open attachments
         if len(current_attachments) > 0:                    

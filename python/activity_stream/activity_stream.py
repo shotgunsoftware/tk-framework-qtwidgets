@@ -233,13 +233,24 @@ class ActivityStreamWidget(QtGui.QWidget):
         
     ############################################################################
     # public interface
+
+    def get_note_attachments(self, note_id):
+        """
+        Gets the Attachment entities associated with the given Note
+        entity.
+
+        :param int note_id: The Note entity id.
+        """
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget) and widget.note_id == note_id:
+                return widget.attachments
         
     def load_data(self, sg_entity_dict):
         """
         Reset the state of the widget and then load up the data
         for a given entity.
         
-        :param sg_entity_dict: Dictionary with keys type and id
+        :param dict sg_entity_dict: Dictionary with keys type and id
         """
  
         self._bundle.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
@@ -368,7 +379,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                             attachment_req["attachment_group_id"], 
                                                             attachment_req["attachment_data"])
         
-        # now request thumbnails for all usesr who have replied, but 
+        # now request thumbnails for all users who have replied, but 
         # only once per user
         reply_users_dup_check = []
         for reply_user in all_reply_users:

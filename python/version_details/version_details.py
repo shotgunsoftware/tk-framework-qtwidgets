@@ -70,11 +70,15 @@ class VersionDetailsWidget(QtGui.QWidget):
     :signal note_metadata_changed(int, str): Fires when the widget successfully
             updates a Note entity's metadata field. The Note entity's id and the
             new metadata are passed on.
+    :signal note_attachment_arrived(int, str): Fires when an attachment file
+            associated with a Note entity is successfully downloaded. The Note
+            entity id and the path to the file on disk are passed on.
     """
     FIELDS_PREFS_KEY = "version_details_fields"
     ACTIVE_FIELDS_PREFS_KEY = "version_details_active_fields"
     VERSION_LIST_FIELDS_PREFS_KEY = "version_details_version_list_fields"
     NOTE_METADATA_FIELD = "sg_metadata"
+    NOTE_MARKUP_PREFIX = "__note_markup__"
 
     # Emitted when an entity is created by the panel. The
     # entity type as a string and id as an int are passed
@@ -89,6 +93,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     note_deselected = QtCore.Signal(int)
     note_arrived = QtCore.Signal(int, object)
     note_metadata_changed = QtCore.Signal(int, str)
+    note_attachment_arrived = QtCore.Signal(int, str)
 
     def __init__(self, bg_task_manager, parent=None, entity=None):
         """
@@ -109,6 +114,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
+        self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
 
         self.ui = Ui_VersionDetailsWidget() 
@@ -409,6 +415,29 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._requested_entity = None
         self._current_entity = None
 
+    def download_note_attachments(self, note_id):
+        """
+        Triggers the attachments linked to the given Note entity to
+        be downloaded. When the download is completed successfully, an
+        attachment_downloaded signal is emitted.
+
+        :param int note_id: The Note entity id.
+        """
+        attachments = self.get_note_attachments(note_id)
+
+        for attachment in attachments:
+            uid = self._data_retriever.request_attachment(attachment)
+            self._attachment_uids[uid] = note_id
+
+    def get_note_attachments(self, note_id):
+        """
+        Gets the Attachment entities associated with the given Note
+        entity.
+
+        :param int note_id: The Note entity id.
+        """
+        return self.ui.note_stream_widget.get_note_attachments(note_id)
+
     def load_data(self, entity):
         """
         Loads the given Shotgun entity into the details panel,
@@ -639,6 +668,10 @@ class VersionDetailsWidget(QtGui.QWidget):
                 entity["id"],
                 entity[self.NOTE_METADATA_FIELD],
             )
+        elif uid in self._attachment_uids:
+            note_id = self._attachment_uids[uid]
+            del self._attachment_uids[uid]
+            self.note_attachment_arrived.emit(note_id, data["file_path"])
 
     def __on_worker_failure(self, uid, msg):
         """
@@ -650,7 +683,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         :type msg:  str
         """
         if uid in self._note_metadata_uids:
-            sgtk.platform.current_engine().log_error(msg)
+            sgtk.platform.current_bundle().log_error(msg)
+        elif uid in self._attachment_uids:
+            sgtk.platform.current_bundle().log_error(msg)
 
     def _load_stylesheet(self):
         """

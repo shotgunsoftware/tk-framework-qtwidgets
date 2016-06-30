@@ -548,7 +548,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 # records after the first discovered (most recent) are 
                 # discarded
                 pe = activity_data.get("primary_entity")
-                if pe and pe.get("type") == "Note" and pe.get("id") in notes: 
+                if pe and pe.get("type") == "Note" and pe.get("id") in notes:
                     continue
                 
                 activities[activity_id] = activity_data
@@ -893,7 +893,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
             image = data["image"]
             if image:
                 signal_payload = copy.copy(self._thumb_map[uid])
-                signal_payload["image"] = image                
+                signal_payload["image"] = image
+                signal_payload["thumb_path"] = data["thumb_path"]
                 self.thumbnail_arrived.emit(signal_payload)
          
 
