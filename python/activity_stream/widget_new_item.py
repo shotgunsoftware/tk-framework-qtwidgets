@@ -57,6 +57,13 @@ class NewItemWidget(ActivityStreamBaseWidget):
     ##############################################################################
     # properties
 
+    @property
+    def user_thumb(self):
+        """
+        The user thumbnail widget.
+        """
+        return self.ui.user_thumb
+
     def _get_interactive(self):
         """
         Whether the new item label is interactive, showing a play icon.
@@ -66,6 +73,11 @@ class NewItemWidget(ActivityStreamBaseWidget):
     def _set_interactive(self, state):
         self._interactive = bool(state)
         self.ui.details_thumb.interactive = self._interactive
+
+        if self._interactive:
+            self.user_thumb.setCursor(QtCore.Qt.PointingHandCursor)
+        else:
+            self.user_thumb.setCursor(QtCore.Qt.ArrowCursor)
 
     interactive = QtCore.Property(
         bool,
