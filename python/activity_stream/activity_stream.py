@@ -72,6 +72,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._allow_screenshots = True
         self._show_sg_stream_button = True
         self._version_items_playable = True
+        self._clickable_user_icons = True
         
         # apply styling
         self._load_stylesheet()
@@ -157,6 +158,30 @@ class ActivityStreamWidget(QtGui.QWidget):
         replies, access can be found via :meth:`ReplyDialog.note_widget`.
         """
         return self.ui.note_widget
+
+    def _get_clickable_user_icons(self):
+        """
+        Whether user icons in the activity stream display as clickable.
+        If True, a pointing hand cursor will be shown when the mouse is
+        hovered over the icons, otherwise the default arrow cursor will be
+        used.
+        """
+        return self._clickable_user_icons
+
+    def _set_clickable_user_icons(self, state):
+        self._clickable_user_icons = bool(state)
+
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget):
+                if state:
+                    widget.set_user_thumb_cursor(QtCore.Qt.PointingHandCursor)
+                else:
+                    widget.set_user_thumb_cursor(QtCore.Qt.ArrowCursor)
+
+    clickable_user_icons = property(
+        _get_clickable_user_icons,
+        _set_clickable_user_icons,
+    )
 
     def _get_pre_submit_callback(self):
         """
@@ -571,6 +596,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             widget.set_info(data)
             widget.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))
             widget.playback_requested.connect(lambda sg_data: self.playback_requested.emit(sg_data))
+
+        # If we're not wanting the user icons to display as clickable, then
+        # we need to set their cursor to be the default arrow cursor. Otherwise
+        # we don't need to do anything because they default to the clickable
+        # finger-pointing cursor.
+        if not self.clickable_user_icons and isinstance(widget, NoteWidget):
+            widget.set_user_thumb_cursor(QtCore.Qt.ArrowCursor)
                     
         return widget
         

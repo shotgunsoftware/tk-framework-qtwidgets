@@ -43,7 +43,17 @@ class ReplyWidget(ActivityStreamBaseWidget):
         self.ui.reply.linkActivated.connect(self._entity_request_from_url)
         self.ui.header_left.linkActivated.connect(self._entity_request_from_url)    
         
-        self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))    
+        self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))
+
+    ##############################################################################
+    # properties
+
+    @property
+    def user_thumb(self):
+        """
+        The user thumbnail widget.
+        """
+        return self.ui.user_thumb
 
     ##############################################################################
     # public interface
@@ -58,6 +68,15 @@ class ReplyWidget(ActivityStreamBaseWidget):
             self.ui.user_thumb.setMaximumSize(QtCore.QSize(30, 30))
         else:
             self._bundle.log_warning("Unknown thumb style for reply")
+
+    def set_user_thumb_cursor(self, cursor):
+        """
+        Sets the cursor displayed when hovering over the user
+        thumbnail.
+
+        :param cursor: The Qt cursor to set.
+        """
+        self.user_thumb.setCursor(cursor)
 
     @property
     def note_widget(self):

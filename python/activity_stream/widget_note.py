@@ -54,10 +54,32 @@ class NoteWidget(ActivityStreamBaseWidget):
         # self.ui.links.linkActivated.connect(self._entity_request_from_url)
         self.ui.content.linkActivated.connect(self._entity_request_from_url)
         self.ui.header_left.linkActivated.connect(self._entity_request_from_url)    
-        self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))    
+        self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))
+
+    ##############################################################################
+    # properties
+
+    @property
+    def user_thumb(self):
+        """
+        The user thumbnail widget.
+        """
+        return self.ui.user_thumb
 
     ##############################################################################
     # public interface
+
+    def set_user_thumb_cursor(self, cursor):
+        """
+        Sets the cursor displayed when hovering over the user
+        thumbnail.
+
+        :param cursor: The Qt cursor to set.
+        """
+        self.user_thumb.setCursor(cursor)
+
+        for widget in self._reply_widgets:
+            widget.set_user_thumb_cursor(cursor)
     
     def set_info(self, data):
         """
@@ -141,6 +163,8 @@ class NoteWidget(ActivityStreamBaseWidget):
                     current_attachments = []                                
                                                 
                 w = ReplyWidget(self)
+                w.set_user_thumb_cursor(self.user_thumb.cursor())
+
                 self.ui.reply_layout.addWidget(w)
                 w.set_info(item)
                 self._reply_widgets.append(w)
