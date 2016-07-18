@@ -81,15 +81,29 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
 
         if self._display_class == self._editor_class:
             # display and edit classes are the same. we need to make sure
-            # we disable the editing
+            # we disable the editing so that the delegate isn't drawn in its
+            # edit state.
             widget.enable_editing(False)
 
         return widget
 
     def sizeHint(self, style_options, model_index):
         """
-        Returns a size hint for the painter widget.
+        Returns the size needed by the delegate to display the item specified by
+        ``model_index``, taking into account the style information provided by
+        ``style_options``.
+
+        Reimplemented from ``QStyledItemDelegate.sizeHint``
+
+        :param style_options: Style information for the item.
+        :type style_options: :class:`~PySide.QtGui.QStyleOptionViewItem`
+        :param model_index: The index of the item to return the size of.
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
+
+        :returns: size required by the delegate
+        :rtype: :class:`~PySide.QtCore.QSize`
         """
+
         if not model_index.isValid():
             return QtCore.QSize()
 
@@ -102,6 +116,8 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
 
     def _create_editor_widget(self, model_index, style_options, parent):
         """
+        Create an editor widget for the supplied model index.
+
         :param model_index: The index of the item in the model to return a widget for
         :type model_index: :class:`~PySide.QtCore.QModelIndex`
 
@@ -261,7 +277,7 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         """
         Forward the mouse event to the display widget to simulate
         interacting with the widget. This is necessary since the delegate only
-        paints the widget in the view rather than being and actual widget
+        paints the widget in the view rather than being an actual widget
         instance.
 
         :param mouse_event: The event that occured on the delegate.
@@ -313,7 +329,7 @@ def _set_widget_value(widget, model_index):
 
     src_index = _map_to_source(model_index)
     if not src_index or not src_index.isValid():
-        # invalide index, do nothing
+        # invalid index, do nothing
         return
 
     # special case for image fields

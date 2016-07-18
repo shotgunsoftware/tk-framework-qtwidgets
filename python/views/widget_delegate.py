@@ -87,6 +87,8 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         """
 
         if not model_index.isValid():
+            # if the index is invalid, no field widget will be useful for display
+            # or editing.
             return None
 
         # the default implementation just uses the internal __paint_widget 
@@ -120,6 +122,7 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         # compatibility.
 
         if not model_index.isValid():
+            # if the index is invalid, no field widget will be useful for editing.
             return None
 
         return self._create_widget(parent)
