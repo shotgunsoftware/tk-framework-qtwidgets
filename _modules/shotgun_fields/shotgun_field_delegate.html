@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
+  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -285,17 +285,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setEditorData</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">setEditorData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_ASSOCIATED_FIELD_ROLE</span><span class="p">)</span>
-        <span class="n">sanitized_value</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">sanitized_value</span><span class="p">)</span>
+    <span class="c1">#def setEditorData(self, widget, index):</span>
+    <span class="c1">#    value = index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)</span>
+    <span class="c1">#    sanitized_value = shotgun_model.sanitize_qt(value)</span>
+    <span class="c1">#    widget.set_value(sanitized_value)</span>
 
     <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">editorEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s2">&quot;EDITOR EVENT: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">event</span>
-        <span class="k">return</span> <span class="bp">True</span></div>
+    <span class="c1">#def editorEvent(self, event, model, option, index):</span>
+    <span class="c1">#    return True</span>
 </pre></div>
 
            </div>
@@ -328,7 +327,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.3',
+            VERSION:'v2.3.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

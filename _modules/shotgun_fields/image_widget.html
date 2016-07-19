@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.image_widget &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
+  <title>shotgun_fields.image_widget &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -497,7 +497,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span><span class="p">:</span>
-                <span class="n">link_color</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">style_constants</span><span class="p">[</span><span class="s2">&quot;SG_HIGHLIGHT_COLOR&quot;</span><span class="p">]</span>
+                <span class="c1"># SG_LINK_COLOR is newer to core than the highlight color, so we&#39;ll</span>
+                <span class="c1"># fall back on highlight if the explicit link color isn&#39;t available.</span>
+                <span class="n">style_constants</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">style_constants</span>
+                <span class="n">link_color</span> <span class="o">=</span> <span class="n">style_constants</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="s2">&quot;SG_LINK_COLOR&quot;</span><span class="p">,</span>
+                    <span class="n">style_constants</span><span class="p">[</span><span class="s2">&quot;SG_HIGHLIGHT_COLOR&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
                     <span class="s2">&quot;&lt;a href=&#39;image::upload&#39;&gt;&lt;font color=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;Upload Image&quot;</span>
                     <span class="s2">&quot;&lt;/font&gt;&lt;/a&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">link_color</span><span class="p">,)</span>
@@ -552,7 +558,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.3',
+            VERSION:'v2.3.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
+  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -213,6 +213,11 @@
     <span class="c1"># dictionary that keeps the mapping from Shotgun data type to widget class</span>
     <span class="n">__WIDGET_TYPE_CLS_MAP</span> <span class="o">=</span> <span class="p">{}</span>
 
+    <span class="c1"># dictionary that keeps the mapping from Shotgun data type to widget class.</span>
+    <span class="c1"># similar to ``__WIDGET_TYPE_CLS_MAP``, but this lookup stores widget classes</span>
+    <span class="c1"># for specific entity+field combinations</span>
+    <span class="n">__ENTITY_FIELD_WIDGET_TYPE_CLS_MAP</span> <span class="o">=</span> <span class="p">{}</span>
+
     <span class="c1"># fires when we are ready to manage the widgets</span>
     <span class="n">initialized</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
@@ -249,6 +254,16 @@
                 <span class="p">(</span><span class="n">widget_type</span><span class="p">,)</span>
             <span class="p">)</span>
 
+        <span class="c1"># see if theres a widget class registered for this specific entity type</span>
+        <span class="c1"># and field combination.</span>
+        <span class="n">entity_field_widget_cls</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__ENTITY_FIELD_WIDGET_TYPE_CLS_MAP</span><span class="o">.</span>\
+            <span class="n">get</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">widget_type</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">entity_field_widget_cls</span><span class="p">:</span>
+            <span class="c1"># found a widget class for the specific entity+field+type combo</span>
+            <span class="k">return</span> <span class="n">entity_field_widget_cls</span>
+
+        <span class="c1"># fall back to the widget class for this field&#39;s data type</span>
         <span class="n">data_type</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_data_type</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">__WIDGET_TYPE_CLS_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data_type</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">widget_type</span><span class="p">)</span></div>
 
@@ -260,9 +275,14 @@
 <span class="sd">        ``widget_type`` must be one of the enum values ``DISPLAY``, ``EDITOR``, or</span>
 <span class="sd">        ``EDITABLE`` defined by the manager class.</span>
 
-<span class="sd">        This method typically does not need to be called. Widget classes are</span>
+<span class="sd">        This method usually does not need to be called. Widget classes are</span>
 <span class="sd">        typically registered as they are imported (when using the</span>
 <span class="sd">        :class:`.ShotgunFieldMeta` class).</span>
+
+<span class="sd">        If you wish to override widgets at a global level (across all entity types),</span>
+<span class="sd">        you can call this method manually. To override a widget for a specific</span>
+<span class="sd">        entity and field type combination, call the ``register_entity_field_class()``</span>
+<span class="sd">        method.</span>
 
 <span class="sd">        :param str field_type: The data type of the field to associate with a type of widget</span>
 <span class="sd">        :param widget_class: The display widget class to associate with the given field type</span>
@@ -274,19 +294,40 @@
 
         <span class="k">if</span> <span class="n">widget_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_WIDGET_TYPES</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;ShotgunFieldManager unable to register fields of type: </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span>
+                <span class="s2">&quot;ShotgunFieldManager unable to register unrecognized widget type: </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span>
                 <span class="p">(</span><span class="n">widget_type</span><span class="p">,)</span>
             <span class="p">)</span>
 
-        <span class="c1"># TODO: consider removing this restriction if we want to allow developers</span>
-        <span class="c1"># to override the default registered widget classes</span>
-        <span class="k">if</span> <span class="n">widget_type</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">__WIDGET_TYPE_CLS_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_type</span><span class="p">,</span> <span class="p">{}):</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">__WIDGET_TYPE_CLS_MAP</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">field_type</span><span class="p">,</span> <span class="p">{})[</span><span class="n">widget_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">widget_class</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ShotgunFieldManager.register_entity_field_class"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.register_entity_field_class">[docs]</a>    <span class="k">def</span> <span class="nf">register_entity_field_class</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">widget_class</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Similar to the ``register_class`` method, but registers a widget to be used</span>
+<span class="sd">        with a specific entity type and field. This is provided to allow very specific</span>
+<span class="sd">        widget customizations for displaying and editing fields when the default</span>
+<span class="sd">        widgets are insufficient.</span>
+
+<span class="sd">        Example usage includes ``checkbox`` fields (boolean values) where you may want</span>
+<span class="sd">        to display an icon (or not) based on the field value rather than a standard</span>
+<span class="sd">        ``QtGui.QCheckbox`` based widget.</span>
+
+<span class="sd">        :param str entity_type: The entity type to register the widget class for</span>
+<span class="sd">        :param str field_name: The name of the field to register the widget class for</span>
+<span class="sd">        :param widget_class: The class of the widget to register for the entity type/field_name</span>
+<span class="sd">        :type widget_class: :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        :param str widget_type: The type of widget to register.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">widget_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_WIDGET_TYPES</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> widget for field_type </span><span class="si">%s</span><span class="s2"> already registered&quot;</span> <span class="o">%</span>
-                <span class="p">(</span><span class="n">widget_type</span><span class="p">,</span> <span class="n">field_type</span><span class="p">)</span>
+                <span class="s2">&quot;ShotgunFieldManager unable to register unrecognized widgets type: </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="n">widget_type</span><span class="p">,)</span>
             <span class="p">)</span>
 
-        <span class="n">cls</span><span class="o">.</span><span class="n">__WIDGET_TYPE_CLS_MAP</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">field_type</span><span class="p">,</span> <span class="p">{})[</span><span class="n">widget_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">widget_class</span></div>
+        <span class="c1"># register with a separate lookup specific to entity+field combo</span>
+        <span class="n">field_map</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__ENTITY_FIELD_WIDGET_TYPE_CLS_MAP</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">field_map</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="p">{})[</span><span class="n">widget_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">widget_class</span></div>
 
     <span class="c1">############################################################################</span>
     <span class="c1"># special methods</span>
@@ -437,52 +478,50 @@
 <span class="sd">        ``widget_type`` must be one of the enum values ``DISPLAY``, ``EDITOR``, or</span>
 <span class="sd">        ``EDITABLE`` defined by the manager class or ``None``.</span>
 
-<span class="sd">        The default is to return a list of field names that have an associated</span>
-<span class="sd">        widget of any type registered. If the ``widget_type`` parameter is</span>
-<span class="sd">        supplied, then the returned fields will be limited to fields for which the</span>
-<span class="sd">        manager can generate widgets of that type.</span>
+<span class="sd">        If ``widget_type`` is ``None``, ``DISPLAY`` will be assumed.</span>
 
+<span class="sd">        The default is to return a list of field names that have an associated</span>
+<span class="sd">        display widget registered.</span>
 
 <span class="sd">        :param str sg_entity_type: Shotgun entity type</span>
 <span class="sd">        :param list field_names: An list of (:obj:`str`) Shotgun field names</span>
 <span class="sd">        :param str widget_type: The type of widget class to check for support.</span>
 
-<span class="sd">        :returns: The subset of field_names that have associated widget classes.</span>
+<span class="sd">        :returns: The subset of ``field_names`` that have associated widget classes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">supported_fields</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="c1"># build a list of all the fields whose type is in the field map</span>
+        <span class="n">widget_type</span> <span class="o">=</span> <span class="n">widget_type</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">DISPLAY</span>
+
+        <span class="c1"># go through each of the supplied field names to see if widgets are defined for them</span>
         <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">field_names</span><span class="p">:</span>
+
             <span class="c1"># handle bubbled field syntax</span>
             <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">field_name</span><span class="p">:</span>
-                <span class="p">(</span><span class="n">field_entity_type</span><span class="p">,</span> <span class="n">short_name</span><span class="p">)</span> <span class="o">=</span> <span class="n">field_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+                <span class="p">(</span><span class="n">resolved_entity_type</span><span class="p">,</span> <span class="n">resolved_field_name</span><span class="p">)</span> <span class="o">=</span> <span class="n">field_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="p">(</span><span class="n">field_entity_type</span><span class="p">,</span> <span class="n">short_name</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
-            <span class="n">data_type</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_data_type</span><span class="p">(</span><span class="n">field_entity_type</span><span class="p">,</span> <span class="n">short_name</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">data_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__WIDGET_TYPE_CLS_MAP</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">widget_type</span><span class="p">:</span>
-                    <span class="c1"># caller wants to know if which fields are supported for</span>
-                    <span class="c1"># a given type (display, editor, editable)</span>
-                    <span class="n">display_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span>
-                        <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DISPLAY</span><span class="p">)</span>
-                    <span class="n">editor_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span>
-                        <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">EDITOR</span><span class="p">)</span>
-                    <span class="n">editable_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span>
-                        <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">EDITABLE</span><span class="p">)</span>
+                <span class="p">(</span><span class="n">resolved_entity_type</span><span class="p">,</span> <span class="n">resolved_field_name</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
 
-                    <span class="k">if</span> <span class="n">widget_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">DISPLAY</span> <span class="ow">and</span> <span class="n">display_cls</span><span class="p">:</span>
-                        <span class="n">supported_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">widget_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDITOR</span> <span class="ow">and</span> <span class="n">editor_cls</span><span class="p">:</span>
-                        <span class="n">supported_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">widget_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDITABLE</span><span class="p">:</span>
-                        <span class="c1"># if editable class registered, supported. if we have</span>
-                        <span class="c1"># both a display and editor clas, then supported.</span>
-                        <span class="k">if</span> <span class="n">editable_cls</span><span class="p">:</span>
-                            <span class="n">supported_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
-                        <span class="k">elif</span> <span class="n">display_cls</span> <span class="ow">and</span> <span class="n">editor_cls</span><span class="p">:</span>
-                            <span class="n">supported_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># only wants to know if some widget is registered</span>
+            <span class="c1"># see if this entity+field+type combo has a widget registered</span>
+            <span class="n">widget_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">resolved_entity_type</span><span class="p">,</span> <span class="n">resolved_field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">widget_cls</span><span class="p">:</span>
+                <span class="n">supported_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># if we&#39;re here, then no direct widget for the supplied entity+field</span>
+            <span class="c1"># or data type. the only other possibility is if this is an editable</span>
+            <span class="c1"># widget type request. if so, then the field may be supported by</span>
+            <span class="c1"># the default editable widget combining a display &amp; editor. see if</span>
+            <span class="c1"># those exist for this entity+field</span>
+            <span class="k">if</span> <span class="n">widget_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDITABLE</span><span class="p">:</span>
+
+                <span class="n">display_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span>
+                    <span class="n">resolved_entity_type</span><span class="p">,</span> <span class="n">resolved_field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DISPLAY</span><span class="p">)</span>
+
+                <span class="n">editor_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span>
+                    <span class="n">resolved_entity_type</span><span class="p">,</span> <span class="n">resolved_field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">EDITOR</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">display_cls</span> <span class="ow">and</span> <span class="n">editor_cls</span><span class="p">:</span>
                     <span class="n">supported_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">supported_fields</span></div>
@@ -730,7 +769,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.3',
+            VERSION:'v2.3.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_meta &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
+  <title>shotgun_fields.shotgun_field_meta &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -247,6 +247,26 @@
 <span class="sd">            _EDITOR_TYPE = &quot;float&quot;</span>
 <span class="sd">            # ...</span>
 
+<span class="sd">    The widgets shown above will be used by any SG field for the specified type.</span>
+<span class="sd">    It is also possible to register widgets that are used only for specific</span>
+<span class="sd">    fields on specific entities. To achieve this, use the ``_ENTITY_FIELDS``</span>
+<span class="sd">    class memeber to define a list of tuples that explicitly defined the entity</span>
+<span class="sd">    fields the widget should be used to display.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        class SpecialFloatDisplayWidget(QtGui.QLabel):</span>
+<span class="sd">            __metaclass__ = ShotgunFieldMeta</span>
+<span class="sd">            _DISPLAY_TYPE = &quot;float&quot;</span>
+<span class="sd">            _ENTITY_FIELDS = [</span>
+<span class="sd">                (&quot;CustomEntity07&quot;, &quot;my_float_field&quot;),</span>
+<span class="sd">                (&quot;CustomEntity11&quot;, &quot;another_float_field&quot;),</span>
+<span class="sd">            ]</span>
+<span class="sd">            # ...</span>
+
+<span class="sd">    The widget defined above will only be used to display the fields in the</span>
+<span class="sd">    ``_ENTITY_FIELDS`` list.</span>
+
 <span class="sd">    - No class defined with this metaclass can define its own ``__init__`` method.</span>
 <span class="sd">        * The metaclass defines an ``__init__`` that takes the arguments below</span>
 <span class="sd">        * The class will pass all other keyword args through to the PySide widget</span>
@@ -324,15 +344,38 @@
         <span class="c1"># create the class instance itself</span>
         <span class="n">field_class</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFieldMeta</span><span class="p">,</span> <span class="n">mcl</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">mcl</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parents</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
 
+        <span class="c1"># widgets can be used for multiple reasons (display, edit, editable, etc).</span>
+        <span class="c1"># build a list of the different types for later registration.</span>
+        <span class="n">registration_types</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="k">if</span> <span class="s2">&quot;_DISPLAY_TYPE&quot;</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">:</span>
-            <span class="c1"># register the field type this class implements with the field manager</span>
-            <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">register_class</span><span class="p">(</span><span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;_DISPLAY_TYPE&quot;</span><span class="p">],</span> <span class="n">field_class</span><span class="p">,</span>
-                <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">DISPLAY</span><span class="p">)</span>
+            <span class="n">field_type</span> <span class="o">=</span> <span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;_DISPLAY_TYPE&quot;</span><span class="p">]</span>
+            <span class="n">widget_type</span> <span class="o">=</span> <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">DISPLAY</span>
+            <span class="n">registration_types</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">field_type</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="s2">&quot;_EDITOR_TYPE&quot;</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">:</span>
-            <span class="c1"># register the field type this class implements with the field manager</span>
-            <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">register_class</span><span class="p">(</span><span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;_EDITOR_TYPE&quot;</span><span class="p">],</span> <span class="n">field_class</span><span class="p">,</span>
-                <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">EDITOR</span><span class="p">)</span>
+            <span class="n">field_type</span> <span class="o">=</span> <span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;_EDITOR_TYPE&quot;</span><span class="p">]</span>
+            <span class="n">widget_type</span> <span class="o">=</span> <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">EDITOR</span>
+            <span class="n">registration_types</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">field_type</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="s2">&quot;_EDITABLE_TYPE&quot;</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">:</span>
+            <span class="n">field_type</span> <span class="o">=</span> <span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;_EDITABLE_TYPE&quot;</span><span class="p">]</span>
+            <span class="n">widget_type</span> <span class="o">=</span> <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">EDITABLE</span>
+            <span class="n">registration_types</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">field_type</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">))</span>
+
+        <span class="c1"># register all the types for this widget class</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">field_type</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">)</span> <span class="ow">in</span> <span class="n">registration_types</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="s2">&quot;_ENTITY_FIELDS&quot;</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">:</span>
+                <span class="c1"># this is an override widget, meaning it is to be used for specific</span>
+                <span class="c1"># entity+field combinations. Loop through those combinations and</span>
+                <span class="c1"># register this class for each.</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;_ENTITY_FIELDS&quot;</span><span class="p">]:</span>
+                    <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">register_entity_field_class</span><span class="p">(</span>
+                        <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_class</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># this widget is to be used for all fields of a certain type</span>
+                <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">register_class</span><span class="p">(</span><span class="n">field_type</span><span class="p">,</span> <span class="n">field_class</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">field_class</span>
 
@@ -473,7 +516,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.3',
+            VERSION:'v2.3.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

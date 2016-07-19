@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Field Widgets &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
+  <title>Shotgun Field Widgets &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="index.html"/>
         <link rel="next" title="Shotgun Menus" href="shotgun_menus.html"/>
         <link rel="prev" title="Screen Capture Widget" href="screen_grab.html"/> 
 
@@ -165,7 +165,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -301,9 +301,13 @@ type has no display widget</p>
 <dd><p>Register a widget class for the given Shotgun field type.</p>
 <p><code class="docutils literal"><span class="pre">widget_type</span></code> must be one of the enum values <code class="docutils literal"><span class="pre">DISPLAY</span></code>, <code class="docutils literal"><span class="pre">EDITOR</span></code>, or
 <code class="docutils literal"><span class="pre">EDITABLE</span></code> defined by the manager class.</p>
-<p>This method typically does not need to be called. Widget classes are
+<p>This method usually does not need to be called. Widget classes are
 typically registered as they are imported (when using the
 <a class="reference internal" href="#shotgun_fields.shotgun_field_meta.ShotgunFieldMeta" title="shotgun_fields.shotgun_field_meta.ShotgunFieldMeta"><code class="xref py py-class docutils literal"><span class="pre">ShotgunFieldMeta</span></code></a> class).</p>
+<p>If you wish to override widgets at a global level (across all entity types),
+you can call this method manually. To override a widget for a specific
+entity and field type combination, call the <code class="docutils literal"><span class="pre">register_entity_field_class()</span></code>
+method.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -316,6 +320,32 @@ typically registered as they are imported (when using the
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal"><span class="pre">ValueError</span></code> if the supplied <code class="docutils literal"><span class="pre">widget_type</span></code> is not known.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="shotgun_fields.ShotgunFieldManager.register_entity_field_class">
+<em class="property">classmethod </em><code class="descname">register_entity_field_class</code><span class="sig-paren">(</span><em>entity_type</em>, <em>field_name</em>, <em>widget_class</em>, <em>widget_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_manager.html#ShotgunFieldManager.register_entity_field_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.ShotgunFieldManager.register_entity_field_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to the <code class="docutils literal"><span class="pre">register_class</span></code> method, but registers a widget to be used
+with a specific entity type and field. This is provided to allow very specific
+widget customizations for displaying and editing fields when the default
+widgets are insufficient.</p>
+<p>Example usage includes <code class="docutils literal"><span class="pre">checkbox</span></code> fields (boolean values) where you may want
+to display an icon (or not) based on the field value rather than a standard
+<code class="docutils literal"><span class="pre">QtGui.QCheckbox</span></code> based widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entity_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The entity type to register the widget class for</li>
+<li><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The name of the field to register the widget class for</li>
+<li><strong>widget_class</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The class of the widget to register for the entity type/field_name</li>
+<li><strong>widget_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The type of widget to register.</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -415,10 +445,9 @@ constructor of whatever <code class="docutils literal"><span class="pre">QWidget
 Field_names may be in &#8220;bubbled&#8221; notation, for example &#8220;sg_task.Task.assignee&#8221;.</p>
 <p><code class="docutils literal"><span class="pre">widget_type</span></code> must be one of the enum values <code class="docutils literal"><span class="pre">DISPLAY</span></code>, <code class="docutils literal"><span class="pre">EDITOR</span></code>, or
 <code class="docutils literal"><span class="pre">EDITABLE</span></code> defined by the manager class or <code class="docutils literal"><span class="pre">None</span></code>.</p>
+<p>If <code class="docutils literal"><span class="pre">widget_type</span></code> is <code class="docutils literal"><span class="pre">None</span></code>, <code class="docutils literal"><span class="pre">DISPLAY</span></code> will be assumed.</p>
 <p>The default is to return a list of field names that have an associated
-widget of any type registered. If the <code class="docutils literal"><span class="pre">widget_type</span></code> parameter is
-supplied, then the returned fields will be limited to fields for which the
-manager can generate widgets of that type.</p>
+display widget registered.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -430,7 +459,7 @@ manager can generate widgets of that type.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The subset of field_names that have associated widget classes.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The subset of <code class="docutils literal"><span class="pre">field_names</span></code> that have associated widget classes.</p>
 </td>
 </tr>
 </tbody>
@@ -481,6 +510,24 @@ type that the class will be responsible for displaying or editing.</li>
     <span class="c1"># ...</span>
 </pre></div>
 </div>
+<p>The widgets shown above will be used by any SG field for the specified type.
+It is also possible to register widgets that are used only for specific
+fields on specific entities. To achieve this, use the <code class="docutils literal"><span class="pre">_ENTITY_FIELDS</span></code>
+class memeber to define a list of tuples that explicitly defined the entity
+fields the widget should be used to display.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SpecialFloatDisplayWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ShotgunFieldMeta</span>
+    <span class="n">_DISPLAY_TYPE</span> <span class="o">=</span> <span class="s2">&quot;float&quot;</span>
+    <span class="n">_ENTITY_FIELDS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;CustomEntity07&quot;</span><span class="p">,</span> <span class="s2">&quot;my_float_field&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;CustomEntity11&quot;</span><span class="p">,</span> <span class="s2">&quot;another_float_field&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>The widget defined above will only be used to display the fields in the
+<code class="docutils literal"><span class="pre">_ENTITY_FIELDS</span></code> list.</p>
 <ul>
 <li><dl class="first docutils">
 <dt>No class defined with this metaclass can define its own <code class="docutils literal"><span class="pre">__init__</span></code> method.</dt>
@@ -2364,7 +2411,7 @@ SG_ASSOCIATED_FIELD_ROLE role.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.3.3',
+            VERSION:'v2.3.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

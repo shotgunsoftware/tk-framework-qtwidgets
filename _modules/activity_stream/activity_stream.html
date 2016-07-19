@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.3.3 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -252,6 +252,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_sg_stream_button</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clickable_user_icons</span> <span class="o">=</span> <span class="bp">True</span>
         
         <span class="c1"># apply styling</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_stylesheet</span><span class="p">()</span>
@@ -337,6 +338,30 @@
 <span class="sd">        replies, access can be found via :meth:`ReplyDialog.note_widget`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span>
+
+    <span class="k">def</span> <span class="nf">_get_clickable_user_icons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether user icons in the activity stream display as clickable.</span>
+<span class="sd">        If True, a pointing hand cursor will be shown when the mouse is</span>
+<span class="sd">        hovered over the icons, otherwise the default arrow cursor will be</span>
+<span class="sd">        used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clickable_user_icons</span>
+
+    <span class="k">def</span> <span class="nf">_set_clickable_user_icons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clickable_user_icons</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">set_user_thumb_cursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">set_user_thumb_cursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ArrowCursor</span><span class="p">)</span>
+
+    <span class="n">clickable_user_icons</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_clickable_user_icons</span><span class="p">,</span>
+        <span class="n">_set_clickable_user_icons</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -751,6 +776,13 @@
             <span class="n">widget</span><span class="o">.</span><span class="n">set_info</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">entity_requested</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_requested</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">))</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">playback_requested</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">sg_data</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">playback_requested</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">sg_data</span><span class="p">))</span>
+
+        <span class="c1"># If we&#39;re not wanting the user icons to display as clickable, then</span>
+        <span class="c1"># we need to set their cursor to be the default arrow cursor. Otherwise</span>
+        <span class="c1"># we don&#39;t need to do anything because they default to the clickable</span>
+        <span class="c1"># finger-pointing cursor.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">clickable_user_icons</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">set_user_thumb_cursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ArrowCursor</span><span class="p">)</span>
                     
         <span class="k">return</span> <span class="n">widget</span>
         
@@ -915,7 +947,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.3',
+            VERSION:'v2.3.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
