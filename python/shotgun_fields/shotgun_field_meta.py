@@ -199,7 +199,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
         return field_class
 
-    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, **kwargs):
+    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, delegate=False, **kwargs):
         """
         Create an instance of the given class.
 
@@ -218,6 +218,8 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         :param bg_task_manager: The task manager the widget will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
 
+        :param bool delegate: True if the widget field widget is being used as a delegate, False otherwise.
+
         Additionally pass all other keyword args through to the PySide widget constructor for the
         class' superclass.
         """
@@ -231,6 +233,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         instance._field_name = field_name
         instance._bg_task_manager = bg_task_manager
         instance._bundle = sgtk.platform.current_bundle()
+        instance._delegate = delegate
 
         # do any widget setup that is needed
         instance.setup_widget()

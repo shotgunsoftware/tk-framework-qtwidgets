@@ -85,6 +85,12 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         :returns:           A QWidget to be used for painting the current index
         :rtype:             :class:`~PySide.QtGui.QWidget`
         """
+
+        if not model_index.isValid():
+            # if the index is invalid, no field widget will be useful for display
+            # or editing.
+            return None
+
         # the default implementation just uses the internal __paint_widget 
         # (creating it if needed) for backwards compatibility
         if not self.__paint_widget or not self.__paint_widget():
@@ -114,6 +120,11 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         """
         # the default implementation just calls _create_widget for backwards
         # compatibility.
+
+        if not model_index.isValid():
+            # if the index is invalid, no field widget will be useful for editing.
+            return None
+
         return self._create_widget(parent)
 
     def _on_before_paint(self, widget, model_index, style_options):
@@ -158,11 +169,11 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
     def createEditor(self, parent_widget, style_options, model_index):
         """
         Subclassed implementation from QStyledItemDelegate which is
-        called when an "editor" is set up - the editor is set up 
+        called when an "editor" is set up - the editor is set up
         via the openPersistentEditor call and is created upon selection
         of an item.
 
-        Normally, for performance, when we draw hundreds of grid cells, 
+        Normally, for performance, when we draw hundreds of grid cells,
         we use the same Qwidget as a brush and simply use it to paint.
 
         For the currently selected cell however, we need to be able to interact
@@ -170,11 +181,11 @@ class WidgetDelegate(QtGui.QStyledItemDelegate):
         to have a real widget for this.
 
         :param parent_widget:   The parent widget to use for the new editor widget
-        
+
         :param style_options:   The style options to use when creating the editor
-        :param model_index:     The index in the data model that will be edited 
+        :param model_index:     The index in the data model that will be edited
                                 using this editor
-        :returns:               An editor widget that will be used to edit this 
+        :returns:               An editor widget that will be used to edit this
                                 index
         """
         # allow derived class to create the editor widget:

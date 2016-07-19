@@ -75,6 +75,7 @@ class ElidedLabelBaseWidget(elided_label.ElidedLabel):
         Display the default value of the widget.
         """
         self.clear()
+        self.setText("")
 
     def _display_value(self, value):
         """

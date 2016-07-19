@@ -32,6 +32,12 @@ class ShotgunTableView(QtGui.QTableView):
 
         self.setMouseTracking(True)
 
+        # identify the ways to initiate editing a field
+        self.setEditTriggers(
+            QtGui.QAbstractItemView.DoubleClicked |
+            QtGui.QAbstractItemView.EditKeyPressed
+        )
+
     def setModel(self, model):
         """
         Overrides the base class setModel.  This assumes that the model is a ShotgunModel
