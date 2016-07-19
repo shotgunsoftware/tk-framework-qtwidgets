@@ -262,6 +262,16 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         :rtype: ``bool``
         """
 
+        # The primary use for this is labels displaying clickable links (entity,
+        # multi-entity, etc). By default, they're painted into the view via the
+        # delegate, so you can't interact with them. There were some suggestions
+        # online how to work around this that seemed really complex. This is a
+        # solution rob suggested which I tried and it seems to work... and is
+        # much simpler! Basically, detect a mouse click (release is all we have
+        # really) in the delegate, populate the underlying widget with the data
+        # from the index, then forward the event to the widget. The result is a
+        # simulation of clicking on the actual widget.
+
         # Forward mouse clicks to the underlying display widget. This only kicks
         # in if the editor widget isn't displayed or doesn't process a mouse
         # event for some reason. If you're having trouble with editors
