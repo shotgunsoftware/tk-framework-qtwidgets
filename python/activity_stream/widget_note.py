@@ -112,8 +112,27 @@ class NoteWidget(ActivityStreamBaseWidget):
         """
         return self._selected
 
+    @property
+    def user_thumb(self):
+        """
+        The user thumbnail widget.
+        """
+        return self.ui.user_thumb
+
     ##############################################################################
     # public interface
+
+    def set_user_thumb_cursor(self, cursor):
+        """
+        Sets the cursor displayed when hovering over the user
+        thumbnail.
+
+        :param cursor: The Qt cursor to set.
+        """
+        self.user_thumb.setCursor(cursor)
+
+        for widget in self._reply_widgets:
+            widget.set_user_thumb_cursor(cursor)
     
     def set_info(self, data):
         """
@@ -203,6 +222,8 @@ class NoteWidget(ActivityStreamBaseWidget):
                     current_attachments = []                                
                                                 
                 w = ReplyWidget(self)
+                w.set_user_thumb_cursor(self.user_thumb.cursor())
+
                 self.ui.reply_layout.addWidget(w)
                 w.set_info(item)
                 self._reply_widgets.append(w)
@@ -353,6 +374,4 @@ class NoteWidget(ActivityStreamBaseWidget):
         # format note links        
         html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
         links_html = self.__generate_note_links_table(html_link_box_data)
-
-        # self.ui.links.setText(links_html)
 

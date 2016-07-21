@@ -8,26 +8,30 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-"""
-Widget that represents the value of a url_template field in Shotgun
-"""
-from .label_base_widget import LabelBaseWidget
+import sgtk
+from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
-class UrlTemplateWidget(LabelBaseWidget):
+class UrlTemplateWidget(ElidedLabelBaseWidget):
     """
-    Inherited from a :class:`~LabelBaseWidget`, this class is able to
-    display a url_template field value as returned by the Shotgun API.
+    Display a ``url_template`` field value as returned by the Shotgun API.
     """
     __metaclass__ = ShotgunFieldMeta
-    _FIELD_TYPE = "url_template"
+    _DISPLAY_TYPE = "url_template"
 
     def _string_value(self, value):
         """
         Convert the Shotgun value for this field into a string
 
-        :param value: The value to convert into a string
-        :type value: A URL String
+        :param str value: The url value to convert into a string
         """
-        return "<a href='%s'>%s</a>" % (value, value)
+        # SG_LINK_COLOR is newer to core than the highlight color, so we'll
+        # fall back on highlight if the explicit link color isn't available.
+        style_constants = sgtk.platform.current_bundle().style_constants
+        link_color = style_constants.get(
+            "SG_LINK_COLOR",
+            style_constants["SG_HIGHLIGHT_COLOR"],
+        )
+        return "<a href='%s'><font color='%s'>%s</font></a>" % (
+            value, link_color, value)

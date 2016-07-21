@@ -30,10 +30,18 @@ class ShotgunTableView(QtGui.QTableView):
         QtGui.QTableView.__init__(self, parent)
         self._fields_manager = fields_manager
 
+        self.setMouseTracking(True)
+
+        # identify the ways to initiate editing a field
+        self.setEditTriggers(
+            QtGui.QAbstractItemView.DoubleClicked |
+            QtGui.QAbstractItemView.EditKeyPressed
+        )
+
     def setModel(self, model):
         """
         Overrides the base class setModel.  This assumes that the model is a ShotgunModel
-        and will set the delegates for the each column to the appropriate delegate to display
+        and will set the delegates for each column to the appropriate delegate to display
         its Shotgun value.
         """
         QtGui.QTableView.setModel(self, model)

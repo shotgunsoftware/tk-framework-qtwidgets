@@ -9,3 +9,4 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from .entity_field_menu import EntityFieldMenu
+from .shotgun_menu import ShotgunMenu

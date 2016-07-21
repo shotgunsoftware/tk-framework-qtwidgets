@@ -9,3 +9,4 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from .shotgun_field_manager import ShotgunFieldManager
+from .shotgun_field_meta import ShotgunFieldMeta

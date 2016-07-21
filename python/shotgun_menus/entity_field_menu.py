@@ -52,20 +52,21 @@ An example of how to use it is:
 import sgtk
 from sgtk.platform.qt import QtGui
 
+from .shotgun_menu import ShotgunMenu
+
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 
-class EntityFieldMenu(QtGui.QMenu):
+class EntityFieldMenu(ShotgunMenu):
     """
-    Inherited from a :class:`~PySide.QtGui.QMenu`, this menu will automatically display the fields
-    for a given Shotgun entity.
+    A menu that automatically displays the fields for a given Shotgun entity.
 
     The QActions for the menu will all have their data set to a dictionary in the form:
         {"field": selected_field}
     """
     _AUDIT_FIELDS = ["created_by", "created_at", "updated_by", "updated_at"]
 
-    def __init__(self, sg_entity_type, parent=None, bg_task_manager=None, project_id=None):
+    def __init__(self, sg_entity_type, parent=None, bg_task_manager=None):
         """
         Constructor
 
@@ -73,15 +74,10 @@ class EntityFieldMenu(QtGui.QMenu):
         :type sg_entity_type: String
 
         :param parent: Parent widget
-        :type parent: :class:`PySide.QtGui.QWidget`
+        :type parent: :class:`~PySide.QtGui.QWidget`
 
         :param bg_task_manager: The task manager the menu will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
-
-        :param project_id:  The project entity id to use when querying fields lists. If
-                            None, the current context's project will be used if one is
-                            set, otherwise the "site" level fields will be queried.
-        :type project_id:   int 
         """
         QtGui.QMenu.__init__(self, parent=None)
 
@@ -92,7 +88,6 @@ class EntityFieldMenu(QtGui.QMenu):
         self._checked_filter = None
         self._disabled_filter = None
         self._entity_type_filter = None
-        self._project_id = project_id
 
         # prefix for fields if this menu represents an entity bubbled through another field
         self._bubble_base = None
@@ -163,26 +158,6 @@ class EntityFieldMenu(QtGui.QMenu):
         """
         self._entity_type_filter = entity_type_filter
 
-    def add_label(self, title):
-        """
-        Add a label with the given title to the menu
-
-        :param title: The title of the sectional label
-        :type title: String
-        """
-        # build the label widget
-        label = QtGui.QLabel(self)
-        label.setStyleSheet("margin: 0.4em; color: gray;")
-        font_style = "text-transform: uppercase;"
-        label.setText("<font style='%s'>%s</font>" % (font_style, title))
-
-        # turn it into an action
-        action = QtGui.QWidgetAction(self)
-        action.setDefaultWidget(label)
-
-        self.addAction(action)
-        return action
-
     def __del__(self):
         """
         Destructor
@@ -192,15 +167,12 @@ class EntityFieldMenu(QtGui.QMenu):
 
     def _on_about_to_show(self):
         """
-        Lazy load the menu.  This is because it is possible to have have cycles when traversing
+        Lazy load the menu.  This is because it is possible to have cycles when traversing
         through the possible bubbled fields, so it is impossible to build the entire nested menu.
         """
         if not self._initialized:
             # need to wait until there is a schema available before populating the menu
-            shotgun_globals.run_on_schema_loaded(
-                self._populate,
-                project_id=self._project_id,
-            )
+            shotgun_globals.run_on_schema_loaded(self._populate)
             self._initialized = True
 
     def _populate(self):
@@ -220,21 +192,13 @@ class EntityFieldMenu(QtGui.QMenu):
                 continue
 
             # grab display names
-            display_name = shotgun_globals.get_field_display_name(
-                self._sg_entity_type,
-                field,
-                project_id=self._project_id,
-            )
+            display_name = shotgun_globals.get_field_display_name(self._sg_entity_type, field)
             field_infos.append({"field": field, "name": display_name, "bubbled": bubbled_field})
 
             # grab info to build bubbled menu
             try:
                 # grab the entity types this field can bubble to
-                entity_types = shotgun_globals.get_valid_types(
-                    self._sg_entity_type,
-                    field,
-                    project_id=self._project_id,
-                )
+                entity_types = shotgun_globals.get_valid_types(self._sg_entity_type, field)
 
                 # filter out entities via the registered callback
                 if self._entity_type_filter:
@@ -257,12 +221,7 @@ class EntityFieldMenu(QtGui.QMenu):
                     bubble_fields[field] = {
                         "name": display_name,
                         "valid_types": entity_types,
-                        "valid_type_names": [
-                            shotgun_globals.get_type_display_name(
-                                et,
-                                project_id=self._project_id,
-                            ) for et in entity_types
-                        ],
+                        "valid_type_names": [shotgun_globals.get_type_display_name(et) for et in entity_types],
                         "bubbled_bases": ["%s.%s" % (bubbled_field, et) for et in entity_types],
                     }
             except Exception:
@@ -274,23 +233,29 @@ class EntityFieldMenu(QtGui.QMenu):
 
         # add in all fields other than audit fields
         audit_fields = []
+        bubbled_actions = []
         for field_info in field_infos:
             if field_info["field"] in self._AUDIT_FIELDS:
                 audit_fields.append(field_info)
             else:
-                self._add_qaction(field_info["bubbled"], field_info["name"])
+                bubbled_actions.append(
+                    self._get_qaction(field_info["bubbled"], field_info["name"]))
+        if bubbled_actions:
+            self.add_group(bubbled_actions)
 
         # now the audit fields
         if audit_fields:
-            self.addSeparator()
-            self.add_label("Audit Fields")
+            audit_actions = []
             for field_info in audit_fields:
-                self._add_qaction(field_info["field"], field_info["name"])
+                audit_actions.append(
+                    self._get_qaction(field_info["field"], field_info["name"]))
+            if audit_actions:
+                self.add_group(audit_actions, title="Audit Fields")
 
         # and finally bubble fields
         if bubble_fields:
-            self.addSeparator()
-            self.add_label("Linked Fields")
+
+            linked_menus = []
             for (field, field_info) in bubble_fields.iteritems():
                 # pull all the bubbled field data in an order that sorts by display name
                 sorted_items = sorted(
@@ -317,14 +282,16 @@ class EntityFieldMenu(QtGui.QMenu):
                     # if there is only one type of entity possible, add the menu directly
                     entity_menu = entity_menus[0][1]
                     entity_menu.setTitle(field_info["name"])
-                    self.addMenu(entity_menu)
+                    linked_menus.append(entity_menu)
                 elif len(entity_menus) > 1:
                     # otherwise add an intermediate menu for each possible entity type
                     bubble_menu = QtGui.QMenu(field_info["name"])
                     for (type_name, entity_menu) in entity_menus:
                         entity_menu.setTitle(type_name)
                         bubble_menu.addMenu(entity_menu)
-                    self.addMenu(bubble_menu)
+                    linked_menus.append(bubble_menu)
+
+            self.add_group(linked_menus, title="Linked Fields")
 
     def _get_bubbled_name(self, field_name, bubble_base=None):
         """
@@ -342,7 +309,7 @@ class EntityFieldMenu(QtGui.QMenu):
             return "%s.%s" % (bubble_base, field_name)
         return field_name
 
-    def _add_qaction(self, field, display_name):
+    def _get_qaction(self, field, display_name):
         """
         Add an action for the given field to the menu. The data for the action will contain
         a dictionary where the selected field is set for the "field" key.
@@ -368,5 +335,4 @@ class EntityFieldMenu(QtGui.QMenu):
         if self._disabled_filter:
             action.setDisabled(self._disabled_filter(field))
 
-        self.addAction(action)
         return action

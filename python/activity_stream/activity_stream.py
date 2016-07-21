@@ -78,6 +78,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._allow_screenshots = True
         self._show_sg_stream_button = True
         self._version_items_playable = True
+        self._clickable_user_icons = True
         
         # apply styling
         self._load_stylesheet()
@@ -121,6 +122,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             allow_screenshots=self._allow_screenshots,
         )
 
+        # We'll allow for a pre-note-creation callback. This is for additional
+        # pre-processing that needs to occur before a Note or Reply is created
+        # in Shotgun. This makes sure that the activity stream data coming down
+        # during the rescan after submission contains anything like additional
+        # attachments that this widget didn't explicitly handle itself prior to
+        # submission.
+        self._pre_submit_callback = None
         self.reply_dialog.note_widget.entity_created.connect(self._on_entity_created)
 
     def set_bg_task_manager(self, task_manager):
@@ -178,6 +186,51 @@ class ActivityStreamWidget(QtGui.QWidget):
         replies, access can be found via :meth:`ReplyDialog.note_widget`.
         """
         return self.ui.note_widget
+
+    def _get_clickable_user_icons(self):
+        """
+        Whether user icons in the activity stream display as clickable.
+        If True, a pointing hand cursor will be shown when the mouse is
+        hovered over the icons, otherwise the default arrow cursor will be
+        used.
+        """
+        return self._clickable_user_icons
+
+    def _set_clickable_user_icons(self, state):
+        self._clickable_user_icons = bool(state)
+
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget):
+                if state:
+                    widget.set_user_thumb_cursor(QtCore.Qt.PointingHandCursor)
+                else:
+                    widget.set_user_thumb_cursor(QtCore.Qt.ArrowCursor)
+
+    clickable_user_icons = property(
+        _get_clickable_user_icons,
+        _set_clickable_user_icons,
+    )
+
+    def _get_pre_submit_callback(self):
+        """
+        The pre-submit callback. This is None if one is not set, or a Python
+        callable if it is. This callable is run prior to submission of a new
+        Note or Reply. Note that the first (and only) argument passed to the
+        callback will be the calling :class:`NoteInputWidget`.
+
+        :returns:   Python callable or None
+        """
+        return self._pre_submit_callback
+
+    def _set_pre_submit_callback(self, callback):
+        self._pre_submit_callback = callback
+        self.reply_dialog.note_widget.pre_submit_callback = callback
+        self.note_widget.pre_submit_callback = callback
+
+    pre_submit_callback = property(
+        _get_pre_submit_callback,
+        _set_pre_submit_callback,
+    )
 
     def _get_allow_screenshots(self):
         """
@@ -616,8 +669,12 @@ class ActivityStreamWidget(QtGui.QWidget):
             widget.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))
             widget.playback_requested.connect(lambda sg_data: self.playback_requested.emit(sg_data))
 
-            if isinstance(widget, NoteWidget):
-                widget.selection_changed.connect(self._note_selected_changed)
+        # If we're not wanting the user icons to display as clickable, then
+        # we need to set their cursor to be the default arrow cursor. Otherwise
+        # we don't need to do anything because they default to the clickable
+        # finger-pointing cursor.
+        if not self.clickable_user_icons and isinstance(widget, NoteWidget):
+            widget.set_user_thumb_cursor(QtCore.Qt.ArrowCursor)
                     
         return widget
 
@@ -769,4 +826,3 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         url = "%s/detail/%s/%s" % (self._bundle.sgtk.shotgun_url, self._entity_type, self._entity_id)
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
-
