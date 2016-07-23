@@ -23,6 +23,7 @@ from .qtwidgets import (
     EntityFieldMenu,
     ShotgunSortFilterProxyModel,
     SimpleTooltipModel,
+    ShotgunMenu,
 )
 
 shotgun_model = sgtk.platform.import_framework(
@@ -220,6 +221,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.note_stream_widget.set_bg_task_manager(self._task_manager)
         self.ui.note_stream_widget.show_sg_stream_button = False
         self.ui.note_stream_widget.version_items_playable = False
+        self.ui.note_stream_widget.clickable_user_icons = False
         self.version_info_model = shotgun_model.SimpleShotgunModel(
             self.ui.note_stream_widget,
             bg_task_manager=self._task_manager,
@@ -768,7 +770,11 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         sg_data = item.get_sg_data()
 
-        self.ui.current_version_card.entity = sg_data
+        try:
+            self.ui.current_version_card.entity = sg_data
+        except:
+            import traceback
+            sgtk.platform.current_engine().log_debug(traceback.format_exc())
         self._more_info_toggled(self.ui.more_info_button.isChecked())
 
         if sg_data.get("entity"):
@@ -934,6 +940,11 @@ class VersionDetailsWidget(QtGui.QWidget):
             "Version",
             project_id=entity.get("project", {}).get("id"),
         )
+        try:
+            menu.show()
+        except:
+            import traceback
+            sgtk.platform.current_engine().log_debug(traceback.format_exc())
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._checked_filter)
         menu.set_disabled_filter(self._disabled_filter)
@@ -962,32 +973,14 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         Sets up the sort-by menu in the Versions tab.
         """
-        entity = self.current_entity or {}
-        self._version_sort_menu = QtGui.QMenu(self)
+        self._version_sort_menu = ShotgunMenu(self)
         self._version_sort_menu.setObjectName("version_sort_menu")
 
-        ascending = QtGui.QAction("Sort Ascending", self)
-        descending = QtGui.QAction("Sort Descending", self)
+        ascending = QtGui.QAction("Ascending", self)
+        descending = QtGui.QAction("Descending", self)
         ascending.setCheckable(True)
         descending.setCheckable(True)
         descending.setChecked(True)
-
-        up_icon = QtGui.QIcon(":version_details/sort_up.png")
-        up_icon.addPixmap(
-            QtGui.QPixmap(":version_details/sort_up_on.png"),
-            QtGui.QIcon.Active,
-            QtGui.QIcon.On,
-        )
-
-        down_icon = QtGui.QIcon(":version_details/sort_down.png")
-        down_icon.addPixmap(
-            QtGui.QPixmap(":version_details/sort_down_on.png"),
-            QtGui.QIcon.Active,
-            QtGui.QIcon.On,
-        )
-
-        ascending.setIcon(up_icon)
-        descending.setIcon(down_icon)
 
         self._version_sort_menu_directions = QtGui.QActionGroup(self)
         self._version_sort_menu_fields = QtGui.QActionGroup(self)
@@ -996,14 +989,14 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         self._version_sort_menu_directions.addAction(ascending)
         self._version_sort_menu_directions.addAction(descending)
-        self._version_sort_menu.addActions([ascending, descending])
-        self._version_sort_menu.addSeparator()
+        self._version_sort_menu.add_group([ascending, descending], title="Direction")
+
+        field_actions = []
 
         for field_name in self._version_list_sort_by_fields:
             display_name = shotgun_globals.get_field_display_name(
                 "Version",
                 field_name,
-                project_id=entity.get("project", {}).get("id"),
             )
 
             action = QtGui.QAction(display_name, self)
@@ -1014,8 +1007,9 @@ class VersionDetailsWidget(QtGui.QWidget):
             action.setCheckable(True)
             action.setChecked((field_name == "id"))
             self._version_sort_menu_fields.addAction(action)
-            self._version_sort_menu.addAction(action)
+            field_actions.append(action)
 
+        self._version_sort_menu.add_group(field_actions, title="By Field")
         self._version_sort_menu_directions.triggered.connect(self._toggle_sort_order)
         self._version_sort_menu_fields.triggered.connect(self._sort_version_list)
         self.ui.version_sort_button.setMenu(self._version_sort_menu)

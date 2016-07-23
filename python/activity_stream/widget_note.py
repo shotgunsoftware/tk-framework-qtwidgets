@@ -54,10 +54,10 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._selected = False
         self._attachments = []
 
+        self.setStyleSheet("#frame { border: 1px solid transparent }")
         self.set_selected(False)
-                
+
         # make sure clicks propagate upwards in the hierarchy
-        # self.ui.links.linkActivated.connect(self._entity_request_from_url)
         self.ui.content.linkActivated.connect(self._entity_request_from_url)
         self.ui.header_left.linkActivated.connect(self._entity_request_from_url)    
         self.ui.user_thumb.entity_requested.connect(
@@ -271,32 +271,6 @@ class NoteWidget(ActivityStreamBaseWidget):
             self.setStyleSheet("#frame { border: 1px solid transparent }")
 
         self.selection_changed.emit(self.selected, self._note_id)
-
-    def mousePressEvent(self, event):
-        """
-        Overridden method that sets widget focus on mouse press.
-
-        :param event:   The Qt event that was triggered.
-        """
-        self.setFocus()
-
-    def focusInEvent(self, event):
-        """
-        Overridden method that triggers a styling change when the
-        widget comes into focus.
-
-        :param event:   The Qt event that was triggered.
-        """
-        self.set_selected(True)
-
-    def focusOutEvent(self, event):
-        """
-        Overridden method that triggers a styling change when the
-        widget goes out of focus.
-
-        :param event:   The Qt event that was triggered.
-        """
-        self.set_selected(False)
         
     def _add_attachment_group(self, attachments, after_note):
         """
@@ -370,6 +344,12 @@ class NoteWidget(ActivityStreamBaseWidget):
         # careful here, because we saw this bug crop up during Cut Support
         # QA.
         self.ui.content.setText(data.get("content", ""))
+
+        # This allows selections from higher-level layouts to occur. If
+        # we don't set this, the label accepts and blocks mouse click
+        # events, which means if you expect to select the note widget
+        # itself you can't click on the note contents.
+        self.ui.content.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
         
         # format note links        
         html_link_box_data = data.get("note_links", []) + data.get("tasks", [])

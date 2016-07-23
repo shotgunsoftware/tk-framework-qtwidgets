@@ -30,6 +30,7 @@ ShotgunFieldManager = shotgun_fields.ShotgunFieldManager
 
 shotgun_menus = sgtk.platform.current_bundle().import_module("shotgun_menus")
 EntityFieldMenu = shotgun_menus.EntityFieldMenu
+ShotgunMenu = shotgun_menus.ShotgunMenu
 
 models = sgtk.platform.current_bundle().import_module("models")
 ShotgunSortFilterProxyModel = models.ShotgunSortFilterProxyModel

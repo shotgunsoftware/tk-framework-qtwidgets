@@ -33,7 +33,6 @@ class Ui_ActivityStreamWidget(object):
         self.activity_stream_scroll_area = QtGui.QScrollArea(ActivityStreamWidget)
         self.activity_stream_scroll_area.setWidgetResizable(True)
         self.activity_stream_scroll_area.setObjectName("activity_stream_scroll_area")
-        self.activity_stream_scroll_area.setStyleSheet("#activity_stream_scroll_area { margin-left: 14px; background: rgb(36,38,41); border: 0px solid rgb(36,38,41); }")
         
         # this is mostly covered by other widgets
         self.activity_stream_widget = QtGui.QWidget()

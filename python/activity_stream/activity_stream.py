@@ -682,10 +682,8 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Handles a change in selection state for a given Note entity id.
 
-        :param selected:    The new selection state of the Note.
-        :type selected:     bool
-        :param note_id:     The Note entity id.
-        :type note_id:      int
+        :param bool selected: The new selection state of the Note.
+        :param int note_id: The Note entity id.
         """
         if selected:
             self.note_selected.emit(note_id)
@@ -826,3 +824,24 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         url = "%s/detail/%s/%s" % (self._bundle.sgtk.shotgun_url, self._entity_type, self._entity_id)
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
+
+    ############################################################################
+    # events
+
+    def mousePressEvent(self, event):
+        """
+        Overrides the default event handler in Qt.
+        """
+        # If they clicked on a note, select it. Any notes that were not
+        # clicked on will be deselected.
+        position = event.globalPos()
+
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget):
+                selected = widget.rect().contains(widget.mapFromGlobal(position))
+
+                if selected != widget.selected:
+                    widget.set_selected(selected)
+                    self._note_selected_changed(selected, widget.note_id)
+
+

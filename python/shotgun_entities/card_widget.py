@@ -80,9 +80,10 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if not self.entity:
             return
 
-        field_widget = self.field_manager.create_display_widget(
+        field_widget = self.field_manager.create_widget(
             self.entity.get("type"),
             field_name,
+            self.field_manager.DISPLAY,
             self.entity,
         )
 
@@ -210,25 +211,23 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         :type selected:     bool
         """
         p = QtGui.QPalette()
-        highlight_col = p.color(QtGui.QPalette.Active, QtGui.QPalette.Highlight)
-        highlight_str = "rgb(%s, %s, %s)" % (
-            highlight_col.red(),
-            highlight_col.green(),
-            highlight_col.blue(),
-        )
 
         self.__selected = selected
         
         if selected:
+            highlight_col = p.color(QtGui.QPalette.Active, QtGui.QPalette.Highlight)
+            highlight_str = "rgb(%s, %s, %s)" % (
+                highlight_col.red(),
+                highlight_col.green(),
+                highlight_col.blue(),
+            )
+
             self.ui.box.setStyleSheet(
                 """
                 #box {
-                    border-top-width: 1px;
-                    border-bottom-width: 1px;
-                    border-right-width: 2px;
-                    border-left-width: 2px;
-                    border-color: %s;
-                    border-style: solid;
+                    border: 1px solid %s;
+                    margin-bottom: 2px;
+                    margin-right: 2px;
                 }
                 """ % (highlight_str)
             )
@@ -236,12 +235,9 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             self.ui.box.setStyleSheet(
                 """
                 #box {
-                    border-top-width: 1px;
-                    border-bottom-width: 1px;
-                    border-right-width: 2px;
-                    border-left-width: 2px;
-                    border-color: rgb(66,67,69);
-                    border-style: solid;
+                    border: 1px solid rgb(50,50,50);
+                    margin-bottom: 2px;
+                    margin-right: 2px;
                 }
                 """
             )
@@ -302,9 +298,10 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     field_widget.set_value(entity.get(field))
         else:
             self._entity = entity
-            self.thumbnail = self.field_manager.create_display_widget(
+            self.thumbnail = self.field_manager.create_widget(
                 entity.get("type"),
                 "image",
+                self.field_manager.DISPLAY,
                 self.entity,
             )
 
@@ -322,9 +319,10 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             field_grid_layout.setColumnStretch(1, 3)
 
             for i, field in enumerate(self.fields):
-                field_widget = self.field_manager.create_display_widget(
+                field_widget = self.field_manager.create_widget(
                     entity.get("type"),
                     field,
+                    self.field_manager.DISPLAY,
                     self.entity,
                 )
 
