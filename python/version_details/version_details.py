@@ -222,6 +222,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.note_stream_widget.show_sg_stream_button = False
         self.ui.note_stream_widget.version_items_playable = False
         self.ui.note_stream_widget.clickable_user_icons = False
+        self.ui.note_stream_widget.show_note_links = False
+        self.ui.note_stream_widget.highlight_new_arrivals = False
+        self.ui.note_stream_widget.notes_are_selectable = True
         self.version_info_model = shotgun_model.SimpleShotgunModel(
             self.ui.note_stream_widget,
             bg_task_manager=self._task_manager,

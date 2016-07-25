@@ -53,6 +53,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._attachment_group_widgets = {}
         self._selected = False
         self._attachments = []
+        self._show_note_links = True
 
         self.setStyleSheet("#frame { border: 1px solid transparent }")
         self.set_selected(False)
@@ -118,6 +119,18 @@ class NoteWidget(ActivityStreamBaseWidget):
         The user thumbnail widget.
         """
         return self.ui.user_thumb
+
+    def _get_show_note_links(self):
+        """
+        Whether the widget will contain a list of navigation links for
+        the parent shot/version/task entities.
+        """
+        return self._show_note_links
+
+    def _set_show_note_links(self, state):
+        self._show_note_links = bool(state)
+
+    show_note_links = property(_get_show_note_links, _set_show_note_links)
 
     ##############################################################################
     # public interface
@@ -300,8 +313,8 @@ class NoteWidget(ActivityStreamBaseWidget):
             entity_type_display_name = shotgun_globals.get_type_display_name(link["type"])
  
             chunk = """
-                <tr><td bgcolor=#AA6666>
-                    <a href='%s:%s' style='text-decoration: none; color: #ddddff'>%s %s</a>
+                <tr><td bgcolor=#666666>
+                    <a href='%s:%s' style='text-decoration: none; color: #dddddd'>%s %s</a>
                 </td></tr>
                 """ % (link["type"], link["id"], entity_type_display_name, link["name"])
             html_chunks.append(chunk)
@@ -351,7 +364,8 @@ class NoteWidget(ActivityStreamBaseWidget):
         # itself you can't click on the note contents.
         self.ui.content.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
         
-        # format note links        
-        html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
-        links_html = self.__generate_note_links_table(html_link_box_data)
-
+        # format note links
+        if self.show_note_links:
+            html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
+            links_html = self.__generate_note_links_table(html_link_box_data)
+            self.ui.links.setText(links_html)

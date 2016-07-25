@@ -79,6 +79,8 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._show_sg_stream_button = True
         self._version_items_playable = True
         self._clickable_user_icons = True
+        self._show_note_links = True
+        self._highlight_new_arrivals = True
         
         # apply styling
         self._load_stylesheet()
@@ -282,6 +284,48 @@ class ActivityStreamWidget(QtGui.QWidget):
     version_items_playable = property(
         _get_version_items_playable,
         _set_version_items_playable,
+    )
+
+    def _get_show_note_links(self):
+        """
+        If True, lists out the parent entity as a list of clickable
+        items for each Note entity that is represented in the activity
+        stream.
+        """
+        return self._show_note_links
+
+    def _set_show_note_links(self, state):
+        self._show_note_links = bool(state)
+
+    show_note_links = property(
+        _get_show_note_links,
+        _set_show_note_links,
+    )
+
+    def _get_highlight_new_arrivals(self):
+        """
+        If True, highlights items in the activity stream that are new
+        since the last time data was loaded.
+        """
+        return self._highlight_new_arrivals
+
+    def _set_highlight_new_arrivals(self, state):
+        self._highlight_new_arrivals = bool(state)
+
+    highlight_new_arrivals = property(
+        _get_highlight_new_arrivals,
+        _set_highlight_new_arrivals,
+    )
+
+    def _get_notes_are_selectable(self):
+        return self._notes_are_selectable
+
+    def _set_notes_are_selectable(self, state):
+        self._notes_are_selectable = bool(state)
+
+    notes_are_selectable = property(
+        _get_notes_are_selectable,
+        _set_notes_are_selectable,
     )
         
     ############################################################################
@@ -647,13 +691,15 @@ class ActivityStreamWidget(QtGui.QWidget):
             elif data["primary_entity"]["type"] == "Note":
                 # new note
                 widget = NoteWidget(self)
-                
+                widget.show_note_links = self.show_note_links
+
             else:
                 # minimalistic 'new' widget for all other cases
                 widget = SimpleNewItemWidget(self)
                             
         elif data["update_type"] == "create_reply":
             widget = NoteWidget(self)
+            widget.show_note_links = self.show_note_links
             
         elif data["update_type"] == "update":
             widget = ValueUpdateWidget(self)
@@ -736,7 +782,8 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self._bundle.log_debug("Adding %s to layout" % w)
                 self.ui.activity_stream_layout.addWidget(w)        
                 # add special blue border to indicate that this is a new arrival
-                w.setStyleSheet("QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }")
+                if self.highlight_new_arrivals:
+                    w.setStyleSheet("QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }")
         
         # when everything is loaded in, load the thumbs
         self._bundle.log_debug("Requesting thumbnails")
@@ -832,6 +879,9 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Overrides the default event handler in Qt.
         """
+        if not self.notes_are_selectable:
+            return
+
         # If they clicked on a note, select it. Any notes that were not
         # clicked on will be deselected.
         position = event.globalPos()
