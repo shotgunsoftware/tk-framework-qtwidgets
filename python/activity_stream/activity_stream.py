@@ -584,7 +584,12 @@ class ActivityStreamWidget(QtGui.QWidget):
             widget = NoteWidget(self)
             
         elif data["update_type"] == "update":
-            widget = ValueUpdateWidget(self)
+            # 37660: We're going to ignore "viewed by" activity for the time being.
+            # According to the review team these entries shouldn't have been returned
+            # as part of the stream anyway, but we have existing data that might
+            # contain these entries that we need to handle elegantly.
+            if data.get("meta", {}).get("attribute_name") != "viewed_by_current_user":
+                widget = ValueUpdateWidget(self)
             
         else:
             self._bundle.log_debug("Activity type not supported and will not be "
