@@ -81,6 +81,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._clickable_user_icons = True
         self._show_note_links = True
         self._highlight_new_arrivals = True
+        self._notes_are_selectable = False
         
         # apply styling
         self._load_stylesheet()

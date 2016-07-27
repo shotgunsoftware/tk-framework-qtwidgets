@@ -210,6 +210,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.version_delegate = ShotgunEntityCardDelegate(
             view=self.ui.entity_version_view,
             shotgun_field_manager=self._shotgun_field_manager,
+            parent=self,
         )
         self.version_delegate.fields = self._settings_manager.retrieve(
             VersionDetailsWidget.VERSION_LIST_FIELDS_PREFS_KEY,
@@ -271,14 +272,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             self._entity_created,
         )
 
-        # The fields menu attached to the "Fields..." buttons
-        # when "More info" is active as well as in the Versions
-        # tab.
-        self._setup_fields_menu()
-        self._setup_version_list_fields_menu()
-        self._setup_version_sort_by_menu()
         self.load_data(entity)
-
         self._load_stylesheet()
 
         # This will handle showing or hiding the dock title bar
@@ -417,6 +411,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.current_version_card.clear()
         self.ui.pages.setCurrentWidget(self.ui.empty_page)
         self.version_model.clear()
+        self.version_info_model.clear()
         self._requested_entity = None
         self._current_entity = None
 
@@ -773,11 +768,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         sg_data = item.get_sg_data()
 
-        try:
-            self.ui.current_version_card.entity = sg_data
-        except:
-            import traceback
-            sgtk.platform.current_engine().log_debug(traceback.format_exc())
+        self.ui.current_version_card.entity = sg_data
         self._more_info_toggled(self.ui.more_info_button.isChecked())
 
         if sg_data.get("entity"):
@@ -942,12 +933,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         menu = EntityFieldMenu(
             "Version",
             project_id=entity.get("project", {}).get("id"),
+            parent=self,
         )
-        try:
-            menu.show()
-        except:
-            import traceback
-            sgtk.platform.current_engine().log_debug(traceback.format_exc())
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._checked_filter)
         menu.set_disabled_filter(self._disabled_filter)
@@ -964,6 +951,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         menu = EntityFieldMenu(
             "Version",
             project_id=entity.get("project", {}).get("id"),
+            parent=self,
         )
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._version_list_checked_filter)
