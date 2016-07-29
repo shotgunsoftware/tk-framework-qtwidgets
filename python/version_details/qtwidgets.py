@@ -21,9 +21,7 @@ SearchWidget = search_widget.SearchWidget
 activity_stream = sgtk.platform.current_bundle().import_module("activity_stream")
 ActivityStreamWidget = activity_stream.ActivityStreamWidget
 
-shotgun_entities = sgtk.platform.current_bundle().import_module("shotgun_entities")
-ShotgunEntityCardWidget = shotgun_entities.ShotgunEntityCardWidget
-ShotgunEntityCardDelegate = shotgun_entities.ShotgunEntityCardDelegate
+from .shotgun_entities import ShotgunEntityCardWidget, ShotgunEntityCardDelegate
 
 shotgun_fields = sgtk.platform.current_bundle().import_module("shotgun_fields")
 ShotgunFieldManager = shotgun_fields.ShotgunFieldManager
@@ -34,4 +32,5 @@ ShotgunMenu = shotgun_menus.ShotgunMenu
 
 models = sgtk.platform.current_bundle().import_module("models")
 ShotgunSortFilterProxyModel = models.ShotgunSortFilterProxyModel
-SimpleTooltipModel = models.SimpleTooltipModel
+
+from .simple_tooltip_model import SimpleTooltipModel

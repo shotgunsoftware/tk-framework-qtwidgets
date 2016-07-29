@@ -24,5 +24,4 @@ from . import global_search_widget
 from . import screen_grab
 from . import shotgun_fields
 from . import shotgun_menus
-from . import shotgun_entities
 from . import version_details

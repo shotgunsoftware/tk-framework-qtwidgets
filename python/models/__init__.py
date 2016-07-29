@@ -11,5 +11,4 @@
 # Proxy model that allows for efficient hierarhcical filtering of a tree-based 
 # source model
 from .hierarchical_filtering_proxy_model import HierarchicalFilteringProxyModel
-from .simple_tooltip_model import SimpleTooltipModel
 from .shotgun_sort_filter_proxy_model import ShotgunSortFilterProxyModel
