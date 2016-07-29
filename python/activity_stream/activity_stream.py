@@ -42,6 +42,10 @@ class ActivityStreamWidget(QtGui.QWidget):
     """
     # max number of items to show in the activity stream.
     MAX_STREAM_LENGTH = 20
+
+    # Activity attributes that we do not want displayed.
+    _SKIP_ACTIVITY_ATTRIBUTES = ["viewed_by_current_user"]
+
     entity_requested = QtCore.Signal(str, int)
     playback_requested = QtCore.Signal(dict)
 
@@ -703,7 +707,12 @@ class ActivityStreamWidget(QtGui.QWidget):
             widget.show_note_links = self.show_note_links
             
         elif data["update_type"] == "update":
-            widget = ValueUpdateWidget(self)
+            # 37660: We're going to ignore "viewed by" activity for the time being.
+            # According to the review team these entries shouldn't have been returned
+            # as part of the stream anyway, but we have existing data that might
+            # contain these entries that we need to handle elegantly.
+            if data.get("meta", {}).get("attribute_name") not in self._SKIP_ACTIVITY_ATTRIBUTES:
+                widget = ValueUpdateWidget(self)
             
         else:
             self._bundle.log_debug("Activity type not supported and will not be "
