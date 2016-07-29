@@ -106,9 +106,16 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
                     sortable=True,
                 )
             except KeyError:
+                # If we got a KeyError, it means that the data we're trying
+                # to compare doesn't exist in one item or the other. This would
+                # most likely be due to the data not having been queried, and
+                # should be an edge case. In this situation, we just can't compare
+                # these fields and we need to move on to the rest.
                 continue
 
             if left_data == right_data:
+                # If the fields are equal then there's no sorting we need to
+                # do based on this field. We'll just continue on to the rest.
                 continue
             else:
                 return (left_data < right_data)

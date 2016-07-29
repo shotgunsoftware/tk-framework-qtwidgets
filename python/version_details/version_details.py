@@ -274,6 +274,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         self.load_data(entity)
         self._load_stylesheet()
+        self.show_title_bar_buttons(False)
 
         # This will handle showing or hiding the dock title bar
         # depending on what the parent is.
@@ -531,24 +532,6 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.note_stream_widget.note_widget._set_screenshot_pixmap(
             QtGui.QPixmap(image_path),
         )
-
-    def setParent(self, parent):
-        """
-        Calls the base class' method of the same name, and then checks
-        to see if the parent is a dock widget. If it is, then a custom
-        title bar is made visible.
-        """
-        super(VersionDetailsWidget, self).setParent(parent)
-
-        try:
-            self.parent().dockLocationChanged.connect(self._dock_location_changed)
-            self._dock_location_changed()
-        except Exception:
-            # If we're not in a dock widget, then we shouldn't show the
-            # title bar with dock and close buttons.
-            self.show_title_bar_buttons(False)
-        else:
-            self.show_title_bar_buttons(True)
 
     def set_pinned(self, checked):
         """

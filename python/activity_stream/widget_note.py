@@ -31,8 +31,15 @@ class NoteWidget(ActivityStreamBaseWidget):
     """
     Widget that represents a Note. This widget in turn contains
     replies and attachments.
+
+    :signal selection_changed(bool, int): Fires when the selection state of the widget
+        changes. The first argument provided is a boolean based on whether the widget
+        was selected or deselected, and the second is the Note entity ID associated
+        with the widget.
     """
 
+    # Whether this was a selection or a deselection, followed by the
+    # Note entity ID associated with this widget.
     selection_changed = QtCore.Signal(bool, int)
     
     def __init__(self, parent):
@@ -55,6 +62,9 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._attachments = []
         self._show_note_links = True
 
+        # We set a transparent border initially, because we don't want to
+        # see the widget "jump" in its size/placement when it is selected
+        # and the colored border appears.
         self.setStyleSheet("#frame { border: 1px solid transparent }")
         self.set_selected(False)
 

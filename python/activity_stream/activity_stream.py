@@ -165,22 +165,62 @@ class ActivityStreamWidget(QtGui.QWidget):
     def note_threads(self):
         """
         The currently loaded note threads, keyed by Note entity id and
-        containing a list of Shotgun entity dictionaries.
+        containing a list of Shotgun entity dictionaries. All note threads
+        currently displayed by the activity stream widget will be returned.
 
-        Example structure containing a single Note entity:
-            6038: [
-                {
-                    'content': 'This is a test note.',
-                    'created_by': {
-                        'id': 39,
-                        'name': 'Jeff Beeland',
-                        'type': 'HumanUser'
-                    },
-                    'id': 6038,
-                    'sg_metadata': None,
-                    'type': 'Note'
-                }
-            ]
+        Example structure containing a Note, a Reply, and an attachment:
+            6040: [
+              {
+                  'addressings_cc': [],
+                  'addressings_to': [],
+                  'client_note': False,
+                  'content': 'This is a test note.',
+                  'created_at': 1466477744.0,
+                  'created_by': {   'id': 39,
+                                    'name': 'Jeff Beeland',
+                                    'type': 'HumanUser'},
+                  'id': 6040,
+                  'note_links': [   {   'id': 1167,
+                                        'name': '123',
+                                        'type': 'Shot'},
+                                    {   'id': 6023,
+                                        'name': 'Scene_v030_123',
+                                        'type': 'Version'}],
+                  'read_by_current_user': 'read',
+                  'subject': "Jeff's Note on Scene_v030_123, 123",
+                  'tasks': [{   'id': 2118, 'name': 'Comp', 'type': 'Task'}],
+                  'type': 'Note',
+                  'user': {   'id': 39,
+                              'name': 'Jeff Beeland',
+                              'type': 'HumanUser'},
+                  'user.ApiUser.image': None,
+                  'user.ClientUser.image': None,
+                  'user.HumanUser.image': 'https://url_to_file'},
+              {   'content': 'test reply',
+                  'created_at': 1469221928.0,
+                  'id': 23,
+                  'type': 'Reply',
+                  'user': {   'id': 39,
+                              'image': 'https://url_to_file',
+                              'name': 'Jeff Beeland',
+                              'type': 'HumanUser'}},
+              {   'attachment_links': [   {   'id': 6051,
+                                              'name': "Jeff's Note on Scene_v030_123, 123 - testing.",
+                                              'type': 'Note'}],
+                  'created_at': 1469484693.0,
+                  'created_by': {   'id': 39,
+                                    'name': 'Jeff Beeland',
+                                    'type': 'HumanUser'},
+                  'id': 601,
+                  'image': 'https://url_to_file',
+                  'this_file': {   'content_type': 'image/png',
+                                   'id': 601,
+                                   'link_type': 'upload',
+                                   'name': 'screencapture_vrviim.png',
+                                   'type': 'Attachment',
+                                   'url': 'https://url_to_file'},
+                  'type': 'Attachment'},
+              ]}
         """
         return self._data_manager.note_threads
 
@@ -339,7 +379,14 @@ class ActivityStreamWidget(QtGui.QWidget):
     def get_note_attachments(self, note_id):
         """
         Gets the Attachment entities associated with the given Note
-        entity.
+        entity. Only attachments from Notes currently loaded by the
+        activity stream widget will be returned.
+
+        .. note:: It is possible for attachments to be added to a Note
+                  entity after the activity stream data has been cached.
+                  In this situation, those attachments will NOT be returned,
+                  as Shotgun will not be requeried for that new data unless
+                  specifically requested to do so.
 
         :param int note_id: The Note entity id.
         """
@@ -505,8 +552,11 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Shows a dialog that allows the user to input a new note.
 
-        :param modal:   Whether the dialog should be shown modally or not.
-        :type modal:    bool
+        .. note:: The return value of the new note dialog is not provided,
+                  as the activity stream widget will emit an entity_created
+                  signal if the user successfully creates a new Note entity.
+
+        :param bool modal: Whether the dialog should be shown modally or not.
         """
         note_dialog = NoteInputDialog(parent=self)
         note_dialog.entity_created.connect(self._on_entity_created)
@@ -840,10 +890,8 @@ class ActivityStreamWidget(QtGui.QWidget):
             # occurred. If the host application doesn't know the note exists,
             # then telling it the note is selected won't do any good.
             self.note_arrived.emit(note_id)
-            widget.set_selected(True)
-            return
-
-        self.note_arrived.emit(note_id)
+        else:
+            self.note_arrived.emit(note_id)
 
     def _on_entity_created(self, entity):
         """

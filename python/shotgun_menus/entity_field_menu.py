@@ -79,9 +79,10 @@ class EntityFieldMenu(ShotgunMenu):
         :param bg_task_manager: The task manager the menu will use if it needs to run a task
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
 
-        :param int project_id: The project entity id to use when querying fields lists. If
-                               None, the current context's project will be used if one is
-                               set, otherwise the "site" level fields will be queried.
+        :param int project_id: The project Entity id. If None, the current
+                               context's project will be used, or the "site"
+                               cache location will be returned if the current
+                               context does not have an associated project.
         """
         QtGui.QMenu.__init__(self, parent=None)
 

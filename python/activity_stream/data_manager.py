@@ -121,22 +121,63 @@ class ActivityStreamDataHandler(QtCore.QObject):
     @property
     def note_threads(self):
         """
-        The list of currently-loaded note threads, keyed by Note entity id.
+        The currently loaded note threads, keyed by Note entity id and
+        containing a list of Shotgun entity dictionaries. All note threads
+        currently cached by the data manager will be returned.
 
-        Example structure containing a single Note entity:
-            6038: [
-                {
-                    'content': 'This is a test note.',
-                    'created_by': {
-                        'id': 39,
-                        'name': 'Jeff Beeland',
-                        'type': 'HumanUser'
-                    },
-                    'id': 6038,
-                    'sg_metadata': None,
-                    'type': 'Note'
-                }
-            ]
+        Example structure containing a Note, a Reply, and an attachment:
+            6040: [
+              {
+                  'addressings_cc': [],
+                  'addressings_to': [],
+                  'client_note': False,
+                  'content': 'This is a test note.',
+                  'created_at': 1466477744.0,
+                  'created_by': {   'id': 39,
+                                    'name': 'Jeff Beeland',
+                                    'type': 'HumanUser'},
+                  'id': 6040,
+                  'note_links': [   {   'id': 1167,
+                                        'name': '123',
+                                        'type': 'Shot'},
+                                    {   'id': 6023,
+                                        'name': 'Scene_v030_123',
+                                        'type': 'Version'}],
+                  'read_by_current_user': 'read',
+                  'subject': "Jeff's Note on Scene_v030_123, 123",
+                  'tasks': [{   'id': 2118, 'name': 'Comp', 'type': 'Task'}],
+                  'type': 'Note',
+                  'user': {   'id': 39,
+                              'name': 'Jeff Beeland',
+                              'type': 'HumanUser'},
+                  'user.ApiUser.image': None,
+                  'user.ClientUser.image': None,
+                  'user.HumanUser.image': 'https://url_to_file'},
+              {   'content': 'test reply',
+                  'created_at': 1469221928.0,
+                  'id': 23,
+                  'type': 'Reply',
+                  'user': {   'id': 39,
+                              'image': 'https://url_to_file',
+                              'name': 'Jeff Beeland',
+                              'type': 'HumanUser'}},
+              {   'attachment_links': [   {   'id': 6051,
+                                              'name': "Jeff's Note on Scene_v030_123, 123 - testing.",
+                                              'type': 'Note'}],
+                  'created_at': 1469484693.0,
+                  'created_by': {   'id': 39,
+                                    'name': 'Jeff Beeland',
+                                    'type': 'HumanUser'},
+                  'id': 601,
+                  'image': 'https://url_to_file',
+                  'this_file': {   'content_type': 'image/png',
+                                   'id': 601,
+                                   'link_type': 'upload',
+                                   'name': 'screencapture_vrviim.png',
+                                   'type': 'Attachment',
+                                   'url': 'https://url_to_file'},
+                  'type': 'Attachment'},
+              ]}
         """
         return self._note_threads
         
@@ -248,6 +289,10 @@ class ActivityStreamDataHandler(QtCore.QObject):
     def rescan(self, force_activity_stream_update=False):
         """
         Check for updates asynchronously.
+
+        :param bool force_activity_stream_update: Forces the data manager to
+                                                  re-query data from Shotgun,
+                                                  even if it is already cached.
         """
         if self._sg_data_retriever is None:
             return
@@ -597,7 +642,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 # first insert event
                 if self._force_activity_stream_update:
                     sql = """
-                        INSERT INTO activity(activity_id, payload, created_at) 
+                        INSERT OR REPLACE INTO activity(activity_id, payload, created_at) 
                         SELECT ?, ?, datetime('now')             
                     """
                 else:
@@ -609,7 +654,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 cursor.execute(sql, (activity_id, blob, activity_id))                
                 if self._force_activity_stream_update:
                     sql = """
-                        INSERT INTO entity (entity_type, entity_id, activity_id, created_at) 
+                        INSERT OR REPLACE INTO entity (entity_type, entity_id, activity_id, created_at) 
                         SELECT ?, ?, ?, datetime('now')               
                      """
                 else:
