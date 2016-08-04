@@ -27,16 +27,6 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
     A sort/filter proxy model that handles sorting and filtering
     data in a ShotgunModel by given Shotgun fields on the entities
     stored therein.
-
-    :ivar filter_by_fields:         A list of string Shotgun field names to filter on.
-    :vartype filter_by_fields:      [field_name, ...]
-
-    :ivar sort_by_fields:           A list of string Shotgun field names to sort by.
-    :vartype sort_by_fields:        [field_name, ...]
-
-    :ivar primary_sort_field:       A string Shotgun field name that acts as the primary
-                                    field to sort on.
-    :vartype primary_sort_field:    str
     """
     def __init__(self, parent):
         """
@@ -46,9 +36,48 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
         """
         super(ShotgunSortFilterProxyModel, self).__init__(parent)
 
-        self.filter_by_fields = ["id"]
-        self.sort_by_fields = ["id"]
-        self.primary_sort_field = "id"
+        self._filter_by_fields = ["id"]
+        self._sort_by_fields = ["id"]
+        self._primary_sort_field = "id"
+
+    ##########################################################################
+    # properties
+
+    def _get_filter_by_fields(self):
+        """
+        A list of string Shotgun field names to filter on.
+        """
+        return self._filter_by_fields
+
+    def _set_filter_by_fields(self, fields):
+        self._filter_by_fields = list(fields)
+
+    filter_by_fields = property(_get_filter_by_fields, _set_filter_by_fields)
+
+    def _get_sort_by_fields(self):
+        """
+        A list of string Shotgun field names to sort by.
+        """
+        return self._sort_by_fields
+
+    def _set_sort_by_fields(self, fields):
+        self._sort_by_fields = list(fields)
+
+    sort_by_fields = property(_get_sort_by_fields, _set_sort_by_fields)
+
+    def _get_primary_sort_field(self):
+        """
+        A string Shotgun field name that acts as the primary field to sort on.
+        """
+        return self._primary_sort_field
+
+    def _set_primary_sort_field(self, field):
+        self._primary_sort_field = field
+
+    primary_sort_field = property(_get_primary_sort_field, _set_primary_sort_field)
+
+    ##########################################################################
+    # methods
 
     def lessThan(self, left, right):
         """
