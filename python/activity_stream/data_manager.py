@@ -86,6 +86,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
     
     update_arrived = QtCore.Signal(list)
     note_arrived = QtCore.Signal(int, int)
+    note_thread_arrived = QtCore.Signal(int, object)
     thumbnail_arrived = QtCore.Signal(dict)
     
     def __init__(self, parent):
@@ -109,9 +110,76 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
         # set up a data retriever
         self._sg_data_retriever = None
+
+        # Offered as an option to rescan(), and if True will trigger
+        # a forced requery of activity stream data during rescan.
+        self._force_activity_stream_update = False
                 
         # set up defaults
         self.__reset()
+
+    @property
+    def note_threads(self):
+        """
+        The currently loaded note threads, keyed by Note entity id and
+        containing a list of Shotgun entity dictionaries. All note threads
+        currently cached by the data manager will be returned.
+
+        Example structure containing a Note, a Reply, and an attachment:
+            6040: [
+              {
+                  'addressings_cc': [],
+                  'addressings_to': [],
+                  'client_note': False,
+                  'content': 'This is a test note.',
+                  'created_at': 1466477744.0,
+                  'created_by': {   'id': 39,
+                                    'name': 'Jeff Beeland',
+                                    'type': 'HumanUser'},
+                  'id': 6040,
+                  'note_links': [   {   'id': 1167,
+                                        'name': '123',
+                                        'type': 'Shot'},
+                                    {   'id': 6023,
+                                        'name': 'Scene_v030_123',
+                                        'type': 'Version'}],
+                  'read_by_current_user': 'read',
+                  'subject': "Jeff's Note on Scene_v030_123, 123",
+                  'tasks': [{   'id': 2118, 'name': 'Comp', 'type': 'Task'}],
+                  'type': 'Note',
+                  'user': {   'id': 39,
+                              'name': 'Jeff Beeland',
+                              'type': 'HumanUser'},
+                  'user.ApiUser.image': None,
+                  'user.ClientUser.image': None,
+                  'user.HumanUser.image': 'https://url_to_file'},
+              {   'content': 'test reply',
+                  'created_at': 1469221928.0,
+                  'id': 23,
+                  'type': 'Reply',
+                  'user': {   'id': 39,
+                              'image': 'https://url_to_file',
+                              'name': 'Jeff Beeland',
+                              'type': 'HumanUser'}},
+              {   'attachment_links': [   {   'id': 6051,
+                                              'name': "Jeff's Note on Scene_v030_123, 123 - testing.",
+                                              'type': 'Note'}],
+                  'created_at': 1469484693.0,
+                  'created_by': {   'id': 39,
+                                    'name': 'Jeff Beeland',
+                                    'type': 'HumanUser'},
+                  'id': 601,
+                  'image': 'https://url_to_file',
+                  'this_file': {   'content_type': 'image/png',
+                                   'id': 601,
+                                   'link_type': 'upload',
+                                   'name': 'screencapture_vrviim.png',
+                                   'type': 'Attachment',
+                                   'url': 'https://url_to_file'},
+                  'type': 'Attachment'},
+              ]}
+        """
+        return self._note_threads
         
     def set_bg_task_manager(self, task_manager):
         """
@@ -177,7 +245,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
         # load note thread only
         note_data = self.__get_note_thread_data(note_id)
         if note_data:
-            self._note_threads[note_id] = note_data        
+            self._note_threads[note_id] = note_data
+            self.note_thread_arrived.emit(note_id, note_data)
 
 
     def load_activity_data(self, entity_type, entity_id, limit=200):
@@ -217,9 +286,13 @@ class ActivityStreamDataHandler(QtCore.QObject):
         sorted_keys = sorted(self._activity_data.keys())
         return sorted_keys
 
-    def rescan(self):
+    def rescan(self, force_activity_stream_update=False):
         """
         Check for updates asynchronously.
+
+        :param bool force_activity_stream_update: Forces the data manager to
+                                                  re-query data from Shotgun,
+                                                  even if it is already cached.
         """
         if self._sg_data_retriever is None:
             return
@@ -247,6 +320,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                     "entity_id": self._entity_id,
                     "highest_id": highest_id
                     }
+            self._force_activity_stream_update = force_activity_stream_update
             self._processing_id = self._sg_data_retriever.execute_method(self._get_activity_stream, data)        
         
 
@@ -519,7 +593,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 # records after the first discovered (most recent) are 
                 # discarded
                 pe = activity_data.get("primary_entity")
-                if pe and pe.get("type") == "Note" and pe.get("id") in notes: 
+                if pe and pe.get("type") == "Note" and pe.get("id") in notes:
                     continue
                 
                 activities[activity_id] = activity_data
@@ -560,34 +634,47 @@ class ActivityStreamDataHandler(QtCore.QObject):
         """
         self._bundle.log_debug("Updating database with %s new events" % len(events))
         try:
-            
             for event in events:
                 activity_id = event["id"]
-                
                 payload = cPickle.dumps(event, cPickle.HIGHEST_PROTOCOL)
                 blob = sqlite3.Binary(payload)
+
                 # first insert event
-                sql = """
-                    INSERT INTO activity(activity_id, payload, created_at) 
-                    SELECT ?, ?, datetime('now')
-                    WHERE NOT EXISTS(SELECT activity_id FROM activity WHERE activity_id = ?);                
-                 """
+                if self._force_activity_stream_update:
+                    sql = """
+                        INSERT OR REPLACE INTO activity(activity_id, payload, created_at) 
+                        SELECT ?, ?, datetime('now')             
+                    """
+                else:
+                    sql = """
+                        INSERT INTO activity(activity_id, payload, created_at) 
+                        SELECT ?, ?, datetime('now')
+                        WHERE NOT EXISTS(SELECT activity_id FROM activity WHERE activity_id = ?);                
+                     """
                 cursor.execute(sql, (activity_id, blob, activity_id))                
-                
-                # now insert entity record
-                sql = """
-                    INSERT INTO entity (entity_type, entity_id, activity_id, created_at) 
-                    SELECT ?, ?, ?, datetime('now')
-                    WHERE NOT EXISTS(SELECT entity_id FROM entity WHERE entity_type = ? and entity_id = ? and activity_id = ?);                
-                 """
+                if self._force_activity_stream_update:
+                    sql = """
+                        INSERT OR REPLACE INTO entity (entity_type, entity_id, activity_id, created_at) 
+                        SELECT ?, ?, ?, datetime('now')               
+                     """
+                else:
+                    # now insert entity record
+                    sql = """
+                        INSERT INTO entity (entity_type, entity_id, activity_id, created_at) 
+                        SELECT ?, ?, ?, datetime('now')
+                        WHERE NOT EXISTS(SELECT entity_id FROM entity WHERE entity_type = ? and entity_id = ? and activity_id = ?);                
+                     """
+
                 cursor.execute(sql, (entity_type, entity_id, activity_id, entity_type, entity_id, activity_id)) 
-            
+
             connection.commit()
-            
         except:
             # supress and continue
             self._bundle.log_exception("Could not add activity stream data "
                                     "to cache database %s" % self._cache_path)
+        finally:
+            self._force_activity_stream_update = False
+
         self._bundle.log_debug("...update complete")
             
     @_db_connect
@@ -705,7 +792,13 @@ class ActivityStreamDataHandler(QtCore.QObject):
                           "TankPublishedFile": ["description", "image", "entity"],
                           }
          
-        sg_data = sg.activity_stream_read(entity_type, entity_id, entity_fields, min_id, limit=self.MAX_ITEMS_TO_GET_FROM_SG)
+        sg_data = sg.activity_stream_read(
+            entity_type,
+            entity_id,
+            entity_fields,
+            min_id,
+            limit=self.MAX_ITEMS_TO_GET_FROM_SG,
+        )
         
         return sg_data
     
@@ -845,7 +938,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
             image = data["image"]
             if image:
                 signal_payload = copy.copy(self._thumb_map[uid])
-                signal_payload["image"] = image                
+                signal_payload["image"] = image
+                signal_payload["thumb_path"] = data["thumb_path"]
                 self.thumbnail_arrived.emit(signal_payload)
          
 

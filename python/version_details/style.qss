@@ -1,0 +1,60 @@
+/*
+Copyright (c) 2015 Shotgun Software Inc.
+ 
+CONFIDENTIAL AND PROPRIETARY
+ 
+This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+Source Code License included in this distribution package. See LICENSE.
+By accessing, using, copying or modifying this work you indicate your 
+agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+not expressly granted therein are reserved by Shotgun Software Inc.
+*/
+
+QTabBar {
+    border: none;
+    alignment: center;
+    margin: 4px;
+    color: rgb(126,127,129);
+}
+
+QTabBar::tab {
+    border: none;
+    alignment: center;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    color: rgb(126,127,129);
+}
+
+QTabBar::tab:hover {
+    color: {{SG_HIGHLIGHT_COLOR}};
+}
+
+QTabBar::tab:selected {
+    color: {{SG_HIGHLIGHT_COLOR}};
+}
+
+QToolButton#more_info_button:hover, QToolButton#more_fields_button:hover, QToolButton#version_fields_button:hover, QToolButton#version_sort_button:hover {
+    color: {{SG_HIGHLIGHT_COLOR}};
+}
+
+QToolButton#more_fields_button:menu-indicator, QToolButton#version_fields_button:menu-indicator, QToolButton#version_sort_button:menu-indicator {
+    image: none;
+}
+
+QMenu::item#version_sort_menu:checked {
+    color: {{SG_HIGHLIGHT_COLOR}};
+}
+
+#note_stream_widget {
+    border: none;
+}
+
+#version_search {
+    background-color: rgb(50,50,50);
+}
+
+QFrame#frame {
+    background-color: rgba(200, 200, 200, 5%);
+    border-radius: 3px;
+}

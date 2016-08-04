@@ -10,4 +10,5 @@
 
 
 from .widget import NoteInputWidget
+from .dialog import NoteInputDialog
 

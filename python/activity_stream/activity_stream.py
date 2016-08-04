@@ -22,6 +22,7 @@ from .widget_value_update import ValueUpdateWidget
 from .dialog_reply import ReplyDialog
 from .data_manager import ActivityStreamDataHandler
 from .overlaywidget import SmallOverlayWidget
+from ..note_input_widget import NoteInputDialog
  
 class ActivityStreamWidget(QtGui.QWidget):
     """
@@ -41,8 +42,17 @@ class ActivityStreamWidget(QtGui.QWidget):
     """
     # max number of items to show in the activity stream.
     MAX_STREAM_LENGTH = 20
+
+    # Activity attributes that we do not want displayed.
+    _SKIP_ACTIVITY_ATTRIBUTES = ["viewed_by_current_user"]
+
     entity_requested = QtCore.Signal(str, int)
     playback_requested = QtCore.Signal(dict)
+
+    # The int is the Note entity id that was selected or deselected.
+    note_selected = QtCore.Signal(int)
+    note_deselected = QtCore.Signal(int)
+    note_arrived = QtCore.Signal(int)
 
     # Emitted when a Note or Reply entity is created. The
     # entity type as a string and id as an int will be
@@ -73,6 +83,9 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._show_sg_stream_button = True
         self._version_items_playable = True
         self._clickable_user_icons = True
+        self._show_note_links = True
+        self._highlight_new_arrivals = True
+        self._notes_are_selectable = False
         
         # apply styling
         self._load_stylesheet()
@@ -92,8 +105,8 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._data_manager.note_arrived.connect(self._process_new_note)
         self._data_manager.update_arrived.connect(self._process_new_data)
         self._data_manager.thumbnail_arrived.connect(self._process_thumbnail)
-        self.ui.note_widget.data_updated.connect(self._on_note_submitted)
         self.ui.note_widget.entity_created.connect(self._on_entity_created)
+        self.ui.note_widget.data_updated.connect(self.rescan)
         
         # keep handles to all widgets to be nice to the GC
         self._loading_widget = None
@@ -123,7 +136,6 @@ class ActivityStreamWidget(QtGui.QWidget):
         # attachments that this widget didn't explicitly handle itself prior to
         # submission.
         self._pre_submit_callback = None
-
         self.reply_dialog.note_widget.entity_created.connect(self._on_entity_created)
 
     def set_bg_task_manager(self, task_manager):
@@ -148,6 +160,69 @@ class ActivityStreamWidget(QtGui.QWidget):
 
     ############################################################################
     # properties
+
+    @property
+    def note_threads(self):
+        """
+        The currently loaded note threads, keyed by Note entity id and
+        containing a list of Shotgun entity dictionaries. All note threads
+        currently displayed by the activity stream widget will be returned.
+
+        Example structure containing a Note, a Reply, and an attachment:
+            6040: [
+              {
+                  'addressings_cc': [],
+                  'addressings_to': [],
+                  'client_note': False,
+                  'content': 'This is a test note.',
+                  'created_at': 1466477744.0,
+                  'created_by': {   'id': 39,
+                                    'name': 'Jeff Beeland',
+                                    'type': 'HumanUser'},
+                  'id': 6040,
+                  'note_links': [   {   'id': 1167,
+                                        'name': '123',
+                                        'type': 'Shot'},
+                                    {   'id': 6023,
+                                        'name': 'Scene_v030_123',
+                                        'type': 'Version'}],
+                  'read_by_current_user': 'read',
+                  'subject': "Jeff's Note on Scene_v030_123, 123",
+                  'tasks': [{   'id': 2118, 'name': 'Comp', 'type': 'Task'}],
+                  'type': 'Note',
+                  'user': {   'id': 39,
+                              'name': 'Jeff Beeland',
+                              'type': 'HumanUser'},
+                  'user.ApiUser.image': None,
+                  'user.ClientUser.image': None,
+                  'user.HumanUser.image': 'https://url_to_file'},
+              {   'content': 'test reply',
+                  'created_at': 1469221928.0,
+                  'id': 23,
+                  'type': 'Reply',
+                  'user': {   'id': 39,
+                              'image': 'https://url_to_file',
+                              'name': 'Jeff Beeland',
+                              'type': 'HumanUser'}},
+              {   'attachment_links': [   {   'id': 6051,
+                                              'name': "Jeff's Note on Scene_v030_123, 123 - testing.",
+                                              'type': 'Note'}],
+                  'created_at': 1469484693.0,
+                  'created_by': {   'id': 39,
+                                    'name': 'Jeff Beeland',
+                                    'type': 'HumanUser'},
+                  'id': 601,
+                  'image': 'https://url_to_file',
+                  'this_file': {   'content_type': 'image/png',
+                                   'id': 601,
+                                   'link_type': 'upload',
+                                   'name': 'screencapture_vrviim.png',
+                                   'type': 'Attachment',
+                                   'url': 'https://url_to_file'},
+                  'type': 'Attachment'},
+              ]}
+        """
+        return self._data_manager.note_threads
 
     @property
     def note_widget(self):
@@ -255,16 +330,76 @@ class ActivityStreamWidget(QtGui.QWidget):
         _get_version_items_playable,
         _set_version_items_playable,
     )
+
+    def _get_show_note_links(self):
+        """
+        If True, lists out the parent entity as a list of clickable
+        items for each Note entity that is represented in the activity
+        stream.
+        """
+        return self._show_note_links
+
+    def _set_show_note_links(self, state):
+        self._show_note_links = bool(state)
+
+    show_note_links = property(
+        _get_show_note_links,
+        _set_show_note_links,
+    )
+
+    def _get_highlight_new_arrivals(self):
+        """
+        If True, highlights items in the activity stream that are new
+        since the last time data was loaded.
+        """
+        return self._highlight_new_arrivals
+
+    def _set_highlight_new_arrivals(self, state):
+        self._highlight_new_arrivals = bool(state)
+
+    highlight_new_arrivals = property(
+        _get_highlight_new_arrivals,
+        _set_highlight_new_arrivals,
+    )
+
+    def _get_notes_are_selectable(self):
+        return self._notes_are_selectable
+
+    def _set_notes_are_selectable(self, state):
+        self._notes_are_selectable = bool(state)
+
+    notes_are_selectable = property(
+        _get_notes_are_selectable,
+        _set_notes_are_selectable,
+    )
         
     ############################################################################
     # public interface
+
+    def get_note_attachments(self, note_id):
+        """
+        Gets the Attachment entities associated with the given Note
+        entity. Only attachments from Notes currently loaded by the
+        activity stream widget will be returned.
+
+        .. note:: It is possible for attachments to be added to a Note
+                  entity after the activity stream data has been cached.
+                  In this situation, those attachments will NOT be returned,
+                  as Shotgun will not be requeried for that new data unless
+                  specifically requested to do so.
+
+        :param int note_id: The Note entity id.
+        """
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget) and widget.note_id == note_id:
+                return widget.attachments
         
     def load_data(self, sg_entity_dict):
         """
         Reset the state of the widget and then load up the data
         for a given entity.
         
-        :param sg_entity_dict: Dictionary with keys type and id
+        :param dict sg_entity_dict: Dictionary with keys type and id
         """
  
         self._bundle.log_debug("Setting up activity stream for entity %s" % sg_entity_dict)
@@ -393,7 +528,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                             attachment_req["attachment_group_id"], 
                                                             attachment_req["attachment_data"])
         
-        # now request thumbnails for all usesr who have replied, but 
+        # now request thumbnails for all users who have replied, but 
         # only once per user
         reply_users_dup_check = []
         for reply_user in all_reply_users:
@@ -412,6 +547,42 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._bundle.log_debug("Ask db manager to ask shotgun for updates...")
         self._data_manager.rescan()
         self._bundle.log_debug("...done")
+
+    def show_new_note_dialog(self, modal=True):
+        """
+        Shows a dialog that allows the user to input a new note.
+
+        .. note:: The return value of the new note dialog is not provided,
+                  as the activity stream widget will emit an entity_created
+                  signal if the user successfully creates a new Note entity.
+
+        :param bool modal: Whether the dialog should be shown modally or not.
+        """
+        note_dialog = NoteInputDialog(parent=self)
+        note_dialog.entity_created.connect(self._on_entity_created)
+        note_dialog.data_updated.connect(self.rescan)
+        note_dialog.set_bg_task_manager(self._task_manager)
+        note_dialog.set_current_entity(self._entity_type, self._entity_id)
+
+        if modal:
+            note_dialog.exec_()
+        else:
+            note_dialog.show()
+
+
+    def rescan(self, force_activity_stream_update=False):
+        """
+        Triggers a rescan of the current activity stream data.
+
+        :param force_activity_stream_update:    If True, will force a requery
+                                                of activity stream data, even
+                                                if it is already cached.
+        :type force_activity_stream_update:     bool
+        """
+        # kick the data manager to rescan for changes
+        self._data_manager.rescan(
+            force_activity_stream_update=force_activity_stream_update,
+        )
             
     ############################################################################
     # internals
@@ -575,16 +746,23 @@ class ActivityStreamWidget(QtGui.QWidget):
             elif data["primary_entity"]["type"] == "Note":
                 # new note
                 widget = NoteWidget(self)
-                
+                widget.show_note_links = self.show_note_links
+
             else:
                 # minimalistic 'new' widget for all other cases
                 widget = SimpleNewItemWidget(self)
                             
         elif data["update_type"] == "create_reply":
             widget = NoteWidget(self)
+            widget.show_note_links = self.show_note_links
             
         elif data["update_type"] == "update":
-            widget = ValueUpdateWidget(self)
+            # 37660: We're going to ignore "viewed by" activity for the time being.
+            # According to the review team these entries shouldn't have been returned
+            # as part of the stream anyway, but we have existing data that might
+            # contain these entries that we need to handle elegantly.
+            if data.get("meta", {}).get("attribute_name") not in self._SKIP_ACTIVITY_ATTRIBUTES:
+                widget = ValueUpdateWidget(self)
             
         else:
             self._bundle.log_debug("Activity type not supported and will not be "
@@ -605,6 +783,18 @@ class ActivityStreamWidget(QtGui.QWidget):
             widget.set_user_thumb_cursor(QtCore.Qt.ArrowCursor)
                     
         return widget
+
+    def _note_selected_changed(self, selected, note_id):
+        """
+        Handles a change in selection state for a given Note entity id.
+
+        :param bool selected: The new selection state of the Note.
+        :param int note_id: The Note entity id.
+        """
+        if selected:
+            self.note_selected.emit(note_id)
+        else:
+            self.note_deselected.emit(note_id)
         
     def _process_new_data(self, activity_ids):
         """
@@ -652,7 +842,8 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self._bundle.log_debug("Adding %s to layout" % w)
                 self.ui.activity_stream_layout.addWidget(w)        
                 # add special blue border to indicate that this is a new arrival
-                w.setStyleSheet("QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }")
+                if self.highlight_new_arrivals:
+                    w.setStyleSheet("QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }")
         
         # when everything is loaded in, load the thumbs
         self._bundle.log_debug("Requesting thumbnails")
@@ -692,6 +883,16 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                           reply_user["id"], 
                                                           reply_user["image"])
 
+            # Ordering here is important. An example of why is that higher
+            # level widgets/apps might be registering a newly-arrived note
+            # with some host application and also listening for selection
+            # signals to notify the same host application of that having
+            # occurred. If the host application doesn't know the note exists,
+            # then telling it the note is selected won't do any good.
+            self.note_arrived.emit(note_id)
+        else:
+            self.note_arrived.emit(note_id)
+
     def _on_entity_created(self, entity):
         """
         Callback when an entity is created by an underlying widget.
@@ -721,13 +922,6 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self.load_data(self._sg_entity_dict)
         finally:
             self.__small_overlay.hide()
-        
-    def _on_note_submitted(self):
-        """
-        Called when a note has finished submitting
-        """
-        # kick the data manager to rescan for changes
-        self._data_manager.rescan()
 
     def _load_shotgun_activity_stream(self):
         """
@@ -735,3 +929,27 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         url = "%s/detail/%s/%s" % (self._bundle.sgtk.shotgun_url, self._entity_type, self._entity_id)
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
+
+    ############################################################################
+    # events
+
+    def mousePressEvent(self, event):
+        """
+        Overrides the default event handler in Qt.
+        """
+        if not self.notes_are_selectable:
+            return
+
+        # If they clicked on a note, select it. Any notes that were not
+        # clicked on will be deselected.
+        position = event.globalPos()
+
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget):
+                selected = widget.rect().contains(widget.mapFromGlobal(position))
+
+                if selected != widget.selected:
+                    widget.set_selected(selected)
+                    self._note_selected_changed(selected, widget.note_id)
+
+

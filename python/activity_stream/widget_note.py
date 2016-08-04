@@ -31,7 +31,16 @@ class NoteWidget(ActivityStreamBaseWidget):
     """
     Widget that represents a Note. This widget in turn contains
     replies and attachments.
+
+    :signal selection_changed(bool, int): Fires when the selection state of the widget
+        changes. The first argument provided is a boolean based on whether the widget
+        was selected or deselected, and the second is the Note entity ID associated
+        with the widget.
     """
+
+    # Whether this was a selection or a deselection, followed by the
+    # Note entity ID associated with this widget.
+    selection_changed = QtCore.Signal(bool, int)
     
     def __init__(self, parent):
         """
@@ -49,15 +58,70 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._general_widgets = []
         self._reply_widgets = []
         self._attachment_group_widgets = {}
-                
+        self._selected = False
+        self._attachments = []
+        self._show_note_links = True
+
+        # We set a transparent border initially, because we don't want to
+        # see the widget "jump" in its size/placement when it is selected
+        # and the colored border appears.
+        self.setStyleSheet("#frame { border: 1px solid transparent }")
+        self.set_selected(False)
+
         # make sure clicks propagate upwards in the hierarchy
-        # self.ui.links.linkActivated.connect(self._entity_request_from_url)
         self.ui.content.linkActivated.connect(self._entity_request_from_url)
         self.ui.header_left.linkActivated.connect(self._entity_request_from_url)    
-        self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))
+        self.ui.user_thumb.entity_requested.connect(
+            lambda entity_type, entity_id: self.entity_requested.emit(
+                entity_type,
+                entity_id
+            )
+        )
 
     ##############################################################################
     # properties
+
+    @property
+    def attachments(self):
+        """
+        Returns a list of attachment entities as returned from the
+        Shotgun Python API.
+
+        Example:
+        [
+            {'attachment_links': [{'id': 6043,
+                                   'name': "Jeff's Note on Buck_rig_v01, Buck - Test!",
+                                   'type': 'Note'}],
+             'created_at': 1467064531.0,
+             'created_by': {'id': 39, 'name': 'Jeff Beeland', 'type': 'HumanUser'},
+             'id': 597,
+             'image': 'https://abc.shotgunstudio.com/thumbnail/api_image/7207?AccessKeyId=123&Expires=123&Signature=123',
+             'this_file': {'content_type': 'image/png',
+                           'id': 597,
+                           'link_type': 'upload',
+                           'name': 'test.png',
+                           'type': 'Attachment',
+                           'url': 'https://abc.shotgunstudio.com/file_serve/attachment/597'},
+             'type': 'Attachment'}
+        ]
+        """
+        return self._attachments
+
+    @property
+    def note_id(self):
+        """
+        The Note entity id that this widget is representing.
+        """
+        return self._note_id
+
+    @property
+    def selected(self):
+        """
+        Whether the widget is currently considered to be selected.
+
+        :returns:   bool
+        """
+        return self._selected
 
     @property
     def user_thumb(self):
@@ -65,6 +129,18 @@ class NoteWidget(ActivityStreamBaseWidget):
         The user thumbnail widget.
         """
         return self.ui.user_thumb
+
+    def _get_show_note_links(self):
+        """
+        Whether the widget will contain a list of navigation links for
+        the parent shot/version/task entities.
+        """
+        return self._show_note_links
+
+    def _set_show_note_links(self, state):
+        self._show_note_links = bool(state)
+
+    show_note_links = property(_get_show_note_links, _set_show_note_links)
 
     ##############################################################################
     # public interface
@@ -130,10 +206,19 @@ class NoteWidget(ActivityStreamBaseWidget):
     def add_reply_button(self):
         reply_button = ClickableLabel(self)
         reply_button.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop)
+        reply_button.setSizePolicy(
+            QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum,
+                QtGui.QSizePolicy.Preferred,
+            )
+        )
+        button_layout = QtGui.QHBoxLayout()
+        self.ui.reply_layout.addLayout(button_layout)
+        button_layout.addStretch(1)
+        button_layout.addWidget(reply_button)
         reply_button.setText("Reply to this Note")
         reply_button.setObjectName("reply_button")
-        self.ui.reply_layout.addWidget(reply_button)
-        self._general_widgets.append(reply_button)
+        self._general_widgets.extend([reply_button, button_layout])
         return reply_button
 
     def get_attachment_group_widget_ids(self):
@@ -149,14 +234,11 @@ class NoteWidget(ActivityStreamBaseWidget):
         """
         Add replies and attachment widgets
         """
-        
         current_attachments = []
         attachment_is_directly_after_note = True
         
         for item in replies_and_attachments:
-            
             if item["type"] == "Reply":
-                    
                 # first, wrap up attachments
                 if len(current_attachments) > 0:                    
                     self._add_attachment_group(current_attachments, attachment_is_directly_after_note)
@@ -175,15 +257,43 @@ class NoteWidget(ActivityStreamBaseWidget):
                 # (this affects the visual style) 
                 attachment_is_directly_after_note = False
 
-                
-                
             if item["type"] == "Attachment" and item["this_file"]["link_type"] == "upload":
                 current_attachments.append(item)
-        
+                self._attachments.append(item)
+
         # see if there are still open attachments
         if len(current_attachments) > 0:                    
             self._add_attachment_group(current_attachments, attachment_is_directly_after_note)
-            current_attachments = []                                
+            current_attachments = []
+
+    def set_selected(self, state):
+        """
+        Sets the selection state of the widget.
+
+        :param state:   Whether the widget is to be selected or deselected.
+        :type state:    bool
+        """
+        if bool(state) == self.selected:
+            return
+
+        self._selected = bool(state)
+
+        if self.selected:
+            color = self.palette().color(
+                QtGui.QPalette.Normal,
+                QtGui.QPalette.Highlight
+            )
+            self.setStyleSheet(
+                "#frame { border: 1px solid rgb(%s,%s,%s) }" % (
+                    color.red(),
+                    color.green(),
+                    color.blue()
+                )
+            )
+        else:
+            self.setStyleSheet("#frame { border: 1px solid transparent }")
+
+        self.selection_changed.emit(self.selected, self._note_id)
         
     def _add_attachment_group(self, attachments, after_note):
         """
@@ -213,8 +323,8 @@ class NoteWidget(ActivityStreamBaseWidget):
             entity_type_display_name = shotgun_globals.get_type_display_name(link["type"])
  
             chunk = """
-                <tr><td bgcolor=#AA6666>
-                    <a href='%s:%s' style='text-decoration: none; color: #ddddff'>%s %s</a>
+                <tr><td bgcolor=#666666>
+                    <a href='%s:%s' style='text-decoration: none; color: #dddddd'>%s %s</a>
                 </td></tr>
                 """ % (link["type"], link["id"], entity_type_display_name, link["name"])
             html_chunks.append(chunk)
@@ -257,10 +367,15 @@ class NoteWidget(ActivityStreamBaseWidget):
         # careful here, because we saw this bug crop up during Cut Support
         # QA.
         self.ui.content.setText(data.get("content", ""))
+
+        # This allows selections from higher-level layouts to occur. If
+        # we don't set this, the label accepts and blocks mouse click
+        # events, which means if you expect to select the note widget
+        # itself you can't click on the note contents.
+        self.ui.content.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
         
-        # format note links        
-        html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
-        links_html = self.__generate_note_links_table(html_link_box_data)
-
-        # self.ui.links.setText(links_html)
-
+        # format note links
+        if self.show_note_links:
+            html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
+            links_html = self.__generate_note_links_table(html_link_box_data)
+            self.ui.links.setText(links_html)
