@@ -8,6 +8,8 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+import re
+
 from sgtk.platform.qt import QtCore, QtGui
 import sgtk
 
@@ -25,11 +27,15 @@ class AttachmentGroupWidget(QtGui.QWidget):
     
     OFFSET_NONE, OFFSET_LARGE_THUMB, OFFSET_SMALL_THUMB = range(3)
     
-    def __init__(self, parent, attachment_data):
+    def __init__(self, parent, attachment_data, filter_regex=None):
         """
         Constructor
         
         :param parent: QT parent object
+        :param dict attachment_data: The attachment data from Shotgun to represent.
+        :param filter_regex: A compiled regular expression used to filter OUT matching
+                             attachments based on file basename.
+        :type filter_regex: SRE_Pattern (re.compile return type)
         """
         QtGui.QWidget.__init__(self, parent)
         
@@ -42,6 +48,7 @@ class AttachmentGroupWidget(QtGui.QWidget):
         self._large_thumbnails = {}
         self._small_thumbnails = {}
         self._other_widgets = []
+        self._filter_regex = filter_regex
         
         self._attachment_data = attachment_data
         
@@ -52,6 +59,10 @@ class AttachmentGroupWidget(QtGui.QWidget):
         max_col = 0
         
         for data in self._attachment_data:
+            
+            if self._filter_regex:
+                if re.match(self._filter_regex, str(data.get("this_file", dict()).get("name"))):
+                    continue
             obj = SmallAttachmentThumbnail(data, self.ui.preview_frame)
             obj.clicked.connect(self._toggle_large_thumbnails)            
             self.ui.preview_layout.addWidget(obj, current_row, current_col)
@@ -85,9 +96,27 @@ class AttachmentGroupWidget(QtGui.QWidget):
         self._other_widgets.append(hide_preview_button)
         
         for data in self._attachment_data:
+            if self._filter_regex:
+                if re.match(self._filter_regex, str(data.get("this_file", dict()).get("name"))):
+                    continue
             obj = LargeAttachmentThumbnail(data, self)
             self.ui.attachment_layout.addWidget(obj)
             self._large_thumbnails[data["id"]] = obj
+
+    ##############################################################################
+    # properties
+
+    @property
+    def filter_regex(self):
+        """
+        If set to a compiled regular expression, attachment file names that match
+        will be filtered OUT and NOT shown.
+        """
+        return self._filter_regex
+
+
+    ##############################################################################
+    # methods
         
     def show_attachments_label(self, status):
         """
@@ -114,6 +143,7 @@ class AttachmentGroupWidget(QtGui.QWidget):
         """
         if data["thumbnail_type"] != ActivityStreamDataHandler.THUMBNAIL_ATTACHMENT:
             return
+
         attachment_id = data["entity"]["id"]
         if attachment_id in self._large_thumbnails:
             attachment_obj = self._large_thumbnails[attachment_id]

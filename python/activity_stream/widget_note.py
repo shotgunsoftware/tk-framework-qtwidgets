@@ -61,6 +61,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._selected = False
         self._attachments = []
         self._show_note_links = True
+        self._attachments_filter = None
 
         # We set a transparent border initially, because we don't want to
         # see the widget "jump" in its size/placement when it is selected
@@ -141,6 +142,18 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._show_note_links = bool(state)
 
     show_note_links = property(_get_show_note_links, _set_show_note_links)
+
+    def _get_attachments_filter(self):
+        """
+        If set to a compiled regular expression, attachment file names that match
+        will be filtered OUT and NOT shown.
+        """
+        return self._attachments_filter
+
+    def _set_attachments_filter(self, regex):
+        self._attachments_filter = regex
+
+    attachments_filter = property(_get_attachments_filter, _set_attachments_filter)
 
     ##############################################################################
     # public interface
@@ -300,7 +313,11 @@ class NoteWidget(ActivityStreamBaseWidget):
         
         """
         curr_attachment_group_widget_id = len(self._attachment_group_widgets)
-        attachment_group = AttachmentGroupWidget(self, attachments)
+        attachment_group = AttachmentGroupWidget(
+            parent=self,
+            attachment_data=attachments,
+            filter_regex=self.attachments_filter,
+        )
         # don't show the ATTACHMENTS header in the activity stream
         attachment_group.show_attachments_label(False)        
 

@@ -117,6 +117,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._note_set_metadata_uids = []
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
+        self._attachments_filter = None
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
@@ -335,6 +336,19 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         return self.ui.note_stream_widget.note_threads
 
+    def _get_attachments_filter(self):
+        """
+        If set to a compiled regular expression, attachment file names that match
+        will be filtered OUT and NOT shown.
+        """
+        return self._attachments_filter
+
+    def _set_attachments_filter(self, regex):
+        self._attachments_filter = regex
+        self.ui.note_stream_widget.attachments_filter = regex
+
+    attachments_filter = property(_get_attachments_filter, _set_attachments_filter)
+
     ##########################################################################
     # public methods
 
@@ -360,6 +374,8 @@ class VersionDetailsWidget(QtGui.QWidget):
                     cleanup_after_upload=cleanup_after_upload,
                 ),
             )
+
+        self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
 
     def add_query_fields(self, fields):
         """
