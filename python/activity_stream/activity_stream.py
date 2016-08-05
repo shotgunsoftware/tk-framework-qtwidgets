@@ -86,6 +86,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._show_note_links = True
         self._highlight_new_arrivals = True
         self._notes_are_selectable = False
+        self._attachments_filter = None
         
         # apply styling
         self._load_stylesheet()
@@ -118,6 +119,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._sg_entity_dict = None
         self._entity_type = None
         self._entity_id = None
+        self._select_on_arrival = dict()
 
         # We'll be keeping a persistent reply dialog available because
         # we need to connect to a signal that it's emitting. It's easiest
@@ -372,6 +374,18 @@ class ActivityStreamWidget(QtGui.QWidget):
         _get_notes_are_selectable,
         _set_notes_are_selectable,
     )
+
+    def _get_attachments_filter(self):
+        """
+        If set to a compiled regular expression, attachment file names that match
+        will be filtered OUT and NOT shown.
+        """
+        return self._attachments_filter
+
+    def _set_attachments_filter(self, regex):
+        self._attachments_filter = regex
+
+    attachments_filter = property(_get_attachments_filter, _set_attachments_filter)
         
     ############################################################################
     # public interface
@@ -747,6 +761,23 @@ class ActivityStreamWidget(QtGui.QWidget):
                 # new note
                 widget = NoteWidget(self)
                 widget.show_note_links = self.show_note_links
+                widget.attachments_filter = self.attachments_filter
+
+                # If it's been requested that we select this Note entity's widget when it's
+                # constructed, then we do so here. This is the situation where the user has
+                # created a new Note, which upon completion we want to have autoselected.
+                if data["primary_entity"]["id"] == self._select_on_arrival.get("id"):
+                    # First we need to deselect whatever is selected, because we're going
+                    # to be selecting our new widget right after.
+                    for w in self._activity_stream_data_widgets.values():
+                        if isinstance(w, NoteWidget):
+                            if w.selected:
+                                w.set_selected(False)
+                                self._note_selected_changed(False, w.note_id)
+
+                    widget.set_selected(True)
+                    self._note_selected_changed(True, widget.note_id)
+                    self._select_on_arrival = dict()
 
             else:
                 # minimalistic 'new' widget for all other cases
@@ -755,6 +786,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         elif data["update_type"] == "create_reply":
             widget = NoteWidget(self)
             widget.show_note_links = self.show_note_links
+            widget.attachments_filter = self.attachments_filter
             
         elif data["update_type"] == "update":
             # 37660: We're going to ignore "viewed by" activity for the time being.
@@ -882,13 +914,6 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self._data_manager.request_user_thumbnail(reply_user["type"], 
                                                           reply_user["id"], 
                                                           reply_user["image"])
-
-            # Ordering here is important. An example of why is that higher
-            # level widgets/apps might be registering a newly-arrived note
-            # with some host application and also listening for selection
-            # signals to notify the same host application of that having
-            # occurred. If the host application doesn't know the note exists,
-            # then telling it the note is selected won't do any good.
             self.note_arrived.emit(note_id)
         else:
             self.note_arrived.emit(note_id)
@@ -899,6 +924,8 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         :param entity:  The Shotgun entity that was created.
         """
+        if self.notes_are_selectable and entity["type"] == "Note":
+            self._select_on_arrival = entity
         self.entity_created.emit(entity)
             
     def _on_reply_clicked(self, note_id):
