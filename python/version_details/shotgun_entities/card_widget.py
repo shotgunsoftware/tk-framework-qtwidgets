@@ -80,10 +80,11 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if not self.entity:
             return
 
+        print "LINE 83 "
         field_widget = self.field_manager.create_widget(
             self.entity.get("type"),
             field_name,
-            self.field_manager.DISPLAY,
+            self.field_manager.EDITABLE,
             self.entity,
         )
 
@@ -196,7 +197,8 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if field_name not in self._fields or not self.entity:
             return
 
-        self._fields[field_name]["widget"].setVisible(bool(state))
+        if self._fields[field_name]["widget"]: 
+            self._fields[field_name]["widget"].setVisible(bool(state))
 
         field_label = self._fields[field_name]["label"]
 
@@ -298,6 +300,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     field_widget.set_value(entity.get(field))
         else:
             self._entity = entity
+            print "THIS ONE is IMAGE?"
             self.thumbnail = self.field_manager.create_widget(
                 entity.get("type"),
                 "image",
@@ -319,12 +322,25 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             field_grid_layout.setColumnStretch(1, 3)
 
             for i, field in enumerate(self.fields):
-                field_widget = self.field_manager.create_widget(
-                    entity.get("type"),
-                    field,
-                    self.field_manager.DISPLAY,
-                    self.entity,
-                )
+                print "EDITABLE %r?" % field
+                if field == 'sg_status_list':
+                    print "MAKKING EDITOAABLE for %r" % field
+                    print "entity type %r" % entity.get("type")
+                    print "self.entity %r" % self.entity
+                    field_widget = self.field_manager.create_widget(
+                        entity.get("type"),
+                        field,
+                        self.field_manager.EDITABLE,
+                        self.entity,
+                    )
+                else: 
+                    field_widget = self.field_manager.create_widget(
+                        entity.get("type"),
+                        field,
+                        self.field_manager.DISPLAY,
+                        self.entity,
+                    )
+                print "FIELD WIDGET: %r" % field_widget
 
                 # If we've been asked to show labels for the fields, then
                 # build those and get them into the layout.
