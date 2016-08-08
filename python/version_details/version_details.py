@@ -115,8 +115,10 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
+        self._uploads_uids = []
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
+        self._attachments_filter = None
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
@@ -335,6 +337,19 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         return self.ui.note_stream_widget.note_threads
 
+    def _get_attachments_filter(self):
+        """
+        If set to a compiled regular expression, attachment file names that match
+        will be filtered OUT and NOT shown.
+        """
+        return self._attachments_filter
+
+    def _set_attachments_filter(self, regex):
+        self._attachments_filter = regex
+        self.ui.note_stream_widget.attachments_filter = regex
+
+    attachments_filter = property(_get_attachments_filter, _set_attachments_filter)
+
     ##########################################################################
     # public methods
 
@@ -351,7 +366,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_entity = note_entity["entity"]
 
         for file_path in file_paths:
-            self._upload_uid = self._data_retriever.execute_method(
+            self._upload_uids.append(self._data_retriever.execute_method(
                 self.__upload_file,
                 dict(
                     file_path=file_path,
@@ -359,7 +374,7 @@ class VersionDetailsWidget(QtGui.QWidget):
                     parent_entity_id=note_entity["id"],
                     cleanup_after_upload=cleanup_after_upload,
                 ),
-            )
+            ))
 
     def add_query_fields(self, fields):
         """
@@ -655,6 +670,8 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_id = self._attachment_uids[uid]
             del self._attachment_uids[uid]
             self.note_attachment_arrived.emit(note_id, data["file_path"])
+        elif uid in self._upload_uids:
+            self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
 
     def __on_worker_failure(self, uid, msg):
         """
