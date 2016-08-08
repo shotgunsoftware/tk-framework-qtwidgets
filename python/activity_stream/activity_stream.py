@@ -379,6 +379,13 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         If set to a compiled regular expression, attachment file names that match
         will be filtered OUT and NOT shown.
+
+        .. note:: An re.match() is used, which means the regular expression must
+                  match from the start of the attachment file's basename. See Python's
+                  "re" module documentation for Python 2.x for more information and
+                  examples.
+
+        .. example:: To match only ".gif" extensions: re.compile(r"\w+[.]gif$")
         """
         return self._attachments_filter
 
