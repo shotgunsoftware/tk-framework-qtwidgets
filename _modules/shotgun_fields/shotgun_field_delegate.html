@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
+  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.4.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.4.1 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.4.1.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -189,10 +189,11 @@
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 <span class="n">views</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;views&quot;</span><span class="p">)</span>
+<span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
 <span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span><span class="p">)</span>
-
 
 <div class="viewcode-block" id="ShotgunFieldDelegate"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate">[docs]</a><span class="k">class</span> <span class="nc">ShotgunFieldDelegate</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -225,36 +226,97 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_editor_class</span> <span class="o">=</span> <span class="n">editor_class</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bg_task_manager</span> <span class="o">=</span> <span class="n">bg_task_manager</span>
 
+<div class="viewcode-block" id="ShotgunFieldDelegate.paint"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.paint">[docs]</a>    <span class="k">def</span> <span class="nf">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Paint method to handle all cells that are not being currently edited.</span>
+
+<span class="sd">        :param painter:         The painter instance to use when painting</span>
+<span class="sd">        :param style_options:   The style options to use when painting</span>
+<span class="sd">        :param model_index:     The index in the data model that needs to be painted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># let the base class do all the heavy lifting</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFieldDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
+
+        <span class="c1"># clear out the paint widget&#39;s contents to prevent it from showing in</span>
+        <span class="c1"># other places in the view (since the widget is shared)</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_painter_widget</span><span class="p">(</span><span class="n">model_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span></div>
+
     <span class="k">def</span> <span class="nf">_create_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param parent:  QWidget to parent the widget to</span>
-<span class="sd">        :type parent:   :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        :param parent: QWidget to parent the widget to</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
 
-<span class="sd">        :returns:       QWidget that will be used to paint grid cells in the view.</span>
-<span class="sd">        :rtype:         :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        :returns: QWidget that will be used to paint grid cells in the view.</span>
+<span class="sd">        :rtype: :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_class</span><span class="p">(</span>
             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span>
             <span class="n">entity_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span>
             <span class="n">field_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">,</span>
             <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bg_task_manager</span><span class="p">,</span>
+            <span class="n">delegate</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
         <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_class</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor_class</span><span class="p">:</span>
+            <span class="c1"># display and edit classes are the same. we need to make sure</span>
+            <span class="c1"># we disable the editing so that the delegate isn&#39;t drawn in its</span>
+            <span class="c1"># edit state.</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">widget</span>
+
+<div class="viewcode-block" id="ShotgunFieldDelegate.sizeHint"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the size needed by the delegate to display the item specified by</span>
+<span class="sd">        ``model_index``, taking into account the style information provided by</span>
+<span class="sd">        ``style_options``.</span>
+
+<span class="sd">        Reimplemented from ``QStyledItemDelegate.sizeHint``</span>
+
+<span class="sd">        :param style_options: Style information for the item.</span>
+<span class="sd">        :type style_options: :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param model_index: The index of the item to return the size of.</span>
+<span class="sd">        :type model_index: :class:`~PySide.QtCore.QModelIndex`</span>
+
+<span class="sd">        :returns: size required by the delegate</span>
+<span class="sd">        :rtype: :class:`~PySide.QtCore.QSize`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">()</span>
+
+        <span class="n">size_hint</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">()</span>
+        <span class="n">painter_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_painter_widget</span><span class="p">(</span><span class="n">model_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">painter_widget</span><span class="p">:</span>
+            <span class="n">size_hint</span> <span class="o">=</span> <span class="n">painter_widget</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">size_hint</span></div>
 
     <span class="k">def</span> <span class="nf">_create_editor_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param model_index:     The index of the item in the model to return a widget for</span>
-<span class="sd">        :type model_index:      :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        Create an editor widget for the supplied model index.</span>
 
-<span class="sd">        :param style_options:   Specifies the current Qt style options for this index</span>
-<span class="sd">        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param model_index: The index of the item in the model to return a widget for</span>
+<span class="sd">        :type model_index: :class:`~PySide.QtCore.QModelIndex`</span>
 
-<span class="sd">        :param parent:          The parent view that the widget should be parented to</span>
-<span class="sd">        :type parent:           :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        :param style_options: Specifies the current Qt style options for this index</span>
+<span class="sd">        :type style_options: :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
 
-<span class="sd">        :returns:               A QWidget to be used for editing the current index</span>
-<span class="sd">        :rtype:                 :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        :param parent: The parent view that the widget should be parented to</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
+
+<span class="sd">        :returns: A QWidget to be used for editing the current index</span>
+<span class="sd">        :rtype: :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ensure the field is editable</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">field_is_editable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor_class</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">None</span>
 
@@ -263,7 +325,18 @@
             <span class="n">entity_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span>
             <span class="n">field_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">,</span>
             <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bg_task_manager</span><span class="p">,</span>
+            <span class="n">delegate</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
         <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_class</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor_class</span><span class="p">:</span>
+            <span class="c1"># display and edit classes are the same. we need to make sure</span>
+            <span class="c1"># we enable the editing</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c1"># auto fill the background color so that the display widget doesn&#39;t show</span>
+        <span class="c1"># behind.</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">widget</span>
 
     <span class="k">def</span> <span class="nf">_on_before_paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
@@ -272,29 +345,214 @@
 <span class="sd">        SG_ASSOCIATED_FIELD_ROLE role.</span>
 
 <span class="sd">        :param widget: The QWidget (constructed in _create_widget()) which will</span>
-<span class="sd">                       be used to paint the cell.</span>
-<span class="sd">        :type parent:  :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">            be used to paint the cell.</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
 
 <span class="sd">        :param model_index: object representing the data of the object that is</span>
-<span class="sd">                            about to be drawn.</span>
-<span class="sd">        :type model_index:  :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">            about to be drawn.</span>
+<span class="sd">        :type model_index: :class:`~PySide.QtCore.QModelIndex`</span>
 
 <span class="sd">        :param style_options: Object containing specifics about the</span>
-<span class="sd">                              view related state of the cell.</span>
-<span class="sd">        :type style_options:  :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">            view related state of the cell.</span>
+<span class="sd">        :type style_options: :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setEditorData</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
 
-    <span class="c1">#def setEditorData(self, widget, index):</span>
-    <span class="c1">#    value = index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)</span>
-    <span class="c1">#    sanitized_value = shotgun_model.sanitize_qt(value)</span>
-    <span class="c1">#    widget.set_value(sanitized_value)</span>
+        <span class="c1"># make sure the display widget is populated with the correct data</span>
+        <span class="n">_set_widget_value</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ShotgunFieldDelegate.setEditorData"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.setEditorData">[docs]</a>    <span class="k">def</span> <span class="nf">setEditorData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the data to be displayed and edited by the editor from the data</span>
+<span class="sd">        model item specified by the model index.</span>
 
-    <span class="c1">#def editorEvent(self, event, model, option, index):</span>
-    <span class="c1">#    return True</span>
+<span class="sd">        :param editor: The editor widget.</span>
+<span class="sd">        :type editor: :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        :param model_index: The index of the model to be edited.</span>
+<span class="sd">        :type model_index: :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># make sure the editor widget is populated with the correct data</span>
+        <span class="n">_set_widget_value</span><span class="p">(</span><span class="n">editor</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldDelegate.setModelData"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.setModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets data from the editor widget and stores it in the specified model at the item index.</span>
+
+<span class="sd">        :param editor: The editor widget.</span>
+<span class="sd">        :type editor: :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        :param model: The SG model where the data lives.</span>
+<span class="sd">        :type model: :class:`~shotgun_utils.shotgun_model.ShotgunModel`</span>
+<span class="sd">        :param index: The index of the model to be edited.</span>
+<span class="sd">        :type index: :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">src_index</span> <span class="o">=</span> <span class="n">_map_to_source</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">src_index</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">src_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="c1"># invalide index, do nothing</span>
+            <span class="k">return</span>
+
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+
+        <span class="n">cur_value</span> <span class="o">=</span> <span class="n">src_index</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_ASSOCIATED_FIELD_ROLE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cur_value</span> <span class="o">==</span> <span class="n">new_value</span><span class="p">:</span>
+            <span class="c1"># value didn&#39;t change. nothing to do here.</span>
+            <span class="k">return</span>
+
+        <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+
+        <span class="c1"># special case for image fields</span>
+        <span class="k">if</span> <span class="n">editor</span><span class="o">.</span><span class="n">_field_name</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span><span class="p">:</span>
+            <span class="n">primary_item</span> <span class="o">=</span> <span class="n">src_index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">src_index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">new_value</span><span class="p">:</span>
+                    <span class="c1"># update the value locally in the model</span>
+                    <span class="n">primary_item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">new_value</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">primary_item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">bundle</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="s2">&quot;Unable to set icon for widget delegate: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">,))</span>
+
+            <span class="k">return</span>
+
+        <span class="n">successful</span> <span class="o">=</span> <span class="n">src_index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
+            <span class="n">src_index</span><span class="p">,</span>
+            <span class="n">new_value</span><span class="p">,</span>
+            <span class="n">shotgun_model</span><span class="o">.</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_ASSOCIATED_FIELD_ROLE</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">successful</span><span class="p">:</span>
+            <span class="n">bundle</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to set model data for widget delegate: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">)</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldDelegate.editorEvent"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.editorEvent">[docs]</a>    <span class="k">def</span> <span class="nf">editorEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles mouse events on the editor.</span>
+
+<span class="sd">        :param event: The event that occurred.</span>
+<span class="sd">        :type event: :class:`~PySide.QtCore.QEvent`</span>
+<span class="sd">        :param model: The SG model where the data lives.</span>
+<span class="sd">        :type model: :class:`~shotgun_utils.shotgun_model.ShotgunModel`</span>
+<span class="sd">        :param option: Options for rendering the item.</span>
+<span class="sd">        :type option: :class:`~PySide.QtQui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the model to be edited.</span>
+<span class="sd">        :type index: :class:`~PySide.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: ``True``, if the event was handled, ``False`` otherwise.</span>
+<span class="sd">        :rtype: ``bool``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># The primary use for this is labels displaying clickable links (entity,</span>
+        <span class="c1"># multi-entity, etc). By default, they&#39;re painted into the view via the</span>
+        <span class="c1"># delegate, so you can&#39;t interact with them. There were some suggestions</span>
+        <span class="c1"># online how to work around this that seemed really complex. This is a</span>
+        <span class="c1"># solution rob suggested which I tried and it seems to work... and is</span>
+        <span class="c1"># much simpler! Basically, detect a mouse click (release is all we have</span>
+        <span class="c1"># really) in the delegate, populate the underlying widget with the data</span>
+        <span class="c1"># from the index, then forward the event to the widget. The result is a</span>
+        <span class="c1"># simulation of clicking on the actual widget.</span>
+
+        <span class="c1"># Forward mouse clicks to the underlying display widget. This only kicks</span>
+        <span class="c1"># in if the editor widget isn&#39;t displayed or doesn&#39;t process a mouse</span>
+        <span class="c1"># event for some reason. If you&#39;re having trouble with editors</span>
+        <span class="c1"># disappearing, it may be because they can&#39;t receive focus or aren&#39;t</span>
+        <span class="c1"># handling a mouse click.</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">MouseButtonRelease</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_forward_mouse_event</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">return</span> <span class="bp">False</span></div>
+
+    <span class="k">def</span> <span class="nf">_forward_mouse_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mouse_event</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forward the mouse event to the display widget to simulate</span>
+<span class="sd">        interacting with the widget. This is necessary since the delegate only</span>
+<span class="sd">        paints the widget in the view rather than being an actual widget</span>
+<span class="sd">        instance.</span>
+
+<span class="sd">        :param mouse_event: The event that occured on the delegate.</span>
+<span class="sd">        :type mouse_event: :class:`~PySide.QtCore.QEvent`</span>
+<span class="sd">        :param index: The model index that was acted on.</span>
+<span class="sd">        :type index: :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get the widget used to paint this index, populate it with the</span>
+        <span class="c1"># value for this index</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_painter_widget</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+        <span class="n">_set_widget_value</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+        <span class="n">item_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">visualRect</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># get the rect of the item in the view</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">item_rect</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+
+        <span class="c1"># move the widget to 0, 0 so we know exactly where it is</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># map global mouse position to within item_rect</span>
+        <span class="n">view_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QCursor</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
+
+        <span class="c1"># calculate the offset from the item rect</span>
+        <span class="n">widget_x</span> <span class="o">=</span> <span class="n">view_pos</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">-</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">x</span><span class="p">()</span>
+        <span class="n">widget_y</span> <span class="o">=</span> <span class="n">view_pos</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">-</span> <span class="n">item_rect</span><span class="o">.</span><span class="n">y</span><span class="p">()</span>
+
+        <span class="c1"># forward the mouse event to the display widget</span>
+        <span class="n">forward_event</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMouseEvent</span><span class="p">(</span>
+            <span class="n">mouse_event</span><span class="o">.</span><span class="n">type</span><span class="p">(),</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">widget_x</span><span class="p">,</span> <span class="n">widget_y</span><span class="p">),</span>
+            <span class="n">mouse_event</span><span class="o">.</span><span class="n">button</span><span class="p">(),</span>
+            <span class="n">mouse_event</span><span class="o">.</span><span class="n">buttons</span><span class="p">(),</span>
+            <span class="n">mouse_event</span><span class="o">.</span><span class="n">modifiers</span><span class="p">(),</span>
+        <span class="p">)</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">sendEvent</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">forward_event</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_set_widget_value</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Updates the supplied widget with data from the supplied model index.</span>
+
+<span class="sd">    :param widget: The widget to set the value for</span>
+<span class="sd">    :type parent: :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">    :param model_index: The index of the model where the data comes from</span>
+<span class="sd">    :type model_index: :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">src_index</span> <span class="o">=</span> <span class="n">_map_to_source</span><span class="p">(</span><span class="n">model_index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_index</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">src_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+        <span class="c1"># invalid index, do nothing</span>
+        <span class="k">return</span>
+
+    <span class="c1"># special case for image fields</span>
+    <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">_field_name</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span><span class="p">:</span>
+        <span class="n">primary_item</span> <span class="o">=</span> <span class="n">src_index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">src_index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">primary_item</span><span class="o">.</span><span class="n">icon</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">icon</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">icon</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)))</span>
+
+    <span class="n">value</span> <span class="o">=</span> <span class="n">src_index</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_ASSOCIATED_FIELD_ROLE</span><span class="p">)</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_map_to_source</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Map the specified index to it&#39;s source model.  This can be done recursively to map</span>
+<span class="sd">    back through a chain of proxy models to the source model at the beginning of the chain</span>
+
+<span class="sd">    :param idx: The index to map from</span>
+<span class="sd">    :param recursive: If true then the function will recurse up the model chain until it</span>
+<span class="sd">        finds an index belonging to a model that doesn&#39;t derive from QAbstractProxyModel.</span>
+<span class="sd">        If false then it will just return the index from the imediate parent model.</span>
+
+<span class="sd">    :returns: QModelIndex in the source model or the first model in the chain that</span>
+<span class="sd">        isn&#39;t a proxy model if recursive is True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">src_idx</span> <span class="o">=</span> <span class="n">idx</span>
+    <span class="k">while</span> <span class="n">src_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src_idx</span><span class="o">.</span><span class="n">model</span><span class="p">(),</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractProxyModel</span><span class="p">):</span>
+        <span class="n">src_idx</span> <span class="o">=</span> <span class="n">src_idx</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">mapToSource</span><span class="p">(</span><span class="n">src_idx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">recursive</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">src_idx</span>
+
 </pre></div>
 
            </div>
@@ -327,7 +585,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.6',
+            VERSION:'v2.4.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
+  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.4.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.4.1 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.4.1.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -256,8 +256,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/link_menu.png&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span><span class="p">:</span>
+            <span class="c1"># not sure why, but when the widget is being used in a delegate,</span>
+            <span class="c1"># this causes editor to close immediately when clicked.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
 
         <span class="c1"># make sure there&#39;s never a bg color or border</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: none; border: none;&quot;</span><span class="p">)</span>
@@ -685,7 +689,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.6',
+            VERSION:'v2.4.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

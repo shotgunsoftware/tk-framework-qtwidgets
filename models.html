@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Model Related Classes &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
+  <title>Model Related Classes &mdash; tk-framework-qtwidgets v2.4.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.4.1 documentation" href="index.html"/>
         <link rel="next" title="Navigation Widgets" href="navigation.html"/>
         <link rel="prev" title="Help Screen Popup" href="help_screen.html"/> 
 
@@ -97,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Related Classes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#hierarchicalfilteringproxymodel">HierarchicalFilteringProxyModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shotgunsortfilterproxymodel">ShotgunSortFilterProxyModel</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
@@ -130,7 +131,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.4.1.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -182,7 +183,8 @@
   <div class="section" id="model-related-classes">
 <h1>Model Related Classes<a class="headerlink" href="#model-related-classes" title="Permalink to this headline">¶</a></h1>
 <p>The <code class="docutils literal"><span class="pre">models</span></code> module contains QT Models and model related classes that
-are useful when building MVC setups and when you need to filter data in various ways.</p>
+are useful when building MVC setups and when you need to filter data in
+various ways.</p>
 <div class="section" id="hierarchicalfilteringproxymodel">
 <h2>HierarchicalFilteringProxyModel<a class="headerlink" href="#hierarchicalfilteringproxymodel" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -244,6 +246,84 @@ the filter.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="shotgunsortfilterproxymodel">
+<h2>ShotgunSortFilterProxyModel<a class="headerlink" href="#shotgunsortfilterproxymodel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="models.ShotgunSortFilterProxyModel">
+<em class="property">class </em><code class="descclassname">models.</code><code class="descname">ShotgunSortFilterProxyModel</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/shotgun_sort_filter_proxy_model.html#ShotgunSortFilterProxyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#models.ShotgunSortFilterProxyModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QSortFilterProxyModel.html#PySide.QtGui.QSortFilterProxyModel" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QSortFilterProxyModel</span></code></a></p>
+<p>A sort/filter proxy model that handles sorting and filtering
+data in a ShotgunModel by given Shotgun fields on the entities
+stored therein.</p>
+<p>Initializes a new ShotgunSortFilterProxyModel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> &#8211; The Qt parent of the proxy model.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="models.ShotgunSortFilterProxyModel.lessThan">
+<code class="descname">lessThan</code><span class="sig-paren">(</span><em>left</em>, <em>right</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/shotgun_sort_filter_proxy_model.html#ShotgunSortFilterProxyModel.lessThan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#models.ShotgunSortFilterProxyModel.lessThan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if &#8220;left&#8221; is less than &#8220;right&#8221;, otherwise
+False. This sort is handled based on the data pulled from
+Shotgun for the current sort_by_field registered with this
+proxy model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>left</strong> &#8211; The QModelIndex of the left-hand item to
+compare.</li>
+<li><strong>right</strong> &#8211; The QModelIndex of the right-hand item to
+compare against.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Whether &#8220;left&#8221; is less than &#8220;right&#8221;.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.ShotgunSortFilterProxyModel.filterAcceptsRow">
+<code class="descname">filterAcceptsRow</code><span class="sig-paren">(</span><em>row</em>, <em>source_parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/shotgun_sort_filter_proxy_model.html#ShotgunSortFilterProxyModel.filterAcceptsRow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#models.ShotgunSortFilterProxyModel.filterAcceptsRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the model index should be shown, and False
+if it should not. This is determined based on whether the
+proxy model&#8217;s filter is found in the Shotgun data for
+the fields specified in the filter_by_fields list registered
+with the proxy model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>row</strong> &#8211; The row being processed.</li>
+<li><strong>source_parent</strong> &#8211; The parent index from the source model.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Whether the row is accepted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -286,7 +366,7 @@ the filter.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.3.6',
+            VERSION:'v2.4.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

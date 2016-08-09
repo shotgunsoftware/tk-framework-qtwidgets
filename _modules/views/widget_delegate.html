@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>views.widget_delegate &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
+  <title>views.widget_delegate &mdash; tk-framework-qtwidgets v2.4.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.4.1 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.4.1.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -265,6 +265,12 @@
 <span class="sd">        :returns:           A QWidget to be used for painting the current index</span>
 <span class="sd">        :rtype:             :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="c1"># if the index is invalid, no field widget will be useful for display</span>
+            <span class="c1"># or editing.</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
         <span class="c1"># the default implementation just uses the internal __paint_widget </span>
         <span class="c1"># (creating it if needed) for backwards compatibility</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span><span class="p">():</span>
@@ -294,6 +300,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># the default implementation just calls _create_widget for backwards</span>
         <span class="c1"># compatibility.</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="c1"># if the index is invalid, no field widget will be useful for editing.</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_widget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="WidgetDelegate._on_before_paint"><a class="viewcode-back" href="../../views.html#views.WidgetDelegate._on_before_paint">[docs]</a>    <span class="k">def</span> <span class="nf">_on_before_paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
@@ -338,11 +349,11 @@
     <span class="k">def</span> <span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_widget</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subclassed implementation from QStyledItemDelegate which is</span>
-<span class="sd">        called when an &quot;editor&quot; is set up - the editor is set up </span>
+<span class="sd">        called when an &quot;editor&quot; is set up - the editor is set up</span>
 <span class="sd">        via the openPersistentEditor call and is created upon selection</span>
 <span class="sd">        of an item.</span>
 
-<span class="sd">        Normally, for performance, when we draw hundreds of grid cells, </span>
+<span class="sd">        Normally, for performance, when we draw hundreds of grid cells,</span>
 <span class="sd">        we use the same Qwidget as a brush and simply use it to paint.</span>
 
 <span class="sd">        For the currently selected cell however, we need to be able to interact</span>
@@ -350,11 +361,11 @@
 <span class="sd">        to have a real widget for this.</span>
 
 <span class="sd">        :param parent_widget:   The parent widget to use for the new editor widget</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param style_options:   The style options to use when creating the editor</span>
-<span class="sd">        :param model_index:     The index in the data model that will be edited </span>
+<span class="sd">        :param model_index:     The index in the data model that will be edited</span>
 <span class="sd">                                using this editor</span>
-<span class="sd">        :returns:               An editor widget that will be used to edit this </span>
+<span class="sd">        :returns:               An editor widget that will be used to edit this</span>
 <span class="sd">                                index</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># allow derived class to create the editor widget:</span>
@@ -465,7 +476,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.6',
+            VERSION:'v2.4.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
