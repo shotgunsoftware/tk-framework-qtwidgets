@@ -289,6 +289,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         # the field widgets into the layout.
         if self.entity:
             self._entity = entity
+            self.thumbnail._needs_download = True
             self.thumbnail.set_value(entity.get("image"))
 
             for field, field_data in self._fields.iteritems():
