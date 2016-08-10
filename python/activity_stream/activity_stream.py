@@ -427,9 +427,11 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         # if the project context is None, the entity is a non project entity and it's NOT
         # the project entity itself, we don't have access to any project state.
-        no_project_available = self._bundle.context.project is None \
-                               and is_non_project_entity_type \
-                               and self._entity_type != "Project"
+        no_project_available = (
+            self._bundle.context.project is None and
+            is_non_project_entity_type and
+            self._entity_type != "Project"
+        )
 
         # also disable note creation in the case we have a site context
         # and a non-project entity

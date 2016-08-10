@@ -395,9 +395,11 @@ class NoteInputWidget(QtGui.QWidget):
             # if we are adding a note to a version, link it with the version
             # and the entity that the version is linked to.
             # if the version has a task, link the task to the note too.
-            sg_version = sg.find_one("Version",
+            sg_version = sg.find_one(
+                "Version",
                 [["id", "is", entity_link["id"] ]],
-                                     ["entity", "sg_task", "cached_display_name", "project"])
+                ["entity", "sg_task", "cached_display_name", "project"]
+            )
 
             # first make a std sg link to the current entity - this to ensure we have a name key present
             note_links += [{"id": entity_link["id"],
@@ -419,9 +421,11 @@ class NoteInputWidget(QtGui.QWidget):
         elif entity_link["type"] == "Task":
             # if we are adding a note to a task, link the note to the entity that is linked to the
             # task. The link the task to the note via the task link.
-            sg_task = sg.find_one("Task",
-                [["id", "is", entity_link["id"] ]],
-                                  ["entity", "project"])
+            sg_task = sg.find_one(
+                "Task",
+                [["id", "is", entity_link["id"]]],
+                ["entity", "project"]
+            )
 
             if sg_task["entity"]:
                 # there is an entity link from this task
