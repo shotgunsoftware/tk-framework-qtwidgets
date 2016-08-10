@@ -23,7 +23,9 @@ from .dialog_reply import ReplyDialog
 from .data_manager import ActivityStreamDataHandler
 from .overlaywidget import SmallOverlayWidget
 from ..note_input_widget import NoteInputDialog
- 
+
+shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+
 class ActivityStreamWidget(QtGui.QWidget):
     """
     QT Widget that displays the Shotgun activity stream for an entity.
@@ -452,7 +454,26 @@ class ActivityStreamWidget(QtGui.QWidget):
         # to mimic the behavior in shotgun - which seems quite strange and
         # inconsistent for users, we need to disable to note dialog for 
         # these cases
+
+        # note - this may return [] if shotgun globals aren't yet cached
+        schema_fields = shotgun_globals.get_entity_fields(self._entity_type)
+        is_non_project_entity_type = len(schema_fields) > 0 and "project" not in schema_fields
+
+        # if the project context is None, the entity is a non project entity and it's NOT
+        # the project entity itself, we don't have access to any project state.
+        no_project_available = (
+            self._bundle.context.project is None and
+            is_non_project_entity_type and
+            self._entity_type != "Project"
+        )
+
+        # also disable note creation in the case we have a site context
+        # and a non-project entity
         if self._entity_type in ["ApiUser", "HumanUser", "ClientUser"]:
+            self.ui.note_widget.setVisible(False)
+        elif no_project_available:
+            # we don't have any project to hang these notes off, so disable
+            # the note integration
             self.ui.note_widget.setVisible(False)
         else:
             self.ui.note_widget.setVisible(True)
