@@ -397,6 +397,19 @@ class ActivityStreamWidget(QtGui.QWidget):
     ############################################################################
     # public interface
 
+    def deselect_note(self):
+        """
+        If a note is currently selected, it will be deselected. This will NOT
+        trigger a note_deselected signal to be emitted, as that is only emitted
+        when the user triggers the deselection and not via procedural means.
+        """
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget) and widget.selected:
+                widget.set_selected(False)
+                # We only support single selection right now, so we don't
+                # need to continue on once we've hit a note that's selected.
+                return
+
     def get_note_attachments(self, note_id):
         """
         Gets the Attachment entities associated with the given Note

@@ -431,6 +431,14 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._requested_entity = None
         self._current_entity = None
 
+    def deselect_note(self):
+        """
+        If a note is currently selected, it will be deselected. This will NOT
+        trigger a note_deselected signal to be emitted, as that is only emitted
+        when the user triggers the deselection and not via procedural means.
+        """
+        self.ui.note_stream_widget.deselect_note()
+
     def download_note_attachments(self, note_id):
         """
         Triggers the attachments linked to the given Note entity to
