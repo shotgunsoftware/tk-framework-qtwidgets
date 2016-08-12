@@ -8,8 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from collections import OrderedDict
-
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.card_widget import Ui_ShotgunEntityCardWidget
@@ -43,10 +41,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         self._show_labels = True
         self.__selected = False
 
-        # TODO: Note that OrderedDict is only in Python 2.7. If we move
-        # this widget out to be used elsewhere, we'll need to find a
-        # solution that's supported by earlier versions of Python.
-        self._fields = OrderedDict()
+        self._fields = _OrderedDict()
         self.set_selected(self.__selected)
 
     ##########################################################################
@@ -69,7 +64,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if field_name in self.fields:
             return
 
-        self._fields[field_name] = OrderedDict(
+        self._fields[field_name] = _OrderedDict(
             widget=None,
             label=None,
             label_exempt=label_exempt,
@@ -461,4 +456,70 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
     show_border = property(_get_show_border, _set_show_border)
     show_labels = property(_get_show_labels, _set_show_labels)
 
+
+class _OrderedDict(object):
+    """
+    An OrderedDict-like class. This is implemented here in order to maintain
+    backwards compatibility with pre-2.7 releases of Python.
+    """
+    def __init__(self, **kwargs):
+        """
+        Constructor. Emulates the behavior of the dict() type.
+        """
+        self._keys = []
+        self._dict = dict()
+
+        for (key, value) in kwargs.iteritems():
+            self.__setitem__(key, value)
+
+    def get(self, key, default=None):
+        """
+        Emulates dict.get()
+
+        :param key: The key to get the value of.
+        :param default: What to return if the key isn't in the dictionary.
+        """
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+    def iteritems(self):
+        """
+        Emulates dict.iteritems()
+        """
+        return [(k, self[k]) for k in self._keys]
+
+    def keys(self):
+        """
+        Emulates dict.keys()
+        """
+        return self._keys
+
+    def values(self):
+        """
+        Emulates dict.values()
+        """
+        return [self[k] for k in self._keys]
+
+    def __iter__(self):
+        for key in self._keys:
+            yield self._dict[key]
+
+    def __len__(self):
+        return len(self._keys)
+
+    def __getitem__(self, key):
+        return self._dict[key]
+
+    def __setitem__(self, key, value):
+        self._keys.append(key)
+        self._dict[key] = value
+
+    def __delitem__(self, key):
+        del self._dict[key]
+        self._keys.remove(key)
+
+    def __contains__(self, item):
+        return (item in self._dict)
 
