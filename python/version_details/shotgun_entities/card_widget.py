@@ -465,6 +465,11 @@ class _OrderedDict(object):
     def __init__(self, **kwargs):
         """
         Constructor. Emulates the behavior of the dict() type.
+
+        .. Note:: The order of key/value pairs passed in as kwargs to the
+                  constructor will not have their order maintained. This is
+                  consistent with the behavior of collections.OrderedDict in
+                  Python 2.7.
         """
         self._keys = []
         self._dict = dict()
