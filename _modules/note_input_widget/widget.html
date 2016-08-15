@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.4.1 documentation</title>
+  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.1 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.1.<br>
+    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -521,64 +521,75 @@
 
 <span class="sd">        :returns:       A Shotgun entity dictionary for the Note that was created.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># note - no logging in here, as I am not sure how all </span>
+        <span class="c1"># note - no logging in here, as I am not sure how all</span>
         <span class="c1"># engines currently react to log_debug() async.</span>
-        
-        <span class="c1"># step 1 - extend out the link dictionary according to specific logic.</span>
-        <span class="c1"># - if link is a version, then also include the item the version </span>
+
+        <span class="c1"># There is lots of business logic hard coded into Shotgun</span>
+        <span class="c1"># for now, attempt to mimic this logic in this method.</span>
+
+        <span class="c1"># Extend out the link dictionary according to specific logic:</span>
+
+        <span class="c1"># - if link is a version, then also include the item the version</span>
         <span class="c1">#   is linked to and the version&#39;s task</span>
-        
-        <span class="c1"># - if a link is a task, find its link and use that as the main link. </span>
+
+        <span class="c1"># - if a link is a task, find its link and use that as the main link.</span>
         <span class="c1">#   set the task to be linked up to the tasks field.</span>
-        
-        <span class="c1"># - if link is a user, group or script then address the note TO </span>
-        <span class="c1">#   that user rather associating the user with the note. </span>
-        
-        
-        <span class="c1"># first establish defaults        </span>
+
+        <span class="c1"># - if link is a user, group or script then address the note TO</span>
+        <span class="c1">#   that user rather associating the user with the note.</span>
+
+        <span class="c1"># - if data[&quot;project&quot;] is None (which typically happens when running in a null-context</span>
+        <span class="c1">#   environment, attempt to pick up the project from the associated entity.</span>
+
+        <span class="c1"># first establish defaults</span>
         <span class="n">project</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]</span>
         <span class="n">addressings_to</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;recipient_links&quot;</span><span class="p">]</span>
         <span class="n">note_links</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">note_tasks</span> <span class="o">=</span> <span class="p">[]</span>
-        
-        
+
+        <span class="c1"># step 1 - business logic for linking</span>
         <span class="c1"># now apply specific logic</span>
         <span class="n">entity_link</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]</span>
-        
-        <span class="k">if</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;HumanUser&quot;</span><span class="p">,</span> <span class="s2">&quot;ApiUser&quot;</span><span class="p">,</span> <span class="s2">&quot;Group&quot;</span><span class="p">]:</span>            
+        <span class="c1"># as we are retrieving data for the associated</span>
+        <span class="c1"># entity, also pull down the associated project</span>
+        <span class="n">entity_project_link</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;HumanUser&quot;</span><span class="p">,</span> <span class="s2">&quot;ApiUser&quot;</span><span class="p">,</span> <span class="s2">&quot;Group&quot;</span><span class="p">]:</span>
             <span class="c1"># for users, scripts and groups,</span>
             <span class="c1"># address the note TO the entity</span>
             <span class="n">addressings_to</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entity_link</span><span class="p">)</span>
 
-            <span class="c1"># Also link the note to the user. This is to get the </span>
+            <span class="c1"># Also link the note to the user. This is to get the</span>
             <span class="c1"># activity stream logic to work.</span>
             <span class="c1"># note that because we don&#39;t have the display name for the entity,</span>
             <span class="c1"># we need to retrieve this</span>
-            <span class="n">sg_entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> 
-                                    <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span> 
+            <span class="n">sg_entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                                    <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span>
                                     <span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">])</span>
-            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> 
-                           <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> 
-                           <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_entity</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span> 
-            
-        
+            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                           <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                           <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_entity</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span>
+
+
         <span class="k">elif</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Version&quot;</span><span class="p">:</span>
-            <span class="c1"># if we are adding a note to a version, link it with the version </span>
+            <span class="c1"># if we are adding a note to a version, link it with the version</span>
             <span class="c1"># and the entity that the version is linked to.</span>
-            <span class="c1"># if the version has a task, link the task to the note too.  </span>
-            <span class="n">sg_version</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="s2">&quot;Version&quot;</span><span class="p">,</span> 
-                                     <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span> 
-                                     <span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;sg_task&quot;</span><span class="p">,</span> <span class="s2">&quot;cached_display_name&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">])</span>
-            
+            <span class="c1"># if the version has a task, link the task to the note too.</span>
+            <span class="n">sg_version</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+                <span class="s2">&quot;Version&quot;</span><span class="p">,</span>
+                <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span>
+                <span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;sg_task&quot;</span><span class="p">,</span> <span class="s2">&quot;cached_display_name&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+
             <span class="c1"># first make a std sg link to the current entity - this to ensure we have a name key present</span>
-            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> 
-                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> 
-                            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span> 
-            
+            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span>
+
             <span class="c1"># and now add the linked entity, if there is one</span>
             <span class="k">if</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]:</span>
                 <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[</span><span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]]</span>
-            
+
             <span class="k">if</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;sg_task&quot;</span><span class="p">]:</span>
                 <span class="n">note_tasks</span> <span class="o">+=</span> <span class="p">[</span><span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;sg_task&quot;</span><span class="p">]]</span>
 
@@ -586,14 +597,16 @@
             <span class="c1"># we know we can get it from the Version entity itself.</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">project</span> <span class="ow">and</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]:</span>
                 <span class="n">project</span> <span class="o">=</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]</span>
-            
+
         <span class="k">elif</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span><span class="p">:</span>
             <span class="c1"># if we are adding a note to a task, link the note to the entity that is linked to the</span>
             <span class="c1"># task. The link the task to the note via the task link.</span>
-            <span class="n">sg_task</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="s2">&quot;Task&quot;</span><span class="p">,</span> 
-                                  <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span> 
-                                  <span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">])</span>
-            
+            <span class="n">sg_task</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+                <span class="s2">&quot;Task&quot;</span><span class="p">,</span>
+                <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span>
+                <span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+
             <span class="k">if</span> <span class="n">sg_task</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]:</span>
                 <span class="c1"># there is an entity link from this task</span>
                 <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[</span><span class="n">sg_task</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]]</span>
@@ -602,24 +615,31 @@
             <span class="c1"># can get one from the Task entity.</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">project</span> <span class="ow">and</span> <span class="n">sg_task</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]:</span>
                 <span class="n">project</span> <span class="o">=</span> <span class="n">sg_task</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]</span>
-            
-            <span class="c1"># lastly, link the note&#39;s task link to this task            </span>
+
+            <span class="c1"># lastly, link the note&#39;s task link to this task</span>
             <span class="n">note_tasks</span> <span class="o">+=</span> <span class="p">[</span><span class="n">entity_link</span><span class="p">]</span>
-        
+
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># no special logic. Just link the note to the current entity.</span>
             <span class="c1"># note that because we don&#39;t have the display name for the entity,</span>
             <span class="c1"># we need to retrieve this</span>
-            <span class="n">sg_entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> 
-                                    <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span> 
-                                    <span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">])</span>
-            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> 
-                           <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> 
-                           <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_entity</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span> 
-        
-        
-        
-        
+            <span class="n">sg_entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                                    <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span>
+                                    <span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">])</span>
+            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                           <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                           <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_entity</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span>
+
+            <span class="c1"># store associated project for use later</span>
+            <span class="k">if</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Project&quot;</span><span class="p">:</span>
+                <span class="c1"># note on a project</span>
+                <span class="n">entity_project_link</span> <span class="o">=</span> <span class="n">entity_link</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># note - some entity types may not have a project field</span>
+                <span class="c1"># so don&#39;t assume the key exists.</span>
+                <span class="n">entity_project_link</span> <span class="o">=</span> <span class="n">sg_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">)</span>
+
+
         <span class="c1"># step 2 - generate the subject line. The following</span>
         <span class="c1"># convention exists for this:</span>
         <span class="c1">#</span>
@@ -636,23 +656,38 @@
                 <span class="c1"># for older cores, just split on the first space</span>
                 <span class="c1"># Sorry Mary Jane Watson!</span>
                 <span class="n">first_name</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                
-            <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&#39;s Note&quot;</span> <span class="o">%</span> <span class="n">first_name</span> 
+
+            <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&#39;s Note&quot;</span> <span class="o">%</span> <span class="n">first_name</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Unknown user&#39;s Note&quot;</span>
-        
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">note_links</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">note_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">note_links</span><span class="p">]</span>
             <span class="n">title</span> <span class="o">+=</span> <span class="s2">&quot; on </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">note_names</span><span class="p">))</span>
 
+        <span class="c1"># step 3 - handle project gracefully</span>
+        <span class="k">if</span> <span class="n">project</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># attempt to pull it from the entity link</span>
+            <span class="k">if</span> <span class="n">entity_project_link</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="c1"># there is no associated project - likely this is a note</span>
+                <span class="c1"># on a non-project entity created in the site ctx</span>
+                <span class="k">raise</span> <span class="n">TankError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot determine the project to associate the note with. &quot;</span>
+                    <span class="s2">&quot;This usually happens when you submit note on a non-project &quot;</span>
+                    <span class="s2">&quot;entity while running Toolkit in a Site context.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">project</span> <span class="o">=</span> <span class="n">entity_project_link</span>
+
+
         <span class="c1"># this is an entity - so create a note and link it</span>
         <span class="n">sg_note_data</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;Note&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span>
-                                          <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span> 
+                                          <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
                                           <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="n">project</span><span class="p">,</span>
                                           <span class="s2">&quot;addressings_to&quot;</span><span class="p">:</span> <span class="n">addressings_to</span><span class="p">,</span>
                                           <span class="s2">&quot;note_links&quot;</span><span class="p">:</span> <span class="n">note_links</span><span class="p">,</span>
                                           <span class="s2">&quot;tasks&quot;</span><span class="p">:</span> <span class="n">note_tasks</span> <span class="p">})</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">__upload_thumbnail</span><span class="p">(</span><span class="n">sg_note_data</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__upload_attachments</span><span class="p">(</span><span class="n">sg_note_data</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
@@ -969,7 +1004,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.4.1',
+            VERSION:'v2.4.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

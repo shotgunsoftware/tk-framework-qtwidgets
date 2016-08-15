@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.4.1 documentation</title>
+  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.1 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.1.<br>
+    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -610,6 +610,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">version_info_model</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="bp">None</span></div>
+
+<div class="viewcode-block" id="VersionDetailsWidget.deselect_note"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.deselect_note">[docs]</a>    <span class="k">def</span> <span class="nf">deselect_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If a note is currently selected, it will be deselected. This will NOT</span>
+<span class="sd">        trigger a note_deselected signal to be emitted, as that is only emitted</span>
+<span class="sd">        when the user triggers the deselection and not via procedural means.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">deselect_note</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.download_note_attachments"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.download_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">download_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1423,7 +1431,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.4.1',
+            VERSION:'v2.4.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
