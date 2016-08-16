@@ -110,7 +110,9 @@ class EntityFieldMenu(ShotgunMenu):
                 start_processing=True
             )
 
-            shotgun_globals.register_bg_task_manager(self._task_manager)
+            # removing this for now... these registrations were causing RV to crash on exit.
+            # are they necessary?
+            # shotgun_globals.register_bg_task_manager(self._task_manager)
 
         # populate the menu the first time it is shown
         self._initialized = False
@@ -164,6 +166,10 @@ class EntityFieldMenu(ShotgunMenu):
         """
         self._entity_type_filter = entity_type_filter
 
+    # this was causing RV to segfault on exit. i think
+    # the task manager was already freed in another thread
+    # before this happens.
+    # removed the registration above and the crashing stopped.
     def __del__(self):
         """
         Destructor

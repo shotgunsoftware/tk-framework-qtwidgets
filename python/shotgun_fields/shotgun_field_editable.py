@@ -98,6 +98,13 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
 
         self.currentWidget().setFocus()
 
+    def __getattr__(self, name):
+        """
+        Routes any attributes not found on the editable widget to the
+        fields widget that it is wrapping.
+        """
+        return getattr(self._display.display_widget, name)
+
 
 class ShotgunFieldNotEditable(QtGui.QWidget):
     """
@@ -151,6 +158,13 @@ class ShotgunFieldNotEditable(QtGui.QWidget):
             self._no_edit_lbl.hide()
 
         return False
+
+    def __getattr__(self, name):
+        """
+        Routes any attributes not found on the editable widget to the
+        fields widget that it is wrapping.
+        """
+        return getattr(self._display_widget, name)
 
 
 class _DisplayWidget(QtGui.QWidget):
@@ -325,4 +339,6 @@ class _EditorWidget(QtGui.QWidget):
         # responsible for storing their own values as they are modified
         self.edit_widget.set_value(self.edit_widget.get_value())
         self.done_editing.emit()
+
+
 

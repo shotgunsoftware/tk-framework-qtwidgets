@@ -80,7 +80,6 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if not self.entity:
             return
 
-        print "LINE 83 "
         field_widget = self.field_manager.create_widget(
             self.entity.get("type"),
             field_name,
@@ -291,6 +290,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         # the field widgets into the layout.
         if self.entity:
             self._entity = entity
+            self.thumbnail._needs_download = True
             self.thumbnail.set_value(entity.get("image"))
 
             for field, field_data in self._fields.iteritems():
@@ -300,7 +300,6 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     field_widget.set_value(entity.get(field))
         else:
             self._entity = entity
-            print "THIS ONE is IMAGE?"
             self.thumbnail = self.field_manager.create_widget(
                 entity.get("type"),
                 "image",
@@ -322,25 +321,15 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             field_grid_layout.setColumnStretch(1, 3)
 
             for i, field in enumerate(self.fields):
-                print "EDITABLE %r?" % field
-                if field == 'sg_status_list':
-                    print "MAKKING EDITOAABLE for %r" % field
-                    print "entity type %r" % entity.get("type")
-                    print "self.entity %r" % self.entity
-                    field_widget = self.field_manager.create_widget(
-                        entity.get("type"),
-                        field,
-                        self.field_manager.EDITABLE,
-                        self.entity,
-                    )
-                else: 
-                    field_widget = self.field_manager.create_widget(
-                        entity.get("type"),
-                        field,
-                        self.field_manager.DISPLAY,
-                        self.entity,
-                    )
-                print "FIELD WIDGET: %r" % field_widget
+                field_widget = self.field_manager.create_widget(
+                    entity.get("type"),
+                    field,
+                    self.field_manager.EDITABLE,
+                    self.entity,
+                )
+                # connect each widget to the local value_changed function
+                # so we can update the DB
+                field_widget._editor.edit_widget.value_changed.connect(self._value_changed)
 
                 # If we've been asked to show labels for the fields, then
                 # build those and get them into the layout.
@@ -365,6 +354,29 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     field_grid_layout.addWidget(field_widget, i, 0)
 
                 self._fields[field]["widget"] = field_widget
+
+    def _value_changed(self, stuff=None):
+        """
+        All field widgets created in this class will call
+        this function when their editor emits a value_changed signal.
+        we just call update from the bundle's shotgun instance so this
+        function is blocking for now.
+        """
+        entity = self._get_entity()
+
+        update_dict = {}
+        update_dict[self.sender()._field_name] = self.sender().get_value()
+
+        bundle = self.field_manager._task_manager._bundle
+        sg_res = bundle.shotgun.update(entity['type'], entity['id'], update_dict)
+
+        # TODO: what does sg_res look like in error?
+
+        # print "UPDATE: %r %r updated as follows:" % ( sg_res['type'], sg_res['id'] )
+        # for k in sg_res:
+        #     if k  != 'type' and k != 'id':
+        #         print "    %r is now %r" % ( k, sg_res[k])
+
 
     def _get_field_manager(self):
         """
