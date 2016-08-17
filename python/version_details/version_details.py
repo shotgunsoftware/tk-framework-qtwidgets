@@ -115,7 +115,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
-        self._uploads_uids = []
+        self._upload_uids = {}
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
         self._attachments_filter = None
@@ -366,7 +366,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_entity = note_entity["entity"]
 
         for file_path in file_paths:
-            self._upload_uids.append(self._data_retriever.execute_method(
+            upload_uid = self._data_retriever.execute_method(
                 self.__upload_file,
                 dict(
                     file_path=file_path,
@@ -374,7 +374,8 @@ class VersionDetailsWidget(QtGui.QWidget):
                     parent_entity_id=note_entity["id"],
                     cleanup_after_upload=cleanup_after_upload,
                 ),
-            ))
+            )
+            self._upload_uids[upload_uid] = note_entity
 
     def add_query_fields(self, fields):
         """
@@ -680,6 +681,12 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.note_attachment_arrived.emit(note_id, data["file_path"])
         elif uid in self._upload_uids:
             self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
+            # TODO: It's not great that we're turning around and re-downloading this
+            # data again, but it's BY FAR the easiest way to make this work right now.
+            # It would probably be best to revisit this if, at some time in the future,
+            # the activity_stream widget is refactored to make it a little friendlier
+            # to data changing after it's already cached.
+            self.download_note_attachments(note_id=self._upload_uids[uid]["id"])
 
     def __on_worker_failure(self, uid, msg):
         """
