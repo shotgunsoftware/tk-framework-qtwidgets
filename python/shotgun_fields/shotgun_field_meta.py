@@ -70,7 +70,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
     The widgets shown above will be used by any SG field for the specified type.
     It is also possible to register widgets that are used only for specific
     fields on specific entities. To achieve this, use the ``_ENTITY_FIELDS``
-    class memeber to define a list of tuples that explicitly defined the entity
+    class member to define a list of tuples that explicitly defined the entity
     fields the widget should be used to display.
 
     Example::

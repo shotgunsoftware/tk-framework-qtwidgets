@@ -12,16 +12,18 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui import resources_rc
 
-# TODO: states for "updating in SG" and "failed to update in SG"
 
 class ShotgunFieldEditable(QtGui.QStackedWidget):
     """
     Wraps ``DISPLAY`` and ``EDITOR`` widgets into a :class:`~PySide.QtGui.QStackedWidget`
     instance to allow toggling between the two modes.
+
+    The class exposes the same public interface as individual field display and
+    editor widgets.
     """
 
-    # TODO: this widget should implement the same interface as regular field widget
-    # it should emit value_changed, have get/set value, etc.
+    # forwarded from either of the enclosed widgets values changing
+    value_changed = QtCore.Signal()
 
     def __init__(self, display_widget, editor_widget, parent=None):
         """
@@ -36,6 +38,8 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         """
         super(ShotgunFieldEditable, self).__init__(parent)
 
+        self._enabled = True
+
         self._display = _DisplayWidget(display_widget)
         self._editor = _EditorWidget(editor_widget)
 
@@ -44,18 +48,71 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
 
         # ---- connect signals
 
+        # user clicked the button to edit the value
         self._display.edit_requested.connect(
             lambda: self.setCurrentWidget(self._editor))
 
+        # user is done editing
         self._editor.done_editing.connect(
             lambda: self.setCurrentWidget(self._display))
 
-        ## TODO: insert backend update here (don't immediately apply the value)
+        # apply the new value entered into the editor
         self._editor.edit_widget.value_changed.connect(self._apply_value)
 
-        # TODO: forward value_changed signal
-
+        # react to the current widget being changed
         self.currentChanged.connect(self._on_current_changed)
+
+        # forward the value change signal from the display widget value changing.
+        # because the editor widget currently applies its changed value to the
+        # display widget, this should handle a value change from either widget.
+        # if this widget is modified to wait on applying the new value until
+        # after SG has been update, this logic will need to change.
+        self._display.display_widget.value_changed.connect(
+            self.value_changed.emit)
+
+    def enable_editing(self, enable):
+        """
+        For consistency, allow the calling code to enable/disable editing.
+
+        Calling this method with a value of ``False`` will force the display
+        widget to be shown and the edit button to be hidden. A value of ``True``
+        will allow the edit button to be displayed again on mouse over.
+
+        :param enable: ``True`` if editing should be enabled, ``False`` otherwise.
+        """
+
+        self._enabled = enable
+
+        # if editing turned off, force the display widget to be shown
+        if not self._enabled:
+            self.setCurrentWidget(self._display)
+
+        # make sure display widget follows
+        self._display.enable_editing(self._enabled)
+
+    def get_value(self):
+        """
+        Returns the value of the widget (display or editor) currently being shown.
+        """
+        if self.currentWidget() == self._display:
+            return self._display.display_widget.get_value()
+        else:
+            return self._editor.edit_widget.get_value()
+
+    def set_value(self, value):
+        """
+        Set the value of the widget (display or editor) currently being shown.
+
+        .. note:: Calling this method while the editor is displayed will trigger
+            the value to be accepted and applied. The display widget will
+            automatically be shown.
+
+        This widget's ``value_changed()`` signal will also be emitted.
+        """
+        if self.currentWidget() == self._display:
+            return self._display.display_widget.set_value(value)
+        else:
+            return self._editor.edit_widget.set_value(value)
 
     def minimumSizeHint(self):
         """
@@ -98,13 +155,6 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
 
         self.currentWidget().setFocus()
 
-    def __getattr__(self, name):
-        """
-        Routes any attributes not found on the editable widget to the
-        fields widget that it is wrapping.
-        """
-        return getattr(self._display.display_widget, name)
-
 
 class ShotgunFieldNotEditable(QtGui.QWidget):
     """
@@ -112,6 +162,9 @@ class ShotgunFieldNotEditable(QtGui.QWidget):
 
     Adds a "no edit" icon when the supplied ``DISPLAY`` widget is hovered.
     """
+
+    # forward from the wrapped widget
+    value_changed = QtCore.Signal()
 
     def __init__(self, display_widget, parent=None):
         """
@@ -148,6 +201,19 @@ class ShotgunFieldNotEditable(QtGui.QWidget):
 
         self.installEventFilter(self)
 
+        # forward the display widget's value changed signal
+        self._display_widget.value_changed.connect(self.value_changed.emit)
+
+    def enable_editing(self, enable):
+        """
+        This method exists to allow this object to conform to the ``EDITABLE``
+        widget protocol.
+
+        Because this is a field that isn't editable however, this method does
+        nothing.
+        """
+        pass
+
     def eventFilter(self, obj, event):
         """
         Filter mouse enter/leave events in order to show/hide the "no edit" label.
@@ -161,8 +227,8 @@ class ShotgunFieldNotEditable(QtGui.QWidget):
 
     def __getattr__(self, name):
         """
-        Routes any attributes not found on the editable widget to the
-        fields widget that it is wrapping.
+        Routes any attributes not found on the widget to the fields widget that
+        it is wrapping.
         """
         return getattr(self._display_widget, name)
 
@@ -186,6 +252,8 @@ class _DisplayWidget(QtGui.QWidget):
         """
 
         super(_DisplayWidget, self).__init__(parent)
+
+        self._enabled = True
 
         self._display_widget = display_widget
 
@@ -223,12 +291,29 @@ class _DisplayWidget(QtGui.QWidget):
         Filter out mouse enter/leave events in order to show/hide the edit button.
         """
 
-        if event.type() == QtCore.QEvent.Enter:
-            self._edit_btn.show()
-        elif event.type() == QtCore.QEvent.Leave:
-            self._edit_btn.hide()
+        # only worry about showing the edit button if editing is enabled
+        if self._enabled:
+            if event.type() == QtCore.QEvent.Enter:
+                self._edit_btn.show()
+            elif event.type() == QtCore.QEvent.Leave:
+                self._edit_btn.hide()
 
         return False
+
+    def enable_editing(self, enable):
+        """
+        Calling this method with a value of ``False`` will force the edit button
+        to be hidden. A value of ``True`` will allow the edit button to be
+        displayed again on mouse over.
+
+        :param enable: ``True`` if editing should be enabled, ``False`` otherwise.
+        """
+
+        self._enabled = enable
+
+        # force hide the edit button if editing turned off
+        if not self._enabled:
+            self._edit_btn.hide()
 
     @property
     def display_widget(self):
