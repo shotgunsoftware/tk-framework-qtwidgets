@@ -162,10 +162,6 @@ class EntityFieldMenu(ShotgunMenu):
         """
         self._entity_type_filter = entity_type_filter
 
-    # this was causing RV to segfault on exit. i think
-    # the task manager was already freed in another thread
-    # before this happens.
-    # removed the registration above and the crashing stopped.
     def __del__(self):
         """
         Destructor
