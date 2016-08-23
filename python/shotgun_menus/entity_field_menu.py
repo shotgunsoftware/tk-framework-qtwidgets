@@ -110,10 +110,6 @@ class EntityFieldMenu(ShotgunMenu):
                 start_processing=True
             )
 
-            # removing this for now... these registrations were causing RV to crash on exit.
-            # are they necessary?
-            # shotgun_globals.register_bg_task_manager(self._task_manager)
-
         # populate the menu the first time it is shown
         self._initialized = False
         self.aboutToShow.connect(self._on_about_to_show)
