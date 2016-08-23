@@ -78,7 +78,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         field_widget = self.field_manager.create_widget(
             self.entity.get("type"),
             field_name,
-            self.field_manager.DISPLAY,
+            self.field_manager.EDITABLE,
             self.entity,
         )
 
@@ -191,7 +191,8 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if field_name not in self._fields or not self.entity:
             return
 
-        self._fields[field_name]["widget"].setVisible(bool(state))
+        if self._fields[field_name]["widget"]: 
+            self._fields[field_name]["widget"].setVisible(bool(state))
 
         field_label = self._fields[field_name]["label"]
 
@@ -290,7 +291,14 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                 field_widget = field_data["widget"]
 
                 if field_widget:
-                    field_widget.set_value(entity.get(field))
+                    # We need to block signals, otherwise the set_value will kick
+                    # off a value_changed signal, which will trigger us to try to
+                    # update Shotgun with the "new" value.
+                    try:
+                        field_widget.blockSignals(True)
+                        field_widget.set_value(entity.get(field))
+                    finally:
+                        field_widget.blockSignals(False)
         else:
             self._entity = entity
             self.thumbnail = self.field_manager.create_widget(
@@ -317,9 +325,12 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                 field_widget = self.field_manager.create_widget(
                     entity.get("type"),
                     field,
-                    self.field_manager.DISPLAY,
+                    self.field_manager.EDITABLE,
                     self.entity,
                 )
+                # Connect each widget to the local value_changed function
+                # so we can update the DB.
+                field_widget.value_changed.connect(self._value_changed)
 
                 # If we've been asked to show labels for the fields, then
                 # build those and get them into the layout.
@@ -344,6 +355,20 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     field_grid_layout.addWidget(field_widget, i, 0)
 
                 self._fields[field]["widget"] = field_widget
+
+    def _value_changed(self):
+        """
+        All field widgets created in this class will call this function when their
+        editor emits a value_changed signal. We just call update from the bundle's
+        Shotgun instance so this function is blocking for now.
+        """
+        entity = self._get_entity()
+
+        update_dict = {}
+        update_dict[self.sender().get_field_name()] = self.sender().get_value()
+
+        bundle = sgtk.platform.current_bundle()
+        sg_res = bundle.shotgun.update(entity['type'], entity['id'], update_dict)
 
     def _get_field_manager(self):
         """

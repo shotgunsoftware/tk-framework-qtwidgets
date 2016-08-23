@@ -110,8 +110,6 @@ class EntityFieldMenu(ShotgunMenu):
                 start_processing=True
             )
 
-            shotgun_globals.register_bg_task_manager(self._task_manager)
-
         # populate the menu the first time it is shown
         self._initialized = False
         self.aboutToShow.connect(self._on_about_to_show)
