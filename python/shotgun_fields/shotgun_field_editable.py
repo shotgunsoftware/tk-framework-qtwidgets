@@ -90,6 +90,33 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         # make sure display widget follows
         self._display.enable_editing(self._enabled)
 
+    def get_entity(self):
+        """
+        Returns the entity of the widget (display or editor) currently being shown.
+        """
+        if self.currentWidget() == self._display:
+            return self._display.display_widget.get_entity()
+        else:
+            return self._editor.edit_widget.get_entity()
+
+    def get_entity_type(self):
+        """
+        Returns the entity type of the widget (display or editor) currently being shown.
+        """
+        if self.currentWidget() == self._display:
+            return self._display.display_widget.get_entity_type()
+        else:
+            return self._editor.edit_widget.get_entity_type()
+
+    def get_field_name(self):
+        """
+        Returns the field name of the widget (display or editor) currently being shown.
+        """
+        if self.currentWidget() == self._display:
+            return self._display.display_widget.get_field_name()
+        else:
+            return self._editor.edit_widget.get_field_name()
+
     def get_value(self):
         """
         Returns the value of the widget (display or editor) currently being shown.

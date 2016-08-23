@@ -119,6 +119,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
         self._attachments_filter = None
+        self._dock_widget = None
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
@@ -348,7 +349,25 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._attachments_filter = regex
         self.ui.note_stream_widget.attachments_filter = regex
 
-    attachments_filter = property(_get_attachments_filter, _set_attachments_filter)
+    attachments_filter = property(
+        _get_attachments_filter,
+        _set_attachments_filter,
+    )
+
+    def _get_notes_are_selectable(self):
+        """
+        If True, note entity widgets in the activity stream will be selectable
+        by the user.
+        """
+        return self.ui.note_stream_widget.notes_are_selectable
+
+    def _set_notes_are_selectable(self, state):
+        self.ui.note_stream_widget.notes_are_selectable = state
+
+    notes_are_selectable = property(
+        _get_notes_are_selectable,
+        _set_notes_are_selectable,
+    )
 
     ##########################################################################
     # public methods
@@ -564,7 +583,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         the panel is unpinned at a later time, the most recent rejected
         entity update will be executed at that time.
 
-        :param checked: True or False
+        :param bool checked: True or False
         """
         self._pinned = checked
 
@@ -579,8 +598,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         Shows a dialog that allows the user to input a new note.
 
-        :param modal:   Whether the dialog should be shown modally or not.
-        :type modal:    bool
+        :param bool modal: Whether the dialog should be shown modally or not.
         """
         self.ui.note_stream_widget.show_new_note_dialog(modal=modal)
 
@@ -589,8 +607,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Sets the visibility of the undock and close buttons in the
         widget's title bar.
 
-        :param state:   Whether to show or hide the buttons.
-        :type state:    bool
+        :param bool state: Whether to show or hide the buttons.
         """
         self.ui.float_button.setVisible(state)
         self.ui.close_button.setVisible(state)
@@ -618,6 +635,18 @@ class VersionDetailsWidget(QtGui.QWidget):
             ),
         )
 
+    def use_styled_title_bar(self, dock_widget):
+        """
+        If the use of the included, custom styled title bar is desired, the
+        parent QDockWidget can be provided here and the styled title bar will
+        be displayed.
+
+        :param dock_widget: The parent QDockWidget.
+        """
+        self._dock_widget = dock_widget
+        self.show_title_bar_buttons(True)
+        dock_widget.dockLocationChanged.connect(self._dock_location_changed)
+
     ##########################################################################
     # internal utilities
 
@@ -626,8 +655,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         When a new Note entity arrives from Shotgun in the version details
         widget, Dynamite is notified and provided the Note entity's metadata.
 
-        :param note_id:     The id of the Note entity.
-        :type note_id:      int
+        :param int note_id: The id of the Note entity.
         """
         entity_fields = dict(
             Note=[self.NOTE_METADATA_FIELD],
@@ -658,12 +686,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         dispatch the work to different methods depending on what async task
         has completed.
 
-        :param uid:             Unique id for the request.
-        :type uid:              int
-        :param request_type:    The request class.
-        :type request_type:     str
-        :param data:            The returned data.
-        :type data:             dict 
+        :param int uid: Unique id for the request.
+        :param str request_type: The request class.
+        :param dict data: The returned data.
         """
         if uid in self._note_metadata_uids:
             entity = data["sg"]
@@ -685,10 +710,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         Asynchronous callback - the worker thread errored.
         
-        :param uid: Unique id for request that failed.
-        :type uid:  int
-        :param msg: The error message.
-        :type msg:  str
+        :param int uid: Unique id for request that failed.
+        :param str msg: The error message.
         """
         if uid in self._note_metadata_uids:
             sgtk.platform.current_bundle().log_error(msg)
@@ -716,7 +739,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         Emits the entity_created signal.
 
-        :param entity: The Shotgun entity dict that was created.
+        :param dict entity: The Shotgun entity dict that was created.
         """
         self.entity_created.emit(entity)
 
@@ -725,7 +748,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Adds or removes a field when it checked or unchecked
         via the EntityFieldMenu.
 
-        :param action:  The QMenuAction that was triggered. 
+        :param action: The QMenuAction that was triggered. 
         """
         if action:
             # The MenuAction's data will have a "field" key that was
@@ -884,7 +907,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Toggled more/less info functionality for the info widget in the
         Notes tab.
 
-        :param checked: True or False
+        :param bool checked: True or False
         """
         if checked:
             self.ui.more_info_button.setText("Hide info")
@@ -1093,24 +1116,27 @@ class VersionDetailsWidget(QtGui.QWidget):
         Handles the dock being redocked in some location. This will
         trigger removing the default title bar.
         """
-        self.parent().setTitleBarWidget(QtGui.QWidget(parent=self))
+        if self._dock_widget:
+            self._dock_widget.setTitleBarWidget(QtGui.QWidget(parent=self))
 
     def _hide_dock(self):
         """
         Hides the parent dock widget.
         """
-        self.parent().hide()
+        if self._dock_widget:
+            self._dock_widget.hide()
 
     def _toggle_floating(self):
         """
         Toggles the parent dock widget's floating status.
         """
-        if self.parent().isFloating():
-            self.parent().setFloating(False)
-            self._dock_location_changed()
-        else:
-            self.parent().setTitleBarWidget(None)
-            self.parent().setFloating(True)
+        if self._dock_widget:
+            if self._dock_widget.isFloating():
+                self._dock_widget.setFloating(False)
+                self._dock_location_changed()
+            else:
+                self._dock_widget.setTitleBarWidget(None)
+                self._dock_widget.setFloating(True)
 
     ##########################################################################
     # version list actions

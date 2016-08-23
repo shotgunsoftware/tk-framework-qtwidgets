@@ -285,14 +285,20 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         # the field widgets into the layout.
         if self.entity:
             self._entity = entity
-            self.thumbnail._needs_download = True
             self.thumbnail.set_value(entity.get("image"))
 
             for field, field_data in self._fields.iteritems():
                 field_widget = field_data["widget"]
 
                 if field_widget:
-                    field_widget.set_value(entity.get(field))
+                    # We need to block signals, otherwise the set_value will kick
+                    # off a value_changed signal, which will trigger us to try to
+                    # update Shotgun with the "new" value.
+                    try:
+                        field_widget.blockSignals(True)
+                        field_widget.set_value(entity.get(field))
+                    finally:
+                        field_widget.blockSignals(False)
         else:
             self._entity = entity
             self.thumbnail = self.field_manager.create_widget(
@@ -322,9 +328,9 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     self.field_manager.EDITABLE,
                     self.entity,
                 )
-                # connect each widget to the local value_changed function
-                # so we can update the DB
-                field_widget._editor.edit_widget.value_changed.connect(self._value_changed)
+                # Connect each widget to the local value_changed function
+                # so we can update the DB.
+                field_widget.value_changed.connect(self._value_changed)
 
                 # If we've been asked to show labels for the fields, then
                 # build those and get them into the layout.
@@ -350,28 +356,19 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
 
                 self._fields[field]["widget"] = field_widget
 
-    def _value_changed(self, stuff=None):
+    def _value_changed(self):
         """
-        All field widgets created in this class will call
-        this function when their editor emits a value_changed signal.
-        we just call update from the bundle's shotgun instance so this
-        function is blocking for now.
+        All field widgets created in this class will call this function when their
+        editor emits a value_changed signal. We just call update from the bundle's
+        Shotgun instance so this function is blocking for now.
         """
         entity = self._get_entity()
 
         update_dict = {}
-        update_dict[self.sender()._field_name] = self.sender().get_value()
+        update_dict[self.sender().get_field_name()] = self.sender().get_value()
 
-        bundle = self.field_manager._task_manager._bundle
+        bundle = sgtk.platform.current_bundle()
         sg_res = bundle.shotgun.update(entity['type'], entity['id'], update_dict)
-
-        # TODO: what does sg_res look like in error?
-
-        # print "UPDATE: %r %r updated as follows:" % ( sg_res['type'], sg_res['id'] )
-        # for k in sg_res:
-        #     if k  != 'type' and k != 'id':
-        #         print "    %r is now %r" % ( k, sg_res[k])
-
 
     def _get_field_manager(self):
         """

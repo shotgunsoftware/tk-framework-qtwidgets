@@ -307,3 +307,27 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         """
         return self._value
 
+    @staticmethod
+    @take_over
+    def get_entity(self):
+        """
+        :return: The entity associated with the field widget.
+        """
+        return self._entity
+
+    @staticmethod
+    @take_over
+    def get_entity_type(self):
+        """
+        :return: The entity type associated with the field widget.
+        """
+        return self._entity_type
+
+    @staticmethod
+    @take_over
+    def get_field_name(self):
+        """
+        :return: The field name associated with the field widget.
+        """
+        return self._field_name
+
