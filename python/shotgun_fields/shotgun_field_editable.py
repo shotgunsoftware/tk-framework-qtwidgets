@@ -70,6 +70,14 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         self._display.display_widget.value_changed.connect(
             self.value_changed.emit)
 
+    def destroy(self):
+        """
+        Call to ensure proper destruction of contained widgets.
+        """
+
+        self._display.display_widget.destroy()
+        self._editor.edit_widget.destroy()
+
     def enable_editing(self, enable):
         """
         For consistency, allow the calling code to enable/disable editing.

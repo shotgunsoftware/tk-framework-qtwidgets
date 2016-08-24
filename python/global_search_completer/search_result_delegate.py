@@ -74,7 +74,12 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
         if mode == GlobalSearchCompleter.MODE_LOADING:
             widget.set_text("Hold on, loading search results...")
             widget.set_thumbnail(None)
-        
+
+        elif mode == GlobalSearchCompleter.MODE_NOT_ENOUGH_TEXT:
+            widget.set_text("Type at least %s characters..." % (
+                GlobalSearchCompleter.COMPLETE_MINIMUM_CHARACTERS,))
+            widget.set_thumbnail(None)
+
         elif mode == GlobalSearchCompleter.MODE_NOT_FOUND:
             widget.set_text("Sorry, no matches found!")
             widget.set_thumbnail(None)

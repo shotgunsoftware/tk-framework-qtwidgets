@@ -105,7 +105,8 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         # http://doc.qt.io/qt-4.8/qt-tools-customcompleter-example.html
         self._completer.setWidget(self)
 
-        self._show_completer()
+        if not self._completer.popup().isVisible():
+            self._show_completer()
         super(MultiEntityEditorWidget, self).focusInEvent(event)
 
     def get_value(self):
@@ -151,6 +152,10 @@ class MultiEntityEditorWidget(BubbleEditWidget):
             QtCore.Qt.Key_Tab,
         ]:
             entity_dict = self._completer.get_current_result()
+            if not entity_dict:
+                # nothing current, get the first result
+                entity_dict = self._completer.get_first_result()
+
             if entity_dict:
                 self.add_entity(entity_dict)
                 self.clear_typed_text()
@@ -219,6 +224,7 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         """
         entity_dict = {"type": type, "id": id, "name": name}
         self._completer.popup().hide()
+        self._completer.clear()
         self.clear_typed_text()
         self.add_entity(entity_dict)
 
@@ -235,7 +241,7 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         typed_text = self.get_typed_text()
         if self.isVisible() and typed_text:
             rect = self.cursorRect()
-            rect.setWidth(self.width())
+            rect.setWidth(300)
             rect.moveLeft(self.rect().left())
             rect.moveTop(rect.top() + 6)
             self._completer.setCompletionPrefix(typed_text)
