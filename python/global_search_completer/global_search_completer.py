@@ -44,9 +44,11 @@ class GlobalSearchCompleter(QtGui.QCompleter):
     SG_DATA_ROLE = QtCore.Qt.UserRole + 1
     MODE_ROLE = QtCore.Qt.UserRole + 2
 
+    COMPLETE_MINIMUM_CHARACTERS = 3
+
     # different items in the auto complete list can have
     # a different meaning, so track those here too
-    (MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT) = range(3)
+    (MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT, MODE_NOT_ENOUGH_TEXT) = range(4)
 
     def __init__(self, parent=None):
         """
@@ -89,6 +91,18 @@ class GlobalSearchCompleter(QtGui.QCompleter):
             "PublishedFile": [],
         }
 
+        # the result widgets are 300 pixels wide. the widget using this
+        # completer may be relatively small, but the results can show a lot of
+        # info. so for now, just force the popup to be at least the same as the
+        # results
+        self.popup().setMinimumWidth(300)
+
+    def clear(self):
+        """
+        Manually clear the contents of the completer's popup view.
+        """
+        self._clear_model(add_loading_item=False, add_more_text_item=True)
+
     def destroy(self):
         """
         Should be called before the widget is closed
@@ -109,6 +123,20 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         """
         model_index = self.popup().currentIndex()
         return self.get_result(model_index)
+
+    def get_first_result(self):
+        """
+        Returns the first result from the current item in the completer popup
+        or ``None`` if there are no results.
+
+        :returns: The entity dict for the first result
+        :rtype: :obj:`dict`: or ``None``
+        """
+        result = None
+        model_index = self.popup().model().index(0, 0)
+        if model_index.isValid():
+            result = self.get_result(model_index)
+        return result
 
     def get_result(self, model_index):
         """
@@ -159,11 +187,11 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         :param text: current contents of editor
         """
-        if len(text) < 3:
+        if len(text) < self.COMPLETE_MINIMUM_CHARACTERS:
             # global search wont work with shorter than 3 len strings
             # for these cases, clear the auto completer model fully
             # there is no more work to do
-            self._clear_model(add_loading_item=False)
+            self.clear()
             return
 
         # now we are about to populate the model with data
@@ -265,7 +293,7 @@ class GlobalSearchCompleter(QtGui.QCompleter):
     ############################################################################
     # internal methods
 
-    def _clear_model(self, add_loading_item=True):
+    def _clear_model(self, add_loading_item=True, add_more_text_item=False):
         """
         Clears the current data in the model.
 
@@ -278,6 +306,11 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         if add_loading_item:
             item = QtGui.QStandardItem("Loading data...")
             item.setData(self.MODE_LOADING, self.MODE_ROLE)
+            self.model().appendRow(item)
+        if add_more_text_item:
+            item = QtGui.QStandardItem("Type at least %s characters..." %
+                (self.COMPLETE_MINIMUM_CHARACTERS,))
+            item.setData(self.MODE_NOT_ENOUGH_TEXT, self.MODE_ROLE)
             self.model().appendRow(item)
 
     def _do_sg_global_search(self, sg, data):

@@ -579,15 +579,10 @@ Example Code
 TODOs & Known Issues
 ====================
 
-- Pressing ``Enter`` or ``Return`` in an entity editor does not always apply the completed value
 - Bubble widget does not display characters properly in some scenarios
 - Timecode & Duration widgets are on hold until python API changes make them feasible
 - Tag edit widget partially done but also awaiting python API edit ability
 - ``ElidedLabel`` causes draw lagging when used in editable widget in Grid/Form layout
-- Global completer with QTextEdit, clicking on popup item does not emit activated (keyboard nav works fine)
 - The note input widget should be updated to use the global completer
 - The status list widget editor should also use colors for visual hint like display widget
-- Retrieving reliable field delegates from the field manager is in progress
-- Editor interaction with the shotgun model is still to come
 - shotgun model to auto update SG on changes still to come
-- shotgun tableview using fields widgets still in progress
