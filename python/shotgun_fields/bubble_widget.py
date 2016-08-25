@@ -248,6 +248,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
         :type object: :class:`~PySide.QtCore.Qt.QEvent`
         :return: True'' if the event was filtered, ''False'' otherwise.
         """
+
         if not isinstance(event, QtGui.QMouseEvent):
             # only pass on mouse events
             return False
@@ -280,6 +281,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
             child_widget = bubble.childAt(bubble_pos)
             if isinstance(child_widget, QtGui.QPushButton):
                 child_widget.click()
+            return True
 
         return False
 
