@@ -21,6 +21,10 @@ class GlobalSearchWidget(QtGui.QLineEdit):
     
     :signal: ``entity_selected(str, int)`` - Fires when someone selects an entity inside
             the search results. The returned parameters are entity type and entity id.
+
+    :signal: ``entity_activated(str, int, str)`` - Fires when someone selects an
+        entity inside the search results. Similar to ``entity_selected``, with
+        the addition of the ``name`` of the activated entity being supplied.
     """
 
     # emitted when shotgun has been updated

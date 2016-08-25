@@ -298,7 +298,9 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         Clears the current data in the model.
 
         :param add_loading_item: if true, a "loading please wait" item will
-                                 be added.
+            be added.
+        :param add_more_text_item: if true, a "type at least 3 characers..."
+            item will be added.
         """
         # clear model
         self.model().clear()
