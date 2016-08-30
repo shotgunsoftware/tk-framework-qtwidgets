@@ -134,8 +134,7 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
                 else:
                     # present type name name
                     link_entity_type = links[0]
-                                        
-                    content += "<br>%s %s" % (shotgun_globals.get_type_display_name(link_entity_type), links[1])
+                    content += " on %s %s" % (shotgun_globals.get_type_display_name(link_entity_type), links[1])
             
             widget.set_text(content)
         
