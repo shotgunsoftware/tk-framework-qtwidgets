@@ -16,6 +16,7 @@ shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "sho
 
 from .ui.search_result_widget import Ui_SearchResultWidget
 
+
 class SearchResultWidget(QtGui.QWidget):
     """
     Widget that represents a single search match that shows up in the
@@ -82,61 +83,7 @@ class SearchResultWidget(QtGui.QWidget):
             self.ui.thumbnail.setVisible(False)
         else:
             self.ui.thumbnail.setVisible(True)
-            self.ui.thumbnail.setPixmap(self.create_rectangular_thumbnail(pixmap))
-            
-            
-    def create_rectangular_thumbnail(self, thumb):
-        """
-        Scale a given pixmap down to a given resolution
-        
-        :param thumb: pixmap to scale
-        :returns: scaled thumbnail
-        """
-        
-        #TODO: this would be great to add to the qtwidgets framework
-    
-        CANVAS_WIDTH = 48
-        CANVAS_HEIGHT = 38
-    
-        # get the 512 base image
-        base_image = QtGui.QPixmap(CANVAS_WIDTH, CANVAS_HEIGHT)
-        base_image.fill(QtCore.Qt.transparent)
-                
-        if not thumb.isNull():
-                
-            # scale it down to fit inside a frame of maximum 512x400
-            thumb_scaled = thumb.scaled(CANVAS_WIDTH, 
-                                        CANVAS_HEIGHT, 
-                                        QtCore.Qt.KeepAspectRatioByExpanding, 
-                                        QtCore.Qt.SmoothTransformation)  
-    
-            # now composite the thumbnail on top of the base image
-            # bottom align it to make it look nice
-            thumb_img = thumb_scaled.toImage()
-            brush = QtGui.QBrush(thumb_img)
-            
-            painter = QtGui.QPainter(base_image)
-            painter.setRenderHint(QtGui.QPainter.Antialiasing)
-            painter.setBrush(brush)
-            
-            # figure out the offset height wise in order to center the thumb
-            height_difference = CANVAS_HEIGHT - thumb_scaled.height()
-            width_difference = CANVAS_WIDTH - thumb_scaled.width()
-            
-            # center it with wise
-            inlay_offset_w = width_difference/2
-            # bottom height wise
-            #inlay_offset_h = height_difference+CORNER_RADIUS
-            inlay_offset_h = height_difference/2
-            
-            # note how we have to compensate for the corner radius
-            painter.translate(inlay_offset_w, inlay_offset_h)
-            painter.drawRect(0, 0, thumb_scaled.width(), thumb_scaled.height()) 
-            
-            painter.end()
-        
-        return base_image
-    
+            self.ui.thumbnail.setPixmap(pixmap)
             
     def set_text(self, label):
         """

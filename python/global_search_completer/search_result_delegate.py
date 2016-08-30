@@ -18,7 +18,8 @@ shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "s
 
 views = sgtk.platform.current_bundle().import_module("views")
 
-from .search_result_widget import SearchResultWidget 
+from .search_result_widget import SearchResultWidget
+from .utils import CompleterPixmaps
 
 
 class SearchResultDelegate(views.EditSelectedWidgetDelegate):
@@ -32,7 +33,9 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
         :param view: The view where this delegate is being used
         """                
         views.EditSelectedWidgetDelegate.__init__(self, view)
-                
+
+        self._pixmaps = CompleterPixmaps()
+
     def _create_widget(self, parent):
         """
         Widget factory as required by base class. The base class will call this
@@ -73,16 +76,16 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
         
         if mode == GlobalSearchCompleter.MODE_LOADING:
             widget.set_text("Hold on, loading search results...")
-            widget.set_thumbnail(None)
+            widget.set_thumbnail(self._pixmaps.loading)
 
         elif mode == GlobalSearchCompleter.MODE_NOT_ENOUGH_TEXT:
             widget.set_text("Type at least %s characters..." % (
                 GlobalSearchCompleter.COMPLETE_MINIMUM_CHARACTERS,))
-            widget.set_thumbnail(None)
+            widget.set_thumbnail(self._pixmaps.keyboard)
 
         elif mode == GlobalSearchCompleter.MODE_NOT_FOUND:
             widget.set_text("Sorry, no matches found!")
-            widget.set_thumbnail(None)
+            widget.set_thumbnail(self._pixmaps.no_matches)
             
         elif mode == GlobalSearchCompleter.MODE_RESULT:
 
@@ -90,6 +93,10 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
             if icon:
                 thumb = icon.pixmap(512)
                 widget.set_thumbnail(thumb)
+            else:
+                # probably won't hit here, but just in case, use default/empty
+                # thumbnail
+                widget.set_thumbnail(self._pixmaps.no_thumbnail)
 
             data = shotgun_model.get_sanitized_data(model_index, GlobalSearchCompleter.SG_DATA_ROLE)
             # Example of data stored in the data role:
