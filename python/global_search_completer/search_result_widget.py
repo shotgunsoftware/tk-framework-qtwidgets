@@ -58,8 +58,8 @@ class SearchResultWidget(QtGui.QWidget):
             """    
         
         self.set_selected(False)    
+        self._text_fade = _TextFadeOverlay(parent=self)
 
-                                    
     def set_selected(self, selected):
         """
         Adjust the style sheet to indicate selection or not
@@ -102,5 +102,52 @@ class SearchResultWidget(QtGui.QWidget):
         :returns: Size of the widget
         """        
         return QtCore.QSize(300, 46)
+
+    def resizeEvent(self, event):
+        """
+        Handles updating the geometry for the text fade overlay.
+
+        Overrides the same method from ``QtGui.QWidget``
+        """
+
+        self._text_fade.setGeometry(self.rect())
+        super(SearchResultWidget, self).resizeEvent(event)
+
+
+class _TextFadeOverlay(QtGui.QWidget):
+    """
+    A sharp gradient to prevent harsh text chopping in result widget.
+    """
+
+    def paintEvent(self, event):
+        """
+        Handles painting the text fade overlay.
+
+        Overrides the same method from ``QtGui.QWidget``
+        """
+        painter = QtGui.QPainter(self)
+
+        # calculate the rectangle to paint the overlay.
+        # it should only be
+        gradient_rect = QtCore.QRect(
+            60,                          # stay to the right of the thumbnail
+            event.rect().bottom() - 10,  # only 10 pixels high from the bottom
+            event.rect().right() + 1,    # ensure covers full width
+            event.rect().bottom()
+        )
+
+        # vertical gradient
+        gradient = QtGui.QLinearGradient(
+            gradient_rect.topLeft(),
+            gradient_rect.bottomLeft()
+        )
+
+        # transparent -> base color, in first 15% of height of rect
+        gradient.setColorAt(0, QtGui.QColor(0, 0, 0, 0))
+        gradient.setColorAt(.15, self.palette().base().color())
+
+        # paint it
+        painter.fillRect(gradient_rect, gradient)
+        painter.end()
 
 
