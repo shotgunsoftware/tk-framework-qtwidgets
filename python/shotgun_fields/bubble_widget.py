@@ -49,11 +49,13 @@ class BubbleWidget(QtGui.QFrame):
             #bubble {
                 border: 1px solid black;
                 border-radius: 5px;
-                background-color: %s;
+                background-color: rgb(37,38,41);
             }
-            """ % self.palette().color(QtGui.QPalette.Button).name()
+            """
         )
-
+        # TODO for some reason, the folowwing call was returning
+        # white for RV, so i'm just hard coding the background value for now.
+        # self.palette().color(QtGui.QPalette.Button).name()
 
         # create a remove button for the widget.
         # extract a close button icon from the style and use it
@@ -171,6 +173,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
 
         self.setMouseTracking(True)
         self.viewport().installEventFilter(self)
+        self.setMinimumWidth(180)
 
     def add_bubble(self, bubble):
         """
