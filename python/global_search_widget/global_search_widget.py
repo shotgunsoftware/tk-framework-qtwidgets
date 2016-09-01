@@ -14,6 +14,7 @@ from sgtk.platform.qt import QtCore, QtGui
 global_search_completer = sgtk.platform.current_bundle().import_module(
     "global_search_completer")
 
+
 class GlobalSearchWidget(QtGui.QLineEdit):
     """
     A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates

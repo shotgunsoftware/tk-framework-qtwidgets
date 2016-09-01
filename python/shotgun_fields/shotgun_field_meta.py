@@ -331,3 +331,36 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         """
         return self._field_name
 
+    @staticmethod
+    @take_over
+    def _get_safe_str(self, value):
+        """
+        Returns a safe string representation of the supplied value.
+
+        Handles unicode and QString values (PyQt).
+
+        :param value: The value provided from the widget
+
+        :return: A safe ``str`` representation of the value.
+        """
+
+        if isinstance(value, str):
+            # it's a string anyway so just return
+            return value
+
+        if isinstance(value, unicode):
+            # convert to utf-8
+            return value.encode("utf8")
+
+        if hasattr(QtCore, "QString"):
+            # running PyQt!
+            if isinstance(value, QtCore.QString):
+                # QtCore.QString inherits from str but supports
+                # unicode, go figure!  Lets play safe and return
+                # a utf-8 string
+                return str(value.toUtf8())
+
+        # For everything else, just return as string
+        return str(value)
+
+

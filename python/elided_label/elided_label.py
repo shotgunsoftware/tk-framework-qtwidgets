@@ -111,6 +111,14 @@ class ElidedLabel(QtGui.QLabel):
         self._actual_text = text
         self._update_elided_text()
 
+        # if we're elided, make the tooltip show the full text
+        if super(ElidedLabel, self).text() != self._actual_text:
+            # wrap the actual text in a paragraph so that it wraps nicely
+            self.setToolTip("<p>%s</p>" % (self._actual_text,))
+        else:
+            self.setToolTip("")
+
+
     def resizeEvent(self, event):
         """
         Overridden base method called when the widget is resized.

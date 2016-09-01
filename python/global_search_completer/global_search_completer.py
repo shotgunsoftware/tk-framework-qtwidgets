@@ -14,6 +14,9 @@ from sgtk.platform.qt import QtCore, QtGui
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 
+from .utils import create_rectangular_thumbnail, CompleterPixmaps
+
+
 class GlobalSearchCompleter(QtGui.QCompleter):
     """
     A standalone ``QCompleter`` class for matching SG entities to typed text.
@@ -60,6 +63,8 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         super(GlobalSearchCompleter, self).__init__(parent)
 
+        self._pixmaps = CompleterPixmaps()
+
         self.setMaxVisibleItems(10)
         self.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
         self.setCompletionMode(QtGui.QCompleter.UnfilteredPopupCompletion)
@@ -71,7 +76,6 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         self._processing_id = None
         self._thumb_map = {}
-        self._default_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.global_search_widget/rect_512x400.png")
 
         # configure popup data source
         self.setModel(QtGui.QStandardItemModel(self))
@@ -96,6 +100,9 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         # info. so for now, just force the popup to be at least the same as the
         # results
         self.popup().setMinimumWidth(300)
+
+        # ensure the icon size is consistent
+        self.popup().setIconSize(QtCore.QSize(48, 38))
 
     def clear(self):
         """
@@ -309,10 +316,12 @@ class GlobalSearchCompleter(QtGui.QCompleter):
             item = QtGui.QStandardItem("Loading data...")
             item.setData(self.MODE_LOADING, self.MODE_ROLE)
             self.model().appendRow(item)
+            item.setIcon(QtGui.QIcon(self._pixmaps.loading))
         if add_more_text_item:
             item = QtGui.QStandardItem("Type at least %s characters..." %
                 (self.COMPLETE_MINIMUM_CHARACTERS,))
             item.setData(self.MODE_NOT_ENOUGH_TEXT, self.MODE_ROLE)
+            item.setIcon(QtGui.QIcon(self._pixmaps.keyboard))
             self.model().appendRow(item)
 
     def _do_sg_global_search(self, sg, data):
@@ -371,11 +380,14 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         if uid in self._thumb_map:
             thumbnail = data["image"]
+            item = self._thumb_map[uid]["item"]
             if thumbnail:
-                item = self._thumb_map[uid]["item"]
                 thumb = QtGui.QPixmap.fromImage(thumbnail)
-                item.setIcon(thumb)
-
+                item.setIcon(create_rectangular_thumbnail(thumb))
+            else:
+                # probably won't hit here, but just in case, use default/empty
+                # thumbnail
+                item.setIcon(self._pixmaps.no_thumbnail)
 
         if self._processing_id == uid:
             # all done!
@@ -396,7 +408,7 @@ class GlobalSearchCompleter(QtGui.QCompleter):
                 item.setData(shotgun_model.sanitize_for_qt_model(d),
                              self.SG_DATA_ROLE)
 
-                item.setIcon(self._default_icon)
+                item.setIcon(self._pixmaps.no_thumbnail)
 
                 if d.get("image") and self.__sg_data_retriever:
                     uid = self.__sg_data_retriever.request_thumbnail(

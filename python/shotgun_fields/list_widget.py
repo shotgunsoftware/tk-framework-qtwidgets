@@ -36,7 +36,7 @@ class ListEditorWidget(QtGui.QComboBox):
         """
         :return: The internal value being displayed by the widget.
         """
-        return self.currentText()
+        return self._get_safe_str(self.currentText())
 
     def setup_widget(self):
         """
