@@ -12,6 +12,10 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.card_widget import Ui_ShotgunEntityCardWidget
 
+# TODO: Remove this and use _OrderedDict once bugs there are resolved.
+# NOTE: DO NOT RELEASE THIS, KEEP ON BRANCH.
+from collections import OrderedDict
+
 class ShotgunEntityCardWidget(QtGui.QWidget):
     """
     Simple entity widget which hosts a thumbnail, plus any requested
@@ -41,7 +45,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         self._show_labels = True
         self.__selected = False
 
-        self._fields = _OrderedDict()
+        self._fields = OrderedDict()
         self.set_selected(self.__selected)
 
     ##########################################################################
@@ -64,7 +68,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if field_name in self.fields:
             return
 
-        self._fields[field_name] = _OrderedDict(
+        self._fields[field_name] = OrderedDict(
             widget=None,
             label=None,
             label_exempt=label_exempt,
