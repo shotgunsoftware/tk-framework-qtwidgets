@@ -70,8 +70,9 @@ class SearchResultWidget(QtGui.QWidget):
             self.ui.box.setStyleSheet(self._css_selected)
         else:
             self.ui.box.setStyleSheet(self._css_not_selected)
-            
-    
+
+        self.show_fade(not selected)
+
     def set_thumbnail(self, pixmap):
         """
         Set a thumbnail given the current pixmap.
@@ -110,11 +111,24 @@ class SearchResultWidget(QtGui.QWidget):
         Overrides the same method from ``QtGui.QWidget``
         """
 
-        rect = self.rect()
-        rect.setBottom(rect.bottom() - 4)
-
-        self._text_fade.setGeometry(rect)
+        self._text_fade.setGeometry(self.rect())
         super(SearchResultWidget, self).resizeEvent(event)
+
+    def show_fade(self, show):
+        """
+        Show or hide the text fade at the bottom of the results.
+
+        :param bool show: Show or hide the text fade widget.
+        :return:
+        """
+
+        if not hasattr(self, "_text_fade"):
+            return
+
+        if show:
+            self._text_fade.show()
+        else:
+            self._text_fade.hide()
 
 
 class _TextFadeOverlay(QtGui.QWidget):
