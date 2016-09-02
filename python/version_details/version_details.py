@@ -1249,7 +1249,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         entity = self.current_entity or {}
         project_id = entity.get("project", {}).get("id")
 
-        # make sure the field is visible and editable
+        # make sure the field is visible
         if not shotgun_globals.field_is_visible("Version", field, project_id=project_id):
             return False
 
