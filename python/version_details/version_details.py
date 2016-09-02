@@ -822,9 +822,54 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.version_model.clear()
 
         self._current_entity = sg_data
+        self._ensure_entity_project_schema_cached()
         self._setup_fields_menu()
         self._setup_version_list_fields_menu()
         self._setup_version_sort_by_menu()
+
+    def _ensure_entity_project_schema_cached(self):
+        """
+        Ensures that the schema is cached before enabling the Fields buttons.
+
+        This prevents errors when trying to display the field menu before the
+        schema is properly cached.
+        """
+
+        # disconnect any previous connection so that the slot isn't called
+        # multiple times
+        try:
+            shotgun_globals.schema_loaded.disconnect(self._on_schema_loaded)
+        except Exception:
+            pass
+
+        # ---- disable the buttons until the schema is cached. set a tooltip
+        #      just in case someone tries to click before the cache is loaded
+
+        self.ui.more_fields_button.setEnabled(False)
+        self.ui.more_fields_button.setToolTip("Caching SG fields. Please hold...")
+
+        self.ui.version_fields_button.setEnabled(False)
+        self.ui.version_fields_button.setToolTip("Caching SG fields. Please hold...")
+
+        # use the current entity to retrieve the project id to ensure is cached
+        entity = self.current_entity or {}
+        project_id = entity.get("project", {}).get("id")
+
+        # run this callback once the cache is loaded
+        shotgun_globals.run_on_schema_loaded(
+            self._on_schema_loaded, project_id=project_id)
+
+    def _on_schema_loaded(self):
+        """
+        Callback that enables the field buttons once the schema is cached.
+        """
+
+        # disable these until the schema is cached
+        self.ui.more_fields_button.setEnabled(True)
+        self.ui.more_fields_button.setToolTip("Select fields to display")
+
+        self.ui.version_fields_button.setEnabled(True)
+        self.ui.version_fields_button.setToolTip("Select fields to display")
 
     def _version_list_field_menu_triggered(self, action):
         """
