@@ -70,8 +70,9 @@ class SearchResultWidget(QtGui.QWidget):
             self.ui.box.setStyleSheet(self._css_selected)
         else:
             self.ui.box.setStyleSheet(self._css_not_selected)
-            
-    
+
+        self.show_fade(not selected)
+
     def set_thumbnail(self, pixmap):
         """
         Set a thumbnail given the current pixmap.
@@ -113,6 +114,22 @@ class SearchResultWidget(QtGui.QWidget):
         self._text_fade.setGeometry(self.rect())
         super(SearchResultWidget, self).resizeEvent(event)
 
+    def show_fade(self, show):
+        """
+        Show or hide the text fade at the bottom of the results.
+
+        :param bool show: Show or hide the text fade widget.
+        :return:
+        """
+
+        if not hasattr(self, "_text_fade"):
+            return
+
+        if show:
+            self._text_fade.show()
+        else:
+            self._text_fade.hide()
+
 
 class _TextFadeOverlay(QtGui.QWidget):
     """
@@ -131,7 +148,7 @@ class _TextFadeOverlay(QtGui.QWidget):
         # it should only be
         gradient_rect = QtCore.QRect(
             60,                          # stay to the right of the thumbnail
-            event.rect().bottom() - 10,  # only 10 pixels high from the bottom
+            event.rect().bottom() - 8,   # only 8 pixels high from the bottom
             event.rect().right() + 1,    # ensure covers full width
             event.rect().bottom()
         )

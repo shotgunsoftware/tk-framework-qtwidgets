@@ -1235,13 +1235,23 @@ class VersionDetailsWidget(QtGui.QWidget):
         Field filter method for the EntityFieldMenu. Determines whether the
         given field should be included in the field menu.
 
-        :param field:   The field name being processed.
+        :param str field: The field name being processed.
         """
-        # Allow any fields that we have a widget available for.
-        return bool(
-            self.ui.current_version_card.field_manager.supported_fields(
-                "Version",
-                [field],
-            )
-        )
+
+        # see if we can display this field
+        supported = self.ui.current_version_card.field_manager.supported_fields(
+            "Version", [field])
+
+        if field not in supported:
+            return False
+
+        # get the current version entity's project id
+        entity = self.current_entity or {}
+        project_id = entity.get("project", {}).get("id")
+
+        # make sure the field is visible
+        if not shotgun_globals.field_is_visible("Version", field, project_id=project_id):
+            return False
+
+        return True
 
