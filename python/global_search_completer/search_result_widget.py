@@ -110,7 +110,10 @@ class SearchResultWidget(QtGui.QWidget):
         Overrides the same method from ``QtGui.QWidget``
         """
 
-        self._text_fade.setGeometry(self.rect())
+        rect = self.rect()
+        rect.setBottom(rect.bottom() - 4)
+
+        self._text_fade.setGeometry(rect)
         super(SearchResultWidget, self).resizeEvent(event)
 
 
@@ -131,7 +134,7 @@ class _TextFadeOverlay(QtGui.QWidget):
         # it should only be
         gradient_rect = QtCore.QRect(
             60,                          # stay to the right of the thumbnail
-            event.rect().bottom() - 10,  # only 10 pixels high from the bottom
+            event.rect().bottom() - 8,   # only 8 pixels high from the bottom
             event.rect().right() + 1,    # ensure covers full width
             event.rect().bottom()
         )

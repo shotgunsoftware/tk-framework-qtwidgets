@@ -1253,8 +1253,5 @@ class VersionDetailsWidget(QtGui.QWidget):
         if not shotgun_globals.field_is_visible("Version", field, project_id=project_id):
             return False
 
-        if not shotgun_globals.field_is_editable("Version", field, project_id=project_id):
-            return False
-
         return True
 
