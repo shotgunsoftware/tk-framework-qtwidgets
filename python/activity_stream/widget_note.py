@@ -79,6 +79,8 @@ class NoteWidget(ActivityStreamBaseWidget):
             )
         )
 
+        self.ui.edit_content_button.toggled.connect(self._edit_content_toggled)
+
     ##############################################################################
     # properties
 
@@ -396,3 +398,12 @@ class NoteWidget(ActivityStreamBaseWidget):
             html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
             links_html = self.__generate_note_links_table(html_link_box_data)
             self.ui.links.setText(links_html)
+
+    ##########################################################################
+    # internal utilities
+
+    def _edit_content_toggled(self):
+        """
+        todo
+        """
+        # turn the note content to an editable field

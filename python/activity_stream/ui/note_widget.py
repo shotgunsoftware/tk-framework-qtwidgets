@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'note_widget.ui'
 #
-#      by: pyside-uic 0.2.15 running on PySide 1.2.4
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -62,6 +62,13 @@ class Ui_NoteWidget(object):
         self.date.setObjectName("date")
         self.horizontalLayout.addWidget(self.date)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        self.plainTextEdit = QtGui.QPlainTextEdit(self.frame)
+        self.plainTextEdit.setStyleSheet("QToolButton { border: none; background: transparent; }")
+        self.plainTextEdit.setFrameShape(QtGui.QFrame.NoFrame)
+        self.plainTextEdit.setFrameShadow(QtGui.QFrame.Plain)
+        self.plainTextEdit.setReadOnly(True)
+        self.plainTextEdit.setObjectName("plainTextEdit")
+        self.verticalLayout.addWidget(self.plainTextEdit)
         self.links = QtGui.QLabel(self.frame)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -85,6 +92,13 @@ class Ui_NoteWidget(object):
         self.content.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
         self.content.setObjectName("content")
         self.verticalLayout.addWidget(self.content)
+        self.edit_content_button = QtGui.QToolButton(self.frame)
+        self.edit_content_button.setStyleSheet("QToolButton { border: none; background: transparent; }")
+        self.edit_content_button.setCheckable(False)
+        self.edit_content_button.setToolButtonStyle(QtCore.Qt.ToolButtonTextOnly)
+        self.edit_content_button.setArrowType(QtCore.Qt.NoArrow)
+        self.edit_content_button.setObjectName("edit_content_button")
+        self.verticalLayout.addWidget(self.edit_content_button)
         self.reply_layout = QtGui.QVBoxLayout()
         self.reply_layout.setSpacing(0)
         self.reply_layout.setContentsMargins(0, 0, -1, -1)
@@ -97,6 +111,7 @@ class Ui_NoteWidget(object):
 
     def retranslateUi(self, NoteWidget):
         NoteWidget.setWindowTitle(QtGui.QApplication.translate("NoteWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_content_button.setText(QtGui.QApplication.translate("NoteWidget", "Edit_test", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..label_widgets import UserThumbnail
 from . import resources_rc
