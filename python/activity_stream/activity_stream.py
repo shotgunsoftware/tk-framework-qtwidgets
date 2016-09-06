@@ -741,13 +741,31 @@ class ActivityStreamWidget(QtGui.QWidget):
             
             # set up the note data first
             note_widget.set_note_info(note_data)
-            
+
+            # Todo: should this all go in the note widget itself, except for the
+            # event (click) handlers?
+            note_widget.add_button_layout()
+            edit_button = note_widget.add_edit_button()
+            edit_button.clicked.connect(lambda : self._on_edit_clicked(note_id))
+            self._edit_button = edit_button
+            cancel_button = note_widget.add_cancel_button()
+            cancel_button.hide()
+            cancel_button.clicked.connect(lambda : self._on_cancel_clicked(note_id))
+            self._cancel_button = cancel_button
+            apply_button = note_widget.add_apply_button()
+            apply_button.hide()
+            apply_button.clicked.connect(lambda : self._on_apply_clicked(note_id))
+            self._apply_button = apply_button
+
+            note_widget.content_changed.connect(lambda : self._on_note_content_changed(note_id=note_id))
+
             # now add replies
             note_widget.add_replies(replies_and_attachments)
-            
+
             # add a reply button and connect it
             reply_button = note_widget.add_reply_button()
             reply_button.clicked.connect(lambda : self._on_reply_clicked(note_id))
+            self._reply_button = reply_button
 
             # get list of users who have replied
             for item in replies_and_attachments:
@@ -972,7 +990,32 @@ class ActivityStreamWidget(QtGui.QWidget):
         if self.notes_are_selectable and entity["type"] == "Note":
             self._select_on_arrival = entity
         self.entity_created.emit(entity)
-            
+
+    def _on_edit_clicked(self, note_id):
+        self._edit_button.hide()
+        self._reply_button.hide()
+        self._cancel_button.show()
+        self._apply_button.show()
+
+    def _on_cancel_clicked(self, note_id):
+        self._edit_button.show()
+        self._reply_button.show()
+        self._cancel_button.hide()
+        self._apply_button.hide()
+
+    def _on_apply_clicked(self, note_id):
+        self._edit_button.show()
+        self._reply_button.show()
+        self._cancel_button.hide()
+        self._apply_button.hide()
+
+    def _on_note_content_changed(self, content, note_id):
+        self.ui.content_editable.setReadOnly(True)
+
+        thread_data = self._data_manager.get_note(note_id)
+        # if thread_data:
+        #     sg =
+
     def _on_reply_clicked(self, note_id):
         """
         Callback when someone clicks reply on a given note

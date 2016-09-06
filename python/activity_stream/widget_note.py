@@ -41,7 +41,10 @@ class NoteWidget(ActivityStreamBaseWidget):
     # Whether this was a selection or a deselection, followed by the
     # Note entity ID associated with this widget.
     selection_changed = QtCore.Signal(bool, int)
-    
+
+    # todo docs
+    content_changed = QtCore.Signal(str)
+
     def __init__(self, parent):
         """
         :param parent: QT parent object
@@ -79,7 +82,8 @@ class NoteWidget(ActivityStreamBaseWidget):
             )
         )
 
-        self.ui.edit_content_button.toggled.connect(self._edit_content_toggled)
+        self.ui.content_editable.setReadOnly(True)
+        self.ui.content.hide() # eldebug temp wip
 
     ##############################################################################
     # properties
@@ -217,6 +221,60 @@ class NoteWidget(ActivityStreamBaseWidget):
                 if data["entity"] == reply_widget.created_by:
                     reply_widget.set_thumbnail(image)
 
+    def add_button_layout(self):
+        button_layout = QtGui.QHBoxLayout()
+        self.ui.reply_layout.addLayout(button_layout)
+        button_layout.addStretch(1)
+        button_layout.setSpacing(20)
+        self._button_layout = button_layout
+
+    def add_edit_button(self):
+        edit_button = ClickableLabel(self)
+        edit_button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        edit_button.setSizePolicy(
+            QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum,
+                QtGui.QSizePolicy.Preferred,
+            )
+        )
+        self._button_layout.addWidget(edit_button)
+        edit_button.setText("Edit")
+        edit_button.setObjectName("edit_button")
+        self._general_widgets.extend([edit_button, self._button_layout])
+        edit_button.clicked.connect(self._on_edit_clicked)
+        return edit_button
+
+    def add_cancel_button(self):
+        button = ClickableLabel(self)
+        button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        button.setSizePolicy(
+            QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum,
+                QtGui.QSizePolicy.Preferred,
+            )
+        )
+        self._button_layout.addWidget(button)
+        button.setText("Cancel")
+        button.setObjectName("button")
+        self._general_widgets.extend([button, self._button_layout])
+        button.clicked.connect(self._on_cancel_clicked)
+        return button
+
+    def add_apply_button(self):
+        button = ClickableLabel(self)
+        button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        button.setSizePolicy(
+            QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum,
+                QtGui.QSizePolicy.Preferred,
+            )
+        )
+        self._button_layout.addWidget(button)
+        button.setText("Apply")
+        button.setObjectName("button")
+        self._general_widgets.extend([button, self._button_layout])
+        button.clicked.connect(self._on_apply_clicked)
+        return button
 
     def add_reply_button(self):
         reply_button = ClickableLabel(self)
@@ -227,14 +285,29 @@ class NoteWidget(ActivityStreamBaseWidget):
                 QtGui.QSizePolicy.Preferred,
             )
         )
-        button_layout = QtGui.QHBoxLayout()
-        self.ui.reply_layout.addLayout(button_layout)
-        button_layout.addStretch(1)
-        button_layout.addWidget(reply_button)
-        reply_button.setText("Reply to this Note")
+        self._button_layout.addWidget(reply_button)
+        reply_button.setText("Reply")
         reply_button.setObjectName("reply_button")
-        self._general_widgets.extend([reply_button, button_layout])
+        self._general_widgets.extend([reply_button, self._button_layout])
         return reply_button
+
+    #def add_reply_button(self):
+    #    reply_button = ClickableLabel(self)
+    #    reply_button.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop)
+    #    reply_button.setSizePolicy(
+    #        QtGui.QSizePolicy(
+    #            QtGui.QSizePolicy.Maximum,
+    #            QtGui.QSizePolicy.Preferred,
+    #        )
+    #    )
+    #    button_layout = QtGui.QHBoxLayout()
+    #    self.ui.reply_layout.addLayout(button_layout)
+    #    button_layout.addStretch(1)
+    #    button_layout.addWidget(reply_button)
+    #    reply_button.setText("Reply to this Note")
+    #    reply_button.setObjectName("reply_button")
+    #    self._general_widgets.extend([reply_button, button_layout])
+    #    return reply_button
 
     def get_attachment_group_widget_ids(self):
         return self._attachment_group_widgets.keys()
@@ -385,7 +458,8 @@ class NoteWidget(ActivityStreamBaseWidget):
         # higher level than this widget, but we're still going to be
         # careful here, because we saw this bug crop up during Cut Support
         # QA.
-        self.ui.content.setText(data.get("content", ""))
+        #self.ui.content.setText(data.get("content", ""))
+        self.ui.content_editable.document().setPlainText(data.get("content", ""));
 
         # This allows selections from higher-level layouts to occur. If
         # we don't set this, the label accepts and blocks mouse click
@@ -407,3 +481,19 @@ class NoteWidget(ActivityStreamBaseWidget):
         todo
         """
         # turn the note content to an editable field
+
+    def _on_edit_clicked(self):
+        self._saved_content = self.ui.content_editable.document().toPlainText()
+        self.ui.content_editable.setReadOnly(False)
+        self.ui.content_editable.setFocus()
+
+    def _on_cancel_clicked(self):
+        self.ui.content_editable.setReadOnly(True)
+        self.ui.content_editable.document().setPlainText(self._saved_content)
+
+    def _on_apply_clicked(self):
+        self.ui.content_editable.setReadOnly(True)
+        content = self.ui.content_editable.document().toPlainText()
+        if self._saved_content != content:
+            self.content_changed.emit(content)
+

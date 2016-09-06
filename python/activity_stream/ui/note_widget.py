@@ -11,7 +11,7 @@ from tank.platform.qt import QtCore, QtGui
 class Ui_NoteWidget(object):
     def setupUi(self, NoteWidget):
         NoteWidget.setObjectName("NoteWidget")
-        NoteWidget.resize(357, 166)
+        NoteWidget.resize(357, 189)
         self.horizontalLayout_2 = QtGui.QHBoxLayout(NoteWidget)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -62,13 +62,18 @@ class Ui_NoteWidget(object):
         self.date.setObjectName("date")
         self.horizontalLayout.addWidget(self.date)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.plainTextEdit = QtGui.QPlainTextEdit(self.frame)
-        self.plainTextEdit.setStyleSheet("QToolButton { border: none; background: transparent; }")
-        self.plainTextEdit.setFrameShape(QtGui.QFrame.NoFrame)
-        self.plainTextEdit.setFrameShadow(QtGui.QFrame.Plain)
-        self.plainTextEdit.setReadOnly(True)
-        self.plainTextEdit.setObjectName("plainTextEdit")
-        self.verticalLayout.addWidget(self.plainTextEdit)
+        self.content_editable = QtGui.QPlainTextEdit(self.frame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.content_editable.sizePolicy().hasHeightForWidth())
+        self.content_editable.setSizePolicy(sizePolicy)
+        self.content_editable.setStyleSheet("")
+        self.content_editable.setFrameShape(QtGui.QFrame.NoFrame)
+        self.content_editable.setFrameShadow(QtGui.QFrame.Plain)
+        self.content_editable.setReadOnly(False)
+        self.content_editable.setObjectName("content_editable")
+        self.verticalLayout.addWidget(self.content_editable)
         self.links = QtGui.QLabel(self.frame)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -92,13 +97,6 @@ class Ui_NoteWidget(object):
         self.content.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
         self.content.setObjectName("content")
         self.verticalLayout.addWidget(self.content)
-        self.edit_content_button = QtGui.QToolButton(self.frame)
-        self.edit_content_button.setStyleSheet("QToolButton { border: none; background: transparent; }")
-        self.edit_content_button.setCheckable(False)
-        self.edit_content_button.setToolButtonStyle(QtCore.Qt.ToolButtonTextOnly)
-        self.edit_content_button.setArrowType(QtCore.Qt.NoArrow)
-        self.edit_content_button.setObjectName("edit_content_button")
-        self.verticalLayout.addWidget(self.edit_content_button)
         self.reply_layout = QtGui.QVBoxLayout()
         self.reply_layout.setSpacing(0)
         self.reply_layout.setContentsMargins(0, 0, -1, -1)
@@ -111,7 +109,6 @@ class Ui_NoteWidget(object):
 
     def retranslateUi(self, NoteWidget):
         NoteWidget.setWindowTitle(QtGui.QApplication.translate("NoteWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_content_button.setText(QtGui.QApplication.translate("NoteWidget", "Edit_test", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..label_widgets import UserThumbnail
 from . import resources_rc
