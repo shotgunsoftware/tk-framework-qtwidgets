@@ -24,14 +24,14 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
     WIDTH_HINT = 300
     HEIGHT_HINT_PADDING = 8
 
-    def __init__(self, parent, shotgun_field_manager=None):
+    def __init__(self, parent, shotgun_field_manager=None, editable=True):
         """
         Constructs a new ShotgunEntityCardWidget.
 
-        :param parent:                  The widget's parent.
-        :param shotgun_field_manager:   A ShotgunFieldManager object. If one is not provided
-                                        the widget will not construct field widgets until one
-                                        is set later via the field_manager property.
+        :param parent: The widget's parent.
+        :param shotgun_field_manager: A ShotgunFieldManager object. If one is not provided
+                                      the widget will not construct field widgets until one
+                                      is set later via the field_manager property.
         """
         super(ShotgunEntityCardWidget, self).__init__(parent)
 
@@ -43,6 +43,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         self._entity = None
         self._show_border = False
         self._show_labels = True
+        self._editable = editable
         self.__selected = False
 
         self._fields = OrderedDict()
@@ -56,9 +57,9 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         Adds the given field to the list of Shotgun entity fields displayed
         by the widget.
 
-        :param field_name:      The Shotgun entity field name to add.
-        :param label_exempt:    Whether to exempt the field from having a label
-                                in the item layout. Defaults to False.
+        :param str field_name: The Shotgun entity field name to add.
+        :param bool label_exempt: Whether to exempt the field from having a label
+                                  in the item layout. Defaults to False.
         """
         if not self.field_manager:
             raise RuntimeError(
@@ -79,14 +80,24 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if not self.entity:
             return
 
+        if self.editable:
+            widget_type = self.field_manager.EDITABLE
+        else:
+            widget_type = self.field_manager.DISPLAY
+
         field_widget = self.field_manager.create_widget(
             self.entity.get("type"),
             field_name,
-            self.field_manager.EDITABLE,
+            widget_type,
             self.entity,
         )
 
         self._fields[field_name]["widget"] = field_widget
+
+        # Connect each widget to the local value_changed function
+        # so we can update the DB.
+        if self.editable:
+            field_widget.value_changed.connect(self._value_changed)
 
         if self.show_labels:
             # If this field is exempt from having a label, then it
@@ -152,7 +163,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         Removes the field widget and its label (when present) for the
         given field name.
 
-        :param field_name:  The Shotgun field name to remove.
+        :param str field_name: The Shotgun field name to remove.
         """
         if field_name not in self.fields:
             return
@@ -184,8 +195,8 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         """
         Sets the visibility of a field widget by name.
 
-        :param field_name:  The name of the Shotgun field.
-        :param state:       True or False
+        :param str field_name: The name of the Shotgun field.
+        :param bool state: Whether to set the field as visible or not.
         """
         if not self.field_manager:
             return
@@ -207,8 +218,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         """
         Adjust the style sheet to indicate selection or not.
 
-        :param selected:    Whether the widget is selected or not.
-        :type selected:     bool
+        :param bool selected: Whether the widget is selected or not.
         """
         p = QtGui.QPalette()
 
@@ -325,16 +335,22 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             field_grid_layout = self.ui.field_grid_layout
             field_grid_layout.setColumnStretch(1, 3)
 
+            if self.editable:
+                widget_type = self.field_manager.EDITABLE
+            else:
+                widget_type = self.field_manager.DISPLAY
+
             for i, field in enumerate(self.fields):
                 field_widget = self.field_manager.create_widget(
                     entity.get("type"),
                     field,
-                    self.field_manager.EDITABLE,
+                    widget_type,
                     self.entity,
                 )
                 # Connect each widget to the local value_changed function
                 # so we can update the DB.
-                field_widget.value_changed.connect(self._value_changed)
+                if self.editable:
+                    field_widget.value_changed.connect(self._value_changed)
 
                 # If we've been asked to show labels for the fields, then
                 # build those and get them into the layout.
@@ -466,6 +482,13 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
 
     ##########################################################################
     # properties
+
+    @property
+    def editable(self):
+        """
+        Whether the entity card widget contains editable Shotgun fields widgets.
+        """
+        return self._editable
 
     @property
     def field_widgets(self):

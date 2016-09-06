@@ -128,19 +128,22 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
     ##########################################################################
     # overridden methods
 
-    def _create_widget(self, parent):
+    def _create_widget(self, parent, editable=False):
         """
         Returns the widget to be used when creating items.
 
-        :param parent:  QWidget to parent the widget to
-        :type parent:   :class:`~PySide.QtGui.QWidget`
+        :param parent:QWidget to parent the widget to
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        :param bool editable: Whether the widget is to be created using editable
+                              Shotgun fields widgets or not.
         
-        :returns:       QWidget that will be used to paint grid cells in the view.
-        :rtype:         :class:`~PySide.QtGui.QWidget` 
+        :returns: QWidget that will be used to paint grid cells in the view.
+        :rtype: :class:`~PySide.QtGui.QWidget` 
         """
         widget = ShotgunEntityCardWidget(
             parent=parent,
             shotgun_field_manager=self._shotgun_field_manager,
+            editable=editable,
         )
 
         widget.fields = self.fields
@@ -195,7 +198,7 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
         :returns:               A QWidget to be used for editing the current index
         :rtype:                 :class:`~PySide.QtGui.QWidget`
         """
-        widget = self._create_widget(parent)
+        widget = self._create_widget(parent, editable=True)
         self._on_before_paint(widget, model_index, style_options)
         self.__current_editor = (model_index, widget)
         return widget
