@@ -8,13 +8,13 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+from __future__ import with_statement
+
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.card_widget import Ui_ShotgunEntityCardWidget
 
-# TODO: Remove this and use _OrderedDict once bugs there are resolved.
-# NOTE: DO NOT RELEASE THIS, KEEP ON BRANCH.
-from collections import OrderedDict
+import threading
 
 class ShotgunEntityCardWidget(QtGui.QWidget):
     """
@@ -23,6 +23,8 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
     """
     WIDTH_HINT = 300
     HEIGHT_HINT_PADDING = 8
+
+    _LOCK = threading.Lock()
 
     def __init__(self, parent, shotgun_field_manager=None, editable=True):
         """
@@ -61,70 +63,71 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         :param bool label_exempt: Whether to exempt the field from having a label
                                   in the item layout. Defaults to False.
         """
-        if not self.field_manager:
-            raise RuntimeError(
-                "No ShotgunFieldManager has been set, unable to add fields."
+        with self._LOCK:
+            if not self.field_manager:
+                raise RuntimeError(
+                    "No ShotgunFieldManager has been set, unable to add fields."
+                )
+
+            if field_name in self.fields:
+                return
+
+            self._fields[field_name] = OrderedDict(
+                widget=None,
+                label=None,
+                label_exempt=label_exempt,
             )
 
-        if field_name in self.fields:
-            return
+            # If we've not yet loaded an entity, then we don't need to
+            # do any widget work.
+            if not self.entity:
+                return
 
-        self._fields[field_name] = OrderedDict(
-            widget=None,
-            label=None,
-            label_exempt=label_exempt,
-        )
-
-        # If we've not yet loaded an entity, then we don't need to
-        # do any widget work.
-        if not self.entity:
-            return
-
-        if self.editable:
-            widget_type = self.field_manager.EDITABLE
-        else:
-            widget_type = self.field_manager.DISPLAY
-
-        field_widget = self.field_manager.create_widget(
-            self.entity.get("type"),
-            field_name,
-            widget_type,
-            self.entity,
-        )
-
-        self._fields[field_name]["widget"] = field_widget
-
-        # Connect each widget to the local value_changed function
-        # so we can update the DB.
-        if self.editable:
-            field_widget.value_changed.connect(self._value_changed)
-
-        if self.show_labels:
-            # If this field is exempt from having a label, then it
-            # goes into the layout in column 0, but with the column
-            # span set to -1. This will cause it to occupy all of the
-            # space on this row of the layout instead of just the first
-            # column.
-            if field_name in self.label_exempt_fields:
-                # If there's no label, then the widget goes in the first
-                # column and is set to span all columns.
-                self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 0, 1, -1)
+            if self.editable:
+                widget_type = self.field_manager.EDITABLE
             else:
-                # We have a label, so we put that in column 0 and the
-                # field widget in column 1.
-                field_label = self.field_manager.create_label(
-                    self.entity.get("type"),
-                    field_name,
-                )
-                self._fields[field_name]["label"] = field_label
-                self.ui.field_grid_layout.addWidget(field_label, len(self.fields), 0, QtCore.Qt.AlignRight)
-                self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 1)
-        else:
-            # Nothing at all will have labels, so we can just put the
-            # widget into column 0. No need to worry about telling it to
-            # span any additional columns, because there will only be a
-            # single column.
-            self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 0)
+                widget_type = self.field_manager.DISPLAY
+
+            field_widget = self.field_manager.create_widget(
+                self.entity.get("type"),
+                field_name,
+                widget_type,
+                self.entity,
+            )
+
+            self._fields[field_name]["widget"] = field_widget
+
+            # Connect each widget to the local value_changed function
+            # so we can update the DB.
+            if self.editable:
+                field_widget.value_changed.connect(self._value_changed)
+
+            if self.show_labels:
+                # If this field is exempt from having a label, then it
+                # goes into the layout in column 0, but with the column
+                # span set to -1. This will cause it to occupy all of the
+                # space on this row of the layout instead of just the first
+                # column.
+                if field_name in self.label_exempt_fields:
+                    # If there's no label, then the widget goes in the first
+                    # column and is set to span all columns.
+                    self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 0, 1, -1)
+                else:
+                    # We have a label, so we put that in column 0 and the
+                    # field widget in column 1.
+                    field_label = self.field_manager.create_label(
+                        self.entity.get("type"),
+                        field_name,
+                    )
+                    self._fields[field_name]["label"] = field_label
+                    self.ui.field_grid_layout.addWidget(field_label, len(self.fields), 0, QtCore.Qt.AlignRight)
+                    self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 1)
+            else:
+                # Nothing at all will have labels, so we can just put the
+                # widget into column 0. No need to worry about telling it to
+                # span any additional columns, because there will only be a
+                # single column.
+                self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 0)
 
     def clear(self):
         """
@@ -165,31 +168,32 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
 
         :param str field_name: The Shotgun field name to remove.
         """
-        if field_name not in self.fields:
-            return
+        with self._LOCK:
+            if field_name not in self.fields:
+                return
 
-        # Now ditch the widget for the field if we have one. If we
-        # don't then we have nothing to worry about.
-        try:
-            field_widget = self._fields[field_name]["widget"]
-        except KeyError:
-            return
+            # Now ditch the widget for the field if we have one. If we
+            # don't then we have nothing to worry about.
+            try:
+                field_widget = self._fields[field_name]["widget"]
+            except KeyError:
+                return
 
-        if not field_widget:
-            return
+            if not field_widget:
+                return
 
-        field_widget.hide()
-        self.ui.field_grid_layout.removeWidget(field_widget)
+            field_widget.hide()
+            self.ui.field_grid_layout.removeWidget(field_widget)
 
-        # If there's a label, then also remove that.
-        field_label = self._fields[field_name]["label"]
+            # If there's a label, then also remove that.
+            field_label = self._fields[field_name]["label"]
 
-        if field_label:
-            field_label.hide()
-            self.ui.field_grid_layout.removeWidget(field_label)
+            if field_label:
+                field_label.hide()
+                self.ui.field_grid_layout.removeWidget(field_label)
 
-        # Remove the field from the list of stuff we're tracking.
-        del self._fields[field_name]
+            # Remove the field from the list of stuff we're tracking.
+            del self._fields[field_name]
 
     def set_field_visibility(self, field_name, state):
         """
@@ -514,6 +518,7 @@ class _OrderedDict(object):
     An OrderedDict-like class. This is implemented here in order to maintain
     backwards compatibility with pre-2.7 releases of Python.
     """
+
     def __init__(self, **kwargs):
         """
         Constructor. Emulates the behavior of the dict() type.
