@@ -34,6 +34,7 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
                                     that are not selected.
     :vartype show_border:           bool
     """
+
     def __init__(self, view, shotgun_field_manager=None, **kwargs):
         """
         Constructs a new ShotgunEntityCardDelegate.
@@ -170,11 +171,8 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
         if model_index in self._widget_cache:
             widget = self._widget_cache[model_index]
 
-            if self.fields != widget.fields:
-                widget.fields = self.fields
-                self.sizeHintChanged.emit(model_index)
-
-            return widget
+            if sorted(self.fields) == sorted(widget.fields):
+                return widget
 
         widget = self._create_widget(parent)
         self._widget_cache[model_index] = widget
