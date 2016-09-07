@@ -74,6 +74,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             widget=None,
             label=None,
             label_exempt=label_exempt,
+            row=0,
         )
 
         # If we've not yet loaded an entity, then we don't need to
@@ -116,6 +117,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                 field_label = self.field_manager.create_label(
                     self.entity.get("type"),
                     field_name,
+                    postfix=":",
                 )
                 self._fields[field_name]["label"] = field_label
                 self.ui.field_grid_layout.addWidget(field_label, len(self.fields), 0, QtCore.Qt.AlignRight)
@@ -349,7 +351,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                 # The stretch factor helps the item widget scale horizontally
                 # in a sane manner while generally pushing the field grid
                 # layout toward the thumbnail on the left.
-                self.ui.box_layout.setStretchFactor(self.ui.right_layout, 5)
+                self.ui.box_layout.setStretchFactor(self.ui.right_layout, 6)
                 self.ui.box_layout.setStretchFactor(self.ui.left_layout, 2)
                 self.ui.left_layout.insertWidget(0, self.thumbnail)
 
@@ -390,6 +392,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                             field_label = self.field_manager.create_label(
                                 entity.get("type"),
                                 field,
+                                postfix=":",
                             )
 
                             field_grid_layout.addWidget(field_label, i, 0, QtCore.Qt.AlignRight)

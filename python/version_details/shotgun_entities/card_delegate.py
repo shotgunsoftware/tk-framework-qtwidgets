@@ -196,7 +196,7 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
         :returns:               A QWidget to be used for editing the current index
         :rtype:                 :class:`~PySide.QtGui.QWidget`
         """
-        widget = self._create_widget(parent, editable=True)
+        widget = self._create_widget(parent, editable=False)
         self._on_before_paint(widget, model_index, style_options)
         self.__current_editor = (model_index, widget)
         return widget
