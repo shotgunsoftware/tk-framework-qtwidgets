@@ -299,7 +299,7 @@ class _DisplayWidget(QtGui.QWidget):
         self._edit_btn.hide()
 
         # make sure there's never a bg color or border
-        self._edit_btn.setStyleSheet("background-color: none; border: none;")
+        self._edit_btn.setStyleSheet("background-color: none; border: none; min-width: 15px;")
 
         spacer = QtGui.QWidget()
         spacer.setFixedHeight(self._edit_btn.height())
@@ -391,8 +391,8 @@ class _EditorWidget(QtGui.QWidget):
         self._apply_btn.setFocusPolicy(QtCore.Qt.NoFocus)
 
         # make sure there's never a bg color or border
-        self._done_btn.setStyleSheet("background-color: none; border: none;")
-        self._apply_btn.setStyleSheet("background-color: none; border: none;")
+        self._done_btn.setStyleSheet("background-color: none; border: none; min-width: 15px;")
+        self._apply_btn.setStyleSheet("background-color: none; border: none; min-width: 15px;")
 
         if self._editor_widget.sizeHint().height() >= 32:
             btn_layout = QtGui.QVBoxLayout()

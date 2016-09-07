@@ -303,6 +303,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             if self.entity:
                 self._entity = entity
                 self.thumbnail.set_value(entity.get("image"))
+                self.thumbnail.setMinimumWidth(150)
 
                 for field, field_data in self._fields.iteritems():
                     field_widget = field_data["widget"]
@@ -324,12 +325,13 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     self.field_manager.DISPLAY,
                     self.entity,
                 )
+                self.thumbnail.setMinimumWidth(150)
 
                 # The stretch factor helps the item widget scale horizontally
                 # in a sane manner while generally pushing the field grid
                 # layout toward the thumbnail on the left.
-                self.ui.box_layout.setStretchFactor(self.ui.right_layout, 15)
-                self.ui.box_layout.setStretchFactor(self.ui.left_layout, 7)
+                self.ui.box_layout.setStretchFactor(self.ui.right_layout, 5)
+                self.ui.box_layout.setStretchFactor(self.ui.left_layout, 2)
                 self.ui.left_layout.insertWidget(0, self.thumbnail)
 
                 # Visually, this will just cause column 1 of the grid layout
