@@ -23,6 +23,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
     """
     WIDTH_HINT = 300
     HEIGHT_HINT_PADDING = 8
+    ROW_HEIGHT = 20
 
     def __init__(self, parent, shotgun_field_manager=None, editable=True):
         """
@@ -126,6 +127,9 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             # single column.
             self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 0)
 
+        self.ui.field_grid_layout.setRowMinimumHeight(len(self.fields), self.ROW_HEIGHT)
+        self._fields[field_name]["row"] = len(self.fields)
+
     def clear(self):
         """
         Clears all data out of the widget.
@@ -188,6 +192,11 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             field_label.hide()
             self.ui.field_grid_layout.removeWidget(field_label)
 
+        self.ui.field_grid_layout.setRowMinimumHeight(
+            self._fields[field_name]["row"],
+            0,
+        )
+
         # Remove the field from the list of stuff we're tracking.
         del self._fields[field_name]
 
@@ -213,6 +222,16 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
 
         if field_label:
             field_label.setVisible(bool(state))
+
+        if state:
+            row_height = self.ROW_HEIGHT
+        else:
+            row_height = 0
+
+        self.ui.field_grid_layout.setRowMinimumHeight(
+            self._fields[field_name]["row"],
+            row_height,
+        )
                    
     def set_selected(self, selected):
         """
@@ -379,7 +398,10 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     else:
                         field_grid_layout.addWidget(field_widget, i, 0)
 
+                    field_grid_layout.setRowMinimumHeight(i, self.ROW_HEIGHT)
+
                     self._fields[field]["widget"] = field_widget
+                    self._fields[field]["row"] = i
         finally:
             self.setUpdatesEnabled(True)
 
