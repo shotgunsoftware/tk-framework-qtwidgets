@@ -49,13 +49,10 @@ class BubbleWidget(QtGui.QFrame):
             #bubble {
                 border: 1px solid black;
                 border-radius: 5px;
-                background-color: rgb(37,38,41);
+                background-color: %s;
             }
-            """
+            """ % self.palette().color(QtGui.QPalette.Button).name()
         )
-        # TODO for some reason, the folowwing call was returning
-        # white for RV, so i'm just hard coding the background value for now.
-        # self.palette().color(QtGui.QPalette.Button).name()
 
         # create a remove button for the widget.
         # extract a close button icon from the style and use it

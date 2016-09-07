@@ -10,7 +10,6 @@
 
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
-import sgtk 
 from sgtk.platform.qt import QtCore, QtGui
 
 
@@ -28,7 +27,6 @@ class TextEditorWidget(QtGui.QTextEdit):
     """
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "text"
-
 
     def get_value(self):
         """
@@ -65,17 +63,6 @@ class TextEditorWidget(QtGui.QTextEdit):
         self.setSizePolicy(
             QtGui.QSizePolicy.Expanding,
             QtGui.QSizePolicy.Preferred
-        )
-
-        # this gives us a border in RV
-        c = sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
-        self.setObjectName("qtwtextedit")
-        self.setStyleSheet(
-            """
-            #qtwtextedit {
-                border: 2px solid %s;
-            }
-            """ % c
         )
 
     def _display_default(self):

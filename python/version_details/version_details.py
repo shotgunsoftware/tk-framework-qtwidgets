@@ -954,19 +954,24 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param bool checked: True or False
         """
-        if checked:
-            self.ui.more_info_button.setText("Hide info")
-            self.ui.more_fields_button.show()
+        try:
+            self.setUpdatesEnabled(False)
 
-            for field_name in self._active_fields:
-                self.ui.current_version_card.set_field_visibility(field_name, True)
-        else:
-            self.ui.more_info_button.setText("More info")
-            self.ui.more_fields_button.hide()
+            if checked:
+                self.ui.more_info_button.setText("Hide info")
+                self.ui.more_fields_button.show()
 
-            for field_name in self._active_fields:
-                if field_name not in self._persistent_fields:
-                    self.ui.current_version_card.set_field_visibility(field_name, False)
+                for field_name in self._active_fields:
+                    self.ui.current_version_card.set_field_visibility(field_name, True)
+            else:
+                self.ui.more_info_button.setText("More info")
+                self.ui.more_fields_button.hide()
+
+                for field_name in self._active_fields:
+                    if field_name not in self._persistent_fields:
+                        self.ui.current_version_card.set_field_visibility(field_name, False)
+        finally:
+            self.setUpdatesEnabled(True)
 
     def _selected_version_entities(self):
         """

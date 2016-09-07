@@ -60,18 +60,7 @@ class StatusListEditorWidget(QtGui.QComboBox):
         Called by the metaclass during initialization.
         """
         self.addItem("")
-        # made the min width larger for RV
-        self.setMinimumWidth(150)
-        # TODO still could not completely remove a white border on top and bottom
-        self.setObjectName("qtwstatuslist")
-        self.setStyleSheet(            
-            """
-            #qtwstatuslist QAbstractItemView {
-                padding: 0px;
-                margin: 0px;
-            }
-            """
-        )
+        self.setMinimumWidth(125)
 
         valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
         for value in valid_values:
@@ -80,6 +69,8 @@ class StatusListEditorWidget(QtGui.QComboBox):
         self.activated.connect(
             lambda i: self.value_changed.emit()
         )
+
+        self.setSizeAdjustPolicy(self.AdjustToContents)
 
     def _begin_edit(self):
         """

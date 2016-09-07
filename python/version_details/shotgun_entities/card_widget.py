@@ -297,84 +297,89 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         # set the values of the existing field widgets. Otherwise
         # this is a first-time setup and we need to create and place
         # the field widgets into the layout.
-        if self.entity:
-            self._entity = entity
-            self.thumbnail.set_value(entity.get("image"))
+        try:
+            self.setUpdatesEnabled(False)
 
-            for field, field_data in self._fields.iteritems():
-                field_widget = field_data["widget"]
+            if self.entity:
+                self._entity = entity
+                self.thumbnail.set_value(entity.get("image"))
 
-                if field_widget:
-                    # We need to block signals, otherwise the set_value will kick
-                    # off a value_changed signal, which will trigger us to try to
-                    # update Shotgun with the "new" value.
-                    try:
-                        field_widget.blockSignals(True)
-                        field_widget.set_value(entity.get(field))
-                    finally:
-                        field_widget.blockSignals(False)
-        else:
-            self._entity = entity
-            self.thumbnail = self.field_manager.create_widget(
-                entity.get("type"),
-                "image",
-                self.field_manager.DISPLAY,
-                self.entity,
-            )
+                for field, field_data in self._fields.iteritems():
+                    field_widget = field_data["widget"]
 
-            # The stretch factor helps the item widget scale horizontally
-            # in a sane manner while generally pushing the field grid
-            # layout toward the thumbnail on the left.
-            self.ui.box_layout.setStretchFactor(self.ui.right_layout, 15)
-            self.ui.box_layout.setStretchFactor(self.ui.left_layout, 7)
-            self.ui.left_layout.insertWidget(0, self.thumbnail)
-
-            # Visually, this will just cause column 1 of the grid layout
-            # to fill any remaining space to the right of the grid within
-            # the parent layout.
-            field_grid_layout = self.ui.field_grid_layout
-            field_grid_layout.setColumnStretch(1, 3)
-
-            if self.editable:
-                widget_type = self.field_manager.EDITABLE
+                    if field_widget:
+                        # We need to block signals, otherwise the set_value will kick
+                        # off a value_changed signal, which will trigger us to try to
+                        # update Shotgun with the "new" value.
+                        try:
+                            field_widget.blockSignals(True)
+                            field_widget.set_value(entity.get(field))
+                        finally:
+                            field_widget.blockSignals(False)
             else:
-                widget_type = self.field_manager.DISPLAY
-
-            for i, field in enumerate(self.fields):
-                field_widget = self.field_manager.create_widget(
+                self._entity = entity
+                self.thumbnail = self.field_manager.create_widget(
                     entity.get("type"),
-                    field,
-                    widget_type,
+                    "image",
+                    self.field_manager.DISPLAY,
                     self.entity,
                 )
-                # Connect each widget to the local value_changed function
-                # so we can update the DB.
+
+                # The stretch factor helps the item widget scale horizontally
+                # in a sane manner while generally pushing the field grid
+                # layout toward the thumbnail on the left.
+                self.ui.box_layout.setStretchFactor(self.ui.right_layout, 15)
+                self.ui.box_layout.setStretchFactor(self.ui.left_layout, 7)
+                self.ui.left_layout.insertWidget(0, self.thumbnail)
+
+                # Visually, this will just cause column 1 of the grid layout
+                # to fill any remaining space to the right of the grid within
+                # the parent layout.
+                field_grid_layout = self.ui.field_grid_layout
+                field_grid_layout.setColumnStretch(1, 3)
+
                 if self.editable:
-                    field_widget.value_changed.connect(self._value_changed)
-
-                # If we've been asked to show labels for the fields, then
-                # build those and get them into the layout.
-                if self.show_labels:
-                    # If this field is exempt from having a label, then it
-                    # goes into the layout in column 0, but with the column
-                    # span set to -1. This will cause it to occupy all of the
-                    # space on this row of the layout instead of just the first
-                    # column.
-                    if field in self.label_exempt_fields:
-                        field_grid_layout.addWidget(field_widget, i, 0, 1, -1)
-                    else:
-                        field_label = self.field_manager.create_label(
-                            entity.get("type"),
-                            field,
-                        )
-
-                        field_grid_layout.addWidget(field_label, i, 0, QtCore.Qt.AlignRight)
-                        self._fields[field]["label"] = field_label
-                        field_grid_layout.addWidget(field_widget, i, 1)
+                    widget_type = self.field_manager.EDITABLE
                 else:
-                    field_grid_layout.addWidget(field_widget, i, 0)
+                    widget_type = self.field_manager.DISPLAY
 
-                self._fields[field]["widget"] = field_widget
+                for i, field in enumerate(self.fields):
+                    field_widget = self.field_manager.create_widget(
+                        entity.get("type"),
+                        field,
+                        widget_type,
+                        self.entity,
+                    )
+                    # Connect each widget to the local value_changed function
+                    # so we can update the DB.
+                    if self.editable:
+                        field_widget.value_changed.connect(self._value_changed)
+
+                    # If we've been asked to show labels for the fields, then
+                    # build those and get them into the layout.
+                    if self.show_labels:
+                        # If this field is exempt from having a label, then it
+                        # goes into the layout in column 0, but with the column
+                        # span set to -1. This will cause it to occupy all of the
+                        # space on this row of the layout instead of just the first
+                        # column.
+                        if field in self.label_exempt_fields:
+                            field_grid_layout.addWidget(field_widget, i, 0, 1, -1)
+                        else:
+                            field_label = self.field_manager.create_label(
+                                entity.get("type"),
+                                field,
+                            )
+
+                            field_grid_layout.addWidget(field_label, i, 0, QtCore.Qt.AlignRight)
+                            self._fields[field]["label"] = field_label
+                            field_grid_layout.addWidget(field_widget, i, 1)
+                    else:
+                        field_grid_layout.addWidget(field_widget, i, 0)
+
+                    self._fields[field]["widget"] = field_widget
+        finally:
+            self.setUpdatesEnabled(True)
 
     def _value_changed(self):
         """
