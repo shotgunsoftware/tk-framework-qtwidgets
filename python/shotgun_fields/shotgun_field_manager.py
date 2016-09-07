@@ -213,16 +213,22 @@ class ShotgunFieldManager(QtCore.QObject):
             bg_task_manager=self._task_manager
         )
 
-    def create_label(self, sg_entity_type, field_name):
+    def create_label(self, sg_entity_type, field_name, prefix=None, postfix=None):
         """
         Returns a widget that can be used as a label for the given field.
 
         :param str sg_entity_type: Shotgun entity type
         :param str field_name: Shotgun field name
+        :param str prefix: Additional text to prefix the field label.
+        :param str postfix: Additional text to postfix the field label.
 
         :returns: :class:`~PySide.QtGui.QLabel`
         """
         display_name = shotgun_globals.get_field_display_name(sg_entity_type, field_name)
+        if prefix:
+            display_name = prefix + display_name
+        if postfix:
+            display_name += postfix
         return QtGui.QLabel(display_name)
 
     def create_widget(self, sg_entity_type, field_name, widget_type=EDITABLE, entity=None, parent=None, **kwargs):
