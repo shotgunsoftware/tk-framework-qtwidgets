@@ -591,7 +591,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_hover.png"))
         else:
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_up.png"))
-            if self._requested_entity:
+            # If we have a valid current_entity, be sure the incoming entity
+            # has a different ID.
+            if self._requested_entity and (not self.current_entity or (
+                    self._requested_entity.get("id") != self.current_entity.get("id"))):
                 self.load_data(self._requested_entity)
 
     def show_new_note_dialog(self, modal=True):
