@@ -176,11 +176,6 @@ class MultiEntityEditorWidget(BubbleEditWidget):
 
         # get this field's schema
         for entity_type in shotgun_globals.get_valid_types(self._entity_type, self._field_name):
-            # TODO: the python-api does not like doing text search across projects.
-            # This is being addressed in a ticket internally. For now, ignore the
-            # project type.
-            if entity_type == "Project":
-                continue
             valid_types[entity_type] = []
 
         self._completer = global_search_completer.GlobalSearchCompleter()

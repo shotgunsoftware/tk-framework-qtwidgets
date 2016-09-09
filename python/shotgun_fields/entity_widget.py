@@ -93,12 +93,7 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
 
         # get this field's schema
         for entity_type in self._types:
-            if entity_type == "Project":
-                # there is currently an issue querying Project entities via the
-                # python API's text search. for now, do not restrict the editor.
-                continue
-            else:
-                valid_types[entity_type] = []
+            valid_types[entity_type] = []
 
         self.set_searchable_entity_types(valid_types)
 
