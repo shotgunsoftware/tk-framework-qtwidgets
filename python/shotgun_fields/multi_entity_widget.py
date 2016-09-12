@@ -14,6 +14,7 @@ from sgtk.platform.qt import QtGui, QtCore
 from .bubble_widget import BubbleEditWidget, BubbleWidget
 from .entity_widget import EntityWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+from .util import check_project_search_supported
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 global_search_completer = sgtk.platform.current_bundle().import_module("global_search_completer")
@@ -172,11 +173,22 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         valid types accepted by the widget.
 
         """
+
+        sg_connection = self._bundle.sgtk.shotgun
+
+        # TODO: remove this check and backward compatibility layer. added 09/16
+        self._project_search_supported = check_project_search_supported(sg_connection)
+
         valid_types = {}
 
         # get this field's schema
         for entity_type in shotgun_globals.get_valid_types(self._entity_type, self._field_name):
-            valid_types[entity_type] = []
+            if entity_type == "Project" and not self._project_search_supported:
+                # there is an issue querying Project entities via text_search
+                # with older versions of SG. for now, don't restrict the editor
+                 continue
+            else:
+                valid_types[entity_type] = []
 
         self._completer = global_search_completer.GlobalSearchCompleter()
         self._completer.set_bg_task_manager(self._bg_task_manager)
