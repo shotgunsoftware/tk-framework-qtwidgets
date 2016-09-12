@@ -1302,8 +1302,17 @@ class VersionDetailsWidget(QtGui.QWidget):
         entity = self.current_entity or {}
         project_id = entity.get("project", {}).get("id")
 
+        # Detect bubble fields. If the field_name is "sg_sequence.Sequence.code"
+        # then we know we want to get the data type of the "code" field on the
+        # "Sequence" entity type.
+        if "." in field:
+            (entity_type, field_name) = field.split(".")[-2:]
+        else:
+            (entity_type, field_name) = ("Version", field)
+
         # make sure the field is visible
-        if not shotgun_globals.field_is_visible("Version", field, project_id=project_id):
+        if not shotgun_globals.field_is_visible(
+                entity_type, field_name, project_id=project_id):
             return False
 
         return True
