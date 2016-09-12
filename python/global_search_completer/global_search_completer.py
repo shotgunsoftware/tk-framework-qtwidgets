@@ -341,7 +341,12 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         # constrain by project in the search
         project_ids = []
-        if self._bundle.context.project:
+
+        if len(self._entity_search_criteria.keys()) == 1 and \
+           "Project" in self._entity_search_criteria:
+            # this is a Project-only search. don't restrict by the current project id
+            pass
+        elif self._bundle.context.project:
             project_ids.append(self._bundle.context.project["id"])
 
         # run the query

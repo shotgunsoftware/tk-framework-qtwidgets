@@ -13,6 +13,7 @@ from sgtk.platform.qt import QtCore, QtGui
 
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+from .util import check_project_search_supported
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 global_search_widget = sgtk.platform.current_bundle().import_module("global_search_widget")
@@ -84,6 +85,12 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
         Called by the metaclass during initialization. Sets the bg task manager
         for the completer and sets the entity type(s) to be searched.
         """
+
+        sg_connection = self._bundle.sgtk.shotgun
+
+        # TODO: remove this check and backward compatibility layer. added 09/16
+        self._project_search_supported = check_project_search_supported(sg_connection)
+
         self.set_bg_task_manager(self._bg_task_manager)
 
         self._types = shotgun_globals.get_valid_types(
@@ -93,10 +100,10 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
 
         # get this field's schema
         for entity_type in self._types:
-            if entity_type == "Project":
-                # there is currently an issue querying Project entities via the
-                # python API's text search. for now, do not restrict the editor.
-                continue
+            if entity_type == "Project" and not self._project_search_supported:
+                # there is an issue querying Project entities via text_search
+                # with older versions of SG. for now, don't restrict the editor
+                 continue
             else:
                 valid_types[entity_type] = []
 
