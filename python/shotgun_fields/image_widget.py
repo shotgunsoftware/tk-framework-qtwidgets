@@ -48,6 +48,7 @@ class ImageWidget(QtGui.QLabel):
         """
         Clears the widget's knowledge of an external resource.
         """
+        self._task_uid = None
         self._pixmap = None
         self._image_path = None
         if not self._delegate:
@@ -152,6 +153,29 @@ class ImageWidget(QtGui.QLabel):
         self._scaled_width = scaled_pixmap.width()
         super(ImageWidget, self).setPixmap(scaled_pixmap)
         self._update_btn_position()
+
+    def set_value(self, value):
+        """
+        Replace the current image with the one supplied.
+
+        :param value: The value returned by the Shotgun API to be displayed.
+            In delegate mode, this value can also be an existing ``QPixmap``
+            object.
+        """
+
+        # unset the task id so that we don't get overridden by running workers
+        self._task_uid = None
+
+        self._value = value
+        if value is None:
+            self._display_default()
+        else:
+            if not isinstance(value, QtGui.QPixmap) and not os.path.exists(value):
+                # this is not a local file or a pre-created pixmap. we need to
+                # download it
+                self._needs_download = True
+            self._display_value(value)
+        self.value_changed.emit()
 
     def setup_widget(self):
         """
@@ -272,8 +296,13 @@ class ImageWidget(QtGui.QLabel):
 
         if isinstance(value, QtGui.QPixmap):
             self.setPixmap(value)
-
-        if self._needs_download:
+        elif os.path.exists(value):
+            # a local path has been set as the value.
+            # TODO: consider when to upload to SG in non-delegate mode
+            self._image_path = value
+            self._value = value
+            self.setPixmap(QtGui.QPixmap(value))
+        elif self._needs_download:
             # queue up the download in the background
             entity_id = None
             entity_type = None
@@ -284,6 +313,8 @@ class ImageWidget(QtGui.QLabel):
             self._task_uid = self._data_retriever.request_thumbnail(
                 value, entity_type, entity_id, self._field_name, load_image=True)
             self._needs_download = False
+
+        self.value_changed.emit()
 
     def _on_link_activated(self, url):
         """
@@ -438,3 +469,4 @@ class ImageWidget(QtGui.QLabel):
             self._value = file_path
             self.value_changed.emit()
 
+            # TODO: upload the image to Shotgun in non-delegate mode

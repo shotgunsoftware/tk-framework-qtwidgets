@@ -36,7 +36,7 @@ class ListEditorWidget(QtGui.QComboBox):
         """
         :return: The internal value being displayed by the widget.
         """
-        return self.currentText()
+        return self._get_safe_str(self.currentText())
 
     def setup_widget(self):
         """
@@ -46,6 +46,7 @@ class ListEditorWidget(QtGui.QComboBox):
         the list and connects the ``activated`` signal.
         """
         self.addItem("")
+
         valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
         self.addItems(valid_values)
 

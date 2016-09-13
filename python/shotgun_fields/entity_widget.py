@@ -76,7 +76,6 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
     """
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "entity"
-    _IMMEDIATE_APPLY = True
 
     def setup_widget(self):
         """
@@ -103,7 +102,44 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
 
         self.set_searchable_entity_types(valid_types)
 
-        self.completer().entity_activated.connect(self._on_entity_activated)
+        self.entity_activated.connect(self._on_entity_activated)
+
+    def get_value(self):
+        """
+        Returns the current valid value for this widget.
+        """
+
+        if self.isVisible() and not self.text():
+            # text was cleared out. return None
+            # TODO: not sure this is the right approach
+            return None
+
+        # return the stored value. if they've typed something else,
+        # we can't ensure it's a valid entity. this implies requiring the use
+        # of the completer.
+        return self._value
+
+    def keyPressEvent(self, event):
+        """
+        Provides shortcuts for applying modified values.
+
+        :param event: The key press event object
+        :type event: :class:`~PySide.QtGui.QKeyEvent`
+
+        Ctrl+Enter or Ctrl+Return will trigger the emission of the ``value_changed``
+        signal.
+        """
+        if event.key() in [
+            QtCore.Qt.Key_Enter,
+            QtCore.Qt.Key_Return
+        ] and event.modifiers() & QtCore.Qt.ControlModifier:
+            if not self.text():
+                self._value = None
+                self.value_changed.emit()
+                event.ignore()
+            return
+
+        super(EntityEditorWidget, self).keyPressEvent(event)
 
     def _begin_edit(self):
         """

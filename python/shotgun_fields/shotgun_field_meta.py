@@ -70,7 +70,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
     The widgets shown above will be used by any SG field for the specified type.
     It is also possible to register widgets that are used only for specific
     fields on specific entities. To achieve this, use the ``_ENTITY_FIELDS``
-    class memeber to define a list of tuples that explicitly defined the entity
+    class member to define a list of tuples that explicitly defined the entity
     fields the widget should be used to display.
 
     Example::
@@ -306,4 +306,61 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         :return: The internal value being displayed by the widget.
         """
         return self._value
+
+    @staticmethod
+    @take_over
+    def get_entity(self):
+        """
+        :return: The entity associated with the field widget.
+        """
+        return self._entity
+
+    @staticmethod
+    @take_over
+    def get_entity_type(self):
+        """
+        :return: The entity type associated with the field widget.
+        """
+        return self._entity_type
+
+    @staticmethod
+    @take_over
+    def get_field_name(self):
+        """
+        :return: The field name associated with the field widget.
+        """
+        return self._field_name
+
+    @staticmethod
+    @take_over
+    def _get_safe_str(self, value):
+        """
+        Returns a safe string representation of the supplied value.
+
+        Handles unicode and QString values (PyQt).
+
+        :param value: The value provided from the widget
+
+        :return: A safe ``str`` representation of the value.
+        """
+
+        if isinstance(value, str):
+            # it's a string anyway so just return
+            return value
+
+        if isinstance(value, unicode):
+            # convert to utf-8
+            return value.encode("utf8")
+
+        if hasattr(QtCore, "QString"):
+            # running PyQt!
+            if isinstance(value, QtCore.QString):
+                # QtCore.QString inherits from str but supports
+                # unicode, go figure!  Lets play safe and return
+                # a utf-8 string
+                return str(value.toUtf8())
+
+        # For everything else, just return as string
+        return str(value)
+
 

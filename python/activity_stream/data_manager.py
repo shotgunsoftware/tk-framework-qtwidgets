@@ -310,10 +310,14 @@ class ActivityStreamDataHandler(QtCore.QObject):
         else:
             # refresh full activity stream
             # the first record returned is the latest one
-            if len(self._activity_data) > 0:
-                highest_id = max(self._activity_data.keys()) 
-            else:
+
+            # If we're forcing the refresh of the entire stream, then we
+            # don't care about what's already been pulled. We'll just go
+            # on as if we've never queried anything.
+            if not self._activity_data:
                 highest_id = None
+            else:
+                highest_id = max(self._activity_data.keys())
             
             # kick off async data request from shotgun 
             data = {"entity_type": self._entity_type,

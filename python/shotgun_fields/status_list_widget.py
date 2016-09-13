@@ -60,7 +60,7 @@ class StatusListEditorWidget(QtGui.QComboBox):
         Called by the metaclass during initialization.
         """
         self.addItem("")
-        self.setMinimumWidth(100)
+        self.setMinimumWidth(125)
 
         valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
         for value in valid_values:
@@ -69,6 +69,8 @@ class StatusListEditorWidget(QtGui.QComboBox):
         self.activated.connect(
             lambda i: self.value_changed.emit()
         )
+
+        self.setSizeAdjustPolicy(self.AdjustToContents)
 
     def _begin_edit(self):
         """

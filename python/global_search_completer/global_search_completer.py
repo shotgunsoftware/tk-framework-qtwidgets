@@ -14,6 +14,9 @@ from sgtk.platform.qt import QtCore, QtGui
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 
+from .utils import create_rectangular_thumbnail, CompleterPixmaps
+
+
 class GlobalSearchCompleter(QtGui.QCompleter):
     """
     A standalone ``QCompleter`` class for matching SG entities to typed text.
@@ -44,9 +47,11 @@ class GlobalSearchCompleter(QtGui.QCompleter):
     SG_DATA_ROLE = QtCore.Qt.UserRole + 1
     MODE_ROLE = QtCore.Qt.UserRole + 2
 
+    COMPLETE_MINIMUM_CHARACTERS = 3
+
     # different items in the auto complete list can have
     # a different meaning, so track those here too
-    (MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT) = range(3)
+    (MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT, MODE_NOT_ENOUGH_TEXT) = range(4)
 
     def __init__(self, parent=None):
         """
@@ -57,6 +62,8 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         """
 
         super(GlobalSearchCompleter, self).__init__(parent)
+
+        self._pixmaps = CompleterPixmaps()
 
         self.setMaxVisibleItems(10)
         self.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
@@ -69,7 +76,6 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         self._processing_id = None
         self._thumb_map = {}
-        self._default_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.global_search_widget/rect_512x400.png")
 
         # configure popup data source
         self.setModel(QtGui.QStandardItemModel(self))
@@ -88,6 +94,21 @@ class GlobalSearchCompleter(QtGui.QCompleter):
             "Version": [],
             "PublishedFile": [],
         }
+
+        # the result widgets are 300 pixels wide. the widget using this
+        # completer may be relatively small, but the results can show a lot of
+        # info. so for now, just force the popup to be at least the same as the
+        # results
+        self.popup().setMinimumWidth(300)
+
+        # ensure the icon size is consistent
+        self.popup().setIconSize(QtCore.QSize(48, 38))
+
+    def clear(self):
+        """
+        Manually clear the contents of the completer's popup view.
+        """
+        self._clear_model(add_loading_item=False, add_more_text_item=True)
 
     def destroy(self):
         """
@@ -109,6 +130,20 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         """
         model_index = self.popup().currentIndex()
         return self.get_result(model_index)
+
+    def get_first_result(self):
+        """
+        Returns the first result from the current item in the completer popup
+        or ``None`` if there are no results.
+
+        :returns: The entity dict for the first result
+        :rtype: :obj:`dict`: or ``None``
+        """
+        result = None
+        model_index = self.popup().model().index(0, 0)
+        if model_index.isValid():
+            result = self.get_result(model_index)
+        return result
 
     def get_result(self, model_index):
         """
@@ -159,11 +194,11 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         :param text: current contents of editor
         """
-        if len(text) < 3:
+        if len(text) < self.COMPLETE_MINIMUM_CHARACTERS:
             # global search wont work with shorter than 3 len strings
             # for these cases, clear the auto completer model fully
             # there is no more work to do
-            self._clear_model(add_loading_item=False)
+            self.clear()
             return
 
         # now we are about to populate the model with data
@@ -265,12 +300,14 @@ class GlobalSearchCompleter(QtGui.QCompleter):
     ############################################################################
     # internal methods
 
-    def _clear_model(self, add_loading_item=True):
+    def _clear_model(self, add_loading_item=True, add_more_text_item=False):
         """
         Clears the current data in the model.
 
         :param add_loading_item: if true, a "loading please wait" item will
-                                 be added.
+            be added.
+        :param add_more_text_item: if true, a "type at least 3 characers..."
+            item will be added.
         """
         # clear model
         self.model().clear()
@@ -278,6 +315,13 @@ class GlobalSearchCompleter(QtGui.QCompleter):
         if add_loading_item:
             item = QtGui.QStandardItem("Loading data...")
             item.setData(self.MODE_LOADING, self.MODE_ROLE)
+            self.model().appendRow(item)
+            item.setIcon(QtGui.QIcon(self._pixmaps.loading))
+        if add_more_text_item:
+            item = QtGui.QStandardItem("Type at least %s characters..." %
+                (self.COMPLETE_MINIMUM_CHARACTERS,))
+            item.setData(self.MODE_NOT_ENOUGH_TEXT, self.MODE_ROLE)
+            item.setIcon(QtGui.QIcon(self._pixmaps.keyboard))
             self.model().appendRow(item)
 
     def _do_sg_global_search(self, sg, data):
@@ -336,11 +380,14 @@ class GlobalSearchCompleter(QtGui.QCompleter):
 
         if uid in self._thumb_map:
             thumbnail = data["image"]
+            item = self._thumb_map[uid]["item"]
             if thumbnail:
-                item = self._thumb_map[uid]["item"]
                 thumb = QtGui.QPixmap.fromImage(thumbnail)
-                item.setIcon(thumb)
-
+                item.setIcon(create_rectangular_thumbnail(thumb))
+            else:
+                # probably won't hit here, but just in case, use default/empty
+                # thumbnail
+                item.setIcon(self._pixmaps.no_thumbnail)
 
         if self._processing_id == uid:
             # all done!
@@ -361,7 +408,7 @@ class GlobalSearchCompleter(QtGui.QCompleter):
                 item.setData(shotgun_model.sanitize_for_qt_model(d),
                              self.SG_DATA_ROLE)
 
-                item.setIcon(self._default_icon)
+                item.setIcon(self._pixmaps.no_thumbnail)
 
                 if d.get("image") and self.__sg_data_retriever:
                     uid = self.__sg_data_retriever.request_thumbnail(

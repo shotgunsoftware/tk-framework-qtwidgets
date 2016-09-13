@@ -10,7 +10,6 @@
 
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
-
 from sgtk.platform.qt import QtCore, QtGui
 
 
@@ -33,7 +32,7 @@ class TextEditorWidget(QtGui.QTextEdit):
         """
         :return: The internal value being displayed by the widget.
         """
-        return self.toPlainText()
+        return self._get_safe_str(self.toPlainText())
 
     def keyPressEvent(self, event):
         """

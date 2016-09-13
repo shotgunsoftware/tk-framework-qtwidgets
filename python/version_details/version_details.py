@@ -115,10 +115,12 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
-        self._upload_uids = {}
+        self._uploads_uids = []
+        self._attachment_query_uids = {}
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
         self._attachments_filter = None
+        self._dock_widget = None
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
@@ -348,7 +350,25 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._attachments_filter = regex
         self.ui.note_stream_widget.attachments_filter = regex
 
-    attachments_filter = property(_get_attachments_filter, _set_attachments_filter)
+    attachments_filter = property(
+        _get_attachments_filter,
+        _set_attachments_filter,
+    )
+
+    def _get_notes_are_selectable(self):
+        """
+        If True, note entity widgets in the activity stream will be selectable
+        by the user.
+        """
+        return self.ui.note_stream_widget.notes_are_selectable
+
+    def _set_notes_are_selectable(self, state):
+        self.ui.note_stream_widget.notes_are_selectable = state
+
+    notes_are_selectable = property(
+        _get_notes_are_selectable,
+        _set_notes_are_selectable,
+    )
 
     ##########################################################################
     # public methods
@@ -366,7 +386,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_entity = note_entity["entity"]
 
         for file_path in file_paths:
-            upload_uid = self._data_retriever.execute_method(
+            self._data_retriever.execute_method(
                 self.__upload_file,
                 dict(
                     file_path=file_path,
@@ -375,7 +395,6 @@ class VersionDetailsWidget(QtGui.QWidget):
                     cleanup_after_upload=cleanup_after_upload,
                 ),
             )
-            self._upload_uids[upload_uid] = note_entity
 
     def add_query_fields(self, fields):
         """
@@ -448,11 +467,25 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param int note_id: The Note entity id.
         """
-        attachments = self.get_note_attachments(note_id)
-
-        for attachment in attachments:
-            uid = self._data_retriever.request_attachment(attachment)
-            self._attachment_uids[uid] = note_id
+        # We're going to query the list of attachments live, because don't
+        # know if the cached data for the activity stream is up to date. The
+        # reason that might be the case is that a new attachment doesn't
+        # trigger a new activity event, so the cache doesn't know it's out
+        # of date in that regard. It would be great to find a better solution
+        # than not trusting the cache.
+        self._attachment_query_uids[self._data_retriever.execute_find(
+            "Attachment",
+            [[
+                "attachment_links",
+                "in",
+                {"type":"Note", "id":note_id}
+            ]],
+            fields=[
+                "this_file",
+                "image",
+                "attachment_links",
+            ]
+        )] = note_id
 
     def get_note_attachments(self, note_id):
         """
@@ -565,7 +598,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         the panel is unpinned at a later time, the most recent rejected
         entity update will be executed at that time.
 
-        :param checked: True or False
+        :param bool checked: True or False
         """
         self._pinned = checked
 
@@ -573,15 +606,17 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_hover.png"))
         else:
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_up.png"))
-            if self._requested_entity:
+            # If we have a valid current_entity, be sure the incoming entity
+            # has a different ID.
+            if self._requested_entity and (not self.current_entity or (
+                    self._requested_entity.get("id") != self.current_entity.get("id"))):
                 self.load_data(self._requested_entity)
 
     def show_new_note_dialog(self, modal=True):
         """
         Shows a dialog that allows the user to input a new note.
 
-        :param modal:   Whether the dialog should be shown modally or not.
-        :type modal:    bool
+        :param bool modal: Whether the dialog should be shown modally or not.
         """
         self.ui.note_stream_widget.show_new_note_dialog(modal=modal)
 
@@ -590,8 +625,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Sets the visibility of the undock and close buttons in the
         widget's title bar.
 
-        :param state:   Whether to show or hide the buttons.
-        :type state:    bool
+        :param bool state: Whether to show or hide the buttons.
         """
         self.ui.float_button.setVisible(state)
         self.ui.close_button.setVisible(state)
@@ -619,6 +653,18 @@ class VersionDetailsWidget(QtGui.QWidget):
             ),
         )
 
+    def use_styled_title_bar(self, dock_widget):
+        """
+        If the use of the included, custom styled title bar is desired, the
+        parent QDockWidget can be provided here and the styled title bar will
+        be displayed.
+
+        :param dock_widget: The parent QDockWidget.
+        """
+        self._dock_widget = dock_widget
+        self.show_title_bar_buttons(True)
+        dock_widget.dockLocationChanged.connect(self._dock_location_changed)
+
     ##########################################################################
     # internal utilities
 
@@ -627,8 +673,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         When a new Note entity arrives from Shotgun in the version details
         widget, Dynamite is notified and provided the Note entity's metadata.
 
-        :param note_id:     The id of the Note entity.
-        :type note_id:      int
+        :param int note_id: The id of the Note entity.
         """
         entity_fields = dict(
             Note=[self.NOTE_METADATA_FIELD],
@@ -659,12 +704,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         dispatch the work to different methods depending on what async task
         has completed.
 
-        :param uid:             Unique id for the request.
-        :type uid:              int
-        :param request_type:    The request class.
-        :type request_type:     str
-        :param data:            The returned data.
-        :type data:             dict 
+        :param int uid: Unique id for the request.
+        :param str request_type: The request class.
+        :param dict data: The returned data.
         """
         if uid in self._note_metadata_uids:
             entity = data["sg"]
@@ -679,28 +721,18 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_id = self._attachment_uids[uid]
             del self._attachment_uids[uid]
             self.note_attachment_arrived.emit(note_id, data["file_path"])
-        elif uid in self._upload_uids:
-            self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
-            # TODO: It's not great that we're turning around and re-downloading this
-            # data again, but it's BY FAR the easiest way to make this work right now.
-            # It would probably be best to revisit this if, at some time in the future,
-            # the activity_stream widget is refactored to make it a little friendlier
-            # to data changing after it's already cached.
-            self.download_note_attachments(note_id=self._upload_uids[uid]["id"])
+        elif uid in self._attachment_query_uids:
+            self._download_attachments(data["sg"], self._attachment_query_uids[uid])
+            del self._attachment_query_uids[uid]
 
     def __on_worker_failure(self, uid, msg):
         """
         Asynchronous callback - the worker thread errored.
         
-        :param uid: Unique id for request that failed.
-        :type uid:  int
-        :param msg: The error message.
-        :type msg:  str
+        :param int uid: Unique id for request that failed.
+        :param str msg: The error message.
         """
-        if uid in self._note_metadata_uids:
-            sgtk.platform.current_bundle().log_error(msg)
-        elif uid in self._attachment_uids:
-            sgtk.platform.current_bundle().log_error(msg)
+        sgtk.platform.current_bundle().log_error(msg)
 
     def _load_stylesheet(self):
         """
@@ -719,11 +751,20 @@ class VersionDetailsWidget(QtGui.QWidget):
         finally:
             f.close()
 
+    def _download_attachments(self, attachments, note_id):
+        """
+        Downloads the contents of the given list of Attachment entities.
+
+        :param list attachments: A list of Attachment entities to download.
+        """
+        for attachment in attachments:
+            self._attachment_uids[self._data_retriever.request_attachment(attachment)] = note_id
+
     def _entity_created(self, entity):
         """
         Emits the entity_created signal.
 
-        :param entity: The Shotgun entity dict that was created.
+        :param dict entity: The Shotgun entity dict that was created.
         """
         self.entity_created.emit(entity)
 
@@ -732,7 +773,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Adds or removes a field when it checked or unchecked
         via the EntityFieldMenu.
 
-        :param action:  The QMenuAction that was triggered. 
+        :param action: The QMenuAction that was triggered. 
         """
         if action:
             # The MenuAction's data will have a "field" key that was
@@ -806,9 +847,54 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.version_model.clear()
 
         self._current_entity = sg_data
+        self._ensure_entity_project_schema_cached()
         self._setup_fields_menu()
         self._setup_version_list_fields_menu()
         self._setup_version_sort_by_menu()
+
+    def _ensure_entity_project_schema_cached(self):
+        """
+        Ensures that the schema is cached before enabling the Fields buttons.
+
+        This prevents errors when trying to display the field menu before the
+        schema is properly cached.
+        """
+
+        # disconnect any previous connection so that the slot isn't called
+        # multiple times
+        try:
+            shotgun_globals.schema_loaded.disconnect(self._on_schema_loaded)
+        except Exception:
+            pass
+
+        # ---- disable the buttons until the schema is cached. set a tooltip
+        #      just in case someone tries to click before the cache is loaded
+
+        self.ui.more_fields_button.setEnabled(False)
+        self.ui.more_fields_button.setToolTip("Caching SG fields. Please hold...")
+
+        self.ui.version_fields_button.setEnabled(False)
+        self.ui.version_fields_button.setToolTip("Caching SG fields. Please hold...")
+
+        # use the current entity to retrieve the project id to ensure is cached
+        entity = self.current_entity or {}
+        project_id = entity.get("project", {}).get("id")
+
+        # run this callback once the cache is loaded
+        shotgun_globals.run_on_schema_loaded(
+            self._on_schema_loaded, project_id=project_id)
+
+    def _on_schema_loaded(self):
+        """
+        Callback that enables the field buttons once the schema is cached.
+        """
+
+        # disable these until the schema is cached
+        self.ui.more_fields_button.setEnabled(True)
+        self.ui.more_fields_button.setToolTip("Select fields to display")
+
+        self.ui.version_fields_button.setEnabled(True)
+        self.ui.version_fields_button.setToolTip("Select fields to display")
 
     def _version_list_field_menu_triggered(self, action):
         """
@@ -891,21 +977,26 @@ class VersionDetailsWidget(QtGui.QWidget):
         Toggled more/less info functionality for the info widget in the
         Notes tab.
 
-        :param checked: True or False
+        :param bool checked: True or False
         """
-        if checked:
-            self.ui.more_info_button.setText("Hide info")
-            self.ui.more_fields_button.show()
+        try:
+            self.setUpdatesEnabled(False)
 
-            for field_name in self._active_fields:
-                self.ui.current_version_card.set_field_visibility(field_name, True)
-        else:
-            self.ui.more_info_button.setText("More info")
-            self.ui.more_fields_button.hide()
+            if checked:
+                self.ui.more_info_button.setText("Hide info")
+                self.ui.more_fields_button.show()
 
-            for field_name in self._active_fields:
-                if field_name not in self._persistent_fields:
-                    self.ui.current_version_card.set_field_visibility(field_name, False)
+                for field_name in self._active_fields:
+                    self.ui.current_version_card.set_field_visibility(field_name, True)
+            else:
+                self.ui.more_info_button.setText("More info")
+                self.ui.more_fields_button.hide()
+
+                for field_name in self._active_fields:
+                    if field_name not in self._persistent_fields:
+                        self.ui.current_version_card.set_field_visibility(field_name, False)
+        finally:
+            self.setUpdatesEnabled(True)
 
     def _selected_version_entities(self):
         """
@@ -1100,24 +1191,27 @@ class VersionDetailsWidget(QtGui.QWidget):
         Handles the dock being redocked in some location. This will
         trigger removing the default title bar.
         """
-        self.parent().setTitleBarWidget(QtGui.QWidget(parent=self))
+        if self._dock_widget:
+            self._dock_widget.setTitleBarWidget(QtGui.QWidget(parent=self))
 
     def _hide_dock(self):
         """
         Hides the parent dock widget.
         """
-        self.parent().hide()
+        if self._dock_widget:
+            self._dock_widget.hide()
 
     def _toggle_floating(self):
         """
         Toggles the parent dock widget's floating status.
         """
-        if self.parent().isFloating():
-            self.parent().setFloating(False)
-            self._dock_location_changed()
-        else:
-            self.parent().setTitleBarWidget(None)
-            self.parent().setFloating(True)
+        if self._dock_widget:
+            if self._dock_widget.isFloating():
+                self._dock_widget.setFloating(False)
+                self._dock_location_changed()
+            else:
+                self._dock_widget.setTitleBarWidget(None)
+                self._dock_widget.setFloating(True)
 
     ##########################################################################
     # version list actions
@@ -1216,13 +1310,23 @@ class VersionDetailsWidget(QtGui.QWidget):
         Field filter method for the EntityFieldMenu. Determines whether the
         given field should be included in the field menu.
 
-        :param field:   The field name being processed.
+        :param str field: The field name being processed.
         """
-        # Allow any fields that we have a widget available for.
-        return bool(
-            self.ui.current_version_card.field_manager.supported_fields(
-                "Version",
-                [field],
-            )
-        )
+
+        # see if we can display this field
+        supported = self.ui.current_version_card.field_manager.supported_fields(
+            "Version", [field])
+
+        if field not in supported:
+            return False
+
+        # get the current version entity's project id
+        entity = self.current_entity or {}
+        project_id = entity.get("project", {}).get("id")
+
+        # make sure the field is visible
+        if not shotgun_globals.field_is_visible("Version", field, project_id=project_id):
+            return False
+
+        return True
 

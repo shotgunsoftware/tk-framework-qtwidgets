@@ -54,7 +54,6 @@ class BubbleWidget(QtGui.QFrame):
             """ % self.palette().color(QtGui.QPalette.Button).name()
         )
 
-
         # create a remove button for the widget.
         # extract a close button icon from the style and use it
         self.remove_button = QtGui.QPushButton(self)
@@ -171,6 +170,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
 
         self.setMouseTracking(True)
         self.viewport().installEventFilter(self)
+        self.setMinimumWidth(180)
 
     def add_bubble(self, bubble):
         """
@@ -248,6 +248,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
         :type object: :class:`~PySide.QtCore.Qt.QEvent`
         :return: True'' if the event was filtered, ''False'' otherwise.
         """
+
         if not isinstance(event, QtGui.QMouseEvent):
             # only pass on mouse events
             return False
@@ -280,6 +281,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
             child_widget = bubble.childAt(bubble_pos)
             if isinstance(child_widget, QtGui.QPushButton):
                 child_widget.click()
+            return True
 
         return False
 

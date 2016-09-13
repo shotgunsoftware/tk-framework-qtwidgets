@@ -14,6 +14,7 @@ from sgtk.platform.qt import QtCore, QtGui
 global_search_completer = sgtk.platform.current_bundle().import_module(
     "global_search_completer")
 
+
 class GlobalSearchWidget(QtGui.QLineEdit):
     """
     A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates
@@ -21,10 +22,15 @@ class GlobalSearchWidget(QtGui.QLineEdit):
     
     :signal: ``entity_selected(str, int)`` - Fires when someone selects an entity inside
             the search results. The returned parameters are entity type and entity id.
+
+    :signal: ``entity_activated(str, int, str)`` - Fires when someone selects an
+        entity inside the search results. Similar to ``entity_selected``, with
+        the addition of the ``name`` of the activated entity being supplied.
     """
 
     # emitted when shotgun has been updated
     entity_selected = QtCore.Signal(str, int)
+    entity_activated = QtCore.Signal(str, int, str)
 
     def __init__(self, parent):
         """
@@ -46,9 +52,11 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         # trigger the completer to popup as text changes
         self.textEdited.connect(self.completer().search)
 
-        # forward the completer's selected signal
+        # forward the completer's activated/selected signals
         self.completer().entity_selected.connect(self.entity_selected.emit)
-        
+        self.completer().entity_activated.connect(self.entity_activated.emit)
+
+
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
