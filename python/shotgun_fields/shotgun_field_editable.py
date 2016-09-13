@@ -12,6 +12,8 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui import resources_rc
 
+# This is the stylesheet applied to edit, apply, and done buttons.
+BUTTON_STYLE = "background-color: none; border: none; min-width: 15px;"
 
 class ShotgunFieldEditable(QtGui.QStackedWidget):
     """
@@ -299,7 +301,7 @@ class _DisplayWidget(QtGui.QWidget):
         self._edit_btn.hide()
 
         # make sure there's never a bg color or border
-        self._edit_btn.setStyleSheet("background-color: none; border: none; min-width: 15px;")
+        self._edit_btn.setStyleSheet(BUTTON_STYLE)
 
         spacer = QtGui.QWidget()
         spacer.setFixedHeight(self._edit_btn.height())
@@ -391,8 +393,8 @@ class _EditorWidget(QtGui.QWidget):
         self._apply_btn.setFocusPolicy(QtCore.Qt.NoFocus)
 
         # make sure there's never a bg color or border
-        self._done_btn.setStyleSheet("background-color: none; border: none; min-width: 15px;")
-        self._apply_btn.setStyleSheet("background-color: none; border: none; min-width: 15px;")
+        self._done_btn.setStyleSheet(BUTTON_STYLE)
+        self._apply_btn.setStyleSheet(BUTTON_STYLE)
 
         if self._editor_widget.sizeHint().height() >= 32:
             btn_layout = QtGui.QVBoxLayout()
