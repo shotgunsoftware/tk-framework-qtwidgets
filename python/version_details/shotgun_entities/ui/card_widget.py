@@ -47,8 +47,6 @@ class Ui_ShotgunEntityCardWidget(object):
         self.field_grid_layout.setVerticalSpacing(2)
         self.field_grid_layout.setObjectName("field_grid_layout")
         self.right_layout.addLayout(self.field_grid_layout)
-        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.right_layout.addItem(spacerItem)
         self.box_layout.addLayout(self.right_layout)
         self.horizontalLayout_2.addLayout(self.box_layout)
         self.horizontalLayout_3.addWidget(self.box)

@@ -120,6 +120,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._note_fields = [self.NOTE_METADATA_FIELD]
         self._attachments_filter = None
         self._dock_widget = None
+        self._pre_submit_callback = None
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
@@ -369,6 +370,23 @@ class VersionDetailsWidget(QtGui.QWidget):
         _set_notes_are_selectable,
     )
 
+    def _get_pre_submit_callback(self):
+        """
+        The pre-submit callback function, if one is registered. If so, this
+        Python callable will be run prior to Note or Reply submission, and
+        will be given the calling :class:`NoteInputWidget` as its first and
+        only argument.
+        """
+        return self.ui.note_stream_widget.pre_submit_callback
+
+    def _set_pre_submit_callback(self, callback):
+        self.ui.note_stream_widget.pre_submit_callback = callback
+
+    pre_submit_callback = property(
+        _get_pre_submit_callback,
+        _set_pre_submit_callback,
+    )
+
     ##########################################################################
     # public methods
 
@@ -591,7 +609,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_hover.png"))
         else:
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_up.png"))
-            if self._requested_entity:
+            # If we have a valid current_entity, be sure the incoming entity
+            # has a different ID.
+            if self._requested_entity and (not self.current_entity or (
+                    self._requested_entity.get("id") != self.current_entity.get("id"))):
                 self.load_data(self._requested_entity)
 
     def show_new_note_dialog(self, modal=True):
@@ -954,19 +975,24 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param bool checked: True or False
         """
-        if checked:
-            self.ui.more_info_button.setText("Hide info")
-            self.ui.more_fields_button.show()
+        try:
+            self.setUpdatesEnabled(False)
 
-            for field_name in self._active_fields:
-                self.ui.current_version_card.set_field_visibility(field_name, True)
-        else:
-            self.ui.more_info_button.setText("More info")
-            self.ui.more_fields_button.hide()
+            if checked:
+                self.ui.more_info_button.setText("Hide info")
+                self.ui.more_fields_button.show()
 
-            for field_name in self._active_fields:
-                if field_name not in self._persistent_fields:
-                    self.ui.current_version_card.set_field_visibility(field_name, False)
+                for field_name in self._active_fields:
+                    self.ui.current_version_card.set_field_visibility(field_name, True)
+            else:
+                self.ui.more_info_button.setText("More info")
+                self.ui.more_fields_button.hide()
+
+                for field_name in self._active_fields:
+                    if field_name not in self._persistent_fields:
+                        self.ui.current_version_card.set_field_visibility(field_name, False)
+        finally:
+            self.setUpdatesEnabled(True)
 
     def _selected_version_entities(self):
         """
@@ -1294,8 +1320,17 @@ class VersionDetailsWidget(QtGui.QWidget):
         entity = self.current_entity or {}
         project_id = entity.get("project", {}).get("id")
 
+        # Detect bubble fields. If the field_name is "sg_sequence.Sequence.code"
+        # then we know we want to get the data type of the "code" field on the
+        # "Sequence" entity type.
+        if "." in field:
+            (entity_type, field_name) = field.split(".")[-2:]
+        else:
+            (entity_type, field_name) = ("Version", field)
+
         # make sure the field is visible
-        if not shotgun_globals.field_is_visible("Version", field, project_id=project_id):
+        if not shotgun_globals.field_is_visible(
+                entity_type, field_name, project_id=project_id):
             return False
 
         return True

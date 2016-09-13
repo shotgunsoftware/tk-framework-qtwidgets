@@ -46,6 +46,7 @@ class ListEditorWidget(QtGui.QComboBox):
         the list and connects the ``activated`` signal.
         """
         self.addItem("")
+
         valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
         self.addItems(valid_values)
 
