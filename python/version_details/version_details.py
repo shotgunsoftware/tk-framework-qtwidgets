@@ -121,6 +121,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._note_fields = [self.NOTE_METADATA_FIELD]
         self._attachments_filter = None
         self._dock_widget = None
+        self._pre_submit_callback = None
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
@@ -368,6 +369,23 @@ class VersionDetailsWidget(QtGui.QWidget):
     notes_are_selectable = property(
         _get_notes_are_selectable,
         _set_notes_are_selectable,
+    )
+
+    def _get_pre_submit_callback(self):
+        """
+        The pre-submit callback function, if one is registered. If so, this
+        Python callable will be run prior to Note or Reply submission, and
+        will be given the calling :class:`NoteInputWidget` as its first and
+        only argument.
+        """
+        return self.ui.note_stream_widget.pre_submit_callback
+
+    def _set_pre_submit_callback(self, callback):
+        self.ui.note_stream_widget.pre_submit_callback = callback
+
+    pre_submit_callback = property(
+        _get_pre_submit_callback,
+        _set_pre_submit_callback,
     )
 
     ##########################################################################
@@ -1324,8 +1342,17 @@ class VersionDetailsWidget(QtGui.QWidget):
         entity = self.current_entity or {}
         project_id = entity.get("project", {}).get("id")
 
+        # Detect bubble fields. If the field_name is "sg_sequence.Sequence.code"
+        # then we know we want to get the data type of the "code" field on the
+        # "Sequence" entity type.
+        if "." in field:
+            (entity_type, field_name) = field.split(".")[-2:]
+        else:
+            (entity_type, field_name) = ("Version", field)
+
         # make sure the field is visible
-        if not shotgun_globals.field_is_visible("Version", field, project_id=project_id):
+        if not shotgun_globals.field_is_visible(
+                entity_type, field_name, project_id=project_id):
             return False
 
         return True
