@@ -88,53 +88,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.ui.content_editable.setFixedHeight(60)
         self.ui.content_editable.setReadOnly(True)
         self.ui.content_editable.document().contentsChanged.connect(self._on_content_editable_content_changed)
-
-    ##############################################################################
-    # overrides
-
-    def mousePressEvent(self, event):
-        """
-        Called when the mouse is clicked in the widget
-        :param event: QEvent
-        """
-        if not self._selected:
-            QtGui.QWidget.mousePressEvent(self, event)
-        else:
-            # Pass to our note content so that scrollbar works
-            self.ui.content_editable.mousePressEvent(event)
-
-    def mouseReleaseEvent(self, event):
-        """
-        Called when the mouse is clicked in the widget
-        :param event: QEvent
-        """
-        if not self._selected:
-            QtGui.QWidget.mouseReleaseEvent(self, event)
-        else:
-            # Pass to our note content so that scrollbar works
-            self.ui.content_editable.mouseReleaseEvent(event)
-
-    def mouseMoveEvent(self, event):
-        """
-        Called when the mouse is clicked in the widget
-        :param event: QEvent
-        """
-        if not self._selected:
-            QtGui.QWidget.mouseMoveEvent(self, event)
-        else:
-            # Pass to our note content so that scrollbar works
-            self.ui.content_editable.mouseMoveEvent(event)
-
-    def mouseDoubleClickEvent(self, event):
-        """
-        Called when the mouse is clicked in the widget
-        :param event: QEvent
-        """
-        if not self._selected:
-            QtGui.QWidget.mouseDoubleClickEvent(self, event)
-        else:
-            # Pass to our note content so that scrollbar works
-            self.ui.content_editable.mouseDoubleClickEvent(event)
+        self._saved_content = ""
 
     ##############################################################################
     # properties
@@ -415,6 +369,8 @@ class NoteWidget(ActivityStreamBaseWidget):
             self.setStyleSheet("#frame { border: 1px solid transparent }")
             self._cancel_note_content_edit()
 
+        self.ui.content_editable.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents, not self.selected)
+
         self.selection_changed.emit(self.selected, self._note_id)
 
     def _add_attachment_group(self, attachments, after_note):
@@ -503,7 +459,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         # events, which means if you expect to select the note widget
         # itself you can't click on the note contents.
         self.ui.content_editable.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
-        
+
         # format note links
         if self.show_note_links:
             html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
