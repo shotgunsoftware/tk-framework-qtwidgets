@@ -87,6 +87,54 @@ class NoteWidget(ActivityStreamBaseWidget):
 
         self.ui.content_editable.setFixedHeight(60)
         self.ui.content_editable.setReadOnly(True)
+        self.ui.content_editable.document().contentsChanged.connect(self._on_content_editable_content_changed)
+
+    ##############################################################################
+    # overrides
+
+    def mousePressEvent(self, event):
+        """
+        Called when the mouse is clicked in the widget
+        :param event: QEvent
+        """
+        if not self._selected:
+            QtGui.QWidget.mousePressEvent(self, event)
+        else:
+            # Pass to our note content so that scrollbar works
+            self.ui.content_editable.mousePressEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        """
+        Called when the mouse is clicked in the widget
+        :param event: QEvent
+        """
+        if not self._selected:
+            QtGui.QWidget.mouseReleaseEvent(self, event)
+        else:
+            # Pass to our note content so that scrollbar works
+            self.ui.content_editable.mouseReleaseEvent(event)
+
+    def mouseMoveEvent(self, event):
+        """
+        Called when the mouse is clicked in the widget
+        :param event: QEvent
+        """
+        if not self._selected:
+            QtGui.QWidget.mouseMoveEvent(self, event)
+        else:
+            # Pass to our note content so that scrollbar works
+            self.ui.content_editable.mouseMoveEvent(event)
+
+    def mouseDoubleClickEvent(self, event):
+        """
+        Called when the mouse is clicked in the widget
+        :param event: QEvent
+        """
+        if not self._selected:
+            QtGui.QWidget.mouseDoubleClickEvent(self, event)
+        else:
+            # Pass to our note content so that scrollbar works
+            self.ui.content_editable.mouseDoubleClickEvent(event)
 
     ##############################################################################
     # properties
@@ -190,7 +238,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         
         # most of the info will appear later, as part of the note
         # data being loaded, so add placeholder
-        self.ui.content_editable.document().setPlainText("Hang on, loading note content...")
+        self._set_note_content_text("Hang on, loading note content...")
 
     def apply_thumbnail(self, data):
         """
@@ -444,7 +492,11 @@ class NoteWidget(ActivityStreamBaseWidget):
         # higher level than this widget, but we're still going to be
         # careful here, because we saw this bug crop up during Cut Support
         # QA.
-        self.ui.content_editable.document().setPlainText(data.get("content", ""));
+        self._set_note_content_text(data.get("content", ""))
+        # The underlying text document's line count is not showing the correct
+        # number immediately after setting the document's text directly. Trigger a refresh
+        # of the widget size with the updated correct line count.
+        QtCore.QTimer.singleShot(0, self._update_note_content_size)
 
         # This allows selections from higher-level layouts to occur. If
         # we don't set this, the label accepts and blocks mouse click
@@ -462,6 +514,21 @@ class NoteWidget(ActivityStreamBaseWidget):
     ##########################################################################
     # internal utilities
 
+    def _set_note_content_text(self, text):
+        self.ui.content_editable.document().setPlainText(text)
+
+    def _update_note_content_size(self):
+        widget = self.ui.content_editable
+        viewable_lines = widget.document().lineCount()
+        max_visible_lines = 4
+        visible_lines = viewable_lines if viewable_lines <= max_visible_lines else max_visible_lines
+        # Adding a constant here for now, this FixedHeight results in the text touching
+        # the bottom of the text frame. Needs investigation.
+        widget.setFixedHeight(widget.fontMetrics().height() * visible_lines + 10)
+
+    def _on_content_editable_content_changed(self):
+        self._update_note_content_size()
+
     def _on_edit_clicked(self):
         self._saved_content = self.ui.content_editable.document().toPlainText()
         self.ui.content_editable.setReadOnly(False)
@@ -475,6 +542,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._cancel_note_content_edit()
 
     def _on_apply_clicked(self):
+        self._update_note_content_size()
         self.ui.content_editable.setReadOnly(True)
         content = self.ui.content_editable.document().toPlainText()
         if self._saved_content != content:

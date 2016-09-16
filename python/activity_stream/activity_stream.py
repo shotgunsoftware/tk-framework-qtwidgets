@@ -1019,7 +1019,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         sg = self._bundle.shotgun
         sg.update("Note", note_id, {"content":content})
         self._data_manager.rescan() # eldebug
-        self._data_manager.rescan(force_activity_stream_update=force_activity_stream_update)
+        self._data_manager.rescan(force_activity_stream_update=True)
 
     def _on_reply_clicked(self, note_id):
         """
@@ -1071,5 +1071,3 @@ class ActivityStreamWidget(QtGui.QWidget):
                 if selected != widget.selected:
                     widget.set_selected(selected)
                     self._note_selected_changed(selected, widget.note_id)
-
-
