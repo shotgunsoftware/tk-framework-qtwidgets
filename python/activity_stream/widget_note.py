@@ -47,6 +47,9 @@ class NoteWidget(ActivityStreamBaseWidget):
     # Fires when the text content of the Note changes
     content_changed = QtCore.Signal(str, int)
 
+    # Fires when the Reply button is clicked
+    reply_clicked = QtCore.Signal(int)
+
     def __init__(self, parent):
         """
         :param parent: QT parent object
@@ -226,12 +229,33 @@ class NoteWidget(ActivityStreamBaseWidget):
                 if data["entity"] == reply_widget.created_by:
                     reply_widget.set_thumbnail(image)
 
-    def add_button_layout(self):
+    def _add_button_layout(self):
         button_layout = QtGui.QHBoxLayout()
         self.ui.reply_layout.addLayout(button_layout)
         button_layout.addStretch(1)
         button_layout.setSpacing(20)
         self._button_layout = button_layout
+
+    def add_buttons(self):
+        self._add_button_layout()
+
+        edit_button = self.add_edit_button()
+        edit_button.clicked.connect(self._on_edit_clicked)
+        self._edit_button = edit_button
+
+        cancel_button = self.add_cancel_button()
+        cancel_button.hide()
+        cancel_button.clicked.connect(self._on_cancel_clicked)
+        self._cancel_button = cancel_button
+
+        apply_button = self.add_apply_button()
+        apply_button.hide()
+        apply_button.clicked.connect(self._on_apply_clicked)
+        self._apply_button = apply_button
+
+        reply_button = self.add_reply_button()
+        reply_button.clicked.connect(self._on_reply_clicked)
+        self._reply_button = reply_button
 
     def add_edit_button(self):
         edit_button = ClickableLabel(self)
@@ -369,6 +393,13 @@ class NoteWidget(ActivityStreamBaseWidget):
             self.setStyleSheet("#frame { border: 1px solid transparent }")
             self._cancel_note_content_edit()
 
+            # Make sure note edit buttons are in default state
+            self._edit_button.show()
+            self._reply_button.show()
+            self._cancel_button.hide()
+            self._apply_button.hide()
+
+
         self.ui.content_editable.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents, not self.selected)
 
         self.selection_changed.emit(self.selected, self._note_id)
@@ -486,6 +517,11 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._update_note_content_size()
 
     def _on_edit_clicked(self):
+        self._edit_button.hide()
+        self._reply_button.hide()
+        self._cancel_button.show()
+        self._apply_button.show()
+
         self._saved_content = self.ui.content_editable.document().toPlainText()
         self.ui.content_editable.setReadOnly(False)
         self.ui.content_editable.setFocus()
@@ -495,12 +531,26 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.ui.content_editable.document().setPlainText(self._saved_content)
 
     def _on_cancel_clicked(self):
+        self._edit_button.show()
+        self._reply_button.show()
+        self._cancel_button.hide()
+        self._apply_button.hide()
+
         self._cancel_note_content_edit()
 
+    def _on_reply_clicked(self):
+        self.reply_clicked.emit(self._note_id)
+
     def _on_apply_clicked(self):
+        self._edit_button.show()
+        self._reply_button.show()
+        self._cancel_button.hide()
+        self._apply_button.hide()
+
         self._update_note_content_size()
         self.ui.content_editable.setReadOnly(True)
         content = self.ui.content_editable.document().toPlainText()
         if self._saved_content != content:
             self.content_changed.emit(content, self._note_id)
             self._saved_content = content
+        self.ui.content_editable.verticalScrollBar().setValue(0)

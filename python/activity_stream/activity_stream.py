@@ -742,30 +742,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             # set up the note data first
             note_widget.set_note_info(note_data)
 
-            # Todo: should this all go in the note widget itself, except for the
-            # event (click) handlers?
-            note_widget.add_button_layout()
-            edit_button = note_widget.add_edit_button()
-            edit_button.clicked.connect(lambda : self._on_edit_clicked(note_id))
-            self._edit_button = edit_button
-            cancel_button = note_widget.add_cancel_button()
-            cancel_button.hide()
-            cancel_button.clicked.connect(lambda : self._on_cancel_clicked(note_id))
-            self._cancel_button = cancel_button
-            apply_button = note_widget.add_apply_button()
-            apply_button.hide()
-            apply_button.clicked.connect(lambda : self._on_apply_clicked(note_id))
-            self._apply_button = apply_button
+            note_widget.add_buttons()
 
+            note_widget.reply_clicked.connect(self._on_note_reply_clicked)
             note_widget.content_changed.connect(self._on_note_content_changed)
 
             # now add replies
             note_widget.add_replies(replies_and_attachments)
-
-            # add a reply button and connect it
-            reply_button = note_widget.add_reply_button()
-            reply_button.clicked.connect(lambda : self._on_reply_clicked(note_id))
-            self._reply_button = reply_button
 
             # get list of users who have replied
             for item in replies_and_attachments:
@@ -891,12 +874,6 @@ class ActivityStreamWidget(QtGui.QWidget):
         else:
             self.note_deselected.emit(note_id)
 
-            # Make sure note edit buttons are in default state
-            self._edit_button.show()
-            self._reply_button.show()
-            self._cancel_button.hide()
-            self._apply_button.hide()
-
     def _process_new_data(self, activity_ids):
         """
         Process new activity ids as they arrive from
@@ -997,31 +974,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._select_on_arrival = entity
         self.entity_created.emit(entity)
 
-    def _on_edit_clicked(self, note_id):
-        self._edit_button.hide()
-        self._reply_button.hide()
-        self._cancel_button.show()
-        self._apply_button.show()
-
-    def _on_cancel_clicked(self, note_id):
-        self._edit_button.show()
-        self._reply_button.show()
-        self._cancel_button.hide()
-        self._apply_button.hide()
-
-    def _on_apply_clicked(self, note_id):
-        self._edit_button.show()
-        self._reply_button.show()
-        self._cancel_button.hide()
-        self._apply_button.hide()
-
     def _on_note_content_changed(self, content, note_id):
         sg = self._bundle.shotgun
         sg.update("Note", note_id, {"content":content})
         self._data_manager.rescan() # eldebug
         self._data_manager.rescan(force_activity_stream_update=True)
 
-    def _on_reply_clicked(self, note_id):
+    def _on_note_reply_clicked(self, note_id):
         """
         Callback when someone clicks reply on a given note
 
