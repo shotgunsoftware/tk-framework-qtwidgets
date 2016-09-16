@@ -314,7 +314,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # If we're forcing the refresh of the entire stream, then we
             # don't care about what's already been pulled. We'll just go
             # on as if we've never queried anything.
-            if not self._activity_data:
+            if not self._activity_data or force_activity_stream_update:
                 highest_id = None
             else:
                 highest_id = max(self._activity_data.keys())
