@@ -613,6 +613,10 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         :param bool modal: Whether the dialog should be shown modally or not.
         """
+        if self._entity_id == None:
+            self._bundle.log_debug("Skipping New Note Dialog - No entity loaded.")
+            return
+
         note_dialog = NoteInputDialog(parent=self)
         note_dialog.entity_created.connect(self._on_entity_created)
         note_dialog.data_updated.connect(self.rescan)
