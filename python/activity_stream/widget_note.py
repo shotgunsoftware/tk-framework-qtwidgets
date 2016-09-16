@@ -43,12 +43,12 @@ class NoteWidget(ActivityStreamBaseWidget):
     selection_changed = QtCore.Signal(bool, int)
 
     # todo docs
-    content_changed = QtCore.Signal(str)
+    content_changed = QtCore.Signal(str, int)
 
     def __init__(self, parent):
         """
         :param parent: QT parent object
-        :type parent: :class:`PySide.QtGui.QWidget`        
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
         # first, call the base class and let it do its thing.
         ActivityStreamBaseWidget.__init__(self, parent)
@@ -73,8 +73,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.set_selected(False)
 
         # make sure clicks propagate upwards in the hierarchy
-        self.ui.content.linkActivated.connect(self._entity_request_from_url)
-        self.ui.header_left.linkActivated.connect(self._entity_request_from_url)    
+        self.ui.header_left.linkActivated.connect(self._entity_request_from_url)
         self.ui.user_thumb.entity_requested.connect(
             lambda entity_type, entity_id: self.entity_requested.emit(
                 entity_type,
@@ -82,8 +81,10 @@ class NoteWidget(ActivityStreamBaseWidget):
             )
         )
 
+        self.ui.content_editable.setFixedHeight(60)
         self.ui.content_editable.setReadOnly(True)
         self.ui.content.hide() # eldebug temp wip
+
 
     ##############################################################################
     # properties
@@ -187,8 +188,8 @@ class NoteWidget(ActivityStreamBaseWidget):
         
         # most of the info will appear later, as part of the note
         # data being loaded, so add placeholder
-        self.ui.content.setText("Hang on, loading note content...")
-        
+        self.ui.content_editable.document().setPlainText("Hang on, loading note content...")
+
     def apply_thumbnail(self, data):
         """
         Populate the UI with the given thumbnail
@@ -291,24 +292,6 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._general_widgets.extend([reply_button, self._button_layout])
         return reply_button
 
-    #def add_reply_button(self):
-    #    reply_button = ClickableLabel(self)
-    #    reply_button.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop)
-    #    reply_button.setSizePolicy(
-    #        QtGui.QSizePolicy(
-    #            QtGui.QSizePolicy.Maximum,
-    #            QtGui.QSizePolicy.Preferred,
-    #        )
-    #    )
-    #    button_layout = QtGui.QHBoxLayout()
-    #    self.ui.reply_layout.addLayout(button_layout)
-    #    button_layout.addStretch(1)
-    #    button_layout.addWidget(reply_button)
-    #    reply_button.setText("Reply to this Note")
-    #    reply_button.setObjectName("reply_button")
-    #    self._general_widgets.extend([reply_button, button_layout])
-    #    return reply_button
-
     def get_attachment_group_widget_ids(self):
         return self._attachment_group_widgets.keys()
     
@@ -317,7 +300,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         Returns an attachment group widget given its id
         """
         return self._attachment_group_widgets[attachment_group_id]
-    
+
     def add_replies(self, replies_and_attachments):
         """
         Add replies and attachment widgets
@@ -458,14 +441,13 @@ class NoteWidget(ActivityStreamBaseWidget):
         # higher level than this widget, but we're still going to be
         # careful here, because we saw this bug crop up during Cut Support
         # QA.
-        #self.ui.content.setText(data.get("content", ""))
         self.ui.content_editable.document().setPlainText(data.get("content", ""));
 
         # This allows selections from higher-level layouts to occur. If
         # we don't set this, the label accepts and blocks mouse click
         # events, which means if you expect to select the note widget
         # itself you can't click on the note contents.
-        self.ui.content.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
+        self.ui.content_editable.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
         
         # format note links
         if self.show_note_links:
@@ -475,12 +457,6 @@ class NoteWidget(ActivityStreamBaseWidget):
 
     ##########################################################################
     # internal utilities
-
-    def _edit_content_toggled(self):
-        """
-        todo
-        """
-        # turn the note content to an editable field
 
     def _on_edit_clicked(self):
         self._saved_content = self.ui.content_editable.document().toPlainText()
@@ -495,5 +471,4 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.ui.content_editable.setReadOnly(True)
         content = self.ui.content_editable.document().toPlainText()
         if self._saved_content != content:
-            self.content_changed.emit(content)
-
+            self.content_changed.emit(content, self._note_id)

@@ -757,7 +757,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             apply_button.clicked.connect(lambda : self._on_apply_clicked(note_id))
             self._apply_button = apply_button
 
-            note_widget.content_changed.connect(lambda : self._on_note_content_changed(note_id=note_id))
+            note_widget.content_changed.connect(self._on_note_content_changed)
 
             # now add replies
             note_widget.add_replies(replies_and_attachments)
@@ -1010,11 +1010,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._apply_button.hide()
 
     def _on_note_content_changed(self, content, note_id):
-        self.ui.content_editable.setReadOnly(True)
-
-        thread_data = self._data_manager.get_note(note_id)
-        # if thread_data:
-        #     sg =
+        sg = self._bundle.shotgun
+        sg.update("Note", note_id, {"content":content})
+        self._data_manager.rescan() # eldebug
+        self._data_manager.rescan(force_activity_stream_update=force_activity_stream_update)
 
     def _on_reply_clicked(self, note_id):
         """
