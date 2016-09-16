@@ -890,7 +890,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             self.note_selected.emit(note_id)
         else:
             self.note_deselected.emit(note_id)
-        
+
+            # Make sure note edit buttons are in default state
+            self._edit_button.show()
+            self._reply_button.show()
+            self._cancel_button.hide()
+            self._apply_button.hide()
+
     def _process_new_data(self, activity_ids):
         """
         Process new activity ids as they arrive from

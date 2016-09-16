@@ -36,13 +36,15 @@ class NoteWidget(ActivityStreamBaseWidget):
         changes. The first argument provided is a boolean based on whether the widget
         was selected or deselected, and the second is the Note entity ID associated
         with the widget.
+    :signal content_changed(str, int): Fires when the text content of the Note changes.
+        The first argument is the new content and the second is the Note entity ID.
     """
 
     # Whether this was a selection or a deselection, followed by the
     # Note entity ID associated with this widget.
     selection_changed = QtCore.Signal(bool, int)
 
-    # todo docs
+    # Fires when the text content of the Note changes
     content_changed = QtCore.Signal(str, int)
 
     def __init__(self, parent):
@@ -81,10 +83,10 @@ class NoteWidget(ActivityStreamBaseWidget):
             )
         )
 
+        self.ui.links.hide()
+
         self.ui.content_editable.setFixedHeight(60)
         self.ui.content_editable.setReadOnly(True)
-        self.ui.content.hide() # eldebug temp wip
-
 
     ##############################################################################
     # properties
@@ -363,9 +365,10 @@ class NoteWidget(ActivityStreamBaseWidget):
             )
         else:
             self.setStyleSheet("#frame { border: 1px solid transparent }")
+            self._cancel_note_content_edit()
 
         self.selection_changed.emit(self.selected, self._note_id)
-        
+
     def _add_attachment_group(self, attachments, after_note):
         """
         
@@ -454,6 +457,7 @@ class NoteWidget(ActivityStreamBaseWidget):
             html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
             links_html = self.__generate_note_links_table(html_link_box_data)
             self.ui.links.setText(links_html)
+            self.ui.links.show()
 
     ##########################################################################
     # internal utilities
@@ -463,12 +467,16 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.ui.content_editable.setReadOnly(False)
         self.ui.content_editable.setFocus()
 
-    def _on_cancel_clicked(self):
+    def _cancel_note_content_edit(self):
         self.ui.content_editable.setReadOnly(True)
         self.ui.content_editable.document().setPlainText(self._saved_content)
+
+    def _on_cancel_clicked(self):
+        self._cancel_note_content_edit()
 
     def _on_apply_clicked(self):
         self.ui.content_editable.setReadOnly(True)
         content = self.ui.content_editable.document().toPlainText()
         if self._saved_content != content:
             self.content_changed.emit(content, self._note_id)
+            self._saved_content = content
