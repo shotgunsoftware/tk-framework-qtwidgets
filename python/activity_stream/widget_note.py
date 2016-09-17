@@ -502,12 +502,13 @@ class NoteWidget(ActivityStreamBaseWidget):
     # internal utilities
 
     def _set_note_content_text(self, text):
+        self._saved_content = text
         self.ui.content_editable.document().setPlainText(text)
 
     def _update_note_content_size(self):
         widget = self.ui.content_editable
         viewable_lines = widget.document().lineCount()
-        max_visible_lines = 4
+        max_visible_lines = 6
         visible_lines = viewable_lines if viewable_lines <= max_visible_lines else max_visible_lines
         # Adding a constant here for now, this FixedHeight results in the text touching
         # the bottom of the text frame. Needs investigation.
