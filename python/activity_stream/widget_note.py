@@ -399,8 +399,9 @@ class NoteWidget(ActivityStreamBaseWidget):
             self._cancel_button.hide()
             self._apply_button.hide()
 
-
         self.ui.content_editable.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents, not self.selected)
+        for reply_widget in self._reply_widgets:
+            reply_widget.set_mouse_input_enabled(self.selected)
 
         self.selection_changed.emit(self.selected, self._note_id)
 
