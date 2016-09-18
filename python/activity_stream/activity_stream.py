@@ -822,7 +822,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                                 self._note_selected_changed(False, w.note_id)
 
                     widget.set_selected(True)
-                    self._note_selected_changed(True, widget.note_id)
+                    self._note_selected_changed(True, data["primary_entity"]["id"])
                     self._select_on_arrival = dict()
 
             else:
