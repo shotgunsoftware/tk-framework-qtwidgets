@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
+  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -924,14 +924,24 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_NEW_NOTE_WIDGET_INDEX</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16777215</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                #stacked_widget {</span>
+<span class="sd">                    border: 1px solid rgba(200, 200, 200, 25%);</span>
+<span class="sd">                    border-radius: 3px;</span>
+<span class="sd">                }</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+            <span class="p">)</span>
              
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EDITOR_WIDGET_INDEX</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16777215</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ATTACHMENTS_WIDGET_INDEX</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16777215</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
              
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;cannot adjust unknown ui mode.&quot;</span><span class="p">)</span>             
@@ -1004,7 +1014,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.4.3',
+            VERSION:'v2.5.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

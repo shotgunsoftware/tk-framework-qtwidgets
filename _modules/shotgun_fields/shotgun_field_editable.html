@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_editable &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
+  <title>shotgun_fields.shotgun_field_editable &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -192,16 +192,20 @@
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 <span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
 
-<span class="c1"># TODO: states for &quot;updating in SG&quot; and &quot;failed to update in SG&quot;</span>
+<span class="c1"># This is the stylesheet applied to edit, apply, and done buttons.</span>
+<span class="n">BUTTON_STYLE</span> <span class="o">=</span> <span class="s2">&quot;background-color: none; border: none; min-width: 15px;&quot;</span>
 
 <div class="viewcode-block" id="ShotgunFieldEditable"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable">[docs]</a><span class="k">class</span> <span class="nc">ShotgunFieldEditable</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStackedWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps ``DISPLAY`` and ``EDITOR`` widgets into a :class:`~PySide.QtGui.QStackedWidget`</span>
 <span class="sd">    instance to allow toggling between the two modes.</span>
+
+<span class="sd">    The class exposes the same public interface as individual field display and</span>
+<span class="sd">    editor widgets.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># TODO: this widget should implement the same interface as regular field widget</span>
-    <span class="c1"># it should emit value_changed, have get/set value, etc.</span>
+    <span class="c1"># forwarded from either of the enclosed widgets values changing</span>
+    <span class="n">value_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">display_widget</span><span class="p">,</span> <span class="n">editor_widget</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -216,6 +220,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFieldEditable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="bp">True</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_display</span> <span class="o">=</span> <span class="n">_DisplayWidget</span><span class="p">(</span><span class="n">display_widget</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span> <span class="o">=</span> <span class="n">_EditorWidget</span><span class="p">(</span><span class="n">editor_widget</span><span class="p">)</span>
 
@@ -224,18 +230,106 @@
 
         <span class="c1"># ---- connect signals</span>
 
+        <span class="c1"># user clicked the button to edit the value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">edit_requested</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
             <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="p">))</span>
 
+        <span class="c1"># user is done editing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">done_editing</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
             <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">))</span>
 
-        <span class="c1">## TODO: insert backend update here (don&#39;t immediately apply the value)</span>
+        <span class="c1"># apply the new value entered into the editor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_apply_value</span><span class="p">)</span>
 
-        <span class="c1"># TODO: forward value_changed signal</span>
-
+        <span class="c1"># react to the current widget being changed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currentChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_current_changed</span><span class="p">)</span>
+
+        <span class="c1"># forward the value change signal from the display widget value changing.</span>
+        <span class="c1"># because the editor widget currently applies its changed value to the</span>
+        <span class="c1"># display widget, this should handle a value change from either widget.</span>
+        <span class="c1"># if this widget is modified to wait on applying the new value until</span>
+        <span class="c1"># after SG has been update, this logic will need to change.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ShotgunFieldEditable.destroy"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call to ensure proper destruction of contained widgets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldEditable.enable_editing"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.enable_editing">[docs]</a>    <span class="k">def</span> <span class="nf">enable_editing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For consistency, allow the calling code to enable/disable editing.</span>
+
+<span class="sd">        Calling this method with a value of ``False`` will force the display</span>
+<span class="sd">        widget to be shown and the edit button to be hidden. A value of ``True``</span>
+<span class="sd">        will allow the edit button to be displayed again on mouse over.</span>
+
+<span class="sd">        :param enable: ``True`` if editing should be enabled, ``False`` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">enable</span>
+
+        <span class="c1"># if editing turned off, force the display widget to be shown</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">)</span>
+
+        <span class="c1"># make sure display widget follows</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldEditable.get_entity"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_entity">[docs]</a>    <span class="k">def</span> <span class="nf">get_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the entity of the widget (display or editor) currently being shown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">get_entity</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">get_entity</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldEditable.get_entity_type"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_entity_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_entity_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the entity type of the widget (display or editor) currently being shown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">get_entity_type</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">get_entity_type</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldEditable.get_field_name"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_field_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_field_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the field name of the widget (display or editor) currently being shown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">get_field_name</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">get_field_name</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldEditable.get_value"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value of the widget (display or editor) currently being shown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldEditable.set_value"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.set_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value of the widget (display or editor) currently being shown.</span>
+
+<span class="sd">        .. note:: Calling this method while the editor is displayed will trigger</span>
+<span class="sd">            the value to be accepted and applied. The display widget will</span>
+<span class="sd">            automatically be shown.</span>
+
+<span class="sd">        This widget&#39;s ``value_changed()`` signal will also be emitted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -286,6 +380,9 @@
 <span class="sd">    Adds a &quot;no edit&quot; icon when the supplied ``DISPLAY`` widget is hovered.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># forward from the wrapped widget</span>
+    <span class="n">value_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">display_widget</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the widget.</span>
@@ -321,6 +418,19 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
+        <span class="c1"># forward the display widget&#39;s value changed signal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_widget</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ShotgunFieldNotEditable.enable_editing"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldNotEditable.enable_editing">[docs]</a>    <span class="k">def</span> <span class="nf">enable_editing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method exists to allow this object to conform to the ``EDITABLE``</span>
+<span class="sd">        widget protocol.</span>
+
+<span class="sd">        Because this is a field that isn&#39;t editable however, this method does</span>
+<span class="sd">        nothing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
     <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter mouse enter/leave events in order to show/hide the &quot;no edit&quot; label.</span>
@@ -330,7 +440,14 @@
         <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Leave</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_no_edit_lbl</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="bp">False</span></div>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Routes any attributes not found on the widget to the fields widget that</span>
+<span class="sd">        it is wrapping.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_display_widget</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
 
 
 <span class="k">class</span> <span class="nc">_DisplayWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
@@ -353,6 +470,8 @@
 
         <span class="nb">super</span><span class="p">(</span><span class="n">_DisplayWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="bp">True</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_display_widget</span> <span class="o">=</span> <span class="n">display_widget</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">()</span>
@@ -362,7 +481,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
         <span class="c1"># make sure there&#39;s never a bg color or border</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: none; border: none;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">BUTTON_STYLE</span><span class="p">)</span>
 
         <span class="n">spacer</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
         <span class="n">spacer</span><span class="o">.</span><span class="n">setFixedHeight</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
@@ -389,12 +508,29 @@
 <span class="sd">        Filter out mouse enter/leave events in order to show/hide the edit button.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Enter</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Leave</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="c1"># only worry about showing the edit button if editing is enabled</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Enter</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Leave</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">enable_editing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calling this method with a value of ``False`` will force the edit button</span>
+<span class="sd">        to be hidden. A value of ``True`` will allow the edit button to be</span>
+<span class="sd">        displayed again on mouse over.</span>
+
+<span class="sd">        :param enable: ``True`` if editing should be enabled, ``False`` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="n">enable</span>
+
+        <span class="c1"># force hide the edit button if editing turned off</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_edit_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">display_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -437,8 +573,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
 
         <span class="c1"># make sure there&#39;s never a bg color or border</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_done_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: none; border: none;&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: none; border: none;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_done_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">BUTTON_STYLE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">BUTTON_STYLE</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor_widget</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">32</span><span class="p">:</span>
             <span class="n">btn_layout</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
@@ -506,6 +642,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">done_editing</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
+
+
 </pre></div>
 
            </div>
@@ -538,7 +676,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.4.3',
+            VERSION:'v2.5.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

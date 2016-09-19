@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Field Widgets &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
+  <title>Shotgun Field Widgets &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="index.html"/>
         <link rel="next" title="Shotgun Menus" href="shotgun_menus.html"/>
         <link rel="prev" title="Screen Capture Widget" href="screen_grab.html"/> 
 
@@ -165,7 +165,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -257,7 +257,7 @@ provided by the class</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; Parent object</li>
-<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.1)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Optional Task manager.  If this is not passed in one will be created
+<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Optional Task manager.  If this is not passed in one will be created
 when the object is initialized.</li>
 </ul>
 </td>
@@ -359,7 +359,7 @@ to display an icon (or not) based on the field value rather than a standard
 field from the given entity type.  This delegate is designed to be used by items
 from a shotgun_model&#8217;s additional columns.  It assumes that the value for the field
 will be stored in the <code class="docutils literal"><span class="pre">SG_ASSOCIATED_FIELD_ROLE</span></code>
-(via the <a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv4.4.1)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>) role of
+(via the <a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv4.4.5)"><code class="xref py py-class docutils literal"><span class="pre">ShotgunModel</span></code></a>) role of
 its current index.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -381,7 +381,7 @@ its current index.</p>
 
 <dl class="method">
 <dt id="shotgun_fields.ShotgunFieldManager.create_label">
-<code class="descname">create_label</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_manager.html#ShotgunFieldManager.create_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.ShotgunFieldManager.create_label" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_label</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em>, <em>prefix=None</em>, <em>postfix=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_manager.html#ShotgunFieldManager.create_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.ShotgunFieldManager.create_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a widget that can be used as a label for the given field.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -390,6 +390,8 @@ its current index.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>sg_entity_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Shotgun entity type</li>
 <li><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Shotgun field name</li>
+<li><strong>prefix</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Additional text to prefix the field label.</li>
+<li><strong>postfix</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Additional text to postfix the field label.</li>
 </ul>
 </td>
 </tr>
@@ -513,7 +515,7 @@ type that the class will be responsible for displaying or editing.</li>
 <p>The widgets shown above will be used by any SG field for the specified type.
 It is also possible to register widgets that are used only for specific
 fields on specific entities. To achieve this, use the <code class="docutils literal"><span class="pre">_ENTITY_FIELDS</span></code>
-class memeber to define a list of tuples that explicitly defined the entity
+class member to define a list of tuples that explicitly defined the entity
 fields the widget should be used to display.</p>
 <p>Example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SpecialFloatDisplayWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
@@ -548,7 +550,7 @@ constructor for the class&#8217; superclass.</li>
 <li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a>) &#8211; Parent widget</li>
 <li><strong>entity</strong> (<em>Whatever is returned by the Shotgun API for this field</em>) &#8211; The Shotgun entity dictionary to pull the field value from.</li>
 <li><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Shotgun field name</li>
-<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.1)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; The task manager the widget will use if it needs to run a task</li>
+<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; The task manager the widget will use if it needs to run a task</li>
 </ul>
 </td>
 </tr>
@@ -668,6 +670,45 @@ and display.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.checkbox_widget.CheckBoxWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.checkbox_widget.CheckBoxWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.checkbox_widget.CheckBoxWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.checkbox_widget.CheckBoxWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.checkbox_widget.CheckBoxWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.checkbox_widget.CheckBoxWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.checkbox_widget.CheckBoxWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.checkbox_widget.CheckBoxWidget.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -707,6 +748,45 @@ and display.</p>
 <em class="property">class </em><code class="descclassname">shotgun_fields.currency_widget.</code><code class="descname">CurrencyWidget</code><a class="reference internal" href="_modules/shotgun_fields/currency_widget.html#CurrencyWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">currency</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.currency_widget.CurrencyWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.currency_widget.CurrencyWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.currency_widget.CurrencyWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.currency_widget.CurrencyWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -758,6 +838,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.currency_widget.CurrencyEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.currency_widget.CurrencyEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.currency_widget.CurrencyEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.currency_widget.CurrencyEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.currency_widget.CurrencyEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -784,6 +903,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 <em class="property">class </em><code class="descclassname">shotgun_fields.date_and_time_widget.</code><code class="descname">DateAndTimeWidget</code><a class="reference internal" href="_modules/shotgun_fields/date_and_time_widget.html#DateAndTimeWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">date_time</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.date_and_time_widget.DateAndTimeWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.date_and_time_widget.DateAndTimeWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.date_and_time_widget.DateAndTimeWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.date_and_time_widget.DateAndTimeWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -835,6 +993,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.date_and_time_widget.DateAndTimeEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.date_and_time_widget.DateAndTimeEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.date_and_time_widget.DateAndTimeEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.date_and_time_widget.DateAndTimeEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_and_time_widget.DateAndTimeEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -861,6 +1058,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 <em class="property">class </em><code class="descclassname">shotgun_fields.date_widget.</code><code class="descname">DateWidget</code><a class="reference internal" href="_modules/shotgun_fields/date_widget.html#DateWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.date_widget.DateWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">date</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.date_widget.DateWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_widget.DateWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.date_widget.DateWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_widget.DateWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.date_widget.DateWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_widget.DateWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.date_widget.DateWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_widget.DateWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -912,6 +1148,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.date_widget.DateEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_widget.DateEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.date_widget.DateEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_widget.DateEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.date_widget.DateEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_widget.DateEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.date_widget.DateEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.date_widget.DateEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -949,6 +1224,45 @@ hours in a workday, etc.</p>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.ElidedLabelBaseWidget" title="shotgun_fields.label_base_widget.ElidedLabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.ElidedLabelBaseWidget</span></code></a></p>
 <p>Display an <code class="docutils literal"><span class="pre">entity</span></code> field value as returned by the Shotgun API.</p>
 <dl class="method">
+<dt id="shotgun_fields.entity_widget.EntityWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.entity_widget.EntityWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.entity_widget.EntityWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.entity_widget.EntityWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.entity_widget.EntityWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.entity_widget.EntityWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.entity_widget.EntityWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.entity_widget.EntityWidget.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -985,12 +1299,60 @@ hours in a workday, etc.</p>
 <p>Allows editing of a <code class="docutils literal"><span class="pre">entity</span></code> field value as returned by the Shotgun API.</p>
 <dl class="method">
 <dt id="shotgun_fields.entity_widget.EntityEditorWidget.get_value">
-<code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.entity_widget.EntityEditorWidget.get_value" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/entity_widget.html#EntityEditorWidget.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.entity_widget.EntityEditorWidget.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current valid value for this widget.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.entity_widget.EntityEditorWidget.keyPressEvent">
+<code class="descname">keyPressEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/entity_widget.html#EntityEditorWidget.keyPressEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.entity_widget.EntityEditorWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides shortcuts for applying modified values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QKeyEvent.html#PySide.QtGui.QKeyEvent" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QKeyEvent</span></code></a>) &#8211; The key press event object</td>
+</tr>
+</tbody>
+</table>
+<p>Ctrl+Enter or Ctrl+Return will trigger the emission of the <code class="docutils literal"><span class="pre">value_changed</span></code>
+signal.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.entity_widget.EntityEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.entity_widget.EntityEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The internal value being displayed by the widget.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.entity_widget.EntityEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.entity_widget.EntityEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.entity_widget.EntityEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.entity_widget.EntityEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
 </tr>
 </tbody>
 </table>
@@ -1048,6 +1410,45 @@ and display.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.file_link_widget.FileLinkWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.file_link_widget.FileLinkWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.file_link_widget.FileLinkWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.file_link_widget.FileLinkWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.file_link_widget.FileLinkWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.file_link_widget.FileLinkWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.file_link_widget.FileLinkWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.file_link_widget.FileLinkWidget.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -1087,6 +1488,45 @@ and display.</p>
 <em class="property">class </em><code class="descclassname">shotgun_fields.float_widget.</code><code class="descname">FloatWidget</code><a class="reference internal" href="_modules/shotgun_fields/float_widget.html#FloatWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.float_widget.FloatWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">float</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.float_widget.FloatWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.float_widget.FloatWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.float_widget.FloatWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.float_widget.FloatWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.float_widget.FloatWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.float_widget.FloatWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.float_widget.FloatWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.float_widget.FloatWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1138,6 +1578,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.float_widget.FloatEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.float_widget.FloatEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.float_widget.FloatEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.float_widget.FloatEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.float_widget.FloatEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.float_widget.FloatEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.float_widget.FloatEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.float_widget.FloatEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -1164,6 +1643,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 <em class="property">class </em><code class="descclassname">shotgun_fields.footage_widget.</code><code class="descname">FootageWidget</code><a class="reference internal" href="_modules/shotgun_fields/footage_widget.html#FootageWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.footage_widget.FootageWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">footage</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.footage_widget.FootageWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.footage_widget.FootageWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.footage_widget.FootageWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.footage_widget.FootageWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.footage_widget.FootageWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.footage_widget.FootageWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.footage_widget.FootageWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.footage_widget.FootageWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1209,6 +1727,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The internal value being displayed by the widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.footage_widget.FootageEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.footage_widget.FootageEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.footage_widget.FootageEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.footage_widget.FootageEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.footage_widget.FootageEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.footage_widget.FootageEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
 </tr>
 </tbody>
 </table>
@@ -1277,6 +1834,61 @@ and display.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.image_widget.ImageWidget.set_value">
+<code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/image_widget.html#ImageWidget.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.image_widget.ImageWidget.set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the current image with the one supplied.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; The value returned by the Shotgun API to be displayed.
+In delegate mode, this value can also be an existing <code class="docutils literal"><span class="pre">QPixmap</span></code>
+object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.image_widget.ImageWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.image_widget.ImageWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.image_widget.ImageWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.image_widget.ImageWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.image_widget.ImageWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.image_widget.ImageWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.image_widget.ImageWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.image_widget.ImageWidget.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -1284,21 +1896,6 @@ and display.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The internal value being displayed by the widget.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_fields.image_widget.ImageWidget.set_value">
-<code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.image_widget.ImageWidget.set_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the value displayed by the widget.</p>
-<p>Calling this method will result in <code class="docutils literal"><span class="pre">value_changed</span></code> signal being emitted.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; The value displayed by the widget</td>
 </tr>
 </tbody>
 </table>
@@ -1316,6 +1913,45 @@ and display.</p>
 <em class="property">class </em><code class="descclassname">shotgun_fields.list_widget.</code><code class="descname">ListWidget</code><a class="reference internal" href="_modules/shotgun_fields/list_widget.html#ListWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.list_widget.ListWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">list</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.list_widget.ListWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.list_widget.ListWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.list_widget.ListWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.list_widget.ListWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.list_widget.ListWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.list_widget.ListWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.list_widget.ListWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.list_widget.ListWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1359,6 +1995,45 @@ and display.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The internal value being displayed by the widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.list_widget.ListEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.list_widget.ListEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.list_widget.ListEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.list_widget.ListEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.list_widget.ListEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.list_widget.ListEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
 </tr>
 </tbody>
 </table>
@@ -1448,6 +2123,45 @@ and display.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -1474,6 +2188,45 @@ and display.</p>
 <em class="property">class </em><code class="descclassname">shotgun_fields.number_widget.</code><code class="descname">NumberWidget</code><a class="reference internal" href="_modules/shotgun_fields/number_widget.html#NumberWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.number_widget.NumberWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">number</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.number_widget.NumberWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.number_widget.NumberWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.number_widget.NumberWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.number_widget.NumberWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.number_widget.NumberWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.number_widget.NumberWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.number_widget.NumberWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.number_widget.NumberWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1525,6 +2278,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.number_widget.NumberEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.number_widget.NumberEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.number_widget.NumberEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.number_widget.NumberEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.number_widget.NumberEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.number_widget.NumberEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.number_widget.NumberEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.number_widget.NumberEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -1551,6 +2343,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 <em class="property">class </em><code class="descclassname">shotgun_fields.percent_widget.</code><code class="descname">PercentWidget</code><a class="reference internal" href="_modules/shotgun_fields/percent_widget.html#PercentWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.percent_widget.PercentWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">percent</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.percent_widget.PercentWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.percent_widget.PercentWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.percent_widget.PercentWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.percent_widget.PercentWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.percent_widget.PercentWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.percent_widget.PercentWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.percent_widget.PercentWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.percent_widget.PercentWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1602,6 +2433,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.percent_widget.PercentEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.percent_widget.PercentEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.percent_widget.PercentEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.percent_widget.PercentEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.percent_widget.PercentEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.percent_widget.PercentEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.percent_widget.PercentEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.percent_widget.PercentEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -1628,6 +2498,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 <em class="property">class </em><code class="descclassname">shotgun_fields.status_list_widget.</code><code class="descname">StatusListWidget</code><a class="reference internal" href="_modules/shotgun_fields/status_list_widget.html#StatusListWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.LabelBaseWidget" title="shotgun_fields.label_base_widget.LabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.LabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">status_list</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.status_list_widget.StatusListWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.status_list_widget.StatusListWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.status_list_widget.StatusListWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.status_list_widget.StatusListWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1677,6 +2586,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.status_list_widget.StatusListEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.status_list_widget.StatusListEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.status_list_widget.StatusListEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.status_list_widget.StatusListEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.status_list_widget.StatusListEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -1703,6 +2651,45 @@ value to be applied and the <code class="docutils literal"><span class="pre">val
 <em class="property">class </em><code class="descclassname">shotgun_fields.tags_widget.</code><code class="descname">TagsWidget</code><a class="reference internal" href="_modules/shotgun_fields/tags_widget.html#TagsWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.tags_widget.TagsWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.ElidedLabelBaseWidget" title="shotgun_fields.label_base_widget.ElidedLabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.ElidedLabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">tag_list</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.tags_widget.TagsWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.tags_widget.TagsWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.tags_widget.TagsWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.tags_widget.TagsWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.tags_widget.TagsWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.tags_widget.TagsWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.tags_widget.TagsWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.tags_widget.TagsWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1748,6 +2735,45 @@ not currently support editing fields of this type.</p>
 <em class="property">class </em><code class="descclassname">shotgun_fields.text_widget.</code><code class="descname">TextWidget</code><a class="reference internal" href="_modules/shotgun_fields/text_widget.html#TextWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.text_widget.TextWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.ElidedLabelBaseWidget" title="shotgun_fields.label_base_widget.ElidedLabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.ElidedLabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">text</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.text_widget.TextWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.text_widget.TextWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.text_widget.TextWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.text_widget.TextWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.text_widget.TextWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.text_widget.TextWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.text_widget.TextWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.text_widget.TextWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1797,6 +2823,45 @@ not currently support editing fields of this type.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="shotgun_fields.text_widget.TextEditorWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.text_widget.TextEditorWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.text_widget.TextEditorWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.text_widget.TextEditorWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.text_widget.TextEditorWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.text_widget.TextEditorWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="shotgun_fields.text_widget.TextEditorWidget.set_value">
 <code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.text_widget.TextEditorWidget.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value displayed by the widget.</p>
@@ -1832,6 +2897,45 @@ is not yet API support for an associated <code class="docutils literal"><span cl
 <em class="property">class </em><code class="descclassname">shotgun_fields.url_template_widget.</code><code class="descname">UrlTemplateWidget</code><a class="reference internal" href="_modules/shotgun_fields/url_template_widget.html#UrlTemplateWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.url_template_widget.UrlTemplateWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#shotgun_fields.label_base_widget.ElidedLabelBaseWidget" title="shotgun_fields.label_base_widget.ElidedLabelBaseWidget"><code class="xref py py-class docutils literal"><span class="pre">shotgun_fields.label_base_widget.ElidedLabelBaseWidget</span></code></a></p>
 <p>Display a <code class="docutils literal"><span class="pre">url_template</span></code> field value as returned by the Shotgun API.</p>
+<dl class="method">
+<dt id="shotgun_fields.url_template_widget.UrlTemplateWidget.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.url_template_widget.UrlTemplateWidget.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.url_template_widget.UrlTemplateWidget.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.url_template_widget.UrlTemplateWidget.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity type associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.url_template_widget.UrlTemplateWidget.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.url_template_widget.UrlTemplateWidget.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The field name associated with the field widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="shotgun_fields.url_template_widget.UrlTemplateWidget.get_value">
 <code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_fields.url_template_widget.UrlTemplateWidget.get_value" title="Permalink to this definition">¶</a></dt>
@@ -1887,6 +2991,8 @@ and the the display widget will be shown with the new value.</p>
 <dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QStackedWidget.html#PySide.QtGui.QStackedWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QStackedWidget</span></code></a></p>
 <p>Wraps <code class="docutils literal"><span class="pre">DISPLAY</span></code> and <code class="docutils literal"><span class="pre">EDITOR</span></code> widgets into a <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QStackedWidget.html#PySide.QtGui.QStackedWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QStackedWidget</span></code></a>
 instance to allow toggling between the two modes.</p>
+<p>The class exposes the same public interface as individual field display and
+editor widgets.</p>
 <p>Initialize the editable widget with the display and editor instances.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1901,6 +3007,66 @@ instance to allow toggling between the two modes.</p>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_editable.html#ShotgunFieldEditable.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call to ensure proper destruction of contained widgets.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.enable_editing">
+<code class="descname">enable_editing</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_editable.html#ShotgunFieldEditable.enable_editing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.enable_editing" title="Permalink to this definition">¶</a></dt>
+<dd><p>For consistency, allow the calling code to enable/disable editing.</p>
+<p>Calling this method with a value of <code class="docutils literal"><span class="pre">False</span></code> will force the display
+widget to be shown and the edit button to be hidden. A value of <code class="docutils literal"><span class="pre">True</span></code>
+will allow the edit button to be displayed again on mouse over.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enable</strong> &#8211; <code class="docutils literal"><span class="pre">True</span></code> if editing should be enabled, <code class="docutils literal"><span class="pre">False</span></code> otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_entity">
+<code class="descname">get_entity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_editable.html#ShotgunFieldEditable.get_entity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the entity of the widget (display or editor) currently being shown.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_editable.html#ShotgunFieldEditable.get_entity_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the entity type of the widget (display or editor) currently being shown.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_field_name">
+<code class="descname">get_field_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_editable.html#ShotgunFieldEditable.get_field_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the field name of the widget (display or editor) currently being shown.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_editable.html#ShotgunFieldEditable.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the widget (display or editor) currently being shown.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.set_value">
+<code class="descname">set_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_editable.html#ShotgunFieldEditable.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of the widget (display or editor) currently being shown.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Calling this method while the editor is displayed will trigger
+the value to be accepted and applied. The display widget will
+automatically be shown.</p>
+</div>
+<p>This widget&#8217;s <code class="docutils literal"><span class="pre">value_changed()</span></code> signal will also be emitted.</p>
+</dd></dl>
+
 </dd></dl>
 
 <p>If an <code class="docutils literal"><span class="pre">EDITABLE</span></code> type is requested for a field that has no registered editor
@@ -1926,6 +3092,15 @@ that the field is not editable.</p>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="shotgun_fields.shotgun_field_editable.ShotgunFieldNotEditable.enable_editing">
+<code class="descname">enable_editing</code><span class="sig-paren">(</span><em>enable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_editable.html#ShotgunFieldNotEditable.enable_editing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.shotgun_field_editable.ShotgunFieldNotEditable.enable_editing" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method exists to allow this object to conform to the <code class="docutils literal"><span class="pre">EDITABLE</span></code>
+widget protocol.</p>
+<p>Because this is a field that isn&#8217;t editable however, this method does
+nothing.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -2477,18 +3652,13 @@ model item specified by the model index.</p>
 <div class="section" id="todos-known-issues">
 <h2>TODOs &amp; Known Issues<a class="headerlink" href="#todos-known-issues" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Pressing <code class="docutils literal"><span class="pre">Enter</span></code> or <code class="docutils literal"><span class="pre">Return</span></code> in an entity editor does not always apply the completed value</li>
 <li>Bubble widget does not display characters properly in some scenarios</li>
 <li>Timecode &amp; Duration widgets are on hold until python API changes make them feasible</li>
 <li>Tag edit widget partially done but also awaiting python API edit ability</li>
 <li><code class="docutils literal"><span class="pre">ElidedLabel</span></code> causes draw lagging when used in editable widget in Grid/Form layout</li>
-<li>Global completer with QTextEdit, clicking on popup item does not emit activated (keyboard nav works fine)</li>
 <li>The note input widget should be updated to use the global completer</li>
 <li>The status list widget editor should also use colors for visual hint like display widget</li>
-<li>Retrieving reliable field delegates from the field manager is in progress</li>
-<li>Editor interaction with the shotgun model is still to come</li>
 <li>shotgun model to auto update SG on changes still to come</li>
-<li>shotgun tableview using fields widgets still in progress</li>
 </ul>
 </div>
 </div>
@@ -2533,7 +3703,7 @@ model item specified by the model index.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.4.3',
+            VERSION:'v2.5.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

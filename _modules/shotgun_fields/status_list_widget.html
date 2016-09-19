@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.status_list_widget &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
+  <title>shotgun_fields.status_list_widget &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -240,7 +240,7 @@
 <span class="sd">        Called by the metaclass during initialization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">125</span><span class="p">)</span>
 
         <span class="n">valid_values</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_valid_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">valid_values</span><span class="p">:</span>
@@ -249,6 +249,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
         <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSizeAdjustPolicy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">AdjustToContents</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_begin_edit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -312,7 +314,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.4.3',
+            VERSION:'v2.5.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

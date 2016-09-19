@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.multi_entity_widget &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
+  <title>shotgun_fields.multi_entity_widget &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -194,6 +194,7 @@
 <span class="kn">from</span> <span class="nn">.bubble_widget</span> <span class="kn">import</span> <span class="n">BubbleEditWidget</span><span class="p">,</span> <span class="n">BubbleWidget</span>
 <span class="kn">from</span> <span class="nn">.entity_widget</span> <span class="kn">import</span> <span class="n">EntityWidget</span>
 <span class="kn">from</span> <span class="nn">.shotgun_field_meta</span> <span class="kn">import</span> <span class="n">ShotgunFieldMeta</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="kn">import</span> <span class="n">check_project_search_supported</span>
 
 <span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
 <span class="n">global_search_completer</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;global_search_completer&quot;</span><span class="p">)</span>
@@ -285,7 +286,8 @@
         <span class="c1"># http://doc.qt.io/qt-4.8/qt-tools-customcompleter-example.html</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_show_completer</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">popup</span><span class="p">()</span><span class="o">.</span><span class="n">isVisible</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_show_completer</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MultiEntityEditorWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">focusInEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MultiEntityEditorWidget.get_value"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.multi_entity_widget.MultiEntityEditorWidget.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -331,6 +333,10 @@
             <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Tab</span><span class="p">,</span>
         <span class="p">]:</span>
             <span class="n">entity_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">get_current_result</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">entity_dict</span><span class="p">:</span>
+                <span class="c1"># nothing current, get the first result</span>
+                <span class="n">entity_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">get_first_result</span><span class="p">()</span>
+
             <span class="k">if</span> <span class="n">entity_dict</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add_entity</span><span class="p">(</span><span class="n">entity_dict</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">clear_typed_text</span><span class="p">()</span>
@@ -347,16 +353,22 @@
 <span class="sd">        valid types accepted by the widget.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sg_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">shotgun</span>
+
+        <span class="c1"># TODO: remove this check and backward compatibility layer. added 09/16</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_project_search_supported</span> <span class="o">=</span> <span class="n">check_project_search_supported</span><span class="p">(</span><span class="n">sg_connection</span><span class="p">)</span>
+
         <span class="n">valid_types</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c1"># get this field&#39;s schema</span>
         <span class="k">for</span> <span class="n">entity_type</span> <span class="ow">in</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_valid_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">):</span>
-            <span class="c1"># TODO: the python-api does not like doing text search across projects.</span>
-            <span class="c1"># This is being addressed in a ticket internally. For now, ignore the</span>
-            <span class="c1"># project type.</span>
-            <span class="k">if</span> <span class="n">entity_type</span> <span class="o">==</span> <span class="s2">&quot;Project&quot;</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="n">valid_types</span><span class="p">[</span><span class="n">entity_type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">entity_type</span> <span class="o">==</span> <span class="s2">&quot;Project&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_project_search_supported</span><span class="p">:</span>
+                <span class="c1"># there is an issue querying Project entities via text_search</span>
+                <span class="c1"># with older versions of SG. for now, don&#39;t restrict the editor</span>
+                 <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">valid_types</span><span class="p">[</span><span class="n">entity_type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span> <span class="o">=</span> <span class="n">global_search_completer</span><span class="o">.</span><span class="n">GlobalSearchCompleter</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bg_task_manager</span><span class="p">)</span>
@@ -399,6 +411,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">entity_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">popup</span><span class="p">()</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_typed_text</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_entity</span><span class="p">(</span><span class="n">entity_dict</span><span class="p">)</span>
 
@@ -415,7 +428,7 @@
         <span class="n">typed_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_typed_text</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isVisible</span><span class="p">()</span> <span class="ow">and</span> <span class="n">typed_text</span><span class="p">:</span>
             <span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursorRect</span><span class="p">()</span>
-            <span class="n">rect</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">())</span>
+            <span class="n">rect</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
             <span class="n">rect</span><span class="o">.</span><span class="n">moveLeft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">())</span>
             <span class="n">rect</span><span class="o">.</span><span class="n">moveTop</span><span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_completer</span><span class="o">.</span><span class="n">setCompletionPrefix</span><span class="p">(</span><span class="n">typed_text</span><span class="p">)</span>
@@ -454,7 +467,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.4.3',
+            VERSION:'v2.5.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

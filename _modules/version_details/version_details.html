@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
+  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -299,6 +299,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_note_fields</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">NOTE_METADATA_FIELD</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="bp">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_VersionDetailsWidget</span><span class="p">()</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -528,7 +530,42 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="n">regex</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">attachments_filter</span> <span class="o">=</span> <span class="n">regex</span>
 
-    <span class="n">attachments_filter</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_attachments_filter</span><span class="p">,</span> <span class="n">_set_attachments_filter</span><span class="p">)</span>
+    <span class="n">attachments_filter</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_attachments_filter</span><span class="p">,</span>
+        <span class="n">_set_attachments_filter</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If True, note entity widgets in the activity stream will be selectable</span>
+<span class="sd">        by the user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">notes_are_selectable</span>
+
+    <span class="k">def</span> <span class="nf">_set_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">notes_are_selectable</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="n">notes_are_selectable</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_notes_are_selectable</span><span class="p">,</span>
+        <span class="n">_set_notes_are_selectable</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The pre-submit callback function, if one is registered. If so, this</span>
+<span class="sd">        Python callable will be run prior to Note or Reply submission, and</span>
+<span class="sd">        will be given the calling :class:`NoteInputWidget` as its first and</span>
+<span class="sd">        only argument.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">pre_submit_callback</span>
+
+    <span class="k">def</span> <span class="nf">_set_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="n">callback</span>
+
+    <span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_pre_submit_callback</span><span class="p">,</span>
+        <span class="n">_set_pre_submit_callback</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="c1">##########################################################################</span>
     <span class="c1"># public methods</span>
@@ -744,7 +781,7 @@
 <span class="sd">        the panel is unpinned at a later time, the most recent rejected</span>
 <span class="sd">        entity update will be executed at that time.</span>
 
-<span class="sd">        :param checked: True or False</span>
+<span class="sd">        :param bool checked: True or False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pinned</span> <span class="o">=</span> <span class="n">checked</span>
 
@@ -752,15 +789,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">pin_button</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/version_details/tack_hover.png&quot;</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">pin_button</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/version_details/tack_up.png&quot;</span><span class="p">))</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span><span class="p">:</span>
+            <span class="c1"># If we have a valid current_entity, be sure the incoming entity</span>
+            <span class="c1"># has a different ID.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span> <span class="ow">or</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.show_new_note_dialog"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows a dialog that allows the user to input a new note.</span>
 
-<span class="sd">        :param modal:   Whether the dialog should be shown modally or not.</span>
-<span class="sd">        :type modal:    bool</span>
+<span class="sd">        :param bool modal: Whether the dialog should be shown modally or not.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">show_new_note_dialog</span><span class="p">(</span><span class="n">modal</span><span class="o">=</span><span class="n">modal</span><span class="p">)</span></div>
 
@@ -769,8 +808,7 @@
 <span class="sd">        Sets the visibility of the undock and close buttons in the</span>
 <span class="sd">        widget&#39;s title bar.</span>
 
-<span class="sd">        :param state:   Whether to show or hide the buttons.</span>
-<span class="sd">        :type state:    bool</span>
+<span class="sd">        :param bool state: Whether to show or hide the buttons.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">float_button</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">close_button</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
@@ -798,6 +836,18 @@
             <span class="p">),</span>
         <span class="p">)</span></div>
 
+<div class="viewcode-block" id="VersionDetailsWidget.use_styled_title_bar"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.use_styled_title_bar">[docs]</a>    <span class="k">def</span> <span class="nf">use_styled_title_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dock_widget</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If the use of the included, custom styled title bar is desired, the</span>
+<span class="sd">        parent QDockWidget can be provided here and the styled title bar will</span>
+<span class="sd">        be displayed.</span>
+
+<span class="sd">        :param dock_widget: The parent QDockWidget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span> <span class="o">=</span> <span class="n">dock_widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_title_bar_buttons</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">dock_widget</span><span class="o">.</span><span class="n">dockLocationChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dock_location_changed</span><span class="p">)</span></div>
+
     <span class="c1">##########################################################################</span>
     <span class="c1"># internal utilities</span>
 
@@ -806,8 +856,7 @@
 <span class="sd">        When a new Note entity arrives from Shotgun in the version details</span>
 <span class="sd">        widget, Dynamite is notified and provided the Note entity&#39;s metadata.</span>
 
-<span class="sd">        :param note_id:     The id of the Note entity.</span>
-<span class="sd">        :type note_id:      int</span>
+<span class="sd">        :param int note_id: The id of the Note entity.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">entity_fields</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
             <span class="n">Note</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">NOTE_METADATA_FIELD</span><span class="p">],</span>
@@ -838,12 +887,9 @@
 <span class="sd">        dispatch the work to different methods depending on what async task</span>
 <span class="sd">        has completed.</span>
 
-<span class="sd">        :param uid:             Unique id for the request.</span>
-<span class="sd">        :type uid:              int</span>
-<span class="sd">        :param request_type:    The request class.</span>
-<span class="sd">        :type request_type:     str</span>
-<span class="sd">        :param data:            The returned data.</span>
-<span class="sd">        :type data:             dict </span>
+<span class="sd">        :param int uid: Unique id for the request.</span>
+<span class="sd">        :param str request_type: The request class.</span>
+<span class="sd">        :param dict data: The returned data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_note_metadata_uids</span><span class="p">:</span>
             <span class="n">entity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sg&quot;</span><span class="p">]</span>
@@ -865,10 +911,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Asynchronous callback - the worker thread errored.</span>
 <span class="sd">        </span>
-<span class="sd">        :param uid: Unique id for request that failed.</span>
-<span class="sd">        :type uid:  int</span>
-<span class="sd">        :param msg: The error message.</span>
-<span class="sd">        :type msg:  str</span>
+<span class="sd">        :param int uid: Unique id for request that failed.</span>
+<span class="sd">        :param str msg: The error message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_note_metadata_uids</span><span class="p">:</span>
             <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -896,7 +940,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Emits the entity_created signal.</span>
 
-<span class="sd">        :param entity: The Shotgun entity dict that was created.</span>
+<span class="sd">        :param dict entity: The Shotgun entity dict that was created.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 
@@ -905,7 +949,7 @@
 <span class="sd">        Adds or removes a field when it checked or unchecked</span>
 <span class="sd">        via the EntityFieldMenu.</span>
 
-<span class="sd">        :param action:  The QMenuAction that was triggered. </span>
+<span class="sd">        :param action: The QMenuAction that was triggered. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">action</span><span class="p">:</span>
             <span class="c1"># The MenuAction&#39;s data will have a &quot;field&quot; key that was</span>
@@ -979,9 +1023,54 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">version_model</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="n">sg_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_entity_project_schema_cached</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setup_fields_menu</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setup_version_list_fields_menu</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setup_version_sort_by_menu</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_ensure_entity_project_schema_cached</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensures that the schema is cached before enabling the Fields buttons.</span>
+
+<span class="sd">        This prevents errors when trying to display the field menu before the</span>
+<span class="sd">        schema is properly cached.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># disconnect any previous connection so that the slot isn&#39;t called</span>
+        <span class="c1"># multiple times</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">schema_loaded</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_schema_loaded</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1"># ---- disable the buttons until the schema is cached. set a tooltip</span>
+        <span class="c1">#      just in case someone tries to click before the cache is loaded</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Caching SG fields. Please hold...&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Caching SG fields. Please hold...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># use the current entity to retrieve the project id to ensure is cached</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">project_id</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+
+        <span class="c1"># run this callback once the cache is loaded</span>
+        <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">run_on_schema_loaded</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_schema_loaded</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_schema_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback that enables the field buttons once the schema is cached.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># disable these until the schema is cached</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Select fields to display&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Select fields to display&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_version_list_field_menu_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1064,21 +1153,26 @@
 <span class="sd">        Toggled more/less info functionality for the info widget in the</span>
 <span class="sd">        Notes tab.</span>
 
-<span class="sd">        :param checked: True or False</span>
+<span class="sd">        :param bool checked: True or False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">checked</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_info_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Hide info&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setUpdatesEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
 
-            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_fields</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">set_field_visibility</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_info_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;More info&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">checked</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_info_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Hide info&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_fields</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">field_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_persistent_fields</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">set_field_visibility</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_fields</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">set_field_visibility</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_info_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;More info&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+                <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_fields</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">field_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_persistent_fields</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">set_field_visibility</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setUpdatesEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_selected_version_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1273,24 +1367,27 @@
 <span class="sd">        Handles the dock being redocked in some location. This will</span>
 <span class="sd">        trigger removing the default title bar.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">setTitleBarWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setTitleBarWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_hide_dock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hides the parent dock widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_toggle_floating</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Toggles the parent dock widget&#39;s floating status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">isFloating</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_dock_location_changed</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">setTitleBarWidget</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">isFloating</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_location_changed</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setTitleBarWidget</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="c1">##########################################################################</span>
     <span class="c1"># version list actions</span>
@@ -1389,15 +1486,34 @@
 <span class="sd">        Field filter method for the EntityFieldMenu. Determines whether the</span>
 <span class="sd">        given field should be included in the field menu.</span>
 
-<span class="sd">        :param field:   The field name being processed.</span>
+<span class="sd">        :param str field: The field name being processed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Allow any fields that we have a widget available for.</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">field_manager</span><span class="o">.</span><span class="n">supported_fields</span><span class="p">(</span>
-                <span class="s2">&quot;Version&quot;</span><span class="p">,</span>
-                <span class="p">[</span><span class="n">field</span><span class="p">],</span>
-            <span class="p">)</span>
-        <span class="p">)</span></div>
+
+        <span class="c1"># see if we can display this field</span>
+        <span class="n">supported</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">field_manager</span><span class="o">.</span><span class="n">supported_fields</span><span class="p">(</span>
+            <span class="s2">&quot;Version&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">field</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">supported</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="c1"># get the current version entity&#39;s project id</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">project_id</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Detect bubble fields. If the field_name is &quot;sg_sequence.Sequence.code&quot;</span>
+        <span class="c1"># then we know we want to get the data type of the &quot;code&quot; field on the</span>
+        <span class="c1"># &quot;Sequence&quot; entity type.</span>
+        <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">field</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Version&quot;</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+
+        <span class="c1"># make sure the field is visible</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">field_is_visible</span><span class="p">(</span>
+                <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">return</span> <span class="bp">True</span></div>
 
 </pre></div>
 
@@ -1431,7 +1547,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.4.3',
+            VERSION:'v2.5.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Global Search Completer &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
+  <title>Shotgun Global Search Completer &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="index.html"/>
         <link rel="next" title="Shotgun Global Search Widget" href="global_search_widget.html"/>
         <link rel="prev" title="Auto-Elide label" href="elided_label.html"/> 
 
@@ -127,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -221,6 +221,12 @@ list (see modes above)</td>
 </tbody>
 </table>
 <dl class="method">
+<dt id="global_search_completer.GlobalSearchCompleter.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_completer/global_search_completer.html#GlobalSearchCompleter.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_completer.GlobalSearchCompleter.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually clear the contents of the completer&#8217;s popup view.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="global_search_completer.GlobalSearchCompleter.destroy">
 <code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_completer/global_search_completer.html#GlobalSearchCompleter.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_completer.GlobalSearchCompleter.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Should be called before the widget is closed</p>
@@ -236,6 +242,23 @@ if there is no current item.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity dict for the current result</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">dict</span></code></a>: or <code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="global_search_completer.GlobalSearchCompleter.get_first_result">
+<code class="descname">get_first_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/global_search_completer/global_search_completer.html#GlobalSearchCompleter.get_first_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#global_search_completer.GlobalSearchCompleter.get_first_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first result from the current item in the completer popup
+or <code class="docutils literal"><span class="pre">None</span></code> if there are no results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The entity dict for the first result</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">dict</span></code></a>: or <code class="docutils literal"><span class="pre">None</span></code></td>
 </tr>
@@ -286,7 +309,7 @@ to Shotgun will be dispatched via this object.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.1)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
 </tr>
 </tbody>
 </table>
@@ -366,7 +389,7 @@ dictionary which looks like this:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.4.3',
+            VERSION:'v2.5.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

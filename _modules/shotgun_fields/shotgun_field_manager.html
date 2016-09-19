@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.4.3 documentation</title>
+  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.4.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.4.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -393,16 +393,22 @@
             <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ShotgunFieldManager.create_label"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_label">[docs]</a>    <span class="k">def</span> <span class="nf">create_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunFieldManager.create_label"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_label">[docs]</a>    <span class="k">def</span> <span class="nf">create_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">postfix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a widget that can be used as a label for the given field.</span>
 
 <span class="sd">        :param str sg_entity_type: Shotgun entity type</span>
 <span class="sd">        :param str field_name: Shotgun field name</span>
+<span class="sd">        :param str prefix: Additional text to prefix the field label.</span>
+<span class="sd">        :param str postfix: Additional text to postfix the field label.</span>
 
 <span class="sd">        :returns: :class:`~PySide.QtGui.QLabel`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">display_name</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_field_display_name</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">prefix</span><span class="p">:</span>
+            <span class="n">display_name</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">display_name</span>
+        <span class="k">if</span> <span class="n">postfix</span><span class="p">:</span>
+            <span class="n">display_name</span> <span class="o">+=</span> <span class="n">postfix</span>
         <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">display_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunFieldManager.create_widget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_widget">[docs]</a>    <span class="k">def</span> <span class="nf">create_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="n">EDITABLE</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -769,7 +775,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.4.3',
+            VERSION:'v2.5.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
