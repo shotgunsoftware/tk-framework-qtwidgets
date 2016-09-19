@@ -80,6 +80,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     VERSION_LIST_FIELDS_PREFS_KEY = "version_details_version_list_fields"
     NOTE_METADATA_FIELD = "sg_metadata"
     NOTE_MARKUP_PREFIX = "__note_markup__"
+    NOTE_THUMBNAIL_PREFIX = "__note_thumbnail__"
 
     # Emitted when an entity is created by the panel. The
     # entity type as a string and id as an int are passed
