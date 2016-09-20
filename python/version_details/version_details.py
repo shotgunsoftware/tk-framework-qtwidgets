@@ -625,6 +625,35 @@ class VersionDetailsWidget(QtGui.QWidget):
             )
         )
 
+    def set_entity_metadata(self, data, metadata):
+        """
+        Sets a entity metadata in Shotgun async.
+
+        :param dict data: The entity type and id.
+        :param str metadata: The metadata to set in Shotgun.
+        """
+        self._note_set_metadata_uids.append(
+            self._data_retriever.execute_update(
+                data["entity"],
+                data["id"],
+                {"metadata":metadata},
+            )
+        )
+
+    
+    def delete_entity_attachment(self, attachment_id):
+        """
+        Delete an entity attachment async
+
+        :param int attachment_id: Attachment id to delete        
+        """
+        self._note_set_metadata_uids.append(
+            self._data_retriever.execute_delete(
+                "Attachment",
+                attachment_id,                
+            )
+        )
+
     def set_note_screenshot(self, image_path):
         """
         Takes the given file path to an image and sets the new note
