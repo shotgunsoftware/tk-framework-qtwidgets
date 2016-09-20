@@ -341,6 +341,9 @@ class NoteWidget(ActivityStreamBaseWidget):
         return reply_button
 
     def get_attachment_group_widget_ids(self):
+        """
+        Returns list of attachment group widget ids.
+        """
         return self._attachment_group_widgets.keys()
     
     def get_attachment_group_widget(self, attachment_group_id):
@@ -528,10 +531,16 @@ class NoteWidget(ActivityStreamBaseWidget):
     # internal utilities
 
     def _set_note_content_text(self, text):
+        """
+        Sets the UI content of the note text widget and stores a copy for state management.
+        """
         self._saved_content = text
         self.ui.content_editable.document().setPlainText(text)
 
     def _update_note_content_size(self):
+        """
+        Resizes the Note text widget to match the number of visible lines up to the max.
+        """
         widget = self.ui.content_editable
         viewable_lines = widget.document().lineCount()
         visible_lines = viewable_lines if viewable_lines <= self.MAX_VISIBLE_LINES else self.MAX_VISIBLE_LINES
@@ -540,9 +549,16 @@ class NoteWidget(ActivityStreamBaseWidget):
         widget.setFixedHeight(widget.fontMetrics().height() * visible_lines + 10)
 
     def _on_content_editable_content_changed(self):
+        """
+        Called during editing while characters are changing and resizes the ui to fit.
+        """
         self._update_note_content_size()
 
     def _on_edit_clicked(self):
+        """
+        Callback for when edit is clicked. Enables editing in the text widget and
+        updates visible button state.
+        """
         self._edit_button.hide()
         self._reply_button.hide()
         self._cancel_button.show()
@@ -553,10 +569,18 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.ui.content_editable.setFocus()
 
     def _cancel_note_content_edit(self):
+        """
+        Disables editing in the text widget and reverts the contents of the text
+        widget.
+        """
         self.ui.content_editable.setReadOnly(True)
         self.ui.content_editable.document().setPlainText(self._saved_content)
 
     def _on_cancel_clicked(self):
+        """
+        Callback for when cancel is clicked. Updates visible button state and
+        reverts text changes.
+        """
         self._edit_button.show()
         self._reply_button.show()
         self._cancel_button.hide()
@@ -565,9 +589,17 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._cancel_note_content_edit()
 
     def _on_reply_clicked(self):
+        """
+        Callback for when reply is clicked. Emits `reply_clicked` signal
+        """
         self.reply_clicked.emit(self._note_id)
 
     def _on_apply_clicked(self):
+        """
+        Callback for when apply is clicked. Emits `apply_clicked` signal, updates
+        visible button state, notifies shotgun of new text value and sets text ui
+        to readonly.
+        """
         self._edit_button.show()
         self._reply_button.show()
         self._cancel_button.hide()
