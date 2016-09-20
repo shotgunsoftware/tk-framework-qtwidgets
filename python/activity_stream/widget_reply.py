@@ -45,6 +45,8 @@ class ReplyWidget(ActivityStreamBaseWidget):
         
         self.ui.user_thumb.entity_requested.connect(lambda entity_type, entity_id: self.entity_requested.emit(entity_type, entity_id))
 
+        # By default, ignore mouse input so that the parent can capture them
+        # to select the parent widget
         self.ui.reply.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
 
 
@@ -142,6 +144,8 @@ class ReplyWidget(ActivityStreamBaseWidget):
         """
         Set whether or not the widget UI should capture mouse events.
         """
-        # Setting it on only the text label as the parent widget receiving
-        # mouse events as needed when disabled on label only.
+        # If the note is not selected then we want to forward mouse events to
+        # the parent so that the user can click anywhere on the note widget to
+        # select it. Once selected, we want the reply widget to capture events
+        # so that the user can select text.
         self.ui.reply.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents, not enabled)

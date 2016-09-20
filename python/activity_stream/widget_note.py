@@ -38,7 +38,12 @@ class NoteWidget(ActivityStreamBaseWidget):
         with the widget.
     :signal content_changed(str, int): Fires when the text content of the Note changes.
         The first argument is the new content and the second is the Note entity ID.
+    :signal reply_clicked(int): Fires when the reply button on the Note is clicked.
+        The first argument is the Note entity ID.
     """
+
+    # Max number of lines to show for text within the Notes content field.
+    MAX_VISIBLE_LINES = 6
 
     # Whether this was a selection or a deselection, followed by the
     # Note entity ID associated with this widget.
@@ -230,6 +235,9 @@ class NoteWidget(ActivityStreamBaseWidget):
                     reply_widget.set_thumbnail(image)
 
     def _add_button_layout(self):
+        """
+        Adds a layout used by the UI buttons.
+        """
         button_layout = QtGui.QHBoxLayout()
         self.ui.reply_layout.addLayout(button_layout)
         button_layout.addStretch(1)
@@ -237,27 +245,30 @@ class NoteWidget(ActivityStreamBaseWidget):
         self._button_layout = button_layout
 
     def add_buttons(self):
+        """
+        Populate the UI with Edit, Cancel, Apply and Reply buttons. Only the Edit
+        and Reply buttons are visible at first.
+        """
         self._add_button_layout()
 
-        edit_button = self.add_edit_button()
-        edit_button.clicked.connect(self._on_edit_clicked)
-        self._edit_button = edit_button
+        self._edit_button = self.add_edit_button()
+        self._edit_button.clicked.connect(self._on_edit_clicked)
 
-        cancel_button = self.add_cancel_button()
-        cancel_button.hide()
-        cancel_button.clicked.connect(self._on_cancel_clicked)
-        self._cancel_button = cancel_button
+        self._cancel_button = self.add_cancel_button()
+        self._cancel_button.hide()
+        self._cancel_button.clicked.connect(self._on_cancel_clicked)
 
-        apply_button = self.add_apply_button()
-        apply_button.hide()
-        apply_button.clicked.connect(self._on_apply_clicked)
-        self._apply_button = apply_button
+        self._apply_button = self.add_apply_button()
+        self._apply_button.hide()
+        self._apply_button.clicked.connect(self._on_apply_clicked)
 
-        reply_button = self.add_reply_button()
-        reply_button.clicked.connect(self._on_reply_clicked)
-        self._reply_button = reply_button
+        self._reply_button = self.add_reply_button()
+        self._reply_button.clicked.connect(self._on_reply_clicked)
 
     def add_edit_button(self):
+        """
+        Adds an initially visible `Edit` button to the UI.
+        """
         edit_button = ClickableLabel(self)
         edit_button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         edit_button.setSizePolicy(
@@ -274,6 +285,9 @@ class NoteWidget(ActivityStreamBaseWidget):
         return edit_button
 
     def add_cancel_button(self):
+        """
+        Adds an initially hidden `Edit` button to the UI.
+        """
         button = ClickableLabel(self)
         button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         button.setSizePolicy(
@@ -290,6 +304,9 @@ class NoteWidget(ActivityStreamBaseWidget):
         return button
 
     def add_apply_button(self):
+        """
+        Adds an initially hidden `Apply` button to the UI.
+        """
         button = ClickableLabel(self)
         button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         button.setSizePolicy(
@@ -306,6 +323,9 @@ class NoteWidget(ActivityStreamBaseWidget):
         return button
 
     def add_reply_button(self):
+        """
+        Adds an initially visible `Reply` button to the UI.
+        """
         reply_button = ClickableLabel(self)
         reply_button.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop)
         reply_button.setSizePolicy(
@@ -399,7 +419,12 @@ class NoteWidget(ActivityStreamBaseWidget):
             self._cancel_button.hide()
             self._apply_button.hide()
 
+        # If the note is not selected then we want to forward mouse events to
+        # the parent so that the user can click anywhere on the note widget to
+        # select it. Once selected, we want the note text edit widget to capture
+        # events so that the user can move the cursor, scrollbar and select text.
         self.ui.content_editable.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents, not self.selected)
+
         for reply_widget in self._reply_widgets:
             reply_widget.set_mouse_input_enabled(self.selected)
 
@@ -509,8 +534,7 @@ class NoteWidget(ActivityStreamBaseWidget):
     def _update_note_content_size(self):
         widget = self.ui.content_editable
         viewable_lines = widget.document().lineCount()
-        max_visible_lines = 6
-        visible_lines = viewable_lines if viewable_lines <= max_visible_lines else max_visible_lines
+        visible_lines = viewable_lines if viewable_lines <= MAX_VISIBLE_LINES else MAX_VISIBLE_LINES
         # Adding a constant here for now, this FixedHeight results in the text touching
         # the bottom of the text frame. Needs investigation.
         widget.setFixedHeight(widget.fontMetrics().height() * visible_lines + 10)

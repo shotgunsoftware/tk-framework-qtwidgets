@@ -613,7 +613,7 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         :param bool modal: Whether the dialog should be shown modally or not.
         """
-        if self._entity_id == None:
+        if self._entity_id is None:
             self._bundle.log_debug("Skipping New Note Dialog - No entity loaded.")
             return
 
@@ -975,9 +975,17 @@ class ActivityStreamWidget(QtGui.QWidget):
         self.entity_created.emit(entity)
 
     def _on_note_content_changed(self, content, note_id):
+        """
+        Callback when a note widget's text `content` field has a new value. This
+        is called once editing has finished, not for each change made during
+        editing.
+
+        :param str content: The Note entity's new `content` field value.
+        :param int note_id: The Note entity id.
+        """
         sg = self._bundle.shotgun
         sg.update("Note", note_id, {"content":content})
-        self._data_manager.rescan() # eldebug
+        #self._data_manager.rescan() # eldebug
         self._data_manager.rescan(force_activity_stream_update=True)
 
     def _on_note_reply_clicked(self, note_id):
