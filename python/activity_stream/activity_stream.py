@@ -22,7 +22,8 @@ from .widget_value_update import ValueUpdateWidget
 from .dialog_reply import ReplyDialog
 from .data_manager import ActivityStreamDataHandler
 from .overlaywidget import SmallOverlayWidget
-from ..note_input_widget import NoteInputDialog
+
+note_input_widget = sgtk.platform.current_bundle().import_module("note_input_widget")
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
@@ -172,59 +173,92 @@ class ActivityStreamWidget(QtGui.QWidget):
         containing a list of Shotgun entity dictionaries. All note threads
         currently displayed by the activity stream widget will be returned.
 
-        Example structure containing a Note, a Reply, and an attachment:
+        Example structure containing a Note, a Reply, and an attachment::
+
             6040: [
-              {
-                  'addressings_cc': [],
-                  'addressings_to': [],
-                  'client_note': False,
-                  'content': 'This is a test note.',
-                  'created_at': 1466477744.0,
-                  'created_by': {   'id': 39,
-                                    'name': 'Jeff Beeland',
-                                    'type': 'HumanUser'},
-                  'id': 6040,
-                  'note_links': [   {   'id': 1167,
-                                        'name': '123',
-                                        'type': 'Shot'},
-                                    {   'id': 6023,
-                                        'name': 'Scene_v030_123',
-                                        'type': 'Version'}],
-                  'read_by_current_user': 'read',
-                  'subject': "Jeff's Note on Scene_v030_123, 123",
-                  'tasks': [{   'id': 2118, 'name': 'Comp', 'type': 'Task'}],
-                  'type': 'Note',
-                  'user': {   'id': 39,
-                              'name': 'Jeff Beeland',
-                              'type': 'HumanUser'},
-                  'user.ApiUser.image': None,
-                  'user.ClientUser.image': None,
-                  'user.HumanUser.image': 'https://url_to_file'},
-              {   'content': 'test reply',
-                  'created_at': 1469221928.0,
-                  'id': 23,
-                  'type': 'Reply',
-                  'user': {   'id': 39,
-                              'image': 'https://url_to_file',
-                              'name': 'Jeff Beeland',
-                              'type': 'HumanUser'}},
-              {   'attachment_links': [   {   'id': 6051,
-                                              'name': "Jeff's Note on Scene_v030_123, 123 - testing.",
-                                              'type': 'Note'}],
-                  'created_at': 1469484693.0,
-                  'created_by': {   'id': 39,
-                                    'name': 'Jeff Beeland',
-                                    'type': 'HumanUser'},
-                  'id': 601,
-                  'image': 'https://url_to_file',
-                  'this_file': {   'content_type': 'image/png',
-                                   'id': 601,
-                                   'link_type': 'upload',
-                                   'name': 'screencapture_vrviim.png',
-                                   'type': 'Attachment',
-                                   'url': 'https://url_to_file'},
-                  'type': 'Attachment'},
-              ]}
+                {
+                    'addressings_cc': [],
+                    'addressings_to': [],
+                    'client_note': False,
+                    'content': 'This is a test note.',
+                    'created_at': 1466477744.0,
+                    'created_by': {
+                        'id': 39,
+                        'name': 'Jeff Beeland',
+                        'type': 'HumanUser'
+                    },
+                    'id': 6040,
+                    'note_links': [
+                        {
+                            'id': 1167,
+                            'name': '123',
+                            'type': 'Shot'
+                        },
+                        {
+                            'id': 6023,
+                            'name': 'Scene_v030_123',
+                            'type': 'Version'
+                        }
+                    ],
+                    'read_by_current_user': 'read',
+                    'subject': "Jeff's Note on Scene_v030_123, 123",
+                    'tasks': [
+                        {
+                            'id': 2118,
+                            'name': 'Comp',
+                            'type': 'Task'
+                        }
+                    ],
+                    'type': 'Note',
+                    'user': {
+                        'id': 39,
+                        'name': 'Jeff Beeland',
+                        'type': 'HumanUser'
+                    },
+                    'user.ApiUser.image': None,
+                    'user.ClientUser.image': None,
+                    'user.HumanUser.image': 'https://url_to_file'
+                },
+                {
+                    'content': 'test reply',
+                    'created_at': 1469221928.0,
+                    'id': 23,
+                    'type': 'Reply',
+                    'user': {
+                        'id': 39,
+                        'image': 'https://url_to_file',
+                        'name': 'Jeff Beeland',
+                        'type': 'HumanUser'
+                    }
+                },
+                {
+                    'attachment_links': [
+                        {
+                            'id': 6051,
+                            'name': "Jeff's Note on Scene_v030_123, 123 - testing.",
+                            'type': 'Note'
+                        }
+                    ],
+                    'created_at': 1469484693.0,
+                    'created_by': {
+                        'id': 39,
+                        'name': 'Jeff Beeland',
+                        'type': 'HumanUser'
+                    },
+                    'id': 601,
+                    'image': 'https://url_to_file',
+                    'this_file': {
+                        'content_type': 'image/png',
+                        'id': 601,
+                        'link_type': 'upload',
+                        'name': 'screencapture_vrviim.png',
+                        'type': 'Attachment',
+                        'url': 'https://url_to_file'
+                    },
+                    'type': 'Attachment'
+                },
+            ]
+
         """
         return self._data_manager.note_threads
 
@@ -617,7 +651,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._bundle.log_debug("Skipping New Note Dialog - No entity loaded.")
             return
 
-        note_dialog = NoteInputDialog(parent=self)
+        note_dialog = note_input_widget.NoteInputDialog(parent=self)
         note_dialog.entity_created.connect(self._on_entity_created)
         note_dialog.data_updated.connect(self.rescan)
         note_dialog.set_bg_task_manager(self._task_manager)
