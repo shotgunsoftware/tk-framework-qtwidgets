@@ -472,6 +472,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
             self._thumb_map[uid] = {"activity_id": activity_id, 
                                     "thumbnail_type": self.THUMBNAIL_ENTITY}            
 
+    def db_insert_note_update(self, note_id, data):
+        self.__db_insert_note_update(None, note_id, data)
 
     ###########################################################################
     # sqlite database access methods
@@ -680,7 +682,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             self._force_activity_stream_update = False
 
         self._bundle.log_debug("...update complete")
-            
+
     @_db_connect
     def __db_insert_note_update(self, connection, cursor, update_id, note_id, data):
         """
@@ -727,7 +729,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # supress and continue
             self._bundle.log_exception("Could not add note data "
                                     "to cache database %s" % self._cache_path)
-            
+
     ###########################################################################
     # private methods        
         

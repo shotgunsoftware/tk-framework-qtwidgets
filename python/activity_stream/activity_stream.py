@@ -985,8 +985,17 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         sg = self._bundle.shotgun
         sg.update("Note", note_id, {"content":content})
-        #self._data_manager.rescan() # eldebug
-        self._data_manager.rescan(force_activity_stream_update=True)
+        #self._data_manager.rescan(force_activity_stream_update=True)
+
+        # update cache directly for this note
+        note_thread_data = self._data_manager.get_note(note_id)
+        if not note_thread_data:
+            # todo error log
+            return
+        note_data = note_thread_data[0]
+        note_data["content"] = content
+        self._data_manager.db_insert_note_update(note_id, note_thread_data)
+        #2self._data_manager.rescan() # eldebug
 
     def _on_note_reply_clicked(self, note_id):
         """
