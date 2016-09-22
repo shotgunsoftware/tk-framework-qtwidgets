@@ -974,18 +974,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._select_on_arrival = entity
         self.entity_created.emit(entity)
 
-    def _on_note_content_changed(self, content, note_id):
+    def __send_note_content_to_cache_and_sg(self, sg, data):
         """
-        Callback when a note widget's text `content` field has a new value. This
-        is called once editing has finished, not for each change made during
-        editing.
-
-        :param str content: The Note entity's new `content` field value.
-        :param int note_id: The Note entity id.
+        Async callback to save the note's text
         """
-        sg = self._bundle.shotgun
+        note_id = data['note_id']
+        content = data['content']
         sg.update("Note", note_id, {"content":content})
-        #self._data_manager.rescan(force_activity_stream_update=True)
 
         # update cache directly for this note
         note_thread_data = self._data_manager.get_note(note_id)
@@ -995,7 +990,23 @@ class ActivityStreamWidget(QtGui.QWidget):
         note_data = note_thread_data[0]
         note_data["content"] = content
         self._data_manager.db_insert_note_update(note_id, note_thread_data)
-        #2self._data_manager.rescan() # eldebug
+
+    def _on_note_content_changed(self, content, note_id):
+        """
+        Callback when a note widget's text `content` field has a new value. This
+        is called once editing has finished, not for each change made during
+        editing.
+
+        :param str content: The Note entity's new `content` field value.
+        :param int note_id: The Note entity id.
+        """
+        self._data_manager._sg_data_retriever.execute_method(
+            self.__send_note_content_to_cache_and_sg,
+            dict(
+                content=content,
+                note_id=note_id,
+            )
+        )
 
     def _on_note_reply_clicked(self, note_id):
         """
