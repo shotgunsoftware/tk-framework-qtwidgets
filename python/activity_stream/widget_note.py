@@ -93,7 +93,6 @@ class NoteWidget(ActivityStreamBaseWidget):
 
         self.ui.links.hide()
 
-        self.ui.content_editable.setFixedHeight(60)
         self.ui.content_editable.setReadOnly(True)
         self.ui.content_editable.document().contentsChanged.connect(self._on_content_editable_content_changed)
         self._saved_content = ""
