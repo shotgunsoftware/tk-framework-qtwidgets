@@ -36,16 +36,29 @@ class NoteWidget(ActivityStreamBaseWidget):
         changes. The first argument provided is a boolean based on whether the widget
         was selected or deselected, and the second is the Note entity ID associated
         with the widget.
+    :signal content_changed(str, int): Fires when the text content of the Note changes.
+        The first argument is the new content and the second is the Note entity ID.
+    :signal reply_clicked(int): Fires when the reply button on the Note is clicked.
+        The first argument is the Note entity ID.
     """
+
+    # Max number of lines to show for text within the Notes content field.
+    MAX_VISIBLE_LINES = 6
 
     # Whether this was a selection or a deselection, followed by the
     # Note entity ID associated with this widget.
     selection_changed = QtCore.Signal(bool, int)
-    
+
+    # Fires when the text content of the Note changes
+    content_changed = QtCore.Signal(str, int)
+
+    # Fires when the Reply button is clicked
+    reply_clicked = QtCore.Signal(int)
+
     def __init__(self, parent):
         """
         :param parent: QT parent object
-        :type parent: :class:`PySide.QtGui.QWidget`        
+        :type parent: :class:`PySide.QtGui.QWidget`
         """
         # first, call the base class and let it do its thing.
         ActivityStreamBaseWidget.__init__(self, parent)
@@ -70,14 +83,20 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.set_selected(False)
 
         # make sure clicks propagate upwards in the hierarchy
-        self.ui.content.linkActivated.connect(self._entity_request_from_url)
-        self.ui.header_left.linkActivated.connect(self._entity_request_from_url)    
+        self.ui.header_left.linkActivated.connect(self._entity_request_from_url)
         self.ui.user_thumb.entity_requested.connect(
             lambda entity_type, entity_id: self.entity_requested.emit(
                 entity_type,
                 entity_id
             )
         )
+
+        self.ui.links.hide()
+
+        self.ui.content_editable.setFixedHeight(60)
+        self.ui.content_editable.setReadOnly(True)
+        self.ui.content_editable.document().contentsChanged.connect(self._on_content_editable_content_changed)
+        self._saved_content = ""
 
     ##############################################################################
     # properties
@@ -181,8 +200,8 @@ class NoteWidget(ActivityStreamBaseWidget):
         
         # most of the info will appear later, as part of the note
         # data being loaded, so add placeholder
-        self.ui.content.setText("Hang on, loading note content...")
-        
+        self._set_note_content_text("Hang on, loading note content...")
+
     def apply_thumbnail(self, data):
         """
         Populate the UI with the given thumbnail
@@ -215,8 +234,98 @@ class NoteWidget(ActivityStreamBaseWidget):
                 if data["entity"] == reply_widget.created_by:
                     reply_widget.set_thumbnail(image)
 
+    def _add_button_layout(self):
+        """
+        Adds a layout used by the UI buttons.
+        """
+        button_layout = QtGui.QHBoxLayout()
+        self.ui.reply_layout.addLayout(button_layout)
+        button_layout.addStretch(1)
+        button_layout.setSpacing(20)
+        self._button_layout = button_layout
+
+    def add_buttons(self):
+        """
+        Populate the UI with Edit, Cancel, Apply and Reply buttons. Only the Edit
+        and Reply buttons are visible at first.
+        """
+        self._add_button_layout()
+
+        self._edit_button = self.add_edit_button()
+        self._edit_button.clicked.connect(self._on_edit_clicked)
+
+        self._cancel_button = self.add_cancel_button()
+        self._cancel_button.hide()
+        self._cancel_button.clicked.connect(self._on_cancel_clicked)
+
+        self._apply_button = self.add_apply_button()
+        self._apply_button.hide()
+        self._apply_button.clicked.connect(self._on_apply_clicked)
+
+        self._reply_button = self.add_reply_button()
+        self._reply_button.clicked.connect(self._on_reply_clicked)
+
+    def add_edit_button(self):
+        """
+        Adds an initially visible `Edit` button to the UI.
+        """
+        edit_button = ClickableLabel(self)
+        edit_button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        edit_button.setSizePolicy(
+            QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum,
+                QtGui.QSizePolicy.Preferred,
+            )
+        )
+        self._button_layout.addWidget(edit_button)
+        edit_button.setText("Edit")
+        edit_button.setObjectName("edit_button")
+        self._general_widgets.extend([edit_button, self._button_layout])
+        edit_button.clicked.connect(self._on_edit_clicked)
+        return edit_button
+
+    def add_cancel_button(self):
+        """
+        Adds an initially hidden `Edit` button to the UI.
+        """
+        button = ClickableLabel(self)
+        button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        button.setSizePolicy(
+            QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum,
+                QtGui.QSizePolicy.Preferred,
+            )
+        )
+        self._button_layout.addWidget(button)
+        button.setText("Cancel")
+        button.setObjectName("button")
+        self._general_widgets.extend([button, self._button_layout])
+        button.clicked.connect(self._on_cancel_clicked)
+        return button
+
+    def add_apply_button(self):
+        """
+        Adds an initially hidden `Apply` button to the UI.
+        """
+        button = ClickableLabel(self)
+        button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        button.setSizePolicy(
+            QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum,
+                QtGui.QSizePolicy.Preferred,
+            )
+        )
+        self._button_layout.addWidget(button)
+        button.setText("Apply")
+        button.setObjectName("button")
+        self._general_widgets.extend([button, self._button_layout])
+        button.clicked.connect(self._on_apply_clicked)
+        return button
 
     def add_reply_button(self):
+        """
+        Adds an initially visible `Reply` button to the UI.
+        """
         reply_button = ClickableLabel(self)
         reply_button.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop)
         reply_button.setSizePolicy(
@@ -225,16 +334,16 @@ class NoteWidget(ActivityStreamBaseWidget):
                 QtGui.QSizePolicy.Preferred,
             )
         )
-        button_layout = QtGui.QHBoxLayout()
-        self.ui.reply_layout.addLayout(button_layout)
-        button_layout.addStretch(1)
-        button_layout.addWidget(reply_button)
-        reply_button.setText("Reply to this Note")
+        self._button_layout.addWidget(reply_button)
+        reply_button.setText("Reply")
         reply_button.setObjectName("reply_button")
-        self._general_widgets.extend([reply_button, button_layout])
+        self._general_widgets.extend([reply_button, self._button_layout])
         return reply_button
 
     def get_attachment_group_widget_ids(self):
+        """
+        Returns list of attachment group widget ids.
+        """
         return self._attachment_group_widgets.keys()
     
     def get_attachment_group_widget(self, attachment_group_id):
@@ -242,7 +351,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         Returns an attachment group widget given its id
         """
         return self._attachment_group_widgets[attachment_group_id]
-    
+
     def add_replies(self, replies_and_attachments):
         """
         Add replies and attachment widgets
@@ -305,9 +414,25 @@ class NoteWidget(ActivityStreamBaseWidget):
             )
         else:
             self.setStyleSheet("#frame { border: 1px solid transparent }")
+            self._cancel_note_content_edit()
+
+            # Make sure note edit buttons are in default state
+            self._edit_button.show()
+            self._reply_button.show()
+            self._cancel_button.hide()
+            self._apply_button.hide()
+
+        # If the note is not selected then we want to forward mouse events to
+        # the parent so that the user can click anywhere on the note widget to
+        # select it. Once selected, we want the note text edit widget to capture
+        # events so that the user can move the cursor, scrollbar and select text.
+        self.ui.content_editable.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents, not self.selected)
+
+        for reply_widget in self._reply_widgets:
+            reply_widget.set_mouse_input_enabled(self.selected)
 
         self.selection_changed.emit(self.selected, self._note_id)
-        
+
     def _add_attachment_group(self, attachments, after_note):
         """
         
@@ -383,16 +508,107 @@ class NoteWidget(ActivityStreamBaseWidget):
         # higher level than this widget, but we're still going to be
         # careful here, because we saw this bug crop up during Cut Support
         # QA.
-        self.ui.content.setText(data.get("content", ""))
+        self._set_note_content_text(data.get("content", ""))
+        # The underlying text document's line count is not showing the correct
+        # number immediately after setting the document's text directly. Trigger a refresh
+        # of the widget size with the updated correct line count.
+        QtCore.QTimer.singleShot(0, self._update_note_content_size)
 
         # This allows selections from higher-level layouts to occur. If
         # we don't set this, the label accepts and blocks mouse click
         # events, which means if you expect to select the note widget
         # itself you can't click on the note contents.
-        self.ui.content.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
-        
+        self.ui.content_editable.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
+
         # format note links
         if self.show_note_links:
             html_link_box_data = data.get("note_links", []) + data.get("tasks", [])
             links_html = self.__generate_note_links_table(html_link_box_data)
             self.ui.links.setText(links_html)
+            self.ui.links.show()
+
+    ##########################################################################
+    # internal utilities
+
+    def _set_note_content_text(self, text):
+        """
+        Sets the UI content of the note text widget and stores a copy for state management.
+        """
+        self._saved_content = text
+        self.ui.content_editable.document().setPlainText(text)
+
+    def _update_note_content_size(self):
+        """
+        Resizes the Note text widget to match the number of visible lines up to the max.
+        """
+        widget = self.ui.content_editable
+        viewable_lines = widget.document().lineCount()
+        visible_lines = viewable_lines if viewable_lines <= self.MAX_VISIBLE_LINES else self.MAX_VISIBLE_LINES
+        # Adding a constant here for now, this FixedHeight results in the text touching
+        # the bottom of the text frame. Needs investigation.
+        widget.setFixedHeight(widget.fontMetrics().height() * visible_lines + 10)
+
+    def _on_content_editable_content_changed(self):
+        """
+        Called during editing while characters are changing and resizes the ui to fit.
+        """
+        self._update_note_content_size()
+
+    def _on_edit_clicked(self):
+        """
+        Callback for when edit is clicked. Enables editing in the text widget and
+        updates visible button state.
+        """
+        self._edit_button.hide()
+        self._reply_button.hide()
+        self._cancel_button.show()
+        self._apply_button.show()
+
+        self._saved_content = self.ui.content_editable.document().toPlainText()
+        self.ui.content_editable.setReadOnly(False)
+        self.ui.content_editable.setFocus()
+
+    def _cancel_note_content_edit(self):
+        """
+        Disables editing in the text widget and reverts the contents of the text
+        widget.
+        """
+        self.ui.content_editable.setReadOnly(True)
+        self.ui.content_editable.document().setPlainText(self._saved_content)
+
+    def _on_cancel_clicked(self):
+        """
+        Callback for when cancel is clicked. Updates visible button state and
+        reverts text changes.
+        """
+        self._edit_button.show()
+        self._reply_button.show()
+        self._cancel_button.hide()
+        self._apply_button.hide()
+
+        self._cancel_note_content_edit()
+
+    def _on_reply_clicked(self):
+        """
+        Callback for when reply is clicked. Emits `reply_clicked` signal
+        """
+        self.reply_clicked.emit(self._note_id)
+
+    def _on_apply_clicked(self):
+        """
+        Callback for when apply is clicked. Emits `apply_clicked` signal, updates
+        visible button state, notifies shotgun of new text value and sets text ui
+        to readonly.
+        """
+        self._edit_button.show()
+        self._reply_button.show()
+        self._cancel_button.hide()
+        self._apply_button.hide()
+
+        self._update_note_content_size()
+        self.ui.content_editable.setReadOnly(True)
+        content = self.ui.content_editable.document().toPlainText()
+        if self._saved_content != content:
+            self.content_changed.emit(content, self._note_id)
+            self._saved_content = content
+        self.ui.content_editable.verticalScrollBar().setValue(0)

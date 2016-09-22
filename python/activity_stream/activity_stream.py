@@ -613,7 +613,7 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         :param bool modal: Whether the dialog should be shown modally or not.
         """
-        if self._entity_id == None:
+        if self._entity_id is None:
             self._bundle.log_debug("Skipping New Note Dialog - No entity loaded.")
             return
 
@@ -741,13 +741,14 @@ class ActivityStreamWidget(QtGui.QWidget):
             
             # set up the note data first
             note_widget.set_note_info(note_data)
-            
+
+            note_widget.add_buttons()
+
+            note_widget.reply_clicked.connect(self._on_note_reply_clicked)
+            note_widget.content_changed.connect(self._on_note_content_changed)
+
             # now add replies
             note_widget.add_replies(replies_and_attachments)
-            
-            # add a reply button and connect it
-            reply_button = note_widget.add_reply_button()
-            reply_button.clicked.connect(lambda : self._on_reply_clicked(note_id))
 
             # get list of users who have replied
             for item in replies_and_attachments:
@@ -821,7 +822,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                                 self._note_selected_changed(False, w.note_id)
 
                     widget.set_selected(True)
-                    self._note_selected_changed(True, widget.note_id)
+                    self._note_selected_changed(True, data["primary_entity"]["id"])
                     self._select_on_arrival = dict()
 
             else:
@@ -872,7 +873,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             self.note_selected.emit(note_id)
         else:
             self.note_deselected.emit(note_id)
-        
+
     def _process_new_data(self, activity_ids):
         """
         Process new activity ids as they arrive from
@@ -972,8 +973,31 @@ class ActivityStreamWidget(QtGui.QWidget):
         if self.notes_are_selectable and entity["type"] == "Note":
             self._select_on_arrival = entity
         self.entity_created.emit(entity)
-            
-    def _on_reply_clicked(self, note_id):
+
+    def _on_note_content_changed(self, content, note_id):
+        """
+        Callback when a note widget's text `content` field has a new value. This
+        is called once editing has finished, not for each change made during
+        editing.
+
+        :param str content: The Note entity's new `content` field value.
+        :param int note_id: The Note entity id.
+        """
+        sg = self._bundle.shotgun
+        sg.update("Note", note_id, {"content":content})
+        #self._data_manager.rescan(force_activity_stream_update=True)
+
+        # update cache directly for this note
+        note_thread_data = self._data_manager.get_note(note_id)
+        if not note_thread_data:
+            # todo error log
+            return
+        note_data = note_thread_data[0]
+        note_data["content"] = content
+        self._data_manager.db_insert_note_update(note_id, note_thread_data)
+        #2self._data_manager.rescan() # eldebug
+
+    def _on_note_reply_clicked(self, note_id):
         """
         Callback when someone clicks reply on a given note
 
@@ -1023,5 +1047,3 @@ class ActivityStreamWidget(QtGui.QWidget):
                 if selected != widget.selected:
                     widget.set_selected(selected)
                     self._note_selected_changed(selected, widget.note_id)
-
-

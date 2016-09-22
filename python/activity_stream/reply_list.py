@@ -146,7 +146,7 @@ class ReplyListWidget(QtGui.QWidget):
         # set note content            
         note_thread_data = self._data_manager.get_note(note_id)
         
-        if note_thread_data:            
+        if note_thread_data:
             self._build_replies(note_thread_data)
 
     def _build_replies(self, note_thread_data):

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'note_widget.ui'
 #
-#      by: pyside-uic 0.2.15 running on PySide 1.2.4
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from tank.platform.qt import QtCore, QtGui
 class Ui_NoteWidget(object):
     def setupUi(self, NoteWidget):
         NoteWidget.setObjectName("NoteWidget")
-        NoteWidget.resize(357, 166)
+        NoteWidget.resize(357, 273)
         self.horizontalLayout_2 = QtGui.QHBoxLayout(NoteWidget)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -62,6 +62,18 @@ class Ui_NoteWidget(object):
         self.date.setObjectName("date")
         self.horizontalLayout.addWidget(self.date)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        self.content_editable = QtGui.QPlainTextEdit(self.frame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.content_editable.sizePolicy().hasHeightForWidth())
+        self.content_editable.setSizePolicy(sizePolicy)
+        self.content_editable.setStyleSheet("")
+        self.content_editable.setFrameShape(QtGui.QFrame.NoFrame)
+        self.content_editable.setFrameShadow(QtGui.QFrame.Plain)
+        self.content_editable.setReadOnly(False)
+        self.content_editable.setObjectName("content_editable")
+        self.verticalLayout.addWidget(self.content_editable)
         self.links = QtGui.QLabel(self.frame)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -73,18 +85,6 @@ class Ui_NoteWidget(object):
         self.links.setWordWrap(True)
         self.links.setObjectName("links")
         self.verticalLayout.addWidget(self.links)
-        self.content = QtGui.QLabel(self.frame)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.content.sizePolicy().hasHeightForWidth())
-        self.content.setSizePolicy(sizePolicy)
-        self.content.setText("")
-        self.content.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.content.setWordWrap(True)
-        self.content.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.content.setObjectName("content")
-        self.verticalLayout.addWidget(self.content)
         self.reply_layout = QtGui.QVBoxLayout()
         self.reply_layout.setSpacing(0)
         self.reply_layout.setContentsMargins(0, 0, -1, -1)
