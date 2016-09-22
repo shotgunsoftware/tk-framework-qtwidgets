@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.3.6 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.5.7 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.3.6 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.7 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.3.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.7.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -202,7 +202,11 @@
 <span class="kn">from</span> <span class="nn">.dialog_reply</span> <span class="kn">import</span> <span class="n">ReplyDialog</span>
 <span class="kn">from</span> <span class="nn">.data_manager</span> <span class="kn">import</span> <span class="n">ActivityStreamDataHandler</span>
 <span class="kn">from</span> <span class="nn">.overlaywidget</span> <span class="kn">import</span> <span class="n">SmallOverlayWidget</span>
- 
+
+<span class="n">note_input_widget</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;note_input_widget&quot;</span><span class="p">)</span>
+
+<span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="ActivityStreamWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget">[docs]</a><span class="k">class</span> <span class="nc">ActivityStreamWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    QT Widget that displays the Shotgun activity stream for an entity.</span>
@@ -221,8 +225,17 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># max number of items to show in the activity stream.</span>
     <span class="n">MAX_STREAM_LENGTH</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="c1"># Activity attributes that we do not want displayed.</span>
+    <span class="n">_SKIP_ACTIVITY_ATTRIBUTES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;viewed_by_current_user&quot;</span><span class="p">]</span>
+
     <span class="n">entity_requested</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="n">playback_requested</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="c1"># The int is the Note entity id that was selected or deselected.</span>
+    <span class="n">note_selected</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">note_deselected</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">note_arrived</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="c1"># Emitted when a Note or Reply entity is created. The</span>
     <span class="c1"># entity type as a string and id as an int will be</span>
@@ -253,6 +266,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_sg_stream_button</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clickable_user_icons</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_note_links</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_highlight_new_arrivals</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_notes_are_selectable</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="bp">None</span>
         
         <span class="c1"># apply styling</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_stylesheet</span><span class="p">()</span>
@@ -272,8 +289,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_new_note</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">update_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_new_data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">thumbnail_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_thumbnail</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">data_updated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_note_submitted</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_created</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">data_updated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rescan</span><span class="p">)</span>
         
         <span class="c1"># keep handles to all widgets to be nice to the GC</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="bp">None</span>
@@ -285,6 +302,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
         <span class="c1"># We&#39;ll be keeping a persistent reply dialog available because</span>
         <span class="c1"># we need to connect to a signal that it&#39;s emitting. It&#39;s easiest</span>
@@ -303,7 +321,6 @@
         <span class="c1"># attachments that this widget didn&#39;t explicitly handle itself prior to</span>
         <span class="c1"># submission.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="bp">None</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_created</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActivityStreamWidget.set_bg_task_manager"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
@@ -328,6 +345,102 @@
 
     <span class="c1">############################################################################</span>
     <span class="c1"># properties</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">note_threads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The currently loaded note threads, keyed by Note entity id and</span>
+<span class="sd">        containing a list of Shotgun entity dictionaries. All note threads</span>
+<span class="sd">        currently displayed by the activity stream widget will be returned.</span>
+
+<span class="sd">        Example structure containing a Note, a Reply, and an attachment::</span>
+
+<span class="sd">            6040: [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;addressings_cc&#39;: [],</span>
+<span class="sd">                    &#39;addressings_to&#39;: [],</span>
+<span class="sd">                    &#39;client_note&#39;: False,</span>
+<span class="sd">                    &#39;content&#39;: &#39;This is a test note.&#39;,</span>
+<span class="sd">                    &#39;created_at&#39;: 1466477744.0,</span>
+<span class="sd">                    &#39;created_by&#39;: {</span>
+<span class="sd">                        &#39;id&#39;: 39,</span>
+<span class="sd">                        &#39;name&#39;: &#39;Jeff Beeland&#39;,</span>
+<span class="sd">                        &#39;type&#39;: &#39;HumanUser&#39;</span>
+<span class="sd">                    },</span>
+<span class="sd">                    &#39;id&#39;: 6040,</span>
+<span class="sd">                    &#39;note_links&#39;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &#39;id&#39;: 1167,</span>
+<span class="sd">                            &#39;name&#39;: &#39;123&#39;,</span>
+<span class="sd">                            &#39;type&#39;: &#39;Shot&#39;</span>
+<span class="sd">                        },</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &#39;id&#39;: 6023,</span>
+<span class="sd">                            &#39;name&#39;: &#39;Scene_v030_123&#39;,</span>
+<span class="sd">                            &#39;type&#39;: &#39;Version&#39;</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ],</span>
+<span class="sd">                    &#39;read_by_current_user&#39;: &#39;read&#39;,</span>
+<span class="sd">                    &#39;subject&#39;: &quot;Jeff&#39;s Note on Scene_v030_123, 123&quot;,</span>
+<span class="sd">                    &#39;tasks&#39;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &#39;id&#39;: 2118,</span>
+<span class="sd">                            &#39;name&#39;: &#39;Comp&#39;,</span>
+<span class="sd">                            &#39;type&#39;: &#39;Task&#39;</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ],</span>
+<span class="sd">                    &#39;type&#39;: &#39;Note&#39;,</span>
+<span class="sd">                    &#39;user&#39;: {</span>
+<span class="sd">                        &#39;id&#39;: 39,</span>
+<span class="sd">                        &#39;name&#39;: &#39;Jeff Beeland&#39;,</span>
+<span class="sd">                        &#39;type&#39;: &#39;HumanUser&#39;</span>
+<span class="sd">                    },</span>
+<span class="sd">                    &#39;user.ApiUser.image&#39;: None,</span>
+<span class="sd">                    &#39;user.ClientUser.image&#39;: None,</span>
+<span class="sd">                    &#39;user.HumanUser.image&#39;: &#39;https://url_to_file&#39;</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;content&#39;: &#39;test reply&#39;,</span>
+<span class="sd">                    &#39;created_at&#39;: 1469221928.0,</span>
+<span class="sd">                    &#39;id&#39;: 23,</span>
+<span class="sd">                    &#39;type&#39;: &#39;Reply&#39;,</span>
+<span class="sd">                    &#39;user&#39;: {</span>
+<span class="sd">                        &#39;id&#39;: 39,</span>
+<span class="sd">                        &#39;image&#39;: &#39;https://url_to_file&#39;,</span>
+<span class="sd">                        &#39;name&#39;: &#39;Jeff Beeland&#39;,</span>
+<span class="sd">                        &#39;type&#39;: &#39;HumanUser&#39;</span>
+<span class="sd">                    }</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;attachment_links&#39;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &#39;id&#39;: 6051,</span>
+<span class="sd">                            &#39;name&#39;: &quot;Jeff&#39;s Note on Scene_v030_123, 123 - testing.&quot;,</span>
+<span class="sd">                            &#39;type&#39;: &#39;Note&#39;</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ],</span>
+<span class="sd">                    &#39;created_at&#39;: 1469484693.0,</span>
+<span class="sd">                    &#39;created_by&#39;: {</span>
+<span class="sd">                        &#39;id&#39;: 39,</span>
+<span class="sd">                        &#39;name&#39;: &#39;Jeff Beeland&#39;,</span>
+<span class="sd">                        &#39;type&#39;: &#39;HumanUser&#39;</span>
+<span class="sd">                    },</span>
+<span class="sd">                    &#39;id&#39;: 601,</span>
+<span class="sd">                    &#39;image&#39;: &#39;https://url_to_file&#39;,</span>
+<span class="sd">                    &#39;this_file&#39;: {</span>
+<span class="sd">                        &#39;content_type&#39;: &#39;image/png&#39;,</span>
+<span class="sd">                        &#39;id&#39;: 601,</span>
+<span class="sd">                        &#39;link_type&#39;: &#39;upload&#39;,</span>
+<span class="sd">                        &#39;name&#39;: &#39;screencapture_vrviim.png&#39;,</span>
+<span class="sd">                        &#39;type&#39;: &#39;Attachment&#39;,</span>
+<span class="sd">                        &#39;url&#39;: &#39;https://url_to_file&#39;</span>
+<span class="sd">                    },</span>
+<span class="sd">                    &#39;type&#39;: &#39;Attachment&#39;</span>
+<span class="sd">                },</span>
+<span class="sd">            ]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">note_threads</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">note_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -435,16 +548,108 @@
         <span class="n">_get_version_items_playable</span><span class="p">,</span>
         <span class="n">_set_version_items_playable</span><span class="p">,</span>
     <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_show_note_links</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If True, lists out the parent entity as a list of clickable</span>
+<span class="sd">        items for each Note entity that is represented in the activity</span>
+<span class="sd">        stream.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_note_links</span>
+
+    <span class="k">def</span> <span class="nf">_set_show_note_links</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_note_links</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="n">show_note_links</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_show_note_links</span><span class="p">,</span>
+        <span class="n">_set_show_note_links</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_highlight_new_arrivals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If True, highlights items in the activity stream that are new</span>
+<span class="sd">        since the last time data was loaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_highlight_new_arrivals</span>
+
+    <span class="k">def</span> <span class="nf">_set_highlight_new_arrivals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_highlight_new_arrivals</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="n">highlight_new_arrivals</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_highlight_new_arrivals</span><span class="p">,</span>
+        <span class="n">_set_highlight_new_arrivals</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_notes_are_selectable</span>
+
+    <span class="k">def</span> <span class="nf">_set_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_notes_are_selectable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="n">notes_are_selectable</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">_get_notes_are_selectable</span><span class="p">,</span>
+        <span class="n">_set_notes_are_selectable</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_attachments_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If set to a compiled regular expression, attachment file names that match</span>
+<span class="sd">        will be filtered OUT and NOT shown.</span>
+
+<span class="sd">        .. note:: An re.match() is used, which means the regular expression must</span>
+<span class="sd">                  match from the start of the attachment file&#39;s basename. See Python&#39;s</span>
+<span class="sd">                  &quot;re&quot; module documentation for Python 2.x for more information and</span>
+<span class="sd">                  examples.</span>
+
+<span class="sd">        .. example:: To match only &quot;.gif&quot; extensions: re.compile(r&quot;\w+[.]gif$&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span>
+
+    <span class="k">def</span> <span class="nf">_set_attachments_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="n">regex</span>
+
+    <span class="n">attachments_filter</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_attachments_filter</span><span class="p">,</span> <span class="n">_set_attachments_filter</span><span class="p">)</span>
         
     <span class="c1">############################################################################</span>
     <span class="c1"># public interface</span>
+
+<div class="viewcode-block" id="ActivityStreamWidget.deselect_note"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.deselect_note">[docs]</a>    <span class="k">def</span> <span class="nf">deselect_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If a note is currently selected, it will be deselected. This will NOT</span>
+<span class="sd">        trigger a note_deselected signal to be emitted, as that is only emitted</span>
+<span class="sd">        when the user triggers the deselection and not via procedural means.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">)</span> <span class="ow">and</span> <span class="n">widget</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                <span class="c1"># We only support single selection right now, so we don&#39;t</span>
+                <span class="c1"># need to continue on once we&#39;ve hit a note that&#39;s selected.</span>
+                <span class="k">return</span></div>
+
+<div class="viewcode-block" id="ActivityStreamWidget.get_note_attachments"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.get_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">get_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Attachment entities associated with the given Note</span>
+<span class="sd">        entity. Only attachments from Notes currently loaded by the</span>
+<span class="sd">        activity stream widget will be returned.</span>
+
+<span class="sd">        .. note:: It is possible for attachments to be added to a Note</span>
+<span class="sd">                  entity after the activity stream data has been cached.</span>
+<span class="sd">                  In this situation, those attachments will NOT be returned,</span>
+<span class="sd">                  as Shotgun will not be requeried for that new data unless</span>
+<span class="sd">                  specifically requested to do so.</span>
+
+<span class="sd">        :param int note_id: The Note entity id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">)</span> <span class="ow">and</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span> <span class="o">==</span> <span class="n">note_id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">attachments</span></div>
         
 <div class="viewcode-block" id="ActivityStreamWidget.load_data"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the state of the widget and then load up the data</span>
 <span class="sd">        for a given entity.</span>
 <span class="sd">        </span>
-<span class="sd">        :param sg_entity_dict: Dictionary with keys type and id</span>
+<span class="sd">        :param dict sg_entity_dict: Dictionary with keys type and id</span>
 <span class="sd">        &quot;&quot;&quot;</span>
  
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Setting up activity stream for entity </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sg_entity_dict</span><span class="p">)</span>
@@ -463,7 +668,26 @@
         <span class="c1"># to mimic the behavior in shotgun - which seems quite strange and</span>
         <span class="c1"># inconsistent for users, we need to disable to note dialog for </span>
         <span class="c1"># these cases</span>
+
+        <span class="c1"># note - this may return [] if shotgun globals aren&#39;t yet cached</span>
+        <span class="n">schema_fields</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">)</span>
+        <span class="n">is_non_project_entity_type</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">schema_fields</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="s2">&quot;project&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">schema_fields</span>
+
+        <span class="c1"># if the project context is None, the entity is a non project entity and it&#39;s NOT</span>
+        <span class="c1"># the project entity itself, we don&#39;t have access to any project state.</span>
+        <span class="n">no_project_available</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span>
+            <span class="n">is_non_project_entity_type</span> <span class="ow">and</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">!=</span> <span class="s2">&quot;Project&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># also disable note creation in the case we have a site context</span>
+        <span class="c1"># and a non-project entity</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ApiUser&quot;</span><span class="p">,</span> <span class="s2">&quot;HumanUser&quot;</span><span class="p">,</span> <span class="s2">&quot;ClientUser&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">no_project_available</span><span class="p">:</span>
+            <span class="c1"># we don&#39;t have any project to hang these notes off, so disable</span>
+            <span class="c1"># the note integration</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
@@ -573,7 +797,7 @@
                                                             <span class="n">attachment_req</span><span class="p">[</span><span class="s2">&quot;attachment_group_id&quot;</span><span class="p">],</span> 
                                                             <span class="n">attachment_req</span><span class="p">[</span><span class="s2">&quot;attachment_data&quot;</span><span class="p">])</span>
         
-        <span class="c1"># now request thumbnails for all usesr who have replied, but </span>
+        <span class="c1"># now request thumbnails for all users who have replied, but </span>
         <span class="c1"># only once per user</span>
         <span class="n">reply_users_dup_check</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">reply_user</span> <span class="ow">in</span> <span class="n">all_reply_users</span><span class="p">:</span>
@@ -592,6 +816,46 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Ask db manager to ask shotgun for updates...&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActivityStreamWidget.show_new_note_dialog"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows a dialog that allows the user to input a new note.</span>
+
+<span class="sd">        .. note:: The return value of the new note dialog is not provided,</span>
+<span class="sd">                  as the activity stream widget will emit an entity_created</span>
+<span class="sd">                  signal if the user successfully creates a new Note entity.</span>
+
+<span class="sd">        :param bool modal: Whether the dialog should be shown modally or not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Skipping New Note Dialog - No entity loaded.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">note_dialog</span> <span class="o">=</span> <span class="n">note_input_widget</span><span class="o">.</span><span class="n">NoteInputDialog</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">note_dialog</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_created</span><span class="p">)</span>
+        <span class="n">note_dialog</span><span class="o">.</span><span class="n">data_updated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rescan</span><span class="p">)</span>
+        <span class="n">note_dialog</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">)</span>
+        <span class="n">note_dialog</span><span class="o">.</span><span class="n">set_current_entity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">modal</span><span class="p">:</span>
+            <span class="n">note_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">note_dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ActivityStreamWidget.rescan"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.rescan">[docs]</a>    <span class="k">def</span> <span class="nf">rescan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_activity_stream_update</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Triggers a rescan of the current activity stream data.</span>
+
+<span class="sd">        :param force_activity_stream_update:    If True, will force a requery</span>
+<span class="sd">                                                of activity stream data, even</span>
+<span class="sd">                                                if it is already cached.</span>
+<span class="sd">        :type force_activity_stream_update:     bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># kick the data manager to rescan for changes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">(</span>
+            <span class="n">force_activity_stream_update</span><span class="o">=</span><span class="n">force_activity_stream_update</span><span class="p">,</span>
+        <span class="p">)</span></div>
             
     <span class="c1">############################################################################</span>
     <span class="c1"># internals</span>
@@ -755,16 +1019,41 @@
             <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Note&quot;</span><span class="p">:</span>
                 <span class="c1"># new note</span>
                 <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-                
+                <span class="n">widget</span><span class="o">.</span><span class="n">show_note_links</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_note_links</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">attachments_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attachments_filter</span>
+
+                <span class="c1"># If it&#39;s been requested that we select this Note entity&#39;s widget when it&#39;s</span>
+                <span class="c1"># constructed, then we do so here. This is the situation where the user has</span>
+                <span class="c1"># created a new Note, which upon completion we want to have autoselected.</span>
+                <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">):</span>
+                    <span class="c1"># First we need to deselect whatever is selected, because we&#39;re going</span>
+                    <span class="c1"># to be selecting our new widget right after.</span>
+                    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
+                                <span class="n">w</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
+
+                    <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># minimalistic &#39;new&#39; widget for all other cases</span>
                 <span class="n">widget</span> <span class="o">=</span> <span class="n">SimpleNewItemWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                             
         <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;create_reply&quot;</span><span class="p">:</span>
             <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">show_note_links</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_note_links</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">attachments_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attachments_filter</span>
             
         <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;update&quot;</span><span class="p">:</span>
-            <span class="n">widget</span> <span class="o">=</span> <span class="n">ValueUpdateWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="c1"># 37660: We&#39;re going to ignore &quot;viewed by&quot; activity for the time being.</span>
+            <span class="c1"># According to the review team these entries shouldn&#39;t have been returned</span>
+            <span class="c1"># as part of the stream anyway, but we have existing data that might</span>
+            <span class="c1"># contain these entries that we need to handle elegantly.</span>
+            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attribute_name&quot;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SKIP_ACTIVITY_ATTRIBUTES</span><span class="p">:</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="n">ValueUpdateWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Activity type not supported and will not be &quot;</span>
@@ -785,6 +1074,18 @@
             <span class="n">widget</span><span class="o">.</span><span class="n">set_user_thumb_cursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ArrowCursor</span><span class="p">)</span>
                     
         <span class="k">return</span> <span class="n">widget</span>
+
+    <span class="k">def</span> <span class="nf">_note_selected_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles a change in selection state for a given Note entity id.</span>
+
+<span class="sd">        :param bool selected: The new selection state of the Note.</span>
+<span class="sd">        :param int note_id: The Note entity id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">selected</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">note_selected</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">note_deselected</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">_process_new_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_ids</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -832,7 +1133,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Adding </span><span class="si">%s</span><span class="s2"> to layout&quot;</span> <span class="o">%</span> <span class="n">w</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>        
                 <span class="c1"># add special blue border to indicate that this is a new arrival</span>
-                <span class="n">w</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">highlight_new_arrivals</span><span class="p">:</span>
+                    <span class="n">w</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }&quot;</span><span class="p">)</span>
         
         <span class="c1"># when everything is loaded in, load the thumbs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Requesting thumbnails&quot;</span><span class="p">)</span>
@@ -871,6 +1173,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_user_thumbnail</span><span class="p">(</span><span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> 
                                                           <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> 
                                                           <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_entity_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -878,6 +1183,8 @@
 
 <span class="sd">        :param entity:  The Shotgun entity that was created.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">notes_are_selectable</span> <span class="ow">and</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Note&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="n">entity</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
             
     <span class="k">def</span> <span class="nf">_on_reply_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
@@ -901,20 +1208,37 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
-        
-    <span class="k">def</span> <span class="nf">_on_note_submitted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Called when a note has finished submitting</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># kick the data manager to rescan for changes</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_load_shotgun_activity_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when someone clicks &#39;show activity stream in shotgun&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/detail/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">shotgun_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">)</span>
-        <span class="n">QtGui</span><span class="o">.</span><span class="n">QDesktopServices</span><span class="o">.</span><span class="n">openUrl</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">url</span><span class="p">))</span></div>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QDesktopServices</span><span class="o">.</span><span class="n">openUrl</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># events</span>
+
+<div class="viewcode-block" id="ActivityStreamWidget.mousePressEvent"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.mousePressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overrides the default event handler in Qt.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">notes_are_selectable</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># If they clicked on a note, select it. Any notes that were not</span>
+        <span class="c1"># clicked on will be deselected.</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
+                <span class="n">selected</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">selected</span> <span class="o">!=</span> <span class="n">widget</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="n">selected</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span></div></div>
+
+
 </pre></div>
 
            </div>
@@ -947,7 +1271,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.3.6',
+            VERSION:'v2.5.7',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

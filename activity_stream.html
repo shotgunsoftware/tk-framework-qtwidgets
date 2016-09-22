@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Activity Stream Widget &mdash; tk-framework-qtwidgets v2.5.6 documentation</title>
+  <title>Shotgun Activity Stream Widget &mdash; tk-framework-qtwidgets v2.5.7 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.6 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.7 documentation" href="index.html"/>
         <link rel="next" title="Auto-Elide label" href="elided_label.html"/>
         <link rel="prev" title="The QT Widgets Framework" href="index.html"/> 
 
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.7.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -209,9 +209,392 @@ pulled down once.</p>
 </div>
 <div class="section" id="activitystreamwidget">
 <h2>ActivityStreamWidget<a class="headerlink" href="#activitystreamwidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="activity_stream.ActivityStreamWidget">
+<em class="property">class </em><code class="descclassname">activity_stream.</code><code class="descname">ActivityStreamWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<p>QT Widget that displays the Shotgun activity stream for an entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_requested(str, int):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when someone clicks an entity inside
+the activity stream. The returned parameters are entity type and entity id.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal playback_requested(dict):</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Fires when someone clicks the playback url
+on a version. Returns a shotgun dictionary with information
+about the version.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_created(object):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when a Note or Reply entity is created by
+an underlying widget within the activity stream. Returns a Shotgun dictionary
+with information about the new Entity.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><strong>reply_dialog</strong> (<em>dialog_reply.ReplyDialog or None</em>) &#8211; When a ReplyDialog is active it can be accessed here. If there
+is no ReplyDialog active, then this will be set to None.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; QT parent object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.set_bg_task_manager">
+<code class="descname">set_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.set_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the background task manager to use to pull
+data in the background. Data calls
+to Shotgun will be dispatched via this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called before the widget is closed</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.note_threads">
+<code class="descname">note_threads</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.note_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>The currently loaded note threads, keyed by Note entity id and
+containing a list of Shotgun entity dictionaries. All note threads
+currently displayed by the activity stream widget will be returned.</p>
+<p>Example structure containing a Note, a Reply, and an attachment:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">6040</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;addressings_cc&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;addressings_to&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;client_note&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;This is a test note.&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;created_at&#39;</span><span class="p">:</span> <span class="mf">1466477744.0</span><span class="p">,</span>
+        <span class="s1">&#39;created_by&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jeff Beeland&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;HumanUser&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">6040</span><span class="p">,</span>
+        <span class="s1">&#39;note_links&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1167</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Shot&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">6023</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Scene_v030_123&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Version&#39;</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;read_by_current_user&#39;</span><span class="p">:</span> <span class="s1">&#39;read&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;subject&#39;</span><span class="p">:</span> <span class="s2">&quot;Jeff&#39;s Note on Scene_v030_123, 123&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;tasks&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2118</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Comp&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Task&#39;</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Note&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jeff Beeland&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;HumanUser&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;user.ApiUser.image&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;user.ClientUser.image&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;user.HumanUser.image&#39;</span><span class="p">:</span> <span class="s1">&#39;https://url_to_file&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;test reply&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;created_at&#39;</span><span class="p">:</span> <span class="mf">1469221928.0</span><span class="p">,</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Reply&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
+            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;https://url_to_file&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jeff Beeland&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;HumanUser&#39;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;attachment_links&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">6051</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s2">&quot;Jeff&#39;s Note on Scene_v030_123, 123 - testing.&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Note&#39;</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;created_at&#39;</span><span class="p">:</span> <span class="mf">1469484693.0</span><span class="p">,</span>
+        <span class="s1">&#39;created_by&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jeff Beeland&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;HumanUser&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">601</span><span class="p">,</span>
+        <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;https://url_to_file&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;this_file&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;content_type&#39;</span><span class="p">:</span> <span class="s1">&#39;image/png&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">601</span><span class="p">,</span>
+            <span class="s1">&#39;link_type&#39;</span><span class="p">:</span> <span class="s1">&#39;upload&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;screencapture_vrviim.png&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Attachment&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://url_to_file&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Attachment&#39;</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.note_widget">
+<code class="descname">note_widget</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.note_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <a class="reference internal" href="note_input_widget.html#note_input_widget.NoteInputWidget" title="note_input_widget.NoteInputWidget"><code class="xref py py-class docutils literal"><span class="pre">NoteInputWidget</span></code></a> contained within
+the ActivityStreamWidget. Note that this is the widget used for NEW note
+input and not Note replies. To get the NoteInputWidget used for Note
+replies, access can be found via <code class="xref py py-meth docutils literal"><span class="pre">ReplyDialog.note_widget()</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.clickable_user_icons">
+<code class="descname">clickable_user_icons</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.clickable_user_icons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether user icons in the activity stream display as clickable.
+If True, a pointing hand cursor will be shown when the mouse is
+hovered over the icons, otherwise the default arrow cursor will be
+used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.pre_submit_callback">
+<code class="descname">pre_submit_callback</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.pre_submit_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pre-submit callback. This is None if one is not set, or a Python
+callable if it is. This callable is run prior to submission of a new
+Note or Reply. Note that the first (and only) argument passed to the
+callback will be the calling <code class="xref py py-class docutils literal"><span class="pre">NoteInputWidget</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Python callable or None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.allow_screenshots">
+<code class="descname">allow_screenshots</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.allow_screenshots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this activity stream is allowed to give the user access to a
+button that performs screenshot operations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.show_sg_stream_button">
+<code class="descname">show_sg_stream_button</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.show_sg_stream_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the button to navigate to Shotgun is shown in the stream.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.version_items_playable">
+<code class="descname">version_items_playable</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.version_items_playable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the label representing a created Version entity is shown
+as being &#8220;playable&#8221; within the UI. If True, then a play icon is
+visible over the thumbnail image, and no icon overlay is shown
+when False.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.show_note_links">
+<code class="descname">show_note_links</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.show_note_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, lists out the parent entity as a list of clickable
+items for each Note entity that is represented in the activity
+stream.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.highlight_new_arrivals">
+<code class="descname">highlight_new_arrivals</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.highlight_new_arrivals" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, highlights items in the activity stream that are new
+since the last time data was loaded.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="activity_stream.ActivityStreamWidget.attachments_filter">
+<code class="descname">attachments_filter</code><a class="headerlink" href="#activity_stream.ActivityStreamWidget.attachments_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>If set to a compiled regular expression, attachment file names that match
+will be filtered OUT and NOT shown.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">An re.match() is used, which means the regular expression must
+match from the start of the attachment file&#8217;s basename. See Python&#8217;s
+&#8220;re&#8221; module documentation for Python 2.x for more information and
+examples.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.deselect_note">
+<code class="descname">deselect_note</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.deselect_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.deselect_note" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a note is currently selected, it will be deselected. This will NOT
+trigger a note_deselected signal to be emitted, as that is only emitted
+when the user triggers the deselection and not via procedural means.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.get_note_attachments">
+<code class="descname">get_note_attachments</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.get_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.get_note_attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Attachment entities associated with the given Note
+entity. Only attachments from Notes currently loaded by the
+activity stream widget will be returned.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is possible for attachments to be added to a Note
+entity after the activity stream data has been cached.
+In this situation, those attachments will NOT be returned,
+as Shotgun will not be requeried for that new data unless
+specifically requested to do so.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The Note entity id.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.load_data">
+<code class="descname">load_data</code><span class="sig-paren">(</span><em>sg_entity_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the state of the widget and then load up the data
+for a given entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_entity_dict</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Dictionary with keys type and id</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.show_new_note_dialog">
+<code class="descname">show_new_note_dialog</code><span class="sig-paren">(</span><em>modal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.show_new_note_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.show_new_note_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a dialog that allows the user to input a new note.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The return value of the new note dialog is not provided,
+as the activity stream widget will emit an entity_created
+signal if the user successfully creates a new Note entity.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>modal</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Whether the dialog should be shown modally or not.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.rescan">
+<code class="descname">rescan</code><span class="sig-paren">(</span><em>force_activity_stream_update=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.rescan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.rescan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Triggers a rescan of the current activity stream data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>force_activity_stream_update</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True, will force a requery
+of activity stream data, even
+if it is already cached.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ActivityStreamWidget.mousePressEvent">
+<code class="descname">mousePressEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/activity_stream.html#ActivityStreamWidget.mousePressEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ActivityStreamWidget.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the default event handler in Qt.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="replylistwidget">
 <h2>ReplyListWidget<a class="headerlink" href="#replylistwidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="activity_stream.ReplyListWidget">
+<em class="property">class </em><code class="descclassname">activity_stream.</code><code class="descname">ReplyListWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/reply_list.html#ReplyListWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ReplyListWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<p>QT Widget that displays a note conversation, 
+including attachments and the ability to reply.</p>
+<p>This will first render the body of the note, including the attachments,
+and then subsequent replies. This widget uses the same
+widgets, data backend and visual components as the 
+activity stream.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_requested(str, int):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when someone clicks an entity inside
+the activity stream. The returned parameters are entity type and entity id.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; QT parent object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="activity_stream.ReplyListWidget.set_bg_task_manager">
+<code class="descname">set_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/reply_list.html#ReplyListWidget.set_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ReplyListWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the background task manager to use to pull
+data in the background. Data calls
+to Shotgun will be dispatched via this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ReplyListWidget.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/reply_list.html#ReplyListWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ReplyListWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called before the widget is closed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="activity_stream.ReplyListWidget.load_data">
+<code class="descname">load_data</code><span class="sig-paren">(</span><em>sg_entity_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/activity_stream/reply_list.html#ReplyListWidget.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#activity_stream.ReplyListWidget.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load replies for a given entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_entity_dict</strong> &#8211; Shotgun link dictionary with keys type and id.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -255,7 +638,7 @@ pulled down once.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.5.6',
+            VERSION:'v2.5.7',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
