@@ -15,11 +15,12 @@ class NoteInputDialog(QtGui.QDialog):
     """
     A dialog wrapper for the :class:`NoteInputWidget` widget.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, parent):
         """
-        Constructor.
+        :param parent: Qt parent object
+        :type parent: :class:`~PySide.QtGui.QWidget`
         """
-        super(NoteInputDialog, self).__init__(*args, **kwargs)
+        super(NoteInputDialog, self).__init__(parent)
 
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint)
 
