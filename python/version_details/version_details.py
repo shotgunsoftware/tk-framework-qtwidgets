@@ -285,6 +285,16 @@ class VersionDetailsWidget(QtGui.QWidget):
         # depending on what the parent is.
         self.setParent(parent)
 
+    def destroy(self):
+        """
+        Should be called before the widget is closed
+        """
+        if self._sg_data_retriever:
+            self._sg_data_retriever.stop()
+            self._sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
+            self._sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
+            self._sg_data_retriever = None
+
     ##########################################################################
     # properties
 
