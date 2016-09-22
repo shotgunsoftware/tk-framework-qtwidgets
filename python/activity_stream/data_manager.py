@@ -200,11 +200,11 @@ class ActivityStreamDataHandler(QtCore.QObject):
         """
         Should be called before the widget is closed
         """
-        if self.__sg_data_retriever:
-            self.__sg_data_retriever.stop()
-            self.__sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
-            self.__sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
-            self.__sg_data_retriever = None
+        if self._sg_data_retriever:
+            self._sg_data_retriever.stop()
+            self._sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
+            self._sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
+            self._sg_data_retriever = None
 
     def __reset(self):
         """

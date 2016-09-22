@@ -93,7 +93,6 @@ class NoteWidget(ActivityStreamBaseWidget):
 
         self.ui.links.hide()
 
-        self.ui.content_editable.setFixedHeight(60)
         self.ui.content_editable.setReadOnly(True)
         self.ui.content_editable.document().contentsChanged.connect(self._on_content_editable_content_changed)
         self._saved_content = ""
@@ -286,7 +285,7 @@ class NoteWidget(ActivityStreamBaseWidget):
 
     def add_cancel_button(self):
         """
-        Adds an initially hidden `Edit` button to the UI.
+        Adds an initially hidden `Cancel` button to the UI.
         """
         button = ClickableLabel(self)
         button.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
@@ -298,7 +297,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         )
         self._button_layout.addWidget(button)
         button.setText("Cancel")
-        button.setObjectName("button")
+        button.setObjectName("cancel_button")
         self._general_widgets.extend([button, self._button_layout])
         button.clicked.connect(self._on_cancel_clicked)
         return button
@@ -317,7 +316,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         )
         self._button_layout.addWidget(button)
         button.setText("Apply")
-        button.setObjectName("button")
+        button.setObjectName("apply_button")
         self._general_widgets.extend([button, self._button_layout])
         button.clicked.connect(self._on_apply_clicked)
         return button

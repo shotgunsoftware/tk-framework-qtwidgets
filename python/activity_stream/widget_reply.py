@@ -143,6 +143,8 @@ class ReplyWidget(ActivityStreamBaseWidget):
     def set_mouse_input_enabled(self, enabled):
         """
         Set whether or not the widget UI should capture mouse events.
+
+        :param bool enabled: True to enable mouse input or False to disable.
         """
         # If the note is not selected then we want to forward mouse events to
         # the parent so that the user can click anywhere on the note widget to
