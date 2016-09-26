@@ -116,7 +116,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
-        self._uploads_uids = []
+        self._uploads_uids = {}       
         self._attachment_query_uids = {}
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
@@ -799,6 +799,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         elif uid in self._attachment_query_uids:
             self._download_attachments(data["sg"], self._attachment_query_uids[uid])
             del self._attachment_query_uids[uid]
+        elif uid in self._uploads_uids:           
+            self.ui.note_stream_widget.note_update(self._uploads_uids[uid]["entity"], self._uploads_uids[uid]["note_id"])          
+            del self._uploads_uids[uid]
 
     def __on_worker_failure(self, uid, msg):
         """

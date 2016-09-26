@@ -681,6 +681,9 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
         self._bundle.log_debug("...update complete")
             
+    def db_insert_note_update(self, note_id, data):            
+        self.__db_insert_note_update(None, note_id, data)
+
     @_db_connect
     def __db_insert_note_update(self, connection, cursor, update_id, note_id, data):
         """

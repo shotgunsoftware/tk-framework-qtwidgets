@@ -643,6 +643,26 @@ class ActivityStreamWidget(QtGui.QWidget):
             force_activity_stream_update=force_activity_stream_update,
         )
             
+    def note_update(self,entity, note_id):       
+        note_thread_data = self._data_manager.get_note(note_id)
+        attachment_metadata = self._bundle.shotgun.find_one("Attachment", 
+                                                         [["attachment_links", "is", {"type": "Note", "id": note_id}],
+                                                          ["display_name", "starts_with", "__note_thumbnail__"]],
+                                                          fields=[
+                                                            "created_at",
+                                                            "created_by",
+                                                            "id", 
+                                                            "this_file",
+                                                            "image",
+                                                            "type",
+                                                            "attachment_links",                                                        
+                                                        ])
+        attachment_metadata["created_at"] = 1474558890.9 #test (need to fix the format)
+        note_thread_data.append(attachment_metadata)
+        self._data_manager.db_insert_note_update(note_id, note_thread_data)
+        
+        self.load_data(entity)
+
     ############################################################################
     # internals
         
