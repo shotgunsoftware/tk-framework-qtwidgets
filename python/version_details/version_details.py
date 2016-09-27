@@ -289,11 +289,13 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         Should be called before the widget is closed
         """
-        if self._sg_data_retriever:
-            self._sg_data_retriever.stop()
-            self._sg_data_retriever.work_completed.disconnect(self.__on_worker_signal)
-            self._sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
-            self._sg_data_retriever = None
+        if self.ui and self.ui.note_stream_widget:
+            self.ui.note_stream_widget.destroy()
+        if self._data_retriever:
+            self._data_retriever.stop()
+            self._data_retriever.work_completed.disconnect(self.__on_worker_signal)
+            self._data_retriever.work_failure.disconnect(self.__on_worker_failure)
+            self._data_retriever = None
 
     ##########################################################################
     # properties
