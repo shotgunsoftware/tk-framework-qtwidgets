@@ -80,6 +80,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     VERSION_LIST_FIELDS_PREFS_KEY = "version_details_version_list_fields"
     NOTE_METADATA_FIELD = "sg_metadata"
     NOTE_MARKUP_PREFIX = "__note_markup__"
+    NOTE_THUMBNAIL_PREFIX = "__note_thumbnail__"
 
     # Emitted when an entity is created by the panel. The
     # entity type as a string and id as an int are passed
@@ -115,7 +116,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
-        self._uploads_uids = []
+        self._uploads_uids = {}       
         self._attachment_query_uids = {}
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
@@ -517,6 +518,33 @@ class VersionDetailsWidget(QtGui.QWidget):
             ]
         )] = note_id
 
+    def download_version_attachments(self, attachment_id ,note_id):
+        """
+        Triggers the attachments linked to the given Version entity to
+        be downloaded. This function is used to download
+        an attachment done on a version but used by a Note.
+        When the download is completed successfully, an
+        attachment_downloaded signal is emitted. 
+
+        :param int attachment_id: The attachment id on the Version entity.
+        :param int note_id: The Note entity id that we want to link with the Version entity attachment.
+        """               
+        self._attachment_query_uids[self._data_retriever.execute_find(
+            "Attachment",
+            [[
+                "attachment_links",
+                "in",
+                {"type":"Version", "id":self.current_entity["id"]}
+            ],
+            ["id", "is", attachment_id]
+            ],
+            fields=[
+                "this_file",
+                "image",
+                "attachment_links",
+            ]
+        )] = note_id
+
     def get_note_attachments(self, note_id):
         """
         Gets the Attachment entities associated with the given Note
@@ -606,6 +634,35 @@ class VersionDetailsWidget(QtGui.QWidget):
                 "Note",
                 note_id,
                 {self.NOTE_METADATA_FIELD:metadata},
+            )
+        )
+
+    def set_entity_metadata(self, data, metadata):
+        """
+        Sets a entity metadata in Shotgun async.
+
+        :param dict data: The entity type and id.
+        :param str metadata: The metadata to set in Shotgun.
+        """
+        self._note_set_metadata_uids.append(
+            self._data_retriever.execute_update(
+                data["entity"],
+                data["id"],
+                {"metadata":metadata},
+            )
+        )
+
+    
+    def delete_entity_attachment(self, attachment_id):
+        """
+        Delete an entity attachment async
+
+        :param int attachment_id: Attachment id to delete        
+        """
+        self._note_set_metadata_uids.append(
+            self._data_retriever.execute_delete(
+                "Attachment",
+                attachment_id,                
             )
         )
 
@@ -754,6 +811,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         elif uid in self._attachment_query_uids:
             self._download_attachments(data["sg"], self._attachment_query_uids[uid])
             del self._attachment_query_uids[uid]
+        elif uid in self._uploads_uids:           
+            self.ui.note_stream_widget.note_update(self._uploads_uids[uid]["entity"], self._uploads_uids[uid]["note_id"])          
+            del self._uploads_uids[uid]
 
     def __on_worker_failure(self, uid, msg):
         """

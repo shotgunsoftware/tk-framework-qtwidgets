@@ -314,7 +314,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # If we're forcing the refresh of the entire stream, then we
             # don't care about what's already been pulled. We'll just go
             # on as if we've never queried anything.
-            if not self._activity_data:
+            if not self._activity_data or force_activity_stream_update:
                 highest_id = None
             else:
                 highest_id = max(self._activity_data.keys())
@@ -682,6 +682,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
             self._force_activity_stream_update = False
 
         self._bundle.log_debug("...update complete")
+    def db_insert_note_update(self, note_id, data):            
+        self.__db_insert_note_update(None, note_id, data)
 
     @_db_connect
     def __db_insert_note_update(self, connection, cursor, update_id, note_id, data):
