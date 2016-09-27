@@ -84,7 +84,7 @@ class EntityFieldMenu(ShotgunMenu):
                                cache location will be returned if the current
                                context does not have an associated project.
         """
-        QtGui.QMenu.__init__(self, parent=None)
+        super(EntityFieldMenu, self).__init__(parent)
 
         self._sg_entity_type = sg_entity_type
 

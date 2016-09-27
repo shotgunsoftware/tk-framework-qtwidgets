@@ -35,6 +35,20 @@ class ShotgunMenu(QtGui.QMenu):
     Image shows the results of the ``ShotgunMenu`` created in the example.
     """
 
+    def __init__(self, parent=None):
+        """
+        Initialize the menu.
+
+        :param parent: The menu's parent.
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        """
+
+        super(ShotgunMenu, self).__init__(parent)
+
+        # ensure the menu only takes up one column and scrolls rather than
+        # expanding horizontally (the default)
+        self.setStyleSheet("QMenu { menu-scrollable: 1; }")
+
     def add_group(self, items, title=None, separator=True):
         """
         Adds a group of items to the menu.
