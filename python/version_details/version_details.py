@@ -517,12 +517,16 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param int attachment_id: The attachment id on the Version entity.
         :param int note_id: The Note entity id that we want to link with the Version entity attachment.
         """               
-        self._attachment_query_uids[self._data_retriever.execute_find(
+        version_id = self.current_entity["id"] if self.current_entity else (self._requested_entity["id"] if self._requested_entity else None)
+        if version_id is None:
+            sgtk.platform.current_bundle().log_error("Unable to download version attachments: no current version entity.")
+            return
+        index = self._data_retriever.execute_find(
             "Attachment",
             [[
                 "attachment_links",
                 "in",
-                {"type":"Version", "id":self.current_entity["id"]}
+                {"type":"Version", "id":version_id}
             ],
             ["id", "is", attachment_id]
             ],
@@ -531,7 +535,8 @@ class VersionDetailsWidget(QtGui.QWidget):
                 "image",
                 "attachment_links",
             ]
-        )] = note_id
+        )
+        self._attachment_query_uids[index] = note_id
 
     def get_note_attachments(self, note_id):
         """
