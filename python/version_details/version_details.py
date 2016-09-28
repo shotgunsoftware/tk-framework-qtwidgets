@@ -600,9 +600,6 @@ class VersionDetailsWidget(QtGui.QWidget):
             fields=self._fields,
         )
 
-        for note_id in self.note_threads.keys():
-            self._process_note_arrival(note_id)
-
         self.entity_loaded.emit(entity)
 
     def save_preferences(self):
