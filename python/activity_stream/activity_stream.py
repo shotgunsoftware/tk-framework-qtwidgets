@@ -54,6 +54,8 @@ class ActivityStreamWidget(QtGui.QWidget):
     # The int is the Note entity id that was selected or deselected.
     note_selected = QtCore.Signal(int)
     note_deselected = QtCore.Signal(int)
+
+    # Called when a note is loaded either from remote download or the cache
     note_arrived = QtCore.Signal(int)
 
     # Emitted when a Note or Reply entity is created. The
@@ -548,9 +550,10 @@ class ActivityStreamWidget(QtGui.QWidget):
                         (note_reply_users, note_attachment_requests) = self._populate_note_widget(w, activity_id, note_id)
                         # extend user and attachment requests to our full list
                         # so that we can request thumbnails for these later...
-                        all_reply_users.extend(note_reply_users)                    
+                        all_reply_users.extend(note_reply_users)
                         attachment_requests.extend(note_attachment_requests)
-            
+                        self.note_arrived.emit(note_id)
+
             # last, create "loading" widget
             # to put at the top of the list.
             #
