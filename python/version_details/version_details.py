@@ -506,37 +506,30 @@ class VersionDetailsWidget(QtGui.QWidget):
             ]
         )] = note_id
 
-    def download_version_attachments(self, attachment_id ,note_id):
+    def download_version_attachments(self, data):
         """
         Triggers the attachments linked to the given Version entity to
         be downloaded. This function is used to download
         an attachment done on a version but used by a Note.
         When the download is completed successfully, an
         attachment_downloaded signal is emitted. 
-
-        :param int attachment_id: The attachment id on the Version entity.
-        :param int note_id: The Note entity id that we want to link with the Version entity attachment.
+               
         """               
-        version_id = self.current_entity["id"] if self.current_entity else (self._requested_entity["id"] if self._requested_entity else None)
-        if version_id is None:
-            sgtk.platform.current_bundle().log_error("Unable to download version attachments: no current version entity.")
-            return
-        index = self._data_retriever.execute_find(
+        self._attachment_query_uids[self._data_retriever.execute_find(
             "Attachment",
             [[
                 "attachment_links",
                 "in",
-                {"type":"Version", "id":version_id}
+                {"type":"Version", "id":data["version_id"]}
             ],
-            ["id", "is", attachment_id]
+            ["id", "is", data["version_attachment_id"]]
             ],
             fields=[
                 "this_file",
                 "image",
                 "attachment_links",
             ]
-        )
-        self._attachment_query_uids[index] = note_id
+        )] = data["note_id"]
 
     def get_note_attachments(self, note_id):
         """

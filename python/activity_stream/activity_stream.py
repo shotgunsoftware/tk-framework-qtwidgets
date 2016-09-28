@@ -10,6 +10,7 @@
 
 import os
 import sys
+import time
 import sgtk
 
 from sgtk.platform.qt import QtCore, QtGui
@@ -657,11 +658,34 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                             "type",
                                                             "attachment_links",                                                        
                                                         ])
-        attachment_metadata["created_at"] = 1474558890.9 #test (need to fix the format)
+        
+        dtime = attachment_metadata["created_at"]      
+        attachment_metadata["created_at"] = time.mktime(dtime.timetuple())
+ 
         note_thread_data.append(attachment_metadata)
         self._data_manager.db_insert_note_update(note_id, note_thread_data)
-        
-        self.load_data(entity)
+
+        ids_to_process = self._data_manager.load_activity_data(entity["type"], 
+                                                               entity["id"],
+                                                               self.MAX_STREAM_LENGTH)     
+        activity_id = ids_to_process[-1]
+
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget) and widget.note_id == note_id:                                               
+                widget._add_attachment_group([attachment_metadata], True)
+                attachment_requests = []
+                for attachment_group_id in widget.get_attachment_group_widget_ids():
+                    agw = widget.get_attachment_group_widget(attachment_group_id)
+                    for attachment_data in agw.get_data():                                         
+                        ag_request = {"attachment_group_id": attachment_group_id,
+                                      "activity_id": activity_id,
+                                      "attachment_data": attachment_data}
+                        attachment_requests.append(ag_request)                
+               
+                for attachment_req in attachment_requests:
+                    self._data_manager.request_attachment_thumbnail(attachment_req["activity_id"], 
+                                                                    attachment_req["attachment_group_id"], 
+                                                                    attachment_req["attachment_data"])
 
     ############################################################################
     # internals
