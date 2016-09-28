@@ -44,7 +44,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     :vartype reply_dialog: .dialog_reply.ReplyDialog or None
     """
     # max number of items to show in the activity stream.
-    MAX_STREAM_LENGTH = 200
+    MAX_STREAM_LENGTH = 50
 
     # Activity attributes that we do not want displayed.
     _SKIP_ACTIVITY_ATTRIBUTES = ["viewed_by_current_user"]
