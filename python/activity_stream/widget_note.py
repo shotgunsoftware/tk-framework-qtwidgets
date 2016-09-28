@@ -42,7 +42,7 @@ class NoteWidget(ActivityStreamBaseWidget):
     # Note entity ID associated with this widget.
     selection_changed = QtCore.Signal(bool, int)
     
-    def __init__(self, parent):
+    def __init__(self, note_id, parent):
         """
         :param parent: QT parent object
         :type parent: :class:`PySide.QtGui.QWidget`        
@@ -54,7 +54,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.ui = Ui_NoteWidget() 
         self.ui.setupUi(self)
         
-        self._note_id = None
+        self._note_id = note_id
         self._general_widgets = []
         self._reply_widgets = []
         self._attachment_group_widgets = {}
@@ -354,7 +354,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         
         return html
         
-        
+
     def set_note_info(self, data):
         """
         update with new note data

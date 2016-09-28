@@ -838,7 +838,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             
             elif data["primary_entity"]["type"] == "Note":
                 # new note
-                widget = NoteWidget(self)
+                widget = NoteWidget(data["primary_entity"]["id"], self)
                 widget.show_note_links = self.show_note_links
                 widget.attachments_filter = self.attachments_filter
 
@@ -863,7 +863,8 @@ class ActivityStreamWidget(QtGui.QWidget):
                 widget = SimpleNewItemWidget(self)
                             
         elif data["update_type"] == "create_reply":
-            widget = NoteWidget(self)
+            # new note widget
+            widget = NoteWidget(data["primary_entity"]["id"], self)
             widget.show_note_links = self.show_note_links
             widget.attachments_filter = self.attachments_filter
             
@@ -914,9 +915,13 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         :param activity_ids: List of activity ids
         """
-        self._bundle.log_debug("Process new data slot called "
-                            "for %s activity events" % len(activity_ids))
-                
+        self._bundle.log_debug(
+            "Process new data called for %s activity events" % len(activity_ids)
+        )
+
+        # keep track of new note widgets created
+        note_widgets_added = []
+
         # remove the "loading please wait .... widget
         self._clear_loading_widget()
         
@@ -955,6 +960,9 @@ class ActivityStreamWidget(QtGui.QWidget):
                 # add special blue border to indicate that this is a new arrival
                 if self.highlight_new_arrivals:
                     w.setStyleSheet("QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }")
+                # register if it is a note so we can post process
+                if isinstance(w, NoteWidget):
+                    note_widgets_added.append(w)
         
         # when everything is loaded in, load the thumbs
         self._bundle.log_debug("Requesting thumbnails")
@@ -962,6 +970,15 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._data_manager.request_activity_thumbnails(activity_id)
                 
         self._bundle.log_debug("Process new data complete.")
+
+        # now cull out any activity items that are duplicated in the list
+        # this may be the case if a note has been replied to - in this case
+        # the note already exists in the list
+        note_ids_added = [widget.note_id for widget in note_widgets_added]
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget) and widget not in note_widgets_added:
+                if widget.note_id in note_ids_added:
+                    widget.hide()
 
         # turn off the overlay in case it is spinning
         # (which only happens on a full load)
