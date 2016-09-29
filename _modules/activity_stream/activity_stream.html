@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.5.7 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.5.9 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.7 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.9 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.7.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.9.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -1018,7 +1018,7 @@
             
             <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Note&quot;</span><span class="p">:</span>
                 <span class="c1"># new note</span>
-                <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="p">)</span>
                 <span class="n">widget</span><span class="o">.</span><span class="n">show_note_links</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_note_links</span>
                 <span class="n">widget</span><span class="o">.</span><span class="n">attachments_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attachments_filter</span>
 
@@ -1043,7 +1043,8 @@
                 <span class="n">widget</span> <span class="o">=</span> <span class="n">SimpleNewItemWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                             
         <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;create_reply&quot;</span><span class="p">:</span>
-            <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="c1"># new note widget</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="p">)</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">show_note_links</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_note_links</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">attachments_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attachments_filter</span>
             
@@ -1094,9 +1095,13 @@
 <span class="sd">        </span>
 <span class="sd">        :param activity_ids: List of activity ids</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Process new data slot called &quot;</span>
-                            <span class="s2">&quot;for </span><span class="si">%s</span><span class="s2"> activity events&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">activity_ids</span><span class="p">))</span>
-                
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span>
+            <span class="s2">&quot;Process new data called for </span><span class="si">%s</span><span class="s2"> activity events&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">activity_ids</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># keep track of new note widgets created</span>
+        <span class="n">note_widgets_added</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="c1"># remove the &quot;loading please wait .... widget</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clear_loading_widget</span><span class="p">()</span>
         
@@ -1135,6 +1140,9 @@
                 <span class="c1"># add special blue border to indicate that this is a new arrival</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">highlight_new_arrivals</span><span class="p">:</span>
                     <span class="n">w</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QFrame#frame{ border: 1px solid rgba(48, 167, 227, 50%); }&quot;</span><span class="p">)</span>
+                <span class="c1"># register if it is a note so we can post process</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
+                    <span class="n">note_widgets_added</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
         
         <span class="c1"># when everything is loaded in, load the thumbs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Requesting thumbnails&quot;</span><span class="p">)</span>
@@ -1142,6 +1150,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">request_activity_thumbnails</span><span class="p">(</span><span class="n">activity_id</span><span class="p">)</span>
                 
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Process new data complete.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># now cull out any activity items that are duplicated in the list</span>
+        <span class="c1"># this may be the case if a note has been replied to - in this case</span>
+        <span class="c1"># the note already exists in the list</span>
+        <span class="n">note_ids_added</span> <span class="o">=</span> <span class="p">[</span><span class="n">widget</span><span class="o">.</span><span class="n">note_id</span> <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">note_widgets_added</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">)</span> <span class="ow">and</span> <span class="n">widget</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">note_widgets_added</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span> <span class="ow">in</span> <span class="n">note_ids_added</span><span class="p">:</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
         <span class="c1"># turn off the overlay in case it is spinning</span>
         <span class="c1"># (which only happens on a full load)</span>
@@ -1271,7 +1288,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.7',
+            VERSION:'v2.5.9',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

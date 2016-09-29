@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Menus &mdash; tk-framework-qtwidgets v2.5.7 documentation</title>
+  <title>Shotgun Menus &mdash; tk-framework-qtwidgets v2.5.9 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.7 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.9 documentation" href="index.html"/>
         <link rel="next" title="Spinner Widget" href="spinner_widget.html"/>
         <link rel="prev" title="Shotgun Field Widgets" href="shotgun_fields.html"/> 
 
@@ -134,7 +134,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.7.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.9.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -195,7 +195,7 @@ building menus that interact with Shotgun.</p>
 <h3>Shotgun Menu<a class="headerlink" href="#shotgun-menu" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="shotgun_menus.ShotgunMenu">
-<em class="property">class </em><code class="descclassname">shotgun_menus.</code><code class="descname">ShotgunMenu</code><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">shotgun_menus.</code><code class="descname">ShotgunMenu</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QMenu.html#PySide.QtGui.QMenu" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QMenu</span></code></a></p>
 <p>A base class with support for easily adding labels and groups of actions
 with a consistent styling.</p>
@@ -215,6 +215,15 @@ with a consistent styling.</p>
 </div>
 <img alt="_images/shotgun_menus_example.png" src="_images/shotgun_menus_example.png" />
 <p>Image shows the results of the <code class="docutils literal"><span class="pre">ShotgunMenu</span></code> created in the example.</p>
+<p>Initialize the menu.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The menu&#8217;s parent.</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="shotgun_menus.ShotgunMenu.add_group">
 <code class="descname">add_group</code><span class="sig-paren">(</span><em>items</em>, <em>title=None</em>, <em>separator=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.add_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.add_group" title="Permalink to this definition">¶</a></dt>
@@ -286,7 +295,7 @@ in the order added, will be returned.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>sg_entity_type</strong> (<em>String</em>) &#8211; The entity type to build a menu for</li>
 <li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; Parent widget</li>
-<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; The task manager the menu will use if it needs to run a task</li>
+<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.12)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; The task manager the menu will use if it needs to run a task</li>
 <li><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The project Entity id. If None, the current
 context&#8217;s project will be used, or the &#8220;site&#8221;
 cache location will be returned if the current
@@ -410,7 +419,7 @@ given entity type should be displayed</td>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.5.7',
+            VERSION:'v2.5.9',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
