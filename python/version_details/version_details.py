@@ -800,12 +800,6 @@ class VersionDetailsWidget(QtGui.QWidget):
         if uid in self._note_metadata_uids:
             entity = data["sg"]
             self.note_arrived.emit(entity["id"], entity)
-        elif uid in self._note_set_metadata_uids:
-            entity = data["sg"]
-            self.note_metadata_changed.emit(
-                entity["id"],
-                entity[self.NOTE_METADATA_FIELD],
-            )
         elif uid in self._attachment_uids:
             note_id = self._attachment_uids[uid]
             del self._attachment_uids[uid]
@@ -813,8 +807,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         elif uid in self._attachment_query_uids:
             self._download_attachments(data["sg"], self._attachment_query_uids[uid])
             del self._attachment_query_uids[uid]
-        elif uid in self._uploads_uids:           
-            self.ui.note_stream_widget.note_update(self._uploads_uids[uid]["entity"], self._uploads_uids[uid]["note_id"])          
+        elif uid in self._uploads_uids:
+            self.ui.note_stream_widget.note_update(self._uploads_uids[uid]["entity"], self._uploads_uids[uid]["note_id"])
             del self._uploads_uids[uid]
 
     def __on_worker_failure(self, uid, msg):
