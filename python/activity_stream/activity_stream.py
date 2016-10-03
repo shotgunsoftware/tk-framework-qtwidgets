@@ -108,6 +108,9 @@ class ActivityStreamWidget(QtGui.QWidget):
         # create a data manager to handle backend
         self._data_manager = ActivityStreamDataHandler(self)
 
+        # used to track outgoing shotgun tasks
+        self._outgoing_tasks = None
+
         # set up signals
         self._data_manager.note_arrived.connect(self._process_new_note)
         self._data_manager.update_arrived.connect(self._process_new_data)
@@ -158,12 +161,20 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._task_manager = task_manager
         self._data_manager.set_bg_task_manager(task_manager)
         self.ui.note_widget.set_bg_task_manager(task_manager)
-        
+
+    def set_outgoing_task_tracker(self, tasks):
+        """
+        The current Shotgun entity that is active in the widget.
+        """
+        self._outgoing_tasks = tasks
+        self.note_widget.set_outgoing_task_tracker(tasks)
+
     def destroy(self):
         """
         Should be called before the widget is closed
         """
         self._data_manager.destroy()
+        self._outgoing_tasks = None
         self._task_manager = None
 
     ############################################################################

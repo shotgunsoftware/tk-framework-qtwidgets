@@ -123,6 +123,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._attachments_filter = None
         self._dock_widget = None
         self._pre_submit_callback = None
+        self._outgoing_tasks = None
 
         self.ui = Ui_VersionDetailsWidget() 
         self.ui.setupUi(self)
@@ -353,6 +354,13 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         return self.ui.note_stream_widget.note_threads
 
+    def num_tasks(self):
+        return self._task_manager.num_tasks()
+
+    def set_outgoing_task_tracker(self, tasks):
+        self._outgoing_tasks = tasks
+        self.ui.note_stream_widget.set_outgoing_task_tracker(tasks)
+
     def _get_attachments_filter(self):
         """
         If set to a compiled regular expression, attachment file names that match
@@ -417,7 +425,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_entity = note_entity["entity"]
 
         for file_path in file_paths:
-            self._data_retriever.execute_method(
+            id = self._data_retriever.execute_method(
                 self.__upload_file,
                 dict(
                     file_path=file_path,
@@ -426,6 +434,7 @@ class VersionDetailsWidget(QtGui.QWidget):
                     cleanup_after_upload=cleanup_after_upload,
                 ),
             )
+            self._outgoing_tasks.add(id)
 
     def add_query_fields(self, fields):
         """
@@ -733,7 +742,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             return
 
         version_id = version_id or self.current_entity["id"]
-        self._data_retriever.execute_method(
+        id = self._data_retriever.execute_method(
             self.__upload_thumbnail,
             dict(
                 entity_type="Version",
@@ -741,6 +750,7 @@ class VersionDetailsWidget(QtGui.QWidget):
                 path=thumbnail_path,
             ),
         )
+        self._outgoing_tasks.add(id)
 
     def use_styled_title_bar(self, dock_widget):
         """
@@ -797,12 +807,17 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param str request_type: The request class.
         :param dict data: The returned data.
         """
+        # The outgoing task may exist in some the other lists so check for it always
+        if uid in self._outgoing_tasks:
+            self._outgoing_tasks.remove(uid)
+
         if uid in self._note_metadata_uids:
             entity = data["sg"]
             self.note_arrived.emit(entity["id"], entity)
         elif uid in self._attachment_uids:
             note_id = self._attachment_uids[uid]
             del self._attachment_uids[uid]
+            
             self.note_attachment_arrived.emit(note_id, data["file_path"])
         elif uid in self._attachment_query_uids:
             self._download_attachments(data["sg"], self._attachment_query_uids[uid])
@@ -811,6 +826,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.note_stream_widget.note_update(self._uploads_uids[uid]["entity"], self._uploads_uids[uid]["note_id"])
             del self._uploads_uids[uid]
 
+
     def __on_worker_failure(self, uid, msg):
         """
         Asynchronous callback - the worker thread errored.
@@ -818,6 +834,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param int uid: Unique id for request that failed.
         :param str msg: The error message.
         """
+        if uid in self._outgoing_tasks:
+            self._outgoing_tasks.remove(uid)
         sgtk.platform.current_bundle().log_error(msg)
 
     def _load_stylesheet(self):
