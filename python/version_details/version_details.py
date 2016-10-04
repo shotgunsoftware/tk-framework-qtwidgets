@@ -808,7 +808,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param dict data: The returned data.
         """
         # The outgoing task may exist in some the other lists so check for it always
-        if uid in self._outgoing_tasks:
+        if self._outgoing_tasks.has(uid):
             self._outgoing_tasks.remove(uid)
 
         if uid in self._note_metadata_uids:
@@ -834,7 +834,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param int uid: Unique id for request that failed.
         :param str msg: The error message.
         """
-        if uid in self._outgoing_tasks:
+        if self._outgoing_tasks.has(uid):
             self._outgoing_tasks.remove(uid)
         sgtk.platform.current_bundle().log_error(msg)
 
