@@ -590,7 +590,7 @@ class NoteInputWidget(QtGui.QWidget):
             self._bundle.log_error("Could not create note/reply: %s" % msg)
             full_msg = "Could not submit note update: %s" % msg
             QtGui.QMessageBox.critical(None, "Shotgun Error", msg)
-            if self._outgoing_tasks:
+            if self._outgoing_tasks and self._outgoing_tasks.has(uid):
                 self._outgoing_tasks.remove(uid)
     
 
@@ -614,7 +614,7 @@ class NoteInputWidget(QtGui.QWidget):
             self._bundle.log_debug("Update call complete! Return data: %s" % data)
             self.data_updated.emit()
             self.entity_created.emit(data["return_value"])
-            if self._outgoing_tasks:
+            if self._outgoing_tasks and self._outgoing_tasks.has(uid):
                 self._outgoing_tasks.remove(uid)
 
             
