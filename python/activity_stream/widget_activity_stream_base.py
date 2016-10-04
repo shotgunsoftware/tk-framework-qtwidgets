@@ -9,6 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from sgtk.platform.qt import QtCore, QtGui
+from sgtk.platform import constants
 
 import sgtk
 import datetime
@@ -208,14 +209,10 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         """
         Generate a standard shotgun url
         """
-        str_val = """<a href='%s:%s' 
-                        style='text-decoration: none;
-                        color: %s'>%s</a>
-                  """ % (entity_type, 
-                         entity_id,
-                         #self._bundle.style_constants["SG_HIGHLIGHT_COLOR"],
-                         'rgb(126,127,129);',
-                         name)
+        str_val = constants.URL_TEMPLATE % (
+            "%s:%s" % (entity_type, entity_id),
+            name,
+        )
         return str_val
     
     def _generate_entity_url(self, entity, this_syntax=True, display_type=True):
