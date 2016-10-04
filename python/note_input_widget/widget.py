@@ -86,6 +86,7 @@ class NoteInputWidget(QtGui.QWidget):
         
         # create a separate sg data handler for submission
         self.__sg_data_retriever = None
+        self._outgoing_tasks = None
         
         # hook up signals and slots
         self.ui.screenshot.clicked.connect(self._screenshot_or_clear)
@@ -134,8 +135,9 @@ class NoteInputWidget(QtGui.QWidget):
         
         self.ui.text_entry.set_bg_task_manager(task_manager)
         
-        
-        
+    def set_outgoing_task_tracker(self, tasks):
+        self._outgoing_tasks = tasks
+
     ###########################################################################
     # internal methods
 
@@ -276,6 +278,8 @@ class NoteInputWidget(QtGui.QWidget):
         # ask the data retriever to execute an async callback
         if self.__sg_data_retriever:
             self._processing_id = self.__sg_data_retriever.execute_method(self._async_submit, data)
+            if self._outgoing_tasks:
+                self._outgoing_tasks.add(self._processing_id)
         else:
             raise TankError("Please associate this class with a background task processor.")
         
@@ -586,6 +590,8 @@ class NoteInputWidget(QtGui.QWidget):
             self._bundle.log_error("Could not create note/reply: %s" % msg)
             full_msg = "Could not submit note update: %s" % msg
             QtGui.QMessageBox.critical(None, "Shotgun Error", msg)
+            if self._outgoing_tasks:
+                self._outgoing_tasks.remove(uid)
     
 
     def __on_worker_signal(self, uid, request_type, data):
@@ -608,6 +614,9 @@ class NoteInputWidget(QtGui.QWidget):
             self._bundle.log_debug("Update call complete! Return data: %s" % data)
             self.data_updated.emit()
             self.entity_created.emit(data["return_value"])
+            if self._outgoing_tasks:
+                self._outgoing_tasks.remove(uid)
+
             
         
     def __format_thumbnail(self, pixmap_obj):
