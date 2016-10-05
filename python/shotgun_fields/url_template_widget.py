@@ -26,7 +26,7 @@ class UrlTemplateWidget(ElidedLabelBaseWidget):
 
         :param str value: The url value to convert into a string
         """
-        return sgtk.platform.get_hyperlink_html(
+        return self._bundle.get_hyperlink_html(
             url=value,
             name=value,
         )

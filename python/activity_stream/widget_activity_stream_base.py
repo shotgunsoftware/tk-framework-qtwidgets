@@ -9,7 +9,6 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from sgtk.platform.qt import QtCore, QtGui
-from sgtk.platform import get_hyperlink_html
 
 import sgtk
 import datetime
@@ -205,7 +204,10 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         """
         Generate a standard shotgun url
         """
-        return get_hyperlink_html("{0}:{1}".format(entity_type, entity_id), name)
+        return self._bundle.get_hyperlink_html(
+            url="{0}:{1}".format(entity_type, entity_id),
+            name=name,
+        )
     
     def _generate_entity_url(self, entity, this_syntax=True, display_type=True):
         """

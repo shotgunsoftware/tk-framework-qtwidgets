@@ -308,7 +308,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         if value["link_type"] in ["web", "upload"]:
             url = value["url"]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)
-            hyperlink = sgtk.platform.get_hyperlink_html(url, value.get("name", url))
+            hyperlink = self._bundle.get_hyperlink_html(url, value.get("name", url))
             str_val = "<span><img src='{0}'>&nbsp;{1}".format(img_src, hyperlink)
         elif value["link_type"] == "local":
             local_path = value["local_path"]
@@ -317,7 +317,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
             # file basename.ext (the SG behavior).
             file_name = os.path.split(local_path)[-1]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)
-            hyperlink = sgtk.platform.get_hyperlink_html(local_path, file_name)
+            hyperlink = self._bundle.get_hyperlink_html(local_path, file_name)
             str_val = "<span><img src='{0}'>&nbsp;{1}".format(img_src, hyperlink)
         else:
             str_val = ""

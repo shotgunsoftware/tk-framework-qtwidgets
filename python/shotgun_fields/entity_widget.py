@@ -45,7 +45,7 @@ class EntityWidget(ElidedLabelBaseWidget):
         entity_url = "%sdetail/%s/%d" % (url_base, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
 
-        hyperlink = sgtk.platform.get_hyperlink_html(entity_url, str_val)
+        hyperlink = self._bundle.get_hyperlink_html(entity_url, str_val)
         return "<span><img src='{0}'>&nbsp;{1}".format(entity_icon_url, hyperlink)
 
     def _string_value(self, value):
