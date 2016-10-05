@@ -725,15 +725,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         note_thread_data.append(attachment_metadata)
         current_attachments.append(attachment_metadata)
         self._data_manager.db_insert_note_update(note_id, note_thread_data)
-
-        ids_to_process = self._data_manager.load_activity_data(entity["type"], 
-                                                               entity["id"],
-                                                               self.MAX_STREAM_LENGTH)     
-        activity_id = ids_to_process[-1]
-
+           
         for widget in self._activity_stream_data_widgets.values():           
-            if isinstance(widget, NoteWidget) and widget.note_id == note_id:     
-                
+            if isinstance(widget, NoteWidget) and widget.note_id == note_id:    
+                               
                 # Force a deletion to the attachment groups to refresh everything in the same group and same line
                 for x in widget._attachment_group_widgets.values():
                     # remove widget from layout:
@@ -750,13 +745,14 @@ class ActivityStreamWidget(QtGui.QWidget):
                 attachment_requests = []
                 for attachment_group_id in widget.get_attachment_group_widget_ids():
                     agw = widget.get_attachment_group_widget(attachment_group_id)
-                    for attachment_data in agw.get_data():                                         
+                    for attachment_data in agw.get_data():              
+                                                                
                         ag_request = {"attachment_group_id": attachment_group_id,
-                                      "activity_id": activity_id,
+                                      "activity_id": widget.activity_id,
                                       "attachment_data": attachment_data}
                         attachment_requests.append(ag_request)                
-               
-                for attachment_req in attachment_requests:
+             
+                for attachment_req in attachment_requests:            
                     self._data_manager.request_attachment_thumbnail(attachment_req["activity_id"], 
                                                                     attachment_req["attachment_group_id"], 
                                                                     attachment_req["attachment_data"])
