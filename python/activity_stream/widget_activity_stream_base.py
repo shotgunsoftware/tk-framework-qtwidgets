@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from sgtk.platform.qt import QtCore, QtGui
-from sgtk.platform import constants
+from sgtk.platform import get_hyperlink_html
 
 import sgtk
 import datetime
@@ -201,19 +201,11 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
             return str(day_diff / 30) + " months ago"
         return str(day_diff / 365) + " years ago"
                      
-    # CBB? we are generating HTML links here and they were
-    # styled thusly. i could not style them via setStyleSheet either.
-    # anyway, i think this could be done another way later?
-    # - stewartb
     def __generate_url(self, entity_type, entity_id, name):
         """
         Generate a standard shotgun url
         """
-        str_val = constants.URL_TEMPLATE % (
-            "%s:%s" % (entity_type, entity_id),
-            name,
-        )
-        return str_val
+        return get_hyperlink_html("{0}:{1}".format(entity_type, entity_id), name)
     
     def _generate_entity_url(self, entity, this_syntax=True, display_type=True):
         """
