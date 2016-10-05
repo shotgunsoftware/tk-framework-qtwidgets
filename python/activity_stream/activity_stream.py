@@ -10,7 +10,7 @@
 
 import os
 import sys
-import time, re
+import time
 import sgtk
 
 from sgtk.platform.qt import QtCore, QtGui
