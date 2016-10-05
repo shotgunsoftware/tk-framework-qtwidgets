@@ -309,7 +309,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
             url = value["url"]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)
             hyperlink = self._bundle.get_hyperlink_html(url, value.get("name", url))
-            str_val = "<span><img src='{0}'>&nbsp;{1}".format(img_src, hyperlink)
+            str_val = "<span><img src='%s'>&nbsp;%s</span>" % (img_src, hyperlink)
         elif value["link_type"] == "local":
             local_path = value["local_path"]
             # for file on OS that differs from the current OS, this will
@@ -318,7 +318,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
             file_name = os.path.split(local_path)[-1]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)
             hyperlink = self._bundle.get_hyperlink_html(local_path, file_name)
-            str_val = "<span><img src='{0}'>&nbsp;{1}".format(img_src, hyperlink)
+            str_val = "<span><img src='%s'>&nbsp;%s</span>" % (img_src, hyperlink)
         else:
             str_val = ""
 
