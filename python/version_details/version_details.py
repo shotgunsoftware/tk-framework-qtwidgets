@@ -115,8 +115,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._task_manager = bg_task_manager
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
-        self._note_set_metadata_uids = []
-        self._uploads_uids = {}       
+        self._uploads_uids = {}
         self._attachment_query_uids = {}
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
@@ -631,50 +630,6 @@ class VersionDetailsWidget(QtGui.QWidget):
             VersionDetailsWidget.VERSION_LIST_FIELDS_PREFS_KEY,
             self.version_delegate.fields,
             self._settings_manager.SCOPE_ENGINE,
-        )
-
-    def set_note_metadata(self, note_id, metadata):
-        """
-        Sets a Note entity's metadata in Shotgun.
-
-        :param int note_id: The Note entity id.
-        :param str metadata: The metadata to set in Shotgun.
-        """
-        self._note_set_metadata_uids.append(
-            self._data_retriever.execute_update(
-                "Note",
-                note_id,
-                {self.NOTE_METADATA_FIELD:metadata},
-            )
-        )
-
-    def set_entity_metadata(self, data, metadata):
-        """
-        Sets a entity metadata in Shotgun async.
-
-        :param dict data: The entity type and id.
-        :param str metadata: The metadata to set in Shotgun.
-        """
-        self._note_set_metadata_uids.append(
-            self._data_retriever.execute_update(
-                data["entity"],
-                data["id"],
-                {"metadata":metadata},
-            )
-        )
-
-    
-    def delete_entity_attachment(self, attachment_id):
-        """
-        Delete an entity attachment async
-
-        :param int attachment_id: Attachment id to delete        
-        """
-        self._note_set_metadata_uids.append(
-            self._data_retriever.execute_delete(
-                "Attachment",
-                attachment_id,                
-            )
         )
 
     def set_note_screenshot(self, image_path):
