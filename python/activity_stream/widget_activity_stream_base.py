@@ -205,7 +205,7 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         Generate a standard shotgun url
         """
         return self._bundle.get_hyperlink_html(
-            url="{0}:{1}".format(entity_type, entity_id),
+            url="%s:%s" % (entity_type, entity_id),
             name=name,
         )
     
