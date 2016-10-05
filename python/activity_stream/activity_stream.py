@@ -10,7 +10,7 @@
 
 import os
 import sys
-import time
+import time, re
 import sgtk
 
 from sgtk.platform.qt import QtCore, QtGui
@@ -694,6 +694,18 @@ class ActivityStreamWidget(QtGui.QWidget):
             
     def note_update(self,entity, note_id):       
         note_thread_data = self._data_manager.get_note(note_id)
+
+        # Remove any previous __note_thumbnail__
+        note_thread_data_cpy = list(note_thread_data)
+        current_attachments = []
+        for attachment in note_thread_data_cpy:
+            if "this_file" in attachment:
+                file_name = attachment["this_file"]["name"]
+                if re.search("__note_thumbnail__", file_name):
+                    note_thread_data.remove(attachment)
+                else:
+                    current_attachments.append(attachment)
+
         attachment_metadata = self._bundle.shotgun.find_one("Attachment", 
                                                          [["attachment_links", "is", {"type": "Note", "id": note_id}],
                                                           ["display_name", "starts_with", "__note_thumbnail__"]],
@@ -711,26 +723,36 @@ class ActivityStreamWidget(QtGui.QWidget):
         attachment_metadata["created_at"] = time.mktime(dtime.timetuple())
  
         note_thread_data.append(attachment_metadata)
+        current_attachments.append(attachment_metadata)
         self._data_manager.db_insert_note_update(note_id, note_thread_data)
+           
+        for widget in self._activity_stream_data_widgets.values():           
+            if isinstance(widget, NoteWidget) and widget.note_id == note_id:    
+                               
+                # Force a deletion to the attachment groups to refresh everything in the same group and same line
+                for x in widget._attachment_group_widgets.values():
+                    # remove widget from layout:
+                    widget.ui.reply_layout.removeWidget(x)
+                    # set it's parent to None so that it is removed from the widget hierarchy
+                    x.setParent(None)
+                    # mark it to be deleted when event processing returns to the main loop
+                    x.deleteLater()
 
-        ids_to_process = self._data_manager.load_activity_data(entity["type"], 
-                                                               entity["id"],
-                                                               self.MAX_STREAM_LENGTH)     
-        activity_id = ids_to_process[-1]
+                widget._attachment_group_widgets = {}   
+                                                                        
+                widget._add_attachment_group(current_attachments, True)
 
-        for widget in self._activity_stream_data_widgets.values():
-            if isinstance(widget, NoteWidget) and widget.note_id == note_id:                                               
-                widget._add_attachment_group([attachment_metadata], True)
                 attachment_requests = []
                 for attachment_group_id in widget.get_attachment_group_widget_ids():
                     agw = widget.get_attachment_group_widget(attachment_group_id)
-                    for attachment_data in agw.get_data():                                         
+                    for attachment_data in agw.get_data():              
+                                                                
                         ag_request = {"attachment_group_id": attachment_group_id,
-                                      "activity_id": activity_id,
+                                      "activity_id": widget.activity_id,
                                       "attachment_data": attachment_data}
                         attachment_requests.append(ag_request)                
-               
-                for attachment_req in attachment_requests:
+             
+                for attachment_req in attachment_requests:            
                     self._data_manager.request_attachment_thumbnail(attachment_req["activity_id"], 
                                                                     attachment_req["attachment_group_id"], 
                                                                     attachment_req["attachment_data"])
