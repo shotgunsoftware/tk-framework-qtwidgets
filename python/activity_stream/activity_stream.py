@@ -694,6 +694,8 @@ class ActivityStreamWidget(QtGui.QWidget):
             
     def note_update(self,entity, note_id):       
         note_thread_data = self._data_manager.get_note(note_id)
+        if not note_thread_data:
+            self._bundle.log_debug("Cannot update note cache for note %s - Note is not cached." % note_id)
 
         # Remove any previous __note_thumbnail__
         note_thread_data_cpy = list(note_thread_data)
