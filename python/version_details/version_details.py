@@ -778,7 +778,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             self._download_attachments(data["sg"], self._attachment_query_uids[uid])
             del self._attachment_query_uids[uid]
         elif uid in self._uploads_uids:
-            self.ui.note_stream_widget.note_update(self._uploads_uids[uid]["entity"], self._uploads_uids[uid]["note_id"])
+            self.ui.note_stream_widget.update_note_attachment_widget(self._uploads_uids[uid])
             del self._uploads_uids[uid]
 
 
