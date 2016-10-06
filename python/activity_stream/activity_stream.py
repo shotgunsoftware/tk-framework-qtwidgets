@@ -692,12 +692,18 @@ class ActivityStreamWidget(QtGui.QWidget):
             force_activity_stream_update=force_activity_stream_update,
         )
             
-    def note_update(self,entity, note_id):       
+    def update_note_attachment_widget(self, note_id):
+        """
+        This function will retrieve the thumbnail note attachment uploaded after the note creation.
+        I will update the sqlite db (cache) accordingly (add new thumbnail and remove the old one).
+        Recreate a new group widget that include this new thumbnail.
+        """     
         note_thread_data = self._data_manager.get_note(note_id)
         if not note_thread_data:
             self._bundle.log_debug("Cannot update note cache for note %s - Note is not cached." % note_id)
+            return
 
-        # Remove any previous __note_thumbnail__
+        # Remove any previous note files that have a prefixed name of __note_thumbnail__
         note_thread_data_cpy = list(note_thread_data)
         current_attachments = []
         for attachment in note_thread_data_cpy:
@@ -708,6 +714,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                 else:
                     current_attachments.append(attachment)
 
+        # Retrieve the thumbnail file attached on the note
         attachment_metadata = self._bundle.shotgun.find_one("Attachment", 
                                                          [["attachment_links", "is", {"type": "Note", "id": note_id}],
                                                           ["display_name", "starts_with", "__note_thumbnail__"]],
@@ -721,16 +728,21 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                             "attachment_links",                                                        
                                                         ])
         
+        # Set the time provided to have it in the proper saved format
         dtime = attachment_metadata["created_at"]      
         attachment_metadata["created_at"] = time.mktime(dtime.timetuple())
  
+        # Add the new attachment to the data that will be saved in the database
         note_thread_data.append(attachment_metadata)
+
+        # Add the new thumbnail to the current note attachments group
         current_attachments.append(attachment_metadata)
+
+        # Update the database with the updated information
         self._data_manager.db_insert_note_update(note_id, note_thread_data)
            
         for widget in self._activity_stream_data_widgets.values():           
             if isinstance(widget, NoteWidget) and widget.note_id == note_id:    
-                               
                 # Force a deletion to the attachment groups to refresh everything in the same group and same line
                 for x in widget._attachment_group_widgets.values():
                     # remove widget from layout:
@@ -741,9 +753,11 @@ class ActivityStreamWidget(QtGui.QWidget):
                     x.deleteLater()
 
                 widget._attachment_group_widgets = {}   
-                                                                        
+                
+                # Create a new group that contains all the attachments                                                   
                 widget._add_attachment_group(current_attachments, True)
 
+                # Request the attachment thumbnail widget creation
                 attachment_requests = []
                 for attachment_group_id in widget.get_attachment_group_widget_ids():
                     agw = widget.get_attachment_group_widget(attachment_group_id)
