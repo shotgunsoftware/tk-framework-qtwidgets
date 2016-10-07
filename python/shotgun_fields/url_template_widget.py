@@ -11,6 +11,7 @@
 import sgtk
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+from ..utils import get_hyperlink_html
 
 
 class UrlTemplateWidget(ElidedLabelBaseWidget):
@@ -26,7 +27,4 @@ class UrlTemplateWidget(ElidedLabelBaseWidget):
 
         :param str value: The url value to convert into a string
         """
-        return self._bundle.get_hyperlink_html(
-            url=value,
-            name=value,
-        )
+        return get_hyperlink_html(url=value, name=value)

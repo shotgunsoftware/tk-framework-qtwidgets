@@ -15,9 +15,11 @@ from sgtk.platform.qt import QtCore, QtGui
 
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+from ..utils import get_hyperlink_html
 
 # ensures access to `link_menu.png`
 from .ui import resources_rc
+
 
 
 class FileLinkWidget(ElidedLabelBaseWidget):
@@ -308,7 +310,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         if value["link_type"] in ["web", "upload"]:
             url = value["url"]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)
-            hyperlink = self._bundle.get_hyperlink_html(url, value.get("name", url))
+            hyperlink = get_hyperlink_html(url, value.get("name", url))
             str_val = "<span><img src='%s'>&nbsp;%s</span>" % (img_src, hyperlink)
         elif value["link_type"] == "local":
             local_path = value["local_path"]
@@ -317,7 +319,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
             # file basename.ext (the SG behavior).
             file_name = os.path.split(local_path)[-1]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)
-            hyperlink = self._bundle.get_hyperlink_html(local_path, file_name)
+            hyperlink = get_hyperlink_html(local_path, file_name)
             str_val = "<span><img src='%s'>&nbsp;%s</span>" % (img_src, hyperlink)
         else:
             str_val = ""
