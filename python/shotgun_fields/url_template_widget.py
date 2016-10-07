@@ -11,6 +11,7 @@
 import sgtk
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+from ..utils import get_hyperlink_html
 
 
 class UrlTemplateWidget(ElidedLabelBaseWidget):
@@ -26,12 +27,4 @@ class UrlTemplateWidget(ElidedLabelBaseWidget):
 
         :param str value: The url value to convert into a string
         """
-        # SG_LINK_COLOR is newer to core than the highlight color, so we'll
-        # fall back on highlight if the explicit link color isn't available.
-        style_constants = sgtk.platform.current_bundle().style_constants
-        link_color = style_constants.get(
-            "SG_LINK_COLOR",
-            style_constants["SG_HIGHLIGHT_COLOR"],
-        )
-        return "<a href='%s'><font color='%s'>%s</font></a>" % (
-            value, link_color, value)
+        return get_hyperlink_html(url=value, name=value)

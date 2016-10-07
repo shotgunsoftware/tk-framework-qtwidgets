@@ -15,9 +15,11 @@ from sgtk.platform.qt import QtCore, QtGui
 
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+from ..utils import get_hyperlink_html
 
 # ensures access to `link_menu.png`
 from .ui import resources_rc
+
 
 
 class FileLinkWidget(ElidedLabelBaseWidget):
@@ -305,24 +307,11 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         :param value: The value to convert into a string
         :type value: A dictionary as returned by the Shotgun API for a url field
         """
-
-        # SG_LINK_COLOR is newer to core than the highlight color, so we'll
-        # fall back on highlight if the explicit link color isn't available.
-        style_constants = sgtk.platform.current_bundle().style_constants
-        link_color = style_constants.get(
-            "SG_LINK_COLOR",
-            style_constants["SG_HIGHLIGHT_COLOR"],
-        )
-
         if value["link_type"] in ["web", "upload"]:
             url = value["url"]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)
-            str_val = value.get("name", url)
-            str_val = (
-                "<span><img src='%s'>&nbsp;"
-                "<a href='%s'><font color='%s'>%s</font></a></span>"
-                % (img_src, url, link_color, str_val)
-            )
+            hyperlink = get_hyperlink_html(url, value.get("name", url))
+            str_val = "<span><img src='%s'>&nbsp;%s</span>" % (img_src, hyperlink)
         elif value["link_type"] == "local":
             local_path = value["local_path"]
             # for file on OS that differs from the current OS, this will
@@ -330,11 +319,8 @@ class FileLinkWidget(ElidedLabelBaseWidget):
             # file basename.ext (the SG behavior).
             file_name = os.path.split(local_path)[-1]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)
-            str_val = (
-                "<span><img src='%s'>&nbsp;"
-                "<a href='file:///%s'><font color='%s'>%s</font></a></span>"
-                % (img_src, local_path, link_color, file_name)
-            )
+            hyperlink = get_hyperlink_html(local_path, file_name)
+            str_val = "<span><img src='%s'>&nbsp;%s</span>" % (img_src, hyperlink)
         else:
             str_val = ""
 
