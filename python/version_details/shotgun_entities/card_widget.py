@@ -469,7 +469,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         return [f for f, d in self._fields.iteritems() if d["label_exempt"]]
 
     def _set_label_exempt_fields(self, fields):
-        fields_to_add = []
+        fields_to_add = {}
         for field_name, field_data in self._fields.iteritems():
             now_exempt = (field_name in fields)
 
@@ -480,12 +480,12 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                 # need to rebuild its widgets in the layout.
                 if previously_exempt != now_exempt:
                     self.destroy_field(field_name)
-                    fields_to_add.append(field_name)
+                    fields_to_add[field_name] = now_exempt
             else:
                 self._fields[field_name]["label_exempt"] = now_exempt
 
         for field_name in fields_to_add:
-            self.add_field(field_name, label_exempt=now_exempt)
+            self.add_field(field_name, label_exempt=fields_to_add[field_name])
 
     def _get_show_labels(self):
         """
