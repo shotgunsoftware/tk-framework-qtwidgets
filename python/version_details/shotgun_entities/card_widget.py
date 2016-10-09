@@ -151,7 +151,8 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         field_names = self.fields
 
         for field_name in field_names:
-            self.remove_field(field_name)
+            self.destroy_field(field_name)
+        self._fields = _OrderedDict()
 
     def get_visible_fields(self):
         """
@@ -164,9 +165,9 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
 
         return [f for f, d in self._fields.iteritems() if d["widget"].isVisible()]
 
-    def remove_field(self, field_name):
+    def destroy_field(self, field_name):
         """
-        Removes the field widget and its label (when present) for the
+        Cleans up the field widget and its label (when present) for the
         given field name.
 
         :param str field_name: The Shotgun field name to remove.
@@ -186,6 +187,8 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
 
         field_widget.hide()
         self.ui.field_grid_layout.removeWidget(field_widget)
+        field_widget.setParent(None)
+        field_widget.deleteLater()
 
         # If there's a label, then also remove that.
         field_label = self._fields[field_name]["label"]
@@ -193,13 +196,18 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if field_label:
             field_label.hide()
             self.ui.field_grid_layout.removeWidget(field_label)
+            field_label.setParent(None)
+            field_label.deleteLater()
 
         self.ui.field_grid_layout.setRowMinimumHeight(
             self._fields[field_name]["row"],
             0,
         )
 
-        # Remove the field from the list of stuff we're tracking.
+    def remove_field(self, field_name):
+        """
+        # Removes the field matching the given name from fields.
+        """
         del self._fields[field_name]
 
     def set_field_visibility(self, field_name, state):
@@ -461,6 +469,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         return [f for f, d in self._fields.iteritems() if d["label_exempt"]]
 
     def _set_label_exempt_fields(self, fields):
+        fields_to_add = {}
         for field_name, field_data in self._fields.iteritems():
             now_exempt = (field_name in fields)
 
@@ -470,10 +479,13 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                 # If the state is changing for this field, then we
                 # need to rebuild its widgets in the layout.
                 if previously_exempt != now_exempt:
-                    self.remove_field(field_name)
-                    self.add_field(field_name, label_exempt=now_exempt)
+                    self.destroy_field(field_name)
+                    fields_to_add[field_name] = now_exempt
             else:
                 self._fields[field_name]["label_exempt"] = now_exempt
+
+        for field_name in fields_to_add:
+            self.add_field(field_name, label_exempt=fields_to_add[field_name])
 
     def _get_show_labels(self):
         """
