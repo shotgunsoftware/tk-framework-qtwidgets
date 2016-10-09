@@ -206,8 +206,9 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
 
     def remove_field(self, field_name):
         """
-        # Removes the field matching the given name from fields.
+        # Cleans up the given field and removes it from fields.
         """
+        self.destroy_field(field_name)
         del self._fields[field_name]
 
     def set_field_visibility(self, field_name, state):
