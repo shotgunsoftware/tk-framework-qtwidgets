@@ -703,16 +703,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._bundle.log_debug("Cannot update note cache for note %s - Note is not cached." % note_id)
             return
 
-        # Remove any previous note files that have a prefixed name of __note_thumbnail__
-        note_thread_data_cpy = list(note_thread_data)
-        current_attachments = []
-        for attachment in note_thread_data_cpy:
-            if "this_file" in attachment:
+        # Retrieve the previous note file index that have a prefixed name of __note_thumbnail__               
+        oldThumbnailIndex = -1
+        for index, attachment in enumerate(note_thread_data):            
+            if "this_file" in attachment:                
                 file_name = attachment["this_file"]["name"]
                 if re.search("__note_thumbnail__", file_name):
-                    note_thread_data.remove(attachment)
-                else:
-                    current_attachments.append(attachment)
+                    oldThumbnailIndex = index                                 
 
         # Retrieve the thumbnail file attached on the note
         attachment_metadata = self._bundle.shotgun.find_one("Attachment", 
@@ -732,19 +729,34 @@ class ActivityStreamWidget(QtGui.QWidget):
         dtime = attachment_metadata["created_at"]      
         attachment_metadata["created_at"] = time.mktime(dtime.timetuple())
  
-        # Add the new attachment to the data that will be saved in the database
-        note_thread_data.append(attachment_metadata)
-
-        # Add the new thumbnail to the current note attachments group
-        current_attachments.append(attachment_metadata)
-
+        # Add the new attachment to the data that will be saved in the bd
+        if oldThumbnailIndex != -1:
+            note_thread_data[oldThumbnailIndex] = attachment_metadata
+        else:
+            note_thread_data.append(attachment_metadata)
+               
         # Update the database with the updated information
         self._data_manager.db_insert_note_update(note_id, note_thread_data)
            
         for widget in self._activity_stream_data_widgets.values():           
-            if isinstance(widget, NoteWidget) and widget.note_id == note_id:    
+            if isinstance(widget, NoteWidget) and widget.note_id == note_id:   
+                
+                # skip any hidden widget
+                if widget.isHidden():
+                    continue
+
                 # Force a deletion to the attachment groups to refresh everything in the same group and same line
-                for x in widget._attachment_group_widgets.values():
+                current_attachments = []
+                if len(widget._attachment_group_widgets.values()) > 0:
+
+                    # Retrieve the first group attachments except the old thumbnail
+                    x = widget._attachment_group_widgets.values()[0]
+                    for attachment in x._attachment_data:
+                        if "this_file" in attachment:
+                            file_name = attachment["this_file"]["name"]
+                            if not re.search("__note_thumbnail__", file_name):
+                                current_attachments.append(attachment)     
+
                     # remove widget from layout:
                     widget.ui.reply_layout.removeWidget(x)
                     # set it's parent to None so that it is removed from the widget hierarchy
@@ -752,10 +764,12 @@ class ActivityStreamWidget(QtGui.QWidget):
                     # mark it to be deleted when event processing returns to the main loop
                     x.deleteLater()
 
-                widget._attachment_group_widgets = {}   
+                # Add the new thumbnail to the current note attachments group
+                current_attachments.append(attachment_metadata)
                 
-                # Create a new group that contains all the attachments                                                   
-                widget._add_attachment_group(current_attachments, True)
+                # Create a new group that contains all the attachments
+                # Insert at index 1 after "Edit/Reply" widget                                                   
+                widget._insert_attachment_group(current_attachments, True, 1)
 
                 # Request the attachment thumbnail widget creation
                 attachment_requests = []
