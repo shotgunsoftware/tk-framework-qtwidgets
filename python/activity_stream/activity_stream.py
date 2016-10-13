@@ -177,6 +177,14 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._outgoing_tasks = None
         self._task_manager = None
 
+    def hide_note_widget(self, note_id):
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget):
+                if widget.note_id == note_id:
+                    widget.hide()
+                    return
+        self._bundle.log_debug("Failed to hide note %s widget. Cannot find in loaded widgets." % note_id)
+
     ############################################################################
     # properties
 
