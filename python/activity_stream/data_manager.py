@@ -18,6 +18,7 @@ import sys
 import cPickle
 import datetime
 import sqlite3
+import re
 
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
@@ -930,6 +931,27 @@ class ActivityStreamDataHandler(QtCore.QObject):
             
             # data is a list of entities, stored inside a "return_value" key
             note_thread_list = data["return_value"]
+
+            # Temporary solution to fix the fact that we always want the thumbnail to be at the top of the activity stream (before the first reply)
+            thumbnailIndex = -1
+            firstReplyIndex = -1
+            for index, value in enumerate(note_thread_list):            
+                if "this_file" in value:                
+                    file_name = value["this_file"]["name"]
+                    if re.search("__note_thumbnail__", file_name):
+                        thumbnailIndex = index      
+                if firstReplyIndex == -1 and "type" in value and value["type"] == "Reply":
+                    # get the first reply index
+                    firstReplyIndex = index
+                    
+
+            if thumbnailIndex != -1 and firstReplyIndex != -1 and thumbnailIndex > firstReplyIndex:
+                # Always insert the thumbnail before the first reply
+                # index 0 is always addressings_cc, after it's an attachment or a reply                           
+                note_thread_list.insert(firstReplyIndex, note_thread_list[thumbnailIndex] )
+                note_thread_list.pop(thumbnailIndex + 1)           
+                
+
             self.__db_insert_note_update(update_id, note_id, note_thread_list)
             
             # and update our dictionary of note conversations

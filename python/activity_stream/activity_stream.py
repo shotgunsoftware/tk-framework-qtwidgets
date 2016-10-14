@@ -695,14 +695,14 @@ class ActivityStreamWidget(QtGui.QWidget):
     def update_note_attachment_widget(self, note_id):
         """
         This function will retrieve the thumbnail note attachment uploaded after the note creation.
-        I will update the sqlite db (cache) accordingly (add new thumbnail and remove the old one).
+        It will update the sqlite db (cache) accordingly (add new thumbnail data and remove the old one).
         Recreate a new group widget that include this new thumbnail.
         """     
         note_thread_data = self._data_manager.get_note(note_id)
         if not note_thread_data:
             self._bundle.log_debug("Cannot update note cache for note %s - Note is not cached." % note_id)
             return
-
+                 
         # Retrieve the previous note file index that have a prefixed name of __note_thumbnail__               
         oldThumbnailIndex = -1
         for index, attachment in enumerate(note_thread_data):            
