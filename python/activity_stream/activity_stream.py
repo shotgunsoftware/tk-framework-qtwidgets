@@ -8,6 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+import copy
 import os
 import sys
 import time, re
@@ -49,6 +50,15 @@ class ActivityStreamWidget(QtGui.QWidget):
 
     # Activity attributes that we do not want displayed.
     _SKIP_ACTIVITY_ATTRIBUTES = ["viewed_by_current_user"]
+
+    EMPTY_NOTE_DATA = {
+        "pixmap" : None,
+        "text" : "",
+        "recipient_links" : [],
+        "entity" : None,
+        "project" : None,
+        "attachments" : [],
+    }
 
     entity_requested = QtCore.Signal(str, int)
     playback_requested = QtCore.Signal(dict)
@@ -149,6 +159,10 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._pre_submit_callback = None
         self.reply_dialog.note_widget.entity_created.connect(self._on_entity_created)
 
+        shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
+        self._note_creator = shotgun_model.NoteCreator()
+        self._note_creator.entity_created.connect(self._on_note_created)
+
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
@@ -161,6 +175,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._task_manager = task_manager
         self._data_manager.set_bg_task_manager(task_manager)
         self.ui.note_widget.set_bg_task_manager(task_manager)
+        self._note_creator.set_bg_task_manager(task_manager)
 
     def set_outgoing_task_tracker(self, tasks):
         """
@@ -168,6 +183,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         self._outgoing_tasks = tasks
         self.note_widget.set_outgoing_task_tracker(tasks)
+        self._note_creator.set_outgoing_task_tracker(tasks)
 
     def destroy(self):
         """
@@ -794,6 +810,40 @@ class ActivityStreamWidget(QtGui.QWidget):
                     self._data_manager.request_attachment_thumbnail(attachment_req["activity_id"], 
                                                                     attachment_req["attachment_group_id"], 
                                                                     attachment_req["attachment_data"])
+
+    def _on_note_created(self, entity):
+        """
+        Callback when an entity is created by an underlying widget.
+
+        :param entity:  The Shotgun entity that was created.
+        """
+        if entity["type"] != "Note":
+            # log error
+            return
+
+        self.rescan()
+        if self.notes_are_selectable:
+            self._select_on_arrival = entity
+        self.entity_created.emit(entity)
+
+    def create_note(self, data):
+        entity_id = self._entity_id
+        if entity_id is None:
+            self.engine.log_debug("Skipping New Note Creation in activity stream - No entity id.")
+            return
+
+        if data is None:
+            data = copy.deepcopy(self.EMPTY_NOTE_DATA)
+
+        if data["entity"] is None:
+            data["entity"] = {
+                "id": entity_id,
+                "type": self._entity_type
+            }
+        if data["project"] is None:
+            data["project"] = self._bundle.context.project
+
+        self._note_creator.submit(data)
 
     ############################################################################
     # internals

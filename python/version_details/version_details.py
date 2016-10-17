@@ -719,6 +719,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.show_title_bar_buttons(True)
         dock_widget.dockLocationChanged.connect(self._dock_location_changed)
 
+    def create_note(self, data):
+        self.ui.note_stream_widget.create_note(data)
+
     def hide_note_widget(self, note_id):
         """
         Todo: remove with dynamite notes attachment refactor
