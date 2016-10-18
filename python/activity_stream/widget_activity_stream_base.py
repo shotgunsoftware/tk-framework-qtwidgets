@@ -115,20 +115,21 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         
         # standard format 
         full_time_str = datetime_obj.strftime('%a %d %b %Y %H:%M') 
-    
-        if datetime_obj > datetime.datetime.now():
-            # future times are reported precisely
-            return (full_time_str, full_time_str) 
-        
+
+        time_now_obj = datetime.datetime.now()
+        # The note created time is rounded up to the nearest second by Shotgun,
+        # so handle creation time greater than now.
+        if datetime_obj > time_now_obj:
+            datetime_obj = time_now_obj
+
         # get the delta and components
-        delta = datetime.datetime.now() - datetime_obj
-    
+        delta = time_now_obj - datetime_obj
+
         # the timedelta structure does not have all units; bigger units are converted
         # into given smaller ones (hours -> seconds, minutes -> seconds, weeks > days, ...)
         # but we need all units:
         delta_weeks        = delta.days // 7
         delta_days         = delta.days
-    
 
         if delta_weeks > 52:
             # more than one year ago - 26 June 2012
