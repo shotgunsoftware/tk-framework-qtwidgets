@@ -189,6 +189,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Should be called before the widget is closed
         """
+        self._note_creator.destroy()
         self._data_manager.destroy()
         self._outgoing_tasks = None
         self._task_manager = None
@@ -903,7 +904,10 @@ class ActivityStreamWidget(QtGui.QWidget):
             # Since we have no entity loaded, we don't need to show
             # the note widget.
             self.ui.note_widget.setVisible(False)
-            
+
+        self._entity_id = None
+        self._entity_type = None
+
     def _clear_loading_widget(self):
         """
         Remove the loading widget from the widget list
