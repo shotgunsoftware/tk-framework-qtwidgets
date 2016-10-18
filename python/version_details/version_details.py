@@ -719,6 +719,18 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.show_title_bar_buttons(True)
         dock_widget.dockLocationChanged.connect(self._dock_location_changed)
 
+    def create_note(self, data):
+        self.ui.note_stream_widget.create_note(data)
+
+    def hide_note_widget(self, note_id):
+        """
+        Todo: remove with dynamite notes attachment refactor
+        """
+        if not self.ui.note_stream_widget:
+            sgtk.platform.current_bundle().log_error("Cannot hide note %s widget: not activity stream widget." % note_id)
+            return
+        self.ui.note_stream_widget.hide_note_widget(note_id)
+
     ##########################################################################
     # internal utilities
 

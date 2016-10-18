@@ -609,13 +609,13 @@ class NoteInputWidget(QtGui.QWidget):
 
         if self._processing_id == uid:
             # all done!
-            self.__overlay.hide()
             self.clear()
             self._bundle.log_debug("Update call complete! Return data: %s" % data)
             self.data_updated.emit()
             self.entity_created.emit(data["return_value"])
             if self._outgoing_tasks and self._outgoing_tasks.has(uid):
                 self._outgoing_tasks.remove(uid)
+            self.__overlay.hide()
 
             
         
