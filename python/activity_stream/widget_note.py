@@ -412,7 +412,7 @@ class NoteWidget(ActivityStreamBaseWidget):
                 )
             )
         else:
-            self.setStyleSheet("#frame { border: 1px solid transparent }")
+            self.setStyleSheet("#frame { border: 1px solid rgba(255,255,255, 20%) }")
             self._cancel_note_content_edit()
 
             # Make sure note edit buttons are in default state
