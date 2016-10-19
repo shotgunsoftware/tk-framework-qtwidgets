@@ -1069,8 +1069,7 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         for widget in self._activity_stream_data_widgets.values():
             if isinstance(widget, NoteWidget):
-                selected = widget.rect().contains(widget.mapFromGlobal(position))
-
+                selected = widget.underMouse()
                 if selected != widget.selected:
                     widget.set_selected(selected)
                     self._note_selected_changed(selected, widget.note_id)
