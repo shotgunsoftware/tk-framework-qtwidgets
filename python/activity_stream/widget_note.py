@@ -304,7 +304,7 @@ class NoteWidget(ActivityStreamBaseWidget):
                 )
             )
         else:
-            self.setStyleSheet("#frame { border: 1px solid transparent }")
+            self.setStyleSheet("#frame { border: 1px solid rgba(255,255,255, 20%) }")
 
         self.selection_changed.emit(self.selected, self._note_id)
         
