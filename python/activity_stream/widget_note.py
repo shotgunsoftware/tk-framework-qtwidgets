@@ -79,7 +79,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         # We set a transparent border initially, because we don't want to
         # see the widget "jump" in its size/placement when it is selected
         # and the colored border appears.
-        self.setStyleSheet("#frame { border: 1px solid transparent }")
+        self.setStyleSheet("#frame { border: 1px solid rgba(255,255,255, 20%) }")
         self.set_selected(False)
 
         # make sure clicks propagate upwards in the hierarchy
