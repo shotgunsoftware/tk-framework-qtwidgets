@@ -938,7 +938,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             for index, value in enumerate(note_thread_list):            
                 if "this_file" in value:                
                     file_name = value["this_file"]["name"]
-                    if re.search("__note_thumbnail__", file_name):
+                    if file_name and re.search("__note_thumbnail__", file_name):
                         thumbnailIndex = index      
                 if firstReplyIndex == -1 and "type" in value and value["type"] == "Reply":
                     # get the first reply index
