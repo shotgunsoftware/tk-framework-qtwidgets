@@ -75,7 +75,8 @@ class ActivityStreamWidget(QtGui.QWidget):
     # provided.
     #
     # dict(entity_type="Note", id=1234)
-    entity_created = QtCore.Signal(object)
+    # userdata
+    entity_created = QtCore.Signal(object, bytes)
 
     def __init__(self, parent):
         """
@@ -812,11 +813,13 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                                     attachment_req["attachment_group_id"], 
                                                                     attachment_req["attachment_data"])
 
-    def _on_note_created(self, entity):
+    def _on_note_created(self, entity, userdata=None):
         """
         Callback when an entity is created by an underlying widget.
 
         :param entity:  The Shotgun entity that was created.
+        :param userdata: Optional userdata that may have been passed to the toolkit in a request
+                         to create a note.
         """
         if entity["type"] != "Note":
             # log error
@@ -825,9 +828,9 @@ class ActivityStreamWidget(QtGui.QWidget):
         self.rescan()
         if self.notes_are_selectable:
             self._select_on_arrival = entity
-        self.entity_created.emit(entity)
+        self.entity_created.emit(entity, userdata)
 
-    def create_note(self, data):
+    def create_note(self, data, userdata):
         entity_id = self._entity_id
         if entity_id is None:
             self.engine.log_debug("Skipping New Note Creation in activity stream - No entity id.")
@@ -844,7 +847,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         if data["project"] is None:
             data["project"] = self._bundle.context.project
 
-        self._note_creator.submit(data)
+        self._note_creator.submit(data, userdata)
 
     ############################################################################
     # internals
@@ -1195,7 +1198,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         if self.notes_are_selectable and entity["type"] == "Note":
             self._select_on_arrival = entity
-        self.entity_created.emit(entity)
+        self.entity_created.emit(entity, None)
 
     def __send_note_content_to_cache_and_sg(self, sg, data):
         """

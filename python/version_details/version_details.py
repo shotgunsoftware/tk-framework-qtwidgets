@@ -84,8 +84,8 @@ class VersionDetailsWidget(QtGui.QWidget):
 
     # Emitted when an entity is created by the panel. The
     # entity type as a string and id as an int are passed
-    # along.
-    entity_created = QtCore.Signal(object)
+    # along, along with optional userdata.
+    entity_created = QtCore.Signal(object, bytes)
 
     # Emitted when an entity is loaded in the panel.
     entity_loaded = QtCore.Signal(object)
@@ -725,8 +725,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.show_title_bar_buttons(True)
         dock_widget.dockLocationChanged.connect(self._dock_location_changed)
 
-    def create_note(self, data):
-        self.ui.note_stream_widget.create_note(data)
+    def create_note(self, data, userdata):
+        self.ui.note_stream_widget.create_note(data, userdata)
 
     def hide_note_widget(self, note_id):
         """
@@ -837,13 +837,13 @@ class VersionDetailsWidget(QtGui.QWidget):
         for attachment in attachments:
             self._attachment_uids[self._data_retriever.request_attachment(attachment)] = note_id
 
-    def _entity_created(self, entity):
+    def _entity_created(self, entity, userdata):
         """
         Emits the entity_created signal.
 
         :param dict entity: The Shotgun entity dict that was created.
         """
-        self.entity_created.emit(entity)
+        self.entity_created.emit(entity, userdata)
 
     def _field_menu_triggered(self, action):
         """
