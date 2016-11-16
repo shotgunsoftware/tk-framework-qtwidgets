@@ -10,6 +10,8 @@
 
 from sgtk.platform.qt import QtGui
 
+from .ui import resources_rc
+
 
 class ShotgunMenu(QtGui.QMenu):
     """
@@ -45,11 +47,47 @@ class ShotgunMenu(QtGui.QMenu):
 
         super(ShotgunMenu, self).__init__(parent)
 
-        # ensure the menu only takes up one column and scrolls rather than
-        # expanding horizontally (the default)
-        self.setStyleSheet("QMenu { menu-scrollable: 1; }")
+        # styling to resemble SG web menus
+        self.setStyleSheet(
+            """
+            QMenu {
+                /*
+                 * Ensure the menu only takes up one column and scrolls rather
+                 * than expanding horizontally (the default)
+                 */
+                menu-scrollable: 1;
+                background: palette(window);
+                margin: 0px;
+            }
+            QMenu::item {
+                padding: 2px 22px 2px 22px;
+            }
+            QMenu::item:selected {
+                border-color: none;
+                background: palette(midlight);
+            }
+            QMenu::separator {
+                height: 1px;
+                background: palette(midlight);
+                margin-left: 0px;
+                margin-right: 0px;
+                margin-top: 4px;
+                margin-bottom: 0px;
+            }
+            QMenu::indicator {
+                left: 5px;
+                top: 1px;
+            }
+            QMenu::indicator:unchecked {
+                image: none;
+            }
+            QMenu::indicator:checked {
+                image: url(:tk_framework_qtwidgets.shotgun_menus/check.png);
+            }
+            """
+        )
 
-    def add_group(self, items, title=None, separator=True):
+    def add_group(self, items, title=None, separator=True, exclusive=False):
         """
         Adds a group of items to the menu.
 
@@ -64,13 +102,21 @@ class ShotgunMenu(QtGui.QMenu):
         A list of all actions, including separator, label, and menu actions,
         in the order added, will be returned.
 
-        :param list items: A list of actions and/or menus to add to this menu
-        :param str title: Optional text to use in a label at the top of the group
-        :param bool separator: Add a separator if ``True`` (default), don't add if ``False``
+        :param list items: A list of actions and/or menus to add to this menu.
+        :param str title: Optional text to use in a label at the top of the
+            group.
+        :param bool separator: Add a separator if ``True`` (default), don't add
+            if ``False``.
+        :param bool exclusive: If exclusive is set to ``True``, the added items
+            will be an exclusive group. If the items are checkable, only one
+            will be checkable at any given time. The default is ``False``.
 
         :returns: A list of added :class:`~PySide.QtGui.QAction` objects
         :rtype: :obj:`list`
         """
+
+        action_group = QtGui.QActionGroup(self)
+        action_group.setExclusive(exclusive)
 
         added_actions = []
 
@@ -86,6 +132,7 @@ class ShotgunMenu(QtGui.QMenu):
             else:
                 self.addAction(item)
                 added_actions.append(item)
+                action_group.addAction(item)
 
         return added_actions
 
@@ -107,3 +154,4 @@ class ShotgunMenu(QtGui.QMenu):
 
         self.addAction(action)
         return action
+
