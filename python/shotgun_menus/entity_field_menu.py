@@ -86,6 +86,7 @@ class EntityFieldMenu(ShotgunMenu):
         """
         super(EntityFieldMenu, self).__init__(parent)
 
+        self._bundle = sgtk.platform.current_bundle()
         self._sg_entity_type = sg_entity_type
 
         # default state
@@ -93,7 +94,7 @@ class EntityFieldMenu(ShotgunMenu):
         self._checked_filter = None
         self._disabled_filter = None
         self._entity_type_filter = None
-        self._project_id = project_id
+        self._project_id = project_id or self._get_current_project_id()
 
         # prefix for fields if this menu represents an entity bubbled through another field
         self._bubble_base = None
@@ -116,7 +117,7 @@ class EntityFieldMenu(ShotgunMenu):
 
     def set_field_filter(self, field_filter):
         """
-        Set the callback used to filter which fields are shown by the menu
+        Set the callback used to filter which fields are shown by the menu.
 
         :param field_filter: Callback called for each entity field which returns True if the field
             should be shown and False if it should not.  The fields will be in "bubbled" notation,
@@ -176,7 +177,8 @@ class EntityFieldMenu(ShotgunMenu):
         """
         if not self._initialized:
             # need to wait until there is a schema available before populating the menu
-            shotgun_globals.run_on_schema_loaded(self._populate)
+            shotgun_globals.run_on_schema_loaded(
+                self._populate, project_id=self._project_id)
             self._initialized = True
 
     def _populate(self):
@@ -187,7 +189,9 @@ class EntityFieldMenu(ShotgunMenu):
         bubble_fields = {}
 
         # gather needed field info
-        for field in shotgun_globals.get_entity_fields(self._sg_entity_type):
+        for field in shotgun_globals.get_entity_fields(
+                self._sg_entity_type, project_id=self._project_id):
+
             # convert field to bubbled form
             bubbled_field = self._get_bubbled_name(field)
 
@@ -220,7 +224,8 @@ class EntityFieldMenu(ShotgunMenu):
                 if self._field_filter:
                     def entity_filter(et):
                         # get the list of fields for this entity type
-                        fields = shotgun_globals.get_entity_fields(et)
+                        fields = shotgun_globals.get_entity_fields(
+                            et, project_id=self._project_id)
 
                         # and filter them down with the filter
                         if self._field_filter:
@@ -353,3 +358,22 @@ class EntityFieldMenu(ShotgunMenu):
             action.setDisabled(self._disabled_filter(field))
 
         return action
+
+    def _get_current_project_id(self):
+        """
+        Return the id of the current project.
+
+        :returns: The project id associated with the current context, or ``None``
+            if operating in a site-level context.
+        :rtype: ``int`` or ``None``
+        """
+
+        if self._bundle.tank.pipeline_configuration.is_site_configuration():
+            # site configuration (no project id). Return None which is
+            # consistent with core.
+            project_id = None
+        else:
+            project_id = self._bundle.tank.pipeline_configuration.get_project_id()
+
+        return project_id
+
