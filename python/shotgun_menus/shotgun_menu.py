@@ -191,6 +191,13 @@ class ShotgunMenu(QtGui.QMenu):
             # add it to the typed text
             self._typed_text += event_text
 
+        # not a key we want to process. call the base class implementation.
+        else:
+            # didn't find a match, call the base class
+            super(ShotgunMenu, self).keyReleaseEvent(event)
+            self._type_timer.start()
+            return
+
         # now search the actions to see if one matches the typed text
         for action in self.actions():
             # use a try to ignore any possible errors
@@ -206,9 +213,6 @@ class ShotgunMenu(QtGui.QMenu):
             except Exception, e:
                 # assume no match
                 pass
-
-        # didn't find a match, call the base class
-        super(ShotgunMenu, self).keyReleaseEvent(event)
 
         # ensure the timer is started
         self._type_timer.start()
