@@ -192,7 +192,8 @@ class ShotgunMenu(QtGui.QMenu):
             self._typed_text += event_text
 
         else:
-            # didn't find a match, call the base class
+            # the typed key isn't one we recognize for matching. call the
+            # default implementation
             super(ShotgunMenu, self).keyReleaseEvent(event)
             self._type_timer.start()
             return
@@ -212,6 +213,9 @@ class ShotgunMenu(QtGui.QMenu):
             except Exception, e:
                 # assume no match
                 pass
+
+        # didn't find a match, call the base class
+        super(ShotgunMenu, self).keyReleaseEvent(event)
 
         # ensure the timer is started
         self._type_timer.start()
