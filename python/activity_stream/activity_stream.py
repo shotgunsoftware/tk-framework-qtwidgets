@@ -38,7 +38,7 @@ class ActivityStreamWidget(QtGui.QWidget):
     :signal playback_requested(dict): Fires when someone clicks the playback url
             on a version. Returns a shotgun dictionary with information
             about the version.
-    :signal entity_created(object): Fires when a Note or Reply entity is created by
+    :signal entity_created(object, object): Fires when a Note or Reply entity is created by
             an underlying widget within the activity stream. Returns a Shotgun dictionary
             with information about the new Entity.
     :ivar reply_dialog: When a ReplyDialog is active it can be accessed here. If there
@@ -75,8 +75,10 @@ class ActivityStreamWidget(QtGui.QWidget):
     # provided.
     #
     # dict(entity_type="Note", id=1234)
-    # userdata
-    entity_created = QtCore.Signal(object, bytes)
+    # 
+    # The second parameter is userdata bytes passed to the note creation request
+    # (may be None).
+    entity_created = QtCore.Signal(object, object)
 
     def __init__(self, parent):
         """

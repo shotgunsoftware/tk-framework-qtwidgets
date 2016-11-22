@@ -56,9 +56,9 @@ class VersionDetailsWidget(QtGui.QWidget):
     QT Widget that displays details and Note thread data for a given Version
     entity.
 
-    :signal entity_created(object): Fires when a Note or Reply entity is created by
+    :signal entity_created(object, object): Fires when a Note or Reply entity is created by
             an underlying widget within the activity stream. Passes on a Shotgun
-            entity definition in the form of a dict.
+            entity definition in the form of a dict and optional userdata a requested note.
     :signal entity_loaded(object): Fires when a Version entity has been loaded by
             the widget. Passes on a Shotgun entity definition in the form of a dict.
     :signal note_selected(int): Fires when a Note entity is selected in the widget's
@@ -85,7 +85,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     # Emitted when an entity is created by the panel. The
     # entity type as a string and id as an int are passed
     # along, along with optional userdata.
-    entity_created = QtCore.Signal(object, bytes)
+    entity_created = QtCore.Signal(object, object)
 
     # Emitted when an entity is loaded in the panel.
     entity_loaded = QtCore.Signal(object)
