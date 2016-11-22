@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_menus.shotgun_menu &mdash; tk-framework-qtwidgets v2.5.10 documentation</title>
+  <title>shotgun_menus.shotgun_menu &mdash; tk-framework-qtwidgets v2.5.12 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.10 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.12 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.10.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.12.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -188,7 +188,11 @@
 <span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtGui</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
 
 
 <div class="viewcode-block" id="ShotgunMenu"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu">[docs]</a><span class="k">class</span> <span class="nc">ShotgunMenu</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">):</span>
@@ -225,11 +229,61 @@
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
-        <span class="c1"># ensure the menu only takes up one column and scrolls rather than</span>
-        <span class="c1"># expanding horizontally (the default)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QMenu { menu-scrollable: 1; }&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-<div class="viewcode-block" id="ShotgunMenu.add_group"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="c1"># create a single shot timer to clear any typed text string after a</span>
+        <span class="c1"># second. this allows the user to search for something in the menu but</span>
+        <span class="c1"># clears the text so they can start over if need be.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">setSingleShot</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">setInterval</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_type_timer_timeout</span><span class="p">)</span>
+
+        <span class="c1"># styling to resemble SG web menus</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            QMenu {</span>
+<span class="sd">                /*</span>
+<span class="sd">                 * Ensure the menu only takes up one column and scrolls rather</span>
+<span class="sd">                 * than expanding horizontally (the default)</span>
+<span class="sd">                 */</span>
+<span class="sd">                menu-scrollable: 1;</span>
+<span class="sd">                background: palette(window);</span>
+<span class="sd">                padding: 0px 1px 1px 0px;</span>
+<span class="sd">                margin: 0px;</span>
+<span class="sd">            }</span>
+<span class="sd">            QMenu::scroller {</span>
+<span class="sd">                height: 16px;</span>
+<span class="sd">            }</span>
+<span class="sd">            QMenu::item {</span>
+<span class="sd">                padding: 2px 22px 2px 22px;</span>
+<span class="sd">            }</span>
+<span class="sd">            QMenu::item:selected {</span>
+<span class="sd">                border-color: none;</span>
+<span class="sd">                background: palette(midlight);</span>
+<span class="sd">            }</span>
+<span class="sd">            QMenu::separator {</span>
+<span class="sd">                height: 1px;</span>
+<span class="sd">                background: palette(base);</span>
+<span class="sd">                margin-left: 0px;</span>
+<span class="sd">                margin-right: 0px;</span>
+<span class="sd">                margin-top: 4px;</span>
+<span class="sd">                margin-bottom: 0px;</span>
+<span class="sd">            }</span>
+<span class="sd">            QMenu::indicator {</span>
+<span class="sd">                left: 5px;</span>
+<span class="sd">                top: 1px;</span>
+<span class="sd">            }</span>
+<span class="sd">            QMenu::indicator:unchecked {</span>
+<span class="sd">                image: none;</span>
+<span class="sd">            }</span>
+<span class="sd">            QMenu::indicator:checked {</span>
+<span class="sd">                image: url(:tk_framework_qtwidgets.shotgun_menus/check.png);</span>
+<span class="sd">            }</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ShotgunMenu.add_group"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a group of items to the menu.</span>
 
@@ -244,13 +298,21 @@
 <span class="sd">        A list of all actions, including separator, label, and menu actions,</span>
 <span class="sd">        in the order added, will be returned.</span>
 
-<span class="sd">        :param list items: A list of actions and/or menus to add to this menu</span>
-<span class="sd">        :param str title: Optional text to use in a label at the top of the group</span>
-<span class="sd">        :param bool separator: Add a separator if ``True`` (default), don&#39;t add if ``False``</span>
+<span class="sd">        :param list items: A list of actions and/or menus to add to this menu.</span>
+<span class="sd">        :param str title: Optional text to use in a label at the top of the</span>
+<span class="sd">            group.</span>
+<span class="sd">        :param bool separator: Add a separator if ``True`` (default), don&#39;t add</span>
+<span class="sd">            if ``False``.</span>
+<span class="sd">        :param bool exclusive: If exclusive is set to ``True``, the added items</span>
+<span class="sd">            will be an exclusive group. If the items are checkable, only one</span>
+<span class="sd">            will be checkable at any given time. The default is ``False``.</span>
 
 <span class="sd">        :returns: A list of added :class:`~PySide.QtGui.QAction` objects</span>
 <span class="sd">        :rtype: :obj:`list`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">action_group</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QActionGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">action_group</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="n">exclusive</span><span class="p">)</span>
 
         <span class="n">added_actions</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -266,6 +328,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
                 <span class="n">added_actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="n">action_group</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">added_actions</span></div>
 
@@ -286,7 +349,61 @@
         <span class="n">action</span><span class="o">.</span><span class="n">setDefaultWidget</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">action</span></div></div>
+        <span class="k">return</span> <span class="n">action</span></div>
+
+<div class="viewcode-block" id="ShotgunMenu.keyReleaseEvent"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.keyReleaseEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Allow users to type menu item names to highlight/select them.&quot;&quot;&quot;</span>
+
+        <span class="c1"># stop the timer that clears the typed text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="c1"># a lowercase string representation of the typed key</span>
+        <span class="n">event_text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">text</span><span class="p">())</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="c1"># if the user wants to clear a letter, do so.</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Backspace</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Delete</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># otherwise, see if the letter is something reasonable (space,</span>
+        <span class="c1"># alphanumeric, dash, dot)</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^[\s\w\-\.]+$&quot;</span><span class="p">,</span> <span class="n">event_text</span><span class="p">):</span>
+            <span class="c1"># add it to the typed text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span> <span class="o">+=</span> <span class="n">event_text</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># the typed key isn&#39;t one we recognize for matching. call the</span>
+            <span class="c1"># default implementation</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">keyReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="c1"># now search the actions to see if one matches the typed text</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">():</span>
+            <span class="c1"># use a try to ignore any possible errors</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">text</span><span class="p">():</span>
+                    <span class="n">action_text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">text</span><span class="p">())</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">action_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span><span class="p">):</span>
+                        <span class="c1"># match found. make this the active action</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">setActiveAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+                        <span class="c1"># restart the timer to clear the text after a given period</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                        <span class="k">return</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># assume no match</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># didn&#39;t find a match, call the base class</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">keyReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+        <span class="c1"># ensure the timer is started</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_on_type_timer_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Timeout triggered after typing has ceased for a given interval.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
+
 </pre></div>
 
            </div>
@@ -319,7 +436,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.10',
+            VERSION:'v2.5.12',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

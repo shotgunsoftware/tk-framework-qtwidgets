@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_menus.entity_field_menu &mdash; tk-framework-qtwidgets v2.5.10 documentation</title>
+  <title>shotgun_menus.entity_field_menu &mdash; tk-framework-qtwidgets v2.5.12 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.10 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.12 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -126,7 +126,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.10.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.12.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -266,6 +266,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EntityFieldMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_type</span> <span class="o">=</span> <span class="n">sg_entity_type</span>
 
         <span class="c1"># default state</span>
@@ -273,7 +274,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_checked_filter</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type_filter</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_project_id</span> <span class="o">=</span> <span class="n">project_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_project_id</span> <span class="o">=</span> <span class="n">project_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_project_id</span><span class="p">()</span>
 
         <span class="c1"># prefix for fields if this menu represents an entity bubbled through another field</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_base</span> <span class="o">=</span> <span class="bp">None</span>
@@ -296,7 +297,7 @@
 
 <div class="viewcode-block" id="EntityFieldMenu.set_field_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_field_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_field_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_filter</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the callback used to filter which fields are shown by the menu</span>
+<span class="sd">        Set the callback used to filter which fields are shown by the menu.</span>
 
 <span class="sd">        :param field_filter: Callback called for each entity field which returns True if the field</span>
 <span class="sd">            should be shown and False if it should not.  The fields will be in &quot;bubbled&quot; notation,</span>
@@ -356,7 +357,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
             <span class="c1"># need to wait until there is a schema available before populating the menu</span>
-            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">run_on_schema_loaded</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_populate</span><span class="p">)</span>
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">run_on_schema_loaded</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_populate</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_id</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="bp">True</span>
 
     <span class="k">def</span> <span class="nf">_populate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -367,7 +369,9 @@
         <span class="n">bubble_fields</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c1"># gather needed field info</span>
-        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_type</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_fields</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_type</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_id</span><span class="p">):</span>
+
             <span class="c1"># convert field to bubbled form</span>
             <span class="n">bubbled_field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_bubbled_name</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
 
@@ -400,7 +404,8 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span><span class="p">:</span>
                     <span class="k">def</span> <span class="nf">entity_filter</span><span class="p">(</span><span class="n">et</span><span class="p">):</span>
                         <span class="c1"># get the list of fields for this entity type</span>
-                        <span class="n">fields</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_fields</span><span class="p">(</span><span class="n">et</span><span class="p">)</span>
+                        <span class="n">fields</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_fields</span><span class="p">(</span>
+                            <span class="n">et</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_id</span><span class="p">)</span>
 
                         <span class="c1"># and filter them down with the filter</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span><span class="p">:</span>
@@ -532,7 +537,26 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span><span class="p">:</span>
             <span class="n">action</span><span class="o">.</span><span class="n">setDisabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
 
-        <span class="k">return</span> <span class="n">action</span></div>
+        <span class="k">return</span> <span class="n">action</span>
+
+    <span class="k">def</span> <span class="nf">_get_current_project_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the id of the current project.</span>
+
+<span class="sd">        :returns: The project id associated with the current context, or ``None``</span>
+<span class="sd">            if operating in a site-level context.</span>
+<span class="sd">        :rtype: ``int`` or ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">tank</span><span class="o">.</span><span class="n">pipeline_configuration</span><span class="o">.</span><span class="n">is_site_configuration</span><span class="p">():</span>
+            <span class="c1"># site configuration (no project id). Return None which is</span>
+            <span class="c1"># consistent with core.</span>
+            <span class="n">project_id</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">project_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">tank</span><span class="o">.</span><span class="n">pipeline_configuration</span><span class="o">.</span><span class="n">get_project_id</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">project_id</span></div>
+
 </pre></div>
 
            </div>
@@ -565,7 +589,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.10',
+            VERSION:'v2.5.12',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

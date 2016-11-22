@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Menus &mdash; tk-framework-qtwidgets v2.5.10 documentation</title>
+  <title>Shotgun Menus &mdash; tk-framework-qtwidgets v2.5.12 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.10 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.12 documentation" href="index.html"/>
         <link rel="next" title="Spinner Widget" href="spinner_widget.html"/>
         <link rel="prev" title="Shotgun Field Widgets" href="shotgun_fields.html"/> 
 
@@ -134,7 +134,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.10.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.12.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -226,7 +226,7 @@ with a consistent styling.</p>
 </table>
 <dl class="method">
 <dt id="shotgun_menus.ShotgunMenu.add_group">
-<code class="descname">add_group</code><span class="sig-paren">(</span><em>items</em>, <em>title=None</em>, <em>separator=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.add_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.add_group" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_group</code><span class="sig-paren">(</span><em>items</em>, <em>title=None</em>, <em>separator=True</em>, <em>exclusive=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.add_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.add_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a group of items to the menu.</p>
 <p>The list of items can include <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QAction.html#PySide.QtGui.QAction" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QAction</span></code></a> or
 <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QMenu.html#PySide.QtGui.QMenu" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QMenu</span></code></a> instances. If a <code class="docutils literal"><span class="pre">title</span></code> is supplied,
@@ -242,9 +242,14 @@ in the order added, will be returned.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>items</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A list of actions and/or menus to add to this menu</li>
-<li><strong>title</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Optional text to use in a label at the top of the group</li>
-<li><strong>separator</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Add a separator if <code class="docutils literal"><span class="pre">True</span></code> (default), don&#8217;t add if <code class="docutils literal"><span class="pre">False</span></code></li>
+<li><strong>items</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A list of actions and/or menus to add to this menu.</li>
+<li><strong>title</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Optional text to use in a label at the top of the
+group.</li>
+<li><strong>separator</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Add a separator if <code class="docutils literal"><span class="pre">True</span></code> (default), don&#8217;t add
+if <code class="docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>exclusive</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If exclusive is set to <code class="docutils literal"><span class="pre">True</span></code>, the added items
+will be an exclusive group. If the items are checkable, only one
+will be checkable at any given time. The default is <code class="docutils literal"><span class="pre">False</span></code>.</li>
 </ul>
 </td>
 </tr>
@@ -272,6 +277,12 @@ in the order added, will be returned.</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="shotgun_menus.ShotgunMenu.keyReleaseEvent">
+<code class="descname">keyReleaseEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.keyReleaseEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow users to type menu item names to highlight/select them.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -295,7 +306,7 @@ in the order added, will be returned.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>sg_entity_type</strong> (<em>String</em>) &#8211; The entity type to build a menu for</li>
 <li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; Parent widget</li>
-<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.12)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; The task manager the menu will use if it needs to run a task</li>
+<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv4.4.15)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; The task manager the menu will use if it needs to run a task</li>
 <li><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The project Entity id. If None, the current
 context&#8217;s project will be used, or the &#8220;site&#8221;
 cache location will be returned if the current
@@ -308,7 +319,7 @@ context does not have an associated project.</li>
 <dl class="method">
 <dt id="shotgun_menus.EntityFieldMenu.set_field_filter">
 <code class="descname">set_field_filter</code><span class="sig-paren">(</span><em>field_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_field_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_field_filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the callback used to filter which fields are shown by the menu</p>
+<dd><p>Set the callback used to filter which fields are shown by the menu.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -419,7 +430,7 @@ given entity type should be displayed</td>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.5.10',
+            VERSION:'v2.5.12',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
