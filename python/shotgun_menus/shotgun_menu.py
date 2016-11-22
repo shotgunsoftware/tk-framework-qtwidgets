@@ -191,6 +191,13 @@ class ShotgunMenu(QtGui.QMenu):
             # add it to the typed text
             self._typed_text += event_text
 
+        else:
+            # the typed key isn't one we recognize for matching. call the
+            # default implementation
+            super(ShotgunMenu, self).keyReleaseEvent(event)
+            self._type_timer.start()
+            return
+
         # now search the actions to see if one matches the typed text
         for action in self.actions():
             # use a try to ignore any possible errors
