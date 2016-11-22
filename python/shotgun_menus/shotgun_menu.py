@@ -191,7 +191,6 @@ class ShotgunMenu(QtGui.QMenu):
             # add it to the typed text
             self._typed_text += event_text
 
-        # not a key we want to process. call the base class implementation.
         else:
             # didn't find a match, call the base class
             super(ShotgunMenu, self).keyReleaseEvent(event)
