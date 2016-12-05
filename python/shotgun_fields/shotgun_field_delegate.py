@@ -58,9 +58,18 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
     def data_role(self):
         """
         The item role used to get and set data associated with the fields being
-        represented by this delegate. The default role is:
+        represented by this delegate.
 
-            ``ShotgunModel.SG_ASSOCIATED_FIELD_ROLE``
+        The data in this role should be of a type that matches the SG field
+        the delegate instance represents. For example, if the delegate's
+        entity type and field are ``HumanUser.name``, then the data should be
+        a string.
+
+        One exception is fields of type ``image`` such as the thumbnail field
+        found on many entity types. This can be either a ``QtGui.QPixmap``
+        instance or a path to a file on disk.
+
+        The default role is ``ShotgunModel.SG_ASSOCIATED_FIELD_ROLE``.
         """
         return self._data_role
 
