@@ -735,6 +735,8 @@ class ActivityStreamWidget(QtGui.QWidget):
             # Since we have no entity loaded, we don't need to show
             # the note widget.
             self.ui.note_widget.setVisible(False)
+
+            self.ui.note_widget.clear()
             
     def _clear_loading_widget(self):
         """
