@@ -905,6 +905,8 @@ class ActivityStreamWidget(QtGui.QWidget):
             # the note widget.
             self.ui.note_widget.setVisible(False)
 
+            self.ui.note_widget.clear()
+
         self._entity_id = None
         self._entity_type = None
 
