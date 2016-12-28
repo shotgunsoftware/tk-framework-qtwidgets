@@ -20,6 +20,10 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
     A delegate for a given type of Shotgun field.  This delegate is designed to work
     with indexes from a ShotgunModel where the value of the field is stored in the
     SG_ASSOCIATED_FIELD_ROLE role.
+
+    To use this delegate with other types of models, simply use the ``data_role``
+    property to identify the role in the source model where data should be set
+    and retrieved.
     """
     def __init__(self, sg_entity_type, field_name, display_class, editor_class, view, bg_task_manager=None):
         """
@@ -45,6 +49,39 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         self._display_class = display_class
         self._editor_class = editor_class
         self._bg_task_manager = bg_task_manager
+
+        # By default, we assume the SG model's field role. This can be changed
+        # by the user via the data_role property
+        self._data_role = shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE
+
+    @property
+    def data_role(self):
+        """
+        The item role used to get and set data associated with the fields being
+        represented by this delegate.
+
+        The data in this role should be of a type that matches the SG field
+        the delegate instance represents. For example, if the delegate's
+        entity type and field are ``HumanUser.name``, then the data should be
+        a string.
+
+        One exception is fields of type ``image`` such as the thumbnail field
+        found on many entity types. This can be either a ``QtGui.QPixmap``
+        instance or a path to a file on disk.
+
+        The default role is ``ShotgunModel.SG_ASSOCIATED_FIELD_ROLE``.
+        """
+        return self._data_role
+
+    @data_role.setter
+    def data_role(self, role):
+        """
+        Sets the item role to use when getting and setting data from the model
+        for use by the delegate.
+
+        :param int role: The item data role in the source model.
+        """
+        self._data_role = role
 
     def paint(self, painter, style_options, model_index):
         """
@@ -161,8 +198,10 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
 
     def _on_before_paint(self, widget, model_index, style_options):
         """
-        Update the display widget with the value stored in the index's
-        SG_ASSOCIATED_FIELD_ROLE role.
+        Update the display widget with the value.
+
+        Retrieves data via the item data role specified by the delegate's
+        ``data_role`` property.
 
         :param widget: The QWidget (constructed in _create_widget()) which will
             be used to paint the cell.
@@ -178,7 +217,7 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         """
 
         # make sure the display widget is populated with the correct data
-        _set_widget_value(widget, model_index)
+        self._set_widget_value(widget, model_index)
 
     def setEditorData(self, editor, model_index):
         """
@@ -192,7 +231,7 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         """
 
         # make sure the editor widget is populated with the correct data
-        _set_widget_value(editor, model_index)
+        self._set_widget_value(editor, model_index)
 
     def setModelData(self, editor, model, index):
         """
@@ -201,26 +240,28 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         :param editor: The editor widget.
         :type editor: :class:`~PySide.QtGui.QWidget`
         :param model: The SG model where the data lives.
-        :type model: :class:`~shotgun_utils.shotgun_model.ShotgunModel`
+        :type model: :class:`~PySide.QtCore.QAbstractItemModel`
         :param index: The index of the model to be edited.
         :type index: :class:`~PySide.QtCore.QModelIndex`
         """
         src_index = _map_to_source(index)
         if not src_index or not src_index.isValid():
-            # invalide index, do nothing
+            # invalid index, do nothing
             return
 
         new_value = editor.get_value()
 
-        cur_value = src_index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)
+        cur_value = src_index.data(self.data_role)
         if cur_value == new_value:
             # value didn't change. nothing to do here.
             return
 
         bundle = sgtk.platform.current_bundle()
 
-        # special case for image fields
-        if editor._field_name == "image":
+        # special case for image fields in the ShotgunModel. The SG model stores
+        # the image field in the first column. If the value has changed, set the
+        # icon value there.
+        if self._source_is_sg_model and editor._field_name == "image":
             primary_item = src_index.model().item(src_index.row(), 0)
             try:
                 if new_value:
@@ -236,7 +277,7 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         successful = src_index.model().setData(
             src_index,
             new_value,
-            shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE,
+            self.data_role
         )
 
         if not successful:
@@ -252,7 +293,7 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         :param event: The event that occurred.
         :type event: :class:`~PySide.QtCore.QEvent`
         :param model: The SG model where the data lives.
-        :type model: :class:`~shotgun_utils.shotgun_model.ShotgunModel`
+        :type model: :class:`~PySide.QtCore.QAbstractItemModel`
         :param option: Options for rendering the item.
         :type option: :class:`~PySide.QtQui.QStyleOptionViewItem`
         :param index: The index of the model to be edited.
@@ -299,7 +340,7 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         # get the widget used to paint this index, populate it with the
         # value for this index
         widget = self._get_painter_widget(index, self.view)
-        _set_widget_value(widget, index)
+        self._set_widget_value(widget, index)
 
         item_rect = self.view.visualRect(index)
 
@@ -327,30 +368,41 @@ class ShotgunFieldDelegate(views.WidgetDelegate):
         QtGui.QApplication.sendEvent(widget, forward_event)
 
 
-def _set_widget_value(widget, model_index):
-    """
-    Updates the supplied widget with data from the supplied model index.
+    def _set_widget_value(self, widget, model_index):
+        """
+        Updates the supplied widget with data from the supplied model index.
 
-    :param widget: The widget to set the value for
-    :type parent: :class:`~PySide.QtGui.QWidget`
-    :param model_index: The index of the model where the data comes from
-    :type model_index: :class:`~PySide.QtCore.QModelIndex`
-    """
+        :param widget: The widget to set the value for
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        :param model_index: The index of the model where the data comes from
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
+        """
 
-    src_index = _map_to_source(model_index)
-    if not src_index or not src_index.isValid():
-        # invalid index, do nothing
-        return
+        src_index = _map_to_source(model_index)
+        if not src_index or not src_index.isValid():
+            # invalid index, do nothing
+            return
 
-    # special case for image fields
-    if widget._field_name == "image":
-        primary_item = src_index.model().item(src_index.row(), 0)
-        icon = primary_item.icon()
-        if icon:
-            widget.set_value(icon.pixmap(QtCore.QSize(256, 256)))
+        # special case for image fields in the ShotgunModel. The SG model has
+        # the ability to pre-query thumbnails for entities for efficiency. If
+        # this is the image field for an entity in the SG model, we can make use
+        # of the potentially pre-queried image available in the first column.
+        if self._source_is_sg_model(model_index) and widget._field_name == "image":
+            primary_item = src_index.model().item(src_index.row(), 0)
+            icon = primary_item.icon()
+            if icon:
+                widget.set_value(icon.pixmap(QtCore.QSize(256, 256)))
+            return
 
-    value = src_index.data(shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE)
-    widget.set_value(shotgun_model.sanitize_qt(value))
+        value = src_index.data(self.data_role)
+        widget.set_value(shotgun_model.sanitize_qt(value))
+
+    def _source_is_sg_model(self, index):
+        """
+        Returns True if the source model is a ``ShotgunModel``.
+        """
+        src_index = _map_to_source(index)
+        return isinstance(src_index.model(), shotgun_model.ShotgunModel)
 
 
 def _map_to_source(idx, recursive=True):

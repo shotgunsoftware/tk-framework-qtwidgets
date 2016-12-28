@@ -472,8 +472,6 @@ in the layout.
 Field Widget Delegates
 ======================
 
-.. TODO
-
 .. currentmodule:: shotgun_fields.shotgun_field_delegate
 
 .. autoclass:: ShotgunFieldDelegate
