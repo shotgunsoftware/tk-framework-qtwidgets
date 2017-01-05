@@ -22,7 +22,6 @@ Contents:
    shotgun_fields
    shotgun_menus
    spinner_widget
-   playback_label
    views
 
 Importing widgets into your app

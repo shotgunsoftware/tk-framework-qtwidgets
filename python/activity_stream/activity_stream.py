@@ -421,7 +421,9 @@ class ActivityStreamWidget(QtGui.QWidget):
                   "re" module documentation for Python 2.x for more information and
                   examples.
 
-        .. example:: To match only ".gif" extensions: re.compile(r"\w+[.]gif$")
+        Example to match only ".gif" extensions::
+
+            re.compile(r"\w+[.]gif$")
         """
         return self._attachments_filter
 

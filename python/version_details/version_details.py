@@ -322,7 +322,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         The currently loaded Note threads keyed by Note entity id and
         containing a list of Shotgun entity dictionaries.
 
-        Example structure containing a single Note entity:
+        Example structure containing a single Note entity::
+
             6038: [
                 {
                     'content': 'This is a test note.',
@@ -429,7 +430,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         Adds an action to the version tab's context menu.
 
-        Action definitions passed in must take the following form:
+        Action definitions passed in must take the following form::
 
             dict(
                 callback=callable,

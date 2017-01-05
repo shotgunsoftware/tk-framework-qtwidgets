@@ -10,7 +10,7 @@
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from .shotgun_field_delegate import ShotgunFieldDelegate
+from .shotgun_field_delegate import ShotgunFieldDelegateGeneric, ShotgunFieldDelegate
 from .shotgun_field_editable import ShotgunFieldEditable, ShotgunFieldNotEditable
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
@@ -211,6 +211,47 @@ class ShotgunFieldManager(QtCore.QObject):
             editor_class,
             view,
             bg_task_manager=self._task_manager
+        )
+
+    def create_generic_delegate(self, sg_entity_type, field_name, view, field_data_role=QtCore.Qt.EditRole):
+        """
+        Returns a delegate that can be used in the given view to show data from
+        the given field from the given entity type.  Unlike ``create_delegate``,
+        this method returns a delegate that can be used with any model
+        representing SG field data. The additional ``field_data_role`` parameter
+        is supplied to tell the delegate wich role in the model will store the
+        field data to edit/display.
+        to be used by items
+
+        :param str sg_entity_type: Shotgun entity type
+
+        :param str field_name: Shotgun field name
+
+        :param view: The parent view for this delegate
+        :type view:  :class:`~PySide.QtGui.QWidget`
+
+        :param int field_data_role: The data role that stores SG field data in
+            the model where this delegate is to be used. The default value is
+            ``QtCore.Qt.EditRole``.
+
+        :returns: A :class:``ShotgunFieldDelegateGeneric`` configured to
+            represent the given field
+        """
+        display_class = self.get_class(sg_entity_type, field_name)
+
+        if not display_class:
+            from .label_base_widget import LabelBaseWidget
+            display_class = LabelBaseWidget
+
+        editor_class = self.get_class(sg_entity_type, field_name, self.EDITOR)
+        return ShotgunFieldDelegateGeneric(
+            sg_entity_type,
+            field_name,
+            display_class,
+            editor_class,
+            view,
+            bg_task_manager=self._task_manager,
+            field_data_role=field_data_role
         )
 
     def create_label(self, sg_entity_type, field_name, prefix=None, postfix=None):

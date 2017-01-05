@@ -1,4 +1,4 @@
-Shotgun Note editor widget
+Shotgun Note Input Widget
 #############################################
 
 The note editor widget makes it easy to add notes in Toolkit.
