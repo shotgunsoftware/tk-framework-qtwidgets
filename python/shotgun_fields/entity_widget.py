@@ -14,10 +14,10 @@ from sgtk.platform.qt import QtCore, QtGui
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 from .util import check_project_search_supported
-from ..utils import get_hyperlink_html
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 global_search_widget = sgtk.platform.current_bundle().import_module("global_search_widget")
+utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
 
 
 class EntityWidget(ElidedLabelBaseWidget):
@@ -46,7 +46,7 @@ class EntityWidget(ElidedLabelBaseWidget):
         entity_url = "%sdetail/%s/%d" % (url_base, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
 
-        hyperlink = get_hyperlink_html(entity_url, str_val)
+        hyperlink = utils.get_hyperlink_html(entity_url, str_val)
         return "<span><img src='%s'>&nbsp;%s</span>" % (entity_icon_url, hyperlink)
 
     def _string_value(self, value):

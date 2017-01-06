@@ -41,4 +41,4 @@ Use the label like this::
 
 .. autoclass:: ShotgunPlaybackLabel
     :show-inheritance:
-    :members: set_shotgun_data, playbable
+    :members: set_shotgun_data, playable

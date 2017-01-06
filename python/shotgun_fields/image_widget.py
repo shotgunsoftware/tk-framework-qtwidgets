@@ -170,9 +170,12 @@ class ImageWidget(QtGui.QLabel):
         if value is None:
             self._display_default()
         else:
-            if not isinstance(value, QtGui.QPixmap) and not os.path.exists(value):
-                # this is not a local file or a pre-created pixmap. we need to
-                # download it
+            if (not self._delegate and
+                not isinstance(value, QtGui.QPixmap) and
+                not os.path.exists(value)):
+                # the widget isn't being used as a delegate (which never
+                # requires downloads) and the value is not a local file or a
+                # pre-created pixmap. so we need to download it.
                 self._needs_download = True
             self._display_value(value)
         self.value_changed.emit()
