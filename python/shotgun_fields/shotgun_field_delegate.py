@@ -14,10 +14,12 @@ from sgtk.platform.qt import QtCore, QtGui
 views = sgtk.platform.current_bundle().import_module("views")
 
 shotgun_globals = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils", "shotgun_globals")
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 shotgun_model = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils", "shotgun_model")
+    "tk-framework-shotgunutils", "shotgun_model"
+)
 
 
 class ShotgunFieldDelegateGeneric(views.WidgetDelegate):
@@ -27,10 +29,10 @@ class ShotgunFieldDelegateGeneric(views.WidgetDelegate):
     This class is designed to be used with any model that represents data that
     can be stored in Shotgun fields.
 
-    The included ``ShotgunFieldDelegate`` class is designed to work specifically
-    with ``ShotgunModel`` instances. For other model types use this class and
-    supply a ``field_data_role`` to this class constructor. The default is
-    ``QtCore.Qt.EditRole``.
+    The included subclass, ``ShotgunFieldDelegate``, is designed to work
+    specifically with ``ShotgunModel`` instances. For other model types use this
+    class and supply a ``field_data_role`` to this class constructor. The
+    default is ``QtCore.Qt.EditRole``.
     """
 
     def __init__(self, sg_entity_type, field_name, display_class, editor_class,
