@@ -12,7 +12,6 @@ import sgtk
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
-utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
 
 class UrlTemplateWidget(ElidedLabelBaseWidget):
     """
@@ -27,4 +26,5 @@ class UrlTemplateWidget(ElidedLabelBaseWidget):
 
         :param str value: The url value to convert into a string
         """
+        utils = self._bundle.import_module("utils")
         return utils.get_hyperlink_html(url=value, name=value)

@@ -16,11 +16,8 @@ from sgtk.platform.qt import QtCore, QtGui
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
-utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
-
 # ensures access to `link_menu.png`
 from .ui import resources_rc
-
 
 
 class FileLinkWidget(ElidedLabelBaseWidget):
@@ -308,6 +305,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         :param value: The value to convert into a string
         :type value: A dictionary as returned by the Shotgun API for a url field
         """
+        utils = self._bundle.import_module("utils")
         if value["link_type"] in ["web", "upload"]:
             url = value["url"]
             img_src = ":/qtwidgets-shotgun-fields/link_%s.png" % (value["link_type"],)

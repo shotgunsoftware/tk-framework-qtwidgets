@@ -17,7 +17,6 @@ from .util import check_project_search_supported
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 global_search_widget = sgtk.platform.current_bundle().import_module("global_search_widget")
-utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
 
 
 class EntityWidget(ElidedLabelBaseWidget):
@@ -46,6 +45,7 @@ class EntityWidget(ElidedLabelBaseWidget):
         entity_url = "%sdetail/%s/%d" % (url_base, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
 
+        utils = self._bundle.import_module("utils")
         hyperlink = utils.get_hyperlink_html(entity_url, str_val)
         return "<span><img src='%s'>&nbsp;%s</span>" % (entity_icon_url, hyperlink)
 

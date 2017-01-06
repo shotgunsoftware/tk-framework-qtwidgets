@@ -15,7 +15,6 @@ import datetime
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
-utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
 
 class ActivityStreamBaseWidget(QtGui.QWidget):
     """
@@ -207,6 +206,7 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         """
         Generate a standard shotgun url
         """
+        utils = self._bundle.import_module("utils")
         return utils.get_hyperlink_html(
             url="%s:%s" % (entity_type, entity_id),
             name=name,
