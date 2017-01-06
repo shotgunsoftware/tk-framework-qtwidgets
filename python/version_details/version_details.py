@@ -588,9 +588,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.clear()
             return
 
+        project_id = entity.get("project", {}).get("id") or entity.get("project")
         # Ensure project schema will be loaded. The project schema is needed
         # to reference Version fields in various UI and other elements.
-        shotgun_globals.run_on_schema_loaded(lambda : None, entity.get("project"))
+        shotgun_globals.run_on_schema_loaded(lambda : None, project_id)
 
         # Switch over to the page that contains the primary display
         # widget set now that we have data to show.
