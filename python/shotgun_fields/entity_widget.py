@@ -14,6 +14,7 @@ from sgtk.platform.qt import QtCore, QtGui
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 from .util import check_project_search_supported
+from ..utils import get_hyperlink_html
 
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 global_search_widget = sgtk.platform.current_bundle().import_module("global_search_widget")
@@ -42,23 +43,11 @@ class EntityWidget(ElidedLabelBaseWidget):
         else:
             url_base = "%s/" % self._bundle.sgtk.shotgun_url
 
-        # SG_LINK_COLOR is newer to core than the highlight color, so we'll
-        # fall back on highlight if the explicit link color isn't available.
-        style_constants = sgtk.platform.current_bundle().style_constants
-        link_color = style_constants.get(
-            "SG_LINK_COLOR",
-            style_constants["SG_HIGHLIGHT_COLOR"],
-        )
-
         entity_url = "%sdetail/%s/%d" % (url_base, value["type"], value["id"])
         entity_icon_url = shotgun_globals.get_entity_type_icon_url(value["type"])
-        str_val = (
-            "<span><img src='%s'>&nbsp;"
-            "<a href='%s'><font color='%s'>%s</font></a></span>"
-             % (entity_icon_url, entity_url, link_color, str_val)
-        )
 
-        return str_val
+        hyperlink = get_hyperlink_html(entity_url, str_val)
+        return "<span><img src='%s'>&nbsp;%s</span>" % (entity_icon_url, hyperlink)
 
     def _string_value(self, value):
         """

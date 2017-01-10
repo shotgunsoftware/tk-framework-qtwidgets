@@ -13,6 +13,8 @@ from sgtk.platform.qt import QtCore, QtGui
 import sgtk
 import datetime
 
+from ..utils import get_hyperlink_html
+
 shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
 
 class ActivityStreamBaseWidget(QtGui.QWidget):
@@ -200,23 +202,14 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
             return str(day_diff / 30) + " months ago"
         return str(day_diff / 365) + " years ago"
                      
-    # CBB? we are generating HTML links here and they were
-    # styled thusly. i could not style them via setStyleSheet either.
-    # anyway, i think this could be done another way later?
-    # - stewartb
     def __generate_url(self, entity_type, entity_id, name):
         """
         Generate a standard shotgun url
         """
-        str_val = """<a href='%s:%s' 
-                        style='text-decoration: none;
-                        color: %s'>%s</a>
-                  """ % (entity_type, 
-                         entity_id,
-                         #self._bundle.style_constants["SG_HIGHLIGHT_COLOR"],
-                         'rgb(126,127,129);',
-                         name)
-        return str_val
+        return get_hyperlink_html(
+            url="%s:%s" % (entity_type, entity_id),
+            name=name,
+        )
     
     def _generate_entity_url(self, entity, this_syntax=True, display_type=True):
         """
