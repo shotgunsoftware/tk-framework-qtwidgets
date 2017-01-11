@@ -139,8 +139,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             bg_task_manager=self._task_manager,
         )
 
+        self._bundle = sgtk.platform.current_bundle()
+
         self._settings_manager = settings.UserSettings(
-            sgtk.platform.current_bundle(),
+            self._bundle,
         )
 
         shotgun_globals.register_bg_task_manager(self._task_manager)
@@ -741,9 +743,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param str msg: The error message.
         """
         if uid in self._note_metadata_uids:
-            sgtk.platform.current_bundle().log_error(msg)
+            self._bundle.log_error(msg)
         elif uid in self._attachment_uids:
-            sgtk.platform.current_bundle().log_error(msg)
+            self._bundle.log_error(msg)
 
     def _load_stylesheet(self):
         """
@@ -755,7 +757,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         )
         try:
             f = open(qss_file, "rt")
-            qss_data = sgtk.platform.current_bundle().engine._resolve_sg_stylesheet_tokens(
+            qss_data = self._bundle.engine._resolve_sg_stylesheet_tokens(
                 f.read(),
             )
             self.setStyleSheet(qss_data)
@@ -822,7 +824,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         )
 
         if not item:
-            sgtk.platform.current_bundle().log_error("Unable to setup version summary: no entity item from version model.")
+            self._bundle.log_error("Unable to setup version summary: no entity item from version model.")
             return
 
         sg_data = item.get_sg_data()
@@ -889,7 +891,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         # use the current entity to retrieve the project id to ensure is cached
         entity = self.current_entity or self._requested_entity
         if not entity:
-            sgtk.platform.current_bundle().log_error("Unable to finalize version: no entity.")
+            self._bundle.log_error("Unable to finalize version: no entity.")
 
         project_id = entity.get("project", {}).get("id")
 
