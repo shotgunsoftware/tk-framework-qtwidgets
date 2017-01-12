@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.url_template_widget &mdash; tk-framework-qtwidgets v2.5.9 documentation</title>
+  <title>shotgun_fields.url_template_widget &mdash; tk-framework-qtwidgets v2.5.15 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.9 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.15 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -96,14 +96,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
@@ -126,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.9.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.15.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -206,15 +205,8 @@
 
 <span class="sd">        :param str value: The url value to convert into a string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># SG_LINK_COLOR is newer to core than the highlight color, so we&#39;ll</span>
-        <span class="c1"># fall back on highlight if the explicit link color isn&#39;t available.</span>
-        <span class="n">style_constants</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">style_constants</span>
-        <span class="n">link_color</span> <span class="o">=</span> <span class="n">style_constants</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;SG_LINK_COLOR&quot;</span><span class="p">,</span>
-            <span class="n">style_constants</span><span class="p">[</span><span class="s2">&quot;SG_HIGHLIGHT_COLOR&quot;</span><span class="p">],</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="s2">&quot;&lt;a href=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&lt;font color=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&lt;/a&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="n">value</span><span class="p">,</span> <span class="n">link_color</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+        <span class="n">utils</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;utils&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_hyperlink_html</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">value</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -226,7 +218,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Autodesk.
+        &copy; Copyright 2017, Autodesk.
 
     </p>
   </div> 
@@ -247,7 +239,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.9',
+            VERSION:'v2.5.15',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

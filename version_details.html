@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Version Details Widget &mdash; tk-framework-qtwidgets v2.5.12 documentation</title>
+  <title>Shotgun Version Details Widget &mdash; tk-framework-qtwidgets v2.5.15 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.12 documentation" href="index.html"/> 
+    <link rel="top" title="tk-framework-qtwidgets v2.5.15 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -95,14 +95,13 @@
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note editor widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -125,7 +124,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.12.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.15.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -283,30 +282,22 @@ when note_arrived is emitted.</p>
 <code class="descname">note_threads</code><a class="headerlink" href="#version_details.VersionDetailsWidget.note_threads" title="Permalink to this definition">¶</a></dt>
 <dd><p>The currently loaded Note threads keyed by Note entity id and
 containing a list of Shotgun entity dictionaries.</p>
-<dl class="docutils">
-<dt>Example structure containing a single Note entity:</dt>
-<dd><dl class="first docutils">
-<dt>6038: [</dt>
-<dd><dl class="first docutils">
-<dt>{</dt>
-<dd><p class="first">&#8216;content&#8217;: &#8216;This is a test note.&#8217;,
-&#8216;created_by&#8217;: {</p>
-<blockquote>
-<div>&#8216;id&#8217;: 39,
-&#8216;name&#8217;: &#8216;Jeff Beeland&#8217;,
-&#8216;type&#8217;: &#8216;HumanUser&#8217;</div></blockquote>
-<p class="last">},
-&#8216;id&#8217;: 6038,
-&#8216;sg_metadata&#8217;: None,
-&#8216;type&#8217;: &#8216;Note&#8217;</p>
-</dd>
-</dl>
-<p class="last">}</p>
-</dd>
-</dl>
-<p class="last">]</p>
-</dd>
-</dl>
+<p>Example structure containing a single Note entity:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">6038</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;This is a test note.&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;created_by&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jeff Beeland&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;HumanUser&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">6038</span><span class="p">,</span>
+        <span class="s1">&#39;sg_metadata&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Note&#39;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -374,15 +365,13 @@ information about the entity in any way.</p>
 <code class="descname">add_version_context_menu_action</code><span class="sig-paren">(</span><em>action_definition</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_version_context_menu_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_version_context_menu_action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds an action to the version tab&#8217;s context menu.</p>
 <p>Action definitions passed in must take the following form:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>dict(</dt>
-<dd>callback=callable,
-text=str,
-required_selection=&#8221;single&#8221;</dd>
-</dl>
-<p>)</p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">dict</span><span class="p">(</span>
+    <span class="n">callback</span><span class="o">=</span><span class="n">callable</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+    <span class="n">required_selection</span><span class="o">=</span><span class="s2">&quot;single&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 <p>Where the callback is a callable object that expects to receive
 a list of Version entity dictionaries as returned by the Shotgun
 Python API. The text key contains the string labels of the action
@@ -605,7 +594,7 @@ be displayed.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Autodesk.
+        &copy; Copyright 2017, Autodesk.
 
     </p>
   </div> 
@@ -626,7 +615,7 @@ be displayed.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.5.12',
+            VERSION:'v2.5.15',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.5.9 documentation</title>
+  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.5.15 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.9 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.15 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -96,14 +96,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note editor widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Spinner and text overlay widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
@@ -126,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.9.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.15.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -190,7 +189,7 @@
 
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
-<span class="kn">from</span> <span class="nn">.shotgun_field_delegate</span> <span class="kn">import</span> <span class="n">ShotgunFieldDelegate</span>
+<span class="kn">from</span> <span class="nn">.shotgun_field_delegate</span> <span class="kn">import</span> <span class="n">ShotgunFieldDelegateGeneric</span><span class="p">,</span> <span class="n">ShotgunFieldDelegate</span>
 <span class="kn">from</span> <span class="nn">.shotgun_field_editable</span> <span class="kn">import</span> <span class="n">ShotgunFieldEditable</span><span class="p">,</span> <span class="n">ShotgunFieldNotEditable</span>
 
 <span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
@@ -391,6 +390,47 @@
             <span class="n">editor_class</span><span class="p">,</span>
             <span class="n">view</span><span class="p">,</span>
             <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunFieldManager.create_generic_delegate"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_generic_delegate">[docs]</a>    <span class="k">def</span> <span class="nf">create_generic_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">view</span><span class="p">,</span> <span class="n">field_data_role</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a delegate that can be used in the given view to show data from</span>
+<span class="sd">        the given field from the given entity type.  Unlike ``create_delegate``,</span>
+<span class="sd">        this method returns a delegate that can be used with any model</span>
+<span class="sd">        representing SG field data. The additional ``field_data_role`` parameter</span>
+<span class="sd">        is supplied to tell the delegate wich role in the model will store the</span>
+<span class="sd">        field data to edit/display.</span>
+<span class="sd">        to be used by items</span>
+
+<span class="sd">        :param str sg_entity_type: Shotgun entity type</span>
+
+<span class="sd">        :param str field_name: Shotgun field name</span>
+
+<span class="sd">        :param view: The parent view for this delegate</span>
+<span class="sd">        :type view:  :class:`~PySide.QtGui.QWidget`</span>
+
+<span class="sd">        :param int field_data_role: The data role that stores SG field data in</span>
+<span class="sd">            the model where this delegate is to be used. The default value is</span>
+<span class="sd">            ``QtCore.Qt.EditRole``.</span>
+
+<span class="sd">        :returns: A :class:``ShotgunFieldDelegateGeneric`` configured to</span>
+<span class="sd">            represent the given field</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">display_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">display_class</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">.label_base_widget</span> <span class="kn">import</span> <span class="n">LabelBaseWidget</span>
+            <span class="n">display_class</span> <span class="o">=</span> <span class="n">LabelBaseWidget</span>
+
+        <span class="n">editor_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDITOR</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ShotgunFieldDelegateGeneric</span><span class="p">(</span>
+            <span class="n">sg_entity_type</span><span class="p">,</span>
+            <span class="n">field_name</span><span class="p">,</span>
+            <span class="n">display_class</span><span class="p">,</span>
+            <span class="n">editor_class</span><span class="p">,</span>
+            <span class="n">view</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">,</span>
+            <span class="n">field_data_role</span><span class="o">=</span><span class="n">field_data_role</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunFieldManager.create_label"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_label">[docs]</a>    <span class="k">def</span> <span class="nf">create_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">postfix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -754,7 +794,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Autodesk.
+        &copy; Copyright 2017, Autodesk.
 
     </p>
   </div> 
@@ -775,7 +815,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.9',
+            VERSION:'v2.5.15',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

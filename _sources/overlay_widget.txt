@@ -1,4 +1,4 @@
-Spinner and text overlay widget
+Text Overlay Widget
 ######################################
 
 
