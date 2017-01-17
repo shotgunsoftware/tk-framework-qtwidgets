@@ -8,6 +8,9 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+
+import math
+
 from tank.platform.qt import QtCore, QtGui
 
 # load resources
@@ -42,6 +45,7 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         self._spin_angle = 0
         self._spin_angle_to = 0
         self._previous_spin_angle_to = 0
+        self._heartbeat = 0
 
         self._sg_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.overlay_widget/sg_logo.png")
 
@@ -95,6 +99,8 @@ class ShotgunSpinningWidget(QtGui.QWidget):
             # If the current spin angle has not reached the destination yet,
             # increment it, but not past.
             self._spin_angle = min(self._spin_angle_to, self._spin_angle + 1)
+            self._heartbeat = (self._heartbeat + 1) % 25
+
         self.repaint()
 
     def _draw_opened_circle(self, painter, start_angle, span_angle):
@@ -141,5 +147,31 @@ class ShotgunSpinningWidget(QtGui.QWidget):
                     # Go clockwise
                     -self._spin_angle
                 )
+
+                self._draw_heartbeat(painter)
+
         finally:
             painter.end()
+
+    def _draw_heartbeat(self, painter):
+
+        amplitude = (math.fabs(self._heartbeat - 12.5) / 12.5) * 6
+
+        angle = self._spin_angle - 90
+        y = math.sin(math.radians(angle))
+        x = math.cos(math.radians(angle))
+
+        pen = QtGui.QPen(QtGui.QColor("#424141"))
+        brush = QtGui.QBrush(QtGui.QColor("#424141"))
+        pen.setWidth(1)
+        painter.setPen(pen)
+        painter.setBrush(brush)
+
+        painter.drawEllipse(
+            QtCore.QRectF(
+                x * 40 + 40 - amplitude / 2,
+                y * 40 + 40 - amplitude / 2,
+                amplitude,
+                amplitude,
+            )
+        )
