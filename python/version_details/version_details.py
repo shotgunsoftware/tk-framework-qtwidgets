@@ -490,6 +490,13 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._requested_entity = None
         self._current_entity = None
 
+    def select_note(self, note_id):
+        """
+        Select the note identified by the id. This will trigger a note_selected
+        signal to be emitted
+        """
+        self.ui.note_stream_widget.select_note(note_id)
+
     def deselect_note(self):
         """
         If a note is currently selected, it will be deselected. This will NOT
