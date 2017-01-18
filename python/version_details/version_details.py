@@ -304,9 +304,16 @@ class VersionDetailsWidget(QtGui.QWidget):
     @property
     def current_entity(self):
         """
-        The current Shotgun entity that is active in the widget.
+        The current Shotgun entity that has been loaded and is active in the widget.
         """
         return self._current_entity
+
+    @property
+    def active_entity(self):
+        """
+        The current Shotgun entity that is OR will become active in the widget.
+        """
+        return self._current_entity or self._requested_entity
 
     @property
     def is_pinned(self):
