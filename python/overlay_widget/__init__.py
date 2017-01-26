@@ -10,3 +10,4 @@
 
 from .shotgun_overlay_widget import ShotgunOverlayWidget
 from .shotgun_model_overlay_widget import ShotgunModelOverlayWidget
+from .shotgun_spinning_widget import ShotgunSpinningWidget
