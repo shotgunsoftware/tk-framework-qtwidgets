@@ -28,6 +28,8 @@ class ShotgunSpinningWidget(QtGui.QWidget):
     MODE_SPIN = 1
     MODE_PROGRESS = 2
 
+    _UPDATES_PER_SECOND = 25
+
     def __init__(self, parent):
         """
         :param parent: Widget to attach the overlay to
@@ -42,9 +44,15 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         # setup spinner timer
         self._timer = QtCore.QTimer(self)
         self._timer.timeout.connect(self._on_animation)
+
+        # This is the current spin angle
         self._spin_angle = 0
+        # This is where we need to scroll to.
         self._spin_angle_to = 0
+        # This is where we were told last time where we need to spin to
         self._previous_spin_angle_to = 0
+        # This counts how many times we've ticked in the last second to know how big the heartbeat
+        # needs to be.
         self._heartbeat = 0
 
         self._sg_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.overlay_widget/sg_logo.png")
@@ -63,14 +71,16 @@ class ShotgunSpinningWidget(QtGui.QWidget):
 
     def start_progress(self):
         self.setVisible(True)
-        self._timer.start(40)
+        self._timer.start(1000 / self._UPDATES_PER_SECOND)
         self._mode = self.MODE_PROGRESS
         self._spin_angle_to = 0
         self._spin_angle = 0
 
     def report_progress(self, current):
+        # We're about to ask the cursor to reach another point. Make sure that
+        # we are at least caught up with where we were requested to be last time.
         self._spin_angle = max(self._previous_spin_angle_to, self._spin_angle)
-        self._previous_spin_angle_to = self._spin_angle_to
+
         self._spin_angle_to = 360 * current
         self.repaint()
 
@@ -98,7 +108,7 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         elif self._mode == self.MODE_PROGRESS:
             # If the current spin angle has not reached the destination yet,
             # increment it, but not past.
-            self._spin_angle = min(self._spin_angle_to, self._spin_angle + 1)
+            self._spin_angle = min(self._spin_angle_to, self._spin_angle + 360 / self._UPDATES_PER_SECOND)
             self._heartbeat = (self._heartbeat + 1) % 25
 
         self.repaint()
@@ -155,7 +165,9 @@ class ShotgunSpinningWidget(QtGui.QWidget):
 
     def _draw_heartbeat(self, painter):
 
-        amplitude = (math.fabs(self._heartbeat - 12.5) / 12.5) * 6
+        half_update = self._UPDATES_PER_SECOND / 2.0
+
+        amplitude = (math.fabs(self._heartbeat - half_update) / half_update) * 6
 
         angle = self._spin_angle - 90
         y = math.sin(math.radians(angle))
