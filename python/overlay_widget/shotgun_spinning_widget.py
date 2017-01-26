@@ -21,13 +21,15 @@ class ShotgunSpinningWidget(QtGui.QWidget):
     """
     Overlay widget that can be placed on top over any QT widget.
     Once you have placed the overlay widget, you can use it to
-    display information, errors, a spinner etc.
+    display a spinner or report progress in the form of an arc that goes
+    from 0 to 360 degrees.
     """
 
     MODE_OFF = 0
     MODE_SPIN = 1
     MODE_PROGRESS = 2
 
+    # Indicates how many times per second does the spinner update. This means every 40ms.
     _UPDATES_PER_SECOND = 25
 
     def __init__(self, parent):
@@ -70,6 +72,11 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         self._mode = self.MODE_SPIN
 
     def start_progress(self):
+        """
+        Enables the overlay and shows an animated progress arc.
+
+        If you want to stop the progress, call :meth:`hide`.
+        """
         self.setVisible(True)
         self._timer.start(1000 / self._UPDATES_PER_SECOND)
         self._mode = self.MODE_PROGRESS
@@ -77,6 +84,12 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         self._spin_angle = 0
 
     def report_progress(self, current):
+        """
+        Updates the widget current progress value.
+
+        :param current: New value for the progress arc. Must be between 0 (nothing) and 1 (complete).
+        :type current: float
+        """
         # We're about to ask the cursor to reach another point. Make sure that
         # we are at least caught up with where we were requested to be last time.
         self._spin_angle = max(self._previous_spin_angle_to, self._spin_angle)
@@ -87,8 +100,6 @@ class ShotgunSpinningWidget(QtGui.QWidget):
     def hide(self):
         """
         Hides the overlay.
-
-        :param hide_errors: If set to False, errors are not hidden.
         """
         self._timer.stop()
         self._mode = self.MODE_OFF
@@ -99,7 +110,7 @@ class ShotgunSpinningWidget(QtGui.QWidget):
 
     def _on_animation(self):
         """
-        Spinner async callback to help animate the progress spinner.
+        Async callback to help animate the widget.
         """
         if self._mode == self.MODE_SPIN:
             self._spin_angle += 1
@@ -107,13 +118,26 @@ class ShotgunSpinningWidget(QtGui.QWidget):
                 self._spin_angle = 0
         elif self._mode == self.MODE_PROGRESS:
             # If the current spin angle has not reached the destination yet,
-            # increment it, but not past.
+            # increment it, but not past where we are supposed to end at.
+
+            # The progress tries to give a smooth impression of the progress. Instead of jumping straight
+            # to the requested value, it will slide over to that value. Sliding from 0 to 1 however is done in
+            # a single second, so the sliding is still quick to the eye. If there are more than
+            # _UPDATES_PER_SECOND steps, this sliding effect is actually not visible since individual increments
+            # between steps will be smaller than 1 / _UPDATES_PER_SECOND of the circumference.
             self._spin_angle = min(self._spin_angle_to, self._spin_angle + 360 / self._UPDATES_PER_SECOND)
             self._heartbeat = (self._heartbeat + 1) % 25
 
         self.repaint()
 
     def _draw_opened_circle(self, painter, start_angle, span_angle):
+        """
+        Draws an arc around the SG logo.
+
+        :param painter: Painter object we will draw with.
+        :param start_angle: Angle at which we will start drawing the arc.
+        :param span_angle: Degrees the arc covers.
+        """
         # show the spinner
         painter.translate((painter.device().width() / 2) - 40,
                           (painter.device().height() / 2) - 40)
@@ -130,6 +154,8 @@ class ShotgunSpinningWidget(QtGui.QWidget):
     def paintEvent(self, event):
         """
         Render the UI.
+
+        :param event: Qt Paint event.
         """
         if self._mode == self.MODE_OFF:
             return
@@ -164,11 +190,18 @@ class ShotgunSpinningWidget(QtGui.QWidget):
             painter.end()
 
     def _draw_heartbeat(self, painter):
+        """
+        Draws the heartbeat of the progress reporter so it doesn't look like
+        the UI has frozen when progress is not updated in a while.
 
+        :param painter: Painter object that will be used to render.
+        """
+        # The heartbeat beats one per second. At the halfway point it is at it's
+        # max amplitude.
         half_update = self._UPDATES_PER_SECOND / 2.0
-
         amplitude = (math.fabs(self._heartbeat - half_update) / half_update) * 6
 
+        # Progress reporting starts at -90, which is (0, 1) in Cartesian coordinates.
         angle = self._spin_angle - 90
         y = math.sin(math.radians(angle))
         x = math.cos(math.radians(angle))
@@ -179,6 +212,7 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         painter.setPen(pen)
         painter.setBrush(brush)
 
+        # Draws the ellipse around the head of the arc.
         painter.drawEllipse(
             QtCore.QRectF(
                 x * 40 + 40 - amplitude / 2,
