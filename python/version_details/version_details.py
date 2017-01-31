@@ -306,13 +306,6 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         The current Shotgun entity that has been loaded and is active in the widget.
         """
-        return self._current_entity
-
-    @property
-    def active_entity(self):
-        """
-        The current Shotgun entity that is OR will become active in the widget.
-        """
         return self._current_entity or self._requested_entity
 
     @property
@@ -550,8 +543,9 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param int attachment_id: The attachment id on the Version entity.
         :param int note_id: The Note entity id that we want to link with the Version entity attachment.
-        """               
-        version_id = self.current_entity["id"] if self.current_entity else (self._requested_entity["id"] if self._requested_entity else None)
+        """
+        current_entity = self.current_entity
+        version_id = current_entity["id"] if current_entity else None
         if version_id is None:
             sgtk.platform.current_bundle().log_error("Unable to download version attachments: no current version entity.")
             return
@@ -593,7 +587,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._requested_entity = entity
 
         # If we're pinned, then we don't allow loading new entities.
-        if self._pinned and self.current_entity:
+        if self._pinned and self._current_entity:
             return
 
         # If we got an "empty" entity from the mode, then we need
@@ -679,10 +673,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_hover.png"))
         else:
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_up.png"))
-            # If we have a valid current_entity, be sure the incoming entity
+            # If we have a valid _current_entity, be sure the incoming entity
             # has a different ID.
-            if self._requested_entity and (not self.current_entity or (
-                    self._requested_entity.get("id") != self.current_entity.get("id"))):
+            if self._requested_entity and (not self._current_entity or (
+                    self._requested_entity.get("id") != self._current_entity.get("id"))):
                 self.load_data(self._requested_entity)
 
     def show_new_note_dialog(self, modal=True):
@@ -713,10 +707,10 @@ class VersionDetailsWidget(QtGui.QWidget):
                                then the current Version entity loaded in
                                the widget will be used.
         """
-        if not version_id and not self.current_entity:
+        if not version_id and not self._current_entity:
             return
 
-        version_id = version_id or self.current_entity["id"]
+        version_id = version_id or self._current_entity["id"]
         id = self._data_retriever.execute_method(
             self.__upload_thumbnail,
             dict(
@@ -976,7 +970,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.version_fields_button.setToolTip("Caching SG fields. Please hold...")
 
         # use the current entity to retrieve the project id to ensure is cached
-        entity = self.current_entity or self._requested_entity
+        entity = self.current_entity
         if not entity:
             sgtk.platform.current_bundle().log_error("Unable to finalize version: no entity.")
 
@@ -1125,7 +1119,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Sets up the EntityFieldMenu and attaches it as the "More fields"
         button's menu.
         """
-        entity = self.current_entity or {}
+        entity = self._current_entity or {}
         menu = EntityFieldMenu(
             "Version",
             project_id=entity.get("project", {}).get("id"),
@@ -1143,7 +1137,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Sets up the EntityFieldMenu and attaches it as the "More fields"
         button's menu.
         """
-        entity = self.current_entity or {}
+        entity = self._current_entity or {}
         menu = EntityFieldMenu(
             "Version",
             project_id=entity.get("project", {}).get("id"),
@@ -1411,7 +1405,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             return False
 
         # get the current version entity's project id
-        entity = self.current_entity or {}
+        entity = self._current_entity or {}
         project_id = entity.get("project", {}).get("id")
 
         # Detect bubble fields. If the field_name is "sg_sequence.Sequence.code"
