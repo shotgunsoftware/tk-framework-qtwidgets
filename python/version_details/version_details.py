@@ -139,8 +139,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             bg_task_manager=self._task_manager,
         )
 
+        self._bundle = sgtk.platform.current_bundle()
+
         self._settings_manager = settings.UserSettings(
-            sgtk.platform.current_bundle(),
+            self._bundle,
         )
 
         shotgun_globals.register_bg_task_manager(self._task_manager)
@@ -521,6 +523,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.clear()
             return
 
+        # Ensure project schema will be loaded. The project schema is needed
+        # to reference Version fields in various UI and other elements.
+        shotgun_globals.run_on_schema_loaded(lambda : None, entity.get("project"))
+
         # Switch over to the page that contains the primary display
         # widget set now that we have data to show.
         self.ui.pages.setCurrentWidget(self.ui.main_page)
@@ -534,6 +540,8 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         self.ui.note_stream_widget.load_data(entity)
 
+        # Trigger async loading of the Version information to finalize loading
+        # of the requested entity.
         shot_filters = [["id", "is", entity["id"]]]
         self.version_info_model.load_data(
             entity_type="Version",
@@ -736,9 +744,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param str msg: The error message.
         """
         if uid in self._note_metadata_uids:
-            sgtk.platform.current_bundle().log_error(msg)
+            self._bundle.log_error(msg)
         elif uid in self._attachment_uids:
-            sgtk.platform.current_bundle().log_error(msg)
+            self._bundle.log_error(msg)
 
     def _load_stylesheet(self):
         """
@@ -750,7 +758,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         )
         try:
             f = open(qss_file, "rt")
-            qss_data = sgtk.platform.current_bundle().engine._resolve_sg_stylesheet_tokens(
+            qss_data = self._bundle.engine._resolve_sg_stylesheet_tokens(
                 f.read(),
             )
             self.setStyleSheet(qss_data)
@@ -801,7 +809,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             except Exception:
                 pass
 
-    def _version_entity_data_refreshed(self):
+    def _finalize_requested_version(self):
         """
         Takes the currently-requested entity and sets various widgets
         to display it.
@@ -817,12 +825,10 @@ class VersionDetailsWidget(QtGui.QWidget):
         )
 
         if not item:
+            self._bundle.log_error("Unable to setup version summary: no entity item from version model.")
             return
 
         sg_data = item.get_sg_data()
-
-        self.ui.current_version_card.entity = sg_data
-        self._more_info_toggled(self.ui.more_info_button.isChecked())
 
         if sg_data.get("entity"):
             version_filters = [["entity", "is", sg_data["entity"]]]
@@ -844,18 +850,29 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.version_model.clear()
 
         self._current_entity = sg_data
-        self._ensure_entity_project_schema_cached()
         self._setup_fields_menu()
         self._setup_version_list_fields_menu()
         self._setup_version_sort_by_menu()
 
-    def _ensure_entity_project_schema_cached(self):
-        """
-        Ensures that the schema is cached before enabling the Fields buttons.
+        # Must setup version card before toggling more info
+        self.ui.current_version_card.entity = sg_data
+        self._more_info_toggled(self.ui.more_info_button.isChecked())
 
-        This prevents errors when trying to display the field menu before the
-        schema is properly cached.
+        self.ui.more_fields_button.setEnabled(True)
+        self.ui.more_fields_button.setToolTip("Select fields to display")
+
+        self.ui.version_fields_button.setEnabled(True)
+        self.ui.version_fields_button.setToolTip("Select fields to display")
+
+    def _version_entity_data_refreshed(self):
         """
+        Called in response to the Version entity information being loaded.
+        """
+
+        # Prepare UI and Ensure that the schema is cached.
+        # This prevents errors when trying to display the field menu, sort the
+        # version proxy model, or set the current entity version card before the
+        # schema is properly cached.
 
         # disconnect any previous connection so that the slot isn't called
         # multiple times
@@ -864,8 +881,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         except Exception:
             pass
 
-        # ---- disable the buttons until the schema is cached. set a tooltip
-        #      just in case someone tries to click before the cache is loaded
+        # set a tooltip in case someone tries to click before the cache is loaded.
 
         self.ui.more_fields_button.setEnabled(False)
         self.ui.more_fields_button.setToolTip("Caching SG fields. Please hold...")
@@ -874,24 +890,15 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.version_fields_button.setToolTip("Caching SG fields. Please hold...")
 
         # use the current entity to retrieve the project id to ensure is cached
-        entity = self.current_entity or {}
+        entity = self.current_entity or self._requested_entity
+        if not entity:
+            self._bundle.log_error("Unable to finalize version: no entity.")
+
         project_id = entity.get("project", {}).get("id")
 
         # run this callback once the cache is loaded
         shotgun_globals.run_on_schema_loaded(
-            self._on_schema_loaded, project_id=project_id)
-
-    def _on_schema_loaded(self):
-        """
-        Callback that enables the field buttons once the schema is cached.
-        """
-
-        # disable these until the schema is cached
-        self.ui.more_fields_button.setEnabled(True)
-        self.ui.more_fields_button.setToolTip("Select fields to display")
-
-        self.ui.version_fields_button.setEnabled(True)
-        self.ui.version_fields_button.setToolTip("Select fields to display")
+            self._finalize_requested_version, project_id=project_id)
 
     def _version_list_field_menu_triggered(self, action):
         """
