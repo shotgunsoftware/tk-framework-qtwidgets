@@ -304,9 +304,16 @@ class VersionDetailsWidget(QtGui.QWidget):
     @property
     def current_entity(self):
         """
-        The current Shotgun entity that is active in the widget.
+        The current Shotgun entity that has been loaded and is active in the widget.
         """
         return self._current_entity
+
+    @property
+    def active_entity(self):
+        """
+        The current Shotgun entity that is OR will become active in the widget.
+        """
+        return self._current_entity or self._requested_entity
 
     @property
     def is_pinned(self):
@@ -489,6 +496,13 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.version_info_model.clear()
         self._requested_entity = None
         self._current_entity = None
+
+    def select_note(self, note_id):
+        """
+        Select the note identified by the id. This will trigger a note_selected
+        signal to be emitted
+        """
+        self.ui.note_stream_widget.select_note(note_id)
 
     def deselect_note(self):
         """
