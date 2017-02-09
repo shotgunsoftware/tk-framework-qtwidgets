@@ -115,7 +115,6 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
-        self._uploads_uids = []
         self._attachment_query_uids = {}
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
@@ -485,13 +484,13 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param int note_id: The Note entity id.
         """
-        # We're going to query the list of attachments live, because don't
+        # We're going to query the list of attachments live, because we don't
         # know if the cached data for the activity stream is up to date. The
         # reason that might be the case is that a new attachment doesn't
         # trigger a new activity event, so the cache doesn't know it's out
         # of date in that regard. It would be great to find a better solution
         # than not trusting the cache.
-        self._attachment_query_uids[self._data_retriever.execute_find(
+        attachment = self._data_retriever.execute_find(
             "Attachment",
             [[
                 "attachment_links",
@@ -502,8 +501,8 @@ class VersionDetailsWidget(QtGui.QWidget):
                 "this_file",
                 "image",
                 "attachment_links",
-            ]
-        )] = note_id
+            ])
+        self._attachment_query_uids[attachment] = note_id
 
     def get_note_attachments(self, note_id):
         """
@@ -771,12 +770,15 @@ class VersionDetailsWidget(QtGui.QWidget):
 
     def _download_attachments(self, attachments, note_id):
         """
-        Downloads the contents of the given list of Attachment entities.
+        Downloads the contents of the given list of Attachment entities
+        associated to a specific note entity.
 
         :param list attachments: A list of Attachment entities to download.
+        :param int note_id: The id of the Note entity.
         """
         for attachment in attachments:
-            self._attachment_uids[self._data_retriever.request_attachment(attachment)] = note_id
+            attachment_uid = self._data_retriever.request_attachment(attachment)
+            self._attachment_uids[attachment_uid] = note_id
 
     def _entity_created(self, entity):
         """
