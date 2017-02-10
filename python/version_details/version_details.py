@@ -115,7 +115,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
-        self._uploads_uids = []
+        self._attachment_query_uids = {}
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
         self._attachments_filter = None
@@ -404,7 +404,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_entity = note_entity["entity"]
 
         for file_path in file_paths:
-            self._upload_uids.append(self._data_retriever.execute_method(
+            self._data_retriever.execute_method(
                 self.__upload_file,
                 dict(
                     file_path=file_path,
@@ -412,7 +412,7 @@ class VersionDetailsWidget(QtGui.QWidget):
                     parent_entity_id=note_entity["id"],
                     cleanup_after_upload=cleanup_after_upload,
                 ),
-            ))
+            )
 
     def add_query_fields(self, fields):
         """
@@ -480,16 +480,29 @@ class VersionDetailsWidget(QtGui.QWidget):
     def download_note_attachments(self, note_id):
         """
         Triggers the attachments linked to the given Note entity to
-        be downloaded. When the download is completed successfully, an
-        attachment_downloaded signal is emitted.
+        be downloaded.
 
         :param int note_id: The Note entity id.
         """
-        attachments = self.get_note_attachments(note_id)
-
-        for attachment in attachments:
-            uid = self._data_retriever.request_attachment(attachment)
-            self._attachment_uids[uid] = note_id
+        # We're going to query the list of attachments live, because we don't
+        # know if the cached data for the activity stream is up to date. The
+        # reason that might be the case is that a new attachment doesn't
+        # trigger a new activity event, so the cache doesn't know it's out
+        # of date in that regard. It would be great to find a better solution
+        # than not trusting the cache.
+        attachment = self._data_retriever.execute_find(
+            "Attachment",
+            [[
+                "attachment_links",
+                "in",
+                {"type":"Note", "id":note_id}
+            ]],
+            fields=[
+                "this_file",
+                "image",
+                "attachment_links",
+            ])
+        self._attachment_query_uids[attachment] = note_id
 
     def get_note_attachments(self, note_id):
         """
@@ -725,8 +738,9 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_id = self._attachment_uids[uid]
             del self._attachment_uids[uid]
             self.note_attachment_arrived.emit(note_id, data["file_path"])
-        elif uid in self._upload_uids:
-            self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
+        elif uid in self._attachment_query_uids:
+            self._download_attachments(data["sg"], self._attachment_query_uids[uid])
+            del self._attachment_query_uids[uid]
 
     def __on_worker_failure(self, uid, msg):
         """
@@ -735,10 +749,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param int uid: Unique id for request that failed.
         :param str msg: The error message.
         """
-        if uid in self._note_metadata_uids:
-            sgtk.platform.current_bundle().log_error(msg)
-        elif uid in self._attachment_uids:
-            sgtk.platform.current_bundle().log_error(msg)
+        sgtk.platform.current_bundle().log_error(msg)
 
     def _load_stylesheet(self):
         """
@@ -756,6 +767,18 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.setStyleSheet(qss_data)
         finally:
             f.close()
+
+    def _download_attachments(self, attachments, note_id):
+        """
+        Downloads the contents of the given list of Attachment entities
+        associated to a specific note entity.
+
+        :param list attachments: A list of Attachment entities to download.
+        :param int note_id: The id of the Note entity.
+        """
+        for attachment in attachments:
+            attachment_uid = self._data_retriever.request_attachment(attachment)
+            self._attachment_uids[attachment_uid] = note_id
 
     def _entity_created(self, entity):
         """
