@@ -479,8 +479,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     def download_note_attachments(self, note_id):
         """
         Triggers the attachments linked to the given Note entity to
-        be downloaded. When the download is completed successfully, an
-        attachment_downloaded signal is emitted.
+        be downloaded.
 
         :param int note_id: The Note entity id.
         """
