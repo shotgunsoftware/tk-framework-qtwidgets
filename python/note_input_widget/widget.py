@@ -33,6 +33,9 @@ class NoteInputWidget(QtGui.QWidget):
         replied to. 
     :signal close_clicked: Emitted if a user chooses to cancel the note 
         creation by clicking the X button.
+    :signal new_entity_requested: Emitted if the user chooses to create a new
+        Note or Reply entity. Can be used to perform application logic specific
+        to the moment when the user initiates the creation of the note.
     :signal entity_created: Emitted when a Shotgun entity is created, which
         will be either a Note or Reply entity, depending on situation. The
         entity dictionary, as provided by the API, will be sent.
@@ -46,14 +49,18 @@ class NoteInputWidget(QtGui.QWidget):
     data_updated = QtCore.Signal()
     close_clicked = QtCore.Signal()
 
+    # Emitted when a new note or reply will be created. The creation request id
+    # is sent and will match the id sent with the entity_created signal.
+    # Todo: This has functional overlap with the pre_submit_callback...resolve that...
+    new_entity_requested = QtCore.Signal(str, int)
+
     # Emitted when a Note or Reply entity is created. The
     # entity type as a string and id as an int will be
-    # provided.
+    # provided along with the request id.
     #
     # dict(entity_type="Note", id=1234)
-    entity_created = QtCore.Signal(object)
-    
-    
+    entity_created = QtCore.Signal(object, int)
+
     def __init__(self, parent):
         """
         :param parent:              The parent QWidget for this control
@@ -280,6 +287,7 @@ class NoteInputWidget(QtGui.QWidget):
             self._processing_id = self.__sg_data_retriever.execute_method(self._async_submit, data)
             if self._outgoing_tasks:
                 self._outgoing_tasks.add(self._processing_id)
+            self.new_entity_requested.emit(data["entity"]["type"], self._processing_id)
         else:
             raise TankError("Please associate this class with a background task processor.")
         
@@ -575,7 +583,6 @@ class NoteInputWidget(QtGui.QWidget):
                 self.__upload_file(png_path, parent_entity, sg)           
                 os.remove(png_path)
 
-        
     def __on_worker_failure(self, uid, msg):
         """
         Asynchronous callback - the worker thread errored.
@@ -592,7 +599,6 @@ class NoteInputWidget(QtGui.QWidget):
             QtGui.QMessageBox.critical(None, "Shotgun Error", msg)
             if self._outgoing_tasks and self._outgoing_tasks.has(uid):
                 self._outgoing_tasks.remove(uid)
-    
 
     def __on_worker_signal(self, uid, request_type, data):
         """
@@ -612,13 +618,11 @@ class NoteInputWidget(QtGui.QWidget):
             self.clear()
             self._bundle.log_debug("Update call complete! Return data: %s" % data)
             self.data_updated.emit()
-            self.entity_created.emit(data["return_value"])
+            self.entity_created.emit(data["return_value"], uid)
             if self._outgoing_tasks and self._outgoing_tasks.has(uid):
                 self._outgoing_tasks.remove(uid)
             self.__overlay.hide()
 
-            
-        
     def __format_thumbnail(self, pixmap_obj):
         """
         Given a screengrab, create a thumbnail object, scaled to 96x75 px
