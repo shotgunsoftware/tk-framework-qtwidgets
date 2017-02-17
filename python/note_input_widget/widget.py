@@ -364,6 +364,23 @@ class NoteInputWidget(QtGui.QWidget):
         # first establish defaults
         project = data["project"]
         addressings_to = data["recipient_links"]
+
+        # If the entity we're attaching the new Note to has a HumanUser
+        # that created it, we need to make sure that the user is added
+        # to the list.
+        entity = sg.find_one(
+            self._entity_type,
+            [
+                ["id", "is", self._entity_id],
+            ],
+            fields=["created_by"],
+        )
+
+        entity_created_by = entity.get("created_by")
+
+        if entity_created_by and entity_created_by["type"] == "HumanUser":
+            addressings_to.append(entity_created_by)
+
         note_links = []
         note_tasks = []
 
@@ -795,8 +812,8 @@ class NoteInputWidget(QtGui.QWidget):
         """
         Specify the current entity that this widget is linked against
         
-        :param entity_type: Shotgun entity type
-        :param entity_id: Shotgun entity id
+        :param str entity_type: Shotgun entity type
+        :param int entity_id: Shotgun entity id
         """
         self._entity_type = entity_type
         self._entity_id = entity_id
