@@ -874,13 +874,14 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         self.entity_created.emit(entity)
 
-    def _new_entity_requested_internally(self, entity, id):
+    def _new_entity_requested_internally(self, entity_type, id):
         """
-        Emits the entity_created signal.
+        Emits the new_entity_requested_internally signal.
 
-        :param dict entity: The Shotgun entity dict that was created.
+        :param str entity_type: The Shotgun entity type that will be created.
+        :param int id: The unique id for this note creation command.
         """
-        self.new_entity_requested_internally.emit(entity, id)
+        self.new_entity_requested_internally.emit(entity_type, id)
 
     def _entity_created_internally(self, entity, id):
         """

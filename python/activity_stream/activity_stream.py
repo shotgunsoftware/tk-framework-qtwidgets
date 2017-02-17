@@ -1222,7 +1222,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         if self.notes_are_selectable and entity["type"] == "Note":
             self._select_on_arrival = entity
-        self.entity_requested.submit(entity)
+        self.entity_created.emit(entity)
         self.entity_created_internally.emit(entity, request_id)
 
     def _on_note_created_externally(self, entity, userdata=None):

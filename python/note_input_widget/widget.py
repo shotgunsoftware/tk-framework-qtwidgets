@@ -287,7 +287,9 @@ class NoteInputWidget(QtGui.QWidget):
             self._processing_id = self.__sg_data_retriever.execute_method(self._async_submit, data)
             if self._outgoing_tasks:
                 self._outgoing_tasks.add(self._processing_id)
-            self.new_entity_requested.emit(data["entity"]["type"], self._processing_id)
+            # If the entity being acted on is a Note then we are creating a Reply, otherwise a "Note"
+            new_entity_type = "Reply" if data["entity"]["type"] == "Note" else "Note"
+            self.new_entity_requested.emit(new_entity_type, int(self._processing_id))
         else:
             raise TankError("Please associate this class with a background task processor.")
         
