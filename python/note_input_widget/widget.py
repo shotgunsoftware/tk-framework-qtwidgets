@@ -284,7 +284,8 @@ class NoteInputWidget(QtGui.QWidget):
 
         # ask the data retriever to execute an async callback
         if self.__sg_data_retriever:
-            self._processing_id = self.__sg_data_retriever.execute_method(self._async_submit, data)
+            self._processing_id = self.__sg_data_retriever.execute_method_with_priority(
+                self._async_submit, self.__sg_data_retriever._SG_CREATE_CALL_PRIORITY, data)
             if self._outgoing_tasks:
                 self._outgoing_tasks.add(self._processing_id)
             # If the entity being acted on is a Note then we are creating a Reply, otherwise a "Note"
