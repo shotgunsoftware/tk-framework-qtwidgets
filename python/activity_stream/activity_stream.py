@@ -38,7 +38,11 @@ class ActivityStreamWidget(QtGui.QWidget):
     :signal playback_requested(dict): Fires when someone clicks the playback url
             on a version. Returns a shotgun dictionary with information
             about the version.
-    :signal entity_created(object): Fires when a Note or Reply entity is created by
+    :signal new_entity_requested_internally(str, int): Fires when the user has
+            triggered the creation of a new Note or Reply entity by interacting
+            with this Widget. This can be used to capture state relative to the Note
+            at the time of the action, since the creation itself is asynchronous.
+    :signal entity_created(object, object, int): Fires when a Note or Reply entity is created by
             an underlying widget within the activity stream. Returns a Shotgun dictionary
             with information about the new Entity.
     :ivar reply_dialog: When a ReplyDialog is active it can be accessed here. If there
@@ -70,11 +74,25 @@ class ActivityStreamWidget(QtGui.QWidget):
     # Called when a note is loaded either from remote download or the cache
     note_arrived = QtCore.Signal(int)
 
+    # Called when the user has initiated the creation of a new Note by interacting
+    # with this widget.
+    new_entity_requested_internally = QtCore.Signal(str, int)
+
+    # Called when entity creation triggered by this widget has completed. Passes
+    # the entity info dict and the creation request that was sent with the matching
+    # new_entity_requested_internally.
+    entity_created_internally = QtCore.Signal(object, int)
+
+    # Called when a note creation triggered via `create_note` has completed. Passes
+    # the entity info and the userdata that was passed to `create_note`.
+    note_created_externally = QtCore.Signal(object, object)
+
     # Emitted when a Note or Reply entity is created. The
     # entity type as a string and id as an int will be
     # provided.
     #
     # dict(entity_type="Note", id=1234)
+    # 
     entity_created = QtCore.Signal(object)
 
     def __init__(self, parent):
@@ -125,6 +143,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._data_manager.note_arrived.connect(self._process_new_note)
         self._data_manager.update_arrived.connect(self._process_new_data)
         self._data_manager.thumbnail_arrived.connect(self._process_thumbnail)
+        self.ui.note_widget.new_entity_requested.connect(self._on_new_entity_requested_internally)
         self.ui.note_widget.entity_created.connect(self._on_entity_created)
         self.ui.note_widget.data_updated.connect(self.rescan)
         
@@ -157,11 +176,12 @@ class ActivityStreamWidget(QtGui.QWidget):
         # attachments that this widget didn't explicitly handle itself prior to
         # submission.
         self._pre_submit_callback = None
+        self.reply_dialog.note_widget.new_entity_requested.connect(self._on_new_entity_requested_internally)
         self.reply_dialog.note_widget.entity_created.connect(self._on_entity_created)
 
         shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
         self._note_creator = shotgun_model.NoteCreator()
-        self._note_creator.entity_created.connect(self._on_note_created)
+        self._note_creator.entity_created.connect(self._on_note_created_externally)
 
     def set_bg_task_manager(self, task_manager):
         """
@@ -705,6 +725,7 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         note_dialog = note_input_widget.NoteInputDialog(parent=self)
         note_dialog.entity_created.connect(self._on_entity_created)
+        note_dialog.new_entity_requested.connect(self._on_new_entity_requested_internally)
         note_dialog.data_updated.connect(self.rescan)
         note_dialog.set_bg_task_manager(self._task_manager)
         note_dialog.set_current_entity(self._entity_type, self._entity_id)
@@ -824,22 +845,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                                     attachment_req["attachment_group_id"], 
                                                                     attachment_req["attachment_data"])
 
-    def _on_note_created(self, entity):
-        """
-        Callback when an entity is created by an underlying widget.
-
-        :param entity:  The Shotgun entity that was created.
-        """
-        if entity["type"] != "Note":
-            # log error
-            return
-
-        self.rescan()
-        if self.notes_are_selectable:
-            self._select_on_arrival = entity
-        self.entity_created.emit(entity)
-
-    def create_note(self, data):
+    def create_note(self, data, userdata):
         entity_id = self._entity_id
         if entity_id is None:
             self.engine.log_debug("Skipping New Note Creation in activity stream - No entity id.")
@@ -856,7 +862,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         if data["project"] is None:
             data["project"] = self._bundle.context.project
 
-        self._note_creator.submit(data)
+        self._note_creator.submit(data, userdata)
 
     ############################################################################
     # internals
@@ -1201,7 +1207,14 @@ class ActivityStreamWidget(QtGui.QWidget):
         else:
             self.note_arrived.emit(note_id)
 
-    def _on_entity_created(self, entity):
+    def _on_new_entity_requested_internally(self, entity_type, request_id):
+        """
+        Called immediately when the user has initiated the creation of a new note,
+        before the shotgun API requests have been processed.
+        """
+        self.new_entity_requested_internally.emit(entity_type, request_id)
+
+    def _on_entity_created(self, entity, request_id):
         """
         Callback when an entity is created by an underlying widget.
 
@@ -1210,6 +1223,25 @@ class ActivityStreamWidget(QtGui.QWidget):
         if self.notes_are_selectable and entity["type"] == "Note":
             self._select_on_arrival = entity
         self.entity_created.emit(entity)
+        self.entity_created_internally.emit(entity, request_id)
+
+    def _on_note_created_externally(self, entity, userdata=None):
+        """
+        Callback when an entity is created by an underlying widget.
+
+        :param entity:  The Shotgun entity that was created.
+        :param userdata: Optional userdata that may have been passed to the toolkit in a request
+                         to create a note.
+        """
+        if entity["type"] != "Note":
+            # log error
+            return
+
+        self.rescan()
+        if self.notes_are_selectable:
+            self._select_on_arrival = entity
+        self.entity_created.emit(entity)
+        self.note_created_externally.emit(entity, userdata)
 
     def __send_note_content_to_cache_and_sg(self, sg, data):
         """

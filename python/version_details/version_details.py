@@ -56,9 +56,9 @@ class VersionDetailsWidget(QtGui.QWidget):
     QT Widget that displays details and Note thread data for a given Version
     entity.
 
-    :signal entity_created(object): Fires when a Note or Reply entity is created by
+    :signal entity_created(object, object): Fires when a Note or Reply entity is created by
             an underlying widget within the activity stream. Passes on a Shotgun
-            entity definition in the form of a dict.
+            entity definition in the form of a dict and optional userdata a requested note.
     :signal entity_loaded(object): Fires when a Version entity has been loaded by
             the widget. Passes on a Shotgun entity definition in the form of a dict.
     :signal note_selected(int): Fires when a Note entity is selected in the widget's
@@ -82,10 +82,24 @@ class VersionDetailsWidget(QtGui.QWidget):
     NOTE_MARKUP_PREFIX = "__note_markup__"
     NOTE_THUMBNAIL_PREFIX = "__note_thumbnail__"
 
-    # Emitted when an entity is created by the panel. The
+    # Emitted when the user has initiated the creation of a new Note by interacting
+    # with this widget. Contains entity type and request_id.
+    new_entity_requested_internally = QtCore.Signal(str, int)
+
+    # Emitted when an entity is finished being created. The
     # entity type as a string and id as an int are passed
-    # along.
+    # along, along with optional userdata. This is called both for entities created
+    # internally (originated within this widget), or via external requests to `create_note`.
     entity_created = QtCore.Signal(object)
+    # Emitted when an entity is finished being created after being requested via
+    # a call to `create_note`. The entity type as a string and id as an int are passed
+    # along, along with optional userdata.
+    note_created_externally = QtCore.Signal(object, object)
+    # Emitted when an entity is finished being created after being requested via
+    # a call to `create_note`. The entity type as a string and id as an int are passed
+    # along, along with an id identifying the request, which will match the id emitted
+    # by `new_entity_requested_internally`.
+    entity_created_internally = QtCore.Signal(object, int)
 
     # Emitted when an entity is loaded in the panel.
     entity_loaded = QtCore.Signal(object)
@@ -274,9 +288,10 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         # We will be passing up our own signal when note and reply entities
         # are created.
-        self.ui.note_stream_widget.entity_created.connect(
-            self._entity_created,
-        )
+        self.ui.note_stream_widget.entity_created.connect(self._entity_created)
+        self.ui.note_stream_widget.new_entity_requested_internally.connect(self._new_entity_requested_internally)
+        self.ui.note_stream_widget.entity_created_internally.connect(self._entity_created_internally)
+        self.ui.note_stream_widget.note_created_externally.connect(self._note_created_externally)
 
         self.load_data(entity)
         self._load_stylesheet()
@@ -733,8 +748,8 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.show_title_bar_buttons(True)
         dock_widget.dockLocationChanged.connect(self._dock_location_changed)
 
-    def create_note(self, data):
-        self.ui.note_stream_widget.create_note(data)
+    def create_note(self, data, userdata):
+        self.ui.note_stream_widget.create_note(data, userdata)
 
     def hide_note_widget(self, note_id):
         """
@@ -852,6 +867,31 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param dict entity: The Shotgun entity dict that was created.
         """
         self.entity_created.emit(entity)
+
+    def _new_entity_requested_internally(self, entity_type, id):
+        """
+        Emits the new_entity_requested_internally signal.
+
+        :param str entity_type: The Shotgun entity type that will be created.
+        :param int id: The unique id for this note creation command.
+        """
+        self.new_entity_requested_internally.emit(entity_type, id)
+
+    def _entity_created_internally(self, entity, id):
+        """
+        Emits the entity_created signal.
+
+        :param dict entity: The Shotgun entity dict that was created.
+        """
+        self.entity_created_internally.emit(entity, id)
+
+    def _note_created_externally(self, entity, userdata):
+        """
+        Emits the entity_created signal.
+
+        :param dict entity: The Shotgun entity dict that was created.
+        """
+        self.note_created_externally.emit(entity, userdata)
 
     def _field_menu_triggered(self, action):
         """
