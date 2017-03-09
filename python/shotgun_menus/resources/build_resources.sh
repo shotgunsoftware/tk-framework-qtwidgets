@@ -13,6 +13,8 @@
 # The path to output all built .py files to:
 UI_PYTHON_PATH=../ui
 
+# Clear up potential png profile problems.
+for f in *png;do convert -strip $f $f; done
 
 # Helper functions to build UI files
 function build_qt {
