@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'search_widget.ui'
 #
-#      by: pyside-uic 0.2.13 running on PySide 1.1.0
+#      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from tank.platform.qt import QtCore, QtGui
 class Ui_SearchWidget(object):
     def setupUi(self, SearchWidget):
         SearchWidget.setObjectName("SearchWidget")
-        SearchWidget.resize(341, 44)
+        SearchWidget.resize(312, 24)
         self.horizontalLayout = QtGui.QHBoxLayout(SearchWidget)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
