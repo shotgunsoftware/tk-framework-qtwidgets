@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'note_input_widget.ui'
 #
-#      by: pyside-uic 0.2.15 running on PySide 1.2.4
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -47,6 +47,7 @@ class Ui_NoteInputWidget(object):
         self.horizontalLayout.addWidget(self.thumbnail)
         self.button_layout_right = QtGui.QVBoxLayout()
         self.button_layout_right.setSpacing(3)
+        self.button_layout_right.setContentsMargins(5, -1, -1, -1)
         self.button_layout_right.setObjectName("button_layout_right")
         self.close = QtGui.QToolButton(self.note_editor_page)
         icon = QtGui.QIcon()
@@ -166,6 +167,7 @@ class Ui_NoteInputWidget(object):
         self.horizontalLayout_3.addWidget(self.attachment_list)
         self.attachment_buttons = QtGui.QVBoxLayout()
         self.attachment_buttons.setSpacing(3)
+        self.attachment_buttons.setContentsMargins(5, -1, -1, -1)
         self.attachment_buttons.setObjectName("attachment_buttons")
         self.close_attachments = QtGui.QToolButton(self.attachments_page)
         self.close_attachments.setIcon(icon)

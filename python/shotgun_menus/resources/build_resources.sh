@@ -13,6 +13,8 @@
 # The path to output all built .py files to:
 UI_PYTHON_PATH=../ui
 
+# Remove any problematic profiles from pngs.
+for f in *.png; do mogrify $f; done
 
 # Helper functions to build UI files
 function build_qt {
