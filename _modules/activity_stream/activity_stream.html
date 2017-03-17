@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.5.15 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.15 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.15.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -243,13 +243,13 @@
     <span class="c1"># dict(entity_type=&quot;Note&quot;, id=1234)</span>
     <span class="n">entity_created</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent: QT parent object</span>
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># first, call the base class and let it do its thing.</span>
-        <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
         
         <span class="c1"># now load in the UI that was created in the UI designer</span>
@@ -614,6 +614,18 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># public interface</span>
 
+    <span class="k">def</span> <span class="nf">select_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+        <span class="n">selectedWidget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span> <span class="o">==</span> <span class="n">note_id</span>
+                <span class="k">if</span> <span class="n">match</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">widget</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
+                    <span class="n">selectedWidget</span> <span class="o">=</span> <span class="n">widget</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">selectedWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">ensureWidgetVisible</span><span class="p">(</span><span class="n">selectedWidget</span><span class="p">)</span>
+
 <div class="viewcode-block" id="ActivityStreamWidget.deselect_note"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.deselect_note">[docs]</a>    <span class="k">def</span> <span class="nf">deselect_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If a note is currently selected, it will be deselected. This will NOT</span>
@@ -865,7 +877,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in a stylesheet from disk</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
+        <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">qss_file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
             <span class="n">qss_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -916,6 +928,8 @@
             <span class="c1"># Since we have no entity loaded, we don&#39;t need to show</span>
             <span class="c1"># the note widget.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
             
     <span class="k">def</span> <span class="nf">_clear_loading_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1250,8 +1264,7 @@
 
         <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
-                <span class="n">selected</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
-
+                <span class="n">selected</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">underMouse</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">selected</span> <span class="o">!=</span> <span class="n">widget</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
                     <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="n">selected</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span></div></div>
@@ -1289,7 +1302,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.15',
+            VERSION:'v2.5.18',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.5.15 documentation</title>
+  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.15 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.15.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -275,7 +275,7 @@
     <span class="n">note_metadata_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
     <span class="n">note_attachment_arrived</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a new :class:`~VersionDetailsWidget` object.</span>
 
@@ -283,7 +283,7 @@
 <span class="sd">        :param bg_task_manager: A :class:`~BackgroundTaskManager` object.</span>
 <span class="sd">        :param entity:          A Shotgun Version entity dictionary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">VersionDetailsWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">VersionDetailsWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pinned</span> <span class="o">=</span> <span class="bp">False</span>
@@ -294,7 +294,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_context_menu_actions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_note_metadata_uids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_note_set_metadata_uids</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_uploads_uids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_query_uids</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_note_fields</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">NOTE_METADATA_FIELD</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="bp">None</span>
@@ -469,9 +469,9 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">current_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The current Shotgun entity that is active in the widget.</span>
+<span class="sd">        The current Shotgun entity that is OR will become active in the widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_pinned</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -583,7 +583,7 @@
             <span class="n">note_entity</span> <span class="o">=</span> <span class="n">note_entity</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">file_paths</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_upload_uids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__upload_file</span><span class="p">,</span>
                 <span class="nb">dict</span><span class="p">(</span>
                     <span class="n">file_path</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
@@ -591,7 +591,7 @@
                     <span class="n">parent_entity_id</span><span class="o">=</span><span class="n">note_entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
                     <span class="n">cleanup_after_upload</span><span class="o">=</span><span class="n">cleanup_after_upload</span><span class="p">,</span>
                 <span class="p">),</span>
-            <span class="p">))</span></div>
+            <span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.add_query_fields"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.add_query_fields">[docs]</a>    <span class="k">def</span> <span class="nf">add_query_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -648,6 +648,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="bp">None</span></div>
 
+<div class="viewcode-block" id="VersionDetailsWidget.select_note"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.select_note">[docs]</a>    <span class="k">def</span> <span class="nf">select_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Select the note identified by the id. This will trigger a note_selected</span>
+<span class="sd">        signal to be emitted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">select_note</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="VersionDetailsWidget.deselect_note"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.deselect_note">[docs]</a>    <span class="k">def</span> <span class="nf">deselect_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If a note is currently selected, it will be deselected. This will NOT</span>
@@ -659,16 +666,29 @@
 <div class="viewcode-block" id="VersionDetailsWidget.download_note_attachments"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.download_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">download_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Triggers the attachments linked to the given Note entity to</span>
-<span class="sd">        be downloaded. When the download is completed successfully, an</span>
-<span class="sd">        attachment_downloaded signal is emitted.</span>
+<span class="sd">        be downloaded.</span>
 
 <span class="sd">        :param int note_id: The Note entity id.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">attachments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_note_attachments</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">attachment</span> <span class="ow">in</span> <span class="n">attachments</span><span class="p">:</span>
-            <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">request_attachment</span><span class="p">(</span><span class="n">attachment</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">note_id</span></div>
+        <span class="c1"># We&#39;re going to query the list of attachments live, because we don&#39;t</span>
+        <span class="c1"># know if the cached data for the activity stream is up to date. The</span>
+        <span class="c1"># reason that might be the case is that a new attachment doesn&#39;t</span>
+        <span class="c1"># trigger a new activity event, so the cache doesn&#39;t know it&#39;s out</span>
+        <span class="c1"># of date in that regard. It would be great to find a better solution</span>
+        <span class="c1"># than not trusting the cache.</span>
+        <span class="n">attachment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">execute_find</span><span class="p">(</span>
+            <span class="s2">&quot;Attachment&quot;</span><span class="p">,</span>
+            <span class="p">[[</span>
+                <span class="s2">&quot;attachment_links&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;Note&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">note_id</span><span class="p">}</span>
+            <span class="p">]],</span>
+            <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
+                <span class="s2">&quot;this_file&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;image&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;attachment_links&quot;</span><span class="p">,</span>
+            <span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_query_uids</span><span class="p">[</span><span class="n">attachment</span><span class="p">]</span> <span class="o">=</span> <span class="n">note_id</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.get_note_attachments"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.get_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">get_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -691,7 +711,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="o">=</span> <span class="n">entity</span>
 
         <span class="c1"># If we&#39;re pinned, then we don&#39;t allow loading new entities.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinned</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinned</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span><span class="p">:</span>
             <span class="k">return</span>
 
         <span class="c1"># If we got an &quot;empty&quot; entity from the mode, then we need</span>
@@ -789,10 +809,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">pin_button</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/version_details/tack_hover.png&quot;</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">pin_button</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/version_details/tack_up.png&quot;</span><span class="p">))</span>
-            <span class="c1"># If we have a valid current_entity, be sure the incoming entity</span>
+            <span class="c1"># If we have a valid _current_entity, be sure the incoming entity</span>
             <span class="c1"># has a different ID.</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span> <span class="ow">or</span> <span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="ow">or</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.show_new_note_dialog"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
@@ -823,10 +843,10 @@
 <span class="sd">                               then the current Version entity loaded in</span>
 <span class="sd">                               the widget will be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">version_id</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">version_id</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="n">version_id</span> <span class="o">=</span> <span class="n">version_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="n">version_id</span> <span class="o">=</span> <span class="n">version_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__upload_thumbnail</span><span class="p">,</span>
             <span class="nb">dict</span><span class="p">(</span>
@@ -904,8 +924,9 @@
             <span class="n">note_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">note_attachment_arrived</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;file_path&quot;</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upload_uids</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">rescan</span><span class="p">(</span><span class="n">force_activity_stream_update</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_query_uids</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_download_attachments</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sg&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_query_uids</span><span class="p">[</span><span class="n">uid</span><span class="p">])</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_query_uids</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__on_worker_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -914,17 +935,14 @@
 <span class="sd">        :param int uid: Unique id for request that failed.</span>
 <span class="sd">        :param str msg: The error message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_note_metadata_uids</span><span class="p">:</span>
-            <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span><span class="p">:</span>
-            <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in the widget&#39;s master stylesheet from disk.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span>
             <span class="s2">&quot;style.qss&quot;</span>
         <span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -935,6 +953,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">qss_data</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_download_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attachments</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Downloads the contents of the given list of Attachment entities</span>
+<span class="sd">        associated to a specific note entity.</span>
+
+<span class="sd">        :param list attachments: A list of Attachment entities to download.</span>
+<span class="sd">        :param int note_id: The id of the Note entity.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">attachment</span> <span class="ow">in</span> <span class="n">attachments</span><span class="p">:</span>
+            <span class="n">attachment_uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">request_attachment</span><span class="p">(</span><span class="n">attachment</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span><span class="p">[</span><span class="n">attachment_uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">note_id</span>
 
     <span class="k">def</span> <span class="nf">_entity_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1053,7 +1083,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Caching SG fields. Please hold...&quot;</span><span class="p">)</span>
 
         <span class="c1"># use the current entity to retrieve the project id to ensure is cached</span>
-        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="n">project_id</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
 
         <span class="c1"># run this callback once the cache is loaded</span>
@@ -1211,7 +1241,7 @@
 <span class="sd">        Sets up the EntityFieldMenu and attaches it as the &quot;More fields&quot;</span>
 <span class="sd">        button&#39;s menu.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="n">EntityFieldMenu</span><span class="p">(</span>
             <span class="s2">&quot;Version&quot;</span><span class="p">,</span>
             <span class="n">project_id</span><span class="o">=</span><span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span>
@@ -1229,7 +1259,7 @@
 <span class="sd">        Sets up the EntityFieldMenu and attaches it as the &quot;More fields&quot;</span>
 <span class="sd">        button&#39;s menu.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="n">EntityFieldMenu</span><span class="p">(</span>
             <span class="s2">&quot;Version&quot;</span><span class="p">,</span>
             <span class="n">project_id</span><span class="o">=</span><span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span>
@@ -1497,7 +1527,7 @@
             <span class="k">return</span> <span class="bp">False</span>
 
         <span class="c1"># get the current version entity&#39;s project id</span>
-        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="n">project_id</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
 
         <span class="c1"># Detect bubble fields. If the field_name is &quot;sg_sequence.Sequence.code&quot;</span>
@@ -1547,7 +1577,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.15',
+            VERSION:'v2.5.18',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

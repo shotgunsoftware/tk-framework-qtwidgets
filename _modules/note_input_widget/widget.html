@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.5.15 documentation</title>
+  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.15 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.15.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -233,13 +233,13 @@
     <span class="n">entity_created</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent:              The parent QWidget for this control</span>
 <span class="sd">        :type parent:               :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># first, call the base class and let it do its thing.</span>
-        <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
         <span class="c1"># now load in the UI that was created in the UI designer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_NoteInputWidget</span><span class="p">()</span> 
@@ -543,6 +543,23 @@
         <span class="c1"># first establish defaults</span>
         <span class="n">project</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]</span>
         <span class="n">addressings_to</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;recipient_links&quot;</span><span class="p">]</span>
+
+        <span class="c1"># If the entity we&#39;re attaching the new Note to has a HumanUser</span>
+        <span class="c1"># that created it, we need to make sure that the user is added</span>
+        <span class="c1"># to the list.</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">],</span>
+            <span class="p">],</span>
+            <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;created_by&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+        <span class="n">entity_created_by</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;created_by&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">entity_created_by</span> <span class="ow">and</span> <span class="n">entity_created_by</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;HumanUser&quot;</span><span class="p">:</span>
+            <span class="n">addressings_to</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entity_created_by</span><span class="p">)</span>
+
         <span class="n">note_links</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">note_tasks</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -840,7 +857,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in a stylesheet from disk</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
+        <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">qss_file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
             <span class="n">qss_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -974,8 +991,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the current entity that this widget is linked against</span>
 <span class="sd">        </span>
-<span class="sd">        :param entity_type: Shotgun entity type</span>
-<span class="sd">        :param entity_id: Shotgun entity id</span>
+<span class="sd">        :param str entity_type: Shotgun entity type</span>
+<span class="sd">        :param int entity_id: Shotgun entity id</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="n">entity_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="n">entity_id</span></div></div>
@@ -1013,7 +1030,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.15',
+            VERSION:'v2.5.18',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

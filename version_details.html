@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Version Details Widget &mdash; tk-framework-qtwidgets v2.5.15 documentation</title>
+  <title>Shotgun Version Details Widget &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.15 documentation" href="index.html"/> 
+    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -124,7 +124,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.15.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -252,7 +252,7 @@ entity id and the path to the file on disk are passed on.</td>
 <dl class="attribute">
 <dt id="version_details.VersionDetailsWidget.current_entity">
 <code class="descname">current_entity</code><a class="headerlink" href="#version_details.VersionDetailsWidget.current_entity" title="Permalink to this definition">¶</a></dt>
-<dd><p>The current Shotgun entity that is active in the widget.</p>
+<dd><p>The current Shotgun entity that is OR will become active in the widget.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -401,6 +401,13 @@ above.</td>
 </dd></dl>
 
 <dl class="method">
+<dt id="version_details.VersionDetailsWidget.select_note">
+<code class="descname">select_note</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.select_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.select_note" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the note identified by the id. This will trigger a note_selected
+signal to be emitted</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="version_details.VersionDetailsWidget.deselect_note">
 <code class="descname">deselect_note</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.deselect_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.deselect_note" title="Permalink to this definition">¶</a></dt>
 <dd><p>If a note is currently selected, it will be deselected. This will NOT
@@ -412,8 +419,7 @@ when the user triggers the deselection and not via procedural means.</p>
 <dt id="version_details.VersionDetailsWidget.download_note_attachments">
 <code class="descname">download_note_attachments</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.download_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.download_note_attachments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Triggers the attachments linked to the given Note entity to
-be downloaded. When the download is completed successfully, an
-attachment_downloaded signal is emitted.</p>
+be downloaded.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -615,7 +621,7 @@ be displayed.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.5.15',
+            VERSION:'v2.5.18',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

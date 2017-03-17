@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.5.15 documentation</title>
+  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.15 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.15.<br>
+    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -214,7 +214,7 @@
 <span class="sd">    default is ``QtCore.Qt.EditRole``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">display_class</span><span class="p">,</span> <span class="n">editor_class</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">display_class</span><span class="p">,</span> <span class="n">editor_class</span><span class="p">,</span>
                  <span class="n">view</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">field_data_role</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -242,7 +242,7 @@
 <span class="sd">        :param int field_data_role: The data role that stores SG field data in</span>
 <span class="sd">            the model where this delegate is to be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">views</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
+        <span class="n">views</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
 
         <span class="c1"># The model role used to get/set values for editing the field widget</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_field_data_role</span> <span class="o">=</span> <span class="n">field_data_role</span>
@@ -561,7 +561,7 @@
 <span class="sd">    stored in the ``SG_ASSOCIATED_FIELD_ROLE`` role.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">display_class</span><span class="p">,</span> <span class="n">editor_class</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">display_class</span><span class="p">,</span> <span class="n">editor_class</span><span class="p">,</span>
                  <span class="n">view</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
@@ -588,7 +588,7 @@
 
         <span class="n">field_data_role</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_ASSOCIATED_FIELD_ROLE</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFieldDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFieldDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">display_class</span><span class="p">,</span> <span class="n">editor_class</span><span class="p">,</span> <span class="n">view</span><span class="p">,</span>
             <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">field_data_role</span><span class="o">=</span><span class="n">field_data_role</span>
         <span class="p">)</span>
@@ -731,7 +731,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.15',
+            VERSION:'v2.5.18',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
