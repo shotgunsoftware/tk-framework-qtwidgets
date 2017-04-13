@@ -435,6 +435,18 @@ class ActivityStreamWidget(QtGui.QWidget):
     ############################################################################
     # public interface
 
+    def select_note(self, note_id):
+        selectedWidget = None
+        for widget in self._activity_stream_data_widgets.values():
+            if isinstance(widget, NoteWidget):
+                match = widget.note_id == note_id
+                if match and not widget.selected:
+                    self._note_selected_changed(True, widget.note_id)
+                    selectedWidget = widget
+                widget.set_selected(match)
+        if selectedWidget is not None:
+            self.ui.activity_stream_scroll_area.ensureWidgetVisible(selectedWidget)
+
     def deselect_note(self):
         """
         If a note is currently selected, it will be deselected. This will NOT

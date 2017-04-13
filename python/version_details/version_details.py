@@ -115,7 +115,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._version_context_menu_actions = []
         self._note_metadata_uids = []
         self._note_set_metadata_uids = []
-        self._uploads_uids = []
+        self._attachment_query_uids = {}
         self._attachment_uids = {}
         self._note_fields = [self.NOTE_METADATA_FIELD]
         self._attachments_filter = None
@@ -290,9 +290,9 @@ class VersionDetailsWidget(QtGui.QWidget):
     @property
     def current_entity(self):
         """
-        The current Shotgun entity that is active in the widget.
+        The current Shotgun entity that is OR will become active in the widget.
         """
-        return self._current_entity
+        return self._current_entity or self._requested_entity
 
     @property
     def is_pinned(self):
@@ -404,7 +404,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_entity = note_entity["entity"]
 
         for file_path in file_paths:
-            self._upload_uids.append(self._data_retriever.execute_method(
+            self._data_retriever.execute_method(
                 self.__upload_file,
                 dict(
                     file_path=file_path,
@@ -412,7 +412,7 @@ class VersionDetailsWidget(QtGui.QWidget):
                     parent_entity_id=note_entity["id"],
                     cleanup_after_upload=cleanup_after_upload,
                 ),
-            ))
+            )
 
     def add_query_fields(self, fields):
         """
@@ -469,6 +469,13 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._requested_entity = None
         self._current_entity = None
 
+    def select_note(self, note_id):
+        """
+        Select the note identified by the id. This will trigger a note_selected
+        signal to be emitted
+        """
+        self.ui.note_stream_widget.select_note(note_id)
+
     def deselect_note(self):
         """
         If a note is currently selected, it will be deselected. This will NOT
@@ -480,16 +487,29 @@ class VersionDetailsWidget(QtGui.QWidget):
     def download_note_attachments(self, note_id):
         """
         Triggers the attachments linked to the given Note entity to
-        be downloaded. When the download is completed successfully, an
-        attachment_downloaded signal is emitted.
+        be downloaded.
 
         :param int note_id: The Note entity id.
         """
-        attachments = self.get_note_attachments(note_id)
-
-        for attachment in attachments:
-            uid = self._data_retriever.request_attachment(attachment)
-            self._attachment_uids[uid] = note_id
+        # We're going to query the list of attachments live, because we don't
+        # know if the cached data for the activity stream is up to date. The
+        # reason that might be the case is that a new attachment doesn't
+        # trigger a new activity event, so the cache doesn't know it's out
+        # of date in that regard. It would be great to find a better solution
+        # than not trusting the cache.
+        attachment = self._data_retriever.execute_find(
+            "Attachment",
+            [[
+                "attachment_links",
+                "in",
+                {"type":"Note", "id":note_id}
+            ]],
+            fields=[
+                "this_file",
+                "image",
+                "attachment_links",
+            ])
+        self._attachment_query_uids[attachment] = note_id
 
     def get_note_attachments(self, note_id):
         """
@@ -512,7 +532,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._requested_entity = entity
 
         # If we're pinned, then we don't allow loading new entities.
-        if self._pinned and self.current_entity:
+        if self._pinned and self._current_entity:
             return
 
         # If we got an "empty" entity from the mode, then we need
@@ -610,10 +630,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_hover.png"))
         else:
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_up.png"))
-            # If we have a valid current_entity, be sure the incoming entity
+            # If we have a valid _current_entity, be sure the incoming entity
             # has a different ID.
-            if self._requested_entity and (not self.current_entity or (
-                    self._requested_entity.get("id") != self.current_entity.get("id"))):
+            if self._requested_entity and (not self._current_entity or (
+                    self._requested_entity.get("id") != self._current_entity.get("id"))):
                 self.load_data(self._requested_entity)
 
     def show_new_note_dialog(self, modal=True):
@@ -644,10 +664,10 @@ class VersionDetailsWidget(QtGui.QWidget):
                                then the current Version entity loaded in
                                the widget will be used.
         """
-        if not version_id and not self.current_entity:
+        if not version_id and not self._current_entity:
             return
 
-        version_id = version_id or self.current_entity["id"]
+        version_id = version_id or self._current_entity["id"]
         self._data_retriever.execute_method(
             self.__upload_thumbnail,
             dict(
@@ -725,8 +745,9 @@ class VersionDetailsWidget(QtGui.QWidget):
             note_id = self._attachment_uids[uid]
             del self._attachment_uids[uid]
             self.note_attachment_arrived.emit(note_id, data["file_path"])
-        elif uid in self._upload_uids:
-            self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
+        elif uid in self._attachment_query_uids:
+            self._download_attachments(data["sg"], self._attachment_query_uids[uid])
+            del self._attachment_query_uids[uid]
 
     def __on_worker_failure(self, uid, msg):
         """
@@ -735,10 +756,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param int uid: Unique id for request that failed.
         :param str msg: The error message.
         """
-        if uid in self._note_metadata_uids:
-            sgtk.platform.current_bundle().log_error(msg)
-        elif uid in self._attachment_uids:
-            sgtk.platform.current_bundle().log_error(msg)
+        sgtk.platform.current_bundle().log_error(msg)
 
     def _load_stylesheet(self):
         """
@@ -756,6 +774,18 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.setStyleSheet(qss_data)
         finally:
             f.close()
+
+    def _download_attachments(self, attachments, note_id):
+        """
+        Downloads the contents of the given list of Attachment entities
+        associated to a specific note entity.
+
+        :param list attachments: A list of Attachment entities to download.
+        :param int note_id: The id of the Note entity.
+        """
+        for attachment in attachments:
+            attachment_uid = self._data_retriever.request_attachment(attachment)
+            self._attachment_uids[attachment_uid] = note_id
 
     def _entity_created(self, entity):
         """
@@ -874,7 +904,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.version_fields_button.setToolTip("Caching SG fields. Please hold...")
 
         # use the current entity to retrieve the project id to ensure is cached
-        entity = self.current_entity or {}
+        entity = self._current_entity or {}
         project_id = entity.get("project", {}).get("id")
 
         # run this callback once the cache is loaded
@@ -1032,7 +1062,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Sets up the EntityFieldMenu and attaches it as the "More fields"
         button's menu.
         """
-        entity = self.current_entity or {}
+        entity = self._current_entity or {}
         menu = EntityFieldMenu(
             "Version",
             project_id=entity.get("project", {}).get("id"),
@@ -1050,7 +1080,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Sets up the EntityFieldMenu and attaches it as the "More fields"
         button's menu.
         """
-        entity = self.current_entity or {}
+        entity = self._current_entity or {}
         menu = EntityFieldMenu(
             "Version",
             project_id=entity.get("project", {}).get("id"),
@@ -1318,7 +1348,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             return False
 
         # get the current version entity's project id
-        entity = self.current_entity or {}
+        entity = self._current_entity or {}
         project_id = entity.get("project", {}).get("id")
 
         # Detect bubble fields. If the field_name is "sg_sequence.Sequence.code"
