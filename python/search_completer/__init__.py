@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Shotgun Software Inc.
+# Copyright (c) 2016 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -8,10 +8,4 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-
-import sgtk
-
-# Backward compatibility with the previous version of the API.
-GlobalSearchCompleter = sgtk.platform.current_bundle().import_module(
-    "search_completer"
-).GlobalSearchCompleter
+from .global_search_completer import GlobalSearchCompleter
