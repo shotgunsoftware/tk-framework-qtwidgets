@@ -11,8 +11,9 @@
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-global_search_completer = sgtk.platform.current_bundle().import_module(
-    "global_search_completer")
+search_completer = sgtk.platform.current_bundle().import_module(
+    "search_completer"
+)
 
 
 class GlobalSearchWidget(QtGui.QLineEdit):
@@ -47,7 +48,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
         super(GlobalSearchWidget, self).__init__(parent)
 
         # configure our popup completer
-        self.setCompleter(global_search_completer.GlobalSearchCompleter(self))
+        self.setCompleter(search_completer.GlobalSearchCompleter(self))
 
         # trigger the completer to popup as text changes
         self.textEdited.connect(self.completer().search)
