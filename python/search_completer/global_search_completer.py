@@ -32,11 +32,11 @@ class GlobalSearchCompleter(SearchCompleter):
     :modes: ``MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT`` - Used to identify the
         mode of an item in the completion list
 
-    :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
+    :model role: ``MODE_ROLE`` - Stores the mode of an item in the completion
         list (see modes above)
 
+    :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
     """
-    SG_DATA_ROLE = QtCore.Qt.UserRole + 1
 
     # emitted when shotgun has been updated
     entity_selected = QtCore.Signal(str, int)

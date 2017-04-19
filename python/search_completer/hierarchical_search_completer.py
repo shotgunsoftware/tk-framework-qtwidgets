@@ -24,6 +24,14 @@ class HierarchicalSearchCompleter(SearchCompleter):
         node inside the search results. The parameters are ``type``, ``id``, ``name``,
         ``label path`` and ``incremental_paths``. If the node activated is not an entity,
         ``type`` and ``id`` will be ``None``.
+
+    :modes: ``MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT`` - Used to identify the
+        mode of an item in the completion list
+
+    :model role: ``MODE_ROLE`` - Stores the mode of an item in the completion
+        list (see modes above)
+
+    :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
     """
 
     # path label, entity type, entity id, name, incremental path

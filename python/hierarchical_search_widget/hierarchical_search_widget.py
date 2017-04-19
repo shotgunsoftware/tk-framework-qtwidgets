@@ -19,7 +19,7 @@ search_completer = sgtk.platform.current_bundle().import_module(
 class HierarchicalSearchWidget(QtGui.QLineEdit):
     """
     A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates
-    a global search input box with auto completion.
+    a hierarchical search input box with auto completion.
 
     :signal: ``entity_selected(str, int)`` - Fires when someone selects an entity inside
             the search results. The returned parameters are entity type and entity id.
@@ -34,9 +34,7 @@ class HierarchicalSearchWidget(QtGui.QLineEdit):
 
     def __init__(self, parent):
         """
-        Initialize the widget.
-
-        Uses the ``HierarchicalSearchCompleter`` as the completer for searching
+        Uses the :class:``HierarchicalSearchCompleter`` as the completer for searching
         SG entities.
 
         :param parent: Qt parent object
@@ -81,6 +79,9 @@ class HierarchicalSearchWidget(QtGui.QLineEdit):
         self.completer().set_bg_task_manager(task_manager)
 
     def _search_edited(self, _):
+        """
+        Called every time the user types something in the search box.
+        """
         self._delay_timer.start(300)
 
     def _launch_search(self):
@@ -88,6 +89,6 @@ class HierarchicalSearchWidget(QtGui.QLineEdit):
 
     def destroy(self):
         """
-        Should be called before the widget is closed
+        Should be called before the widget is closed.
         """
         self.completer().destroy()

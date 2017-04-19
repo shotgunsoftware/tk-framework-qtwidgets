@@ -27,6 +27,14 @@ class GlobalSearchWidget(QtGui.QLineEdit):
     :signal: ``entity_activated(str, int, str)`` - Fires when someone selects an
         entity inside the search results. Similar to ``entity_selected``, with
         the addition of the ``name`` of the activated entity being supplied.
+
+    :modes: ``MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT`` - Used to identify the
+        mode of an item in the completion list
+
+    :model role: ``MODE_ROLE`` - Stores the mode of an item in the completion
+        list (see modes above)
+
+    :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
     """
 
     # emitted when shotgun has been updated
@@ -35,9 +43,7 @@ class GlobalSearchWidget(QtGui.QLineEdit):
 
     def __init__(self, parent):
         """
-        Initialize the widget.
-
-        Uses the ``GlobalSearchCompleter`` as the completer for searching
+        Uses the :class:``GlobalSearchCompleter`` as the completer for searching
         SG entities.
 
         :param parent: Qt parent object
