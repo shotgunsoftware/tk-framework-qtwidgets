@@ -20,7 +20,7 @@ class HierarchicalSearchCompleter(SearchCompleter):
     """
     A standalone ``QCompleter`` class for matching SG entities to typed text.
 
-    :signal: ``node_activated(str, int, str)`` - Fires when someone activates a
+    :signal: ``node_activated(str, int, str, str, dict)`` - Fires when someone activates a
         node inside the search results. The parameters are ``type``, ``id``, ``name``,
         ``label path`` and ``incremental_paths``. If the node activated is not an entity,
         ``type`` and ``id`` will be ``None``.
