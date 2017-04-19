@@ -9,5 +9,5 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 
-from .global_search_widget import GlobalSearchWidget
-
+import sgtk
+GlobalSearchWidget = sgtk.platform.current_bundle().import_module("shotgun_search_widget").GlobalSearchWidget

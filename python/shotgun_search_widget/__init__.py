@@ -10,4 +10,5 @@
 
 
 from .hierarchical_search_widget import HierarchicalSearchWidget
+from .global_search_widget import GlobalSearchWidget
 
