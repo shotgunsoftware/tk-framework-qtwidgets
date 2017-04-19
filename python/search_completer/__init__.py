@@ -9,3 +9,4 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from .global_search_completer import GlobalSearchCompleter
+from .hierarchical_search_completer import HierarchicalSearchCompleter

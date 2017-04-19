@@ -21,6 +21,7 @@ from . import navigation
 from . import note_input_widget
 from . import activity_stream
 from . import search_completer
+from . import hierarchical_search_widget
 from . import global_search_completer
 from . import global_search_widget
 from . import screen_grab

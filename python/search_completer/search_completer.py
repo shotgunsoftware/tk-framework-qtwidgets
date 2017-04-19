@@ -21,31 +21,18 @@ class SearchCompleter(QtGui.QCompleter):
     """
     A standalone ``QCompleter`` class for matching SG entities to typed text.
 
-    :signal: ``entity_selected(str, int)`` - Provided for backward compatibility.
-      ``entity_activated`` is emitted at the same time with an additional ``name``
-      value. Fires when someone selects an entity inside the search results. The
-      returned parameters are entity ``type`` and entity ``id``.
-
-    :signal: ``entity_activated(str, int, str)`` - Fires when someone activates an
-      entity inside the search results. Essentially the same as ``entity_selected``
-      only the parameters returned are ``type``, ``id`` **and** ``name``.
-
     :modes: ``MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT`` - Used to identify the
         mode of an item in the completion list
 
-    :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
     :model role: ``MODE_ROLE`` - Stores the mode of an item in the completion
         list (see modes above)
 
+    :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
     """
 
-    # emitted when shotgun has been updated
-    entity_selected = QtCore.Signal(str, int)
-    entity_activated = QtCore.Signal(str, int, str)
-
     # custom roles for the model that tracks the auto completion results
-    SG_DATA_ROLE = QtCore.Qt.UserRole + 1
-    MODE_ROLE = QtCore.Qt.UserRole + 2
+    MODE_ROLE = QtCore.Qt.UserRole + 1
+    SG_DATA_ROLE = QtCore.Qt.UserRole + 2
 
     COMPLETE_MINIMUM_CHARACTERS = 3
 
@@ -106,74 +93,6 @@ class SearchCompleter(QtGui.QCompleter):
             self._sg_data_retriever.work_failure.disconnect(self.__on_worker_failure)
             self._sg_data_retriever = None
 
-    def get_current_result(self):
-        """
-        Returns the result from the current item in the completer popup or ``None``
-        if there is no current item.
-
-        :returns: The entity dict for the current result
-        :rtype: :obj:`dict`: or ``None``
-        """
-        model_index = self.popup().currentIndex()
-        return self.get_result(model_index)
-
-    def get_first_result(self):
-        """
-        Returns the first result from the current item in the completer popup
-        or ``None`` if there are no results.
-
-        :returns: The entity dict for the first result
-        :rtype: :obj:`dict`: or ``None``
-        """
-        result = None
-        model_index = self.popup().model().index(0, 0)
-        if model_index.isValid():
-            result = self.get_result(model_index)
-        return result
-
-    def get_result(self, model_index):
-        """
-        Return the entity data for the supplied model index or None if there is
-        no data for the supplied index.
-
-        :param model_index: The index of the model to return the result for.
-        :type model_index: :class:`~PySide.QtCore.QModelIndex`
-
-        :return: The entity dict for the supplied model index.
-        :rtype: :obj:`dict`: or ``None``
-        """
-
-        # make sure that the user selected an actual shotgun item.
-        # if they just selected the "no items found" or "loading please hold"
-        # items, just ignore it.
-        mode = shotgun_model.get_sanitized_data(model_index, self.MODE_ROLE)
-        if mode == self.MODE_RESULT:
-
-            # get the payload
-            data = shotgun_model.get_sanitized_data(model_index, self.SG_DATA_ROLE)
-
-            # Example of data stored in the data role:
-            #
-            # {'status': 'vwd',
-            #  'name': 'bunny_010_0050_comp_v001',
-            #  'links': ['Shot', 'bunny_010_0050'],
-            #  'image': 'https://xxx',
-            #  'project_id': 65,
-            #  'type': 'Version',
-            #  'id': 99}
-
-            # NOTE: this data format differs from what is typically returned by
-            # the shotgun python-api. this data may be formalized at some point
-            # but for now, only expose the minimum information.
-
-            return {
-                "type": data["type"],
-                "id": data["id"],
-                "name": data["name"],
-            }
-        else:
-            return None
-
     def search(self, text):
         """
         Triggers the popup to display results based on the supplied text.
@@ -198,12 +117,7 @@ class SearchCompleter(QtGui.QCompleter):
         # tell completer to render matches using our delegate
         # configure how the popup should look
 
-        # deferred import to help documentation generation.
-        from .search_result_delegate import SearchResultDelegate
-
-        popup = self.popup()
-        self._delegate = SearchResultDelegate(popup)
-        popup.setItemDelegate(self._delegate)
+        self._set_item_delegate(self.popup(), text)
 
         # try to disconnect and reconnect the activated signal
         # it seems this signal is lost every time the widget
@@ -271,7 +185,7 @@ class SearchCompleter(QtGui.QCompleter):
         self.model().clear()
 
         if add_loading_item:
-            item = QtGui.QStandardItem("Loading data...")
+            item = QtGui.QStandardItem("Hold on, loading search results...")
             item.setData(self.MODE_LOADING, self.MODE_ROLE)
             self.model().appendRow(item)
             item.setIcon(QtGui.QIcon(self._pixmaps.loading))
@@ -305,8 +219,6 @@ class SearchCompleter(QtGui.QCompleter):
         :param request_type: String identifying the request class
         :param data: the data that was returned
         """
-
-        print uid, request_type, data
         uid = shotgun_model.sanitize_qt(uid) # qstring on pyqt, str on pyside
         data = shotgun_model.sanitize_qt(data)
 
@@ -325,44 +237,4 @@ class SearchCompleter(QtGui.QCompleter):
             # all done!
             self._clear_model(add_loading_item=False)
 
-            matches = data["sg"]["matches"]
-
-            if len(matches) == 0:
-                item = QtGui.QStandardItem("No matches found!")
-                item.setData(self.MODE_NOT_FOUND, self.MODE_ROLE)
-                self.model().appendRow(item)
-
-            # insert new data into model
-            for d in matches:
-                item = QtGui.QStandardItem(d["name"])
-                item.setData(self.MODE_RESULT, self.MODE_ROLE)
-
-                item.setData(shotgun_model.sanitize_for_qt_model(d),
-                             self.SG_DATA_ROLE)
-
-                item.setIcon(self._pixmaps.no_thumbnail)
-
-                if d.get("image") and self._sg_data_retriever:
-                    uid = self._sg_data_retriever.request_thumbnail(
-                        d["image"],
-                        d["type"],
-                        d["id"],
-                        "image",
-                        load_image=True
-                    )
-                    self._thumb_map[uid] = {"item": item}
-
-                self.model().appendRow(item)
-
-    def _on_select(self, model_index):
-        """
-        Fires when an item in the completer is selected.
-        This will emit an entity_selected signal for the
-        global search widget
-
-        :param model_index: QModelIndex describing the current item
-        """
-        data = self.get_result(model_index)
-        if data:
-            self.entity_selected.emit(data["type"], data["id"])
-            self.entity_activated.emit(data["type"], data["id"], data["name"])
+            self._handle_search_results(data)

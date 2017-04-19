@@ -9,6 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
+from sgtk.platform.qt import QtCore, QtGui
 
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 
@@ -32,10 +33,14 @@ class GlobalSearchCompleter(SearchCompleter):
         mode of an item in the completion list
 
     :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
-    :model role: ``MODE_ROLE`` - Stores the mode of an item in the completion
         list (see modes above)
 
     """
+    SG_DATA_ROLE = QtCore.Qt.UserRole + 1
+
+    # emitted when shotgun has been updated
+    entity_selected = QtCore.Signal(str, int)
+    entity_activated = QtCore.Signal(str, int, str)
 
     def __init__(self, parent=None):
         super(GlobalSearchCompleter, self).__init__(parent)
@@ -53,6 +58,74 @@ class GlobalSearchCompleter(SearchCompleter):
             "Version": [],
             "PublishedFile": [],
         }
+
+    def get_current_result(self):
+        """
+        Returns the result from the current item in the completer popup or ``None``
+        if there is no current item.
+
+        :returns: The entity dict for the current result
+        :rtype: :obj:`dict`: or ``None``
+        """
+        model_index = self.popup().currentIndex()
+        return self.get_result(model_index)
+
+    def get_first_result(self):
+        """
+        Returns the first result from the current item in the completer popup
+        or ``None`` if there are no results.
+
+        :returns: The entity dict for the first result
+        :rtype: :obj:`dict`: or ``None``
+        """
+        result = None
+        model_index = self.popup().model().index(0, 0)
+        if model_index.isValid():
+            result = self.get_result(model_index)
+        return result
+
+    def get_result(self, model_index):
+        """
+        Return the entity data for the supplied model index or None if there is
+        no data for the supplied index.
+
+        :param model_index: The index of the model to return the result for.
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
+
+        :return: The entity dict for the supplied model index.
+        :rtype: :obj:`dict`: or ``None``
+        """
+
+        # make sure that the user selected an actual shotgun item.
+        # if they just selected the "no items found" or "loading please hold"
+        # items, just ignore it.
+        mode = shotgun_model.get_sanitized_data(model_index, self.MODE_ROLE)
+        if mode == self.MODE_RESULT:
+
+            # get the payload
+            data = shotgun_model.get_sanitized_data(model_index, self.SG_DATA_ROLE)
+
+            # Example of data stored in the data role:
+            #
+            # {'status': 'vwd',
+            #  'name': 'bunny_010_0050_comp_v001',
+            #  'links': ['Shot', 'bunny_010_0050'],
+            #  'image': 'https://xxx',
+            #  'project_id': 65,
+            #  'type': 'Version',
+            #  'id': 99}
+
+            # NOTE: this data format differs from what is typically returned by
+            # the shotgun python-api. this data may be formalized at some point
+            # but for now, only expose the minimum information.
+
+            return {
+                "type": data["type"],
+                "id": data["id"],
+                "name": data["name"],
+            }
+        else:
+            return None
 
     def set_searchable_entity_types(self, types_dict):
         """
@@ -79,6 +152,12 @@ class GlobalSearchCompleter(SearchCompleter):
         """
         self._entity_search_criteria = types_dict
 
+    def _set_item_delegate(self, popup, text):
+        # deferred import to help documentation generation.
+        from .global_search_result_delegate import GlobalSearchResultDelegate
+        self._delegate = GlobalSearchResultDelegate(popup, text)
+        popup.setItemDelegate(self._delegate)
+
     def _launch_sg_search(self, text):
 
         # constrain by project in the search
@@ -96,3 +175,46 @@ class GlobalSearchCompleter(SearchCompleter):
             self._entity_search_criteria,
             project_ids
         )
+
+    def _on_select(self, model_index):
+        """
+        Fires when an item in the completer is selected.
+        This will emit an entity_selected signal for the
+        global search widget
+
+        :param model_index: QModelIndex describing the current item
+        """
+        data = self.get_result(model_index)
+        if data:
+            self.entity_selected.emit(data["type"], data["id"])
+            self.entity_activated.emit(data["type"], data["id"], data["name"])
+
+    def _handle_search_results(self, data):
+        matches = data["sg"]["matches"]
+
+        if len(matches) == 0:
+            item = QtGui.QStandardItem("No matches found!")
+            item.setData(self.MODE_NOT_FOUND, self.MODE_ROLE)
+            self.model().appendRow(item)
+
+        # insert new data into model
+        for d in matches:
+            item = QtGui.QStandardItem(d["name"])
+            item.setData(self.MODE_RESULT, self.MODE_ROLE)
+
+            item.setData(shotgun_model.sanitize_for_qt_model(d),
+                         self.SG_DATA_ROLE)
+
+            item.setIcon(self._pixmaps.no_thumbnail)
+
+            if d.get("image") and self._sg_data_retriever:
+                uid = self._sg_data_retriever.request_thumbnail(
+                    d["image"],
+                    d["type"],
+                    d["id"],
+                    "image",
+                    load_image=True
+                )
+                self._thumb_map[uid] = {"item": item}
+
+            self.model().appendRow(item)

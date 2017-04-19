@@ -1,11 +1,11 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
@@ -16,11 +16,11 @@ search_completer = sgtk.platform.current_bundle().import_module(
 )
 
 
-class GlobalSearchWidget(QtGui.QLineEdit):
+class HierarchicalSearchWidget(QtGui.QLineEdit):
     """
     A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates
     a global search input box with auto completion.
-    
+
     :signal: ``entity_selected(str, int)`` - Fires when someone selects an entity inside
             the search results. The returned parameters are entity type and entity id.
 
@@ -30,60 +30,64 @@ class GlobalSearchWidget(QtGui.QLineEdit):
     """
 
     # emitted when shotgun has been updated
-    entity_selected = QtCore.Signal(str, int)
-    entity_activated = QtCore.Signal(str, int, str)
+    node_activated = QtCore.Signal(str, int, str, str, dict)
 
     def __init__(self, parent):
         """
         Initialize the widget.
 
-        Uses the ``GlobalSearchCompleter`` as the completer for searching
+        Uses the ``HierarchicalSearchCompleter`` as the completer for searching
         SG entities.
 
         :param parent: Qt parent object
-        :type parent: :class:`~PySide.QtGui.QWidget`        
+        :type parent: :class:`~PySide.QtGui.QWidget`
         """
- 
+
         # first, call the base class and let it do its thing.
-        super(GlobalSearchWidget, self).__init__(parent)
+        super(HierarchicalSearchWidget, self).__init__(parent)
 
         # configure our popup completer
-        self.setCompleter(search_completer.GlobalSearchCompleter(self))
+        self.setCompleter(search_completer.HierarchicalSearchCompleter(self))
 
         # trigger the completer to popup as text changes
-        self.textEdited.connect(self.completer().search)
+        self.textEdited.connect(self._search_edited)
 
-        # forward the completer's activated/selected signals
-        self.completer().entity_selected.connect(self.entity_selected.emit)
-        self.completer().entity_activated.connect(self.entity_activated.emit)
+        # forward the completer's node_selected signals
+        self.completer().node_activated.connect(self.node_activated)
+
+        # Taken from https://wiki.qt.io/Delay_action_to_wait_for_user_interaction
+        self._delay_timer = QtCore.QTimer(self)
+        self._delay_timer.timeout.connect(self._launch_search)
+        self._delay_timer.setSingleShot(True)
+
+    def set_search_root(self, entity):
+        """
+        Allows to change the root of the search.
+
+        :param dict entity: Entity to search under. If ``None``, the search will be done
+            at the site level. Note that only project entities are supported at the moment.
+        """
+        self.completer().set_search_root(entity)
 
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
         data in the background. Data calls
         to Shotgun will be dispatched via this object.
-        
+
         :param task_manager: Background task manager to use
-        :type  task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
+        :type  task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager`
         """
         self.completer().set_bg_task_manager(task_manager)
 
-    def set_searchable_entity_types(self, types_dict):
-        """
-        Specify a dictionary of entity types with optional search filters to
-        limit the breadth of the widget's search.
+    def _search_edited(self, _):
+        self._delay_timer.start(300)
 
-        See the documentation for `GlobalSearchCompleter.set_searchable_entity_types`
-        for the default values if this method is not called on the widget.
-
-        :param types_dict: A dictionary of searchable types with optional filters
-        """
-
-        self.completer().set_searchable_entity_types(types_dict)
+    def _launch_search(self):
+        self.completer().search(self.text())
 
     def destroy(self):
         """
         Should be called before the widget is closed
         """
         self.completer().destroy()
-
