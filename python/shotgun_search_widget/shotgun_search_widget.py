@@ -36,6 +36,47 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         self._delay_timer.timeout.connect(self._typing_timeout)
         self._delay_timer.setSingleShot(True)
 
+        # FIXME: The following was stolen from SearchWidget. We can't refactor easily that
+        # part of the code since the base classes for ShotgunSearchWidget and SearchWidget
+        # are not the same, but at least the ShotgunSearchWidget has feature parity.
+        self.set_placeholder_text("Search")
+
+        # dynamically create the clear button so that we can place it over the
+        # edit widget:
+        self._clear_btn = QtGui.QPushButton(self)
+        self._clear_btn.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self._clear_btn.setFlat(True)
+        self._clear_btn.setCursor(QtCore.Qt.ArrowCursor)
+        style = ("QPushButton {"
+                 "border: 0px solid;"
+                 "image: url(:/tk-framework-qtwidgets/search_widget/clear_search.png);"
+                 "width: 16;"
+                 "height: 16;"
+                 "}"
+                 "QPushButton::hover {"
+                 "image: url(:/tk-framework-qtwidgets/search_widget/clear_search_hover.png);"
+                 "}")
+        self._clear_btn.setStyleSheet(style)
+        self._clear_btn.hide()
+
+        h_layout = QtGui.QHBoxLayout(self)
+        h_layout.addStretch()
+        h_layout.addWidget(self._clear_btn)
+        h_layout.setContentsMargins(3, 0, 3, 0)
+        h_layout.setSpacing(0)
+        self.setLayout(h_layout)
+        self._clear_btn.clicked.connect(self._on_clear_clicked)
+
+    def set_placeholder_text(self, text):
+        """
+        Set the placeholder text for the widget
+
+        :param text:    The text to use
+        """
+        # Note, setPlaceholderText is only available in recent versions of Qt.
+        if hasattr(self, "setPlaceholderText"):
+            self.setPlaceholderText(text)
+
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
@@ -47,7 +88,7 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         """
         self.completer().set_bg_task_manager(task_manager)
 
-    def _search_edited(self, _):
+    def _search_edited(self, text):
         """
         Called every time the user types something in the search box.
         """
@@ -55,6 +96,7 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         # the timer restarts counting. This differs from the editingFinished event on a QLineEdit which
         # fires only when the user pressed enter. This fires when the user has finished typing for
         # a short period of time.
+        self._clear_btn.setVisible(bool(text))
         self._delay_timer.start(300)
 
     def _typing_timeout(self):
@@ -68,3 +110,17 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         Should be called before the widget is closed.
         """
         self.completer().destroy()
+
+    def clear(self):
+        """
+        Clears the search box.
+        """
+        self.setText("")
+        self._clear_btn.hide()
+
+    def _on_clear_clicked(self):
+        """
+        Slot triggered when the clear button is clicked - clears the text
+        and emits the relevant signals.
+        """
+        self.clear()
