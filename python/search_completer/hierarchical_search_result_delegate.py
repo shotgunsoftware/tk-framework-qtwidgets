@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2017 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -23,12 +23,20 @@ views = sgtk.platform.current_bundle().import_module("views")
 
 class HierarchicalSearchResultDelegate(SearchResultDelegate):
     """
-    Delegate which renders search match entries in the global
+    Delegate which renders search match entries in the hierarhical
     search completer.
     """
 
     def _render_result(self, widget, model_index):
+        """
+        Renders a result from the model into the provided widget.
 
+        :param widget: Widget used to render the result.
+        :type widget: ``SearchResultWidget``
+
+        :param model_index: Index of the item to render.
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
+        """
         from .hierarchical_search_completer import HierarchicalSearchCompleter
 
         icon = shotgun_model.get_sanitized_data(model_index, QtCore.Qt.DecorationRole)

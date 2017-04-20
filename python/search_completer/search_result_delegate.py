@@ -96,6 +96,11 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
     def _highlight_search_term(self, matching):
         """
         Generates a text string with the searched text underlined.
+
+        :param str matching: String that potentially matched the search term.
+
+        :returns: The exact same string with the search term underlined. If the search term
+            was not present, the string is returned as is.
         """
         # Previous version of the API didn't take a text string in. If we don't have one,
         # we can't highlight

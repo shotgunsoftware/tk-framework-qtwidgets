@@ -33,7 +33,7 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
 
         # Taken from https://wiki.qt.io/Delay_action_to_wait_for_user_interaction
         self._delay_timer = QtCore.QTimer(self)
-        self._delay_timer.timeout.connect(self._finished_editing)
+        self._delay_timer.timeout.connect(self._typing_timeout)
         self._delay_timer.setSingleShot(True)
 
     def set_bg_task_manager(self, task_manager):
@@ -51,13 +51,13 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         """
         Called every time the user types something in the search box.
         """
-        # This will fire _launch_search after 300 ms. If the user types something before it fires,
+        # This will fire _typing_timeout after 300 ms. If the user types something before it fires,
         # the timer restarts counting. This differs from the editingFinished event on a QLineEdit which
         # fires only when the user pressed enter. This fires when the user has finished typing for
         # a short period of time.
         self._delay_timer.start(300)
 
-    def _finished_editing(self):
+    def _typing_timeout(self):
         """
         Launches the search in the completer.
         """

@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2017 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -28,7 +28,15 @@ class GlobalSearchResultDelegate(SearchResultDelegate):
     """
 
     def _render_result(self, widget, model_index):
+        """
+        Renders a result from the model into the provided widget.
 
+        :param widget: Widget used to render the result.
+        :type widget: ``SearchResultWidget``
+
+        :param model_index: Index of the item to render.
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
+        """
         from .global_search_completer import GlobalSearchCompleter
 
         icon = shotgun_model.get_sanitized_data(model_index, QtCore.Qt.DecorationRole)
@@ -59,7 +67,9 @@ class GlobalSearchResultDelegate(SearchResultDelegate):
 
         if et_url:
             # present thumbnail icon and name
-            content += "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>" % (et_url, highlighted_name)
+            content += "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>" % (
+                et_url, highlighted_name
+            )
         else:
             # present type name name
             content += "%s" % highlighted_name

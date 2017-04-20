@@ -313,7 +313,8 @@ class SearchCompleter(QtGui.QCompleter):
         """
         Fires when an item in the completer is selected.
 
-        :param model_index: QModelIndex describing the current item
+        :param model_index: Index describing the current item
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
         """
         raise NotImplementedError
 
