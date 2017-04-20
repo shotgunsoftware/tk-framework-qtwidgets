@@ -18,7 +18,7 @@ from .search_completer import SearchCompleter
 
 class GlobalSearchCompleter(SearchCompleter):
     """
-    A standalone ``QCompleter`` class for matching SG entities to typed text.
+    A standalone :class:`PySide.QtGui.QCompleter` class for matching SG entities to typed text.
 
     :signal: ``entity_selected(str, int)`` - Provided for backward compatibility.
       ``entity_activated`` is emitted at the same time with an additional ``name``
@@ -43,6 +43,10 @@ class GlobalSearchCompleter(SearchCompleter):
     entity_activated = QtCore.Signal(str, int, str)
 
     def __init__(self, parent=None):
+        """
+        :param parent: Parent widget
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        """
         super(GlobalSearchCompleter, self).__init__(parent)
 
         # the default entity search criteria. The calling code can override these
@@ -58,31 +62,6 @@ class GlobalSearchCompleter(SearchCompleter):
             "Version": [],
             "PublishedFile": [],
         }
-
-    def get_current_result(self):
-        """
-        Returns the result from the current item in the completer popup or ``None``
-        if there is no current item.
-
-        :returns: The entity dict for the current result
-        :rtype: :obj:`dict`: or ``None``
-        """
-        model_index = self.popup().currentIndex()
-        return self.get_result(model_index)
-
-    def get_first_result(self):
-        """
-        Returns the first result from the current item in the completer popup
-        or ``None`` if there are no results.
-
-        :returns: The entity dict for the first result
-        :rtype: :obj:`dict`: or ``None``
-        """
-        result = None
-        model_index = self.popup().model().index(0, 0)
-        if model_index.isValid():
-            result = self.get_result(model_index)
-        return result
 
     def get_result(self, model_index):
         """
@@ -153,12 +132,27 @@ class GlobalSearchCompleter(SearchCompleter):
         self._entity_search_criteria = types_dict
 
     def _set_item_delegate(self, popup, text):
+        """
+        Sets an item delegate for the completer's popup.
+
+        :param popup: Popup instance from the completer.
+        :type popup: :class:`~PySide.QtGui.QAbstractItemView`
+
+        :param str text: Text used for completion.
+        """
         # deferred import to help documentation generation.
         from .global_search_result_delegate import GlobalSearchResultDelegate
         self._delegate = GlobalSearchResultDelegate(popup, text)
         popup.setItemDelegate(self._delegate)
 
     def _launch_sg_search(self, text):
+        """
+        Launches a search on the Shotgun server.
+
+        :param str text: Text to search for.
+
+        :returns: The :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`'s job id.
+        """
 
         # constrain by project in the search
         project_ids = []
@@ -178,9 +172,8 @@ class GlobalSearchCompleter(SearchCompleter):
 
     def _on_select(self, model_index):
         """
-        Fires when an item in the completer is selected.
-        This will emit an entity_selected signal for the
-        global search widget
+        Fires when an item in the completer is selected. This will emit an entity_selected signal
+        for the global search widget
 
         :param model_index: QModelIndex describing the current item
         """
@@ -190,6 +183,12 @@ class GlobalSearchCompleter(SearchCompleter):
             self.entity_activated.emit(data["type"], data["id"], data["name"])
 
     def _handle_search_results(self, data):
+        """
+        Populates the model associated with the completer with the data coming back from Shotgun.
+
+        :param dict data: Data received back from the job sent to the
+            :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` in :method:``_launch_sg_search``.
+        """
         matches = data["sg"]["matches"]
 
         if len(matches) == 0:

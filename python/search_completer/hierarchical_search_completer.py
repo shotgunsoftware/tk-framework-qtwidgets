@@ -18,9 +18,9 @@ shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "sho
 
 class HierarchicalSearchCompleter(SearchCompleter):
     """
-    A standalone ``QCompleter`` class for matching SG entities to typed text.
+    A standalone :class:`PySide.QtGui.QCompleter` class for matching SG entities to typed text.
 
-    :signal: ``node_activated(str, int, str, str, dict)`` - Fires when someone activates a
+    :signal: ``node_activated(str, int, str, str, list)`` - Fires when someone activates a
         node inside the search results. The parameters are ``type``, ``id``, ``name``,
         ``label path`` and ``incremental_paths``. If the node activated is not an entity,
         ``type`` and ``id`` will be ``None``.
@@ -35,23 +35,27 @@ class HierarchicalSearchCompleter(SearchCompleter):
     """
 
     # path label, entity type, entity id, name, incremental path
-    node_activated = QtCore.Signal(str, int, str, str, dict)
+    node_activated = QtCore.Signal(str, int, str, str, list)
 
     def __init__(self, parent=None):
+        """
+        :param parent: Parent widget
+        :type parent: :class:`~PySide.QtGui.QWidget`
+        """
         super(HierarchicalSearchCompleter, self).__init__(parent)
         self.set_search_root(self._bundle.context.project)
 
-    def set_search_root(self, project_entity):
+    def set_search_root(self, entity):
         """
         Allows to change the root of the search.
 
-        :param dict project_entity: Project to search under. If ``None``, the search will be done
-            at the site level.
+        :param dict entity: Entity to search under. If ``None``, the search will be done
+            at the site level. Note that only ``Project`` entities are supported at the moment.
         """
-        if not project_entity:
+        if not entity:
             self._search_root = "/"
         else:
-            self._search_root = "/Project/%d" % project_entity.get("id")
+            self._search_root = "/Project/%d" % entity.get("id")
 
     def _set_item_delegate(self, popup, text):
         """
@@ -67,7 +71,11 @@ class HierarchicalSearchCompleter(SearchCompleter):
 
     def _launch_sg_search(self, text):
         """
-        Called by the base class to kickstart the search process.
+        Launches a search on the Shotgun server.
+
+        :param str text: Text to search for.
+
+        :returns: The :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`'s job id.
         """
         return self._sg_data_retriever.execute_nav_search_string(
             self._search_root, text
@@ -75,8 +83,10 @@ class HierarchicalSearchCompleter(SearchCompleter):
 
     def _handle_search_results(self, data):
         """
-        Called by the base class when the search results have come back from
-        Shotgun.
+        Populates the model associated with the completer with the data coming back from Shotgun.
+
+        :param dict data: Data received back from the job sent to the
+            :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` in :method:``_launch_sg_search``.
         """
         matches = data["sg"]
 
@@ -84,6 +94,25 @@ class HierarchicalSearchCompleter(SearchCompleter):
             item = QtGui.QStandardItem("No matches found!")
             item.setData(self.MODE_NOT_FOUND, self.MODE_ROLE)
             self.model().appendRow(item)
+
+        # Payload looks like:
+        # [
+        #     {
+        #         "label": "bunny_020",
+        #         "incremental_path": [
+        #             "/Project/65",
+        #             "/Project/65/Shot",
+        #             "/Project/65/Shot/sg_sequence/Sequence/5"
+        #         ],
+        #         "path_label": "Shots",
+        #         "ref": {
+        #             "id": 5,
+        #             "type": "Sequence"
+        #         },
+        #         "project_id": 65
+        #     },
+        #     ...
+        # ]
 
         # insert new data into model
         for d in matches:
@@ -109,24 +138,28 @@ class HierarchicalSearchCompleter(SearchCompleter):
         """
         Returns an item from the result list.
 
-        :param model_index: :class:`QtModelIndex` of the result to retrieve.
+        Here's an example::
 
-        :returns: Returns a dictionary of the match.
-            For example::
-                {
-                    "label": "bunny_020",
-                    "incremental_path": [
-                        "/Project/65",
-                        "/Project/65/Shot",
-                        "/Project/65/Shot/sg_sequence/Sequence/5"
-                    ],
-                    "path_label": "Shots",
-                    "ref": {
-                        "id": 5,
-                        "type": "Sequence"
-                    },
-                    "project_id": 65
-                }
+            {
+                "label": "bunny_020",
+                "incremental_path": [
+                    "/Project/65",
+                    "/Project/65/Shot",
+                    "/Project/65/Shot/sg_sequence/Sequence/5"
+                ],
+                "path_label": "Shots",
+                "ref": {
+                    "id": 5,
+                    "type": "Sequence"
+                },
+                "project_id": 65
+            }
+
+        :param model_index: The index of the model to return the result for.
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
+
+        :return: The dict for the supplied model index.
+        :rtype: :obj:`dict`: or ``None``
         """
         mode = shotgun_model.get_sanitized_data(model_index, self.MODE_ROLE)
         if mode == self.MODE_RESULT:

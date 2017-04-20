@@ -19,7 +19,7 @@ from .utils import create_rectangular_thumbnail, CompleterPixmaps
 
 class SearchCompleter(QtGui.QCompleter):
     """
-    A standalone ``QCompleter`` class for matching SG entities to typed text.
+    A standalone :class:`PySide.QtGui.QCompleter` class for matching SG entities to typed text.
 
     :modes: ``MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT`` - Used to identify the
         mode of an item in the completion list
@@ -28,6 +28,13 @@ class SearchCompleter(QtGui.QCompleter):
         list (see modes above)
 
     :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model
+
+    Derived classes are expected to implement the following methods:
+        - :method:``_handle_search_results``
+        - :method:``_on_select``
+        - :method:``_launch_sg_search``
+        - :method:``_set_item_delegate``
+        - :method:``get_result``
     """
 
     # custom roles for the model that tracks the auto completion results
@@ -42,8 +49,6 @@ class SearchCompleter(QtGui.QCompleter):
 
     def __init__(self, parent=None):
         """
-        Initialize the completer.
-
         :param parent: Parent widget
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
@@ -153,6 +158,31 @@ class SearchCompleter(QtGui.QCompleter):
             raise sgtk.TankError(
                 "Please associate this class with a background task manager.")
 
+    def get_current_result(self):
+        """
+        Returns the result from the current item in the completer popup or ``None``
+        if there is no current item.
+
+        :returns: The entity dict for the current result
+        :rtype: :obj:`dict`: or ``None``
+        """
+        model_index = self.popup().currentIndex()
+        return self.get_result(model_index)
+
+    def get_first_result(self):
+        """
+        Returns the first result from the current item in the completer popup
+        or ``None`` if there are no results.
+
+        :returns: The entity dict for the first result
+        :rtype: :obj:`dict`: or ``None``
+        """
+        result = None
+        model_index = self.popup().model().index(0, 0)
+        if model_index.isValid():
+            result = self.get_result(model_index)
+        return result
+
     def set_bg_task_manager(self, task_manager):
         """
         Specify the background task manager to use to pull
@@ -238,3 +268,65 @@ class SearchCompleter(QtGui.QCompleter):
             self._clear_model(add_loading_item=False)
 
             self._handle_search_results(data)
+
+    ############################################################################
+    # Abstract methods
+
+    def _set_item_delegate(self, popup, text):
+        """
+        Sets the item delegate for the pop-up associated with the completer.
+
+        Derived classes are expected to provide a :class:`~PySide.QtGui.QAbstractItemDelegate` derived
+        object in this method.
+
+        :param popup: Popup instance from the completer.
+        :type popup: :class:`~PySide.QtGui.QAbstractItemView`
+
+        :param str text: Text used for completion.
+        """
+        raise NotImplementedError
+
+    def _launch_sg_search(self, text):
+        """
+        Launches a search on the Shotgun server.
+
+        Is is expected that the search is launched using the
+        :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` and than the job
+        id is returned to the called.
+
+        :param str text: Text to search for.
+
+        :returns: The :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`'s job id.
+        """
+        raise NotImplementedError
+
+    def _handle_search_result(self, data):
+        """
+        Populates the model associated with the completer with the data coming back from Shotgun.
+
+        :param dict data: Data received back from the job sent to the
+            :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` in :method:``_launch_sg_search``.
+        """
+        raise NotImplementedError
+
+    def _on_select(self, model_index):
+        """
+        Fires when an item in the completer is selected.
+
+        :param model_index: QModelIndex describing the current item
+        """
+        raise NotImplementedError
+
+    def get_result(self, model_index):
+        """
+        Returns an item from the list of results.
+
+        This method will be called by :method:``get_current_result`` and :method:``get_first_result``
+
+        :param model_index: The index of the model to return the result for.
+        :type model_index: :class:`~PySide.QtCore.QModelIndex`
+
+        :return: The dict for the supplied model index.
+        :rtype: :obj:`dict`: or ``None``
+        """
+        raise NotImplementedError

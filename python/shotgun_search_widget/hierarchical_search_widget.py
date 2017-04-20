@@ -23,18 +23,18 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
     A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates
     a hierarchical search input box with auto completion.
 
-    :signal: ``node_activated(str, int, str, str, dict)`` - Fires when someone activates a
+    :signal: ``node_activated(str, int, str, str, list)`` - Fires when someone activates a
         node inside the search results. The parameters are ``type``, ``id``, ``name``,
         ``label path`` and ``incremental_paths``. If the node activated is not an entity,
         ``type`` and ``id`` will be ``None``.
     """
 
     # emitted when shotgun has been updated
-    node_activated = QtCore.Signal(str, int, str, str, dict)
+    node_activated = QtCore.Signal(str, int, str, str, list)
 
     def __init__(self, parent):
         """
-        Uses the :class:``HierarchicalSearchCompleter`` as the completer for searching
+        Uses the :class:`~search_completer.HierarchicalSearchCompleter` as the completer for searching
         SG entities.
 
         :param parent: Qt parent object
@@ -54,6 +54,6 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
         Allows to change the root of the search.
 
         :param dict entity: Entity to search under. If ``None``, the search will be done
-            at the site level. Note that only project entities are supported at the moment.
+            at the site level. Note that only ``Project`` entities are supported at the moment.
         """
         self.completer().set_search_root(entity)

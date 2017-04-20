@@ -8,31 +8,19 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-
-search_completer = sgtk.platform.current_bundle().import_module(
-    "search_completer"
-)
 
 
 class ShotgunSearchWidget(QtGui.QLineEdit):
     """
     A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates
-    a hierarchical search input box with auto completion.
+    a search input box with auto completion.
 
-    :signal: ``entity_selected(str, int)`` - Fires when someone selects an entity inside
-            the search results. The returned parameters are entity type and entity id.
-
-    :signal: ``entity_activated(str, int, str)`` - Fires when someone selects an
-        entity inside the search results. Similar to ``entity_selected``, with
-        the addition of the ``name`` of the activated entity being supplied.
+    The derived classes are expected to provide a :class:`PySide.QtGui.QCompleter`
+    during initialization. The completer must have ``search(str)`` and ``destroy`` method.
     """
     def __init__(self, parent):
         """
-        Uses the :class:``HierarchicalSearchCompleter`` as the completer for searching
-        SG entities.
-
         :param parent: Qt parent object
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
