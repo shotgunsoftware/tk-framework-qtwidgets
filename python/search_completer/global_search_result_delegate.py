@@ -63,31 +63,31 @@ class GlobalSearchResultDelegate(SearchResultDelegate):
         content = ""
         et_url = shotgun_globals.get_entity_type_icon_url(data["type"])
 
-        highlighted_name = self._highlight_search_term(data["name"])
+        underlined_name = self._underline_search_term(data["name"])
 
         if et_url:
             # present thumbnail icon and name
             content += "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>" % (
-                et_url, highlighted_name
+                et_url, underlined_name
             )
         else:
             # present type name name
-            content += "%s" % highlighted_name
+            content += "%s" % underlined_name
 
         content += "<br>%s" % entity_type_display_name
 
         links = data["links"]
         # note users return weird data so ignore it.
         if links and links[0] != "" and links[0] != "HumanUser" and links[0] != "ClientUser":
-            highlighted_link = self._highlight_search_term(links[1])
+            underlined_link = self._underline_search_term(links[1])
             # there is a referenced entity
             et_url = shotgun_globals.get_entity_type_icon_url(links[0])
             if et_url:
                 # present thumbnail icon and name
-                content += " on <img align=absmiddle src='%s'/>  %s" % (et_url, highlighted_link)
+                content += " on <img align=absmiddle src='%s'/>  %s" % (et_url, underlined_link)
             else:
                 # present type name name
                 link_entity_type = links[0]
-                content += " on %s %s" % (shotgun_globals.get_type_display_name(link_entity_type), highlighted_link)
+                content += " on %s %s" % (shotgun_globals.get_type_display_name(link_entity_type), underlined_link)
 
         widget.set_text(content)

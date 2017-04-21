@@ -93,7 +93,7 @@ class SearchResultDelegate(views.EditSelectedWidgetDelegate):
         else:
             widget.set_text("Unknown mode!")
 
-    def _highlight_search_term(self, matching):
+    def _underline_search_term(self, matching):
         """
         Generates a text string with the searched text underlined.
 

@@ -8,6 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+import os
 from sgtk.platform.qt import QtCore, QtGui
 
 
@@ -47,16 +48,13 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         self._clear_btn.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._clear_btn.setFlat(True)
         self._clear_btn.setCursor(QtCore.Qt.ArrowCursor)
-        style = ("QPushButton {"
-                 "border: 0px solid;"
-                 "image: url(:/tk-framework-qtwidgets/search_widget/clear_search.png);"
-                 "width: 16;"
-                 "height: 16;"
-                 "}"
-                 "QPushButton::hover {"
-                 "image: url(:/tk-framework-qtwidgets/search_widget/clear_search_hover.png);"
-                 "}")
-        self._clear_btn.setStyleSheet(style)
+
+        # Loads the style sheet for the search button.
+        qss_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "search_style.qss")
+        with open(qss_file, "rt") as f:
+            # apply to widget (and all its children)
+            self._clear_btn.setStyleSheet(f.read())
+
         self._clear_btn.hide()
 
         h_layout = QtGui.QHBoxLayout(self)

@@ -120,16 +120,16 @@ class HierarchicalSearchCompleter(SearchCompleter):
         :param dict data: Data received back from the job sent to the
             :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` in :method:``_launch_sg_search``.
         """
-        matches = data["sg"]
+        data_matches = data["sg"]
 
         # When showing only entities, skip entries that aren't.
         if self._show_entities_only:
-            matches = filter(
+            data_matches = filter(
                 lambda x: x["ref"]["type"] is not None and x["ref"]["id"] is not None,
-                matches
+                data_matches
             )
 
-        if len(matches) == 0:
+        if len(data_matches) == 0:
             item = QtGui.QStandardItem("No matches found!")
             item.setData(self.MODE_NOT_FOUND, self.MODE_ROLE)
             self.model().appendRow(item)
@@ -154,21 +154,21 @@ class HierarchicalSearchCompleter(SearchCompleter):
         # ]
 
         # insert new data into model
-        for d in matches:
+        for data in data_matches:
 
-            item = QtGui.QStandardItem(d["label"])
+            item = QtGui.QStandardItem(data["label"])
             item.setData(self.MODE_RESULT, self.MODE_ROLE)
 
-            item.setData(shotgun_model.sanitize_for_qt_model(d),
+            item.setData(shotgun_model.sanitize_for_qt_model(data),
                          self.SG_DATA_ROLE)
 
             item.setIcon(self._pixmaps.no_thumbnail)
 
-            if d["ref"]["type"] and d["ref"]["id"] and self._sg_data_retriever:
+            data_type = data["ref"]["type"]
+            data_id = data["ref"]["id"]
+            if data_type and data_id and self._sg_data_retriever:
                 uid = self._sg_data_retriever.request_thumbnail_source(
-                    d["ref"]["type"],
-                    d["ref"]["id"],
-                    load_image=True
+                    data_type, data_id, load_image=True
                 )
                 self._thumb_map[uid] = {"item": item}
 

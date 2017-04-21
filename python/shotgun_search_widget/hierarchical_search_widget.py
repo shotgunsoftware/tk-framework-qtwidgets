@@ -13,9 +13,7 @@ from sgtk.platform.qt import QtCore
 
 from .shotgun_search_widget import ShotgunSearchWidget
 
-search_completer = sgtk.platform.current_bundle().import_module(
-    "search_completer"
-)
+search_completer = sgtk.platform.current_bundle().import_module("search_completer")
 
 
 class HierarchicalSearchWidget(ShotgunSearchWidget):

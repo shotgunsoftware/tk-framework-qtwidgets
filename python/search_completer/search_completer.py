@@ -215,7 +215,7 @@ class SearchCompleter(QtGui.QCompleter):
         self.model().clear()
 
         if add_loading_item:
-            item = QtGui.QStandardItem("Hold on, loading search results...")
+            item = QtGui.QStandardItem("Loading search results...")
             item.setData(self.MODE_LOADING, self.MODE_ROLE)
             self.model().appendRow(item)
             item.setIcon(QtGui.QIcon(self._pixmaps.loading))

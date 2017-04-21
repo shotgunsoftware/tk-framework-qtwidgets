@@ -71,15 +71,15 @@ class HierarchicalSearchResultDelegate(SearchResultDelegate):
         else:
             et_url = None
 
-        highlighted_label = self._highlight_search_term(data["label"])
+        underlined_label = self._underline_search_term(data["label"])
 
         # present type name name
         if et_url:
             content = "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>" % (
-                et_url, highlighted_label
+                et_url, underlined_label
             )
         else:
-            content = highlighted_label
+            content = underlined_label
 
         content += "<br>%s" % data["path_label"]
 

@@ -12,6 +12,5 @@
 import sgtk
 
 # Backward compatibility with the previous version of the API.
-GlobalSearchCompleter = sgtk.platform.current_bundle().import_module(
-    "search_completer"
-).GlobalSearchCompleter
+search_completer = sgtk.platform.current_bundle().import_module("search_completer")
+GlobalSearchCompleter = search_completer.GlobalSearchCompleter
