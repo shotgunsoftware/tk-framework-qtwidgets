@@ -23,6 +23,8 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
     A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates
     a hierarchical search input box with auto completion.
 
+    If defaults to searching inside the current context's project and to only show entities.
+
     :signal: ``node_activated(str, int, str, str, list)`` - Fires when someone activates a
         node inside the search results. The parameters are ``type``, ``id``, ``name``,
         ``label path`` and ``incremental_paths``. If the node activated is not an entity,
@@ -47,13 +49,41 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
         self.setCompleter(search_completer.HierarchicalSearchCompleter(self))
 
         # forward the completer's node_selected signals
-        self.completer().node_activated.connect(self.node_activated)
+        self.completer().node_activated.connect(self.node_activated.emit)
 
-    def set_search_root(self, entity):
-        """
-        Allows to change the root of the search.
+        self.show_entities_only = True
+        self.search_root = sgtk.platform.current_bundle().context.project
 
-        :param dict entity: Entity to search under. If ``None``, the search will be done
-            at the site level. Note that only ``Project`` entities are supported at the moment.
+    @property
+    def search_root(self):
         """
-        self.completer().set_search_root(entity)
+        The entity under which the search will be done. If ``None``, the search will be done
+        for the whole site.
+
+        The entity is a ``dict`` with keys ``id`` and ``type``. Note that only ``Project`` entities
+        are supported at the moment.
+        """
+        return self.completer().search_root
+
+    @search_root.setter
+    def search_root(self, entity):
+        """
+        See getter documentation.
+        """
+        self.completer().search_root = entity
+
+    @property
+    def show_entities_only(self):
+        """
+        Indicates if only entities will be shown in the search results.
+
+        If set to ``True``, only entities will be shown.
+        """
+        self.completer.show_entities_only
+
+    @show_entities_only.setter
+    def show_entities_only(self, is_set):
+        """
+        See getter documentation.
+        """
+        self.completer().show_entities_only = is_set

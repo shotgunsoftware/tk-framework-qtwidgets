@@ -20,9 +20,11 @@ class HierarchicalSearchCompleter(SearchCompleter):
     """
     A standalone :class:`PySide.QtGui.QCompleter` class for matching SG entities to typed text.
 
+    If defaults to searching inside the current context's project and to only show entities.
+
     :signal: ``node_activated(str, int, str, str, list)`` - Fires when someone activates a
         node inside the search results. The parameters are ``type``, ``id``, ``name``,
-        ``label path`` and ``incremental_paths``. If the node activated is not an entity,
+        ``label_path`` and ``incremental_path``. If the node activated is not an entity,
         ``type`` and ``id`` will be ``None``.
 
     :modes: ``MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT`` - Used to identify the
@@ -43,19 +45,42 @@ class HierarchicalSearchCompleter(SearchCompleter):
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
         super(HierarchicalSearchCompleter, self).__init__(parent)
-        self.set_search_root(self._bundle.context.project)
+        self.search_root = self._bundle.context.project
+        self.show_entities_only = True
 
-    def set_search_root(self, entity):
+    @property
+    def search_root(self):
         """
-        Allows to change the root of the search.
+        The entity under which the search will be done. If ``None``, the search will be done
+        for the whole site.
 
-        :param dict entity: Entity to search under. If ``None``, the search will be done
-            at the site level. Note that only ``Project`` entities are supported at the moment.
+        The entity is a ``dict`` with keys ``id`` and ``type``. Note that only ``Project`` entities
+        are supported at the moment.
         """
-        if not entity:
-            self._search_root = "/"
-        else:
-            self._search_root = "/Project/%d" % entity.get("id")
+        return self._search_root
+
+    @search_root.setter
+    def search_root(self, entity):
+        """
+        See getter documentation.
+        """
+        self._search_root = entity
+
+    @property
+    def show_entities_only(self):
+        """
+        Indicates if only entities will be shown in the search results.
+
+        If set to ``True``, only entities will be shown.
+        """
+        return self._show_entities_only
+
+    @show_entities_only.setter
+    def show_entities_only(self, is_set):
+        """
+        See getter documentation.
+        """
+        self._show_entities_only = is_set
 
     def _set_item_delegate(self, popup, text):
         """
@@ -77,8 +102,15 @@ class HierarchicalSearchCompleter(SearchCompleter):
 
         :returns: The :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`'s job id.
         """
+        # FIXME: Ideally we would use the nav_search_entity endpoint to compute the path to the root.
+        # Unfortunately there is a bug a the moment that prevents this.
+        if not self._search_root:
+            root_path = "/"
+        else:
+            root_path = "/Project/%d" % self._search_root.get("id")
+
         return self._sg_data_retriever.execute_nav_search_string(
-            self._search_root, text
+            root_path, text
         )
 
     def _handle_search_results(self, data):
@@ -89,6 +121,13 @@ class HierarchicalSearchCompleter(SearchCompleter):
             :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` in :method:``_launch_sg_search``.
         """
         matches = data["sg"]
+
+        # When showing only entities, skip entries that aren't.
+        if self._show_entities_only:
+            matches = filter(
+                lambda x: x["ref"]["type"] is not None and x["ref"]["id"] is not None,
+                matches
+            )
 
         if len(matches) == 0:
             item = QtGui.QStandardItem("No matches found!")
@@ -116,6 +155,7 @@ class HierarchicalSearchCompleter(SearchCompleter):
 
         # insert new data into model
         for d in matches:
+
             item = QtGui.QStandardItem(d["label"])
             item.setData(self.MODE_RESULT, self.MODE_ROLE)
 
@@ -158,8 +198,8 @@ class HierarchicalSearchCompleter(SearchCompleter):
         :param model_index: The index of the model to return the result for.
         :type model_index: :class:`~PySide.QtCore.QModelIndex`
 
-        :return: The dict for the supplied model index.
-        :rtype: :obj:`dict`: or ``None``
+        :return: The ``dict`` for the supplied model index.
+        :rtype: ``dict`` or ``None``
         """
         mode = shotgun_model.get_sanitized_data(model_index, self.MODE_ROLE)
         if mode == self.MODE_RESULT:
