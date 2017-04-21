@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Shotgun Software Inc.
+# Copyright (c) 2015 Shotgun Software Inc.
 # 
 # CONFIDENTIAL AND PROPRIETARY
 # 
@@ -9,6 +9,6 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 
-import sgtk
-shotgun_search_widget = sgtk.platform.current_bundle().import_module("shotgun_search_widget")
-GlobalSearchWidget = shotgun_search_widget.GlobalSearchWidget
+from .hierarchical_search_widget import HierarchicalSearchWidget
+from .global_search_widget import GlobalSearchWidget
+

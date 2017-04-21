@@ -10,8 +10,8 @@ Contents:
 
    activity_stream
    elided_label
-   global_search_completer
-   global_search_widget
+   search_completer
+   shotgun_search_widget
    help_screen
    models
    navigation
