@@ -38,7 +38,7 @@ class SearchWidget(QtGui.QWidget):
         # set up the UI
         self._ui = Ui_SearchWidget()
         self._ui.setupUi(self)
-        self.set_placeholder_text("Search")
+        self.set_placeholder_text("Search...")
 
         # dynamically create the clear button so that we can place it over the
         # edit widget:
