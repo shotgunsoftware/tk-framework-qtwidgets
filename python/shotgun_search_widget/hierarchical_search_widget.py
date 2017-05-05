@@ -48,6 +48,11 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
 
         # forward the completer's node_selected signals
         self.completer().node_activated.connect(self.node_activated.emit)
+        # When the node is activated it queues an event to put the selection into the line edit.
+        # Queueing the event like this ensures we clean up the line edit after.
+        # Taken from:
+        # http://stackoverflow.com/questions/11865129/fail-to-clear-qlineedit-after-selecting-item-from-qcompleter
+        self.completer().node_activated.connect(self.clear, QtCore.Qt.QueuedConnection)
 
         self.show_entities_only = True
         self.search_root = sgtk.platform.current_bundle().context.project

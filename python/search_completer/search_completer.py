@@ -266,7 +266,6 @@ class SearchCompleter(QtGui.QCompleter):
         if self._processing_id == uid:
             # all done!
             self._clear_model(add_loading_item=False)
-
             self._handle_search_results(data)
 
     ############################################################################

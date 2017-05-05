@@ -216,7 +216,6 @@ class HierarchicalSearchCompleter(SearchCompleter):
 
         :param model_index: :class:`QtModelIndex` of the item that was selected.
         """
-
         data = self.get_result(model_index)
         if data:
             # Let it be known that something was picked.
