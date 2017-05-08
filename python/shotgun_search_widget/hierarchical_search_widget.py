@@ -57,6 +57,28 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
         self.show_entities_only = True
         self.search_root = sgtk.platform.current_bundle().context.project
 
+        self.completer().popup().installEventFilter(self)
+
+    def eventFilter(self, obj, event):
+        if obj != self.completer().popup():
+            return super(HierarchicalSearchWidget, self).eventFilter(obj, event)
+
+        if event.type() != QtCore.QEvent.KeyPress:
+            return super(HierarchicalSearchWidget, self).eventFilter(obj, event)
+
+        if event.key() != QtCore.Qt.Key_Return:
+            return super(HierarchicalSearchWidget, self).eventFilter(obj, event)
+
+        index = self.completer().popup().currentIndex()
+
+        # model indices are always truthy, so test against empty value...
+        if index == QtCore.QModelIndex():
+            index = self.completer().popup().model().index(0, 0)
+
+        self.completer()._on_select(index)
+        self.completer().popup().close()
+        return True
+
     @property
     def search_root(self):
         """

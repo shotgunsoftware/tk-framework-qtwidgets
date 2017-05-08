@@ -22,7 +22,7 @@ class SearchResultWidget(QtGui.QWidget):
     Widget that represents a single search match that shows up in the
     auto completer global search matches popup.
     """
-    
+
     def __init__(self, parent):
         """
         Constructor
@@ -111,7 +111,8 @@ class SearchResultWidget(QtGui.QWidget):
         Overrides the same method from ``QtGui.QWidget``
         """
 
-        self._text_fade.setGeometry(self.rect())
+        if hasattr(self, "_text_fade"):
+            self._text_fade.setGeometry(self.rect())
         super(SearchResultWidget, self).resizeEvent(event)
 
     def show_fade(self, show):

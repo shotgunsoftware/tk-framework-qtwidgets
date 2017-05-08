@@ -174,6 +174,8 @@ class HierarchicalSearchCompleter(SearchCompleter):
 
             self.model().appendRow(item)
 
+        return bool(data_matches)
+
     def get_result(self, model_index):
         """
         Returns an item from the result list.

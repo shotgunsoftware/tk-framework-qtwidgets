@@ -131,7 +131,7 @@ class SearchCompleter(QtGui.QCompleter):
             self.activated[QtCore.QModelIndex].disconnect(self._on_select)
         except Exception:
             self._bundle.log_debug(
-                "Could not disconnect global search activated signal prior to "
+                "Could not disconnect activated signal prior to "
                 "reconnect. Looks like this connection must have been "
                 "discarded at some point along the way."
             )
@@ -266,7 +266,15 @@ class SearchCompleter(QtGui.QCompleter):
         if self._processing_id == uid:
             # all done!
             self._clear_model(add_loading_item=False)
-            self._handle_search_results(data)
+            if self._handle_search_results(data):
+                self._select_first_widget()
+
+    def _select_first_widget(self):
+        text = self.widget().text()
+        index = self.popup().model().index(0, 0)
+        self.popup().setCurrentIndex(index)
+        self.widget().setText(text)
+        print self.popup().currentIndex()
 
     ############################################################################
     # Abstract methods
