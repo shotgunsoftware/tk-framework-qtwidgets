@@ -57,30 +57,7 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
         self.show_entities_only = True
         self.search_root = sgtk.platform.current_bundle().context.project
 
-        self.completer().popup().installEventFilter(self)
-
-    def eventFilter(self, obj, event):
-        if obj != self.completer().popup():
-            return super(HierarchicalSearchWidget, self).eventFilter(obj, event)
-
-        if event.type() != QtCore.QEvent.KeyPress:
-            return super(HierarchicalSearchWidget, self).eventFilter(obj, event)
-
-        if event.key() != QtCore.Qt.Key_Return:
-            return super(HierarchicalSearchWidget, self).eventFilter(obj, event)
-
-        index = self.completer().popup().currentIndex()
-
-        # model indices are always truthy, so test against empty value...
-        if index == QtCore.QModelIndex():
-            index = self.completer().popup().model().index(0, 0)
-
-        self.completer()._on_select(index)
-        self.completer().popup().close()
-        return True
-
-    @property
-    def search_root(self):
+    def _get_search_root(self):
         """
         The entity under which the search will be done. If ``None``, the search will be done
         for the whole site.
@@ -90,25 +67,42 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
         """
         return self.completer().search_root
 
-    @search_root.setter
-    def search_root(self, entity):
+    def _set_search_root(self, entity):
         """
         See getter documentation.
         """
         self.completer().search_root = entity
 
-    @property
-    def show_entities_only(self):
+    search_root = property(_get_search_root, _set_search_root)
+
+    def _get_show_entities_only(self):
         """
         Indicates if only entities will be shown in the search results.
 
         If set to ``True``, only entities will be shown.
         """
-        self.completer.show_entities_only
+        self.completer().show_entities_only
 
-    @show_entities_only.setter
-    def show_entities_only(self, is_set):
+    def _set_show_entities_only(self, is_set):
         """
         See getter documentation.
         """
         self.completer().show_entities_only = is_set
+
+    show_entities_only = property(_get_show_entities_only, _set_show_entities_only)
+
+    def _get_seed_entity_field(self):
+        """
+        The seed entity to use when searching for entity.
+
+        Can be ``PublishedFile.entity`` or ``Version.entity``.
+        """
+        return self.completer().seed_entity_field
+
+    def _set_seed_entity_field(self, seed_entity_field):
+        """
+        See setter documentation.
+        """
+        self.completer().seed_entity_field = seed_entity_field
+
+    seed_entity_field = property(_get_seed_entity_field, _set_seed_entity_field)

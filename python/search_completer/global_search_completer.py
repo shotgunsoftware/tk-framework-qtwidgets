@@ -217,5 +217,3 @@ class GlobalSearchCompleter(SearchCompleter):
                 self._thumb_map[uid] = {"item": item}
 
             self.model().appendRow(item)
-
-        return bool(matches)

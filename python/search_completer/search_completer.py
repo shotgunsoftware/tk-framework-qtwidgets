@@ -266,15 +266,7 @@ class SearchCompleter(QtGui.QCompleter):
         if self._processing_id == uid:
             # all done!
             self._clear_model(add_loading_item=False)
-            if self._handle_search_results(data):
-                self._select_first_widget()
-
-    def _select_first_widget(self):
-        text = self.widget().text()
-        index = self.popup().model().index(0, 0)
-        self.popup().setCurrentIndex(index)
-        self.widget().setText(text)
-        print self.popup().currentIndex()
+            self._handle_search_results(data)
 
     ############################################################################
     # Abstract methods

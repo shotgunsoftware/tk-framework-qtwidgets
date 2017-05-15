@@ -47,9 +47,9 @@ class HierarchicalSearchCompleter(SearchCompleter):
         super(HierarchicalSearchCompleter, self).__init__(parent)
         self.search_root = self._bundle.context.project
         self.show_entities_only = True
+        self.seed_entity_field = "PublishedFile.entity"
 
-    @property
-    def search_root(self):
+    def _get_search_root(self):
         """
         The entity under which the search will be done. If ``None``, the search will be done
         for the whole site.
@@ -59,15 +59,15 @@ class HierarchicalSearchCompleter(SearchCompleter):
         """
         return self._search_root
 
-    @search_root.setter
-    def search_root(self, entity):
+    def _set_search_root(self, entity):
         """
         See getter documentation.
         """
         self._search_root = entity
 
-    @property
-    def show_entities_only(self):
+    search_root = property(_get_search_root, _set_search_root)
+
+    def _get_show_entities_only(self):
         """
         Indicates if only entities will be shown in the search results.
 
@@ -75,12 +75,29 @@ class HierarchicalSearchCompleter(SearchCompleter):
         """
         return self._show_entities_only
 
-    @show_entities_only.setter
-    def show_entities_only(self, is_set):
+    def _set_show_entities_only(self, is_set):
         """
         See getter documentation.
         """
         self._show_entities_only = is_set
+
+    show_entities_only = property(_get_show_entities_only, _set_show_entities_only)
+
+    def _get_seed_entity_field(self):
+        """
+        The seed entity to use when searching for entity.
+
+        Can be ``PublishedFile.entity`` or ``Version.entity``.
+        """
+        return self._seed_entity_field
+
+    def _set_seed_entity_field(self, seed_entity_field):
+        """
+        See setter documentation.
+        """
+        self._seed_entity_field = seed_entity_field
+
+    seed_entity_field = property(_get_seed_entity_field, _set_seed_entity_field)
 
     def _set_item_delegate(self, popup, text):
         """
@@ -110,7 +127,7 @@ class HierarchicalSearchCompleter(SearchCompleter):
             root_path = "/Project/%d" % self._search_root.get("id")
 
         return self._sg_data_retriever.execute_nav_search_string(
-            root_path, text
+            root_path, text, self._seed_entity_field
         )
 
     def _handle_search_results(self, data):
@@ -173,8 +190,6 @@ class HierarchicalSearchCompleter(SearchCompleter):
                 self._thumb_map[uid] = {"item": item}
 
             self.model().appendRow(item)
-
-        return bool(data_matches)
 
     def get_result(self, model_index):
         """
