@@ -52,6 +52,12 @@ class GlobalSearchWidget(ShotgunSearchWidget):
         # forward the completer's activated/selected signals
         self.completer().entity_selected.connect(self.entity_selected.emit)
         self.completer().entity_activated.connect(self.entity_activated.emit)
+        # When the node is activated it queues an event to put the selection into the line edit.
+        # Queueing the event like this ensures we clean up the line edit after.
+        # Taken from:
+        # http://stackoverflow.com/questions/11865129/fail-to-clear-qlineedit-after-selecting-item-from-qcompleter
+        # Only need to listen to one of the two events as both are always emitted by the completer.
+        self.completer().entity_activated.connect(self.clear, QtCore.Qt.QueuedConnection)
 
     def set_searchable_entity_types(self, types_dict):
         """

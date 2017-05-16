@@ -48,12 +48,16 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
 
         # forward the completer's node_selected signals
         self.completer().node_activated.connect(self.node_activated.emit)
+        # When the node is activated it queues an event to put the selection into the line edit.
+        # Queueing the event like this ensures we clean up the line edit after.
+        # Taken from:
+        # http://stackoverflow.com/questions/11865129/fail-to-clear-qlineedit-after-selecting-item-from-qcompleter
+        self.completer().node_activated.connect(self.clear, QtCore.Qt.QueuedConnection)
 
         self.show_entities_only = True
         self.search_root = sgtk.platform.current_bundle().context.project
 
-    @property
-    def search_root(self):
+    def _get_search_root(self):
         """
         The entity under which the search will be done. If ``None``, the search will be done
         for the whole site.
@@ -63,25 +67,42 @@ class HierarchicalSearchWidget(ShotgunSearchWidget):
         """
         return self.completer().search_root
 
-    @search_root.setter
-    def search_root(self, entity):
+    def _set_search_root(self, entity):
         """
         See getter documentation.
         """
         self.completer().search_root = entity
 
-    @property
-    def show_entities_only(self):
+    search_root = property(_get_search_root, _set_search_root)
+
+    def _get_show_entities_only(self):
         """
         Indicates if only entities will be shown in the search results.
 
         If set to ``True``, only entities will be shown.
         """
-        self.completer.show_entities_only
+        self.completer().show_entities_only
 
-    @show_entities_only.setter
-    def show_entities_only(self, is_set):
+    def _set_show_entities_only(self, is_set):
         """
         See getter documentation.
         """
         self.completer().show_entities_only = is_set
+
+    show_entities_only = property(_get_show_entities_only, _set_show_entities_only)
+
+    def _get_seed_entity_field(self):
+        """
+        The seed entity to use when searching for entity.
+
+        Can be ``PublishedFile.entity`` or ``Version.entity``.
+        """
+        return self.completer().seed_entity_field
+
+    def _set_seed_entity_field(self, seed_entity_field):
+        """
+        See setter documentation.
+        """
+        self.completer().seed_entity_field = seed_entity_field
+
+    seed_entity_field = property(_get_seed_entity_field, _set_seed_entity_field)

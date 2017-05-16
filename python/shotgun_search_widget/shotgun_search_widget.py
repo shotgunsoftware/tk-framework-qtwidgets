@@ -122,3 +122,13 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         and emits the relevant signals.
         """
         self.clear()
+
+    def keyPressEvent(self, event):
+        """
+        Clears the line edit when the user hits escape.
+        """
+        if event.key() == QtCore.Qt.Key_Escape:
+            self.clear()
+            self.completer().popup().close()
+        else:
+            super(ShotgunSearchWidget, self).keyPressEvent(event)
