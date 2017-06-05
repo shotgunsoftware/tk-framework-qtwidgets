@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_search_widget.hierarchical_search_widget &mdash; tk-framework-qtwidgets v2.6.0 documentation</title>
+  <title>shotgun_search_widget.hierarchical_search_widget &mdash; tk-framework-qtwidgets v2.6.2 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.6.0 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.6.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.2.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -227,12 +227,16 @@
 
         <span class="c1"># forward the completer&#39;s node_selected signals</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">node_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_activated</span><span class="o">.</span><span class="n">emit</span><span class="p">)</span>
+        <span class="c1"># When the node is activated it queues an event to put the selection into the line edit.</span>
+        <span class="c1"># Queueing the event like this ensures we clean up the line edit after.</span>
+        <span class="c1"># Taken from:</span>
+        <span class="c1"># http://stackoverflow.com/questions/11865129/fail-to-clear-qlineedit-after-selecting-item-from-qcompleter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">node_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">QueuedConnection</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">show_entities_only</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">search_root</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">search_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_search_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The entity under which the search will be done. If ``None``, the search will be done</span>
 <span class="sd">        for the whole site.</span>
@@ -242,28 +246,45 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">search_root</span>
 
-    <span class="nd">@search_root.setter</span>
-    <span class="k">def</span> <span class="nf">search_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_set_search_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        See getter documentation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">search_root</span> <span class="o">=</span> <span class="n">entity</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">show_entities_only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">search_root</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_search_root</span><span class="p">,</span> <span class="n">_set_search_root</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_show_entities_only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Indicates if only entities will be shown in the search results.</span>
 
 <span class="sd">        If set to ``True``, only entities will be shown.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="o">.</span><span class="n">show_entities_only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">show_entities_only</span>
 
-    <span class="nd">@show_entities_only.setter</span>
-    <span class="k">def</span> <span class="nf">show_entities_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_set</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_set_show_entities_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_set</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        See getter documentation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">show_entities_only</span> <span class="o">=</span> <span class="n">is_set</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">show_entities_only</span> <span class="o">=</span> <span class="n">is_set</span>
+
+    <span class="n">show_entities_only</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_show_entities_only</span><span class="p">,</span> <span class="n">_set_show_entities_only</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_seed_entity_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The seed entity to use when searching for entity.</span>
+
+<span class="sd">        Can be ``PublishedFile.entity`` or ``Version.entity``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">seed_entity_field</span>
+
+    <span class="k">def</span> <span class="nf">_set_seed_entity_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed_entity_field</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See setter documentation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">seed_entity_field</span> <span class="o">=</span> <span class="n">seed_entity_field</span>
+
+    <span class="n">seed_entity_field</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_seed_entity_field</span><span class="p">,</span> <span class="n">_set_seed_entity_field</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -296,7 +317,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.6.0',
+            VERSION:'v2.6.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
