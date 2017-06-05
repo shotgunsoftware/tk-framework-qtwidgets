@@ -44,10 +44,18 @@ Please note that the example above is crude and for heavy computational work we 
 an asynchronous approach with a worker thread for better UI responsiveness.
 
 
-ShotgunOverlayWidget
+.. currentmodule:: overlay_widget
+
+ShotgunSpinningWidget
 ======================================
 
-.. currentmodule:: overlay_widget
+.. autoclass:: ShotgunSpinningWidget
+    :show-inheritance:
+    :members:
+    :exclude-members: paintEvent
+
+ShotgunOverlayWidget
+======================================
 
 .. autoclass:: ShotgunOverlayWidget
     :show-inheritance:

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Text Overlay Widget &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
+  <title>Text Overlay Widget &mdash; tk-framework-qtwidgets v2.6.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.0 documentation" href="index.html"/>
         <link rel="next" title="Shotgun Playback Label Widget" href="playback_label.html"/>
         <link rel="prev" title="Shotgun Note Input Widget" href="note_input_widget.html"/> 
 
@@ -92,8 +92,8 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
@@ -103,6 +103,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#sample-code">Sample Code</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#shotgunspinningwidget">ShotgunSpinningWidget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#shotgunoverlaywidget">ShotgunOverlayWidget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#shotgunmodeloverlaywidget">ShotgunModelOverlayWidget</a></li>
 </ul>
@@ -134,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -219,6 +220,61 @@ connect it to a widget and then control the overlay state:</p>
 an asynchronous approach with a worker thread for better UI responsiveness.</p>
 </div>
 </div>
+<div class="section" id="shotgunspinningwidget">
+<h2>ShotgunSpinningWidget<a class="headerlink" href="#shotgunspinningwidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="overlay_widget.ShotgunSpinningWidget">
+<em class="property">class </em><code class="descclassname">overlay_widget.</code><code class="descname">ShotgunSpinningWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_spinning_widget.html#ShotgunSpinningWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunSpinningWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<p>Overlay widget that can be placed on top over any QT widget.
+Once you have placed the overlay widget, you can use it to
+display a spinner or report progress in the form of an arc that goes
+from 0 to 360 degrees.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a>) &#8211; Widget to attach the overlay to</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="overlay_widget.ShotgunSpinningWidget.start_spin">
+<code class="descname">start_spin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_spinning_widget.html#ShotgunSpinningWidget.start_spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunSpinningWidget.start_spin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables the overlay and shows an animated spinner.</p>
+<p>If you want to stop the spinning, call <a class="reference internal" href="#overlay_widget.ShotgunSpinningWidget.hide" title="overlay_widget.ShotgunSpinningWidget.hide"><code class="xref py py-meth docutils literal"><span class="pre">hide()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="overlay_widget.ShotgunSpinningWidget.start_progress">
+<code class="descname">start_progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_spinning_widget.html#ShotgunSpinningWidget.start_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunSpinningWidget.start_progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables the overlay and shows an animated progress arc.</p>
+<p>If you want to stop the progress, call <a class="reference internal" href="#overlay_widget.ShotgunSpinningWidget.hide" title="overlay_widget.ShotgunSpinningWidget.hide"><code class="xref py py-meth docutils literal"><span class="pre">hide()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="overlay_widget.ShotgunSpinningWidget.report_progress">
+<code class="descname">report_progress</code><span class="sig-paren">(</span><em>current</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_spinning_widget.html#ShotgunSpinningWidget.report_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunSpinningWidget.report_progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the widget current progress value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>current</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; New value for the progress arc. Must be between 0.0 (nothing) and 1.0 (complete).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="overlay_widget.ShotgunSpinningWidget.hide">
+<code class="descname">hide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_spinning_widget.html#ShotgunSpinningWidget.hide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunSpinningWidget.hide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the overlay.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="shotgunoverlaywidget">
 <h2>ShotgunOverlayWidget<a class="headerlink" href="#shotgunoverlaywidget" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -226,7 +282,7 @@ an asynchronous approach with a worker thread for better UI responsiveness.</p>
 <em class="property">class </em><code class="descclassname">overlay_widget.</code><code class="descname">ShotgunOverlayWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
 <p>Overlay widget that can be placed on top over any QT widget.
-Once you have placed the overlay widget, you can use it to 
+Once you have placed the overlay widget, you can use it to
 display information, errors, a spinner etc.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -262,7 +318,7 @@ a error message centered in the middle of the overlay.</p>
 <dt id="overlay_widget.ShotgunOverlayWidget.show_message">
 <code class="descname">show_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.show_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.show_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display a message centered on the overlay.
-If an error is already being displayed by the overlay at this point, 
+If an error is already being displayed by the overlay at this point,
 nothing will happen.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -280,7 +336,7 @@ nothing will happen.</p>
 <dt id="overlay_widget.ShotgunOverlayWidget.show_message_pixmap">
 <code class="descname">show_message_pixmap</code><span class="sig-paren">(</span><em>pixmap</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/overlay_widget/shotgun_overlay_widget.html#ShotgunOverlayWidget.show_message_pixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#overlay_widget.ShotgunOverlayWidget.show_message_pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show an info message in the form of a pixmap.
-If an error is already being displayed by the overlay, 
+If an error is already being displayed by the overlay,
 the pixmap will not be shown.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -392,7 +448,7 @@ easily created and connected to the same shotgun model.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.5.18',
+            VERSION:'v2.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

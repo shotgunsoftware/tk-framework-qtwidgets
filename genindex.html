@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
+  <title>Index &mdash; tk-framework-qtwidgets v2.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="index.html"/> 
+    <link rel="top" title="tk-framework-qtwidgets v2.6.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -91,8 +91,8 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -364,12 +364,16 @@
   </dt>
 
       
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter.clear">clear() (global_search_completer.GlobalSearchCompleter method)</a>
+  <dt><a href="note_input_widget.html#note_input_widget.NoteInputWidget.clear">clear() (note_input_widget.NoteInputWidget method)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="note_input_widget.html#note_input_widget.NoteInputWidget.clear">(note_input_widget.NoteInputWidget method)</a>
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter.clear">(search_completer.GlobalSearchCompleter method)</a>
+  </dt>
+
+        
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.clear">(search_completer.HierarchicalSearchCompleter method)</a>
   </dt>
 
         
@@ -378,6 +382,14 @@
 
         
   <dt><a href="shotgun_fields.html#shotgun_fields.image_widget.ImageWidget.clear">(shotgun_fields.image_widget.ImageWidget method)</a>
+  </dt>
+
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget.clear">(shotgun_search_widget.GlobalSearchWidget method)</a>
+  </dt>
+
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.HierarchicalSearchWidget.clear">(shotgun_search_widget.HierarchicalSearchWidget method)</a>
   </dt>
 
         
@@ -475,19 +487,27 @@
   </dt>
 
         
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter.destroy">(global_search_completer.GlobalSearchCompleter method)</a>
-  </dt>
-
-        
-  <dt><a href="global_search_widget.html#global_search_widget.GlobalSearchWidget.destroy">(global_search_widget.GlobalSearchWidget method)</a>
-  </dt>
-
-        
   <dt><a href="note_input_widget.html#note_input_widget.NoteInputWidget.destroy">(note_input_widget.NoteInputWidget method)</a>
   </dt>
 
         
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter.destroy">(search_completer.GlobalSearchCompleter method)</a>
+  </dt>
+
+        
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.destroy">(search_completer.HierarchicalSearchCompleter method)</a>
+  </dt>
+
+        
   <dt><a href="shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.destroy">(shotgun_fields.shotgun_field_editable.ShotgunFieldEditable method)</a>
+  </dt>
+
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget.destroy">(shotgun_search_widget.GlobalSearchWidget method)</a>
+  </dt>
+
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.HierarchicalSearchWidget.destroy">(shotgun_search_widget.HierarchicalSearchWidget method)</a>
   </dt>
 
       </dl></dd>
@@ -612,9 +632,15 @@
   </dt>
 
       
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter.get_current_result">get_current_result() (global_search_completer.GlobalSearchCompleter method)</a>
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter.get_current_result">get_current_result() (search_completer.GlobalSearchCompleter method)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.get_current_result">(search_completer.HierarchicalSearchCompleter method)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.get_data">get_data() (shotgun_fields.bubble_widget.BubbleWidget method)</a>
   </dt>
@@ -978,9 +1004,15 @@
 
       </dl></dd>
       
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter.get_first_result">get_first_result() (global_search_completer.GlobalSearchCompleter method)</a>
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter.get_first_result">get_first_result() (search_completer.GlobalSearchCompleter method)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.get_first_result">(search_completer.HierarchicalSearchCompleter method)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
@@ -994,9 +1026,15 @@
 
       </dl></dd>
       
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter.get_result">get_result() (global_search_completer.GlobalSearchCompleter method)</a>
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter.get_result">get_result() (search_completer.GlobalSearchCompleter method)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.get_result">(search_completer.HierarchicalSearchCompleter method)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.get_typed_text">get_typed_text() (shotgun_fields.bubble_widget.BubbleEditWidget method)</a>
   </dt>
@@ -1120,11 +1158,11 @@
 
       </dl></dd>
       
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter">GlobalSearchCompleter (class in global_search_completer)</a>
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter">GlobalSearchCompleter (class in search_completer)</a>
   </dt>
 
       
-  <dt><a href="global_search_widget.html#global_search_widget.GlobalSearchWidget">GlobalSearchWidget (class in global_search_widget)</a>
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget">GlobalSearchWidget (class in shotgun_search_widget)</a>
   </dt>
 
       
@@ -1153,12 +1191,26 @@
   <dt><a href="overlay_widget.html#overlay_widget.ShotgunOverlayWidget.hide">hide() (overlay_widget.ShotgunOverlayWidget method)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="overlay_widget.html#overlay_widget.ShotgunSpinningWidget.hide">(overlay_widget.ShotgunSpinningWidget method)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="models.html#models.HierarchicalFilteringProxyModel">HierarchicalFilteringProxyModel (class in models)</a>
   </dt>
 
+      
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter">HierarchicalSearchCompleter (class in search_completer)</a>
+  </dt>
+
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.HierarchicalSearchWidget">HierarchicalSearchWidget (class in shotgun_search_widget)</a>
+  </dt>
+
       
   <dt><a href="activity_stream.html#activity_stream.ActivityStreamWidget.highlight_new_arrivals">highlight_new_arrivals (activity_stream.ActivityStreamWidget attribute)</a>
   </dt>
@@ -1402,6 +1454,10 @@
   </dt>
 
       
+  <dt><a href="overlay_widget.html#overlay_widget.ShotgunSpinningWidget.report_progress">report_progress() (overlay_widget.ShotgunSpinningWidget method)</a>
+  </dt>
+
+      
   <dt><a href="activity_stream.html#activity_stream.ActivityStreamWidget.rescan">rescan() (activity_stream.ActivityStreamWidget method)</a>
   </dt>
 
@@ -1424,9 +1480,25 @@
   </dt>
 
       
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter.search">search() (global_search_completer.GlobalSearchCompleter method)</a>
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter.search">search() (search_completer.GlobalSearchCompleter method)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.search">(search_completer.HierarchicalSearchCompleter method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.search_root">search_root (search_completer.HierarchicalSearchCompleter attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.HierarchicalSearchWidget.search_root">(shotgun_search_widget.HierarchicalSearchWidget attribute)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="version_details.html#version_details.VersionDetailsWidget.select_note">select_note() (version_details.VersionDetailsWidget method)</a>
   </dt>
@@ -1445,15 +1517,23 @@
   </dt>
 
         
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter.set_bg_task_manager">(global_search_completer.GlobalSearchCompleter method)</a>
-  </dt>
-
-        
-  <dt><a href="global_search_widget.html#global_search_widget.GlobalSearchWidget.set_bg_task_manager">(global_search_widget.GlobalSearchWidget method)</a>
-  </dt>
-
-        
   <dt><a href="note_input_widget.html#note_input_widget.NoteInputWidget.set_bg_task_manager">(note_input_widget.NoteInputWidget method)</a>
+  </dt>
+
+        
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter.set_bg_task_manager">(search_completer.GlobalSearchCompleter method)</a>
+  </dt>
+
+        
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.set_bg_task_manager">(search_completer.HierarchicalSearchCompleter method)</a>
+  </dt>
+
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget.set_bg_task_manager">(shotgun_search_widget.GlobalSearchWidget method)</a>
+  </dt>
+
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.HierarchicalSearchWidget.set_bg_task_manager">(shotgun_search_widget.HierarchicalSearchWidget method)</a>
   </dt>
 
       </dl></dd>
@@ -1510,16 +1590,26 @@
   </dt>
 
       
-  <dt><a href="shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.set_removable">set_removable() (shotgun_fields.bubble_widget.BubbleWidget method)</a>
-  </dt>
-
-      
-  <dt><a href="global_search_completer.html#global_search_completer.GlobalSearchCompleter.set_searchable_entity_types">set_searchable_entity_types() (global_search_completer.GlobalSearchCompleter method)</a>
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget.set_placeholder_text">set_placeholder_text() (shotgun_search_widget.GlobalSearchWidget method)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="global_search_widget.html#global_search_widget.GlobalSearchWidget.set_searchable_entity_types">(global_search_widget.GlobalSearchWidget method)</a>
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.HierarchicalSearchWidget.set_placeholder_text">(shotgun_search_widget.HierarchicalSearchWidget method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.set_removable">set_removable() (shotgun_fields.bubble_widget.BubbleWidget method)</a>
+  </dt>
+
+      
+  <dt><a href="search_completer.html#search_completer.GlobalSearchCompleter.set_searchable_entity_types">set_searchable_entity_types() (search_completer.GlobalSearchCompleter method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget.set_searchable_entity_types">(shotgun_search_widget.GlobalSearchWidget method)</a>
   </dt>
 
       </dl></dd>
@@ -1653,12 +1743,12 @@
   <dt><a href="version_details.html#version_details.VersionDetailsWidget.set_version_thumbnail">set_version_thumbnail() (version_details.VersionDetailsWidget method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.setModelData">setModelData() (shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate method)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="elided_label.html#elided_label.ElidedLabel.setText">setText() (elided_label.ElidedLabel method)</a>
   </dt>
@@ -1708,6 +1798,20 @@
   </dt>
 
       
+  <dt><a href="overlay_widget.html#overlay_widget.ShotgunSpinningWidget">ShotgunSpinningWidget (class in overlay_widget)</a>
+  </dt>
+
+      
+  <dt><a href="search_completer.html#search_completer.HierarchicalSearchCompleter.show_entities_only">show_entities_only (search_completer.HierarchicalSearchCompleter attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="shotgun_search_widget.html#shotgun_search_widget.HierarchicalSearchWidget.show_entities_only">(shotgun_search_widget.HierarchicalSearchWidget attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
   <dt><a href="overlay_widget.html#overlay_widget.ShotgunOverlayWidget.show_error_message">show_error_message() (overlay_widget.ShotgunOverlayWidget method)</a>
   </dt>
 
@@ -1750,9 +1854,19 @@
   </dt>
 
       
+  <dt><a href="overlay_widget.html#overlay_widget.ShotgunSpinningWidget.start_progress">start_progress() (overlay_widget.ShotgunSpinningWidget method)</a>
+  </dt>
+
+      
   <dt><a href="overlay_widget.html#overlay_widget.ShotgunOverlayWidget.start_spin">start_spin() (overlay_widget.ShotgunOverlayWidget method)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="overlay_widget.html#overlay_widget.ShotgunSpinningWidget.start_spin">(overlay_widget.ShotgunSpinningWidget method)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="shotgun_fields.html#shotgun_fields.status_list_widget.StatusListEditorWidget">StatusListEditorWidget (class in shotgun_fields.status_list_widget)</a>
   </dt>
@@ -1876,7 +1990,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.5.18',
+            VERSION:'v2.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

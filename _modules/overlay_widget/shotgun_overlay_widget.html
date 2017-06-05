@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>overlay_widget.shotgun_overlay_widget &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
+  <title>overlay_widget.shotgun_overlay_widget &mdash; tk-framework-qtwidgets v2.6.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -91,8 +91,8 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../global_search_completer.html">Shotgun Global Search Completer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">Shotgun Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">Shotgun Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -178,25 +178,27 @@
             
   <h1>Source code for overlay_widget.shotgun_overlay_widget</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2013 Shotgun Software Inc.</span>
-<span class="c1"># </span>
+<span class="c1">#</span>
 <span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c1"># </span>
-<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
 <span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">from</span> <span class="nn">tank.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 <span class="c1"># load resources</span>
-<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
+<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span> <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.shotgun_spinning_widget</span> <span class="kn">import</span> <span class="n">ShotgunSpinningWidget</span>
+
 
 <div class="viewcode-block" id="ShotgunOverlayWidget"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunOverlayWidget">[docs]</a><span class="k">class</span> <span class="nc">ShotgunOverlayWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Overlay widget that can be placed on top over any QT widget.</span>
-<span class="sd">    Once you have placed the overlay widget, you can use it to </span>
-<span class="sd">    display information, errors, a spinner etc.  </span>
+<span class="sd">    Once you have placed the overlay widget, you can use it to</span>
+<span class="sd">    display information, errors, a spinner etc.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">MODE_OFF</span> <span class="o">=</span> <span class="mi">0</span>
@@ -204,6 +206,7 @@
     <span class="n">MODE_ERROR</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">MODE_INFO_TEXT</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="n">MODE_INFO_PIXMAP</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">MODE_PROGRESS</span> <span class="o">=</span> <span class="mi">5</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -212,12 +215,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
-        <span class="c1"># hook up a listener to the parent window so we </span>
+        <span class="c1"># hook up a listener to the parent window so we</span>
         <span class="c1"># can resize the overlay at the same time as the parent window</span>
         <span class="c1"># is being resized.</span>
         <span class="nb">filter</span> <span class="o">=</span> <span class="n">ResizeEventFilter</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="nb">filter</span><span class="o">.</span><span class="n">resized</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_parent_resized</span><span class="p">)</span>
         <span class="n">parent</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span> <span class="o">=</span> <span class="n">ShotgunSpinningWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="c1"># make it transparent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WA_TransparentForMouseEvents</span><span class="p">)</span>
@@ -226,26 +231,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_OFF</span>
 
-        <span class="c1"># setup spinner timer</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_animation</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_spin_angle</span> <span class="o">=</span> <span class="mi">0</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">_message_pixmap</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_message</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/tk_framework_qtwidgets.overlay_widget/sg_logo.png&quot;</span><span class="p">)</span>
- 
+
     <span class="c1">############################################################################################</span>
     <span class="c1"># public interface</span>
 <div class="viewcode-block" id="ShotgunOverlayWidget.start_spin"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunOverlayWidget.start_spin">[docs]</a>    <span class="k">def</span> <span class="nf">start_spin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enables the overlay and shows an animated spinner.</span>
-<span class="sd">        </span>
-<span class="sd">        If you want to stop the spinning, call :meth:`hide`. </span>
+
+<span class="sd">        If you want to stop the spinning, call :meth:`hide`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_SPIN</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span><span class="o">.</span><span class="n">start_spin</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_SPIN</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunOverlayWidget.show_error_message"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunOverlayWidget.show_error_message">[docs]</a>    <span class="k">def</span> <span class="nf">show_error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -254,16 +254,16 @@
 
 <span class="sd">        :param msg: Message to display</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_message</span> <span class="o">=</span> <span class="n">msg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span></div>
- 
+
 <div class="viewcode-block" id="ShotgunOverlayWidget.show_message"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunOverlayWidget.show_message">[docs]</a>    <span class="k">def</span> <span class="nf">show_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Display a message centered on the overlay.</span>
-<span class="sd">        If an error is already being displayed by the overlay at this point, </span>
+<span class="sd">        If an error is already being displayed by the overlay at this point,</span>
 <span class="sd">        nothing will happen.</span>
 
 <span class="sd">        :param msg: Message to display</span>
@@ -271,8 +271,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
-        <span class="k">else</span><span class="p">:</span> 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_message</span> <span class="o">=</span> <span class="n">msg</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_TEXT</span>
@@ -282,17 +282,17 @@
 <div class="viewcode-block" id="ShotgunOverlayWidget.show_message_pixmap"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunOverlayWidget.show_message_pixmap">[docs]</a>    <span class="k">def</span> <span class="nf">show_message_pixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show an info message in the form of a pixmap.</span>
-<span class="sd">        If an error is already being displayed by the overlay, </span>
+<span class="sd">        If an error is already being displayed by the overlay,</span>
 <span class="sd">        the pixmap will not be shown.</span>
 
 <span class="sd">        :param pixamp: Image to display</span>
 <span class="sd">        :type pixmap: :class:`PySide.QtGui.QPixmap`</span>
-<span class="sd">        :returns: True if pixmap was displayed, False otherwise        </span>
+<span class="sd">        :returns: True if pixmap was displayed, False otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
-        <span class="k">else</span><span class="p">:</span>         
-            <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_message_pixmap</span> <span class="o">=</span> <span class="n">pixmap</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_PIXMAP</span>
@@ -305,16 +305,16 @@
 
 <span class="sd">        :param hide_errors: If set to False, errors are not hidden.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">hide_errors</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">hide_errors</span> <span class="ow">is</span> <span class="bp">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
             <span class="c1"># an error is displayed - leave it up.</span>
             <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_OFF</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></div>
- 
+
     <span class="c1">############################################################################################</span>
     <span class="c1"># internal methods</span>
- 
+
     <span class="k">def</span> <span class="nf">_on_parent_resized</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Special slot hooked up to the event filter.</span>
@@ -322,16 +322,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># resize overlay</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">_on_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Spinner async callback to help animate the progress spinner.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_spin_angle</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spin_angle</span> <span class="o">==</span> <span class="mi">90</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_spin_angle</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
- 
     <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Render the UI.</span>
@@ -343,31 +335,12 @@
         <span class="n">painter</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># set up semi transparent backdrop</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span><span class="p">)</span>
             <span class="n">overlay_color</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;#1B1B1B&quot;</span><span class="p">)</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">overlay_color</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">overlay_color</span><span class="p">))</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">overlay_color</span><span class="p">))</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
 
-            <span class="c1"># now draw different things depending on mode</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_SPIN</span><span class="p">:</span>
-
-                <span class="c1"># show the spinner</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">40</span><span class="p">,</span> 
-                                  <span class="p">(</span><span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">40</span><span class="p">)</span>
-
-                <span class="n">pen</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;#424141&quot;</span><span class="p">))</span>
-                <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">drawPixmap</span><span class="p">(</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_icon</span><span class="p">)</span>
-
-                <span class="n">r</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRectF</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">80.0</span><span class="p">,</span> <span class="mf">80.0</span><span class="p">)</span>
-                <span class="n">start_angle</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spin_angle</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">16</span>
-                <span class="n">span_angle</span> <span class="o">=</span> <span class="mi">340</span> <span class="o">*</span> <span class="mi">16</span> 
-
-                <span class="n">painter</span><span class="o">.</span><span class="n">drawArc</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">start_angle</span><span class="p">,</span> <span class="n">span_angle</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_TEXT</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_TEXT</span><span class="p">:</span>
                 <span class="c1"># show text in the middle</span>
                 <span class="n">pen</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;#888888&quot;</span><span class="p">))</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
@@ -378,20 +351,23 @@
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
                 <span class="c1"># show error text in the center</span>
                 <span class="n">pen</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;#C8534A&quot;</span><span class="p">))</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>            
+                <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
                 <span class="n">text_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
                 <span class="n">text_flags</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextWordWrap</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_rect</span><span class="p">,</span> <span class="n">text_flags</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message</span><span class="p">)</span>
 
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_PIXMAP</span><span class="p">:</span>
                 <span class="c1"># draw image</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_pixmap</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> 
-                                  <span class="p">(</span><span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_pixmap</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_pixmap</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+                                  <span class="p">(</span><span class="n">painter</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_pixmap</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
 
-                <span class="n">painter</span><span class="o">.</span><span class="n">drawPixmap</span><span class="p">(</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_pixmap</span><span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawPixmap</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_pixmap</span><span class="p">)</span>
 
         <span class="k">finally</span><span class="p">:</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span></div>
+            <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunOverlayWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
 
 <span class="k">class</span> <span class="nc">ResizeEventFilter</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -401,14 +377,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">resized</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">obj</span><span class="p">,</span>  <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="c1"># peek at the message</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Resize</span><span class="p">:</span>
             <span class="c1"># re-broadcast any resize events</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resized</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
         <span class="c1"># pass it on!</span>
         <span class="k">return</span> <span class="bp">False</span>
-
 </pre></div>
 
            </div>
@@ -441,7 +416,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.5.18',
+            VERSION:'v2.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

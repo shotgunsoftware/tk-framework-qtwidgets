@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Field Widgets &mdash; tk-framework-qtwidgets v2.5.18 documentation</title>
+  <title>Shotgun Field Widgets &mdash; tk-framework-qtwidgets v2.6.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.5.18 documentation" href="index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.0 documentation" href="index.html"/>
         <link rel="next" title="Shotgun Menus" href="shotgun_menus.html"/>
         <link rel="prev" title="Screen Capture Widget" href="screen_grab.html"/> 
 
@@ -92,8 +92,8 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="global_search_completer.html">Shotgun Global Search Completer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="global_search_widget.html">Shotgun Global Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
@@ -164,7 +164,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.5.18.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -487,7 +487,7 @@ display widget registered.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>sg_entity_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Shotgun entity type</li>
-<li><strong>field_names</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; An list of (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">str</span></code></a>) Shotgun field names</li>
+<li><strong>field_names</strong> (<em>list</em>) &#8211; An list of (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">str</span></code></a>) Shotgun field names</li>
 <li><strong>widget_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The type of widget class to check for support.</li>
 </ul>
 </td>
@@ -519,10 +519,10 @@ and available via the <code class="docutils literal"><span class="pre">ShotgunFi
 <p>This class also provides default logic common to all Shotgun field widgets
 without requiring them to use multiple inheritance which can be tricky.</p>
 <p>The following protocols apply when using this class:</p>
-<ul>
+<ul class="simple">
 <li><dl class="first docutils">
 <dt>Classes defined with this metaclass must have the following:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li>A member named <code class="docutils literal"><span class="pre">_DISPLAY_TYPE</span></code>, <code class="docutils literal"><span class="pre">_EDITOR_TYPE</span></code>, or both. The value
 of these members should be a string matching the Shotgun field data
 type that the class will be responsible for displaying or editing.</li>
@@ -561,10 +561,10 @@ fields the widget should be used to display.</p>
 </div>
 <p>The widget defined above will only be used to display the fields in the
 <code class="docutils literal"><span class="pre">_ENTITY_FIELDS</span></code> list.</p>
-<ul>
+<ul class="simple">
 <li><dl class="first docutils">
 <dt>No class defined with this metaclass can define its own <code class="docutils literal"><span class="pre">__init__</span></code> method.</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li>The metaclass defines an <code class="docutils literal"><span class="pre">__init__</span></code> that takes the arguments below</li>
 <li>The class will pass all other keyword args through to the PySide widget
 constructor for the class&#8217; superclass.</li>
@@ -587,10 +587,10 @@ constructor for the class&#8217; superclass.</li>
 </tr>
 </tbody>
 </table>
-<ul>
+<ul class="simple">
 <li><dl class="first docutils">
 <dt>All instances of the class will have the following member variables set:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">_entity</span></code>: The entity the widget is representing a field of (if passed in)</li>
 <li><code class="docutils literal"><span class="pre">_field_name</span></code>: The name of the field the widget is representing</li>
 <li><code class="docutils literal"><span class="pre">_bg_task_manager</span></code>: The task manager the widget should use (if passed in)</li>
@@ -601,7 +601,7 @@ constructor for the class&#8217; superclass.</li>
 </li>
 <li><dl class="first docutils">
 <dt>All instances of this class can emit the following signals:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">value_changed()</span></code>: Emitted when the value of the widget is changed
 either programmatically or via user interaction.</li>
 </ul>
@@ -610,7 +610,7 @@ either programmatically or via user interaction.</li>
 </li>
 <li><dl class="first docutils">
 <dt>The following optional method can be defined by classes using this metaclass</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">setup_widget(self)</span></code>: called during construction after the superclass
 has been initialized and after the above member variables have been set.</li>
 <li><code class="docutils literal"><span class="pre">set_value(self,</span> <span class="pre">value)</span></code>: called during construction after
@@ -625,7 +625,7 @@ field in Shotgun, as returned by the python API.</li>
 </li>
 <li><dl class="first docutils">
 <dt>If <code class="docutils literal"><span class="pre">set_value</span></code> is not defined, then the class must implement the following methods:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">_display_default(self)</span></code>: Set the widget to display its &#8220;blank&#8221; state</li>
 <li><code class="docutils literal"><span class="pre">_display_value(self,</span> <span class="pre">value)</span></code>: Set the widget to display the value from Shotgun</li>
 <li>These methods are called by the default implementation of <code class="docutils literal"><span class="pre">set_value</span></code>.</li>
@@ -635,7 +635,7 @@ field in Shotgun, as returned by the python API.</li>
 </li>
 <li><dl class="first docutils">
 <dt>Classes that handle display <strong>and</strong> editing of field values and must implement the following methods:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">enable_editing(self,</span> <span class="pre">bool)</span></code>: Toggles the editability of the widget</li>
 </ul>
 </dd>
@@ -643,7 +643,7 @@ field in Shotgun, as returned by the python API.</li>
 </li>
 <li><dl class="first docutils">
 <dt>Editor classes can optionally implement the following methods:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">_begin_edit(self)</span></code>: Used to provide additional behavior/polish when
 when the user has requested to edit the field. An example would be automatically
 showing a combobox popup menu or selecting the text in a line edit.</li>
@@ -653,7 +653,7 @@ showing a combobox popup menu or selecting the text in a line edit.</li>
 </li>
 <li><dl class="first docutils">
 <dt>Editor classes can optionally set the following members:</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li><code class="docutils literal"><span class="pre">_IMMEDIATE_APPLY</span></code>: If True, it implies that interaction with the
 editor will apply a value. If False (default), it implies that the user
 must apply the value as a separate action (like clicking an apply button).
@@ -2147,7 +2147,7 @@ object.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of <a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">dict</span></code></a> objects.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">list</span></code></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-obj docutils literal"><span class="pre">list</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -3222,7 +3222,7 @@ interaction and decide when a new &#8220;bubble&#8221; should be added to the wi
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of <a class="reference internal" href="#shotgun_fields.bubble_widget.BubbleWidget" title="shotgun_fields.bubble_widget.BubbleWidget"><code class="xref py py-class docutils literal"><span class="pre">BubbleWidget</span></code></a> classes</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)">list</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -3427,7 +3427,7 @@ the item index.</p>
 <hr class="docutils" />
 <div class="section" id="example-code">
 <h2>Example Code<a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h2>
-<div class="literal-block-wrapper container" id="populate-a-qtablewidget-with-the-results-of-a-shotgun-query">
+<div class="literal-block-wrapper docutils container" id="populate-a-qtablewidget-with-the-results-of-a-shotgun-query">
 <div class="code-block-caption"><span class="caption-text">Populate a QTableWidget with the results of a Shotgun query</span><a class="headerlink" href="#populate-a-qtablewidget-with-the-results-of-a-shotgun-query" title="Permalink to this code">¶</a></div>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -3535,7 +3535,7 @@ the item index.</p>
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="literal-block-wrapper container" id="display-data-from-a-shotgunmodel-in-a-tableview">
+<div class="literal-block-wrapper docutils container" id="display-data-from-a-shotgunmodel-in-a-tableview">
 <div class="code-block-caption"><span class="caption-text">Display data from a ShotgunModel in a TableView</span><a class="headerlink" href="#display-data-from-a-shotgunmodel-in-a-tableview" title="Permalink to this code">¶</a></div>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -3648,7 +3648,7 @@ the item index.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.5.18',
+            VERSION:'v2.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -1,0 +1,478 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>search_completer.hierarchical_search_completer &mdash; tk-framework-qtwidgets v2.6.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets v2.6.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <a href='http://developer.shotgunsoftware.com'>
+    
+        <img style='width: 191px;
+                height: 60px; 
+                margin: 2px;
+                border-radius: 0px; 
+                padding: 0px;' 
+            src='../../_static/logo@2x.png'/>
+    
+    </a>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">Shotgun Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">Shotgun Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+       
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> v2.6.0.<br>
+    
+        This documentation is part of the Shotgun Pipeline Toolkit.
+    
+    For more information, please visit
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>search_completer.hierarchical_search_completer</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for search_completer.hierarchical_search_completer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2017 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="kn">from</span> <span class="nn">.search_completer</span> <span class="kn">import</span> <span class="n">SearchCompleter</span>
+
+<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="HierarchicalSearchCompleter"><a class="viewcode-back" href="../../search_completer.html#search_completer.HierarchicalSearchCompleter">[docs]</a><span class="k">class</span> <span class="nc">HierarchicalSearchCompleter</span><span class="p">(</span><span class="n">SearchCompleter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A standalone :class:`PySide.QtGui.QCompleter` class for matching SG entities to typed text.</span>
+
+<span class="sd">    If defaults to searching inside the current context&#39;s project and to only show entities.</span>
+
+<span class="sd">    :signal: ``node_activated(str, int, str, str, list)`` - Fires when someone activates a</span>
+<span class="sd">        node inside the search results. The parameters are ``type``, ``id``, ``name``,</span>
+<span class="sd">        ``label_path`` and ``incremental_path``. If the node activated is not an entity,</span>
+<span class="sd">        ``type`` and ``id`` will be ``None``.</span>
+
+<span class="sd">    :modes: ``MODE_LOADING, MODE_NOT_FOUND, MODE_RESULT`` - Used to identify the</span>
+<span class="sd">        mode of an item in the completion list</span>
+
+<span class="sd">    :model role: ``MODE_ROLE`` - Stores the mode of an item in the completion</span>
+<span class="sd">        list (see modes above)</span>
+
+<span class="sd">    :model role: ``SG_DATA_ROLE`` - Role for storing shotgun data in the model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># path label, entity type, entity id, name, incremental path</span>
+    <span class="n">node_activated</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param parent: Parent widget</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HierarchicalSearchCompleter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_entities_only</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">search_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The entity under which the search will be done. If ``None``, the search will be done</span>
+<span class="sd">        for the whole site.</span>
+
+<span class="sd">        The entity is a ``dict`` with keys ``id`` and ``type``. Note that only ``Project`` entities</span>
+<span class="sd">        are supported at the moment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_root</span>
+
+    <span class="nd">@search_root.setter</span>
+    <span class="k">def</span> <span class="nf">search_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See getter documentation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_search_root</span> <span class="o">=</span> <span class="n">entity</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">show_entities_only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Indicates if only entities will be shown in the search results.</span>
+
+<span class="sd">        If set to ``True``, only entities will be shown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_entities_only</span>
+
+    <span class="nd">@show_entities_only.setter</span>
+    <span class="k">def</span> <span class="nf">show_entities_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_set</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See getter documentation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_entities_only</span> <span class="o">=</span> <span class="n">is_set</span>
+
+    <span class="k">def</span> <span class="nf">_set_item_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">popup</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the item delegate for the popup widget.</span>
+
+<span class="sd">        :param popup: Qt Popup widget receiving the delegate.</span>
+<span class="sd">        :paarm text: Text from the current search.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># deferred import to help documentation generation.</span>
+        <span class="kn">from</span> <span class="nn">.hierarchical_search_result_delegate</span> <span class="kn">import</span> <span class="n">HierarchicalSearchResultDelegate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span> <span class="o">=</span> <span class="n">HierarchicalSearchResultDelegate</span><span class="p">(</span><span class="n">popup</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+        <span class="n">popup</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_launch_sg_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Launches a search on the Shotgun server.</span>
+
+<span class="sd">        :param str text: Text to search for.</span>
+
+<span class="sd">        :returns: The :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`&#39;s job id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># FIXME: Ideally we would use the nav_search_entity endpoint to compute the path to the root.</span>
+        <span class="c1"># Unfortunately there is a bug a the moment that prevents this.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_root</span><span class="p">:</span>
+            <span class="n">root_path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">root_path</span> <span class="o">=</span> <span class="s2">&quot;/Project/</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_root</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">execute_nav_search_string</span><span class="p">(</span>
+            <span class="n">root_path</span><span class="p">,</span> <span class="n">text</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_search_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Populates the model associated with the completer with the data coming back from Shotgun.</span>
+
+<span class="sd">        :param dict data: Data received back from the job sent to the</span>
+<span class="sd">            :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` in :method:``_launch_sg_search``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_matches</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sg&quot;</span><span class="p">]</span>
+
+        <span class="c1"># When showing only entities, skip entries that aren&#39;t.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_entities_only</span><span class="p">:</span>
+            <span class="n">data_matches</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="n">data_matches</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="s2">&quot;No matches found!&quot;</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_NOT_FOUND</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="c1"># Payload looks like:</span>
+        <span class="c1"># [</span>
+        <span class="c1">#     {</span>
+        <span class="c1">#         &quot;label&quot;: &quot;bunny_020&quot;,</span>
+        <span class="c1">#         &quot;incremental_path&quot;: [</span>
+        <span class="c1">#             &quot;/Project/65&quot;,</span>
+        <span class="c1">#             &quot;/Project/65/Shot&quot;,</span>
+        <span class="c1">#             &quot;/Project/65/Shot/sg_sequence/Sequence/5&quot;</span>
+        <span class="c1">#         ],</span>
+        <span class="c1">#         &quot;path_label&quot;: &quot;Shots&quot;,</span>
+        <span class="c1">#         &quot;ref&quot;: {</span>
+        <span class="c1">#             &quot;id&quot;: 5,</span>
+        <span class="c1">#             &quot;type&quot;: &quot;Sequence&quot;</span>
+        <span class="c1">#         },</span>
+        <span class="c1">#         &quot;project_id&quot;: 65</span>
+        <span class="c1">#     },</span>
+        <span class="c1">#     ...</span>
+        <span class="c1"># ]</span>
+
+        <span class="c1"># insert new data into model</span>
+        <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_matches</span><span class="p">:</span>
+
+            <span class="n">item</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_RESULT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>
+
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_for_qt_model</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
+
+            <span class="n">item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixmaps</span><span class="o">.</span><span class="n">no_thumbnail</span><span class="p">)</span>
+
+            <span class="n">data_type</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+            <span class="n">data_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">data_type</span> <span class="ow">and</span> <span class="n">data_id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="p">:</span>
+                <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">request_thumbnail_source</span><span class="p">(</span>
+                    <span class="n">data_type</span><span class="p">,</span> <span class="n">data_id</span><span class="p">,</span> <span class="n">load_image</span><span class="o">=</span><span class="bp">True</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_thumb_map</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;item&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">}</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HierarchicalSearchCompleter.get_result"><a class="viewcode-back" href="../../search_completer.html#search_completer.HierarchicalSearchCompleter.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an item from the result list.</span>
+
+<span class="sd">        Here&#39;s an example::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;label&quot;: &quot;bunny_020&quot;,</span>
+<span class="sd">                &quot;incremental_path&quot;: [</span>
+<span class="sd">                    &quot;/Project/65&quot;,</span>
+<span class="sd">                    &quot;/Project/65/Shot&quot;,</span>
+<span class="sd">                    &quot;/Project/65/Shot/sg_sequence/Sequence/5&quot;</span>
+<span class="sd">                ],</span>
+<span class="sd">                &quot;path_label&quot;: &quot;Shots&quot;,</span>
+<span class="sd">                &quot;ref&quot;: {</span>
+<span class="sd">                    &quot;id&quot;: 5,</span>
+<span class="sd">                    &quot;type&quot;: &quot;Sequence&quot;</span>
+<span class="sd">                },</span>
+<span class="sd">                &quot;project_id&quot;: 65</span>
+<span class="sd">            }</span>
+
+<span class="sd">        :param model_index: The index of the model to return the result for.</span>
+<span class="sd">        :type model_index: :class:`~PySide.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: The ``dict`` for the supplied model index.</span>
+<span class="sd">        :rtype: ``dict`` or ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">get_sanitized_data</span><span class="p">(</span><span class="n">model_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_RESULT</span><span class="p">:</span>
+            <span class="c1"># get the payload</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">get_sanitized_data</span><span class="p">(</span><span class="n">model_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span></div>
+
+    <span class="k">def</span> <span class="nf">_on_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by the base class when something was selected in the pop-up. Emits</span>
+<span class="sd">        the ``node_activated`` event.</span>
+
+<span class="sd">        :param model_index: :class:`QtModelIndex` of the item that was selected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_result</span><span class="p">(</span><span class="n">model_index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="c1"># Let it be known that something was picked.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">node_activated</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">],</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;path_label&quot;</span><span class="p">],</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;incremental_path&quot;</span><span class="p">]</span>
+            <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v2.6.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-2114792-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>
