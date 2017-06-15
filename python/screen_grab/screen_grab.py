@@ -152,17 +152,43 @@ class ScreenGrabber(QtGui.QDialog):
         :returns: Captured screen
         :rtype: :class:`~PySide.QtGui.QPixmap`
         """
+        bundle = sgtk.platform.current_bundle()
+
         if cls.SCREEN_GRAB_CALLBACK:
+            # use an external callback for screen grabbing
             return cls.SCREEN_GRAB_CALLBACK()
-        elif sys.platform in ["linux2", "darwin"]:
+
+        elif sys.platform.startswith("linux"):
             # there are known issues with the QT based screen grabbing
             # on linux - some distros don't have a X11 compositing manager
-            # so transparent windows aren't supported. With macosx there
-            # are known issues with some multi-diplay setups. In both
+            # so transparent windows aren't supported. In
             # these cases, fall back onto a traditional approach where
-            # an external application is used to grab the screenshot.  
+            # an external application is used to grab the screenshot.
+            #
+            # if the external application does not exist,
+            # try using the QT based approach as a fallback.
+            #
+            # by using import first, we can advise users who have issues
+            # with the qt approach to simply install imagemagick and things
+            # should start to work.
+            #
+            pixmap = _external_screenshot()
+
+            if pixmap is None or pixmap.isNull():
+                bundle.log_debug("Falling back on internal screen grabber.")
+                tool = ScreenGrabber()
+                tool.exec_()
+                pixmap = get_desktop_pixmap(tool.capture_rect)
+
+            return pixmap
+
+        elif sys.platform == "darwin":
+            # With macosx there are known issues with some
+            # multi-diplay setups, so better to use built-in tool
             return _external_screenshot()
+
         else:
+            # on windows, just use the QT solution.
             tool = ScreenGrabber()
             tool.exec_()
             return get_desktop_pixmap(tool.capture_rect)
@@ -271,11 +297,14 @@ def _external_screenshot():
             QtGui.QApplication.processEvents()
 
         if screenshot_thread.error_message:
-            raise sgtk.TankError("Failed to capture "
-                                 "screenshot: %s" % screenshot_thread.error_message)
-
-        # load into pixmap:
-        pm = QtGui.QPixmap(output_path)
+            bundle = sgtk.platform.current_bundle()
+            bundle.log_debug(
+                "Failed to capture "
+                "screenshot: %s" % screenshot_thread.error_message
+            )
+        else:
+            # load into pixmap
+            pm = QtGui.QPixmap(output_path)
     finally:
         # remove the temporary file
         if output_path and os.path.exists(output_path):
