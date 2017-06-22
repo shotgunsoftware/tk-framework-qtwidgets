@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets v2.6.2 documentation</title>
+  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets v2.6.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.6.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.6.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -331,17 +331,43 @@
 <span class="sd">        :returns: Captured screen</span>
 <span class="sd">        :rtype: :class:`~PySide.QtGui.QPixmap`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+
         <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">SCREEN_GRAB_CALLBACK</span><span class="p">:</span>
+            <span class="c1"># use an external callback for screen grabbing</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">SCREEN_GRAB_CALLBACK</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;linux2&quot;</span><span class="p">,</span> <span class="s2">&quot;darwin&quot;</span><span class="p">]:</span>
+
+        <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;linux&quot;</span><span class="p">):</span>
             <span class="c1"># there are known issues with the QT based screen grabbing</span>
             <span class="c1"># on linux - some distros don&#39;t have a X11 compositing manager</span>
-            <span class="c1"># so transparent windows aren&#39;t supported. With macosx there</span>
-            <span class="c1"># are known issues with some multi-diplay setups. In both</span>
+            <span class="c1"># so transparent windows aren&#39;t supported. In</span>
             <span class="c1"># these cases, fall back onto a traditional approach where</span>
-            <span class="c1"># an external application is used to grab the screenshot.  </span>
+            <span class="c1"># an external application is used to grab the screenshot.</span>
+            <span class="c1">#</span>
+            <span class="c1"># if the external application does not exist,</span>
+            <span class="c1"># try using the QT based approach as a fallback.</span>
+            <span class="c1">#</span>
+            <span class="c1"># by using import first, we can advise users who have issues</span>
+            <span class="c1"># with the qt approach to simply install imagemagick and things</span>
+            <span class="c1"># should start to work.</span>
+            <span class="c1">#</span>
+            <span class="n">pixmap</span> <span class="o">=</span> <span class="n">_external_screenshot</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">pixmap</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+                <span class="n">bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Falling back on internal screen grabber.&quot;</span><span class="p">)</span>
+                <span class="n">tool</span> <span class="o">=</span> <span class="n">ScreenGrabber</span><span class="p">()</span>
+                <span class="n">tool</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+                <span class="n">pixmap</span> <span class="o">=</span> <span class="n">get_desktop_pixmap</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="n">capture_rect</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">pixmap</span>
+
+        <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
+            <span class="c1"># With macosx there are known issues with some</span>
+            <span class="c1"># multi-diplay setups, so better to use built-in tool</span>
             <span class="k">return</span> <span class="n">_external_screenshot</span><span class="p">()</span>
+
         <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># on windows, just use the QT solution.</span>
             <span class="n">tool</span> <span class="o">=</span> <span class="n">ScreenGrabber</span><span class="p">()</span>
             <span class="n">tool</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">get_desktop_pixmap</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="n">capture_rect</span><span class="p">)</span>
@@ -450,11 +476,14 @@
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">screenshot_thread</span><span class="o">.</span><span class="n">error_message</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Failed to capture &quot;</span>
-                                 <span class="s2">&quot;screenshot: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">screenshot_thread</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
-
-        <span class="c1"># load into pixmap:</span>
-        <span class="n">pm</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+            <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+            <span class="n">bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to capture &quot;</span>
+                <span class="s2">&quot;screenshot: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">screenshot_thread</span><span class="o">.</span><span class="n">error_message</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># load into pixmap</span>
+            <span class="n">pm</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="c1"># remove the temporary file</span>
         <span class="k">if</span> <span class="n">output_path</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_path</span><span class="p">):</span>
@@ -532,7 +561,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.6.2',
+            VERSION:'v2.6.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
