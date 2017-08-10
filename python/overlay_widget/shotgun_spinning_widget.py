@@ -101,9 +101,14 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         """
         Hides the overlay.
         """
-        self._timer.stop()
-        self._mode = self.MODE_OFF
-        self.setVisible(False)
+        try:
+            self._timer.stop()
+            self._mode = self.MODE_OFF
+            self.setVisible(False)
+        except RuntimeError:
+            # This will occur if the timer or widget have already been garbage collected.
+            # It becomes an issue in some cases in Nuke 11, as an example.
+            pass
 
     ############################################################################################
     # internal methods

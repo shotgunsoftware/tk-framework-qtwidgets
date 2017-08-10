@@ -100,7 +100,12 @@ class SpinnerWidget(QtGui.QWidget):
 
         :param even:    The event
         """
-        self._timer.stop()
+        try:
+            self._timer.stop()
+        except RuntimeError:
+            # This will occur if the timer has already been garbage collected.
+            # It becomes an issue in some cases in Nuke 11, as an example.
+            pass
         QtGui.QWidget.closeEvent(self, event)
 
     def _on_timer_timeout(self):
