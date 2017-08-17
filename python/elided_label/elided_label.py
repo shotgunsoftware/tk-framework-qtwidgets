@@ -60,7 +60,13 @@ class ElidedLabel(QtGui.QLabel):
             except Exception:
                 width = self.width()
             finally:
-                doc.deleteLater()
+                # We've seen problems in Qt5 with deleteLater causing
+                # garbage collection of Qt objects out from under Python
+                # objects that still have active references. If we're not
+                # in Qt4, then we're going to let Qt/Python decide when to
+                # clean up instead of forcing it ourselves.
+                if QtCore.__version__.startswith("4."):
+                    doc.deleteLater()
 
             self._ideal_width = width
 
@@ -214,8 +220,14 @@ class ElidedLabel(QtGui.QLabel):
             self._line_width = line_width
             return doc.toHtml()
         finally:
-            # clean up the doc:
-            doc.deleteLater()
+            # We've seen problems in Qt5 with deleteLater causing
+            # garbage collection of Qt objects out from under Python
+            # objects that still have active references. If we're not
+            # in Qt4, then we're going to let Qt/Python decide when to
+            # clean up instead of forcing it ourselves.
+            if QtCore.__version__.startswith("4."):
+                # clean up the doc:
+                doc.deleteLater()
 
     @property
     def line_width(self):

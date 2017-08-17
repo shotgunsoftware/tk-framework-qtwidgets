@@ -729,8 +729,14 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self.ui.activity_stream_layout.removeWidget(x)
                 # set it's parent to None so that it is removed from the widget hierarchy
                 x.setParent(None)
-                # mark it to be deleted when event processing returns to the main loop
-                x.deleteLater()
+                # We've seen problems in Qt5 with deleteLater causing
+                # garbage collection of Qt objects out from under Python
+                # objects that still have active references. If we're not
+                # in Qt4, then we're going to let Qt/Python decide when to
+                # clean up instead of forcing it ourselves.
+                if QtCore.__version__.startswith("4."):
+                    # mark it to be deleted when event processing returns to the main loop
+                    x.deleteLater()
         
             self._bundle.log_debug("Clearing python data structures")
             self._activity_stream_data_widgets = {}
@@ -739,7 +745,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             for w in self._activity_stream_static_widgets:
                 self.ui.activity_stream_layout.removeWidget(w)
                 w.setParent(None)
-                w.deleteLater()
+                # We've seen problems in Qt5 with deleteLater causing
+                # garbage collection of Qt objects out from under Python
+                # objects that still have active references. If we're not
+                # in Qt4, then we're going to let Qt/Python decide when to
+                # clean up instead of forcing it ourselves.
+                if QtCore.__version__.startswith("4."):
+                    w.deleteLater()
             self._activity_stream_static_widgets = []
         
         finally:
@@ -760,7 +772,13 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._bundle.log_debug("Clearing the loading widget")
             self.ui.activity_stream_layout.removeWidget(self._loading_widget)
             self._loading_widget.setParent(None)
-            self._loading_widget.deleteLater()
+            # We've seen problems in Qt5 with deleteLater causing
+            # garbage collection of Qt objects out from under Python
+            # objects that still have active references. If we're not
+            # in Qt4, then we're going to let Qt/Python decide when to
+            # clean up instead of forcing it ourselves.
+            if QtCore.__version__.startswith("4."):
+                self._loading_widget.deleteLater()
             self._loading_widget = None
             self._bundle.log_debug("...done")
         

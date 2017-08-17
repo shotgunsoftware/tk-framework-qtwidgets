@@ -188,7 +188,13 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         field_widget.hide()
         self.ui.field_grid_layout.removeWidget(field_widget)
         field_widget.setParent(None)
-        field_widget.deleteLater()
+        # We've seen problems in Qt5 with deleteLater causing
+        # garbage collection of Qt objects out from under Python
+        # objects that still have active references. If we're not
+        # in Qt4, then we're going to let Qt/Python decide when to
+        # clean up instead of forcing it ourselves.
+        if QtCore.__version__.startswith("4."):
+            field_widget.deleteLater()
 
         # If there's a label, then also remove that.
         field_label = self._fields[field_name]["label"]
@@ -197,7 +203,13 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             field_label.hide()
             self.ui.field_grid_layout.removeWidget(field_label)
             field_label.setParent(None)
-            field_label.deleteLater()
+            # We've seen problems in Qt5 with deleteLater causing
+            # garbage collection of Qt objects out from under Python
+            # objects that still have active references. If we're not
+            # in Qt4, then we're going to let Qt/Python decide when to
+            # clean up instead of forcing it ourselves.
+            if QtCore.__version__.startswith("4."):
+                field_label.deleteLater()
 
         self.ui.field_grid_layout.setRowMinimumHeight(
             self._fields[field_name]["row"],
