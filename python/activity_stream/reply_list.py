@@ -23,6 +23,8 @@ from .data_manager import ActivityStreamDataHandler
 from .widget_attachment_group import AttachmentGroupWidget
 from .widget_reply import ReplyWidget
 from .overlaywidget import SmallOverlayWidget
+
+utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
  
 class ReplyListWidget(QtGui.QWidget):
     """
@@ -264,8 +266,7 @@ class ReplyListWidget(QtGui.QWidget):
             self.ui.reply_layout.removeWidget(x)
             # set it's parent to None so that it is removed from the widget hierarchy
             x.setParent(None)
-            # mark it to be deleted when event processing returns to the main loop
-            x.deleteLater()
+            utils.safe_delete_later(x)
     
         self._general_widgets = []
         self._reply_widgets = []
