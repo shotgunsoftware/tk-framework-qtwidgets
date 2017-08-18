@@ -15,7 +15,8 @@ correctly within the widget frame.  Handles rich-text.
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from sgtk.platform.qt.util import safe_delete_later
+
+utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
 
 class ElidedLabel(QtGui.QLabel):
     """
@@ -61,7 +62,7 @@ class ElidedLabel(QtGui.QLabel):
             except Exception:
                 width = self.width()
             finally:
-                safe_delete_later(doc)
+                utils.safe_delete_later(doc)
 
             self._ideal_width = width
 
@@ -215,7 +216,7 @@ class ElidedLabel(QtGui.QLabel):
             self._line_width = line_width
             return doc.toHtml()
         finally:
-            safe_delete_later(doc)
+            utils.safe_delete_later(doc)
 
     @property
     def line_width(self):
