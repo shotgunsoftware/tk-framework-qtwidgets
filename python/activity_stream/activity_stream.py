@@ -730,7 +730,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self.ui.activity_stream_layout.removeWidget(x)
                 # set it's parent to None so that it is removed from the widget hierarchy
                 x.setParent(None)
-                utils.safe_delete_later(x(
+                utils.safe_delete_later(x)
         
             self._bundle.log_debug("Clearing python data structures")
             self._activity_stream_data_widgets = {}
