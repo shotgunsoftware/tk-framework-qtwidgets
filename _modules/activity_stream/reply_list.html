@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.6.3 documentation</title>
+  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.6.5 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.6.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.5 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.6.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.5.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -202,6 +202,8 @@
 <span class="kn">from</span> <span class="nn">.widget_attachment_group</span> <span class="kn">import</span> <span class="n">AttachmentGroupWidget</span>
 <span class="kn">from</span> <span class="nn">.widget_reply</span> <span class="kn">import</span> <span class="n">ReplyWidget</span>
 <span class="kn">from</span> <span class="nn">.overlaywidget</span> <span class="kn">import</span> <span class="n">SmallOverlayWidget</span>
+
+<span class="n">utils</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;utils&quot;</span><span class="p">)</span>
  
 <div class="viewcode-block" id="ReplyListWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget">[docs]</a><span class="k">class</span> <span class="nc">ReplyListWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -443,8 +445,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="c1"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
             <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-            <span class="c1"># mark it to be deleted when event processing returns to the main loop</span>
-            <span class="n">x</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     
         <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span> <span class="o">=</span> <span class="p">[]</span>
@@ -632,7 +633,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.6.3',
+            VERSION:'v2.6.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

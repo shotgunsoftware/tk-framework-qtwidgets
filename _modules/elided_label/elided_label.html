@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>elided_label.elided_label &mdash; tk-framework-qtwidgets v2.6.3 documentation</title>
+  <title>elided_label.elided_label &mdash; tk-framework-qtwidgets v2.6.5 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.6.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.5 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.6.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.5.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -195,6 +195,8 @@
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
+<span class="n">utils</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;utils&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="ElidedLabel"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel">[docs]</a><span class="k">class</span> <span class="nc">ElidedLabel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Label that gracefully handles when the text doesn&#39;t fit </span>
@@ -239,7 +241,7 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
             <span class="k">finally</span><span class="p">:</span>
-                <span class="n">doc</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_ideal_width</span> <span class="o">=</span> <span class="n">width</span>
 
@@ -393,8 +395,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_line_width</span> <span class="o">=</span> <span class="n">line_width</span>
             <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">toHtml</span><span class="p">()</span>
         <span class="k">finally</span><span class="p">:</span>
-            <span class="c1"># clean up the doc:</span>
-            <span class="n">doc</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">line_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -435,7 +436,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.6.3',
+            VERSION:'v2.6.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

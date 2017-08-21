@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.6.3 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.6.5 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.6.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.5 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -125,7 +125,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.6.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.5.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -205,6 +205,7 @@
 <span class="n">note_input_widget</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;note_input_widget&quot;</span><span class="p">)</span>
 
 <span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
+<span class="n">utils</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;utils&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActivityStreamWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget">[docs]</a><span class="k">class</span> <span class="nc">ActivityStreamWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -908,8 +909,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
                 <span class="c1"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
                 <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-                <span class="c1"># mark it to be deleted when event processing returns to the main loop</span>
-                <span class="n">x</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing python data structures&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span> <span class="o">=</span> <span class="p">{}</span>
@@ -918,7 +918,8 @@
             <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
                 <span class="n">w</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-                <span class="n">w</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         
         <span class="k">finally</span><span class="p">:</span>
@@ -939,7 +940,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing the loading widget&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="bp">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
         
@@ -1302,7 +1303,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.6.3',
+            VERSION:'v2.6.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
