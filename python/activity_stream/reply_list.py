@@ -24,6 +24,8 @@ from .widget_attachment_group import AttachmentGroupWidget
 from .widget_reply import ReplyWidget
 from .overlaywidget import SmallOverlayWidget
 
+from .metric_utils import log_metric_created_reply
+
 utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
  
 class ReplyListWidget(QtGui.QWidget):
@@ -418,6 +420,7 @@ class ReplyListWidget(QtGui.QWidget):
             self.__small_overlay.show()
             if reply_dialog.exec_() == QtGui.QDialog.Accepted:
                 self._data_manager.rescan()
+                log_metric_created_reply(self._bundle, "Reply List")
         finally:
             self.__small_overlay.hide()
         

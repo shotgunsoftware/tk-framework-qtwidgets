@@ -14,6 +14,8 @@ import sgtk
 
 from sgtk.platform.qt import QtCore, QtGui
 
+from . import utils as qtwidgets_utils
+
 from .ui.activity_stream_widget import Ui_ActivityStreamWidget
 
 from .widget_new_item import NewItemWidget, SimpleNewItemWidget
@@ -22,6 +24,8 @@ from .widget_value_update import ValueUpdateWidget
 from .dialog_reply import ReplyDialog
 from .data_manager import ActivityStreamDataHandler
 from .overlaywidget import SmallOverlayWidget
+
+from .metric_utils import log_metric_created_note, log_metric_created_reply
 
 note_input_widget = sgtk.platform.current_bundle().import_module("note_input_widget")
 
@@ -694,7 +698,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             
     ############################################################################
     # internals
-        
+
     def _load_stylesheet(self):
         """
         Loads in a stylesheet from disk
@@ -1028,6 +1032,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                           reply_user["id"], 
                                                           reply_user["image"])
             self.note_arrived.emit(note_id)
+
         else:
             self.note_arrived.emit(note_id)
 
@@ -1037,8 +1042,11 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         :param entity:  The Shotgun entity that was created.
         """
-        if self.notes_are_selectable and entity["type"] == "Note":
-            self._select_on_arrival = entity
+        if entity["type"] == "Note":
+            log_metric_created_note(self._bundle, "Activity Stream", entity.get("type", "Unknown"))
+            if self.notes_are_selectable:
+                self._select_on_arrival = entity
+
         self.entity_created.emit(entity)
             
     def _on_reply_clicked(self, note_id):
@@ -1060,6 +1068,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             self.__small_overlay.show()
             if self.reply_dialog.exec_() == QtGui.QDialog.Accepted:
                 self.load_data(self._sg_entity_dict)
+                log_metric_created_reply(self._bundle, "Activity Stream")
         finally:
             self.__small_overlay.hide()
 
