@@ -14,8 +14,6 @@ import sgtk
 
 from sgtk.platform.qt import QtCore, QtGui
 
-from . import utils as qtwidgets_utils
-
 from .ui.activity_stream_widget import Ui_ActivityStreamWidget
 
 from .widget_new_item import NewItemWidget, SimpleNewItemWidget
@@ -24,8 +22,6 @@ from .widget_value_update import ValueUpdateWidget
 from .dialog_reply import ReplyDialog
 from .data_manager import ActivityStreamDataHandler
 from .overlaywidget import SmallOverlayWidget
-
-from .metric_utils import log_metric_created_note, log_metric_created_reply
 
 note_input_widget = sgtk.platform.current_bundle().import_module("note_input_widget")
 
@@ -1043,7 +1039,30 @@ class ActivityStreamWidget(QtGui.QWidget):
         :param entity:  The Shotgun entity that was created.
         """
         if entity["type"] == "Note":
-            log_metric_created_note(self._bundle, "Activity Stream", entity.get("type", "Unknown"))
+
+            try:
+                from sgtk.util.metrics import EventMetric
+
+                fields = []  # reserved for future use
+                annotations = {}  # reserved for future use
+
+                properties = {
+                    "Source": "Activity Stream",
+                    "Linked Entity Type": entity.get("type", "Unknown"),
+                    "Field Used": fields,
+                    "Annotations": annotations
+                }
+
+                EventMetric.log(
+                    EventMetric.GROUP_MEDIA,
+                    "Created Note",
+                    properties=properties,
+                    bundle=self._bundle
+                )
+            except:
+                # ignore all errors. ex: using a core that doesn't support metrics
+                pass
+
             if self.notes_are_selectable:
                 self._select_on_arrival = entity
 
@@ -1068,7 +1087,24 @@ class ActivityStreamWidget(QtGui.QWidget):
             self.__small_overlay.show()
             if self.reply_dialog.exec_() == QtGui.QDialog.Accepted:
                 self.load_data(self._sg_entity_dict)
-                log_metric_created_reply(self._bundle, "Activity Stream")
+
+                try:
+                    from sgtk.util.metrics import EventMetric
+
+                    properties = {
+                        "Source": "Activity Stream",
+                    }
+
+                    EventMetric.log(
+                        EventMetric.GROUP_MEDIA,
+                        "Created Reply",
+                        properties=properties,
+                        bundle=self._bundle
+                    )
+                except:
+                    # ignore all errors. ex: using a core that doesn't support metrics
+                    pass
+
         finally:
             self.__small_overlay.hide()
 
