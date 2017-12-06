@@ -418,6 +418,23 @@ class ReplyListWidget(QtGui.QWidget):
             self.__small_overlay.show()
             if reply_dialog.exec_() == QtGui.QDialog.Accepted:
                 self._data_manager.rescan()
+                try:
+                    from sgtk.util.metrics import EventMetric
+
+                    properties = {
+                        "Source": "Reply List",
+                    }
+
+                    EventMetric.log(
+                        EventMetric.GROUP_MEDIA,
+                        "Created Reply",
+                        properties=properties,
+                        bundle=self._bundle
+                    )
+                except:
+                    # ignore all errors. ex: using a core that doesn't support metrics
+                    pass
+
         finally:
             self.__small_overlay.hide()
         

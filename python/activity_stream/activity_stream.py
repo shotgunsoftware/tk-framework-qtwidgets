@@ -694,7 +694,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             
     ############################################################################
     # internals
-        
+
     def _load_stylesheet(self):
         """
         Loads in a stylesheet from disk
@@ -1028,6 +1028,7 @@ class ActivityStreamWidget(QtGui.QWidget):
                                                           reply_user["id"], 
                                                           reply_user["image"])
             self.note_arrived.emit(note_id)
+
         else:
             self.note_arrived.emit(note_id)
 
@@ -1037,8 +1038,34 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         :param entity:  The Shotgun entity that was created.
         """
-        if self.notes_are_selectable and entity["type"] == "Note":
-            self._select_on_arrival = entity
+        if entity["type"] == "Note":
+
+            try:
+                from sgtk.util.metrics import EventMetric
+
+                fields = []  # reserved for future use
+                annotations = {}  # reserved for future use
+
+                properties = {
+                    "Source": "Activity Stream",
+                    "Linked Entity Type": entity.get("type", "Unknown"),
+                    "Field Used": fields,
+                    "Annotations": annotations
+                }
+
+                EventMetric.log(
+                    EventMetric.GROUP_MEDIA,
+                    "Created Note",
+                    properties=properties,
+                    bundle=self._bundle
+                )
+            except:
+                # ignore all errors. ex: using a core that doesn't support metrics
+                pass
+
+            if self.notes_are_selectable:
+                self._select_on_arrival = entity
+
         self.entity_created.emit(entity)
             
     def _on_reply_clicked(self, note_id):
@@ -1060,6 +1087,24 @@ class ActivityStreamWidget(QtGui.QWidget):
             self.__small_overlay.show()
             if self.reply_dialog.exec_() == QtGui.QDialog.Accepted:
                 self.load_data(self._sg_entity_dict)
+
+                try:
+                    from sgtk.util.metrics import EventMetric
+
+                    properties = {
+                        "Source": "Activity Stream",
+                    }
+
+                    EventMetric.log(
+                        EventMetric.GROUP_MEDIA,
+                        "Created Reply",
+                        properties=properties,
+                        bundle=self._bundle
+                    )
+                except:
+                    # ignore all errors. ex: using a core that doesn't support metrics
+                    pass
+
         finally:
             self.__small_overlay.hide()
 
