@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.6.5 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.6.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.6.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -108,7 +108,9 @@
 
             
           
-       
+
+    <a href='genindex.html'>Alphabetic Index</a>
+
     <div style='margin-top: 50px;
                 margin-left: 10px;
                 margin-right: 10px;
@@ -125,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.6.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -135,6 +137,8 @@
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
+
+
 
         </div>
       </div>
@@ -873,7 +877,7 @@
             
     <span class="c1">############################################################################</span>
     <span class="c1"># internals</span>
-        
+
     <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in a stylesheet from disk</span>
@@ -1207,6 +1211,7 @@
                                                           <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> 
                                                           <span class="n">reply_user</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
 
@@ -1216,8 +1221,34 @@
 
 <span class="sd">        :param entity:  The Shotgun entity that was created.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">notes_are_selectable</span> <span class="ow">and</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Note&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="n">entity</span>
+        <span class="k">if</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Note&quot;</span><span class="p">:</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">sgtk.util.metrics</span> <span class="kn">import</span> <span class="n">EventMetric</span>
+
+                <span class="n">fields</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># reserved for future use</span>
+                <span class="n">annotations</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># reserved for future use</span>
+
+                <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;Source&quot;</span><span class="p">:</span> <span class="s2">&quot;Activity Stream&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Linked Entity Type&quot;</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;Field Used&quot;</span><span class="p">:</span> <span class="n">fields</span><span class="p">,</span>
+                    <span class="s2">&quot;Annotations&quot;</span><span class="p">:</span> <span class="n">annotations</span>
+                <span class="p">}</span>
+
+                <span class="n">EventMetric</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                    <span class="n">EventMetric</span><span class="o">.</span><span class="n">GROUP_MEDIA</span><span class="p">,</span>
+                    <span class="s2">&quot;Created Note&quot;</span><span class="p">,</span>
+                    <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span>
+                    <span class="n">bundle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span>
+                <span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="c1"># ignore all errors. ex: using a core that doesn&#39;t support metrics</span>
+                <span class="k">pass</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">notes_are_selectable</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="n">entity</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
             
     <span class="k">def</span> <span class="nf">_on_reply_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
@@ -1239,6 +1270,24 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="kn">from</span> <span class="nn">sgtk.util.metrics</span> <span class="kn">import</span> <span class="n">EventMetric</span>
+
+                    <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;Source&quot;</span><span class="p">:</span> <span class="s2">&quot;Activity Stream&quot;</span><span class="p">,</span>
+                    <span class="p">}</span>
+
+                    <span class="n">EventMetric</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                        <span class="n">EventMetric</span><span class="o">.</span><span class="n">GROUP_MEDIA</span><span class="p">,</span>
+                        <span class="s2">&quot;Created Reply&quot;</span><span class="p">,</span>
+                        <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span>
+                        <span class="n">bundle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span>
+                    <span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="c1"># ignore all errors. ex: using a core that doesn&#39;t support metrics</span>
+                    <span class="k">pass</span>
+
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
@@ -1303,7 +1352,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.6.5',
+            VERSION:'v2.6.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

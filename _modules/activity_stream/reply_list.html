@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.6.5 documentation</title>
+  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.6.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.6.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.6.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -108,7 +108,9 @@
 
             
           
-       
+
+    <a href='genindex.html'>Alphabetic Index</a>
+
     <div style='margin-top: 50px;
                 margin-left: 10px;
                 margin-right: 10px;
@@ -125,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.6.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.6.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -135,6 +137,8 @@
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
+
+
 
         </div>
       </div>
@@ -597,6 +601,23 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">reply_dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="kn">from</span> <span class="nn">sgtk.util.metrics</span> <span class="kn">import</span> <span class="n">EventMetric</span>
+
+                    <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;Source&quot;</span><span class="p">:</span> <span class="s2">&quot;Reply List&quot;</span><span class="p">,</span>
+                    <span class="p">}</span>
+
+                    <span class="n">EventMetric</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                        <span class="n">EventMetric</span><span class="o">.</span><span class="n">GROUP_MEDIA</span><span class="p">,</span>
+                        <span class="s2">&quot;Created Reply&quot;</span><span class="p">,</span>
+                        <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span>
+                        <span class="n">bundle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span>
+                    <span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="c1"># ignore all errors. ex: using a core that doesn&#39;t support metrics</span>
+                    <span class="k">pass</span>
+
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div>
         
@@ -633,7 +654,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.6.5',
+            VERSION:'v2.6.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
