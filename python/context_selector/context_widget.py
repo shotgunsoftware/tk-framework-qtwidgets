@@ -110,7 +110,6 @@ class ContextWidget(QtGui.QWidget):
             # apply to widget (and all its children)
             self.setStyleSheet(f.read())
 
-
     def eventFilter(self, widget, event):
         """
         Filter out and handle some key/click events on the search widgets.
@@ -192,7 +191,7 @@ class ContextWidget(QtGui.QWidget):
         """
 
         # build a list of serialized recent contexts. we grab all the QActions
-        # from the recents list ad serialize them.
+        # from the recents list and serialize them.
         serialized_contexts = []
         for recent_action in self._menu_actions["Recent"]:
             recent_context = recent_action.data()
@@ -238,10 +237,6 @@ class ContextWidget(QtGui.QWidget):
         )
 
         # ensure the new context is added to the list of recents.
-        # TODO: we should only update recents after publishing. but until we
-        # have the ability to easily assign a context to multiple publish items
-        # simultaneously, this provides a nice mechanism for quick assignment
-        # in the UI.
         if context:
             self._add_to_recents(context)
 
@@ -283,6 +278,11 @@ class ContextWidget(QtGui.QWidget):
             self._on_entity_activated
         )
 
+        # limit the task autocompleter to tasks only.
+        # TODO: limit to tasks linked to the entity types given
+        task_types_dict = {"Task": []}
+        self.ui.task_search.set_searchable_entity_types(task_types_dict)
+
         # set up event filters for the task/link display labels so that when
         # clicked, they go directly to an edit state
         self.ui.task_display.installEventFilter(self)
@@ -303,15 +303,63 @@ class ContextWidget(QtGui.QWidget):
         task_manager.task_completed.connect(self._on_task_completed)
         task_manager.task_failed.connect(self._on_task_failed)
 
-        # Query Shotgun for valid entity types for PublishedFile.entity field
-        self._schema_query_id = task_manager.add_task(
-            _query_publishedfile_entity_schema)
-
         # query all my assigned tasks in a bg task
         self._my_tasks_query_id = task_manager.add_task(_query_my_tasks)
 
         # get recent contexts from user settings
         self._get_recent_contexts()
+
+    def restrict_entity_types_by_link(self, entity_type, field_name):
+        """
+        Specify what entries should show up in the list of links when
+        using the auto completer.
+
+        For the simple case where you just want to show a given set of
+        entity types, use :meth:`restrict_entity_types`. This method is
+        a more complex restriction suitable for workflows around publishing
+        and review.
+
+        This method will look at the given link field (e.g. ``PublishedFile.entity``)
+        and inspect the shotgun schema to see which entity types are valid connections
+        to this field (e.g. in this example which entity types can you can associate
+        a publish with) and those types will appear in the list of items shown by the
+        auto completer.
+
+        This is useful when you want to use the context widget in conjunction with
+        workflows related to for example publishes, versions or notes and you want to
+        restrict the entities displayed by the auto completer to the ones that have been
+        configured in the shotgun site schema to be able to associate with the given type.
+
+        :param str entity_type: Entity type to restrict based on
+        :param str field_name: Shotgun field to restrict based on
+        """
+        if self._task_manager is None:
+            raise RuntimeError("You must run set_up() before this method can be executed.")
+
+        # Query Shotgun for valid entity types for PublishedFile.entity field
+        self._schema_query_id = self._task_manager.add_task(
+            _query_publishedfile_entity_schema,
+            task_args=[entity_type, field_name]
+        )
+
+    def restrict_entity_types(self, entity_types):
+        """
+        Restrict which entity types should show up in the list of matches.
+
+        :param list entity_types: List of entity types
+        """
+        logger.debug(
+            "Restricting auto completer to show the following types: %s" % entity_types
+        )
+        # construct a dictionary that the search widget expects for
+        # filtering. This is a dictionary with the entity types as keys and
+        # values a list of search filters. We don't have any filters, so we
+        # just use empty list.
+        entity_types_dict = dict((k, []) for k in entity_types)
+
+        # update the types for the link completer
+        self.ui.link_search.set_searchable_entity_types(
+            entity_types_dict)
 
     @property
     def context_label(self):
@@ -320,11 +368,31 @@ class ContextWidget(QtGui.QWidget):
         """
         return self.ui.label
 
+    def set_task_tooltip(self, tooltip):
+        """
+        Specify a string (can be html) which should be shown
+        as the tooltip for the task selection widget
+
+        :param str tooltip: Tooltip plaintext or html
+        """
+        self.ui.task_display.setToolTip(tooltip)
+
+    def set_link_tooltip(self, tooltip):
+        """
+        Specify a string (can be html) which should be shown
+        as the tooltip for the link selection widget
+
+        :param str tooltip: Tooltip plaintext or html
+        """
+        self.ui.task_display.setToolTip(tooltip)
+
     def enable_editing(self, enabled, message=None):
         """
         Show/hide the input widgets and display a message in the context label.
-        """
 
+        :param bool enabled: Indicates if task/link selectors should be shown
+        :param str message: Message to display on :meth:`context_label`
+        """
         if enabled:
             self.ui.edit_widget.show()
         else:
@@ -380,7 +448,7 @@ class ContextWidget(QtGui.QWidget):
         will not be included in the list of actions.
         """
 
-        publisher = sgtk.platform.current_bundle()
+        bundle = sgtk.platform.current_bundle()
 
         if not tasks:
             logger.debug("No tasks supplied for group: %s" % (group_name,))
@@ -391,7 +459,7 @@ class ContextWidget(QtGui.QWidget):
         task_actions = []
 
         for task in tasks:
-            task_context = publisher.sgtk.context_from_entity_dictionary(task)
+            task_context = bundle.sgtk.context_from_entity_dictionary(task)
 
             # the context from dict method clears all unnecessary fields
             # from the task upon creation. now that we have the context,
@@ -483,8 +551,8 @@ class ContextWidget(QtGui.QWidget):
         # dynamic.
         self._task_menu.clear()
 
-        publisher = sgtk.platform.current_bundle()
-        project = publisher.context.project
+        bundle = sgtk.platform.current_bundle()
+        project = bundle.context.project
 
         # ---- build the "Related" menu
 
@@ -571,8 +639,8 @@ class ContextWidget(QtGui.QWidget):
         """
         Slot called when an entity is selected via one of the search completers.
         """
-        publisher = sgtk.platform.current_bundle()
-        context = publisher.sgtk.context_from_entity(entity_type, entity_id)
+        bundle = sgtk.platform.current_bundle()
+        context = bundle.sgtk.context_from_entity(entity_type, entity_id)
         self._on_context_activated(context)
 
     def _on_task_search_toggled(self, checked):
@@ -716,10 +784,10 @@ class ContextWidget(QtGui.QWidget):
         if entity_id in self._related_tasks_cache:
             return self._related_tasks_cache[entity_id]
 
-        publisher = sgtk.platform.current_bundle()
+        bundle = sgtk.platform.current_bundle()
 
         # query the tasks for the entity
-        tasks = publisher.shotgun.find(
+        tasks = bundle.shotgun.find(
             "Task",
             [["entity", "is", context.entity]],
             # query all fields required to create a context from a task entity
@@ -918,9 +986,9 @@ def _query_my_tasks():
     Called via bg task to query SG for tasks assigned to the current user.
     """
 
-    publisher = sgtk.platform.current_bundle()
-    project = publisher.context.project
-    current_user = publisher.context.user
+    bundle = sgtk.platform.current_bundle()
+    project = bundle.context.project
+    current_user = bundle.context.user
 
     logger.debug("Querying tasks for the curren user: %s" % (current_user,))
 
@@ -939,7 +1007,7 @@ def _query_my_tasks():
     task_fields = TASK_QUERY_FIELDS
     task_fields.extend(["sg_status_list"])
 
-    return publisher.shotgun.find(
+    return bundle.shotgun.find(
         "Task",
         filters,
         fields=task_fields,
@@ -947,18 +1015,20 @@ def _query_my_tasks():
     )
 
 
-def _query_publishedfile_entity_schema():
+def _query_publishedfile_entity_schema(entity_type, field_name):
     """
-    Called as bg task to query SG for the field schema for PublishedFile.entity
+    Called as bg task to query SG for the field schema for the given type and field
+
+    :param str entity_type: Entity type to query schema for
+    :param str field_name: Shotgun field name to query schema for
     """
+    logger.debug("Querying %s.%s schema..." % (entity_type, field_name))
 
-    logger.debug("Querying PublishedFile.entity schema...")
+    bundle = sgtk.platform.current_bundle()
+    project = bundle.context.project
 
-    publisher = sgtk.platform.current_bundle()
-    project = publisher.context.project
-
-    return publisher.shotgun.schema_field_read(
-        "PublishedFile",
-        field_name="entity",
+    return bundle.shotgun.schema_field_read(
+        entity_type,
+        field_name=field_name,
         project_entity=project
     )
