@@ -338,7 +338,7 @@ class ContextWidget(QtGui.QWidget):
 
         # Query Shotgun for valid entity types for PublishedFile.entity field
         self._schema_query_id = self._task_manager.add_task(
-            _query_publishedfile_entity_schema,
+            _query_entity_schema,
             task_args=[entity_type, field_name]
         )
 
@@ -384,7 +384,7 @@ class ContextWidget(QtGui.QWidget):
 
         :param str tooltip: Tooltip plaintext or html
         """
-        self.ui.task_display.setToolTip(tooltip)
+        self.ui.link_display.setToolTip(tooltip)
 
     def enable_editing(self, enabled, message=None):
         """
@@ -1015,9 +1015,10 @@ def _query_my_tasks():
     )
 
 
-def _query_publishedfile_entity_schema(entity_type, field_name):
+def _query_entity_schema(entity_type, field_name):
     """
-    Called as bg task to query SG for the field schema for the given type and field
+    Called as bg task to query SG for the field schema
+    for the given type and field.
 
     :param str entity_type: Entity type to query schema for
     :param str field_name: Shotgun field name to query schema for
