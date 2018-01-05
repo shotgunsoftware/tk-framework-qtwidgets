@@ -40,7 +40,8 @@ class ContextWidget(QtGui.QWidget):
     for a different context via search completer. A menu is also provided for
     recent contexts as well as tasks assigned to the user.
 
-    Emits a context_changed signal when the user selects a new context
+    :signal context_changed(context_obj): Fires when when the user
+        selects a context.
     """
 
     # emitted when a settings button is clicked on a node
@@ -48,8 +49,6 @@ class ContextWidget(QtGui.QWidget):
 
     def __init__(self, parent):
         """
-        Initialize the widget
-
         :param parent: The model parent.
         :type parent: :class:`~PySide.QtGui.QObject`
         """
@@ -213,6 +212,10 @@ class ContextWidget(QtGui.QWidget):
 
         The initial display values can be overridden via the task and link
         override args.
+
+        :param context: Toolkit Context that the widget should be set to.
+        :param str task_display_override: Override text to be displayed for the task.
+        :param str link_display_override: Override text to be displayed for the link.
         """
         logger.debug("Setting context to: %s" % (context,))
 
@@ -239,8 +242,8 @@ class ContextWidget(QtGui.QWidget):
         Handles initial set up of the widget. Includes setting up menu, running
         any background set up tasks, etc.
 
-        :param task_manager:
-        :return:
+        :param task_manager: Background task manager to use
+        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager`
         """
         logger.debug("Setting up the UI...")
 
