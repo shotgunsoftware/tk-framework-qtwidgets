@@ -28,3 +28,4 @@ from . import screen_grab
 from . import shotgun_fields
 from . import shotgun_menus
 from . import version_details
+from . import context_selector
