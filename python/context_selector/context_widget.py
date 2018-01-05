@@ -8,6 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+import os
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.context_editor_widget import Ui_ContextWidget
@@ -102,6 +103,13 @@ class ContextWidget(QtGui.QWidget):
         # set up the UI
         self.ui = Ui_ContextWidget()
         self.ui.setupUi(self)
+
+        # Loads the style sheet for the widget
+        qss_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.qss")
+        with open(qss_file, "rt") as f:
+            # apply to widget (and all its children)
+            self.setStyleSheet(f.read())
+
 
     def eventFilter(self, widget, event):
         """
