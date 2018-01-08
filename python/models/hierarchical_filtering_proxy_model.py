@@ -369,19 +369,18 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             child_idx = idx.child(ci, 0)
 
             # check if child item is in cache:
-            accepted = self._accepted_cache.get(child_idx)
-            if accepted == None:
+            child_accepted = self._accepted_cache.get(child_idx)
+            if child_accepted == None:
                 # it's not so lets see if it's accepted and add to the cache:
-                accepted = self._is_row_accepted(child_idx.row(), idx, parent_accepted)
-                self._accepted_cache.add(child_idx, accepted)
+                child_accepted = self._is_row_accepted(child_idx.row(), idx, parent_accepted)
+                self._accepted_cache.add(child_idx, child_accepted)
 
-            if model.hasChildren(child_idx):
-                child_accepted = self._is_child_accepted_r(child_idx, accepted)
-            else:
-                child_accepted = accepted
+            if not child_accepted and model.hasChildren(child_idx):
+                # Check grand children
+                child_accepted = self._is_child_accepted_r(child_idx, False)
 
             if child_accepted:
-                # found a child that was accepted so we can stop searching
+                # Found a child that was accepted so we can stop searching
                 break
 
         # cache if any children were accepted:
