@@ -358,33 +358,34 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         model = idx.model()
 
         # check to see if any children of this item are known to have been accepted:
-        child_accepted = self._child_accepted_cache.get(idx)
-        if child_accepted != None:
+        cached_value = self._child_accepted_cache.get(idx)
+        if cached_value is not None:
             # we already computed this so just return the result
-            return child_accepted
+            return cached_value
 
         # need to recursively iterate over children looking for one that is accepted:
         child_accepted = False
         for ci in range(model.rowCount(idx)):
             child_idx = idx.child(ci, 0)
 
-            # check if child item is in cache:
-            accepted = self._accepted_cache.get(child_idx)
-            if accepted == None:
-                # it's not so lets see if it's accepted and add to the cache:
-                accepted = self._is_row_accepted(child_idx.row(), idx, parent_accepted)
-                self._accepted_cache.add(child_idx, accepted)
+            # Check if child item is in cache:
+            child_accepted = self._accepted_cache.get(child_idx)
+            if child_accepted is None:
+                # It's not in the cache so lets see if it's accepted and add to the cache:
+                child_accepted = self._is_row_accepted(child_idx.row(), idx, parent_accepted)
+                self._accepted_cache.add(child_idx, child_accepted)
 
-            if model.hasChildren(child_idx):
-                child_accepted = self._is_child_accepted_r(child_idx, accepted)
-            else:
-                child_accepted = accepted
+            if not child_accepted and model.hasChildren(child_idx):
+                # This child was not accepted.
+                # Recurse down and check if any grand children are accepted.
+                child_accepted = self._is_child_accepted_r(child_idx, False)
 
             if child_accepted:
-                # found a child that was accepted so we can stop searching
+                # This child node or one of its descendants indicated that they
+                # were accepted so exit early.
                 break
 
-        # cache if any children were accepted:
+        # Cache if one of the descendants was accepted or not.
         self._child_accepted_cache.add(idx, child_accepted)
         return child_accepted
 
