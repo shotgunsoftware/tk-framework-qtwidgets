@@ -14,6 +14,9 @@ Proxy model that provides efficient hierarhcical filtering of a tree-based sourc
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
+from collections import deque
+
+
 class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     """
     Inherited from a :class:`~PySide.QtGui.QSortFilterProxyModel`, this class implements filtering across all 
@@ -23,12 +26,12 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     """
     
     
-    class _IndexAcceptedCache(object):
+    class _IndexRejectedCache(object):
         """
-        Cached 'accepted' values for indexes.  Uses a dictionary that maps a key to a tuple 
-        containing a QPersistentModelIndex for the index and its accepted value.
+        Cached 'rejected' values for indexes.  Uses a dictionary that maps a key to a tuple
+        containing a QPersistentModelIndex for the index and its rejected value.
 
-            key -> (QPersistentModelIndex, accepted)
+            key -> (QPersistentModelIndex, rejected)
 
         In recent versions of PySide, the key is just a QPersistentModelIndex which has the
         advantage that cache entries don't become invalid when rows are added/moved.
@@ -75,19 +78,21 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             """
             return len(self._cache)
 
-        def add(self, index, accepted):
+        def add(self, index, rejected):
             """
-            Add the specified index to the cache together with it's accepted state
+            Add or update the specified index to the cache together with it's
+            rejected state.
 
-            :param index:       The QModelIndex to be added
-            :param accepted:    True if the model index is accepted by the filtering, False if not.
+            :param index:       The QModelIndex to be added or updated.
+            :param rejected:    True if the model index is rejected by the filtering,
+                                False if not.
             """
             if not self.enabled:
                 return
 
             cache_key = self._gen_cache_key(index)
             p_index = cache_key if self._use_persistent_index_keys else QtCore.QPersistentModelIndex(index)
-            self._cache[cache_key] = (p_index, accepted)
+            self._cache[cache_key] = (p_index, rejected)
 
         def remove(self, index):
             """
@@ -104,10 +109,11 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
 
         def get(self, index):
             """
-            Get the accepted state for the specified index in the cache.
+            Get the rejected state for the specified index in the cache.
 
-            :param index:   The QModelIndex to get the accepted state for
-            :returns:       The accepted state if the index was found in the cache, otherwise None
+            :param index:   The QModelIndex to get the rejected state for.
+            :returns:       The rejected state if the index was found in the cache,
+                            otherwise None.
             """
             if not self.enabled:
                 return None
@@ -118,11 +124,11 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 self._cache_misses += 1
                 return None
 
-            p_index, accepted = cache_value
+            p_index, rejected = cache_value
             if p_index and p_index == index:
                 # index and cached value are still valid!
                 self._cache_hits += 1
-                return accepted
+                return rejected
             else:
                 # row has changed so results are bad!
                 self._cache_misses += 1
@@ -176,33 +182,37 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         """
         QtGui.QSortFilterProxyModel.__init__(self, parent)
 
-        self._accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
-        self._child_accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
+        self._rejected_cache = HierarchicalFilteringProxyModel._IndexRejectedCache()
+        self._refresh_queued = False
 
     def enable_caching(self, enable=True):
         """
-        Allow control over enabling/disabling of the accepted cache used to accelerate
+        Allow control over enabling/disabling of the rejected cache used to accelerate
         filtering.  Can be used for debug purposes to ensure the caching isn't the cause
         of incorrect filtering/sorting or instability!
 
         :param enable:    True if caching should be enabled, False if it should be disabled. 
         """
-        # clear the accepted cache - this will make sure we don't use out-of-date 
+        # clear the rejected cache - this will make sure we don't use out-of-date
         # information from the cache
-        self._dirty_all_accepted()
-        self._accepted_cache.enabled = enable
-        self._child_accepted_cache.enabled = enable
+        self._clear_rejection_cache()
+        self._rejected_cache.enabled = enable
 
-    def _is_row_accepted(self, src_row, src_parent_idx, parent_accepted):
+    def _is_row_accepted(self, src_row, src_parent_idx, parent_accepted=False):
         """
         Override this method to decide if the specified row should be accepted or not by
         the filter.
 
-        This should be overridden instead of filterAcceptsRow in derived classes
+        This should be overridden instead of filterAcceptsRow in derived classes.
+
+        .. note::
+            The `parent_accepted` param is kept for backward compatibility but is
+            always `False`. This method is never called for an item which has an
+            accepted parent.
 
         :param src_row:         The row in the source model to filter
         :param src_parent_idx:  The parent QModelIndex instance to filter
-        :param parent_accepted: True if a parent item has been accepted by the filter
+        :param parent_accepted: Deprecated, always False.
         :returns:               True if this index should be accepted, otherwise False
         """
         raise NotImplementedError("HierarchicalFilteringProxyModel._is_row_accepted() must be overridden"
@@ -215,42 +225,42 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         """
         Overriden base class method to set the filter regular expression
         """
-        self._dirty_all_accepted()
+        self._clear_rejection_cache()
         QtGui.QSortFilterProxyModel.setFilterRegExp(self, reg_exp)
 
     def setFilterFixedString(self, pattern):
         """
         Overriden base class method to set the filter fixed string
         """
-        self._dirty_all_accepted()
+        self._clear_rejection_cache()
         QtGui.QSortFilterProxyModel.setFilterFixedString(self, pattern)
 
     def setFilterCaseSensitivity(self, cs):
         """
         Overriden base class method to set the filter case sensitivity
         """
-        self._dirty_all_accepted()
+        self._clear_rejection_cache()
         QtGui.QSortFilterProxyModel.setFilterCaseSensitivity(self, cs)
 
     def setFilterKeyColumn(self, column):
         """
         Overriden base class method to set the filter key column
         """
-        self._dirty_all_accepted()
+        self._clear_rejection_cache()
         QtGui.QSortFilterProxyModel.setFilterKeyColumn(self, column)
 
     def setFilterRole(self, role):
         """
         Overriden base class method to set the filter role
         """
-        self._dirty_all_accepted()
+        self._clear_rejection_cache()
         QtGui.QSortFilterProxyModel.setFilterRole(self, role)
 
     def invalidate(self):
         """
         Overriden base class method used to invalidate sorting and filtering.
         """
-        self._dirty_all_accepted()
+        self._clear_rejection_cache()
         # call through to the base class:
         QtGui.QSortFilterProxyModel.invalidate(self)
 
@@ -258,7 +268,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         """
         Overriden base class method used to invalidate the current filter.
         """
-        self._dirty_all_accepted()
+        self._clear_rejection_cache()
         # call through to the base class:
         QtGui.QSortFilterProxyModel.invalidateFilter(self)
 
@@ -267,56 +277,50 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         Overriden base class method used to determine if a row is accepted by the
         current filter.
 
-        This implementation checks both up and down the hierarchy to determine if
-        this row should be accepted.
+        This implementation checks the given row and its descendants to decide if
+        the item should be accepted or not. It means a whole subtree has to be
+        traversed to reject a particular item.
+
+        A rejection cache is build when this method is called on top nodes to
+        avoid to compute the same values again and again when this method is called
+        in nodes deeper in the hierarchy. This cache keeps track of pruned branches
+        in the tree.
 
         :param src_row:         The row in the source model to filter
         :param src_parent_idx:  The parent index in the source model to filter
         :returns:               True if the row should be accepted by the filter, False
                                 otherwise
         """
-        # get the source index for the row:
+        # Get the source index for the row:
         src_model = self.sourceModel()
         src_idx = src_model.index(src_row, 0, src_parent_idx)
 
-        # first, see if any children of this item are known to already be accepted
-        child_accepted = self._child_accepted_cache.get(src_idx)
-        if child_accepted == True:
-            # child is accepted so this item must also be accepted
-            return True
-
-        # next, we need to determine if the parent item has been accepted.  To do this,
-        # search up the hierarchy stopping at the first parent that we know for sure if
-        # it has been accepted or not.
-        upstream_indexes = []
-        current_idx = src_idx
-        parent_accepted = False
-        while current_idx and current_idx.isValid():
-            accepted = self._accepted_cache.get(current_idx)
-            if accepted != None:
-                parent_accepted = accepted
-                break
-            upstream_indexes.append(current_idx)
-            current_idx = current_idx.parent()
-
-        # now update the accepted status for items that we don't know
-        # for sure, working from top to bottom in the hierarchy ending
-        # on the index we are checking for:
-        for idx in reversed(upstream_indexes):
-            accepted = self._is_row_accepted(idx.row(), idx.parent(), parent_accepted)
-            self._accepted_cache.add(idx, accepted)
-            parent_accepted = accepted
-
-        if parent_accepted:
-            # the index we are testing was accepted!
-            return True
-        elif src_model.hasChildren(src_idx):
-            # even though the parent wasn't accepted, it may still be needed if one or more
-            # children/grandchildren/etc. are accepted:
-            return self._is_child_accepted_r(src_idx, parent_accepted)
+        # Check if we are dealing with top nodes
+        if not src_parent_idx.parent() or not src_parent_idx.parent().isValid():
+            self._update_rejection_cache(src_idx)
+            # We can now just return the cached value which was may be modified
+            # when traversing the tree.
+            cached_value = self._rejected_cache.get(src_idx)
+            return not cached_value
         else:
-            # index wasn't accepted and has no children
-            return False  
+            # If we are reaching this level, it means that our parent was accepted.
+            # There are two cases:
+            # 1) The parent itself was accepted.
+            # 2) The parent was accepted because one of its descendants was accepted.
+            # For 2) we check if we were rejected when during the top to bottom
+            # initial traversal. If we are not in the rejected cache, or we were
+            # not rejected, we can be accepted without any further checking.
+            cached_value = self._rejected_cache.get(src_idx)
+            if cached_value:
+                # We were rejected, return that we are not accepted.
+                return False
+            else:
+                # None or False
+                # - None means that this depth didn't have to be checked during
+                #   the initial traversal.
+                # - False means that this depth was reached and was not rejected.
+                return True
+
 
     def setSourceModel(self, model):
         """
@@ -329,11 +333,12 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         prev_source_model = self.sourceModel()
         if prev_source_model:
             prev_source_model.rowsInserted.disconnect(self._on_source_model_rows_inserted)
+            prev_source_model.rowsRemoved.disconnect(self._on_source_model_rows_removed)
             prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
             prev_source_model.modelAboutToBeReset.disconnect(self._on_source_model_about_to_be_reset)
 
-        # clear out the various caches:
-        self._dirty_all_accepted()
+        # clear out the rejection cache:
+        self._clear_rejection_cache()
 
         # call base implementation:
         QtGui.QSortFilterProxyModel.setSourceModel(self, model)
@@ -341,92 +346,109 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # connect to the new model:
         if model:
             model.rowsInserted.connect(self._on_source_model_rows_inserted)
+            model.rowsRemoved.connect(self._on_source_model_rows_removed)
             model.dataChanged.connect(self._on_source_model_data_changed)
             model.modelAboutToBeReset.connect(self._on_source_model_about_to_be_reset)
 
     # -------------------------------------------------------------------------------
     # Private methods
 
-    def _is_child_accepted_r(self, idx, parent_accepted):
+    def _update_rejection_cache(self, from_index):
         """
-        Recursively check children to see if any of them have been accepted.
+        Update the rejection cache from the given index.
 
-        :param idx:             The model index whose children should be checked
-        :param parent_accepted: True if a parent item has been accepted
-        :returns:               True if a child of the item is accepted by the filter
+        The cache at the given index has to be cleared before calling this method
+        to force a refresh.
+
+        :param from_index: A :class:`QModelIndex` instance.
         """
-        model = idx.model()
-
-        # check to see if any children of this item are known to have been accepted:
-        cached_value = self._child_accepted_cache.get(idx)
+        if not from_index or not from_index.isValid():
+            return
+        # Do we have a value from a previous iteration?
+        cached_value = self._rejected_cache.get(from_index)
         if cached_value is not None:
-            # we already computed this so just return the result
-            return cached_value
+            return not cached_value
+        # We don't have a cache value check if this item can be accepted
+        accepted = self._is_row_accepted(from_index.row(), from_index.parent(), False)
+        self._rejected_cache.add(from_index, not accepted)
+        if accepted:
+            # Great, no need to check further.
+            return True
+        # We need to check if we should be accepted because one of our
+        # descendant is accepted.
+        # We keep a list of indexes to check, add new indexes at the end and
+        # unqueue them from the left (first in first out).
+        descendant_indexes = deque()
+        for row_i in range(from_index.model().rowCount(from_index)):
+            descendant_indexes.append(from_index.child(row_i, 0))
+        while descendant_indexes:
+            child_index = descendant_indexes.popleft()
+            rejected = self._rejected_cache.get(child_index)
+            if cached_value is None:
+                # Compute the value
+                accepted = self._is_row_accepted(
+                    child_index.row(),
+                    child_index.parent(),
+                    False
+                )
+                rejected = not accepted
+                self._rejected_cache.add(child_index, rejected)
+            if rejected:
+                # We need to check children, if any, add them in the
+                # descendant list.
+                for row_i in range(child_index.model().rowCount(child_index)):
+                    descendant_indexes.append(child_index.child(row_i, 0))
+            else:
+                # This item is accepted, no need to check descendants.
+                # Go up in the tree and flag the path leading to us as "accepted"
+                # By not adding children in the descendant list we stop the
+                # traversal at this level.
+                # Please note that we might get higher in the tree hierarchy than
+                # the depth of our starting index, potentially up to the top nodes.
+                parent_index = child_index.parent()
+                while parent_index and parent_index.isValid():
+                    if self._rejected_cache.get(parent_index) == False:
+                        # The path to parent_index is already accepted, no
+                        # need to go further up.
+                        break
+                    self._rejected_cache.add(parent_index, False)
+                    parent_index = parent_index.parent()
 
-        # need to recursively iterate over children looking for one that is accepted:
-        child_accepted = False
-        for ci in range(model.rowCount(idx)):
-            child_idx = idx.child(ci, 0)
-
-            # Check if child item is in cache:
-            child_accepted = self._accepted_cache.get(child_idx)
-            if child_accepted is None:
-                # It's not in the cache so lets see if it's accepted and add to the cache:
-                child_accepted = self._is_row_accepted(child_idx.row(), idx, parent_accepted)
-                self._accepted_cache.add(child_idx, child_accepted)
-
-            if not child_accepted and model.hasChildren(child_idx):
-                # This child was not accepted.
-                # Recurse down and check if any grand children are accepted.
-                child_accepted = self._is_child_accepted_r(child_idx, False)
-
-            if child_accepted:
-                # This child node or one of its descendants indicated that they
-                # were accepted so exit early.
-                break
-
-        # Cache if one of the descendants was accepted or not.
-        self._child_accepted_cache.add(idx, child_accepted)
-        return child_accepted
-
-    def _dirty_all_accepted(self):
+    def _clear_rejection_cache(self):
         """
-        Dirty/clear the accepted caches
+        Clear the rejection cache.
         """
-        self._accepted_cache.clear()
-        self._child_accepted_cache.clear()
+        self._rejected_cache.clear()
 
-    def _dirty_accepted_rows(self, parent_idx, start, end):
+    def _deferred_refresh(self):
         """
-        Dirty the specified rows from the accepted caches.  This will remove any entries in
-        either the accepted or the child accepted cache that match the start/end rows for the
-        specified parent index.
+        Run a posted deferred refresh by invalidating the current filter.
 
-        This also dirties the parent hierarchy to ensure that any filtering is re-calculated for
-        those parent items.
-
-        :param parent_idx:  The parent model index to dirty rows for
-        :param start:       The first row in to dirty
-        :param end:         The last row to dirty
+        This does not rebuild the rejection cache by just ensure it is applied.
         """
-        # clear all rows from the accepted caches
-        for row in range(start, end+1):
-            idx = self.sourceModel().index(row, 0, parent_idx)
-            self._child_accepted_cache.remove(idx)
-            self._accepted_cache.remove(idx)
+        self._refresh_queued = False
+        # Run the base implementation to not invalidate our cache.
+        QtGui.QSortFilterProxyModel.invalidateFilter(self)
 
-        # remove parent hierarchy from caches as well:
-        while parent_idx.isValid():
-            self._child_accepted_cache.remove(parent_idx)
-            self._accepted_cache.remove(parent_idx)
-            parent_idx = parent_idx.parent()
+    def _post_refresh(self):
+        """
+        Workaround for the rejected cache being updated and the QSortFilterProxyModel
+        instance not being aware of it: post a full refresh of the proxy model
+        and ensure only one is queued at any time.
+        """
+        if not self._refresh_queued:
+            self._refresh_queued = True
+            # With a 0 timeout we're posting an event which will be processed as
+            # soon as the Qt event loop becomes idle.
+            QtCore.QTimer.singleShot(0, self._deferred_refresh)
 
     def _on_source_model_data_changed(self, start_idx, end_idx):
         """
         Slot triggered when data for one or more items in the source model changes.
 
-        Data in the source model changing may mean that the filtering for an item changes.  If this
-        is the case then we need to make sure we clear any affected entries from the cache
+        Data in the source model changing may mean that the filtering for an item
+        changes.  If this is the case then we need to make sure we refresh any
+        affected entries from the cache.
 
         :param start_idx:   The index of the first row in the range of model items that have changed
         :param start_idx:   The index of the last row in the range of model items that have changed
@@ -440,27 +462,32 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         parent_idx = start_idx.parent()
         if parent_idx != end_idx.parent():
             # this should never happen but just in case, dirty the entire cache:
-            self._dirty_all_accepted()
+            self._clear_rejection_cache()
 
-        # dirty specific rows in the caches:
-        self._dirty_accepted_rows(parent_idx, start_idx.row(), end_idx.row())
+        # Get the current value for the parent
+        cached_value = self._rejected_cache.get(parent_idx)
+        # Clear the cache value for the parent.
+        self._rejected_cache.remove(parent_idx)
+        # And recompute the cache from it.
+        self._update_rejection_cache(parent_idx)
+        # Get the new value
+        new_cached_value = self._rejected_cache.get(parent_idx)
+        # And check if it changed
+        if new_cached_value != cached_value:
+            # cache changes might have happened for items higher in the tree
+            # but the QSortFilterProxyModel will not be aware of them: in the base
+            # implementation a node change can't affect something higher in the
+            # hierarchy. As a brute force workaround post a full refresh to ensure
+            # the proxy model is up to date with the cache.
+            self._post_refresh()
 
     def _on_source_model_rows_inserted(self, parent_idx, start, end):
         """
         Slot triggered when rows are inserted into the source model.
 
-        There appears to be a limitation with the QSortFilterProxyModel that breaks sorting
-        of newly added child rows when the parent row has previously been filtered out.  This
-        can happen when the model data is lazy-loaded as the filtering may decide that as
-        there are no valid children, then the parent should be filtered out.  However, when
-        matching children later get added, the parent then matches but the children don't get
-        sorted correctly!
-
-        The workaround is to detect when children are added to a parent that was previously
-        filtered out and force the whole proxy model to be invalidated (so that the filtering
-        and sorting are both applied from scratch).
-
-        The alternative would be to implement our own version of the QSortFilterProxyModel!
+        If new rows are inserted, they might affect a parent item which was
+        previously filtered out. So we recompute the cache for the path leading
+        to the new rows.
 
         :param parent_idx:  The index of the parent model item
         :param start:       The first row that was inserted into the source model
@@ -471,8 +498,75 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             # invalid input parameters so ignore!
             return
 
-        # dirty specific rows in the caches:
-        self._dirty_accepted_rows(parent_idx, start, end)
+        # Get the current value for the parent
+        cached_value = self._rejected_cache.get(parent_idx)
+        # Clear the cache value for the parent.
+        self._rejected_cache.remove(parent_idx)
+        # And recompute the cache from it.
+        self._update_rejection_cache(parent_idx)
+        # Get the new value
+        new_cached_value = self._rejected_cache.get(parent_idx)
+        # And check if it changed
+        if new_cached_value != cached_value:
+            # cache changes might have happened for items higher in the tree
+            # but the QSortFilterProxyModel will not be aware of them: in the base
+            # implementation a node change can't affect something higher in the
+            # hierarchy. As a brute force workaround post a full refresh to ensure
+            # the proxy model is up to date with the cache.
+            self._post_refresh()
+
+    def _on_source_model_rows_removed(self, parent_idx, start, end):
+        """
+        Slot triggered when rows are deleted from the source model.
+
+        If rows are deleted, they might affect a parent item which was
+        previously accepted. So we invalidate the cache for the path leading
+        to the new rows.
+
+        :param parent_idx:  The index of the parent model item
+        :param start:       The first row that was inserted into the source model
+        :param end:         The last row that was inserted into the source model
+        """
+        if (not parent_idx.isValid()
+            or parent_idx.model() != self.sourceModel()):
+            # invalid input parameters so ignore!
+            return
+
+        # Get the current value for the parent
+        cached_value = self._rejected_cache.get(parent_idx)
+        # Clear the cache value for the parent.
+        self._rejected_cache.remove(parent_idx)
+        # And recompute the cache from it.
+        self._update_rejection_cache(parent_idx)
+        # Get the new value
+        new_cached_value = self._rejected_cache.get(parent_idx)
+        # Check if we were accepted and are now rejected
+        if new_cached_value == True and not cached_value:
+            # The cached value was an explicit (True) or implicit (None) acceptance
+            # We need to update the path leading to us to prune it
+            up_index = parent_idx.parent()
+            proxy_index = None
+            while up_index and up_index.isValid():
+                proxy_index = self.mapFromSource(up_index)
+                if not proxy_index or not proxy_index.isValid():
+                    # For an unknown reason the parent source index is not in
+                    # the filtered view, let's stop here...
+                    break
+                # If the parent has a single child it means we were the only
+                # reason for the parent to be accepted, which is not the case
+                # anymore. Stop here if there is not a single child
+                if proxy_index.model().rowCount(proxy_index) != 1:
+                    break
+                # Reject the parent
+                self._rejected_cache.add(up_index, True)
+                # And keep going up
+                up_index = up_index.parent()
+            # cache changes might have happened for items higher in the tree
+            # but the QSortFilterProxyModel will not be aware of them: in the base
+            # implementation a node change can't affect something higher in the
+            # hierarchy. As a brute force workaround post a full refresh to ensure
+            # the proxy model is up to date with the cache.
+            self._post_refresh()
 
     def _on_source_model_about_to_be_reset(self):
         """
@@ -483,4 +577,4 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # we are guaranteed that the indices won't be valid anymore, so clearning thoses indices now
         # means the source model won't have to keep updating them as the tree is being cleared, thus slowing
         # down the reset.
-        self._dirty_all_accepted()
+        self._clear_rejection_cache()
