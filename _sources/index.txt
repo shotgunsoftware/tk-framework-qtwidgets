@@ -12,6 +12,7 @@ Contents:
    elided_label
    search_completer
    shotgun_search_widget
+   context_widget
    help_screen
    models
    navigation
@@ -22,6 +23,7 @@ Contents:
    shotgun_fields
    shotgun_menus
    spinner_widget
+   version_details
    views
 
 Importing widgets into your app

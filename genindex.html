@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; tk-framework-qtwidgets v2.6.6 documentation</title>
+  <title>Index &mdash; tk-framework-qtwidgets v2.7.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.6.6 documentation" href="index.html"/> 
+    <link rel="top" title="tk-framework-qtwidgets v2.7.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -93,6 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
@@ -103,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_details.html">Shotgun Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -127,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.6.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.7.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -414,15 +416,23 @@
   </dt>
 
       
-  <dt><a href="shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_delegate">create_delegate() (shotgun_fields.ShotgunFieldManager method)</a>
+  <dt><a href="context_widget.html#context_selector.ContextWidget.context_label">context_label (context_selector.ContextWidget attribute)</a>
   </dt>
 
       
-  <dt><a href="shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_generic_delegate">create_generic_delegate() (shotgun_fields.ShotgunFieldManager method)</a>
+  <dt><a href="context_widget.html#context_selector.ContextWidget">ContextWidget (class in context_selector)</a>
+  </dt>
+
+      
+  <dt><a href="shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_delegate">create_delegate() (shotgun_fields.ShotgunFieldManager method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_generic_delegate">create_generic_delegate() (shotgun_fields.ShotgunFieldManager method)</a>
+  </dt>
+
       
   <dt><a href="views.html#views.GroupedListViewItemDelegate.create_group_widget">create_group_widget() (views.GroupedListViewItemDelegate method)</a>
   </dt>
@@ -548,10 +558,14 @@
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="shotgun_fields.html#shotgun_fields.checkbox_widget.CheckBoxWidget.enable_editing">enable_editing() (shotgun_fields.checkbox_widget.CheckBoxWidget method)</a>
+  <dt><a href="context_widget.html#context_selector.ContextWidget.enable_editing">enable_editing() (context_selector.ContextWidget method)</a>
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="shotgun_fields.html#shotgun_fields.checkbox_widget.CheckBoxWidget.enable_editing">(shotgun_fields.checkbox_widget.CheckBoxWidget method)</a>
+  </dt>
+
         
   <dt><a href="shotgun_fields.html#shotgun_fields.file_link_widget.FileLinkWidget.enable_editing">(shotgun_fields.file_link_widget.FileLinkWidget method)</a>
   </dt>
@@ -1461,18 +1475,26 @@
   <dt><a href="shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.remove_bubble">remove_bubble() (shotgun_fields.bubble_widget.BubbleEditWidget method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="activity_stream.html#activity_stream.ReplyListWidget">ReplyListWidget (class in activity_stream)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="overlay_widget.html#overlay_widget.ShotgunSpinningWidget.report_progress">report_progress() (overlay_widget.ShotgunSpinningWidget method)</a>
   </dt>
 
       
   <dt><a href="activity_stream.html#activity_stream.ActivityStreamWidget.rescan">rescan() (activity_stream.ActivityStreamWidget method)</a>
+  </dt>
+
+      
+  <dt><a href="context_widget.html#context_selector.ContextWidget.restrict_entity_types">restrict_entity_types() (context_selector.ContextWidget method)</a>
+  </dt>
+
+      
+  <dt><a href="context_widget.html#context_selector.ContextWidget.restrict_entity_types_by_link">restrict_entity_types_by_link() (context_selector.ContextWidget method)</a>
   </dt>
 
   </dl></td>
@@ -1483,6 +1505,10 @@
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="version_details.html#version_details.VersionDetailsWidget.save_preferences">save_preferences() (version_details.VersionDetailsWidget method)</a>
+  </dt>
+
+      
+  <dt><a href="context_widget.html#context_selector.ContextWidget.save_recent_contexts">save_recent_contexts() (context_selector.ContextWidget method)</a>
   </dt>
 
       
@@ -1566,6 +1592,10 @@
   </dt>
 
       
+  <dt><a href="context_widget.html#context_selector.ContextWidget.set_context">set_context() (context_selector.ContextWidget method)</a>
+  </dt>
+
+      
   <dt><a href="note_input_widget.html#note_input_widget.NoteInputWidget.set_current_entity">set_current_entity() (note_input_widget.NoteInputWidget method)</a>
   </dt>
 
@@ -1595,6 +1625,10 @@
 
       
   <dt><a href="views.html#views.GroupWidgetBase.set_item">set_item() (views.GroupWidgetBase method)</a>
+  </dt>
+
+      
+  <dt><a href="context_widget.html#context_selector.ContextWidget.set_link_tooltip">set_link_tooltip() (context_selector.ContextWidget method)</a>
   </dt>
 
       
@@ -1642,9 +1676,19 @@
   </dt>
 
       
+  <dt><a href="context_widget.html#context_selector.ContextWidget.set_task_tooltip">set_task_tooltip() (context_selector.ContextWidget method)</a>
+  </dt>
+
+      
   <dt><a href="shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.set_text">set_text() (shotgun_fields.bubble_widget.BubbleWidget method)</a>
   </dt>
 
+      
+  <dt><a href="context_widget.html#context_selector.ContextWidget.set_up">set_up() (context_selector.ContextWidget method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="shotgun_fields.html#shotgun_fields.checkbox_widget.CheckBoxWidget.set_value">set_value() (shotgun_fields.checkbox_widget.CheckBoxWidget method)</a>
   </dt>
@@ -1767,8 +1811,6 @@
   <dt><a href="version_details.html#version_details.VersionDetailsWidget.set_version_thumbnail">set_version_thumbnail() (version_details.VersionDetailsWidget method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.setModelData">setModelData() (shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate method)</a>
   </dt>
@@ -1993,7 +2035,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Autodesk.
+        &copy; Copyright 2018, Autodesk.
 
     </p>
   </div> 
@@ -2014,7 +2056,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'v2.6.6',
+            VERSION:'v2.7.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

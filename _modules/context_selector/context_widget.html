@@ -1,0 +1,1292 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.7.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="tk-framework-qtwidgets v2.7.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <a href='http://developer.shotgunsoftware.com'>
+    
+        <img style='width: 191px;
+                height: 60px; 
+                margin: 2px;
+                border-radius: 0px; 
+                padding: 0px;' 
+            src='../../_static/logo@2x.png'/>
+    
+    </a>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">Shotgun Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">Shotgun Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../context_widget.html">Context Selector Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Shotgun Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">Shotgun Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+
+    <a href='genindex.html'>Alphabetic Index</a>
+
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px; 
+                color: #b3b3b3; 
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>    
+    <style>
+        a.custom_post_menu { display: inline; 
+                             padding: 0px; 
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> v2.7.0.<br>
+    
+        This documentation is part of the Shotgun Pipeline Toolkit.
+    
+    For more information, please visit
+    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found 
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">tk-framework-qtwidgets</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>context_selector.context_widget</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for context_selector.context_widget</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">.ui.context_editor_widget</span> <span class="kn">import</span> <span class="n">Ui_ContextWidget</span>
+
+<span class="c1"># framework imports</span>
+<span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;settings&quot;</span><span class="p">)</span>
+
+<span class="c1"># internal imports</span>
+<span class="n">shotgun_fields</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;shotgun_fields&quot;</span><span class="p">)</span>
+<span class="n">shotgun_menus</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;shotgun_menus&quot;</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># fields required to create a context from a task entity without falling back to</span>
+<span class="c1"># a SG query</span>
+<span class="n">TASK_QUERY_FIELDS</span> <span class="o">=</span><span class="p">[</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;content&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;project&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;entity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;step&quot;</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="ContextWidget"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget">[docs]</a><span class="k">class</span> <span class="nc">ContextWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Widget which represents the current context and allows the user to search</span>
+<span class="sd">    for a different context via search completer. A menu is also provided for</span>
+<span class="sd">    recent contexts as well as tasks assigned to the user.</span>
+
+<span class="sd">    :signal context_changed(context_obj): Fires when when the user</span>
+<span class="sd">        selects a context.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># emitted when a settings button is clicked on a node</span>
+    <span class="n">context_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param parent: The model parent.</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QObject`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ContextWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
+
+        <span class="c1"># get instance of user settings to save/restore values across sessions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">UserSettings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="p">)</span>
+
+        <span class="c1"># the key we&#39;ll use to store/retrieve recent contexts via user settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_recent_contexts_key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_recent_contexts_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">project</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+
+        <span class="c1"># we will do a bg query that requires an id to catch results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schema_query_id</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># another query to get all tasks assigned to the current user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_my_tasks_query_id</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># and a query for related tasks for a given context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_query_id</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># keep an in-memory cache of tasks for a given entity to prevent</span>
+        <span class="c1"># unnecessary lookups</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># keep a handle on the current context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># also keep a handle on the task manager used by completer and for</span>
+        <span class="c1"># querying shotgun in the bg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># menu for recent and user contexts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span> <span class="o">=</span> <span class="n">shotgun_menus</span><span class="o">.</span><span class="n">ShotgunMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;context_menu&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Loading...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># keep a handle on all actions created. the my tasks menu will be</span>
+        <span class="c1"># constant, but the recents menu will be dynamic. so we build the menu</span>
+        <span class="c1"># just before it is shown. these lists hold the QActions for each</span>
+        <span class="c1"># group of contexts to show in the menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Related&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;My Tasks&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;Recent&quot;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+
+        <span class="c1"># set up the UI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_ContextWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Loads the style sheet for the widget</span>
+        <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">qss_file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="c1"># apply to widget (and all its children)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filter out and handle some key/click events on the search widgets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">key_event</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">KeyPress</span>
+        <span class="n">click_event</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">MouseButtonRelease</span>
+
+        <span class="k">if</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_display</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">click_event</span><span class="p">:</span>
+                <span class="c1"># user clicked on the task display, show the search widget</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_manual_task_search_toggle</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">elif</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">key_event</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">:</span>
+                    <span class="c1"># user escaped in the task search, show the display</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_manual_task_search_toggle</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">True</span>
+                <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Tab</span><span class="p">,</span>
+                    <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Return</span><span class="p">,</span>
+                    <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Enter</span><span class="p">,</span>
+                <span class="p">]:</span>
+                    <span class="c1"># user hit tab/enter/return in search. go with the currently</span>
+                    <span class="c1"># highlighted item or the first one</span>
+                    <span class="n">result</span> <span class="o">=</span> \
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_current_result</span><span class="p">()</span> <span class="ow">or</span>\
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_first_result</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span><span class="p">(</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                        <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">click_event</span><span class="p">:</span>
+                <span class="c1"># user clicked on the link display, show the search widget</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_manual_link_search_toggle</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">elif</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">key_event</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">:</span>
+                    <span class="c1"># user escaped in the task search, show the display</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_manual_link_search_toggle</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">True</span>
+                <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Tab</span><span class="p">,</span>
+                    <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Return</span><span class="p">,</span>
+                    <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Enter</span><span class="p">,</span>
+                <span class="p">]:</span>
+                    <span class="c1"># user hit tab/enter/return in search. go with the currently</span>
+                    <span class="c1"># highlighted item or the first one</span>
+                    <span class="n">result</span> <span class="o">=</span> \
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_current_result</span><span class="p">()</span> <span class="ow">or</span>\
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_first_result</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span><span class="p">(</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">False</span>
+
+<div class="viewcode-block" id="ContextWidget.save_recent_contexts"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.save_recent_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">save_recent_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Should be called by the parent widget, typically when the dialog closes,</span>
+<span class="sd">        to ensure the recent contexts are saved to disk when closing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># build a list of serialized recent contexts. we grab all the QActions</span>
+        <span class="c1"># from the recents list and serialize them.</span>
+        <span class="n">serialized_contexts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">recent_action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Recent&quot;</span><span class="p">]:</span>
+            <span class="n">recent_context</span> <span class="o">=</span> <span class="n">recent_action</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+
+            <span class="c1"># don&#39;t include the user credentials in the serialized context as</span>
+            <span class="c1"># it may cause issues with authentication when deserializing</span>
+            <span class="n">serialized_context</span> <span class="o">=</span> <span class="n">recent_context</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span>
+                <span class="n">with_user_credentials</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+            <span class="n">serialized_contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">serialized_context</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Storing serialized &#39;Recent&#39; contexts.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># store the recent contexts on disk. the scope is per-project</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">store</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_settings_recent_contexts_key</span><span class="p">,</span>
+            <span class="n">serialized_contexts</span><span class="p">,</span>
+            <span class="n">scope</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">UserSettings</span><span class="o">.</span><span class="n">SCOPE_PROJECT</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ContextWidget.set_context"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_context">[docs]</a>    <span class="k">def</span> <span class="nf">set_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">task_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">link_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the context to display in the widget.</span>
+
+<span class="sd">        The initial display values can be overridden via the task and link</span>
+<span class="sd">        override args.</span>
+
+<span class="sd">        :param context: Toolkit Context that the widget should be set to.</span>
+<span class="sd">        :param str task_display_override: Override text to be displayed for the task.</span>
+<span class="sd">        :param str link_display_override: Override text to be displayed for the link.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting context to: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">context</span><span class="p">,))</span>
+
+        <span class="c1"># clear any related tasks from the previous context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Related&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_context</span><span class="p">(</span>
+            <span class="n">context</span><span class="p">,</span>
+            <span class="n">task_display_override</span><span class="o">=</span><span class="n">task_display_override</span><span class="p">,</span>
+            <span class="n">link_display_override</span><span class="o">=</span><span class="n">link_display_override</span>
+        <span class="p">)</span>
+
+        <span class="c1"># ensure the new context is added to the list of recents.</span>
+        <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_recents</span><span class="p">(</span><span class="n">context</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ContextWidget.set_up"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_up">[docs]</a>    <span class="k">def</span> <span class="nf">set_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles initial set up of the widget. Includes setting up menu, running</span>
+<span class="sd">        any background set up tasks, etc.</span>
+
+<span class="sd">        :param task_manager: Background task manager to use</span>
+<span class="sd">        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting up the UI...&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">task_manager</span>
+
+        <span class="c1"># attach the context menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_menu_btn</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">aboutToShow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_about_to_show_contexts_menu</span><span class="p">)</span>
+
+        <span class="c1"># setup the search toggle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search_btn</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_task_search_toggled</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+        <span class="c1"># setup the search toggle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search_btn</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_link_search_toggled</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+        <span class="c1"># set up the task manager to the task search widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">set_placeholder_text</span><span class="p">(</span><span class="s2">&quot;Search for Tasks...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span><span class="p">)</span>
+
+        <span class="c1"># save as above but for the link search widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_placeholder_text</span><span class="p">(</span><span class="s2">&quot;Search for entity link...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span>
+        <span class="p">)</span>
+
+        <span class="c1"># limit the task autocompleter to tasks only.</span>
+        <span class="c1"># TODO: limit to tasks linked to the entity types given</span>
+        <span class="n">task_types_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Task&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span><span class="n">task_types_dict</span><span class="p">)</span>
+
+        <span class="c1"># set up event filters for the task/link display labels so that when</span>
+        <span class="c1"># clicked, they go directly to an edit state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_display</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># setup event filters for the task/link search inputs so that when</span>
+        <span class="c1"># certain keys are pressed, the widget can react to it properly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># we need to limit the search completer to entity types that are valid</span>
+        <span class="c1"># for ``PublishedFile.entity`` field links. To do this, query the</span>
+        <span class="c1"># shotgun schema to get a list of these entity types. We use the current</span>
+        <span class="c1"># project schema if we&#39;re in a project. We do this as a background query</span>
+        <span class="c1"># via the supplied task manager.</span>
+
+        <span class="c1"># connect to the task manager signals so that we can get the results</span>
+        <span class="n">task_manager</span><span class="o">.</span><span class="n">task_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_task_completed</span><span class="p">)</span>
+        <span class="n">task_manager</span><span class="o">.</span><span class="n">task_failed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_task_failed</span><span class="p">)</span>
+
+        <span class="c1"># query all my assigned tasks in a bg task</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_my_tasks_query_id</span> <span class="o">=</span> <span class="n">task_manager</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="n">_query_my_tasks</span><span class="p">)</span>
+
+        <span class="c1"># get recent contexts from user settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_recent_contexts</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ContextWidget.restrict_entity_types_by_link"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.restrict_entity_types_by_link">[docs]</a>    <span class="k">def</span> <span class="nf">restrict_entity_types_by_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Specify what entries should show up in the list of links when</span>
+<span class="sd">        using the auto completer.</span>
+
+<span class="sd">        For the simple case where you just want to show a given set of</span>
+<span class="sd">        entity types, use :meth:`restrict_entity_types`. This method is</span>
+<span class="sd">        a more complex restriction suitable for workflows around publishing</span>
+<span class="sd">        and review.</span>
+
+<span class="sd">        This method will look at the given link field (e.g. ``PublishedFile.entity``)</span>
+<span class="sd">        and inspect the shotgun schema to see which entity types are valid connections</span>
+<span class="sd">        to this field (e.g. in this example which entity types can you can associate</span>
+<span class="sd">        a publish with) and those types will appear in the list of items shown by the</span>
+<span class="sd">        auto completer.</span>
+
+<span class="sd">        This is useful when you want to use the context widget in conjunction with</span>
+<span class="sd">        workflows related to for example publishes, versions or notes and you want to</span>
+<span class="sd">        restrict the entities displayed by the auto completer to the ones that have been</span>
+<span class="sd">        configured in the shotgun site schema to be able to associate with the given type.</span>
+
+<span class="sd">        :param str entity_type: Entity type to restrict based on</span>
+<span class="sd">        :param str field_name: Shotgun field to restrict based on</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;You must run set_up() before this method can be executed.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Query Shotgun for valid entity types for PublishedFile.entity field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schema_query_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span>
+            <span class="n">_query_entity_schema</span><span class="p">,</span>
+            <span class="n">task_args</span><span class="o">=</span><span class="p">[</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ContextWidget.restrict_entity_types"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.restrict_entity_types">[docs]</a>    <span class="k">def</span> <span class="nf">restrict_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_types</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrict which entity types should show up in the list of matches.</span>
+
+<span class="sd">        :param list entity_types: List of entity types</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Restricting auto completer to show the following types: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entity_types</span>
+        <span class="p">)</span>
+        <span class="c1"># construct a dictionary that the search widget expects for</span>
+        <span class="c1"># filtering. This is a dictionary with the entity types as keys and</span>
+        <span class="c1"># values a list of search filters. We don&#39;t have any filters, so we</span>
+        <span class="c1"># just use empty list.</span>
+        <span class="n">entity_types_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="p">[])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">entity_types</span><span class="p">)</span>
+
+        <span class="c1"># update the types for the link completer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span>
+            <span class="n">entity_types_dict</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">context_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The label for the context widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">label</span>
+
+<div class="viewcode-block" id="ContextWidget.set_task_tooltip"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_task_tooltip">[docs]</a>    <span class="k">def</span> <span class="nf">set_task_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tooltip</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Specify a string (can be html) which should be shown</span>
+<span class="sd">        as the tooltip for the task selection widget</span>
+
+<span class="sd">        :param str tooltip: Tooltip plaintext or html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_display</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">tooltip</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ContextWidget.set_link_tooltip"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_link_tooltip">[docs]</a>    <span class="k">def</span> <span class="nf">set_link_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tooltip</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Specify a string (can be html) which should be shown</span>
+<span class="sd">        as the tooltip for the link selection widget</span>
+
+<span class="sd">        :param str tooltip: Tooltip plaintext or html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">tooltip</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ContextWidget.enable_editing"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.enable_editing">[docs]</a>    <span class="k">def</span> <span class="nf">enable_editing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show/hide the input widgets and display a message in the context label.</span>
+
+<span class="sd">        :param bool enabled: Indicates if task/link selectors should be shown</span>
+<span class="sd">        :param str message: Message to display on :meth:`context_label`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">context_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">message</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_add_to_recents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the supplied context as an action in the list of recents context</span>
+<span class="sd">        actions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># don&#39;t add a &quot;project&quot; context to recents. we shouldn&#39;t encourage it</span>
+        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">project</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">task</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Adding context to &#39;Recents&#39;: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">context</span><span class="p">,))</span>
+
+        <span class="n">recent_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Recent&quot;</span><span class="p">]</span>
+
+        <span class="n">matching_indexes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">recent_action</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">recent_actions</span><span class="p">):</span>
+            <span class="n">recent_context</span> <span class="o">=</span> <span class="n">recent_action</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">recent_context</span> <span class="o">==</span> <span class="n">context</span><span class="p">:</span>
+                <span class="c1"># contexts support __eq__ so this should be enough for comparing</span>
+                <span class="n">matching_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">matching_indexes</span><span class="p">:</span>
+            <span class="c1"># context exists in recent list in one or more places. remove the</span>
+            <span class="c1"># QAction(s) and put one of them at the front of the list</span>
+            <span class="n">recent_action</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">for</span> <span class="n">match_index</span> <span class="ow">in</span> <span class="n">matching_indexes</span><span class="p">:</span>
+                <span class="n">recent_action</span> <span class="o">=</span> <span class="n">recent_actions</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">match_index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># the context does not exist in the recents. add it</span>
+            <span class="n">recent_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_qaction_for_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">recent_action</span><span class="p">:</span>
+            <span class="n">recent_actions</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">recent_action</span><span class="p">)</span>
+
+        <span class="c1"># only keep the 5 most recent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Recent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recent_actions</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_build_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tasks</span><span class="p">,</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">exclude_current_context</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a list of actions from the supplied tasks. The actions are stored</span>
+<span class="sd">        in the instance&#39;s _menu_actions dictionary and used to build the menu.</span>
+
+<span class="sd">        The actions will be sorted by name if ``sort`` is set to True. If the</span>
+<span class="sd">        ``exclude_current_context`` is supplied, the widget&#39;s current context</span>
+<span class="sd">        will not be included in the list of actions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tasks</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No tasks supplied for group: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">group_name</span><span class="p">,))</span>
+            <span class="k">return</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Building actions for group: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">group_name</span><span class="p">,))</span>
+
+        <span class="n">task_actions</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+            <span class="n">task_context</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">context_from_entity_dictionary</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+            <span class="c1"># the context from dict method clears all unnecessary fields</span>
+            <span class="c1"># from the task upon creation. now that we have the context,</span>
+            <span class="c1"># update the fields with the queried task fields</span>
+            <span class="n">task_context</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+            <span class="c1"># don&#39;t include the current context in this list of actions</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="ow">and</span>
+                <span class="n">exclude_current_context</span> <span class="ow">and</span>
+                <span class="n">task_context</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># build the action and add it to the list</span>
+            <span class="n">task_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_qaction_for_context</span><span class="p">(</span><span class="n">task_context</span><span class="p">)</span>
+            <span class="n">task_actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task_action</span><span class="p">)</span>
+
+        <span class="c1"># sort on the action text if requested</span>
+        <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+            <span class="n">task_actions</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+
+        <span class="c1"># store the actions list for use when building the menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="n">group_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">task_actions</span>
+
+    <span class="k">def</span> <span class="nf">_get_qaction_for_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper method to build a QAction for the supplied context.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get the display string and icon path for the context</span>
+        <span class="n">context_display</span> <span class="o">=</span> <span class="n">_get_context_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">icon_path</span> <span class="o">=</span> <span class="n">_get_context_icon_path</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="c1"># construct the action</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">context_display</span><span class="p">)</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">icon_path</span><span class="p">))</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">c</span><span class="o">=</span><span class="n">context</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_context_activated</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">action</span>
+
+    <span class="k">def</span> <span class="nf">_get_recent_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pull the stored, serialized contexts from user settings and populate the</span>
+<span class="sd">        Recent actions list for use when building the contexts menu.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Retrieving stored &#39;Recent&#39; actions from disk...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># get the serialized contexts from disk</span>
+        <span class="n">serialized_recent_contexts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_settings_recent_contexts_key</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+            <span class="n">scope</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">UserSettings</span><span class="o">.</span><span class="n">SCOPE_PROJECT</span>
+        <span class="p">)</span>
+
+        <span class="c1"># turn these into QActions to add to the list of recents in the menu</span>
+        <span class="k">for</span> <span class="n">serialized_context</span> <span class="ow">in</span> <span class="n">serialized_recent_contexts</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">context</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">Context</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">serialized_context</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Unable to deserialize stored context.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">recent_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_qaction_for_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Recent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">recent_action</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_manual_task_search_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Small wrapper to manual toggle the task searching on/off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search_btn</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search_btn</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_manual_link_search_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Small wrapper to manual toggle the link searching on/off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search_btn</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search_btn</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_about_to_show_contexts_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot called just before the contexts menu is shown. It handles</span>
+<span class="sd">        organizing the actions into menus.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># clear and rebuild the menu since the recents/related sections are</span>
+        <span class="c1"># dynamic.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
+
+        <span class="c1"># ---- build the &quot;Related&quot; menu</span>
+
+        <span class="n">related_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Related&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">related_actions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">related_actions</span><span class="p">,</span> <span class="s2">&quot;Related&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ---- build the &quot;My Tasks&quot; menu</span>
+
+        <span class="c1"># TODO: here we&#39;re organizing the tasks by status. since these contexts</span>
+        <span class="c1"># are status for a publish session, we could (perhaps should) organize</span>
+        <span class="c1"># them once (elsewhere) and simply construct the menus here. For now,</span>
+        <span class="c1"># this simplifies the logic since `self._menu_actions` is just a</span>
+        <span class="c1"># dictionary of flat lists of QActions.</span>
+
+        <span class="n">my_tasks_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;My Tasks&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">my_tasks_actions</span><span class="p">:</span>
+
+            <span class="n">status_groups</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="c1"># organize the tasks by status</span>
+            <span class="k">for</span> <span class="n">task_action</span> <span class="ow">in</span> <span class="n">my_tasks_actions</span><span class="p">:</span>
+                <span class="n">context</span> <span class="o">=</span> <span class="n">task_action</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+                <span class="n">task</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">task</span>
+                <span class="n">status_code</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sg_status_list&quot;</span><span class="p">,</span> <span class="s2">&quot;ip&quot;</span><span class="p">)</span>
+                <span class="n">status_groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="n">status_groups</span><span class="p">[</span><span class="n">status_code</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task_action</span><span class="p">)</span>
+
+            <span class="c1"># special case the &quot;ip&quot; tasks and show them at the top level</span>
+            <span class="n">ip_tasks</span> <span class="o">=</span> <span class="n">status_groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ip&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">top_level_my_tasks_actions</span> <span class="o">=</span> <span class="n">ip_tasks</span>
+
+            <span class="c1"># create submenus for everything else</span>
+            <span class="k">for</span> <span class="n">status_code</span> <span class="ow">in</span> <span class="n">status_groups</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">status_code</span> <span class="o">==</span> <span class="s2">&quot;ip&quot;</span><span class="p">:</span>
+                    <span class="c1"># skipping special cased &quot;in progress&quot; tasks</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># get the display name for the status code</span>
+                <span class="n">status_display</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_status_display_name</span><span class="p">(</span>
+                    <span class="n">status_code</span><span class="p">,</span>
+                    <span class="n">project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="c1"># get the actions for this code</span>
+                <span class="n">status_actions</span> <span class="o">=</span> <span class="n">status_groups</span><span class="p">[</span><span class="n">status_code</span><span class="p">]</span>
+
+                <span class="c1"># build the submenu for this status</span>
+                <span class="n">status_menu</span> <span class="o">=</span> <span class="n">shotgun_menus</span><span class="o">.</span><span class="n">ShotgunMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">status_menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">status_display</span><span class="p">)</span>
+                <span class="n">status_menu</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">status_actions</span><span class="p">,</span> <span class="n">status_display</span><span class="p">)</span>
+
+                <span class="c1"># add the submenu to the top level my tasks menu</span>
+                <span class="n">top_level_my_tasks_actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status_menu</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">top_level_my_tasks_actions</span><span class="p">,</span> <span class="s2">&quot;My Tasks&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ---- build the &quot;Recent&quot; menu</span>
+
+        <span class="n">recent_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Recent&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">recent_actions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">recent_actions</span><span class="p">,</span> <span class="s2">&quot;Recent&quot;</span><span class="p">)</span>
+
+        <span class="c1"># if there are no menu items, show a message</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">actions</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;No Tasks to show&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_context_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when a new context is set via the menu or one of the completers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Context changed to: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">context</span><span class="p">,))</span>
+
+        <span class="c1"># update the widget to display the new context and alert listeners that</span>
+        <span class="c1"># a new context was selected</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_entity_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot called when an entity is selected via one of the search completers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">context_from_entity</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_context_activated</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_task_search_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot called when the user clicks the task display or the task search</span>
+<span class="sd">        button.</span>
+
+<span class="sd">        If checked, hides the task display label and shows the search completer.</span>
+<span class="sd">        Also populates the completer with context info to help the user.</span>
+
+<span class="sd">        If not checked, hides the search info and shows the task display widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">checked</span><span class="p">:</span>
+
+            <span class="c1"># hide the display, show the search</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_display</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_menu_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span>
+
+            <span class="c1"># populate and show the completer</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">:</span>
+                <span class="n">search_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">entity</span><span class="p">:</span>
+                    <span class="n">search_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">task</span><span class="p">:</span>
+                    <span class="n">search_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">search_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">search_str</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_str</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">complete</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># hide the search, show the display</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_display</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_menu_btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_on_link_search_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot called when the user clicks the link display or the link search</span>
+<span class="sd">        button.</span>
+
+<span class="sd">        If checked, hides the link display label and shows the search completer.</span>
+<span class="sd">        Also populates the completer with context info to help the user.</span>
+
+<span class="sd">        If not checked, hides the search info and shows the link display widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">checked</span><span class="p">:</span>
+            <span class="c1"># hide the display, show the search</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span>
+
+            <span class="c1"># populate and show the completer</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">:</span>
+                <span class="n">search_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">entity</span><span class="p">:</span>
+                    <span class="n">search_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">search_str</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">search_str</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_str</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">complete</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># hide the search, show the display</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_on_task_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slot called when a background task completes. Displatches methods to</span>
+<span class="sd">        handle the results depending on which task was completed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># queried valid entity types for PublishedFile.entity field</span>
+        <span class="k">if</span> <span class="n">task_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema_query_id</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed query of PublishedFile.entity schema&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_restrict_searchable_entity_types</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="c1"># queried the current user&#39;s tasks</span>
+        <span class="k">elif</span> <span class="n">task_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_my_tasks_query_id</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed query for current user tasks.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build_actions</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;My Tasks&quot;</span><span class="p">)</span>
+
+        <span class="c1"># queried tasks related to the currently selected link</span>
+        <span class="k">elif</span> <span class="n">task_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_query_id</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed query for the current user&#39;s Tasks.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build_actions</span><span class="p">(</span>
+                <span class="n">result</span><span class="p">,</span>
+                <span class="s2">&quot;Related&quot;</span><span class="p">,</span>
+                <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">exclude_current_context</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_task_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">traceback_str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If the schema query fails, add a log warning. It&#39;s not catastrophic, but</span>
+<span class="sd">        it shouldn&#39;t fail, so we need to make a record of it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># failed to query valid entity types for PublishedFile.entity field</span>
+        <span class="k">if</span> <span class="n">task_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema_query_id</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to query valid entity types for PublishedFile.entity.&quot;</span>
+                <span class="s2">&quot;Error Message: </span><span class="si">%s</span><span class="s2">.</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">traceback_str</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># failed to query the current user&#39;s tasks</span>
+        <span class="k">elif</span> <span class="n">task_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_my_tasks_query_id</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to query tasks for the current Shotgun user.&quot;</span>
+                <span class="s2">&quot;Error Message: </span><span class="si">%s</span><span class="s2">.</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">traceback_str</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># failed to query tasks related to the currently selected link</span>
+        <span class="k">elif</span> <span class="n">task_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_query_id</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to related tasks for the selected entity link.&quot;</span>
+                <span class="s2">&quot;Error Message: </span><span class="si">%s</span><span class="s2">.</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">traceback_str</span><span class="p">)</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_query_related_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method called via background task to query tasks related to the current</span>
+<span class="sd">        context&#39;s entity.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Querying related tasks for context: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">context</span><span class="p">,))</span>
+
+        <span class="c1"># unique id for entity to use as local cache lookup</span>
+        <span class="n">entity_id</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+        <span class="c1"># if we&#39;ve queried tasks for this entity before, just return those</span>
+        <span class="k">if</span> <span class="n">entity_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_cache</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_cache</span><span class="p">[</span><span class="n">entity_id</span><span class="p">]</span>
+
+        <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+
+        <span class="c1"># query the tasks for the entity</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+            <span class="s2">&quot;Task&quot;</span><span class="p">,</span>
+            <span class="p">[[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">]],</span>
+            <span class="c1"># query all fields required to create a context from a task entity</span>
+            <span class="c1"># dictionary. see sgtk api `context_from_entity_dictionary`</span>
+            <span class="n">fields</span><span class="o">=</span><span class="n">TASK_QUERY_FIELDS</span>
+        <span class="p">)</span>
+
+        <span class="c1"># cache the tasks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_cache</span><span class="p">[</span><span class="n">entity_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">tasks</span>
+
+        <span class="k">return</span> <span class="n">tasks</span>
+
+    <span class="k">def</span> <span class="nf">_restrict_searchable_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">published_file_entity_schema</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called after successful lookup of valid PublishedFile.entity types.</span>
+<span class="sd">        The supplied field schema contains the valid entity names. Use these to</span>
+<span class="sd">        restrict the search completers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># drill down into the schema to retrieve the valid types for the</span>
+        <span class="c1"># field. this is ugly, but will ensure we get a list no matter what</span>
+        <span class="n">entity_types</span> <span class="o">=</span> <span class="n">published_file_entity_schema</span><span class="o">.</span> \
+            <span class="n">get</span><span class="p">(</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span> \
+            <span class="n">get</span><span class="p">(</span><span class="s2">&quot;properties&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span> \
+            <span class="n">get</span><span class="p">(</span><span class="s2">&quot;valid_types&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span> \
+            <span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="c1"># always include Project and Tasks</span>
+        <span class="n">entity_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Project&quot;</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Limiting context link completer to these entities: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+            <span class="p">(</span><span class="n">entity_types</span><span class="p">,)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># construct a dictionary that the search widget expects for</span>
+        <span class="c1"># filtering. This is a dictionary with the entity types as keys and</span>
+        <span class="c1"># values a list of search filters. We don&#39;t have any filters, so we</span>
+        <span class="c1"># just use empty list.</span>
+        <span class="n">entity_types_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="p">[])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">entity_types</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Setting searchable entity types to: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entity_types_dict</span><span class="p">,))</span>
+
+        <span class="c1"># update the types for the link completer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span>
+            <span class="n">entity_types_dict</span><span class="p">)</span>
+
+        <span class="c1"># limit the task search to tasks only.</span>
+        <span class="c1"># TODO: limit to tasks linked to entities of the types queried above</span>
+        <span class="n">task_types_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Task&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+
+        <span class="c1"># now update the types for the task completer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span><span class="n">task_types_dict</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_show_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">task_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">link_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show the supplied context in the UI.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">task_display_override</span><span class="p">:</span>
+            <span class="n">task_display</span> <span class="o">=</span> <span class="n">task_display_override</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">task_display</span> <span class="o">=</span> <span class="n">_get_task_display</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">link_display_override</span><span class="p">:</span>
+            <span class="n">link_display</span> <span class="o">=</span> <span class="n">link_display_override</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">link_display</span> <span class="o">=</span> <span class="n">_get_link_display</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="c1"># update the task display/state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_display</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">task_display</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search_btn</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search_btn</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="c1"># update the link display/state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">link_display</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search_btn</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search_btn</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
+            <span class="c1"># given the context, populate any related tasks for the menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_query_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_query_related_tasks</span><span class="p">,</span>
+                <span class="n">task_args</span><span class="o">=</span><span class="p">[</span><span class="n">context</span><span class="p">]</span>
+            <span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_task_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build a display string for the task of the supplied context.</span>
+
+<span class="sd">    By default, return rich text with an entity icon. If ``plain_text`` is True,</span>
+<span class="sd">    simply return the name of the task.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">task</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">task_name</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">plain_text</span><span class="p">:</span>
+        <span class="c1"># just the name</span>
+        <span class="n">display_name</span> <span class="o">=</span> <span class="n">task_name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># return the name with the appropriate icon in front</span>
+        <span class="n">task_type</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+        <span class="n">task_icon</span> <span class="o">=</span> <span class="s2">&quot;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="n">task_type</span><span class="p">),)</span>
+        <span class="n">display_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&amp;nbsp;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">task_icon</span><span class="p">,</span> <span class="n">task_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">display_name</span>
+
+
+<span class="k">def</span> <span class="nf">_get_link_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build a display string for the link of the supplied context.</span>
+
+<span class="sd">    By default, return rich text with an entity icon. If ``plain_text`` is True,</span>
+<span class="sd">    simply return the name of the link.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">entity</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span> <span class="ow">or</span> <span class="n">context</span><span class="o">.</span><span class="n">project</span> <span class="ow">or</span> <span class="bp">None</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">entity</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">entity_name</span> <span class="o">=</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">plain_text</span><span class="p">:</span>
+        <span class="c1"># just the name</span>
+        <span class="n">display_name</span> <span class="o">=</span> <span class="n">entity_name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># return the name with the appropriate icon in front</span>
+        <span class="n">entity_type</span> <span class="o">=</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+        <span class="n">entity_icon</span> <span class="o">=</span> <span class="s2">&quot;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="n">entity_type</span><span class="p">),)</span>
+        <span class="n">display_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&amp;nbsp;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entity_icon</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">display_name</span>
+
+
+<span class="k">def</span> <span class="nf">_get_context_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the full display string for the supplied context.</span>
+
+<span class="sd">    By default, return rich text with entity icons. If ``plain_text`` is True,</span>
+<span class="sd">    simply return the display text for link &gt; task.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># individual display of task/link</span>
+    <span class="n">task_display</span> <span class="o">=</span> <span class="n">_get_task_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="n">plain_text</span><span class="p">)</span>
+    <span class="n">link_display</span> <span class="o">=</span> <span class="n">_get_link_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="n">plain_text</span><span class="p">)</span>
+
+    <span class="c1"># always show link (entity)</span>
+    <span class="n">display_name</span> <span class="o">=</span> <span class="n">link_display</span>
+
+    <span class="c1"># include task if there is one</span>
+    <span class="k">if</span> <span class="n">task_display</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">plain_text</span><span class="p">:</span>
+            <span class="n">display_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> &gt; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">display_name</span><span class="p">,</span> <span class="n">task_display</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">display_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                </span><span class="si">%s</span><span class="s2">&amp;nbsp;&amp;nbsp;&lt;b&gt;&lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;</span><span class="si">%s</span><span class="s2"></span>
+<span class="s2">            &quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">link_display</span><span class="p">,</span> <span class="n">task_display</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">display_name</span>
+
+
+<span class="k">def</span> <span class="nf">_get_context_icon_path</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the most appropriate icon for a given context.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># We use the context&#39;s entity icon primarily since the task icon is a</span>
+    <span class="c1"># checkmark and looks wonky in menus (where this is primarily called from).</span>
+
+    <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">:</span>
+        <span class="n">entity_type</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="n">entity_type</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">context</span><span class="o">.</span><span class="n">task</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="s2">&quot;Task&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">context</span><span class="o">.</span><span class="n">project</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="s2">&quot;Project&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_query_my_tasks</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called via bg task to query SG for tasks assigned to the current user.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
+    <span class="n">current_user</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">user</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Querying tasks for the curren user: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">current_user</span><span class="p">,))</span>
+
+    <span class="n">filters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">project</span><span class="p">],</span>
+        <span class="p">[</span><span class="s2">&quot;task_assignees&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">current_user</span><span class="p">],</span>
+    <span class="p">]</span>
+
+    <span class="n">order</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;field_name&quot;</span><span class="p">:</span> <span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;asc&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;field_name&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;asc&quot;</span><span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="c1"># query all fields required to create a context from a task entity</span>
+    <span class="c1"># dictionary. see sgtk api `context_from_entity_dictionary`</span>
+    <span class="n">task_fields</span> <span class="o">=</span> <span class="n">TASK_QUERY_FIELDS</span>
+    <span class="n">task_fields</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;sg_status_list&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">bundle</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+        <span class="s2">&quot;Task&quot;</span><span class="p">,</span>
+        <span class="n">filters</span><span class="p">,</span>
+        <span class="n">fields</span><span class="o">=</span><span class="n">task_fields</span><span class="p">,</span>
+        <span class="n">order</span><span class="o">=</span><span class="n">order</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_query_entity_schema</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called as bg task to query SG for the field schema</span>
+<span class="sd">    for the given type and field.</span>
+
+<span class="sd">    :param str entity_type: Entity type to query schema for</span>
+<span class="sd">    :param str field_name: Shotgun field name to query schema for</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Querying </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> schema...&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">))</span>
+
+    <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
+
+    <span class="k">return</span> <span class="n">bundle</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">schema_field_read</span><span class="p">(</span>
+        <span class="n">entity_type</span><span class="p">,</span>
+        <span class="n">field_name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span>
+        <span class="n">project_entity</span><span class="o">=</span><span class="n">project</span>
+    <span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Autodesk.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v2.7.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-2114792-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>
