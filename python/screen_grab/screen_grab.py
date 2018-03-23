@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2018 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -48,7 +48,7 @@ class ScreenGrabber(QtGui.QDialog):
         self.setCursor(QtCore.Qt.CrossCursor)
         self.setMouseTracking(True)
 
-        desktop = QtGui.QApplication.instance().desktop()
+        desktop = QtGui.QApplication.desktop()
         desktop.resized.connect(self._fit_screen_geometry)
         desktop.screenCountChanged.connect(self._fit_screen_geometry)
 
@@ -223,13 +223,11 @@ class ScreenGrabber(QtGui.QDialog):
 
     def _fit_screen_geometry(self):
         # Compute the union of all screen geometries, and resize to fit.
-        desktop = QtGui.QApplication.instance().desktop()
+        desktop = QtGui.QApplication.desktop()
         workspace_rect = QtCore.QRect()
         for i in range(desktop.screenCount()):
             workspace_rect = workspace_rect.united(desktop.screenGeometry(i))
         self.setGeometry(workspace_rect)
-
-
 
 
 class ExternalCaptureThread(QtCore.QThread):
@@ -275,11 +273,12 @@ class ExternalCaptureThread(QtCore.QThread):
         except Exception, e:
             self._error = str(e)
 
+
 def _external_screenshot():
     """
     Use an external approach for grabbing a screenshot.
     Linux and macosx support only.
-    
+
     :returns: Captured image
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
@@ -313,7 +312,6 @@ def _external_screenshot():
     return pm
 
 
-
 def get_desktop_pixmap(rect):
     """
     Performs a screen capture on the specified rectangle.
@@ -323,7 +321,7 @@ def get_desktop_pixmap(rect):
     :returns: Captured image
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
-    desktop = QtGui.QApplication.instance().desktop()
+    desktop = QtGui.QApplication.desktop()
     return QtGui.QPixmap.grabWindow(desktop.winId(), rect.x(), rect.y(),
                                     rect.width(), rect.height())
 
