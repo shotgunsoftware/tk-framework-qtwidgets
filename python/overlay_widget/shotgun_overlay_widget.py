@@ -48,19 +48,18 @@ class ShotgunOverlayWidget(QtGui.QLabel):
 
         self._shotgun_spinning_widget = ShotgunSpinningWidget(self)
 
-        # make it transparent
+        # We want text to be centered and wrapping words.
         self.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter | QtCore.Qt.TextWordWrap)
-
-        self.setOpenExternalLinks(True)
         self.setWordWrap(True)
+
+        # Allow to open hyperlinks
+        self.setOpenExternalLinks(True)
+
+        # Dark gray background.
         self.setStyleSheet("background-color: #1B1B1B")
 
-        # turn off the widget
+        # turn off the widget by default.
         self.hide()
-
-        self._message_pixmap = None
-        self._message = None
-        self._sg_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.overlay_widget/sg_logo.png")
 
     ############################################################################################
     # public interface
@@ -127,13 +126,16 @@ class ShotgunOverlayWidget(QtGui.QLabel):
         elif mode == self.MODE_INFO_TEXT:
             self.setText(
                 "<font style='color: #%s;'>%s</font>" %
-                (self.NORMAL_COLOR, payload.replace("\n", "<br>"))
+                (self.INFO_COLOR, payload.replace("\n", "<br>"))
             )
         else:
             self.setText("")
 
-        # User is trying to display something, so make the overlay visible.
-        self.setVisible(True)
+        # If the widget is not off, make it visible
+        if mode == self.MODE_OFF:
+            self.setVisible(False)
+        else:
+            self.setVisible(True)
 
         self._mode = mode
 
