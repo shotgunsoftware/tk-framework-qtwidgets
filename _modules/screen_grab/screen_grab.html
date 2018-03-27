@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets v2.7.1 documentation</title>
+  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets v2.7.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.7.1 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.7.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.7.1.<br>
+    <b>tk-framework-qtwidgets</b> v2.7.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -183,7 +183,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for screen_grab.screen_grab</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
+<span></span><span class="c1"># Copyright (c) 2018 Shotgun Software Inc.</span>
 <span class="c1">#</span>
 <span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
 <span class="c1">#</span>
@@ -233,7 +233,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CrossCursor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMouseTracking</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
-        <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
+        <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
         <span class="n">desktop</span><span class="o">.</span><span class="n">resized</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fit_screen_geometry</span><span class="p">)</span>
         <span class="n">desktop</span><span class="o">.</span><span class="n">screenCountChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fit_screen_geometry</span><span class="p">)</span>
 
@@ -408,13 +408,11 @@
 
     <span class="k">def</span> <span class="nf">_fit_screen_geometry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Compute the union of all screen geometries, and resize to fit.</span>
-        <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
+        <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
         <span class="n">workspace_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">desktop</span><span class="o">.</span><span class="n">screenCount</span><span class="p">()):</span>
             <span class="n">workspace_rect</span> <span class="o">=</span> <span class="n">workspace_rect</span><span class="o">.</span><span class="n">united</span><span class="p">(</span><span class="n">desktop</span><span class="o">.</span><span class="n">screenGeometry</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">workspace_rect</span><span class="p">)</span>
-
-
 
 
 <span class="k">class</span> <span class="nc">ExternalCaptureThread</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QThread</span><span class="p">):</span>
@@ -460,11 +458,12 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
+
 <span class="k">def</span> <span class="nf">_external_screenshot</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use an external approach for grabbing a screenshot.</span>
 <span class="sd">    Linux and macosx support only.</span>
-<span class="sd">    </span>
+
 <span class="sd">    :returns: Captured image</span>
 <span class="sd">    :rtype: :class:`~PySide.QtGui.QPixmap`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -498,7 +497,6 @@
     <span class="k">return</span> <span class="n">pm</span>
 
 
-
 <div class="viewcode-block" id="get_desktop_pixmap"><a class="viewcode-back" href="../../screen_grab.html#screen_grab.get_desktop_pixmap">[docs]</a><span class="k">def</span> <span class="nf">get_desktop_pixmap</span><span class="p">(</span><span class="n">rect</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Performs a screen capture on the specified rectangle.</span>
@@ -508,7 +506,7 @@
 <span class="sd">    :returns: Captured image</span>
 <span class="sd">    :rtype: :class:`~PySide.QtGui.QPixmap`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
+    <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="o">.</span><span class="n">grabWindow</span><span class="p">(</span><span class="n">desktop</span><span class="o">.</span><span class="n">winId</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
                                     <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">())</span></div>
 
@@ -567,7 +565,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.7.1',
+            VERSION:'v2.7.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
