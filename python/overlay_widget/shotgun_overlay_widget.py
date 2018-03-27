@@ -20,6 +20,13 @@ class ShotgunOverlayWidget(QtGui.QLabel):
     Overlay widget that can be placed on top over any QT widget.
     Once you have placed the overlay widget, you can use it to
     display information, errors, a spinner etc.
+
+    The :meth:`show_message` and :meth:`show_error_message` accept
+    both regular text and HTML to format the error message.
+
+    Constants ``INFO_COLOR`` and ``ERROR_COLOR`` are provided on the class
+    as shorthand for the colors employed by the :meth:`show_message` and
+    :meth:`show_error_message` methods.
     """
 
     MODE_OFF = 0
