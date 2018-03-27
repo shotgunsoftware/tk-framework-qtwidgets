@@ -1,4 +1,4 @@
-# Copyright (c) 2013 Shotgun Software Inc.
+# Copyright (c) 2018 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -7,6 +7,8 @@
 # By accessing, using, copying or modifying this work you indicate your
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
+
+import os
 
 from tank.platform.qt import QtCore, QtGui
 
@@ -62,8 +64,11 @@ class ShotgunOverlayWidget(QtGui.QLabel):
         # Allow to open hyperlinks
         self.setOpenExternalLinks(True)
 
+        with open(os.path.join(os.path.dirname(__file__), "style.qss"), "r") as fh:
+            style = fh.read()
+
         # Dark gray background.
-        self.setStyleSheet("background-color: #1B1B1B")
+        self.setStyleSheet(style)
 
         # turn off the widget by default.
         self.hide()
