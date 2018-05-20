@@ -95,3 +95,14 @@ class ReplyDialog(QtGui.QDialog):
         self.ui.note_widget.clear()
         # ok to close
         event.accept()
+
+    def set_bg_task_manager(self, task_manager):
+        """
+        Specify the background task manager to use to pull
+        data in the background. Data calls
+        to Shotgun will be dispatched via this object.
+        
+        :param task_manager: Background task manager to use
+        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
+        """
+        self.ui.note_widget.set_bg_task_manager(task_manager)

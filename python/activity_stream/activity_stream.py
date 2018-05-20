@@ -156,6 +156,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._task_manager = task_manager
         self._data_manager.set_bg_task_manager(task_manager)
         self.ui.note_widget.set_bg_task_manager(task_manager)
+        self.reply_dialog.set_bg_task_manager(task_manager)
         
     def destroy(self):
         """

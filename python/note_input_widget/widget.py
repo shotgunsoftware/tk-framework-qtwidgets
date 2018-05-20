@@ -125,8 +125,14 @@ class NoteInputWidget(QtGui.QWidget):
         :param task_manager: Background task manager to use
         :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
-        self.__sg_data_retriever = shotgun_data.ShotgunDataRetriever(self, 
-                                                                     bg_task_manager=task_manager)
+        # To stop the threads in self.ui.text_entry and
+        # self.__sg_data_retriever
+        self.destroy()
+
+        self.__sg_data_retriever = shotgun_data.ShotgunDataRetriever(
+            self,
+            bg_task_manager=task_manager
+        )
         
         self.__sg_data_retriever.start()
         self.__sg_data_retriever.work_completed.connect(self.__on_worker_signal)
