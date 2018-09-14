@@ -154,6 +154,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` 
         """
         self._task_manager = task_manager
+        shotgun_globals.register_bg_task_manager(task_manager)
         self._data_manager.set_bg_task_manager(task_manager)
         self.ui.note_widget.set_bg_task_manager(task_manager)
         self.reply_dialog.set_bg_task_manager(task_manager)
@@ -713,10 +714,16 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Clear the widget. This will remove all items the UI
         """
+        is_qt4 = QtCore.__version__.startswith("4.")
+
         self._bundle.log_debug("Clearing UI...")
         # before we begin widget operations, turn off visibility
-        # of the whole widget in order to avoid recomputes        
-        self.setVisible(False)
+        # of the whole widget in order to avoid recomputes
+        #
+        # NOTE: For some reason this causes a crash when in a PySide2
+        # environment. We'll only do it if we're in Qt4 as a result.
+        if is_qt4:   
+            self.setVisible(False)
         
         # scroll to top
         self.ui.activity_stream_scroll_area.verticalScrollBar().setValue(0)
@@ -746,7 +753,11 @@ class ActivityStreamWidget(QtGui.QWidget):
         
         finally:
             # make the window visible again and trigger a redraw
-            self.setVisible(True)
+            #
+            # NOTE: For some reason this causes a crash when in a PySide2
+            # environment. We'll only do it if we're in Qt4 as a result.
+            if is_qt4:
+                self.setVisible(True)
 
             # Since we have no entity loaded, we don't need to show
             # the note widget.
