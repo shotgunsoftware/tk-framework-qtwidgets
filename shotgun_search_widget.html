@@ -188,6 +188,201 @@ search found in Shotgun. They return a number of matches based on text
 that is being typed in by the user.</p>
 <img alt="_images/global_search.png" src="_images/global_search.png" />
 <p>Once a user selects an object, a signal fires to indicate the request.</p>
+<dl class="class">
+<dt id="shotgun_search_widget.GlobalSearchWidget">
+<em class="property">class </em><code class="descclassname">shotgun_search_widget.</code><code class="descname">GlobalSearchWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_search_widget/global_search_widget.html#GlobalSearchWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_search_widget.GlobalSearchWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A QT Widget deriving from <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QLineEdit.html#PySide.QtGui.QLineEdit" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QLineEdit</span></code></a> that creates
+a global search input box with auto completion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Signal:</th><td class="field-body"><code class="docutils literal"><span class="pre">entity_selected(str,</span> <span class="pre">int)</span></code> - Fires when someone selects an entity inside
+the search results. The returned parameters are entity type and entity id.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Signal:</th><td class="field-body"><code class="docutils literal"><span class="pre">entity_activated(str,</span> <span class="pre">int,</span> <span class="pre">str)</span></code> - Fires when someone selects an
+entity inside the search results. Similar to <code class="docutils literal"><span class="pre">entity_selected</span></code>, with
+the addition of the <code class="docutils literal"><span class="pre">name</span></code> of the activated entity being supplied.</td>
+</tr>
+</tbody>
+</table>
+<p>Uses the <a class="reference internal" href="search_completer.html#search_completer.GlobalSearchCompleter" title="search_completer.GlobalSearchCompleter"><code class="xref py py-class docutils literal"><span class="pre">GlobalSearchCompleter</span></code></a> as the completer for searching
+SG entities.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; Qt parent object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="shotgun_search_widget.GlobalSearchWidget.set_searchable_entity_types">
+<code class="descname">set_searchable_entity_types</code><span class="sig-paren">(</span><em>types_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_search_widget/global_search_widget.html#GlobalSearchWidget.set_searchable_entity_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_search_widget.GlobalSearchWidget.set_searchable_entity_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a dictionary of entity types with optional search filters to
+limit the breadth of the widget&#8217;s search.</p>
+<p>See the documentation for <cite>GlobalSearchCompleter.set_searchable_entity_types</cite>
+for the default values if this method is not called on the widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>types_dict</strong> &#8211; A dictionary of searchable types with optional filters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.GlobalSearchWidget.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.GlobalSearchWidget.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the search box.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.GlobalSearchWidget.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.GlobalSearchWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called before the widget is closed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.GlobalSearchWidget.keyPressEvent">
+<code class="descname">keyPressEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.GlobalSearchWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the line edit when the user hits escape.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.GlobalSearchWidget.set_bg_task_manager">
+<code class="descname">set_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.GlobalSearchWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the background task manager to use to pull
+data in the background. Data calls
+to Shotgun will be dispatched via this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.GlobalSearchWidget.set_placeholder_text">
+<code class="descname">set_placeholder_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.GlobalSearchWidget.set_placeholder_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the placeholder text for the widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget">
+<em class="property">class </em><code class="descclassname">shotgun_search_widget.</code><code class="descname">HierarchicalSearchWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_search_widget/hierarchical_search_widget.html#HierarchicalSearchWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A QT Widget deriving from <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QLineEdit.html#PySide.QtGui.QLineEdit" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QLineEdit</span></code></a> that creates
+a hierarchical search input box with auto completion.</p>
+<p>If defaults to searching inside the current context&#8217;s project and to only show entities.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Signal:</th><td class="field-body"><code class="docutils literal"><span class="pre">node_activated(str,</span> <span class="pre">int,</span> <span class="pre">str,</span> <span class="pre">str,</span> <span class="pre">list)</span></code> - Fires when someone activates a
+node inside the search results. The parameters are <code class="docutils literal"><span class="pre">type</span></code>, <code class="docutils literal"><span class="pre">id</span></code>, <code class="docutils literal"><span class="pre">name</span></code>,
+<code class="docutils literal"><span class="pre">label</span> <span class="pre">path</span></code> and <code class="docutils literal"><span class="pre">incremental_paths</span></code>. If the node activated is not an entity,
+<code class="docutils literal"><span class="pre">type</span></code> and <code class="docutils literal"><span class="pre">id</span></code> will be <code class="docutils literal"><span class="pre">None</span></code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Uses the <a class="reference internal" href="search_completer.html#search_completer.HierarchicalSearchCompleter" title="search_completer.HierarchicalSearchCompleter"><code class="xref py py-class docutils literal"><span class="pre">HierarchicalSearchCompleter</span></code></a> as the completer for searching
+SG entities.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; Qt parent object</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget.search_root">
+<code class="descname">search_root</code><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget.search_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity under which the search will be done. If <code class="docutils literal"><span class="pre">None</span></code>, the search will be done
+for the whole site.</p>
+<p>The entity is a <code class="docutils literal"><span class="pre">dict</span></code> with keys <code class="docutils literal"><span class="pre">id</span></code> and <code class="docutils literal"><span class="pre">type</span></code>. Note that only <code class="docutils literal"><span class="pre">Project</span></code> entities
+are supported at the moment.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget.show_entities_only">
+<code class="descname">show_entities_only</code><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget.show_entities_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates if only entities will be shown in the search results.</p>
+<p>If set to <code class="docutils literal"><span class="pre">True</span></code>, only entities will be shown.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the search box.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called before the widget is closed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget.keyPressEvent">
+<code class="descname">keyPressEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the line edit when the user hits escape.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget.set_bg_task_manager">
+<code class="descname">set_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the background task manager to use to pull
+data in the background. Data calls
+to Shotgun will be dispatched via this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget.set_placeholder_text">
+<code class="descname">set_placeholder_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget.set_placeholder_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the placeholder text for the widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="shotgun_search_widget.HierarchicalSearchWidget.seed_entity_field">
+<code class="descname">seed_entity_field</code><a class="headerlink" href="#shotgun_search_widget.HierarchicalSearchWidget.seed_entity_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>The seed entity to use when searching for entity.</p>
+<p>Can be <code class="docutils literal"><span class="pre">PublishedFile.entity</span></code> or <code class="docutils literal"><span class="pre">Version.entity</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

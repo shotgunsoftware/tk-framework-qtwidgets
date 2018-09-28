@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.7.3 documentation</title>
+  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.8.2 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.7.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.2 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.7.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.2.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -310,8 +310,14 @@
 <span class="sd">        :param task_manager: Background task manager to use</span>
 <span class="sd">        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="n">shotgun_data</span><span class="o">.</span><span class="n">ShotgunDataRetriever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
-                                                                     <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">task_manager</span><span class="p">)</span>
+        <span class="c1"># To stop the threads in self.ui.text_entry and</span>
+        <span class="c1"># self.__sg_data_retriever</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="n">shotgun_data</span><span class="o">.</span><span class="n">ShotgunDataRetriever</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">task_manager</span>
+        <span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_signal</span><span class="p">)</span>
@@ -1036,7 +1042,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.7.3',
+            VERSION:'v2.8.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

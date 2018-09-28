@@ -206,6 +206,402 @@ and the widget requests only the changes since the last update.</p>
 </div>
 <div class="section" id="versiondetailswidget">
 <h2>VersionDetailsWidget<a class="headerlink" href="#versiondetailswidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="version_details.VersionDetailsWidget">
+<em class="property">class </em><code class="descclassname">version_details.</code><code class="descname">VersionDetailsWidget</code><span class="sig-paren">(</span><em>bg_task_manager</em>, <em>parent=None</em>, <em>entity=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<p>QT Widget that displays details and Note thread data for a given Version
+entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_created(object):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when a Note or Reply entity is created by
+an underlying widget within the activity stream. Passes on a Shotgun
+entity definition in the form of a dict.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal entity_loaded(object):</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Fires when a Version entity has been loaded by
+the widget. Passes on a Shotgun entity definition in the form of a dict.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal note_selected(int):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when a Note entity is selected in the widget&#8217;s
+note thread stream. Passes on the entity id of the selected note.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal note_deselected(int):</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Fires when a Note entity is deselected. Passes on
+the entity id of the selected note.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal note_arrived(int, object):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when a new Note entity arrives and is
+displayed in the widget&#8217;s note thread stream. Passes on the entity id
+and Shotgun entity definition as an int and dict, respectively.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal note_metadata_changed(int, str):</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Fires when the widget successfully
+updates a Note entity&#8217;s metadata field. The Note entity&#8217;s id and the
+new metadata are passed on.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal note_attachment_arrived(int, str):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when an attachment file
+associated with a Note entity is successfully downloaded. The Note
+entity id and the path to the file on disk are passed on.</td>
+</tr>
+</tbody>
+</table>
+<p>Constructs a new <a class="reference internal" href="#version_details.VersionDetailsWidget" title="version_details.VersionDetailsWidget"><code class="xref py py-class docutils literal"><span class="pre">VersionDetailsWidget</span></code></a> object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; The widget&#8217;s parent.</li>
+<li><strong>bg_task_manager</strong> &#8211; A <code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code> object.</li>
+<li><strong>entity</strong> &#8211; A Shotgun Version entity dictionary.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="version_details.VersionDetailsWidget.current_entity">
+<code class="descname">current_entity</code><a class="headerlink" href="#version_details.VersionDetailsWidget.current_entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current Shotgun entity that is OR will become active in the widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="version_details.VersionDetailsWidget.is_pinned">
+<code class="descname">is_pinned</code><a class="headerlink" href="#version_details.VersionDetailsWidget.is_pinned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the panel is pinned and not processing entity
+updates, and False if it is not pinned.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="version_details.VersionDetailsWidget.note_fields">
+<code class="descname">note_fields</code><a class="headerlink" href="#version_details.VersionDetailsWidget.note_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of Note entity field names that are queried and provided
+when note_arrived is emitted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list(str, ...)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="version_details.VersionDetailsWidget.note_threads">
+<code class="descname">note_threads</code><a class="headerlink" href="#version_details.VersionDetailsWidget.note_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>The currently loaded Note threads keyed by Note entity id and
+containing a list of Shotgun entity dictionaries.</p>
+<p>Example structure containing a single Note entity:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">6038</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;This is a test note.&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;created_by&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jeff Beeland&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;HumanUser&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">6038</span><span class="p">,</span>
+        <span class="s1">&#39;sg_metadata&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Note&#39;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="version_details.VersionDetailsWidget.attachments_filter">
+<code class="descname">attachments_filter</code><a class="headerlink" href="#version_details.VersionDetailsWidget.attachments_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>If set to a compiled regular expression, attachment file names that match
+will be filtered OUT and NOT shown.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="version_details.VersionDetailsWidget.notes_are_selectable">
+<code class="descname">notes_are_selectable</code><a class="headerlink" href="#version_details.VersionDetailsWidget.notes_are_selectable" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, note entity widgets in the activity stream will be selectable
+by the user.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="version_details.VersionDetailsWidget.pre_submit_callback">
+<code class="descname">pre_submit_callback</code><a class="headerlink" href="#version_details.VersionDetailsWidget.pre_submit_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pre-submit callback function, if one is registered. If so, this
+Python callable will be run prior to Note or Reply submission, and
+will be given the calling <code class="xref py py-class docutils literal"><span class="pre">NoteInputWidget</span></code> as its first and
+only argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.add_note_attachments">
+<code class="descname">add_note_attachments</code><span class="sig-paren">(</span><em>file_paths</em>, <em>note_entity</em>, <em>cleanup_after_upload=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_note_attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a given list of files to the note widget as file attachments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_paths</strong> &#8211; A list of file paths to attach to the
+current note.</li>
+<li><strong>cleanup_after_upload</strong> &#8211; If True, after the files are uploaded
+to Shotgun they will be removed from disk.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.add_query_fields">
+<code class="descname">add_query_fields</code><span class="sig-paren">(</span><em>fields</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_query_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_query_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the given list of Shotgun field names to the list of fields
+that are queried by the version details widget&#8217;s internal data
+model. Adding fields this way does not change the display of
+information about the entity in any way.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fields</strong> (<em>[field_name, ...]</em>) &#8211; A list of Shotgun field names to add.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.add_version_context_menu_action">
+<code class="descname">add_version_context_menu_action</code><span class="sig-paren">(</span><em>action_definition</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_version_context_menu_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_version_context_menu_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an action to the version tab&#8217;s context menu.</p>
+<p>Action definitions passed in must take the following form:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">dict</span><span class="p">(</span>
+    <span class="n">callback</span><span class="o">=</span><span class="n">callable</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+    <span class="n">required_selection</span><span class="o">=</span><span class="s2">&quot;single&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Where the callback is a callable object that expects to receive
+a list of Version entity dictionaries as returned by the Shotgun
+Python API. The text key contains the string labels of the action
+in the QMenu, and the required_selection is one of &#8220;single&#8221;, &#8220;multi&#8221;,
+or &#8220;either&#8221;. Any action requiring a &#8220;single&#8221; selection will be enabled
+only if there is a single item selected in the Version list view,
+those requiring &#8220;multi&#8221; selection require 2 or more selected items,
+and the &#8220;either&#8221; requirement results in the action being enabled if
+one or more items are selected.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action_definition</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) &#8211; The action defition to add to the menu.
+This takes the form of a dictionary of
+a structure described in the method docs
+above.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all data from all widgets and views in the details panel.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.select_note">
+<code class="descname">select_note</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.select_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.select_note" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the note identified by the id. This will trigger a note_selected
+signal to be emitted</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.deselect_note">
+<code class="descname">deselect_note</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.deselect_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.deselect_note" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a note is currently selected, it will be deselected. This will NOT
+trigger a note_deselected signal to be emitted, as that is only emitted
+when the user triggers the deselection and not via procedural means.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.download_note_attachments">
+<code class="descname">download_note_attachments</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.download_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.download_note_attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Triggers the attachments linked to the given Note entity to
+be downloaded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) &#8211; The Note entity id.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.get_note_attachments">
+<code class="descname">get_note_attachments</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.get_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.get_note_attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Attachment entities associated with the given Note
+entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) &#8211; The Note entity id.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.load_data">
+<code class="descname">load_data</code><span class="sig-paren">(</span><em>entity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the given Shotgun entity into the details panel,
+triggering the notes and versions streams to be updated
+relative to the given entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entity</strong> &#8211; The Shotgun entity to load. This is a dict in
+the form returned by the Shotgun Python API.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.save_preferences">
+<code class="descname">save_preferences</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.save_preferences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.save_preferences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves user preferences to disk.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.set_note_metadata">
+<code class="descname">set_note_metadata</code><span class="sig-paren">(</span><em>note_id</em>, <em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_note_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_note_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a Note entity&#8217;s metadata in Shotgun.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) &#8211; The Note entity id.</li>
+<li><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; The metadata to set in Shotgun.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.set_note_screenshot">
+<code class="descname">set_note_screenshot</code><span class="sig-paren">(</span><em>image_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_note_screenshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_note_screenshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the given file path to an image and sets the new note
+widget&#8217;s thumbnail image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; A file path to an image file on disk.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.set_pinned">
+<code class="descname">set_pinned</code><span class="sig-paren">(</span><em>checked</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_pinned"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_pinned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the &#8220;pinned&#8221; state of the details panel. When the panel is
+pinned it will not accept updates. It will, however, record the
+most recent entity passed to load_data that was not accepted. If
+the panel is unpinned at a later time, the most recent rejected
+entity update will be executed at that time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checked</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; True or False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.show_new_note_dialog">
+<code class="descname">show_new_note_dialog</code><span class="sig-paren">(</span><em>modal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.show_new_note_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.show_new_note_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a dialog that allows the user to input a new note.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>modal</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; Whether the dialog should be shown modally or not.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.show_title_bar_buttons">
+<code class="descname">show_title_bar_buttons</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.show_title_bar_buttons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.show_title_bar_buttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the visibility of the undock and close buttons in the
+widget&#8217;s title bar.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; Whether to show or hide the buttons.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.set_version_thumbnail">
+<code class="descname">set_version_thumbnail</code><span class="sig-paren">(</span><em>thumbnail_path</em>, <em>version_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_version_thumbnail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_version_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a Version entity&#8217;s thumbnail image in Shotgun. If no Version
+id is provided, the current Version entity will be updated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>thumbnail_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; The path to the thumbnail file on disk.</li>
+<li><strong>version_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) &#8211; The Version entity&#8217;s id. If not provided
+then the current Version entity loaded in
+the widget will be used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.use_styled_title_bar">
+<code class="descname">use_styled_title_bar</code><span class="sig-paren">(</span><em>dock_widget</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.use_styled_title_bar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.use_styled_title_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the use of the included, custom styled title bar is desired, the
+parent QDockWidget can be provided here and the styled title bar will
+be displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dock_widget</strong> &#8211; The parent QDockWidget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

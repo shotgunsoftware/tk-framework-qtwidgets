@@ -194,6 +194,169 @@ dropped in when a Toolkit App needs a user to select a context:</p>
 <li>Configurable to be just a viewer rather than a selector.</li>
 <li>Configurable title</li>
 </ul>
+<dl class="class">
+<dt id="context_selector.ContextWidget">
+<em class="property">class </em><code class="descclassname">context_selector.</code><code class="descname">ContextWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget which represents the current context and allows the user to search
+for a different context via search completer. A menu is also provided for
+recent contexts as well as tasks assigned to the user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal context_changed(context_obj):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when when the user
+selects a context.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<code class="xref py py-class docutils literal"><span class="pre">QObject</span></code>) &#8211; The model parent.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="context_selector.ContextWidget.save_recent_contexts">
+<code class="descname">save_recent_contexts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget.save_recent_contexts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget.save_recent_contexts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called by the parent widget, typically when the dialog closes,
+to ensure the recent contexts are saved to disk when closing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="context_selector.ContextWidget.set_context">
+<code class="descname">set_context</code><span class="sig-paren">(</span><em>context</em>, <em>task_display_override=None</em>, <em>link_display_override=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget.set_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget.set_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the context to display in the widget.</p>
+<p>The initial display values can be overridden via the task and link
+override args.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>context</strong> &#8211; Toolkit Context that the widget should be set to.</li>
+<li><strong>task_display_override</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; Override text to be displayed for the task.</li>
+<li><strong>link_display_override</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; Override text to be displayed for the link.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="context_selector.ContextWidget.set_up">
+<code class="descname">set_up</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget.set_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget.set_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles initial set up of the widget. Includes setting up menu, running
+any background set up tasks, etc.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.4.5)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="context_selector.ContextWidget.restrict_entity_types_by_link">
+<code class="descname">restrict_entity_types_by_link</code><span class="sig-paren">(</span><em>entity_type</em>, <em>field_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget.restrict_entity_types_by_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget.restrict_entity_types_by_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify what entries should show up in the list of links when
+using the auto completer.</p>
+<p>For the simple case where you just want to show a given set of
+entity types, use <a class="reference internal" href="#context_selector.ContextWidget.restrict_entity_types" title="context_selector.ContextWidget.restrict_entity_types"><code class="xref py py-meth docutils literal"><span class="pre">restrict_entity_types()</span></code></a>. This method is
+a more complex restriction suitable for workflows around publishing
+and review.</p>
+<p>This method will look at the given link field (e.g. <code class="docutils literal"><span class="pre">PublishedFile.entity</span></code>)
+and inspect the shotgun schema to see which entity types are valid connections
+to this field (e.g. in this example which entity types can you can associate
+a publish with) and those types will appear in the list of items shown by the
+auto completer.</p>
+<p>This is useful when you want to use the context widget in conjunction with
+workflows related to for example publishes, versions or notes and you want to
+restrict the entities displayed by the auto completer to the ones that have been
+configured in the shotgun site schema to be able to associate with the given type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entity_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; Entity type to restrict based on</li>
+<li><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; Shotgun field to restrict based on</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="context_selector.ContextWidget.restrict_entity_types">
+<code class="descname">restrict_entity_types</code><span class="sig-paren">(</span><em>entity_types</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget.restrict_entity_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget.restrict_entity_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict which entity types should show up in the list of matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entity_types</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) &#8211; List of entity types</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="context_selector.ContextWidget.context_label">
+<code class="descname">context_label</code><a class="headerlink" href="#context_selector.ContextWidget.context_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label for the context widget.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="context_selector.ContextWidget.set_task_tooltip">
+<code class="descname">set_task_tooltip</code><span class="sig-paren">(</span><em>tooltip</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget.set_task_tooltip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget.set_task_tooltip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a string (can be html) which should be shown
+as the tooltip for the task selection widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tooltip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; Tooltip plaintext or html</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="context_selector.ContextWidget.set_link_tooltip">
+<code class="descname">set_link_tooltip</code><span class="sig-paren">(</span><em>tooltip</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget.set_link_tooltip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget.set_link_tooltip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a string (can be html) which should be shown
+as the tooltip for the link selection widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tooltip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; Tooltip plaintext or html</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="context_selector.ContextWidget.enable_editing">
+<code class="descname">enable_editing</code><span class="sig-paren">(</span><em>enabled</em>, <em>message=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/context_selector/context_widget.html#ContextWidget.enable_editing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#context_selector.ContextWidget.enable_editing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show/hide the input widgets and display a message in the context label.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) &#8211; Indicates if task/link selectors should be shown</li>
+<li><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) &#8211; Message to display on <a class="reference internal" href="#context_selector.ContextWidget.context_label" title="context_selector.ContextWidget.context_label"><code class="xref py py-meth docutils literal"><span class="pre">context_label()</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
