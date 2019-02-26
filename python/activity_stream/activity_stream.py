@@ -110,6 +110,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         self._data_manager.note_arrived.connect(self._process_new_note)
         self._data_manager.update_arrived.connect(self._process_new_data)
         self._data_manager.thumbnail_arrived.connect(self._process_thumbnail)
+        self._data_manager.requesting_ui_refresh.connect(self._clear)
         self.ui.note_widget.entity_created.connect(self._on_entity_created)
         self.ui.note_widget.data_updated.connect(self.rescan)
         
