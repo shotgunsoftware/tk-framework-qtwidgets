@@ -18,6 +18,7 @@ import sys
 import cPickle
 import datetime
 import sqlite3
+import hashlib
 
 shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
 shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
@@ -72,6 +73,18 @@ class ActivityStreamDataHandler(QtCore.QObject):
     """
     
     DATBASE_FORMAT_VERSION = 18
+
+    # The amount of time to wait before triggering a cache dump and rescan
+    # when a placeholder thumbnail is detected in the cache. This happens
+    # when we end up caching thumbnail during the interim period after a
+    # thumbnail is uploaded but before it's done going through virus scan
+    # and final upload to S3.
+    RESCAN_TIMER_INTERVAL = 20000 # 20 seconds
+
+    # This is a sha1 hashsum of the placeholder thumbnail png file that
+    # Shotgun provides when a thumbnail is requested that isn't yet
+    # available.
+    PLACEHOLDER_THUMBNAIL_HASHSUM = "d730702c967dcad5347efe885f0bd4344f6c568e"
     
     # max number of items to pull from shotgun
     # typically the updates are incremental and hence smaller
@@ -88,6 +101,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
     note_arrived = QtCore.Signal(int, int)
     note_thread_arrived = QtCore.Signal(int, object)
     thumbnail_arrived = QtCore.Signal(dict)
+    requesting_ui_refresh = QtCore.Signal()
     
     def __init__(self, parent):
         """
@@ -114,6 +128,13 @@ class ActivityStreamDataHandler(QtCore.QObject):
         # Offered as an option to rescan(), and if True will trigger
         # a forced requery of activity stream data during rescan.
         self._force_activity_stream_update = False
+
+        # This is a timer that can be started to trigger a cache dump and
+        # rescan after a given interval (20 seconds as of this writing).
+        self._rescan_timer = QtCore.QTimer(self)
+        self._rescan_timer.setSingleShot(True)
+        self._rescan_timer.setInterval(self.RESCAN_TIMER_INTERVAL)
+        self._rescan_timer.timeout.connect(self.__hard_refresh)
                 
         # set up defaults
         self.__reset()
@@ -852,6 +873,18 @@ class ActivityStreamDataHandler(QtCore.QObject):
     
         else:
             return data
+
+    def __hard_refresh(self):
+        """
+        Triggers the removal of the sqlite cache file on disk and a rescan of
+        activity stream data from Shotgun. Once the rescan is complete, the
+        requesting_ui_refresh signal will be emitted.
+        """
+        if os.path.exists(self._cache_path):
+            os.remove(self._cache_path)
+
+        self.rescan(force_activity_stream_update=True)
+        self.requesting_ui_refresh.emit()
         
     def __on_worker_signal(self, uid, request_type, data):
         """
@@ -940,7 +973,26 @@ class ActivityStreamDataHandler(QtCore.QObject):
         if uid in self._thumb_map:
             # we got a thumbnail back!            
             image = data["image"]
+
+            # If we have a thumbnail image, we need to check to see if it's a
+            # placeholder.
             if image:
+                # We're going to compare the sha1 hashsum of the thumbnail we
+                # just downloaded to that of the known placeholder thumbnail.
+                sha = hashlib.sha1()
+                with open(data["thumb_path"], "rb") as fh:
+                    sha.update(fh.read())
+
+                # If they match, we know we have a placeholder and we need to trigger
+                # a cache dump and rescan after a certain period of time. Once we've
+                # started the timer here, we can go ahead and emit the placeholder
+                # file to be used until that rescan occurs.
+                if sha.hexdigest() == self.PLACEHOLDER_THUMBNAIL_HASHSUM:
+                    self._bundle.log_debug(
+                        "Placeholder thumbnail detected. Triggering a cache dump and rescan..."
+                    )
+                    self._rescan_timer.start()
+
                 signal_payload = copy.copy(self._thumb_map[uid])
                 signal_payload["image"] = image
                 signal_payload["thumb_path"] = data["thumb_path"]
