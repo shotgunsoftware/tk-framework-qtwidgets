@@ -40,7 +40,7 @@ that they are placed at the top of the file.
 
 Once you have imported the module, you can access the class or objects inside::
 
-    my_overlay = overlay.ShotgunOverlayWidget(self)
+    my_overlay = overlay_widget.ShotgunOverlayWidget(self)
 
 .. _widgets-in-designer:
 
