@@ -322,7 +322,7 @@ def get_desktop_pixmap(rect):
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
     desktop = QtGui.QApplication.desktop()
-    return QtGui.QPixmap.grabWindow(desktop.winId(), rect.x(), rect.y(),
+    return QtGui.QPixmap.grabWindow(long(desktop.winId()), rect.x(), rect.y(),
                                     rect.width(), rect.height())
 
 
