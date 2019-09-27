@@ -990,11 +990,17 @@ def _query_my_tasks():
     project = bundle.context.project
     current_user = bundle.context.user
 
-    logger.debug("Querying tasks for the curren user: %s" % (current_user,))
+    logger.debug("Querying tasks for the current user: %s" % (current_user,))
 
     filters = [
         ["project", "is", project],
-        ["task_assignees", "is", current_user],
+        {
+            "filter_operator": "any",
+            "filters": [
+                ["task_assignees", "is", current_user],
+                ["task_assignees.Group.users", "is", current_user]
+            ]
+        }
     ]
 
     order = [
