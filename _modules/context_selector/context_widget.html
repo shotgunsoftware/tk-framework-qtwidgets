@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.8.3 documentation</title>
+  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.8.4 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.3 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.4 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.4.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -1175,11 +1175,17 @@
     <span class="n">project</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
     <span class="n">current_user</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">user</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Querying tasks for the curren user: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">current_user</span><span class="p">,))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Querying tasks for the current user: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">current_user</span><span class="p">,))</span>
 
     <span class="n">filters</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">project</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;task_assignees&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">current_user</span><span class="p">],</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;filter_operator&quot;</span><span class="p">:</span> <span class="s2">&quot;any&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">[</span><span class="s2">&quot;task_assignees&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">current_user</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;task_assignees.Group.users&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">current_user</span><span class="p">]</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
     <span class="p">]</span>
 
     <span class="n">order</span> <span class="o">=</span> <span class="p">[</span>
@@ -1250,7 +1256,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.3',
+            VERSION:'v2.8.4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
