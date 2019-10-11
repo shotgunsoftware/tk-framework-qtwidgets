@@ -498,7 +498,7 @@ class ContextWidget(QtGui.QWidget):
         action.setIcon(QtGui.QIcon(icon_path))
         action.setData(context)
         action.triggered.connect(
-            lambda c=context: self._on_context_activated(c))
+            lambda: self._on_context_activated(context))
 
         return action
 
