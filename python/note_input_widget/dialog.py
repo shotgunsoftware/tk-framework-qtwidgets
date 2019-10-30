@@ -14,12 +14,27 @@ from . import NoteInputWidget
 class NoteInputDialog(QtGui.QDialog):
     """
     A dialog wrapper for the :class:`NoteInputWidget` widget.
+
+    The dialog instance will mirror all attributes and methods
+    found on the embedded :class:`NoteInputWidget` instance.
+    Example::
+
+        note_dialog = NoteInputDialog(parent=self)
+        note_dialog.entity_created.connect(self._on_entity_created)
+        note_dialog.data_updated.connect(self.rescan)
+        note_dialog.set_bg_task_manager(self._task_manager)
+        note_dialog.set_current_entity(self._entity_type, self._entity_id)
+
+        # show modal
+        note_dialog.exec_()
+
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, parent):
         """
-        Constructor.
+        :param parent: Qt parent object
+        :type parent: :class:`~PySide.QtGui.QWidget`
         """
-        super(NoteInputDialog, self).__init__(*args, **kwargs)
+        super(NoteInputDialog, self).__init__(parent)
 
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint)
 
@@ -36,4 +51,10 @@ class NoteInputDialog(QtGui.QDialog):
         self.widget.open_editor()
 
     def __getattr__(self, name):
+        """
+        Attribute dispatcher that promotes all the properties
+        and methods of the NoteInputWidget up to the widget.
+
+        :param name: Attribute name to retrieve
+        """
         return getattr(self.widget, name)
