@@ -13,7 +13,7 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(784, 483)
         Dialog.setStyleSheet("#Dialog {\n"
-"background-image: url(:/tk_framework_qtwidgets.help_screen/bg.png); \n"
+"background-image: url(:/tk_framework_qtwidgets.help_screen/bg.png);\n"
 "}\n"
 "\n"
 "")
