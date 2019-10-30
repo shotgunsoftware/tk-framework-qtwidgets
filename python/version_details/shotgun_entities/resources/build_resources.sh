@@ -30,7 +30,7 @@ function build_ui {
 }
 
 function build_res {
-    build_qt "pyside-rcc" "$1.qrc" "$1_rc"
+    build_qt "pyside-rcc -py3" "$1.qrc" "$1_rc"
 }
 
 

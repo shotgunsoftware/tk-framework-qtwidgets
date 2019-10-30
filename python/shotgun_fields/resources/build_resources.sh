@@ -12,6 +12,7 @@
 
 # The path to output all built .py files to:
 UI_PYTHON_PATH=../ui
+PYTHON_BASE="/Applications/Shotgun.app/Contents/Resources/Python"
 
 # Remove any problematic profiles from pngs.
 for f in *.png; do mogrify $f; done
@@ -28,9 +29,8 @@ function build_qt {
 }
 
 function build_res {
-    build_qt "pyside-rcc" "$1.qrc" "$1_rc"
+    build_qt "${PYTHON_BASE}/bin/pyside-rcc -py3" "$1.qrc" "$1_rc"
 }
-
 
 # build resources
 echo "building resources..."
