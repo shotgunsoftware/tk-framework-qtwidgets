@@ -521,7 +521,7 @@ class ContextWidget(QtGui.QWidget):
         for serialized_context in serialized_recent_contexts:
             try:
                 context = sgtk.Context.deserialize(serialized_context)
-            except Exception, e:
+            except Exception as e:
                 logger.debug("Unable to deserialize stored context.")
             else:
                 recent_action = self._get_qaction_for_context(context)

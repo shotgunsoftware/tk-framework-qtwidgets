@@ -451,7 +451,7 @@ class ShotgunFieldDelegate(ShotgunFieldDelegateGeneric):
                     primary_item.setIcon(QtGui.QIcon(new_value))
                 else:
                     primary_item.setIcon(QtGui.QIcon())
-            except Exception, e:
+            except Exception as e:
                 bundle.log_error(
                     "Unable to set icon for widget delegate: %s" % (e,))
 

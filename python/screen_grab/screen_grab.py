@@ -270,7 +270,7 @@ class ExternalCaptureThread(QtCore.QThread):
 
             else:
                 raise sgtk.TankError("Unsupported platform.")
-        except Exception, e:
+        except Exception as e:
             self._error = str(e)
 
 

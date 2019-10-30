@@ -210,7 +210,7 @@ class ShotgunMenu(QtGui.QMenu):
                         # restart the timer to clear the text after a given period
                         self._type_timer.start()
                         return
-            except Exception, e:
+            except Exception as e:
                 # assume no match
                 pass
 
