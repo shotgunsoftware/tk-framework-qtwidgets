@@ -223,4 +223,3 @@ class ShotgunMenu(QtGui.QMenu):
     def _on_type_timer_timeout(self):
         """Timeout triggered after typing has ceased for a given interval."""
         self._typed_text = ""
-

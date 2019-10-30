@@ -15,6 +15,7 @@ from .ui import resources_rc
 # This is the stylesheet applied to edit, apply, and done buttons.
 BUTTON_STYLE = "background-color: none; border: none; min-width: 15px;"
 
+
 class ShotgunFieldEditable(QtGui.QStackedWidget):
     """
     Wraps ``DISPLAY`` and ``EDITOR`` widgets into a :class:`~PySide.QtGui.QStackedWidget`
@@ -52,11 +53,11 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
 
         # user clicked the button to edit the value
         self._display.edit_requested.connect(
-            lambda: self.setCurrentWidget(self._editor))
+            lambda: self.setCurrentWidget(self._editor)
+        )
 
         # user is done editing
-        self._editor.done_editing.connect(
-            lambda: self.setCurrentWidget(self._display))
+        self._editor.done_editing.connect(lambda: self.setCurrentWidget(self._display))
 
         # apply the new value entered into the editor
         self._editor.edit_widget.value_changed.connect(self._apply_value)
@@ -69,8 +70,7 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         # display widget, this should handle a value change from either widget.
         # if this widget is modified to wait on applying the new value until
         # after SG has been update, this logic will need to change.
-        self._display.display_widget.value_changed.connect(
-            self.value_changed.emit)
+        self._display.display_widget.value_changed.connect(self.value_changed.emit)
 
     def destroy(self):
         """
@@ -187,7 +187,7 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
             finally:
                 self._editor.edit_widget.blockSignals(False)
 
-            if hasattr(self._editor.edit_widget, '_begin_edit'):
+            if hasattr(self._editor.edit_widget, "_begin_edit"):
                 self._editor.edit_widget._begin_edit()
 
         self.currentWidget().setFocus()
@@ -220,7 +220,8 @@ class ShotgunFieldNotEditable(QtGui.QWidget):
         # this is the "no edit" label that will show on hover
         self._no_edit_lbl = QtGui.QLabel(self)
         self._no_edit_lbl.setPixmap(
-            QtGui.QPixmap(":/qtwidgets-shotgun-fields/not_editable.png"))
+            QtGui.QPixmap(":/qtwidgets-shotgun-fields/not_editable.png")
+        )
         self._no_edit_lbl.setFixedSize(QtCore.QSize(16, 16))
         self._no_edit_lbl.hide()
 
@@ -388,7 +389,9 @@ class _EditorWidget(QtGui.QWidget):
         self._done_btn.setFocusPolicy(QtCore.Qt.NoFocus)
 
         self._apply_btn = QtGui.QPushButton()
-        self._apply_btn.setIcon(QtGui.QIcon(":/qtwidgets-shotgun-fields/apply_value.png"))
+        self._apply_btn.setIcon(
+            QtGui.QIcon(":/qtwidgets-shotgun-fields/apply_value.png")
+        )
         self._apply_btn.setFixedSize(QtCore.QSize(16, 16))
         self._apply_btn.setFocusPolicy(QtCore.Qt.NoFocus)
 
@@ -407,7 +410,7 @@ class _EditorWidget(QtGui.QWidget):
             btn_layout.addWidget(self._done_btn)
             btn_layout.addStretch()
 
-        if getattr(editor_widget, '_IMMEDIATE_APPLY', None):
+        if getattr(editor_widget, "_IMMEDIATE_APPLY", None):
             # widget is set to immediately apply value. no need to display the btn
             self._apply_btn.hide()
 
@@ -461,6 +464,3 @@ class _EditorWidget(QtGui.QWidget):
         # responsible for storing their own values as they are modified
         self.edit_widget.set_value(self.edit_widget.get_value())
         self.done_editing.emit()
-
-
-

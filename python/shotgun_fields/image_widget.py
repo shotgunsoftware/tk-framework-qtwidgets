@@ -16,8 +16,12 @@ from .shotgun_field_meta import ShotgunFieldMeta
 
 from .ui import resources_rc
 
-shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_data = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_data"
+)
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 class ImageWidget(QtGui.QLabel):
@@ -26,6 +30,7 @@ class ImageWidget(QtGui.QLabel):
 
     The ``ImageWidget`` represents both the ``DISPLAY`` and ``EDITOR`` widget type.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "image"
     _EDITOR_TYPE = "image"
@@ -170,9 +175,11 @@ class ImageWidget(QtGui.QLabel):
         if value is None:
             self._display_default()
         else:
-            if (not self._delegate and
-                not isinstance(value, QtGui.QPixmap) and
-                not os.path.exists(value)):
+            if (
+                not self._delegate
+                and not isinstance(value, QtGui.QPixmap)
+                and not os.path.exists(value)
+            ):
                 # the widget isn't being used as a delegate (which never
                 # requires downloads) and the value is not a local file or a
                 # pre-created pixmap. so we need to download it.
@@ -202,19 +209,20 @@ class ImageWidget(QtGui.QLabel):
             self._needs_download = True
 
             # start up a data retriever to fetch the thumbnail in the background
-            self._data_retriever = shotgun_data.ShotgunDataRetriever(bg_task_manager=self._bg_task_manager)
+            self._data_retriever = shotgun_data.ShotgunDataRetriever(
+                bg_task_manager=self._bg_task_manager
+            )
             self._data_retriever.start()
             self._data_retriever.work_completed.connect(self._on_worker_signal)
             self._data_retriever.work_failure.connect(self._on_worker_failure)
 
-        self.setSizePolicy(
-            QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Expanding
-        )
+        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 
         # menu display button for showing the popup menu
         self._popup_btn = QtGui.QPushButton(self)
-        self._popup_btn.setIcon(QtGui.QIcon(":/qtwidgets-shotgun-fields/image_menu.png"))
+        self._popup_btn.setIcon(
+            QtGui.QIcon(":/qtwidgets-shotgun-fields/image_menu.png")
+        )
         self._popup_btn.setFixedSize(QtCore.QSize(18, 12))
         self._popup_btn.hide()
 
@@ -314,7 +322,8 @@ class ImageWidget(QtGui.QLabel):
                 entity_type = self._entity.get("type")
 
             self._task_uid = self._data_retriever.request_thumbnail(
-                value, entity_type, entity_id, self._field_name, load_image=True)
+                value, entity_type, entity_id, self._field_name, load_image=True
+            )
             self._needs_download = False
 
         self.value_changed.emit()
@@ -350,9 +359,7 @@ class ImageWidget(QtGui.QLabel):
             menu = self._popup_display_menu
 
         menu.exec_(
-            self._popup_btn.mapToGlobal(
-                QtCore.QPoint(0, self._popup_btn.height())
-            )
+            self._popup_btn.mapToGlobal(QtCore.QPoint(0, self._popup_btn.height()))
         )
 
     def _on_worker_failure(self, uid, msg):
@@ -385,9 +392,7 @@ class ImageWidget(QtGui.QLabel):
         Scale the pixmap in preparation for display.
         """
         return pixmap.scaled(
-            self.size(),
-            QtCore.Qt.KeepAspectRatio,
-            QtCore.Qt.SmoothTransformation
+            self.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation
         )
 
     def _show_image(self):
@@ -412,9 +417,11 @@ class ImageWidget(QtGui.QLabel):
 
         img_dialog = QtGui.QDialog(self)
         img_dialog.setWindowTitle(
-            "Viewing: %s %s" % (
+            "Viewing: %s %s"
+            % (
                 shotgun_globals.get_type_display_name(self._entity_type),
-                self._field_name)
+                self._field_name,
+            )
         )
 
         lbl = QtGui.QLabel()
@@ -462,9 +469,7 @@ class ImageWidget(QtGui.QLabel):
         """
 
         file_path = QtGui.QFileDialog.getOpenFileName(
-            self,
-            caption="Replace Image",
-            options=QtGui.QFileDialog.DontResolveSymlinks,
+            self, caption="Replace Image", options=QtGui.QFileDialog.DontResolveSymlinks
         )[0]
         if file_path:
             self.setPixmap(QtGui.QPixmap(file_path))

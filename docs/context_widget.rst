@@ -21,5 +21,3 @@ The widget includes the following features:
     :members:
     :inherited-members:
     :exclude-members: eventFilter
-
-

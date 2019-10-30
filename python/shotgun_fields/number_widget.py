@@ -18,6 +18,7 @@ class NumberWidget(LabelBaseWidget):
     """
     Display a ``number`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "number"
 
@@ -37,6 +38,7 @@ class NumberEditorWidget(QtGui.QSpinBox):
     Pressing ``Enter`` or ``Return`` when the widget has focus will cause the
     value to be applied and the ``value_changed`` signal to be emitted.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "number"
 
@@ -82,4 +84,3 @@ class NumberEditorWidget(QtGui.QSpinBox):
         :param value: The value returned by the Shotgun API to be displayed
         """
         self.setValue(value)
-

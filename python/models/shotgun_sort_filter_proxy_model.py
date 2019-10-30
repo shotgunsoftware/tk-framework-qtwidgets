@@ -1,11 +1,11 @@
 # Copyright (c) 2016 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
@@ -13,14 +13,13 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
 shotgun_model = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils",
-    "shotgun_model",
+    "tk-framework-shotgunutils", "shotgun_model"
 )
 
 shotgun_globals = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils",
-    "shotgun_globals",
+    "tk-framework-shotgunutils", "shotgun_globals"
 )
+
 
 class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
     """
@@ -28,6 +27,7 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
     data in a ShotgunModel by given Shotgun fields on the entities
     stored therein.
     """
+
     def __init__(self, parent):
         """
         Initializes a new ShotgunSortFilterProxyModel.
@@ -110,7 +110,9 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
         # We push the primary sort field to the beginning of the list of
         # fields that we're going to sort on, then least the rest in their
         # existing order to act as secondary sort fields.
-        secondary_sort_fields = [f for f in self.sort_by_fields if f != self.primary_sort_field]
+        secondary_sort_fields = [
+            f for f in self.sort_by_fields if f != self.primary_sort_field
+        ]
 
         # We are also going to shove "id" to the end of the secondary list
         # if it is present. This is because it will never be equal between
@@ -118,21 +120,19 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
         # we might want to sort by lower in the list. As such, we'll treat
         # it as the lowest priority.
         if "id" in secondary_sort_fields:
-            secondary_sort_fields = [f for f in secondary_sort_fields if f != "id"] + ["id"]
+            secondary_sort_fields = [f for f in secondary_sort_fields if f != "id"] + [
+                "id"
+            ]
 
         sort_fields = [self.primary_sort_field] + secondary_sort_fields
 
         for sort_by_field in sort_fields:
             try:
                 left_data = self._get_processable_field_data(
-                    sg_left,
-                    sort_by_field,
-                    sortable=True,
+                    sg_left, sort_by_field, sortable=True
                 )
                 right_data = self._get_processable_field_data(
-                    sg_right,
-                    sort_by_field,
-                    sortable=True,
+                    sg_right, sort_by_field, sortable=True
                 )
             except KeyError:
                 # If we got a KeyError, it means that the data we're trying
@@ -147,7 +147,7 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
                 # do based on this field. We'll just continue on to the rest.
                 continue
             else:
-                return (left_data < right_data)
+                return left_data < right_data
 
         return False
 
@@ -171,7 +171,7 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
         # We only have one column, so column 0 is what we're
         # after.
         sg_data = shotgun_model.get_sg_data(
-            self.sourceModel().index(row, 0, source_parent),
+            self.sourceModel().index(row, 0, source_parent)
         )
 
         if not sg_data:
@@ -216,8 +216,7 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
                             sorting operation.
         """
         data_type = shotgun_globals.get_data_type(
-            self.sourceModel().get_entity_type(),
-            field,
+            self.sourceModel().get_entity_type(), field
         )
 
         # Certain field data types will need to be treated specially
@@ -254,8 +253,7 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
         elif data_type == "date_time":
             if sg_data[field] is not None:
                 processable_data = shotgun_globals.create_human_readable_timestamp(
-                    sg_data[field],
-                    " %I:%M%p",
+                    sg_data[field], " %I:%M%p"
                 )
             else:
                 processable_data = ""
@@ -265,5 +263,3 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
             processable_data = sg_data[field]
 
         return processable_data
-
-

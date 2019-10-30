@@ -10,6 +10,7 @@
 
 import sgtk
 
+
 def get_hyperlink_html(url, name):
     """
     Provides an html string for a hyperlink pointing to the given URL
@@ -24,7 +25,7 @@ def get_hyperlink_html(url, name):
     # just fall back on SG_FOREGROUND_COLOR in that case.
     color = sgtk.platform.constants.SG_STYLESHEET_CONSTANTS.get(
         "SG_LINK_COLOR",
-        sgtk.platform.constants.SG_STYLESHEET_CONSTANTS["SG_FOREGROUND_COLOR"]
+        sgtk.platform.constants.SG_STYLESHEET_CONSTANTS["SG_FOREGROUND_COLOR"],
     )
 
     html = "<a href='%s' style='text-decoration: none; color: %s'><b>%s</b></a>" % (

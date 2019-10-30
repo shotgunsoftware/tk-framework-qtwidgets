@@ -13,7 +13,9 @@ from sgtk.platform.qt import QtCore, QtGui
 
 from .search_completer import SearchCompleter
 
-shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
+shotgun_model = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_model"
+)
 
 
 class HierarchicalSearchCompleter(SearchCompleter):
@@ -107,7 +109,10 @@ class HierarchicalSearchCompleter(SearchCompleter):
         :paarm text: Text from the current search.
         """
         # deferred import to help documentation generation.
-        from .hierarchical_search_result_delegate import HierarchicalSearchResultDelegate
+        from .hierarchical_search_result_delegate import (
+            HierarchicalSearchResultDelegate,
+        )
+
         self._delegate = HierarchicalSearchResultDelegate(popup, text)
         popup.setItemDelegate(self._delegate)
 
@@ -143,7 +148,7 @@ class HierarchicalSearchCompleter(SearchCompleter):
         if self._show_entities_only:
             data_matches = filter(
                 lambda x: x["ref"]["type"] is not None and x["ref"]["id"] is not None,
-                data_matches
+                data_matches,
             )
 
         if len(data_matches) == 0:
@@ -176,8 +181,7 @@ class HierarchicalSearchCompleter(SearchCompleter):
             item = QtGui.QStandardItem(data["label"])
             item.setData(self.MODE_RESULT, self.MODE_ROLE)
 
-            item.setData(shotgun_model.sanitize_for_qt_model(data),
-                         self.SG_DATA_ROLE)
+            item.setData(shotgun_model.sanitize_for_qt_model(data), self.SG_DATA_ROLE)
 
             item.setIcon(self._pixmaps.no_thumbnail)
 
@@ -237,7 +241,9 @@ class HierarchicalSearchCompleter(SearchCompleter):
         if data:
             # Let it be known that something was picked.
             self.node_activated.emit(
-                data["ref"]["type"], data["ref"]["id"], data["label"],
+                data["ref"]["type"],
+                data["ref"]["id"],
+                data["label"],
                 data["path_label"],
-                data["incremental_path"]
+                data["incremental_path"],
             )

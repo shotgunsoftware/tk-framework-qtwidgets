@@ -27,7 +27,7 @@ def check_project_search_supported(sg_connection):
 
     # make sure we're greater than or equal to SG v7.0.2
     return (
-        hasattr(sg_connection, "server_caps") and
-        server_caps.version and
-        server_caps.version >= (7, 0, 2)
+        hasattr(sg_connection, "server_caps")
+        and server_caps.version
+        and server_caps.version >= (7, 0, 2)
     )

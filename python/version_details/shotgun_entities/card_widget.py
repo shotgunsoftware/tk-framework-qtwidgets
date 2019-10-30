@@ -1,11 +1,11 @@
 # Copyright (c) 2016 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from __future__ import with_statement
@@ -18,11 +18,13 @@ import threading
 
 utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
 
+
 class ShotgunEntityCardWidget(QtGui.QWidget):
     """
     Simple entity widget which hosts a thumbnail, plus any requested
     entity fields in a layout to the right of the thumbnail.
     """
+
     WIDTH_HINT = 300
     HEIGHT_HINT_PADDING = 8
     ROW_HEIGHT = 20
@@ -38,7 +40,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         """
         super(ShotgunEntityCardWidget, self).__init__(parent)
 
-        self.ui = Ui_ShotgunEntityCardWidget() 
+        self.ui = Ui_ShotgunEntityCardWidget()
         self.ui.setupUi(self)
 
         self._field_manager = shotgun_field_manager
@@ -73,10 +75,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             return
 
         self._fields[field_name] = _OrderedDict(
-            widget=None,
-            label=None,
-            label_exempt=label_exempt,
-            row=0,
+            widget=None, label=None, label_exempt=label_exempt, row=0
         )
 
         # If we've not yet loaded an entity, then we don't need to
@@ -90,10 +89,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             widget_type = self.field_manager.DISPLAY
 
         field_widget = self.field_manager.create_widget(
-            self.entity.get("type"),
-            field_name,
-            widget_type,
-            self.entity,
+            self.entity.get("type"), field_name, widget_type, self.entity
         )
 
         self._fields[field_name]["widget"] = field_widget
@@ -112,17 +108,19 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             if field_name in self.label_exempt_fields:
                 # If there's no label, then the widget goes in the first
                 # column and is set to span all columns.
-                self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 0, 1, -1)
+                self.ui.field_grid_layout.addWidget(
+                    field_widget, len(self.fields), 0, 1, -1
+                )
             else:
                 # We have a label, so we put that in column 0 and the
                 # field widget in column 1.
                 field_label = self.field_manager.create_label(
-                    self.entity.get("type"),
-                    field_name,
-                    postfix=":",
+                    self.entity.get("type"), field_name, postfix=":"
                 )
                 self._fields[field_name]["label"] = field_label
-                self.ui.field_grid_layout.addWidget(field_label, len(self.fields), 0, QtCore.Qt.AlignRight)
+                self.ui.field_grid_layout.addWidget(
+                    field_label, len(self.fields), 0, QtCore.Qt.AlignRight
+                )
                 self.ui.field_grid_layout.addWidget(field_widget, len(self.fields), 1)
         else:
             # Nothing at all will have labels, so we can just put the
@@ -202,8 +200,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             utils.safe_delete_later(field_label)
 
         self.ui.field_grid_layout.setRowMinimumHeight(
-            self._fields[field_name]["row"],
-            0,
+            self._fields[field_name]["row"], 0
         )
 
     def remove_field(self, field_name):
@@ -228,7 +225,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         if field_name not in self._fields or not self.entity:
             return
 
-        if self._fields[field_name]["widget"]: 
+        if self._fields[field_name]["widget"]:
             self._fields[field_name]["widget"].setVisible(bool(state))
 
         field_label = self._fields[field_name]["label"]
@@ -242,10 +239,9 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             row_height = 0
 
         self.ui.field_grid_layout.setRowMinimumHeight(
-            self._fields[field_name]["row"],
-            row_height,
+            self._fields[field_name]["row"], row_height
         )
-                   
+
     def set_selected(self, selected):
         """
         Adjust the style sheet to indicate selection or not.
@@ -255,7 +251,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         p = QtGui.QPalette()
 
         self.__selected = selected
-        
+
         if selected:
             highlight_col = p.color(QtGui.QPalette.Active, QtGui.QPalette.Highlight)
             highlight_str = "rgb(%s, %s, %s)" % (
@@ -271,7 +267,8 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                     margin-bottom: 2px;
                     margin-right: 2px;
                 }
-                """ % (highlight_str)
+                """
+                % (highlight_str)
             )
         elif self._show_border:
             self.ui.box.setStyleSheet(
@@ -296,7 +293,8 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         """
         return QtCore.QSize(
             ShotgunEntityCardWidget.WIDTH_HINT,
-            self.ui.field_grid_layout.sizeHint().height() + ShotgunEntityCardWidget.HEIGHT_HINT_PADDING,
+            self.ui.field_grid_layout.sizeHint().height()
+            + ShotgunEntityCardWidget.HEIGHT_HINT_PADDING,
         )
 
     def minimumSizeHint(self):
@@ -352,10 +350,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             else:
                 self._entity = entity
                 self.thumbnail = self.field_manager.create_widget(
-                    entity.get("type"),
-                    "image",
-                    self.field_manager.DISPLAY,
-                    self.entity,
+                    entity.get("type"), "image", self.field_manager.DISPLAY, self.entity
                 )
                 self.thumbnail.setMinimumWidth(150)
 
@@ -379,10 +374,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
 
                 for i, field in enumerate(self.fields):
                     field_widget = self.field_manager.create_widget(
-                        entity.get("type"),
-                        field,
-                        widget_type,
-                        self.entity,
+                        entity.get("type"), field, widget_type, self.entity
                     )
                     # Connect each widget to the local value_changed function
                     # so we can update the DB.
@@ -401,12 +393,12 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                             field_grid_layout.addWidget(field_widget, i, 0, 1, -1)
                         else:
                             field_label = self.field_manager.create_label(
-                                entity.get("type"),
-                                field,
-                                postfix=":",
+                                entity.get("type"), field, postfix=":"
                             )
 
-                            field_grid_layout.addWidget(field_label, i, 0, QtCore.Qt.AlignRight)
+                            field_grid_layout.addWidget(
+                                field_label, i, 0, QtCore.Qt.AlignRight
+                            )
                             self._fields[field]["label"] = field_label
                             field_grid_layout.addWidget(field_widget, i, 1)
                     else:
@@ -431,7 +423,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         update_dict[self.sender().get_field_name()] = self.sender().get_value()
 
         bundle = sgtk.platform.current_bundle()
-        sg_res = bundle.shotgun.update(entity['type'], entity['id'], update_dict)
+        sg_res = bundle.shotgun.update(entity["type"], entity["id"], update_dict)
 
     def _get_field_manager(self):
         """
@@ -459,10 +451,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         label_exempt = self.label_exempt_fields
         self.clear_fields()
         for field_name in fields:
-            self.add_field(
-                field_name,
-                label_exempt=(field_name in label_exempt),
-            )
+            self.add_field(field_name, label_exempt=(field_name in label_exempt))
 
     def _get_label_exempt_fields(self):
         """
@@ -474,7 +463,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
     def _set_label_exempt_fields(self, fields):
         fields_to_add = {}
         for field_name, field_data in self._fields.iteritems():
-            now_exempt = (field_name in fields)
+            now_exempt = field_name in fields
 
             if self.entity:
                 previously_exempt = field_data["label_exempt"]
@@ -626,5 +615,4 @@ class _OrderedDict(object):
         self._keys.remove(key)
 
     def __contains__(self, item):
-        return (item in self._dict)
-
+        return item in self._dict

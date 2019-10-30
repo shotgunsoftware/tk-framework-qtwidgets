@@ -17,6 +17,7 @@ class TextWidget(ElidedLabelBaseWidget):
     """
     Display a ``text`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "text"
 
@@ -25,6 +26,7 @@ class TextEditorWidget(QtGui.QTextEdit):
     """
     Allows editing of a ``text`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "text"
 
@@ -44,10 +46,10 @@ class TextEditorWidget(QtGui.QTextEdit):
         Ctrl+Enter or Ctrl+Return will trigger the emission of the ``value_changed``
         signal.
         """
-        if event.key() in [
-            QtCore.Qt.Key_Enter,
-            QtCore.Qt.Key_Return
-        ] and event.modifiers() & QtCore.Qt.ControlModifier:
+        if (
+            event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]
+            and event.modifiers() & QtCore.Qt.ControlModifier
+        ):
             self.value_changed.emit()
             event.ignore()
             return
@@ -60,10 +62,7 @@ class TextEditorWidget(QtGui.QTextEdit):
 
         Called by the metaclass during initialization.
         """
-        self.setSizePolicy(
-            QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Preferred
-        )
+        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
 
     def _display_default(self):
         """
@@ -86,4 +85,3 @@ class TextEditorWidget(QtGui.QTextEdit):
         :param value: The value from Shotgun
         """
         return str(value)
-

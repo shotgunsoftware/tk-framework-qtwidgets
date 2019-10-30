@@ -1,11 +1,11 @@
 # Copyright (c) 2016 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
@@ -14,9 +14,9 @@ from .card_widget import ShotgunEntityCardWidget
 
 views = sgtk.platform.current_bundle().import_module("views")
 shotgun_model = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils",
-    "shotgun_model",
+    "tk-framework-shotgunutils", "shotgun_model"
 )
+
 
 class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
     """
@@ -137,9 +137,9 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
         :type parent: :class:`~PySide.QtGui.QWidget`
         :param bool editable: Whether the widget is to be created using editable
                               Shotgun fields widgets or not.
-        
+
         :returns: QWidget that will be used to paint grid cells in the view.
-        :rtype: :class:`~PySide.QtGui.QWidget` 
+        :rtype: :class:`~PySide.QtGui.QWidget`
         """
         widget = ShotgunEntityCardWidget(
             parent=parent,
@@ -186,13 +186,13 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
 
         :param model_index:     The index of the item in the model to return a widget for
         :type model_index:      :class:`~PySide.QtCore.QModelIndex`
-        
+
         :param style_options:   Specifies the current Qt style options for this index
         :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`
-        
+
         :param parent:          The parent view that the widget should be parented to
         :type parent:           :class:`~PySide.QtGui.QWidget`
-        
+
         :returns:               A QWidget to be used for editing the current index
         :rtype:                 :class:`~PySide.QtGui.QWidget`
         """
@@ -205,19 +205,19 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
         """
         Called when a cell is being painted.
 
-        :param widget: The QWidget (constructed in _create_widget()) which will 
-                       be used to paint the cell. 
+        :param widget: The QWidget (constructed in _create_widget()) which will
+                       be used to paint the cell.
         :type parent:  :class:`~PySide.QtGui.QWidget`
-        
-        :param model_index: QModelIndex object representing the data of the object that is 
+
+        :param model_index: QModelIndex object representing the data of the object that is
                             about to be drawn.
         :type model_index:  :class:`~PySide.QtCore.QModelIndex`
-        
-        :param style_options: object containing specifics about the 
+
+        :param style_options: object containing specifics about the
                               view related state of the cell.
         :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`
         """
-        # Get the shotgun query data for this model item.     
+        # Get the shotgun query data for this model item.
         sg_item = shotgun_model.get_sg_data(model_index)
         widget.entity = sg_item
 
@@ -246,5 +246,3 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
         # into an infinite loop.
         widget = self._widget_cache.get(model_index) or self._create_widget(self.view)
         return widget.sizeHint()
-
-
