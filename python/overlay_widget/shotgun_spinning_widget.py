@@ -14,7 +14,7 @@ import math
 from tank.platform.qt import QtCore, QtGui
 
 # load resources
-from .ui import resources_rc # noqa
+from .ui import resources_rc  # noqa
 
 
 class ShotgunSpinningWidget(QtGui.QWidget):
@@ -57,7 +57,9 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         # needs to be.
         self._heartbeat = 0
 
-        self._sg_icon = QtGui.QPixmap(":/tk_framework_qtwidgets.overlay_widget/sg_logo.png")
+        self._sg_icon = QtGui.QPixmap(
+            ":/tk_framework_qtwidgets.overlay_widget/sg_logo.png"
+        )
 
     ############################################################################################
     # public interface
@@ -125,7 +127,9 @@ class ShotgunSpinningWidget(QtGui.QWidget):
             # a single second, so the sliding is still quick to the eye. If there are more than
             # _UPDATES_PER_SECOND steps, this sliding effect is actually not visible since individual increments
             # between steps will be smaller than 1 / _UPDATES_PER_SECOND of the circumference.
-            self._spin_angle = min(self._spin_angle_to, self._spin_angle + 360 / self._UPDATES_PER_SECOND)
+            self._spin_angle = min(
+                self._spin_angle_to, self._spin_angle + 360 / self._UPDATES_PER_SECOND
+            )
             self._heartbeat = (self._heartbeat + 1) % 25
 
         self.repaint()
@@ -139,8 +143,9 @@ class ShotgunSpinningWidget(QtGui.QWidget):
         :param span_angle: Degrees the arc covers.
         """
         # show the spinner
-        painter.translate((painter.device().width() / 2) - 40,
-                          (painter.device().height() / 2) - 40)
+        painter.translate(
+            (painter.device().width() / 2) - 40, (painter.device().height() / 2) - 40
+        )
 
         pen = QtGui.QPen(QtGui.QColor("#424141"))
         pen.setWidth(3)
@@ -169,11 +174,7 @@ class ShotgunSpinningWidget(QtGui.QWidget):
             # now draw different things depending on mode
             if self._mode == self.MODE_SPIN:
 
-                self._draw_opened_circle(
-                    painter,
-                    self._spin_angle * 4,
-                    340
-                )
+                self._draw_opened_circle(painter, self._spin_angle * 4, 340)
 
             elif self._mode == self.MODE_PROGRESS:
                 self._draw_opened_circle(
@@ -181,7 +182,7 @@ class ShotgunSpinningWidget(QtGui.QWidget):
                     # Start at noon
                     90,
                     # Go clockwise
-                    -self._spin_angle
+                    -self._spin_angle,
                 )
 
                 self._draw_heartbeat(painter)

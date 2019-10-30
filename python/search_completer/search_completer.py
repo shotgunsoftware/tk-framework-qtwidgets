@@ -11,8 +11,12 @@
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-shotgun_data = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_data")
-shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
+shotgun_data = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_data"
+)
+shotgun_model = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_model"
+)
 
 from .utils import create_rectangular_thumbnail, CompleterPixmaps
 
@@ -156,7 +160,8 @@ class SearchCompleter(QtGui.QCompleter):
             self._processing_id = self._launch_sg_search(text)
         else:
             raise sgtk.TankError(
-                "Please associate this class with a background task manager.")
+                "Please associate this class with a background task manager."
+            )
 
     def get_current_result(self):
         """
@@ -193,7 +198,8 @@ class SearchCompleter(QtGui.QCompleter):
         :type  task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager`
         """
         self._sg_data_retriever = shotgun_data.ShotgunDataRetriever(
-            self, bg_task_manager=task_manager)
+            self, bg_task_manager=task_manager
+        )
 
         self._sg_data_retriever.start()
         self._sg_data_retriever.work_completed.connect(self.__on_worker_signal)
@@ -220,8 +226,8 @@ class SearchCompleter(QtGui.QCompleter):
             self.model().appendRow(item)
             item.setIcon(QtGui.QIcon(self._pixmaps.loading))
         if add_more_text_item:
-            item = QtGui.QStandardItem("Type at least %s characters..." % (
-                self.COMPLETE_MINIMUM_CHARACTERS,)
+            item = QtGui.QStandardItem(
+                "Type at least %s characters..." % (self.COMPLETE_MINIMUM_CHARACTERS,)
             )
             item.setData(self.MODE_NOT_ENOUGH_TEXT, self.MODE_ROLE)
             item.setIcon(QtGui.QIcon(self._pixmaps.keyboard))
@@ -234,7 +240,7 @@ class SearchCompleter(QtGui.QCompleter):
         :param uid: Unique id for request that failed
         :param msg: Error message
         """
-        uid = shotgun_model.sanitize_qt(uid) # qstring on pyqt, str on pyside
+        uid = shotgun_model.sanitize_qt(uid)  # qstring on pyqt, str on pyside
         msg = shotgun_model.sanitize_qt(msg)
         if self._processing_id == uid:
             self._bundle.log_warning("Could not retrieve search results: %s" % msg)
@@ -249,7 +255,7 @@ class SearchCompleter(QtGui.QCompleter):
         :param request_type: String identifying the request class
         :param data: the data that was returned
         """
-        uid = shotgun_model.sanitize_qt(uid) # qstring on pyqt, str on pyside
+        uid = shotgun_model.sanitize_qt(uid)  # qstring on pyqt, str on pyside
         data = shotgun_model.sanitize_qt(data)
 
         if uid in self._thumb_map:

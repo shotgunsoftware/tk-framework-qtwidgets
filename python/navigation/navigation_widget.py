@@ -1,31 +1,32 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.navigation_widget import Ui_NavigationWidget
 
+
 class NavigationWidget(QtGui.QWidget):
     """
     Navigation widget containing previous, home and next buttons: [H][<][>].  The
     widget keeps track of the current location within a list and emits signals
     whenever the user navigates via one of the buttons.
-    
+
     :signal home_clicked: Emitted when someone clicks the home button
     :signal navigate(bj): Emitted when someone clicks the next or prev buttons.
         A navigation object is passed with the signal.
     """
 
-    # Signal emitted whenever the user navigates using 
+    # Signal emitted whenever the user navigates using
     # the 'previous'/[<] or 'next'/[>] buttons.
-    navigate = QtCore.Signal(object)# destination to navigate to
+    navigate = QtCore.Signal(object)  # destination to navigate to
 
     # Signal emitted whenever the 'home'/[H] button is pressed
     home_clicked = QtCore.Signal()
@@ -34,6 +35,7 @@ class NavigationWidget(QtGui.QWidget):
         """
         Container to keep track of information about a destination
         """
+
         def __init__(self, label, destination):
             """
             :param label:       The label to be used for this destination
@@ -45,7 +47,7 @@ class NavigationWidget(QtGui.QWidget):
     def __init__(self, parent=None):
         """
         :param parent:  The parent QWidget
-        :type parent:   :class:`~PySide.QtGui.QWidget`        
+        :type parent:   :class:`~PySide.QtGui.QWidget`
         """
         QtGui.QWidget.__init__(self, parent)
 
@@ -71,8 +73,10 @@ class NavigationWidget(QtGui.QWidget):
         :param destination: The destination object
         """
         new_destination_info = NavigationWidget._DestinationInfo(label, destination)
-        self._destinations = self._destinations[:self._current_idx+1] + [new_destination_info]
-        self._current_idx = len(self._destinations)-1
+        self._destinations = self._destinations[: self._current_idx + 1] + [
+            new_destination_info
+        ]
+        self._current_idx = len(self._destinations) - 1
         self._update_ui()
 
     # ------------------------------------------------------------------------------------------
@@ -80,7 +84,7 @@ class NavigationWidget(QtGui.QWidget):
 
     def _on_nav_prev_clicked(self):
         """
-        Slot triggered when the 'previous'/[<] button is clicked.  Sets the current 
+        Slot triggered when the 'previous'/[<] button is clicked.  Sets the current
         destination to the previous destination and emits the navigate signal.
         """
         if self._current_idx < 1:
@@ -93,7 +97,7 @@ class NavigationWidget(QtGui.QWidget):
 
     def _on_nav_next_clicked(self):
         """
-        Slot triggered when the 'next'/[>] button is clicked.  Sets the current 
+        Slot triggered when the 'next'/[>] button is clicked.  Sets the current
         destination to the next destination and emits the navigate signal.
         """
         if self._current_idx >= (len(self._destinations) - 1):
@@ -110,7 +114,6 @@ class NavigationWidget(QtGui.QWidget):
         """
         self._ui.nav_home_btn.setEnabled(True)
         self._ui.nav_prev_btn.setEnabled(self._current_idx > 0)
-        self._ui.nav_next_btn.setEnabled(self._current_idx < (len(self._destinations) - 1))
-
-
-
+        self._ui.nav_next_btn.setEnabled(
+            self._current_idx < (len(self._destinations) - 1)
+        )

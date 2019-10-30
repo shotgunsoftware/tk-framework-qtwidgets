@@ -35,9 +35,16 @@ class ShotgunFieldDelegateGeneric(views.WidgetDelegate):
     default is ``QtCore.Qt.EditRole``.
     """
 
-    def __init__(self, sg_entity_type, field_name, display_class, editor_class,
-                 view, bg_task_manager=None,
-                 field_data_role=QtCore.Qt.EditRole):
+    def __init__(
+        self,
+        sg_entity_type,
+        field_name,
+        display_class,
+        editor_class,
+        view,
+        bg_task_manager=None,
+        field_data_role=QtCore.Qt.EditRole,
+    ):
         """
         Constructor
 
@@ -93,9 +100,7 @@ class ShotgunFieldDelegateGeneric(views.WidgetDelegate):
 
         # let the base class do all the heavy lifting
         super(ShotgunFieldDelegateGeneric, self).paint(
-            painter,
-            style_options,
-            model_index
+            painter, style_options, model_index
         )
 
         # clear out the paint widget's contents to prevent it from showing in
@@ -175,8 +180,7 @@ class ShotgunFieldDelegateGeneric(views.WidgetDelegate):
         :rtype: :class:`~PySide.QtGui.QWidget`
         """
         # ensure the field is editable
-        if not shotgun_globals.field_is_editable(self._entity_type,
-                                                 self._field_name):
+        if not shotgun_globals.field_is_editable(self._entity_type, self._field_name):
             return None
 
         if not model_index.isValid():
@@ -265,13 +269,14 @@ class ShotgunFieldDelegateGeneric(views.WidgetDelegate):
 
         # attempt to set the new value in the model
         successful = src_index.model().setData(
-            src_index, new_value, self.field_data_role)
+            src_index, new_value, self.field_data_role
+        )
 
         if not successful:
             bundle = sgtk.platform.current_bundle()
             bundle.log_error(
-                "Unable to set model data for widget delegate: %s, %s" %
-                (self._entity_type, self._field_name)
+                "Unable to set model data for widget delegate: %s, %s"
+                % (self._entity_type, self._field_name)
             )
 
     def editorEvent(self, event, model, option, index):
@@ -382,8 +387,15 @@ class ShotgunFieldDelegate(ShotgunFieldDelegateGeneric):
     stored in the ``SG_ASSOCIATED_FIELD_ROLE`` role.
     """
 
-    def __init__(self, sg_entity_type, field_name, display_class, editor_class,
-                 view, bg_task_manager=None):
+    def __init__(
+        self,
+        sg_entity_type,
+        field_name,
+        display_class,
+        editor_class,
+        view,
+        bg_task_manager=None,
+    ):
         """
         Constructor
 
@@ -410,8 +422,13 @@ class ShotgunFieldDelegate(ShotgunFieldDelegateGeneric):
         field_data_role = shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE
 
         super(ShotgunFieldDelegate, self).__init__(
-            sg_entity_type, field_name, display_class, editor_class, view,
-            bg_task_manager=bg_task_manager, field_data_role=field_data_role
+            sg_entity_type,
+            field_name,
+            display_class,
+            editor_class,
+            view,
+            bg_task_manager=bg_task_manager,
+            field_data_role=field_data_role,
         )
 
     def setModelData(self, editor, model, index):
@@ -451,22 +468,19 @@ class ShotgunFieldDelegate(ShotgunFieldDelegateGeneric):
                     primary_item.setIcon(QtGui.QIcon(new_value))
                 else:
                     primary_item.setIcon(QtGui.QIcon())
-            except Exception, e:
-                bundle.log_error(
-                    "Unable to set icon for widget delegate: %s" % (e,))
+            except Exception as e:
+                bundle.log_error("Unable to set icon for widget delegate: %s" % (e,))
 
             return
 
         successful = src_index.model().setData(
-            src_index,
-            new_value,
-            self.field_data_role
+            src_index, new_value, self.field_data_role
         )
 
         if not successful:
             bundle.log_error(
-                "Unable to set model data for widget delegate: %s, %s" %
-                (self._entity_type, self._field_name)
+                "Unable to set model data for widget delegate: %s, %s"
+                % (self._entity_type, self._field_name)
             )
 
     def _set_widget_value(self, widget, model_index):
@@ -514,8 +528,7 @@ def _map_to_source(idx, recursive=True):
         that isn't a proxy model if recursive is True.
     """
     src_idx = idx
-    while src_idx.isValid() and isinstance(
-            src_idx.model(), QtGui.QAbstractProxyModel):
+    while src_idx.isValid() and isinstance(src_idx.model(), QtGui.QAbstractProxyModel):
         src_idx = src_idx.model().mapToSource(src_idx)
         if not recursive:
             break

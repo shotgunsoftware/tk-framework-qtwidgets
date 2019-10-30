@@ -1,11 +1,11 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 """
@@ -18,15 +18,17 @@ from sgtk.platform.qt import QtCore, QtGui
 
 utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
 
+
 class ElidedLabel(QtGui.QLabel):
     """
-    Label that gracefully handles when the text doesn't fit 
-    within the given space. 
+    Label that gracefully handles when the text doesn't fit
+    within the given space.
     """
+
     def __init__(self, parent=None):
         """
         :param parent:  The parent QWidget
-        :type parent: :class:`~PySide.QtGui.QWidget`     
+        :type parent: :class:`~PySide.QtGui.QWidget`
         """
         QtGui.QLabel.__init__(self, parent)
 
@@ -35,19 +37,13 @@ class ElidedLabel(QtGui.QLabel):
         self._line_width = 0
         self._ideal_width = None
 
-        self.setSizePolicy(
-            QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Preferred,
-        )
+        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
 
     def sizeHint(self):
 
         base_size_hint = super(ElidedLabel, self).sizeHint()
 
-        return QtCore.QSize(
-            self._get_width_hint(),
-            base_size_hint.height()
-        )
+        return QtCore.QSize(self._get_width_hint(), base_size_hint.height())
 
     def _get_width_hint(self):
 
@@ -68,28 +64,28 @@ class ElidedLabel(QtGui.QLabel):
 
         return self._ideal_width
 
-
     def _get_elide_mode(self):
         """
-        Returns current elide mode 
+        Returns current elide mode
 
-        :returns:   The current elide mode, either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight 
+        :returns:   The current elide mode, either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight
         """
         return self._elide_mode
-    
+
     def _set_elide_mode(self, value):
         """
         Set the current elide mode.
 
-        :param value:   The elide mode to use - must be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight 
+        :param value:   The elide mode to use - must be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight
         """
-        if (value != QtCore.Qt.ElideLeft
-            and value != QtCore.Qt.ElideRight):
-            raise ValueError("elide_mode must be set to either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight")
+        if value != QtCore.Qt.ElideLeft and value != QtCore.Qt.ElideRight:
+            raise ValueError(
+                "elide_mode must be set to either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight"
+            )
         self._elide_mode = value
         self._update_elided_text()
-    
-    #: Property to get or set the elide mode. The value provided 
+
+    #: Property to get or set the elide mode. The value provided
     #: should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight
     elide_mode = property(_get_elide_mode, _set_elide_mode)
 
@@ -120,7 +116,6 @@ class ElidedLabel(QtGui.QLabel):
         else:
             self.setToolTip("")
 
-
     def resizeEvent(self, event):
         """
         Overridden base method called when the widget is resized.
@@ -149,7 +144,7 @@ class ElidedLabel(QtGui.QLabel):
         # target width is the label width:
         target_width = self.width()
 
-        # Use a QTextDocument to measure html/richtext width 
+        # Use a QTextDocument to measure html/richtext width
         doc = QtGui.QTextDocument()
         try:
             doc.setHtml(text)
@@ -171,7 +166,7 @@ class ElidedLabel(QtGui.QLabel):
                     cursor.setPosition(0)
                 elif elide_mode == QtCore.Qt.ElideRight:
                     char_count = doc.characterCount()
-                    cursor.setPosition(char_count-1)
+                    cursor.setPosition(char_count - 1)
                 cursor.insertText(ellipses)
             ellipses_len = len(ellipses)
 
@@ -190,9 +185,9 @@ class ElidedLabel(QtGui.QLabel):
                 # calculate the number of characters to remove - should always remove at least 1
                 # to be sure the text gets shorter!
                 line_width = doc.idealWidth()
-                p = target_width/line_width
+                p = target_width / line_width
                 # play it safe and remove a couple less than the calculated amount
-                chars_to_delete = max(1, char_count - int(float(char_count) * p)-2)
+                chars_to_delete = max(1, char_count - int(float(char_count) * p) - 2)
 
                 # remove the characters:
                 if elide_mode == QtCore.Qt.ElideLeft:
@@ -224,4 +219,3 @@ class ElidedLabel(QtGui.QLabel):
         (:obj:`int`) width of the line of text in pixels
         """
         return self._line_width
-

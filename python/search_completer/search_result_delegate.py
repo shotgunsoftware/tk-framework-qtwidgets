@@ -11,8 +11,12 @@
 import sgtk
 
 # import the shotgun_model and view modules from the shotgun utils framework
-shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_model = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_model"
+)
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 views = sgtk.platform.current_bundle().import_module("views")
@@ -91,8 +95,10 @@ class SearchResultDelegate(views.WidgetDelegate):
             widget.set_thumbnail(self._pixmaps.loading)
 
         elif mode == SearchCompleter.MODE_NOT_ENOUGH_TEXT:
-            widget.set_text("Type at least %s characters..." % (
-                SearchCompleter.COMPLETE_MINIMUM_CHARACTERS,))
+            widget.set_text(
+                "Type at least %s characters..."
+                % (SearchCompleter.COMPLETE_MINIMUM_CHARACTERS,)
+            )
             widget.set_thumbnail(self._pixmaps.keyboard)
 
         elif mode == SearchCompleter.MODE_NOT_FOUND:
@@ -125,7 +131,9 @@ class SearchResultDelegate(views.WidgetDelegate):
         match_end = match_start + len(self._text)
 
         return "%s<span style='text-decoration:underline;'>%s</span>%s" % (
-            matching[: match_start], matching[match_start: match_end], matching[match_end:]
+            matching[:match_start],
+            matching[match_start:match_end],
+            matching[match_end:],
         )
 
     def sizeHint(self, style_options, model_index):

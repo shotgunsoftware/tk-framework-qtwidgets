@@ -22,6 +22,7 @@ class LabelBaseWidget(QtGui.QLabel):
     """
     Display any Shotgun field value than can be directly rendered as a string.
     """
+
     def setup_widget(self):
         """
         Prepare the widget for display.
@@ -29,10 +30,7 @@ class LabelBaseWidget(QtGui.QLabel):
         Called by the metaclass during initialization.
         """
         self.setOpenExternalLinks(True)
-        self.setSizePolicy(
-            QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Preferred,
-        )
+        self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
 
     def _display_default(self):
         """
@@ -62,6 +60,7 @@ class ElidedLabelBaseWidget(elided_label.ElidedLabel):
     """
     Display any Shotgun field value than can be directly rendered as a string.
     """
+
     def setup_widget(self):
         """
         Prepare the widget for display.
@@ -93,4 +92,3 @@ class ElidedLabelBaseWidget(elided_label.ElidedLabel):
         :type value: Anything with a __str__ method
         """
         return str(value)
-

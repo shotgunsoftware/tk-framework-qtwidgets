@@ -18,6 +18,7 @@ class CurrencyWidget(LabelBaseWidget):
     """
     Display a ``currency`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "currency"
 
@@ -35,6 +36,7 @@ class CurrencyWidget(LabelBaseWidget):
 
         return val
 
+
 class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
     """
     Allows editing of a ``currency`` field value as returned by the Shotgun API.
@@ -42,6 +44,7 @@ class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
     Pressing ``Enter`` or ``Return`` when the widget has focus will cause the
     value to be applied and the ``value_changed`` signal to be emitted.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "currency"
 
@@ -97,4 +100,3 @@ class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
         :param value: The value returned by the Shotgun API to be displayed
         """
         self.setValue(value)
-

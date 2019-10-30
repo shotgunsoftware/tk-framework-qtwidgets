@@ -1,11 +1,11 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 """
@@ -14,18 +14,18 @@ Proxy model that provides efficient hierarhcical filtering of a tree-based sourc
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
+
 class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     """
-    Inherited from a :class:`~PySide.QtGui.QSortFilterProxyModel`, this class implements filtering across all 
+    Inherited from a :class:`~PySide.QtGui.QSortFilterProxyModel`, this class implements filtering across all
     levels of a hierarchy in a hierarchical (tree-based) model and provides a simple
     interface for derived classes so that all they need to do is filter a single item
     as requested.
     """
-    
-    
+
     class _IndexAcceptedCache(object):
         """
-        Cached 'accepted' values for indexes.  Uses a dictionary that maps a key to a tuple 
+        Cached 'accepted' values for indexes.  Uses a dictionary that maps a key to a tuple
         containing a QPersistentModelIndex for the index and its accepted value.
 
             key -> (QPersistentModelIndex, accepted)
@@ -33,11 +33,12 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         In recent versions of PySide, the key is just a QPersistentModelIndex which has the
         advantage that cache entries don't become invalid when rows are added/moved.
 
-        In older versions of PySide (e.g. in 1.0.9 used by Nuke 6/7/8/9) this isn't possible 
-        as QPersistentModelIndex isn't hashable so instead a tuple of the row hierarchy is used 
-        and then when looking up the cached value, the persistent model index is used to ensure 
+        In older versions of PySide (e.g. in 1.0.9 used by Nuke 6/7/8/9) this isn't possible
+        as QPersistentModelIndex isn't hashable so instead a tuple of the row hierarchy is used
+        and then when looking up the cached value, the persistent model index is used to ensure
         that the cache entry is still valid.
         """
+
         def __init__(self):
             """
             Construction
@@ -47,7 +48,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             self._cache_hits = 0
             self._cache_misses = 0
 
-            # ideally we'd use QPersistentModelIndexes to key into the cache but these 
+            # ideally we'd use QPersistentModelIndexes to key into the cache but these
             # aren't hashable in earlier versions of PySide!
             self._use_persistent_index_keys = True
             try:
@@ -86,7 +87,11 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 return
 
             cache_key = self._gen_cache_key(index)
-            p_index = cache_key if self._use_persistent_index_keys else QtCore.QPersistentModelIndex(index)
+            p_index = (
+                cache_key
+                if self._use_persistent_index_keys
+                else QtCore.QPersistentModelIndex(index)
+            )
             self._cache[cache_key] = (p_index, accepted)
 
         def remove(self, index):
@@ -135,7 +140,9 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             if not self.enabled:
                 return
 
-            self._cache = dict([(k, v) for k, v in self._cache.iteritems() if v[0].isValid()])
+            self._cache = dict(
+                [(k, v) for k, v in self._cache.iteritems() if v[0].isValid()]
+            )
 
         def clear(self):
             """
@@ -172,12 +179,14 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
     def __init__(self, parent=None):
         """
         :param parent:    The parent QObject to use for this instance
-        :type parent:     :class:`~PySide.QtGui.QWidget`  
+        :type parent:     :class:`~PySide.QtGui.QWidget`
         """
         QtGui.QSortFilterProxyModel.__init__(self, parent)
 
         self._accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
-        self._child_accepted_cache = HierarchicalFilteringProxyModel._IndexAcceptedCache()
+        self._child_accepted_cache = (
+            HierarchicalFilteringProxyModel._IndexAcceptedCache()
+        )
 
     def enable_caching(self, enable=True):
         """
@@ -185,9 +194,9 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         filtering.  Can be used for debug purposes to ensure the caching isn't the cause
         of incorrect filtering/sorting or instability!
 
-        :param enable:    True if caching should be enabled, False if it should be disabled. 
+        :param enable:    True if caching should be enabled, False if it should be disabled.
         """
-        # clear the accepted cache - this will make sure we don't use out-of-date 
+        # clear the accepted cache - this will make sure we don't use out-of-date
         # information from the cache
         self._dirty_all_accepted()
         self._accepted_cache.enabled = enable
@@ -205,8 +214,10 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :param parent_accepted: True if a parent item has been accepted by the filter
         :returns:               True if this index should be accepted, otherwise False
         """
-        raise NotImplementedError("HierarchicalFilteringProxyModel._is_row_accepted() must be overridden"
-                                  " in derived classes!")
+        raise NotImplementedError(
+            "HierarchicalFilteringProxyModel._is_row_accepted() must be overridden"
+            " in derived classes!"
+        )
 
     # -------------------------------------------------------------------------------
     # Overriden base class methods
@@ -316,11 +327,11 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             return self._is_child_accepted_r(src_idx, parent_accepted)
         else:
             # index wasn't accepted and has no children
-            return False  
+            return False
 
     def setSourceModel(self, model):
         """
-        Overridden base method that we use to keep track of when rows are inserted into the 
+        Overridden base method that we use to keep track of when rows are inserted into the
         source model
 
         :param model:   The source model to track
@@ -328,9 +339,13 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # if needed, disconnect from the previous source model:
         prev_source_model = self.sourceModel()
         if prev_source_model:
-            prev_source_model.rowsInserted.disconnect(self._on_source_model_rows_inserted)
+            prev_source_model.rowsInserted.disconnect(
+                self._on_source_model_rows_inserted
+            )
             prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
-            prev_source_model.modelAboutToBeReset.disconnect(self._on_source_model_about_to_be_reset)
+            prev_source_model.modelAboutToBeReset.disconnect(
+                self._on_source_model_about_to_be_reset
+            )
 
         # clear out the various caches:
         self._dirty_all_accepted()
@@ -372,7 +387,9 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
             child_accepted = self._accepted_cache.get(child_idx)
             if child_accepted is None:
                 # It's not in the cache so lets see if it's accepted and add to the cache:
-                child_accepted = self._is_row_accepted(child_idx.row(), idx, parent_accepted)
+                child_accepted = self._is_row_accepted(
+                    child_idx.row(), idx, parent_accepted
+                )
                 self._accepted_cache.add(child_idx, child_accepted)
 
             if not child_accepted and model.hasChildren(child_idx):
@@ -410,7 +427,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :param end:         The last row to dirty
         """
         # clear all rows from the accepted caches
-        for row in range(start, end+1):
+        for row in range(start, end + 1):
             idx = self.sourceModel().index(row, 0, parent_idx)
             self._child_accepted_cache.remove(idx)
             self._accepted_cache.remove(idx)
@@ -431,9 +448,12 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :param start_idx:   The index of the first row in the range of model items that have changed
         :param start_idx:   The index of the last row in the range of model items that have changed
         """
-        if (not start_idx.isValid() or not end_idx.isValid()
-            or start_idx.model() != self.sourceModel() 
-            or end_idx.model() != self.sourceModel()):
+        if (
+            not start_idx.isValid()
+            or not end_idx.isValid()
+            or start_idx.model() != self.sourceModel()
+            or end_idx.model() != self.sourceModel()
+        ):
             # invalid input parameters so ignore!
             return
 
@@ -466,8 +486,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         :param start:       The first row that was inserted into the source model
         :param end:         The last row that was inserted into the source model
         """
-        if (not parent_idx.isValid()
-            or parent_idx.model() != self.sourceModel()):
+        if not parent_idx.isValid() or parent_idx.model() != self.sourceModel():
             # invalid input parameters so ignore!
             return
 

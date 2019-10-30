@@ -21,27 +21,28 @@ def create_rectangular_thumbnail(thumb):
     :param thumb: pixmap to scale
     :returns: scaled thumbnail
     """
-    #TODO: this would be great to add to the qtwidgets framework
+    # TODO: this would be great to add to the qtwidgets framework
 
     CANVAS_WIDTH = 48
     CANVAS_HEIGHT = 38
 
-
     if thumb.isNull():
         # to be safe, if thumb is null, use the empty/default thumbnail
         thumb = QtGui.QPixmap(
-            ":/tk_framework_qtwidgets.global_search_widget/no_thumbnail.png")
-
+            ":/tk_framework_qtwidgets.global_search_widget/no_thumbnail.png"
+        )
 
     # get the 512 base image
     base_image = QtGui.QPixmap(CANVAS_WIDTH, CANVAS_HEIGHT)
     base_image.fill(QtCore.Qt.transparent)
 
     # scale it down to fit inside a frame of maximum 512x400
-    thumb_scaled = thumb.scaled(CANVAS_WIDTH,
-                                CANVAS_HEIGHT,
-                                QtCore.Qt.KeepAspectRatioByExpanding,
-                                QtCore.Qt.SmoothTransformation)
+    thumb_scaled = thumb.scaled(
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT,
+        QtCore.Qt.KeepAspectRatioByExpanding,
+        QtCore.Qt.SmoothTransformation,
+    )
 
     # now composite the thumbnail on top of the base image
     # bottom align it to make it look nice
@@ -57,10 +58,10 @@ def create_rectangular_thumbnail(thumb):
     width_difference = CANVAS_WIDTH - thumb_scaled.width()
 
     # center it with wise
-    inlay_offset_w = width_difference/2
+    inlay_offset_w = width_difference / 2
     # bottom height wise
-    #inlay_offset_h = height_difference+CORNER_RADIUS
-    inlay_offset_h = height_difference/2
+    # inlay_offset_h = height_difference+CORNER_RADIUS
+    inlay_offset_h = height_difference / 2
 
     # note how we have to compensate for the corner radius
     painter.translate(inlay_offset_w, inlay_offset_h)
@@ -97,23 +98,17 @@ class CompleterPixmaps(object):
 
         # loading a pixmap
         self.loading = create_rectangular_thumbnail(
-            QtGui.QPixmap(
-                ":/tk_framework_qtwidgets.global_search_widget/loading.png"
-            )
+            QtGui.QPixmap(":/tk_framework_qtwidgets.global_search_widget/loading.png")
         )
 
         # more typing required
         self.keyboard = create_rectangular_thumbnail(
-            QtGui.QPixmap(
-                ":/tk_framework_qtwidgets.global_search_widget/keyboard.png"
-            )
+            QtGui.QPixmap(":/tk_framework_qtwidgets.global_search_widget/keyboard.png")
         )
 
         # no matches found
         self.no_matches = create_rectangular_thumbnail(
-            QtGui.QPixmap(
-                ":/tk_framework_qtwidgets.global_search_widget/no_match.png"
-            )
+            QtGui.QPixmap(":/tk_framework_qtwidgets.global_search_widget/no_match.png")
         )
 
         # no thumbnail for the entity

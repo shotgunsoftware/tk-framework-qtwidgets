@@ -54,7 +54,9 @@ from sgtk.platform.qt import QtGui
 
 from .shotgun_menu import ShotgunMenu
 
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 class EntityFieldMenu(ShotgunMenu):
@@ -64,9 +66,12 @@ class EntityFieldMenu(ShotgunMenu):
     The QActions for the menu will all have their data set to a dictionary in the form:
         {"field": selected_field}
     """
+
     _AUDIT_FIELDS = ["created_by", "created_at", "updated_by", "updated_at"]
 
-    def __init__(self, sg_entity_type, parent=None, bg_task_manager=None, project_id=None):
+    def __init__(
+        self, sg_entity_type, parent=None, bg_task_manager=None, project_id=None
+    ):
         """
         Constructor
 
@@ -104,11 +109,11 @@ class EntityFieldMenu(ShotgunMenu):
         if self._task_manager is None:
             self._owns_task_manager = True
 
-            task_manager = sgtk.platform.import_framework("tk-framework-shotgunutils", "task_manager")
+            task_manager = sgtk.platform.import_framework(
+                "tk-framework-shotgunutils", "task_manager"
+            )
             self._task_manager = task_manager.BackgroundTaskManager(
-                parent=self,
-                max_threads=1,
-                start_processing=True
+                parent=self, max_threads=1, start_processing=True
             )
 
         # populate the menu the first time it is shown
@@ -178,7 +183,8 @@ class EntityFieldMenu(ShotgunMenu):
         if not self._initialized:
             # need to wait until there is a schema available before populating the menu
             shotgun_globals.run_on_schema_loaded(
-                self._populate, project_id=self._project_id)
+                self._populate, project_id=self._project_id
+            )
             self._initialized = True
 
     def _populate(self):
@@ -190,7 +196,8 @@ class EntityFieldMenu(ShotgunMenu):
 
         # gather needed field info
         for field in shotgun_globals.get_entity_fields(
-                self._sg_entity_type, project_id=self._project_id):
+            self._sg_entity_type, project_id=self._project_id
+        ):
 
             # convert field to bubbled form
             bubbled_field = self._get_bubbled_name(field)
@@ -201,37 +208,46 @@ class EntityFieldMenu(ShotgunMenu):
 
             # grab display names
             display_name = shotgun_globals.get_field_display_name(
-                self._sg_entity_type,
-                field,
-                project_id=self._project_id,
+                self._sg_entity_type, field, project_id=self._project_id
             )
-            field_infos.append({"field": field, "name": display_name, "bubbled": bubbled_field})
+            field_infos.append(
+                {"field": field, "name": display_name, "bubbled": bubbled_field}
+            )
 
             # grab info to build bubbled menu
             try:
                 # grab the entity types this field can bubble to
                 entity_types = shotgun_globals.get_valid_types(
-                    self._sg_entity_type,
-                    field,
-                    project_id=self._project_id,
+                    self._sg_entity_type, field, project_id=self._project_id
                 )
 
                 # filter out entities via the registered callback
                 if self._entity_type_filter:
-                    entity_types = [t for t in entity_types if self._entity_type_filter(t)]
+                    entity_types = [
+                        t for t in entity_types if self._entity_type_filter(t)
+                    ]
 
                 # and filter out any entities that don't have any displayable fields
                 if self._field_filter:
+
                     def entity_filter(et):
                         # get the list of fields for this entity type
                         fields = shotgun_globals.get_entity_fields(
-                            et, project_id=self._project_id)
+                            et, project_id=self._project_id
+                        )
 
                         # and filter them down with the filter
                         if self._field_filter:
-                            fields = [f for f in fields if self._field_filter("%s.%s.%s" % (bubbled_field, et, f))]
+                            fields = [
+                                f
+                                for f in fields
+                                if self._field_filter(
+                                    "%s.%s.%s" % (bubbled_field, et, f)
+                                )
+                            ]
 
                         return bool(fields)
+
                     entity_types = [et for et in entity_types if entity_filter(et)]
 
                 if entity_types:
@@ -240,11 +256,13 @@ class EntityFieldMenu(ShotgunMenu):
                         "valid_types": entity_types,
                         "valid_type_names": [
                             shotgun_globals.get_type_display_name(
-                                et,
-                                project_id=self._project_id,
-                            ) for et in entity_types
+                                et, project_id=self._project_id
+                            )
+                            for et in entity_types
                         ],
-                        "bubbled_bases": ["%s.%s" % (bubbled_field, et) for et in entity_types],
+                        "bubbled_bases": [
+                            "%s.%s" % (bubbled_field, et) for et in entity_types
+                        ],
                     }
             except Exception:
                 # not a field that can be bubbled
@@ -261,7 +279,8 @@ class EntityFieldMenu(ShotgunMenu):
                 audit_fields.append(field_info)
             else:
                 bubbled_actions.append(
-                    self._get_qaction(field_info["bubbled"], field_info["name"]))
+                    self._get_qaction(field_info["bubbled"], field_info["name"])
+                )
         if bubbled_actions:
             self.add_group(bubbled_actions)
 
@@ -270,7 +289,8 @@ class EntityFieldMenu(ShotgunMenu):
             audit_actions = []
             for field_info in audit_fields:
                 audit_actions.append(
-                    self._get_qaction(field_info["field"], field_info["name"]))
+                    self._get_qaction(field_info["field"], field_info["name"])
+                )
             if audit_actions:
                 self.add_group(audit_actions, title="Audit Fields")
 
@@ -291,7 +311,9 @@ class EntityFieldMenu(ShotgunMenu):
                 entity_menus = []
                 for (type_name, entity_type, bubble_base) in sorted_items:
                     # build the menu for this entity passing on our state
-                    entity_menu = EntityFieldMenu(entity_type, parent=self, bg_task_manager=self._task_manager)
+                    entity_menu = EntityFieldMenu(
+                        entity_type, parent=self, bg_task_manager=self._task_manager
+                    )
                     entity_menu.set_field_filter(self._field_filter)
                     entity_menu.set_disabled_filter(self._disabled_filter)
                     entity_menu.set_checked_filter(self._checked_filter)
@@ -344,9 +366,7 @@ class EntityFieldMenu(ShotgunMenu):
         """
         action = QtGui.QAction(display_name, self)
 
-        action.setData({
-            "field": field,
-        })
+        action.setData({"field": field})
 
         if self._checked_filter:
             action.setCheckable(True)
@@ -376,4 +396,3 @@ class EntityFieldMenu(ShotgunMenu):
             project_id = self._bundle.tank.pipeline_configuration.get_project_id()
 
         return project_id
-

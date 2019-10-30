@@ -67,29 +67,40 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
       These methods are called by the default implementation of set_value.
     """
+
     def __new__(mcl, name, parents, class_dict):
         """
         Construct the class object for a Shotgun field widget class
         """
         # validate the class definition to make sure it implements the needed interface
         if "_FIELD_TYPE" not in class_dict:
-            raise ValueError("ShotgunFieldMeta classes must have a _FIELD_TYPE member variable")
+            raise ValueError(
+                "ShotgunFieldMeta classes must have a _FIELD_TYPE member variable"
+            )
         if "__init__" in class_dict:
-            raise ValueError("ShotgunFieldMeta classes cannot define their own constructor")
+            raise ValueError(
+                "ShotgunFieldMeta classes cannot define their own constructor"
+            )
 
         # take over interface methods if they have not already been defined
-        mcl.take_over_if_not_defined("setup_widget", mcl.setup_widget, class_dict, parents)
+        mcl.take_over_if_not_defined(
+            "setup_widget", mcl.setup_widget, class_dict, parents
+        )
         mcl.take_over_if_not_defined("set_value", mcl.set_value, class_dict, parents)
 
         # create the class instance itself
-        field_class = super(ShotgunFieldMeta, mcl).__new__(mcl, name, parents, class_dict)
+        field_class = super(ShotgunFieldMeta, mcl).__new__(
+            mcl, name, parents, class_dict
+        )
 
         # register the field type this class implements with the field manager
         ShotgunFieldManager.register(class_dict["_FIELD_TYPE"], field_class)
 
         return field_class
 
-    def __call__(cls, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs):
+    def __call__(
+        cls, parent=None, entity=None, field_name=None, bg_task_manager=None, **kwargs
+    ):
         """
         Create an instance of the given class.
 

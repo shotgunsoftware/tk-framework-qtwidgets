@@ -14,8 +14,12 @@ from sgtk.platform.qt import QtCore
 from .search_result_delegate import SearchResultDelegate
 
 # import the shotgun_model and view modules from the shotgun utils framework
-shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_model = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_model"
+)
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 views = sgtk.platform.current_bundle().import_module("views")
@@ -48,7 +52,9 @@ class HierarchicalSearchResultDelegate(SearchResultDelegate):
             # thumbnail
             widget.set_thumbnail(self._pixmaps.no_thumbnail)
 
-        data = shotgun_model.get_sanitized_data(model_index, HierarchicalSearchCompleter.SG_DATA_ROLE)
+        data = shotgun_model.get_sanitized_data(
+            model_index, HierarchicalSearchCompleter.SG_DATA_ROLE
+        )
         # Example of data stored in the data role:
         # {
         #     "path_label": "Assets > Character",
@@ -75,8 +81,9 @@ class HierarchicalSearchResultDelegate(SearchResultDelegate):
 
         # present type name name
         if et_url:
-            content = "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>" % (
-                et_url, underlined_label
+            content = (
+                "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>"
+                % (et_url, underlined_label)
             )
         else:
             content = underlined_label
