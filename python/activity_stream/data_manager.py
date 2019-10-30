@@ -15,7 +15,7 @@ import copy
 import time
 import os
 import sys
-import cPickle
+from tank_vendor.shotgun_api3.lib.six.moves import cPickle
 import datetime
 import sqlite3
 import hashlib

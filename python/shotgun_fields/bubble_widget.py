@@ -10,6 +10,7 @@
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
+from tank_vendor.shotgun_api3.lib.six import unichr
 
 
 class BubbleWidget(QtGui.QFrame):
