@@ -16,6 +16,7 @@ import time
 import os
 import sys
 from tank_vendor.shotgun_api3.lib.six.moves import cPickle
+from tank_vendor.shotgun_api3.lib import six
 import datetime
 import sqlite3
 import hashlib
@@ -604,7 +605,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             res = list(res)
             if len(res) > 0:
                 note_payload = res[0][0]
-                note_data = cPickle.loads(str(note_payload))
+                note_data = cPickle.loads(six.ensure_binary(note_payload))
         except:
             # supress and continue
             self._bundle.log_exception(
@@ -651,7 +652,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 note_id = data[2]
                 note_payload = data[3]
 
-                activity_data = cPickle.loads(str(activity_payload))
+                activity_data = cPickle.loads(six.ensure_binary(activity_payload))
 
                 # if the activity links to a note and this note
                 # has already been registered, skip the activity altogether.
@@ -668,7 +669,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 activities[activity_id] = activity_data
 
                 if note_id:
-                    notes[note_id] = cPickle.loads(str(note_payload))
+                    notes[note_id] = cPickle.loads(six.ensure_binary(note_payload))
 
                 # now for items where there is just the note created
                 # and no note updates yet, we haevn't pulled down
@@ -713,7 +714,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
         try:
             for event in events:
                 activity_id = event["id"]
-                payload = cPickle.dumps(event, cPickle.HIGHEST_PROTOCOL)
+                # Hardcoding to protocol 2 so we can share data between Python 2 and 3.
+                payload = cPickle.dumps(event, 2)
                 blob = sqlite3.Binary(payload)
 
                 # first insert event
@@ -788,7 +790,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
         try:
 
             # first pickle the note data
-            payload = cPickle.dumps(data, cPickle.HIGHEST_PROTOCOL)
+            # Hardcoding to protocol 2 so we can share data between Python 2 and 3.
+            payload = cPickle.dumps(data, 2)
             blob = sqlite3.Binary(payload)
 
             # first delete any existing record
