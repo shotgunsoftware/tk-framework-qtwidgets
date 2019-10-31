@@ -13,7 +13,7 @@ import os
 import inspect
 
 from tank_test.tank_test_base import TankTestBase
-from tank_test.tank_test_base import setUpModule
+from tank_test.tank_test_base import setUpModule  # noqa
 
 import sgtk
 
