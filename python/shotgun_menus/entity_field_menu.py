@@ -298,7 +298,7 @@ class EntityFieldMenu(ShotgunMenu):
         if bubble_fields:
 
             linked_menus = []
-            for (field, field_info) in bubble_fields.iteritems():
+            for (field, field_info) in bubble_fields.items():
                 # pull all the bubbled field data in an order that sorts by display name
                 sorted_items = sorted(
                     zip(

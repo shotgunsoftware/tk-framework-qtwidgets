@@ -771,7 +771,7 @@ class GroupedListView(QtGui.QAbstractItemView):
 
         # build lookups for the group widgets:
         group_widgets_by_row = {}
-        for widget, row in self._group_widget_rows.iteritems():
+        for widget, row in self._group_widget_rows.items():
             if row < row_count:
                 group_widgets_by_row[row] = widget
         unused_group_widgets = []

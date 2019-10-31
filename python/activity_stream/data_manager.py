@@ -939,7 +939,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
         elif isinstance(data, dict):
             new_val = {}
-            for (k, v) in data.iteritems():
+            for (k, v) in data.items():
                 new_val[k] = self.__convert_timestamp_r(v)
             return new_val
 
