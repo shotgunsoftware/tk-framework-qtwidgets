@@ -8,6 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+import time
 import os
 import inspect
 
@@ -55,11 +56,22 @@ class TestFramework(TankTestBase):
         )
         shotgun_model = su_fw.import_module("shotgun_model")
         task_manager = su_fw.import_module("task_manager")
+        field_manager = qt_fw.import_module("shotgun_fields")
+        shotgun_globals = su_fw.import_module("shotgun_globals")
 
-        parent = sgtk.platform.qt.QtGui.QWidget()
+        parent = sgtk.platform.qt.QtGui.QDialog()
+        bg_task_manager = task_manager.BackgroundTaskManager(parent=self._app)
+        shotgun_globals.register_bg_task_manager(bg_task_manager)
         for module_name in modules:
-            # Skips __pycache__ and __init__.py
-            if "__" in module_name:
+            # Skips __pycache__ and __init__.py.
+            # FIXME: There seems to be some weird ownership problems regarding the
+            # background task manager and the activity stream and version details
+            # widgets, which causes the test process to crash on exit, so we're
+            # skipping those two.
+            if "__" in module_name or module_name in [
+                "activity_stream",
+                "version_details",
+            ]:
                 continue
 
             module = qt_fw.import_module(os.path.splitext(module_name)[0])
@@ -67,17 +79,28 @@ class TestFramework(TankTestBase):
                 attr = getattr(module, attr_name)
                 if hasattr(attr, "focusInEvent") is False:
                     continue
+                if attr_name in ["GroupWidgetBase"]:
+                    continue
 
                 params = {}
                 for arg in inspect.getargspec(attr.__init__).args:
                     if arg == "parent":
                         continue
                     elif arg == "sg_model":
-                        params["sg_model"] = shotgun_model.ShotgunModel(parent=parent)
-                    elif arg == "bg_task_manager":
-                        params["bg_task_manager"] = task_manager.BackgroundTaskManager(
-                            parent=parent
+                        params["sg_model"] = shotgun_model.ShotgunModel(
+                            parent=self._app, bg_task_manager=bg_task_manager
                         )
+                    elif arg == "bg_task_manager":
+                        params["bg_task_manager"] = bg_task_manager
+                    elif arg == "fields_manager":
+                        params["fields_manager"] = field_manager.ShotgunFieldManager(
+                            parent=parent, bg_task_manager=bg_task_manager
+                        )
+                    elif arg == "sg_entity_type":
+                        params["sg_entity_type"] = "Asset"
 
-                attr(**params, parent=parent).destroy()
-                parent.destroy()
+                attr(parent=parent, **params).destroy()
+
+        parent.destroy()
+        bg_task_manager.shut_down()
+        time.sleep(3)
