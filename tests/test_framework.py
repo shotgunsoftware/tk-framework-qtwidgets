@@ -18,12 +18,15 @@ class TestFramework(TankTestBase):
     def setUp(self):
         super(TestFramework, self).setUp()
         self.setup_fixtures()
+        context = sgtk.Context(self.tk)
+        self.engine = sgtk.platform.start_engine("tk-testengine", self.tk, context)
+
+    def tearDown(self):
+        self.engine.destroy()
+        super(TestFramework, self).tearDown()
 
     def test_import_framework(self):
-        context = sgtk.Context(self.tk)
-        engine = sgtk.platform.start_engine("tk-testengine", self.tk, context)
-        fw = engine.apps["tk-testapp"].execute_hook_method(
+        fw = self.engine.apps["tk-testapp"].execute_hook_method(
             "load_framework", "load_widgets_framework"
         )
         fw.import_module("activity_stream")
-        engine.destroy()
