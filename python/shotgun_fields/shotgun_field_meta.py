@@ -43,7 +43,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
     """
     The primary purpose of this class is to register widget classes with the
     :class:`shotgun_fields.ShotgunFieldManager`. Classes that specify this class
-    as their ``__metaclass__``, and follow the protocols below, will be registered
+    as their ``metaclass``, and follow the protocols below, will be registered
     and available via the ``ShotgunFieldManager.create_widget()`` factory method.
 
     This class also provides default logic common to all Shotgun field widgets
@@ -57,14 +57,13 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
           type that the class will be responsible for displaying or editing.
 
     Example::
-
+        @six.add_metaclass(ShotgunFieldMeta)
         class FloatDisplayWidget(QtGui.QLabel):
-            __metaclass__ = ShotgunFieldMeta
             _DISPLAY_TYPE = "float"
             # ...
 
+        @six.add_metaclass(ShotgunFieldMeta)
         class FloatEditorWidget(QtGui.QDoubleSpinBox):
-            __metaclass__ = ShotgunFieldMeta
             _EDITOR_TYPE = "float"
             # ...
 
@@ -76,8 +75,8 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
     Example::
 
+        @six.add_metaclass(ShotgunFieldMeta)
         class SpecialFloatDisplayWidget(QtGui.QLabel):
-            __metaclass__ = ShotgunFieldMeta
             _DISPLAY_TYPE = "float"
             _ENTITY_FIELDS = [
                 ("CustomEntity07", "my_float_field"),

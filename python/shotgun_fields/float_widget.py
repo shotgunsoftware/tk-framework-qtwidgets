@@ -10,16 +10,17 @@
 
 import locale
 from sgtk.platform.qt import QtGui, QtCore
+from tank_vendor.shotgun_api3.lib import six
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class FloatWidget(LabelBaseWidget):
     """
     Display a ``float`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "float"
 
     def _string_value(self, value):
@@ -31,6 +32,7 @@ class FloatWidget(LabelBaseWidget):
         return locale.format("%.2f", value, grouping=True)
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class FloatEditorWidget(QtGui.QDoubleSpinBox):
     """
     Allows editing of a ``float`` field value as returned by the Shotgun API.
@@ -39,7 +41,6 @@ class FloatEditorWidget(QtGui.QDoubleSpinBox):
     value to be applied and the ``value_changed`` signal to be emitted.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "float"
 
     def get_value(self):

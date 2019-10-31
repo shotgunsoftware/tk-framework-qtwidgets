@@ -14,17 +14,19 @@ from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 from sgtk.platform.qt import QtCore, QtGui
+from tank_vendor.shotgun_api3.lib import six
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class FootageWidget(LabelBaseWidget):
     """
     Display a ``footage`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "footage"
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class FootageEditorWidget(QtGui.QLineEdit):
     """
     Allows editing of a ``footage`` field value as returned by the Shotgun API.
@@ -33,7 +35,6 @@ class FootageEditorWidget(QtGui.QLineEdit):
     value to be applied and the ``value_changed`` signal to be emitted.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "footage"
 
     def get_value(self):

@@ -10,12 +10,13 @@
 
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
+from tank_vendor.shotgun_api3.lib import six
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class DurationWidget(LabelBaseWidget):
     """
     Display a ``duration`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "duration"

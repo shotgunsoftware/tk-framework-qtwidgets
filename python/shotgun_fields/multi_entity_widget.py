@@ -10,11 +10,13 @@
 
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
+from tank_vendor.shotgun_api3.lib import six
 
 from .bubble_widget import BubbleEditWidget, BubbleWidget
 from .entity_widget import EntityWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 from .util import check_project_search_supported
+
 
 shotgun_globals = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_globals"
@@ -42,12 +44,12 @@ class MultiEntityWidget(EntityWidget):
         return ", ".join([self._entity_dict_to_html(entity) for entity in value])
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class MultiEntityEditorWidget(BubbleEditWidget):
     """
     Allows editing of a ``multi_entity`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "multi_entity"
 
     def add_entity(self, entity_dict):
