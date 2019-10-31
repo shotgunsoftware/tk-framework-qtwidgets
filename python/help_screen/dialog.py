@@ -64,7 +64,7 @@ class Dialog(QtGui.QDialog):
 
         # it seems some versions of linux are having issues with the splash screen mode,
         # so disable this
-        if sgtk.util.is_linux():
+        if tank.util.is_linux():
             QtGui.QDialog.__init__(self, parent, QtCore.Qt.WindowStaysOnTopHint)
         else:
             QtGui.QDialog.__init__(
