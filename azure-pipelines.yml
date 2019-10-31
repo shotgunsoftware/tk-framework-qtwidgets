@@ -14,7 +14,7 @@ resources:
     - repository: templates
       type: github
       name: shotgunsoftware/tk-ci-tools
-      ref: refs/heads/run_tests
+      ref: refs/heads/cloning_external_respositories
       endpoint: shotgunsoftware
 
 # We want builds to trigger for 3 reasons:
@@ -41,3 +41,6 @@ jobs:
 - template: build-pipeline.yml@templates
   parameters:
     tk_toolchain_ref: docs_validation
+    additional_repositories:
+    - name: tk-framework-shotgunutils
+      ref: SG-13267_python3_part_two
