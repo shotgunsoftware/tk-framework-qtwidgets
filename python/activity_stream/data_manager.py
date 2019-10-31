@@ -722,13 +722,15 @@ class ActivityStreamDataHandler(QtCore.QObject):
                         INSERT OR REPLACE INTO activity(activity_id, payload, created_at)
                         SELECT ?, ?, datetime('now')
                     """
+                    params = (activity_id, blob)
                 else:
                     sql = """
                         INSERT INTO activity(activity_id, payload, created_at)
                         SELECT ?, ?, datetime('now')
                         WHERE NOT EXISTS(SELECT activity_id FROM activity WHERE activity_id = ?);
-                     """
-                cursor.execute(sql, (activity_id, blob, activity_id))
+                    """
+                    params = (activity_id, blob, activity_id)
+                cursor.execute(sql, params)
                 if self._force_activity_stream_update:
                     sql = """
                         INSERT OR REPLACE INTO entity (entity_type, entity_id, activity_id, created_at)
