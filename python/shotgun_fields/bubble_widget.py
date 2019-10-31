@@ -305,7 +305,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
 
         # loop over each character until a replacement character with a known
         # char format that matches the supplied id is found.
-        for i in xrange(0, len(text)):
+        for i in range(0, len(text)):
             if text[i] != self._OBJECT_REPLACEMENT_CHAR:
                 continue
 
