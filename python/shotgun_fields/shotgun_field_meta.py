@@ -57,6 +57,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
           type that the class will be responsible for displaying or editing.
 
     Example::
+
         @six.add_metaclass(ShotgunFieldMeta)
         class FloatDisplayWidget(QtGui.QLabel):
             _DISPLAY_TYPE = "float"

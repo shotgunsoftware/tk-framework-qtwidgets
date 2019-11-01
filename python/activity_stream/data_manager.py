@@ -652,7 +652,9 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 note_id = data[2]
                 note_payload = data[3]
 
-                activity_data = cPickle.loads(six.ensure_binary(activity_payload))
+                # we're receiving a buffer object, so we should extract the bytes from
+                # it. In Python 2, bytes == str
+                activity_data = cPickle.loads(bytes(activity_payload))
 
                 # if the activity links to a note and this note
                 # has already been registered, skip the activity altogether.
@@ -669,7 +671,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 activities[activity_id] = activity_data
 
                 if note_id:
-                    notes[note_id] = cPickle.loads(six.ensure_binary(note_payload))
+                    notes[note_id] = cPickle.loads(bytes(note_payload))
 
                 # now for items where there is just the note created
                 # and no note updates yet, we haevn't pulled down
