@@ -15,6 +15,8 @@ from sgtk.platform.qt import QtCore, QtGui
 from tank_vendor.shotgun_api3.lib import six
 from .shotgun_field_meta import ShotgunFieldMeta
 
+from .ui import resources_rc
+
 shotgun_data = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_data"
 )
