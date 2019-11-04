@@ -9,20 +9,19 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 """
-Pick environment hook.
+Load framework hook.
 """
 
 from tank import get_hook_baseclass
 
 
 class LoadFramework(get_hook_baseclass()):
-    """
-    Picks the environment based on the context.
-    """
+    def load_framework(self, name):
+        """
+        Loads the specified framework.
 
-    def load_widgets_framework(self, name):
+        This hook is necessary because we want to be able to load any framework we want,
+        and frameworks can be loaded only from bundle's python folder and we don't have a
+        full scale app.
         """
-        Always picks the test environment unless step is not set, in which case
-        it picks the entity environment.
-        """
-        return self.load_framework(name)
+        return super(LoadFramework, self).load_framework(name)

@@ -34,9 +34,7 @@ class TestFramework(TankTestBase):
 
     def test_import_framework(self):
         fw = self.engine.apps["tk-testapp"].execute_hook_method(
-            "load_framework",
-            "load_widgets_framework",
-            name="tk-framework-qtwidgets_v2.x.x",
+            "load_framework", "load_framework", name="tk-framework-qtwidgets_v2.x.x"
         )
         # we need to import a module in order to trigger
         # an import of all the framework modules.
@@ -55,14 +53,10 @@ class TestFramework(TankTestBase):
         # We can't load modules from a test because load_framework can only be called
         # from within a Toolkit bundle or hook, so we'll do it from a hook.
         qt_fw = self.engine.apps["tk-testapp"].execute_hook_method(
-            "load_framework",
-            "load_widgets_framework",
-            name="tk-framework-qtwidgets_v2.x.x",
+            "load_framework", "load_framework", name="tk-framework-qtwidgets_v2.x.x"
         )
         su_fw = self.engine.apps["tk-testapp"].execute_hook_method(
-            "load_framework",
-            "load_widgets_framework",
-            name="tk-framework-shotgunutils_v5.x.x",
+            "load_framework", "load_framework", name="tk-framework-shotgunutils_v5.x.x"
         )
         # Get a few modules that will be useful later on when instantiating widgets.
         shotgun_model = su_fw.import_module("shotgun_model")
