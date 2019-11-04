@@ -19,7 +19,14 @@ import sgtk
 
 
 class TestFramework(TankTestBase):
+    """
+    Very basic tests for the framework.
+    """
+
     def setUp(self):
+        """
+        Prepare a configuration with a config that uses the framework.
+        """
         super(TestFramework, self).setUp()
         self.setup_fixtures()
         context = sgtk.Context(self.tk, project=self.project)
@@ -29,10 +36,18 @@ class TestFramework(TankTestBase):
         )
 
     def tearDown(self):
+        """
+        Terminate the engine and the rest of the test suite.
+        """
         self.engine.destroy()
         super(TestFramework, self).tearDown()
 
     def test_import_framework(self):
+        """
+        Ensure we can import the framework.
+        """
+        # We can't load modules from a test because load_framework can only be called
+        # from within a Toolkit bundle or hook, so we'll do it from a hook.
         fw = self.engine.apps["tk-testapp"].execute_hook_method(
             "load_framework", "load_framework", name="tk-framework-qtwidgets_v2.x.x"
         )
@@ -64,12 +79,13 @@ class TestFramework(TankTestBase):
         field_manager = qt_fw.import_module("shotgun_fields")
         shotgun_globals = su_fw.import_module("shotgun_globals")
 
-        # Create a bunch of recurring globals for each widgets.
+        # We'll parent the widgets under a dialog.
         parent = sgtk.platform.qt.QtGui.QDialog()
         parent.show()
         parent.activateWindow()
         parent.raise_()
 
+        # And we want to reuse the same background task manager for every widget.
         bg_task_manager = task_manager.BackgroundTaskManager(parent=self._app)
         shotgun_globals.register_bg_task_manager(bg_task_manager)
 
@@ -77,10 +93,13 @@ class TestFramework(TankTestBase):
         modules = os.listdir(os.path.join(os.path.dirname(__file__), "..", "python"))
         for module_name in modules:
             # Skips __pycache__ and __init__.py.
-            # FIXME: There seems to be some weird ownership problems regarding the
+            # FIXME: Also, there seems to be some weird ownership problems regarding the
             # background task manager and the activity stream and version details
-            # widgets, which causes the test process to crash on exit, so we're
-            # skipping those modules.
+            # widgets, which causes the test process to crash on exit, due to threads
+            # still running because they are not properly shut down.
+            # I've tried to fix this, but couldn't figure how. This is only a problem
+            # with tests and not in DCCs, so we'll let it slide for now and skip
+            # those widgets.
             if "__" in module_name or module_name in [
                 "activity_stream",
                 "version_details",
@@ -92,22 +111,24 @@ class TestFramework(TankTestBase):
             for attr_name in dir(module):
                 attr = getattr(module, attr_name)
 
-                # FIXME: For some weird reason, isinstance(attr, sgtk.platform.qt.QtCore.QWidget)
-                # always returns False here, which is weird, so test for a QWidget method
-                # instead.
-
-                # Skip if not QWidget
-                if hasattr(attr, "focusInEvent") is False:
+                # Skip non-class attributes
+                if inspect.isclass(attr) is False:
                     continue
 
-                # Skip this particular widget, as it is the base class of other widgets and is unusable.
+                # Skip classes that are not widgets.
+                if issubclass(attr, sgtk.platform.qt.QtGui.QWidget) is False:
+                    continue
+
+                # Skip this particular widget, as it is the base class of other
+                # widgets and is unusable.
                 if attr_name in ["GroupWidgetBase"]:
                     continue
 
                 params = {}
                 # Look at the parameter list for this widget's __init__ method
                 for arg in inspect.getargspec(attr.__init__).args:
-                    # For each required parameter, we'll pass in an instance of the right type.
+                    # For each required parameter, we'll pass in an instance
+                    # of the right type.
                     if arg == "parent":
                         params["parent"] = parent
                     elif arg == "sg_model":
@@ -123,9 +144,9 @@ class TestFramework(TankTestBase):
                     elif arg == "sg_entity_type":
                         params["sg_entity_type"] = "Asset"
 
-                # Create and destroy the widget, don't worry about it.
-                widget = attr(**params)
-                widget.show()
+                # Add the widget and show it, don't worry about the rest.
+                # It. Just. Works.
+                attr(**params).show()
 
         self._app.processEvents()
         parent.destroy()
