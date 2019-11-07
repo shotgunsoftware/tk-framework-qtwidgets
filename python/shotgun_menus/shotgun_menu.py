@@ -187,7 +187,7 @@ class ShotgunMenu(QtGui.QMenu):
 
         # otherwise, see if the letter is something reasonable (space,
         # alphanumeric, dash, dot)
-        elif re.match("^[\s\w\-\.]+$", event_text):
+        elif re.match(r"^[\s\w\-\.]+$", event_text):
             # add it to the typed text
             self._typed_text += event_text
 

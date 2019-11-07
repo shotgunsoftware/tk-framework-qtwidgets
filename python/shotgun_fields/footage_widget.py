@@ -158,7 +158,7 @@ class _FootageInputValidator(QtGui.QValidator):
             # feet (16 frames per foot) and the remaining frames using ``divmod``.
             return divmod(int(input_str), 16)
 
-        match = re.match("^(\d+)-(\d+)$", input_str)
+        match = re.match(r"^(\d+)-(\d+)$", input_str)
         if match:
             # the input value is of the form ``{feet}-{frames}``. ensure the
             # frames value is reduced, then compute the total feet and frames.

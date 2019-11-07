@@ -15,6 +15,7 @@ import inspect
 from tank_test.tank_test_base import TankTestBase
 from tank_test.tank_test_base import setUpModule  # noqa
 
+from tank_vendor.shotgun_api3.lib import six
 import sgtk
 
 
@@ -120,8 +121,12 @@ class TestFramework(TankTestBase):
                     continue
 
                 params = {}
+                if six.PY2:
+                    getargspec = inspect.getargspec
+                else:
+                    getargspec = inspect.getfullargspec
                 # Look at the parameter list for this widget's __init__ method
-                for arg in inspect.getargspec(attr.__init__).args:
+                for arg in getargspec(attr.__init__).args:
                     # For each required parameter, we'll pass in an instance
                     # of the right type.
                     if arg == "parent":
