@@ -13,13 +13,16 @@ from sgtk.platform.qt import QtGui, QtCore
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 class ListWidget(LabelBaseWidget):
     """
     Display a ``list`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "list"
 
@@ -28,6 +31,7 @@ class ListEditorWidget(QtGui.QComboBox):
     """
     Allows editing of a ``list`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "list"
     _IMMEDIATE_APPLY = True
@@ -47,12 +51,12 @@ class ListEditorWidget(QtGui.QComboBox):
         """
         self.addItem("")
 
-        valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
+        valid_values = shotgun_globals.get_valid_values(
+            self._entity_type, self._field_name
+        )
         self.addItems(valid_values)
 
-        self.activated.connect(
-            lambda i: self.value_changed.emit()
-        )
+        self.activated.connect(lambda i: self.value_changed.emit())
 
     def _begin_edit(self):
         """
@@ -78,4 +82,3 @@ class ListEditorWidget(QtGui.QComboBox):
         index = self.findText(value)
         if index != -1:
             self.setCurrentIndex(index)
-

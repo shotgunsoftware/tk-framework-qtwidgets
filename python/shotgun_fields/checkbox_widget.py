@@ -16,6 +16,7 @@ class CheckBoxWidget(QtGui.QCheckBox):
     """
     Displays a ``checkbox`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "checkbox"
     _EDITOR_TYPE = "checkbox"
@@ -38,7 +39,6 @@ class CheckBoxWidget(QtGui.QCheckBox):
         Called by the metaclass during initialization.
         """
         self.stateChanged.connect(self._on_state_changed)
-
 
     def _display_default(self):
         """
@@ -66,8 +66,7 @@ class CheckBoxWidget(QtGui.QCheckBox):
         :param int state: Qt enum for check/unchecked
         """
 
-        new_value = (state == QtCore.Qt.Checked)
+        new_value = state == QtCore.Qt.Checked
         if self._value != new_value:
             # set the value internally
             self.set_value(new_value)
-

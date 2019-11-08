@@ -1,11 +1,11 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 from sgtk.platform.qt import QtCore, QtGui
 
@@ -13,11 +13,12 @@ from sgtk.platform.qt import QtCore, QtGui
 from .ui import resources_rc
 from .shotgun_overlay_widget import ShotgunOverlayWidget
 
+
 class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
     """
-    A convenience class specifically designed to work with a  
+    A convenience class specifically designed to work with a
     :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`.
-    
+
     By using this class, multiple overlay widgets can be
     easily created and connected to the same shotgun model.
     """
@@ -88,7 +89,7 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
 
     def _model_refreshed(self, data_changed):
         """
-        Slot signaled when the data from the connected Shotgun model has 
+        Slot signaled when the data from the connected Shotgun model has
         been refreshed
 
         :param data_changed:    True if the refresh resulted in the data changing
@@ -102,5 +103,3 @@ class ShotgunModelOverlayWidget(ShotgunOverlayWidget):
         :param msg:    The reason the refresh failed
         """
         self.show_error_message(msg)
-
-

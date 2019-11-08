@@ -13,13 +13,16 @@ from sgtk.platform.qt import QtGui, QtCore
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 class StatusListWidget(LabelBaseWidget):
     """
     Display a ``status_list`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "status_list"
 
@@ -34,7 +37,10 @@ class StatusListWidget(LabelBaseWidget):
 
         if color_str:
             # append colored box to indicate status color
-            str_val = ("<span style='color: rgb(%s)'>&#9608;</span>&nbsp;%s" % (color_str, str_val))
+            str_val = "<span style='color: rgb(%s)'>&#9608;</span>&nbsp;%s" % (
+                color_str,
+                str_val,
+            )
 
         return str_val
 
@@ -43,6 +49,7 @@ class StatusListEditorWidget(QtGui.QComboBox):
     """
     Allows editing of a ``status_list`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "status_list"
     _IMMEDIATE_APPLY = True
@@ -62,13 +69,13 @@ class StatusListEditorWidget(QtGui.QComboBox):
         self.addItem("")
         self.setMinimumWidth(125)
 
-        valid_values = shotgun_globals.get_valid_values(self._entity_type, self._field_name)
+        valid_values = shotgun_globals.get_valid_values(
+            self._entity_type, self._field_name
+        )
         for value in valid_values:
             self.addItem(shotgun_globals.get_status_display_name(value), value)
 
-        self.activated.connect(
-            lambda i: self.value_changed.emit()
-        )
+        self.activated.connect(lambda i: self.value_changed.emit())
 
         self.setSizeAdjustPolicy(self.AdjustToContents)
 
@@ -101,4 +108,3 @@ class StatusListEditorWidget(QtGui.QComboBox):
             self.setCurrentIndex(index)
         else:
             self.setCurrentIndex(0)
-

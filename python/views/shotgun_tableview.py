@@ -17,6 +17,7 @@ class ShotgunTableView(QtGui.QTableView):
     the column delegates to the appropriate delegate for the type of Shotgun data
     contained in them.
     """
+
     def __init__(self, fields_manager, parent=None):
         """
         Constructor
@@ -34,8 +35,8 @@ class ShotgunTableView(QtGui.QTableView):
 
         # identify the ways to initiate editing a field
         self.setEditTriggers(
-            QtGui.QAbstractItemView.DoubleClicked |
-            QtGui.QAbstractItemView.EditKeyPressed
+            QtGui.QAbstractItemView.DoubleClicked
+            | QtGui.QAbstractItemView.EditKeyPressed
         )
 
     def setModel(self, model):
@@ -50,5 +51,6 @@ class ShotgunTableView(QtGui.QTableView):
         columns_and_fields = model.get_additional_column_fields()
         for column_info in columns_and_fields:
             delegate = self._fields_manager.create_delegate(
-                model.get_entity_type(), column_info["field"], self)
+                model.get_entity_type(), column_info["field"], self
+            )
             self.setItemDelegateForColumn(column_info["column_idx"], delegate)

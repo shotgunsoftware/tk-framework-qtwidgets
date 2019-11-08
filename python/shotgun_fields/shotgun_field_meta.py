@@ -17,6 +17,7 @@ from .shotgun_field_manager import ShotgunFieldManager
 # taken over by deriving classes as new instances are created.
 TAKE_OVER_NAMES = []
 
+
 def take_over(func):
     """
     Decorator to accumulate the names of members to take over in derived classes.
@@ -24,10 +25,10 @@ def take_over(func):
     :param func: A function or method to takeover in the derived class.
     """
 
-    if hasattr(func, '__name__'):
+    if hasattr(func, "__name__"):
         # regular method
         name = func.__name__
-    elif hasattr(func, '__func__'):
+    elif hasattr(func, "__func__"):
         # static or class method
         name = func.__func__.__name__
     else:
@@ -148,9 +149,13 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
         # validate the class definition to make sure it implements the needed interface
         if ("_DISPLAY_TYPE" not in class_dict) and ("_EDITOR_TYPE" not in class_dict):
-            raise ValueError("ShotgunFieldMeta classes must have a _DISPLAY_TYPE or _EDITOR_TYPE member variable")
+            raise ValueError(
+                "ShotgunFieldMeta classes must have a _DISPLAY_TYPE or _EDITOR_TYPE member variable"
+            )
         if "__init__" in class_dict:
-            raise ValueError("ShotgunFieldMeta classes cannot define their own constructor")
+            raise ValueError(
+                "ShotgunFieldMeta classes cannot define their own constructor"
+            )
 
         # take over class members if called out via the @take_over decorator
         for member_name in TAKE_OVER_NAMES:
@@ -162,7 +167,9 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         class_dict["value_changed"] = QtCore.Signal()
 
         # create the class instance itself
-        field_class = super(ShotgunFieldMeta, mcl).__new__(mcl, name, parents, class_dict)
+        field_class = super(ShotgunFieldMeta, mcl).__new__(
+            mcl, name, parents, class_dict
+        )
 
         # widgets can be used for multiple reasons (display, edit, editable, etc).
         # build a list of the different types for later registration.
@@ -192,14 +199,24 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
                 # register this class for each.
                 for (entity_type, field_name) in class_dict["_ENTITY_FIELDS"]:
                     ShotgunFieldManager.register_entity_field_class(
-                        entity_type, field_name, field_class, widget_type)
+                        entity_type, field_name, field_class, widget_type
+                    )
             else:
                 # this widget is to be used for all fields of a certain type
                 ShotgunFieldManager.register_class(field_type, field_class, widget_type)
 
         return field_class
 
-    def __call__(cls, parent=None, entity_type=None, field_name=None, entity=None, bg_task_manager=None, delegate=False, **kwargs):
+    def __call__(
+        cls,
+        parent=None,
+        entity_type=None,
+        field_name=None,
+        entity=None,
+        bg_task_manager=None,
+        delegate=False,
+        **kwargs
+    ):
         """
         Create an instance of the given class.
 
@@ -362,5 +379,3 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
         # For everything else, just return as string
         return str(value)
-
-

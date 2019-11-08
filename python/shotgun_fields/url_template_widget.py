@@ -17,6 +17,7 @@ class UrlTemplateWidget(ElidedLabelBaseWidget):
     """
     Display a ``url_template`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "url_template"
 

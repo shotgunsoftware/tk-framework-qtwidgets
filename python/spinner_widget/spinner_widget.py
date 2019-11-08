@@ -1,11 +1,11 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
@@ -14,10 +14,12 @@ from sgtk.platform.qt import QtCore, QtGui
 import time
 import math
 
+
 class SpinnerWidget(QtGui.QWidget):
     """
     A simple widget that draws an animated spinner that spins whilst visible.
     """
+
     def __init__(self, parent=None):
         """
         :param parent:    The parent widget
@@ -36,7 +38,7 @@ class SpinnerWidget(QtGui.QWidget):
         self._timer = QtCore.QTimer(self)
         self._timer.timeout.connect(self._on_timer_timeout)
 
-        # keep track of the current start angle to avoid 
+        # keep track of the current start angle to avoid
         # unnecessary repaints
         self._start_angle = 0
 
@@ -64,7 +66,7 @@ class SpinnerWidget(QtGui.QWidget):
             r = QtCore.QRect(0, 0, self.width(), self.height())
             r.adjust(border, border, -border, -border)
 
-            # draw the arc:    
+            # draw the arc:
             painter.drawArc(r, -self._start_angle * 16, self.arc_length * 16)
             r = None
 
@@ -112,12 +114,12 @@ class SpinnerWidget(QtGui.QWidget):
             # nothing to do!
             return
 
-        # calculate the spin angle as a function of the current time so that all 
+        # calculate the spin angle as a function of the current time so that all
         # spinners appear in sync!
         t = time.time()
         whole_seconds = int(t)
         p = (whole_seconds % self.seconds_per_spin) + (t - whole_seconds)
-        angle = int((360 * p)/self.seconds_per_spin)
+        angle = int((360 * p) / self.seconds_per_spin)
 
         if angle == self._start_angle:
             # angle hasn't changed!
@@ -127,6 +129,3 @@ class SpinnerWidget(QtGui.QWidget):
 
         # trigger a repaint for the widget:
         self.update()
-
-
-

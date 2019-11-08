@@ -13,9 +13,7 @@ from sgtk.platform.qt import QtCore
 
 from .shotgun_search_widget import ShotgunSearchWidget
 
-search_completer = sgtk.platform.current_bundle().import_module(
-    "search_completer"
-)
+search_completer = sgtk.platform.current_bundle().import_module("search_completer")
 
 
 class GlobalSearchWidget(ShotgunSearchWidget):
@@ -57,7 +55,9 @@ class GlobalSearchWidget(ShotgunSearchWidget):
         # Taken from:
         # http://stackoverflow.com/questions/11865129/fail-to-clear-qlineedit-after-selecting-item-from-qcompleter
         # Only need to listen to one of the two events as both are always emitted by the completer.
-        self.completer().entity_activated.connect(self.clear, QtCore.Qt.QueuedConnection)
+        self.completer().entity_activated.connect(
+            self.clear, QtCore.Qt.QueuedConnection
+        )
 
     def set_searchable_entity_types(self, types_dict):
         """

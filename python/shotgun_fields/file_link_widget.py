@@ -26,6 +26,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
 
     The ``FileLinkWidget`` represents both the ``DISPLAY`` and ``EDITOR`` widget type.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "url"
     _EDITOR_TYPE = "url"
@@ -98,7 +99,9 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         self._edit_upload_file_action = QtGui.QAction("Upload New File", self)
         self._edit_upload_file_action.triggered.connect(self._upload_file)
 
-        self._replace_with_upload_file_action = QtGui.QAction("Replace with Uploaded File", self)
+        self._replace_with_upload_file_action = QtGui.QAction(
+            "Replace with Uploaded File", self
+        )
         self._replace_with_upload_file_action.triggered.connect(self._upload_file)
 
         # web
@@ -108,17 +111,23 @@ class FileLinkWidget(ElidedLabelBaseWidget):
         self._edit_web_page_link_action = QtGui.QAction("Edit Web Page Link", self)
         self._edit_web_page_link_action.triggered.connect(self._edit_link)
 
-        self._replace_with_web_page_link_action = QtGui.QAction("Replace with Web Page Link", self)
+        self._replace_with_web_page_link_action = QtGui.QAction(
+            "Replace with Web Page Link", self
+        )
         self._replace_with_web_page_link_action.triggered.connect(self._edit_link)
 
         # local
         self._local_path_action = QtGui.QAction("Link to Local File or Directory", self)
         self._local_path_action.triggered.connect(self._browse_local)
 
-        self._edit_local_path_action = QtGui.QAction("Edit Local File or Directory", self)
+        self._edit_local_path_action = QtGui.QAction(
+            "Edit Local File or Directory", self
+        )
         self._edit_local_path_action.triggered.connect(self._browse_local)
 
-        self._replace_with_local_path_action = QtGui.QAction("Replace with Local File or Directory", self)
+        self._replace_with_local_path_action = QtGui.QAction(
+            "Replace with Local File or Directory", self
+        )
         self._replace_with_local_path_action.triggered.connect(self._browse_local)
 
         # remove
@@ -227,7 +236,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
             sg = self._bundle.shotgun
             result = sg.find_one(
                 self._entity["type"],
-                [['id', 'is', self._entity["id"]]],
+                [["id", "is", self._entity["id"]]],
                 [self._field_name],
             )
             if not result:
@@ -278,9 +287,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
 
         # show the menu below the button
         popup_menu.exec_(
-            self._popup_btn.mapToGlobal(
-                QtCore.QPoint(0, self._popup_btn.height())
-            )
+            self._popup_btn.mapToGlobal(QtCore.QPoint(0, self._popup_btn.height()))
         )
 
     def _remove_link(self):
@@ -290,11 +297,7 @@ class FileLinkWidget(ElidedLabelBaseWidget):
 
         # clear the value of the field, emit the ``value_changed`` signal.
         self.clear()
-        self._value = {
-            "name": None,
-            "link_type": None,
-            "url": None,
-        }
+        self._value = {"name": None, "link_type": None, "url": None}
         self._display_value(self._value)
         self.value_changed.emit()
 
@@ -393,7 +396,7 @@ class _EditWebLinkDialog(QtGui.QDialog):
         self.setMinimumWidth(350)
 
         url = url
-        display= display
+        display = display
 
         self.setWindowTitle("Link to Web Page")
 
@@ -461,4 +464,3 @@ class _EditWebLinkDialog(QtGui.QDialog):
     def display(self):
         """:obj:`str` display name entered by the user."""
         return self._display_input.text()
-

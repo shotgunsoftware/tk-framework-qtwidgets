@@ -15,14 +15,19 @@ from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 from .util import check_project_search_supported
 
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
-global_search_widget = sgtk.platform.current_bundle().import_module("global_search_widget")
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
+global_search_widget = sgtk.platform.current_bundle().import_module(
+    "global_search_widget"
+)
 
 
 class EntityWidget(ElidedLabelBaseWidget):
     """
     Display an ``entity`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "entity"
 
@@ -64,6 +69,7 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
     """
     Allows editing of a ``entity`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "entity"
 
@@ -83,7 +89,8 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
         self.set_bg_task_manager(self._bg_task_manager)
 
         self._types = shotgun_globals.get_valid_types(
-            self._entity_type, self._field_name)
+            self._entity_type, self._field_name
+        )
 
         valid_types = {}
 
@@ -92,7 +99,7 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
             if entity_type == "Project" and not self._project_search_supported:
                 # there is an issue querying Project entities via text_search
                 # with older versions of SG. for now, don't restrict the editor
-                 continue
+                continue
             else:
                 valid_types[entity_type] = []
 
@@ -125,10 +132,10 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
         Ctrl+Enter or Ctrl+Return will trigger the emission of the ``value_changed``
         signal.
         """
-        if event.key() in [
-            QtCore.Qt.Key_Enter,
-            QtCore.Qt.Key_Return
-        ] and event.modifiers() & QtCore.Qt.ControlModifier:
+        if (
+            event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]
+            and event.modifiers() & QtCore.Qt.ControlModifier
+        ):
             if not self.text():
                 self._value = None
                 self.value_changed.emit()
@@ -167,13 +174,8 @@ class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
         :param str entity_name: The name of the activated entity.
         """
         if entity_type in self._types:
-            self._value = {
-                "type": entity_type,
-                "id": entity_id,
-                "name": entity_name,
-            }
+            self._value = {"type": entity_type, "id": entity_id, "name": entity_name}
             self.value_changed.emit()
         else:
             self._display_value(self._value)
             self._begin_edit()
-

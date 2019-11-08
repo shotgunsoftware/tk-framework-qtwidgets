@@ -1,11 +1,11 @@
 # Copyright (c) 2016 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import os
@@ -27,29 +27,23 @@ from .qtwidgets import (
 )
 
 shotgun_model = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils",
-    "shotgun_model",
+    "tk-framework-shotgunutils", "shotgun_model"
 )
 
 shotgun_globals = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils",
-    "shotgun_globals",
+    "tk-framework-shotgunutils", "shotgun_globals"
 )
 
 task_manager = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils",
-    "task_manager",
+    "tk-framework-shotgunutils", "task_manager"
 )
 
 shotgun_data = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils",
-    "shotgun_data",
+    "tk-framework-shotgunutils", "shotgun_data"
 )
 
-settings = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils",
-    "settings",
-)
+settings = sgtk.platform.import_framework("tk-framework-shotgunutils", "settings")
+
 
 class VersionDetailsWidget(QtGui.QWidget):
     """
@@ -75,6 +69,7 @@ class VersionDetailsWidget(QtGui.QWidget):
             associated with a Note entity is successfully downloaded. The Note
             entity id and the path to the file on disk are passed on.
     """
+
     FIELDS_PREFS_KEY = "version_details_fields"
     ACTIVE_FIELDS_PREFS_KEY = "version_details_active_fields"
     VERSION_LIST_FIELDS_PREFS_KEY = "version_details_version_list_fields"
@@ -122,7 +117,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._dock_widget = None
         self._pre_submit_callback = None
 
-        self.ui = Ui_VersionDetailsWidget() 
+        self.ui = Ui_VersionDetailsWidget()
         self.ui.setupUi(self)
 
         # Show the "empty" image that tells the user that no Version
@@ -130,18 +125,14 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.pages.setCurrentWidget(self.ui.empty_page)
 
         self._data_retriever = shotgun_data.ShotgunDataRetriever(
-            parent=self,
-            bg_task_manager=self._task_manager,
+            parent=self, bg_task_manager=self._task_manager
         )
 
         self._shotgun_field_manager = ShotgunFieldManager(
-            self,
-            bg_task_manager=self._task_manager,
+            self, bg_task_manager=self._task_manager
         )
 
-        self._settings_manager = settings.UserSettings(
-            sgtk.platform.current_bundle(),
-        )
+        self._settings_manager = settings.UserSettings(sgtk.platform.current_bundle())
 
         shotgun_globals.register_bg_task_manager(self._task_manager)
         self._shotgun_field_manager.initialize()
@@ -171,40 +162,29 @@ class VersionDetailsWidget(QtGui.QWidget):
         # are displayed by default when the "More info" option is active.
         self._active_fields = self._settings_manager.retrieve(
             VersionDetailsWidget.ACTIVE_FIELDS_PREFS_KEY,
-            [
-                "code",
-                "entity",
-                "user",
-                "sg_status_list",
-            ],
+            ["code", "entity", "user", "sg_status_list"],
             self._settings_manager.SCOPE_ENGINE,
         )
 
         # This is the subset of self._active_fields that are always
         # visible, even when "More info" is not active.
-        self._persistent_fields = [
-            "code",
-            "entity",
-        ]
+        self._persistent_fields = ["code", "entity"]
 
         # The fields list for the Version list view delegate operate
         # the same way as the above persistent list. We're simply
         # keeping track of what we don't allow to be turned off.
-        self._version_list_persistent_fields = [
-            "code",
-            "user",
-            "sg_status_list",
-        ]
+        self._version_list_persistent_fields = ["code", "user", "sg_status_list"]
 
         # Our sort-by list will include "id" at the head.
-        self._version_list_sort_by_fields = ["id"] + self._version_list_persistent_fields
+        self._version_list_sort_by_fields = [
+            "id"
+        ] + self._version_list_persistent_fields
 
         self.version_model = SimpleTooltipModel(
-            self.ui.entity_version_tab,
-            bg_task_manager=self._task_manager,
+            self.ui.entity_version_tab, bg_task_manager=self._task_manager
         )
         self.version_proxy_model = ShotgunSortFilterProxyModel(
-            parent=self.ui.entity_version_view,
+            parent=self.ui.entity_version_view
         )
         self.version_proxy_model.filter_by_fields = self._version_list_persistent_fields
         self.version_proxy_model.sort_by_fields = self._version_list_sort_by_fields
@@ -231,8 +211,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.note_stream_widget.highlight_new_arrivals = False
         self.ui.note_stream_widget.notes_are_selectable = True
         self.version_info_model = shotgun_model.SimpleShotgunModel(
-            self.ui.note_stream_widget,
-            bg_task_manager=self._task_manager,
+            self.ui.note_stream_widget, bg_task_manager=self._task_manager
         )
 
         # For the basic info widget in the Notes stream we won't show
@@ -250,10 +229,12 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.note_stream_widget._load_shotgun_activity_stream
         )
         self.ui.entity_version_view.customContextMenuRequested.connect(
-            self._show_version_context_menu,
+            self._show_version_context_menu
         )
         self.ui.version_search.search_edited.connect(self._set_version_list_filter)
-        self.version_info_model.data_refreshed.connect(self._version_entity_data_refreshed)
+        self.version_info_model.data_refreshed.connect(
+            self._version_entity_data_refreshed
+        )
         self._task_manager.task_completed.connect(self._on_task_completed)
         self.ui.note_stream_widget.note_selected.connect(self.note_selected.emit)
         self.ui.note_stream_widget.note_deselected.connect(self.note_deselected.emit)
@@ -272,9 +253,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         # We will be passing up our own signal when note and reply entities
         # are created.
-        self.ui.note_stream_widget.entity_created.connect(
-            self._entity_created,
-        )
+        self.ui.note_stream_widget.entity_created.connect(self._entity_created)
 
         self.load_data(entity)
         self._load_stylesheet()
@@ -351,10 +330,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self._attachments_filter = regex
         self.ui.note_stream_widget.attachments_filter = regex
 
-    attachments_filter = property(
-        _get_attachments_filter,
-        _set_attachments_filter,
-    )
+    attachments_filter = property(_get_attachments_filter, _set_attachments_filter)
 
     def _get_notes_are_selectable(self):
         """
@@ -367,8 +343,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         self.ui.note_stream_widget.notes_are_selectable = state
 
     notes_are_selectable = property(
-        _get_notes_are_selectable,
-        _set_notes_are_selectable,
+        _get_notes_are_selectable, _set_notes_are_selectable
     )
 
     def _get_pre_submit_callback(self):
@@ -383,10 +358,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     def _set_pre_submit_callback(self, callback):
         self.ui.note_stream_widget.pre_submit_callback = callback
 
-    pre_submit_callback = property(
-        _get_pre_submit_callback,
-        _set_pre_submit_callback,
-    )
+    pre_submit_callback = property(_get_pre_submit_callback, _set_pre_submit_callback)
 
     ##########################################################################
     # public methods
@@ -499,16 +471,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         # than not trusting the cache.
         attachment = self._data_retriever.execute_find(
             "Attachment",
-            [[
-                "attachment_links",
-                "in",
-                {"type":"Note", "id":note_id}
-            ]],
-            fields=[
-                "this_file",
-                "image",
-                "attachment_links",
-            ])
+            [["attachment_links", "in", {"type": "Note", "id": note_id}]],
+            fields=["this_file", "image", "attachment_links"],
+        )
         self._attachment_query_uids[attachment] = note_id
 
     def get_note_attachments(self, note_id):
@@ -556,9 +521,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         shot_filters = [["id", "is", entity["id"]]]
         self.version_info_model.load_data(
-            entity_type="Version",
-            filters=shot_filters,
-            fields=self._fields,
+            entity_type="Version", filters=shot_filters, fields=self._fields
         )
 
         for note_id in self.note_threads.keys():
@@ -597,9 +560,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         self._note_set_metadata_uids.append(
             self._data_retriever.execute_update(
-                "Note",
-                note_id,
-                {self.NOTE_METADATA_FIELD:metadata},
+                "Note", note_id, {self.NOTE_METADATA_FIELD: metadata}
             )
         )
 
@@ -611,7 +572,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param str image_path:  A file path to an image file on disk.
         """
         self.ui.note_stream_widget.note_widget._set_screenshot_pixmap(
-            QtGui.QPixmap(image_path),
+            QtGui.QPixmap(image_path)
         )
 
     def set_pinned(self, checked):
@@ -632,8 +593,10 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.ui.pin_button.setIcon(QtGui.QIcon(":/version_details/tack_up.png"))
             # If we have a valid _current_entity, be sure the incoming entity
             # has a different ID.
-            if self._requested_entity and (not self._current_entity or (
-                    self._requested_entity.get("id") != self._current_entity.get("id"))):
+            if self._requested_entity and (
+                not self._current_entity
+                or (self._requested_entity.get("id") != self._current_entity.get("id"))
+            ):
                 self.load_data(self._requested_entity)
 
     def show_new_note_dialog(self, modal=True):
@@ -670,11 +633,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         version_id = version_id or self._current_entity["id"]
         self._data_retriever.execute_method(
             self.__upload_thumbnail,
-            dict(
-                entity_type="Version",
-                entity_id=version_id,
-                path=thumbnail_path,
-            ),
+            dict(entity_type="Version", entity_id=version_id, path=thumbnail_path),
         )
 
     def use_styled_title_bar(self, dock_widget):
@@ -700,15 +659,12 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param int note_id: The id of the Note entity.
         """
         entity_fields = dict(
-            Note=[self.NOTE_METADATA_FIELD],
-            Reply=[self.NOTE_METADATA_FIELD], 
+            Note=[self.NOTE_METADATA_FIELD], Reply=[self.NOTE_METADATA_FIELD]
         )
 
         self._note_metadata_uids.append(
             self._data_retriever.execute_find_one(
-                "Note",
-                [["id", "is", note_id]],
-                self.note_fields,
+                "Note", [["id", "is", note_id]], self.note_fields
             )
         )
 
@@ -738,8 +694,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         elif uid in self._note_set_metadata_uids:
             entity = data["sg"]
             self.note_metadata_changed.emit(
-                entity["id"],
-                entity[self.NOTE_METADATA_FIELD],
+                entity["id"], entity[self.NOTE_METADATA_FIELD]
             )
         elif uid in self._attachment_uids:
             note_id = self._attachment_uids[uid]
@@ -752,7 +707,7 @@ class VersionDetailsWidget(QtGui.QWidget):
     def __on_worker_failure(self, uid, msg):
         """
         Asynchronous callback - the worker thread errored.
-        
+
         :param int uid: Unique id for request that failed.
         :param str msg: The error message.
         """
@@ -762,14 +717,11 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         Loads in the widget's master stylesheet from disk.
         """
-        qss_file = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)),
-            "style.qss"
-        )
+        qss_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.qss")
         try:
             f = open(qss_file, "rt")
             qss_data = sgtk.platform.current_bundle().engine._resolve_sg_stylesheet_tokens(
-                f.read(),
+                f.read()
             )
             self.setStyleSheet(qss_data)
         finally:
@@ -800,7 +752,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Adds or removes a field when it checked or unchecked
         via the EntityFieldMenu.
 
-        :param action: The QMenuAction that was triggered. 
+        :param action: The QMenuAction that was triggered.
         """
         if action:
             # The MenuAction's data will have a "field" key that was
@@ -841,10 +793,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         if not entity:
             return
 
-        item = self.version_info_model.item_from_entity(
-            "Version",
-            entity["id"],
-        )
+        item = self.version_info_model.item_from_entity("Version", entity["id"])
 
         if not item:
             return
@@ -857,17 +806,15 @@ class VersionDetailsWidget(QtGui.QWidget):
         if sg_data.get("entity"):
             version_filters = [["entity", "is", sg_data["entity"]]]
             self.version_model.load_data(
-                "Version",
-                filters=version_filters,
-                fields=self._fields,
+                "Version", filters=version_filters, fields=self._fields
             )
 
             self.version_proxy_model.sort(
-                0, 
+                0,
                 (
-                    QtCore.Qt.AscendingOrder if 
-                    self._sort_versions_ascending else 
-                    QtCore.Qt.DescendingOrder
+                    QtCore.Qt.AscendingOrder
+                    if self._sort_versions_ascending
+                    else QtCore.Qt.DescendingOrder
                 ),
             )
         else:
@@ -909,7 +856,8 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         # run this callback once the cache is loaded
         shotgun_globals.run_on_schema_loaded(
-            self._on_schema_loaded, project_id=project_id)
+            self._on_schema_loaded, project_id=project_id
+        )
 
     def _on_schema_loaded(self):
         """
@@ -928,7 +876,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         Adds or removes a field when it checked or unchecked
         via the EntityFieldMenu.
 
-        :param action:  The QMenuAction that was triggered. 
+        :param action:  The QMenuAction that was triggered.
         """
         if action:
             # The MenuAction's data will have a "field" key that was
@@ -947,10 +895,7 @@ class VersionDetailsWidget(QtGui.QWidget):
                     self.load_data(self._requested_entity)
 
                     new_action = QtGui.QAction(
-                        shotgun_globals.get_field_display_name(
-                            "Version",
-                            field_name,
-                        ),
+                        shotgun_globals.get_field_display_name("Version", field_name),
                         self,
                     )
 
@@ -966,10 +911,15 @@ class VersionDetailsWidget(QtGui.QWidget):
                 # We also need to remove the field from the sort-by menu. We
                 # will leave "id" in the list always, even if it isn't being
                 # displayed by the delegate.
-                if field_name != "id" and field_name in self._version_list_sort_by_fields:
+                if (
+                    field_name != "id"
+                    and field_name in self._version_list_sort_by_fields
+                ):
                     self._version_list_sort_by_fields.remove(field_name)
                     sort_actions = self._version_sort_menu.actions()
-                    remove_action = [a for a in sort_actions if a.data() == field_name][0]
+                    remove_action = [a for a in sort_actions if a.data() == field_name][
+                        0
+                    ]
 
                     # If it's the current primary sort field, then we need to
                     # fall back on "id" to take its place.
@@ -982,7 +932,9 @@ class VersionDetailsWidget(QtGui.QWidget):
                     self._version_sort_menu_fields.removeAction(remove_action)
 
             self.version_proxy_model.filter_by_fields = self.version_delegate.fields
-            self.version_proxy_model.setFilterWildcard(self.ui.version_search.search_text)
+            self.version_proxy_model.setFilterWildcard(
+                self.ui.version_search.search_text
+            )
             self.ui.entity_version_view.repaint()
 
             try:
@@ -1021,7 +973,9 @@ class VersionDetailsWidget(QtGui.QWidget):
 
                 for field_name in self._active_fields:
                     if field_name not in self._persistent_fields:
-                        self.ui.current_version_card.set_field_visibility(field_name, False)
+                        self.ui.current_version_card.set_field_visibility(
+                            field_name, False
+                        )
         finally:
             self.setUpdatesEnabled(True)
 
@@ -1036,7 +990,9 @@ class VersionDetailsWidget(QtGui.QWidget):
         for i in indexes:
             entity = shotgun_model.get_sg_data(i)
             try:
-                image_file = self.version_delegate.widget_cache[i].thumbnail.image_file_path
+                image_file = self.version_delegate.widget_cache[
+                    i
+                ].thumbnail.image_file_path
             except Exception:
                 image_file = ""
             entity["__image_path"] = image_file
@@ -1064,9 +1020,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         entity = self._current_entity or {}
         menu = EntityFieldMenu(
-            "Version",
-            project_id=entity.get("project", {}).get("id"),
-            parent=self,
+            "Version", project_id=entity.get("project", {}).get("id"), parent=self
         )
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._checked_filter)
@@ -1082,15 +1036,15 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         entity = self._current_entity or {}
         menu = EntityFieldMenu(
-            "Version",
-            project_id=entity.get("project", {}).get("id"),
-            parent=self,
+            "Version", project_id=entity.get("project", {}).get("id"), parent=self
         )
         menu.set_field_filter(self._field_filter)
         menu.set_checked_filter(self._version_list_checked_filter)
         menu.set_disabled_filter(self._version_list_disabled_filter)
         self._version_list_field_menu = menu
-        self._version_list_field_menu.triggered.connect(self._version_list_field_menu_triggered)
+        self._version_list_field_menu.triggered.connect(
+            self._version_list_field_menu_triggered
+        )
         self.ui.version_fields_button.setMenu(menu)
 
     def _setup_version_sort_by_menu(self):
@@ -1118,10 +1072,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         field_actions = []
 
         for field_name in self._version_list_sort_by_fields:
-            display_name = shotgun_globals.get_field_display_name(
-                "Version",
-                field_name,
-            )
+            display_name = shotgun_globals.get_field_display_name("Version", field_name)
 
             action = QtGui.QAction(display_name, self)
 
@@ -1169,9 +1120,7 @@ class VersionDetailsWidget(QtGui.QWidget):
                           "cleanup_after_upload" keys.
         """
         sg.upload(
-            data["parent_entity_type"],
-            data["parent_entity_id"],
-            str(data["file_path"]),
+            data["parent_entity_type"], data["parent_entity_id"], str(data["file_path"])
         )
 
         if data.get("cleanup_after_upload", False):
@@ -1199,17 +1148,11 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param dict data: A dictionary of data passed through from the
                           Shotgun data retriever.
         """
-        sg.upload_thumbnail(
-            data["entity_type"],
-            data["entity_id"],
-            data["path"],
-        )
+        sg.upload_thumbnail(data["entity_type"], data["entity_id"], data["path"])
 
         self.ui.note_stream_widget.rescan(force_activity_stream_update=True)
-        self.ui.current_version_card.thumbnail.setPixmap(
-            QtGui.QPixmap(data["path"])
-        )
-        
+        self.ui.current_version_card.thumbnail.setPixmap(QtGui.QPixmap(data["path"]))
+
     ##########################################################################
     # docking
 
@@ -1249,11 +1192,11 @@ class VersionDetailsWidget(QtGui.QWidget):
         """
         self._sort_versions_ascending = not self._sort_versions_ascending
         self.version_proxy_model.sort(
-            0, 
+            0,
             (
-                QtCore.Qt.AscendingOrder if 
-                self._sort_versions_ascending else 
-                QtCore.Qt.DescendingOrder
+                QtCore.Qt.AscendingOrder
+                if self._sort_versions_ascending
+                else QtCore.Qt.DescendingOrder
             ),
         )
 
@@ -1280,11 +1223,11 @@ class VersionDetailsWidget(QtGui.QWidget):
             self.version_proxy_model.primary_sort_field = field
 
         self.version_proxy_model.sort(
-            0, 
+            0,
             (
-                QtCore.Qt.AscendingOrder if 
-                self._sort_versions_ascending else 
-                QtCore.Qt.DescendingOrder
+                QtCore.Qt.AscendingOrder
+                if self._sort_versions_ascending
+                else QtCore.Qt.DescendingOrder
             ),
         )
 
@@ -1303,7 +1246,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param field:   The field name being processed.
         """
-        return (field in self._active_fields)
+        return field in self._active_fields
 
     def _version_list_checked_filter(self, field):
         """
@@ -1312,7 +1255,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param field:   The field name being processed.
         """
-        return (field in self.version_delegate.fields)
+        return field in self.version_delegate.fields
 
     def _disabled_filter(self, field):
         """
@@ -1321,7 +1264,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param field:   The field name being processed.
         """
-        return (field in self._persistent_fields)
+        return field in self._persistent_fields
 
     def _version_list_disabled_filter(self, field):
         """
@@ -1330,7 +1273,7 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         :param field:   The field name being processed.
         """
-        return (field in self._version_list_persistent_fields)
+        return field in self._version_list_persistent_fields
 
     def _field_filter(self, field):
         """
@@ -1342,7 +1285,8 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         # see if we can display this field
         supported = self.ui.current_version_card.field_manager.supported_fields(
-            "Version", [field])
+            "Version", [field]
+        )
 
         if field not in supported:
             return False
@@ -1361,8 +1305,8 @@ class VersionDetailsWidget(QtGui.QWidget):
 
         # make sure the field is visible
         if not shotgun_globals.field_is_visible(
-                entity_type, field_name, project_id=project_id):
+            entity_type, field_name, project_id=project_id
+        ):
             return False
 
         return True
-

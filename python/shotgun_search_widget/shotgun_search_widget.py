@@ -20,6 +20,7 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
     The derived classes are expected to provide a :class:`PySide.QtGui.QCompleter`
     during initialization. The completer must have ``search(str)`` and ``destroy`` method.
     """
+
     def __init__(self, parent):
         """
         :param parent: Qt parent object
@@ -50,7 +51,9 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         self._clear_btn.setCursor(QtCore.Qt.ArrowCursor)
 
         # Loads the style sheet for the search button.
-        qss_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "search_style.qss")
+        qss_file = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "search_style.qss"
+        )
         with open(qss_file, "rt") as f:
             # apply to widget (and all its children)
             self._clear_btn.setStyleSheet(f.read())

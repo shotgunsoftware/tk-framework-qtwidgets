@@ -20,8 +20,10 @@ class FootageWidget(LabelBaseWidget):
     """
     Display a ``footage`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "footage"
+
 
 class FootageEditorWidget(QtGui.QLineEdit):
     """
@@ -30,6 +32,7 @@ class FootageEditorWidget(QtGui.QLineEdit):
     Pressing ``Enter`` or ``Return`` when the widget has focus will cause the
     value to be applied and the ``value_changed`` signal to be emitted.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "footage"
 
@@ -164,4 +167,3 @@ class _FootageInputValidator(QtGui.QValidator):
             return (int(feet) + extra_feet, frames)
 
         raise ValueError
-

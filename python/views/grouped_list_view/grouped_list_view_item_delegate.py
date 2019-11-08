@@ -1,11 +1,11 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 """
@@ -18,6 +18,7 @@ from sgtk.platform.qt import QtGui, QtCore
 from ..widget_delegate import WidgetDelegate
 from .group_widget import GroupWidget
 
+
 class GroupedListViewItemDelegate(WidgetDelegate):
     """
     Base delegate class for a delegate specifically to be used by a :class:`GroupedListView`.
@@ -25,7 +26,7 @@ class GroupedListViewItemDelegate(WidgetDelegate):
     The delegate provides a method to return a group widget in addition to the regular
     delegate methods.
     """
-    
+
     def __init__(self, view):
         """
         :param view: The view this delegate is operating on
@@ -54,10 +55,10 @@ class GroupedListViewItemDelegate(WidgetDelegate):
 
         :param style_options:   The style options to use when determining the size
         :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`
-        
+
         :param model_index:     The index in the model to return the size hint for
         :type model_index:      :class:`~PySide.QtCore.QModelIndex`
-        
+
         :returns:               The QSize representing the size for the index in the view
         :rtype:                 :class:`~PySide.QtCore.QSize`
         """
@@ -79,7 +80,7 @@ class GroupedListViewItemDelegate(WidgetDelegate):
             self._calc_group_widget.set_item(model_index)
             layout = self._calc_group_widget.layout()
             if layout:
-                # this ensures the widget is updated correctly 
+                # this ensures the widget is updated correctly
                 # using it's internal layout
                 layout.invalidate()
                 layout.activate()
@@ -88,4 +89,3 @@ class GroupedListViewItemDelegate(WidgetDelegate):
         else:
             # return the base size hint:
             return WidgetDelegate.sizeHint(self, style_options, model_index)
-

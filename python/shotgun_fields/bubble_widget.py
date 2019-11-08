@@ -51,7 +51,8 @@ class BubbleWidget(QtGui.QFrame):
                 border-radius: 5px;
                 background-color: %s;
             }
-            """ % self.palette().color(QtGui.QPalette.Button).name()
+            """
+            % self.palette().color(QtGui.QPalette.Button).name()
         )
 
         # create a remove button for the widget.
@@ -87,9 +88,7 @@ class BubbleWidget(QtGui.QFrame):
         self.setLayout(self.layout)
 
         # emit the "remove_clicked" signal when the button is clicked.
-        self.remove_button.clicked.connect(
-            lambda: self.remove_clicked.emit()
-        )
+        self.remove_button.clicked.connect(lambda: self.remove_clicked.emit())
 
     def set_text(self, label_text):
         """
@@ -149,7 +148,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
     """
 
     # used as a placeholder for a bubble in the editor
-    _OBJECT_REPLACEMENT_CHAR = unichr(0xfffc)
+    _OBJECT_REPLACEMENT_CHAR = unichr(0xFFFC)
 
     def __init__(self, parent=None):
         """
@@ -165,7 +164,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
 
         self._bubble_text_object = _BubbleTextObject(self)
         self.document().documentLayout().registerHandler(
-            _BubbleTextObject.OBJECT_TYPE, self._bubble_text_object,
+            _BubbleTextObject.OBJECT_TYPE, self._bubble_text_object
         )
 
         self.setMouseTracking(True)
@@ -186,15 +185,15 @@ class BubbleEditWidget(QtGui.QTextEdit):
         # create a character format for the bubble
         char_format = QtGui.QTextCharFormat()
         char_format.setObjectType(self._bubble_text_object.OBJECT_TYPE)
-        char_format.setProperty(self._bubble_text_object.BUBBLE_DATA_PROPERTY, bubble_id)
+        char_format.setProperty(
+            self._bubble_text_object.BUBBLE_DATA_PROPERTY, bubble_id
+        )
 
         # keep a reference to the char format so that we can map a cursor to this
         # bubble later on
         self._char_formats[bubble_id] = char_format
 
-        bubble.remove_clicked.connect(
-            lambda: self.remove_bubble(bubble_id)
-        )
+        bubble.remove_clicked.connect(lambda: self.remove_bubble(bubble_id))
 
         # insert the bubble character into the text editor and char format it properly
         cursor = self.textCursor()
@@ -259,7 +258,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
         # resulting to just adding the scroll values. please fix if you can
         edit_pos = QtCore.QPoint(
             event.pos().x() + self.horizontalScrollBar().value(),
-            event.pos().y() + self.verticalScrollBar().value()
+            event.pos().y() + self.verticalScrollBar().value(),
         )
 
         # for mouse events find the actual widget at the position
@@ -309,7 +308,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
             if text[i] != self._OBJECT_REPLACEMENT_CHAR:
                 continue
 
-            cursor.setPosition(i+1, QtGui.QTextCursor.MoveAnchor)
+            cursor.setPosition(i + 1, QtGui.QTextCursor.MoveAnchor)
             char_format = cursor.charFormat()
 
             if self._char_formats[bubble_id] != char_format:
@@ -339,7 +338,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
             if text[i] != self._OBJECT_REPLACEMENT_CHAR:
                 continue
 
-            cursor.setPosition(i+1, QtGui.QTextCursor.MoveAnchor)
+            cursor.setPosition(i + 1, QtGui.QTextCursor.MoveAnchor)
             char_format = cursor.charFormat()
 
             if not char_format in self._char_formats.values():
@@ -359,7 +358,9 @@ class BubbleEditWidget(QtGui.QTextEdit):
         Returns a :obj:`str` representing the text typed in the editor.
         """
 
-        char_list = [c for c in self.toPlainText() if c != self._OBJECT_REPLACEMENT_CHAR]
+        char_list = [
+            c for c in self.toPlainText() if c != self._OBJECT_REPLACEMENT_CHAR
+        ]
         return "".join(char_list)
 
     def remove_bubble(self, bubble_id):
@@ -385,7 +386,7 @@ class BubbleEditWidget(QtGui.QTextEdit):
             if text[i] != self._OBJECT_REPLACEMENT_CHAR:
                 continue
 
-            cursor.setPosition(i+1, QtGui.QTextCursor.MoveAnchor)
+            cursor.setPosition(i + 1, QtGui.QTextCursor.MoveAnchor)
             char_format = cursor.charFormat()
 
             if self._char_formats[bubble_id] != char_format:
@@ -470,14 +471,12 @@ class _BubbleTextObject(QtGui.QPyTextObject):
                     painter,
                     QtCore.QPoint(0, 1),
                     QtGui.QRegion(),
-                    QtGui.QWidget.DrawChildren
+                    QtGui.QWidget.DrawChildren,
                 )
             else:
                 # pyside is using the renderFlags parameter which seems correct
                 bubble.render(
-                    painter,
-                    QtCore.QPoint(0, 1),
-                    renderFlags=QtGui.QWidget.DrawChildren
+                    painter, QtCore.QPoint(0, 1), renderFlags=QtGui.QWidget.DrawChildren
                 )
         finally:
             painter.restore()

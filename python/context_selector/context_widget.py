@@ -14,7 +14,9 @@ from sgtk.platform.qt import QtCore, QtGui
 from .ui.context_editor_widget import Ui_ContextWidget
 
 # framework imports
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 settings = sgtk.platform.import_framework("tk-framework-shotgunutils", "settings")
 
 # internal imports
@@ -25,14 +27,7 @@ logger = sgtk.platform.get_logger(__name__)
 
 # fields required to create a context from a task entity without falling back to
 # a SG query
-TASK_QUERY_FIELDS =[
-    "type",
-    "id",
-    "content",
-    "project",
-    "entity",
-    "step"
-]
+TASK_QUERY_FIELDS = ["type", "id", "content", "project", "entity", "step"]
 
 
 class ContextWidget(QtGui.QWidget):
@@ -63,7 +58,9 @@ class ContextWidget(QtGui.QWidget):
 
         # the key we'll use to store/retrieve recent contexts via user settings
         self._settings_recent_contexts_key = "%s_recent_contexts_%s" % (
-            self._bundle.name, project["id"])
+            self._bundle.name,
+            project["id"],
+        )
 
         # we will do a bg query that requires an id to catch results
         self._schema_query_id = None
@@ -94,11 +91,7 @@ class ContextWidget(QtGui.QWidget):
         # constant, but the recents menu will be dynamic. so we build the menu
         # just before it is shown. these lists hold the QActions for each
         # group of contexts to show in the menu
-        self._menu_actions = {
-            "Related": [],
-            "My Tasks": [],
-            "Recent": []
-        }
+        self._menu_actions = {"Related": [], "My Tasks": [], "Recent": []}
 
         # set up the UI
         self.ui = Ui_ContextWidget()
@@ -140,14 +133,13 @@ class ContextWidget(QtGui.QWidget):
                 ]:
                     # user hit tab/enter/return in search. go with the currently
                     # highlighted item or the first one
-                    result = \
-                        self.ui.task_search.completer().get_current_result() or\
-                        self.ui.task_search.completer().get_first_result()
+                    result = (
+                        self.ui.task_search.completer().get_current_result()
+                        or self.ui.task_search.completer().get_first_result()
+                    )
                     if result:
                         self._on_entity_activated(
-                            result["type"],
-                            result["id"],
-                            result["name"],
+                            result["type"], result["id"], result["name"]
                         )
 
         elif widget == self.ui.link_display:
@@ -172,14 +164,13 @@ class ContextWidget(QtGui.QWidget):
                 ]:
                     # user hit tab/enter/return in search. go with the currently
                     # highlighted item or the first one
-                    result = \
-                        self.ui.link_search.completer().get_current_result() or\
-                        self.ui.link_search.completer().get_first_result()
+                    result = (
+                        self.ui.link_search.completer().get_current_result()
+                        or self.ui.link_search.completer().get_first_result()
+                    )
                     if result:
                         self._on_entity_activated(
-                            result["type"],
-                            result["id"],
-                            result["name"],
+                            result["type"], result["id"], result["name"]
                         )
 
         return False
@@ -198,8 +189,7 @@ class ContextWidget(QtGui.QWidget):
 
             # don't include the user credentials in the serialized context as
             # it may cause issues with authentication when deserializing
-            serialized_context = recent_context.serialize(
-                with_user_credentials=False)
+            serialized_context = recent_context.serialize(with_user_credentials=False)
 
             serialized_contexts.append(serialized_context)
 
@@ -209,11 +199,12 @@ class ContextWidget(QtGui.QWidget):
         self._settings.store(
             self._settings_recent_contexts_key,
             serialized_contexts,
-            scope=settings.UserSettings.SCOPE_PROJECT
+            scope=settings.UserSettings.SCOPE_PROJECT,
         )
 
-    def set_context(self, context, task_display_override=None,
-        link_display_override=None):
+    def set_context(
+        self, context, task_display_override=None, link_display_override=None
+    ):
         """
         Set the context to display in the widget.
 
@@ -233,7 +224,7 @@ class ContextWidget(QtGui.QWidget):
         self._show_context(
             context,
             task_display_override=task_display_override,
-            link_display_override=link_display_override
+            link_display_override=link_display_override,
         )
 
         # ensure the new context is added to the list of recents.
@@ -254,8 +245,7 @@ class ContextWidget(QtGui.QWidget):
 
         # attach the context menu
         self.ui.task_menu_btn.setMenu(self._task_menu)
-        self._task_menu.aboutToShow.connect(
-            self._on_about_to_show_contexts_menu)
+        self._task_menu.aboutToShow.connect(self._on_about_to_show_contexts_menu)
 
         # setup the search toggle
         self.ui.task_search_btn.toggled.connect(self._on_task_search_toggled)
@@ -268,15 +258,12 @@ class ContextWidget(QtGui.QWidget):
         # set up the task manager to the task search widget
         self.ui.task_search.set_placeholder_text("Search for Tasks...")
         self.ui.task_search.set_bg_task_manager(task_manager)
-        self.ui.task_search.entity_activated.connect(
-            self._on_entity_activated)
+        self.ui.task_search.entity_activated.connect(self._on_entity_activated)
 
         # save as above but for the link search widget
         self.ui.link_search.set_placeholder_text("Search for entity link...")
         self.ui.link_search.set_bg_task_manager(task_manager)
-        self.ui.link_search.entity_activated.connect(
-            self._on_entity_activated
-        )
+        self.ui.link_search.entity_activated.connect(self._on_entity_activated)
 
         # limit the task autocompleter to tasks only.
         # TODO: limit to tasks linked to the entity types given
@@ -334,12 +321,13 @@ class ContextWidget(QtGui.QWidget):
         :param str field_name: Shotgun field to restrict based on
         """
         if self._task_manager is None:
-            raise RuntimeError("You must run set_up() before this method can be executed.")
+            raise RuntimeError(
+                "You must run set_up() before this method can be executed."
+            )
 
         # Query Shotgun for valid entity types for PublishedFile.entity field
         self._schema_query_id = self._task_manager.add_task(
-            _query_entity_schema,
-            task_args=[entity_type, field_name]
+            _query_entity_schema, task_args=[entity_type, field_name]
         )
 
     def restrict_entity_types(self, entity_types):
@@ -358,8 +346,7 @@ class ContextWidget(QtGui.QWidget):
         entity_types_dict = dict((k, []) for k in entity_types)
 
         # update the types for the link completer
-        self.ui.link_search.set_searchable_entity_types(
-            entity_types_dict)
+        self.ui.link_search.set_searchable_entity_types(entity_types_dict)
 
     @property
     def context_label(self):
@@ -437,8 +424,9 @@ class ContextWidget(QtGui.QWidget):
         # only keep the 5 most recent
         self._menu_actions["Recent"] = recent_actions[:5]
 
-    def _build_actions(self, tasks, group_name, sort=False,
-        exclude_current_context=False):
+    def _build_actions(
+        self, tasks, group_name, sort=False, exclude_current_context=False
+    ):
         """
         Build a list of actions from the supplied tasks. The actions are stored
         in the instance's _menu_actions dictionary and used to build the menu.
@@ -467,9 +455,11 @@ class ContextWidget(QtGui.QWidget):
             task_context.task.update(task)
 
             # don't include the current context in this list of actions
-            if (self._context and
-                exclude_current_context and
-                task_context == self._context):
+            if (
+                self._context
+                and exclude_current_context
+                and task_context == self._context
+            ):
                 continue
 
             # build the action and add it to the list
@@ -497,8 +487,7 @@ class ContextWidget(QtGui.QWidget):
         action.setText(context_display)
         action.setIcon(QtGui.QIcon(icon_path))
         action.setData(context)
-        action.triggered.connect(
-            lambda c=context: self._on_context_activated(c))
+        action.triggered.connect(lambda: self._on_context_activated(context))
 
         return action
 
@@ -514,14 +503,14 @@ class ContextWidget(QtGui.QWidget):
         serialized_recent_contexts = self._settings.retrieve(
             self._settings_recent_contexts_key,
             default=[],
-            scope=settings.UserSettings.SCOPE_PROJECT
+            scope=settings.UserSettings.SCOPE_PROJECT,
         )
 
         # turn these into QActions to add to the list of recents in the menu
         for serialized_context in serialized_recent_contexts:
             try:
                 context = sgtk.Context.deserialize(serialized_context)
-            except Exception, e:
+            except Exception as e:
                 logger.debug("Unable to deserialize stored context.")
             else:
                 recent_action = self._get_qaction_for_context(context)
@@ -595,8 +584,7 @@ class ContextWidget(QtGui.QWidget):
 
                 # get the display name for the status code
                 status_display = shotgun_globals.get_status_display_name(
-                    status_code,
-                    project.get("id")
+                    status_code, project.get("id")
                 )
 
                 # get the actions for this code
@@ -668,8 +656,7 @@ class ContextWidget(QtGui.QWidget):
                 if self._context.entity:
                     search_str = self._context.entity["name"]
                 if self._context.task:
-                    search_str = "%s %s " % (
-                        search_str, self._context.task["name"])
+                    search_str = "%s %s " % (search_str, self._context.task["name"])
                 self.ui.task_search.setText(search_str)
                 self.ui.task_search.completer().search(search_str)
                 self.ui.task_search.completer().complete()
@@ -730,10 +717,7 @@ class ContextWidget(QtGui.QWidget):
         elif task_id == self._related_tasks_query_id:
             logger.debug("Completed query for the current user's Tasks.")
             self._build_actions(
-                result,
-                "Related",
-                sort=True,
-                exclude_current_context=True
+                result, "Related", sort=True, exclude_current_context=True
             )
 
     def _on_task_failed(self, task_id, group, message, traceback_str):
@@ -775,10 +759,7 @@ class ContextWidget(QtGui.QWidget):
         logger.debug("Querying related tasks for context: %s" % (context,))
 
         # unique id for entity to use as local cache lookup
-        entity_id = "%s_%s" % (
-            context.entity["type"],
-            context.entity["id"],
-        )
+        entity_id = "%s_%s" % (context.entity["type"], context.entity["id"])
 
         # if we've queried tasks for this entity before, just return those
         if entity_id in self._related_tasks_cache:
@@ -792,7 +773,7 @@ class ContextWidget(QtGui.QWidget):
             [["entity", "is", context.entity]],
             # query all fields required to create a context from a task entity
             # dictionary. see sgtk api `context_from_entity_dictionary`
-            fields=TASK_QUERY_FIELDS
+            fields=TASK_QUERY_FIELDS,
         )
 
         # cache the tasks
@@ -809,18 +790,18 @@ class ContextWidget(QtGui.QWidget):
 
         # drill down into the schema to retrieve the valid types for the
         # field. this is ugly, but will ensure we get a list no matter what
-        entity_types = published_file_entity_schema. \
-            get("entity", {}). \
-            get("properties", {}). \
-            get("valid_types", {}). \
-            get("value", [])
+        entity_types = (
+            published_file_entity_schema.get("entity", {})
+            .get("properties", {})
+            .get("valid_types", {})
+            .get("value", [])
+        )
 
         # always include Project and Tasks
         entity_types.append("Project")
 
         logger.debug(
-            "Limiting context link completer to these entities: %s" %
-            (entity_types,)
+            "Limiting context link completer to these entities: %s" % (entity_types,)
         )
 
         # construct a dictionary that the search widget expects for
@@ -829,12 +810,10 @@ class ContextWidget(QtGui.QWidget):
         # just use empty list.
         entity_types_dict = dict((k, []) for k in entity_types)
 
-        logger.debug(
-            "Setting searchable entity types to: %s" % (entity_types_dict,))
+        logger.debug("Setting searchable entity types to: %s" % (entity_types_dict,))
 
         # update the types for the link completer
-        self.ui.link_search.set_searchable_entity_types(
-            entity_types_dict)
+        self.ui.link_search.set_searchable_entity_types(entity_types_dict)
 
         # limit the task search to tasks only.
         # TODO: limit to tasks linked to entities of the types queried above
@@ -843,8 +822,9 @@ class ContextWidget(QtGui.QWidget):
         # now update the types for the task completer
         self.ui.task_search.set_searchable_entity_types(task_types_dict)
 
-    def _show_context(self, context, task_display_override=None,
-        link_display_override=None):
+    def _show_context(
+        self, context, task_display_override=None, link_display_override=None
+    ):
         """
         Show the supplied context in the UI.
         """
@@ -872,8 +852,7 @@ class ContextWidget(QtGui.QWidget):
         if context:
             # given the context, populate any related tasks for the menu
             self._related_tasks_query_id = self._task_manager.add_task(
-                self._query_related_tasks,
-                task_args=[context]
+                self._query_related_tasks, task_args=[context]
             )
 
 
@@ -897,7 +876,8 @@ def _get_task_display(context, plain_text=False):
         # return the name with the appropriate icon in front
         task_type = context.task["type"]
         task_icon = "<img src='%s'>" % (
-            shotgun_globals.get_entity_type_icon_url(task_type),)
+            shotgun_globals.get_entity_type_icon_url(task_type),
+        )
         display_name = "%s&nbsp;%s" % (task_icon, task_name)
 
     return display_name
@@ -928,7 +908,8 @@ def _get_link_display(context, plain_text=False):
         # return the name with the appropriate icon in front
         entity_type = entity["type"]
         entity_icon = "<img src='%s'>" % (
-            shotgun_globals.get_entity_type_icon_url(entity_type),)
+            shotgun_globals.get_entity_type_icon_url(entity_type),
+        )
         display_name = "%s&nbsp;%s" % (entity_icon, entity_name)
 
     return display_name
@@ -957,7 +938,10 @@ def _get_context_display(context, plain_text=False):
         else:
             display_name = """
                 %s&nbsp;&nbsp;<b><code>&gt;</code></b>&nbsp;&nbsp;%s
-            """ % (link_display, task_display)
+            """ % (
+                link_display,
+                task_display,
+            )
 
     return display_name
 
@@ -998,14 +982,14 @@ def _query_my_tasks():
             "filter_operator": "any",
             "filters": [
                 ["task_assignees", "is", current_user],
-                ["task_assignees.Group.users", "is", current_user]
-            ]
-        }
+                ["task_assignees.Group.users", "is", current_user],
+            ],
+        },
     ]
 
     order = [
         {"field_name": "entity", "direction": "asc"},
-        {"field_name": "content", "direction": "asc"}
+        {"field_name": "content", "direction": "asc"},
     ]
 
     # query all fields required to create a context from a task entity
@@ -1013,12 +997,7 @@ def _query_my_tasks():
     task_fields = TASK_QUERY_FIELDS
     task_fields.extend(["sg_status_list"])
 
-    return bundle.shotgun.find(
-        "Task",
-        filters,
-        fields=task_fields,
-        order=order
-    )
+    return bundle.shotgun.find("Task", filters, fields=task_fields, order=order)
 
 
 def _query_entity_schema(entity_type, field_name):
@@ -1035,7 +1014,5 @@ def _query_entity_schema(entity_type, field_name):
     project = bundle.context.project
 
     return bundle.shotgun.schema_field_read(
-        entity_type,
-        field_name=field_name,
-        project_entity=project
+        entity_type, field_name=field_name, project_entity=project
     )

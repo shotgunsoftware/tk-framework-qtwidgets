@@ -16,14 +16,19 @@ from .entity_widget import EntityWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 from .util import check_project_search_supported
 
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
-global_search_completer = sgtk.platform.current_bundle().import_module("global_search_completer")
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
+global_search_completer = sgtk.platform.current_bundle().import_module(
+    "global_search_completer"
+)
 
 
 class MultiEntityWidget(EntityWidget):
     """
     Display a ``multi_entity`` field value as returned by the Shotgun API.
     """
+
     _DISPLAY_TYPE = "multi_entity"
 
     def _string_value(self, value):
@@ -36,10 +41,12 @@ class MultiEntityWidget(EntityWidget):
         """
         return ", ".join([self._entity_dict_to_html(entity) for entity in value])
 
+
 class MultiEntityEditorWidget(BubbleEditWidget):
     """
     Allows editing of a ``multi_entity`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "multi_entity"
 
@@ -68,8 +75,10 @@ class MultiEntityEditorWidget(BubbleEditWidget):
             bubble_entity_dict = bubble.get_data()
 
             # see if the bubble matches the supplied entity dict
-            if (bubble_entity_dict["type"] == entity_dict["type"] and
-                bubble_entity_dict["id"] == entity_dict["id"]):
+            if (
+                bubble_entity_dict["type"] == entity_dict["type"]
+                and bubble_entity_dict["id"] == entity_dict["id"]
+            ):
                 # move the bubble to the end
                 self.remove_bubble(bubble.id)
                 self.add_entity(bubble_entity_dict)
@@ -140,10 +149,10 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         :type event: :class:`~PySide.QtGui.QEvent`
         """
 
-        if event.key() in [
-            QtCore.Qt.Key_Enter,
-            QtCore.Qt.Key_Return
-        ] and event.modifiers() & QtCore.Qt.ControlModifier:
+        if (
+            event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]
+            and event.modifiers() & QtCore.Qt.ControlModifier
+        ):
             self.value_changed.emit()
             event.ignore()
             return
@@ -182,11 +191,13 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         valid_types = {}
 
         # get this field's schema
-        for entity_type in shotgun_globals.get_valid_types(self._entity_type, self._field_name):
+        for entity_type in shotgun_globals.get_valid_types(
+            self._entity_type, self._field_name
+        ):
             if entity_type == "Project" and not self._project_search_supported:
                 # there is an issue querying Project entities via text_search
                 # with older versions of SG. for now, don't restrict the editor
-                 continue
+                continue
             else:
                 valid_types[entity_type] = []
 
@@ -254,4 +265,3 @@ class MultiEntityEditorWidget(BubbleEditWidget):
             self._completer.setCompletionPrefix(typed_text)
             self._completer.complete(rect)
             self._completer.search(typed_text)
-

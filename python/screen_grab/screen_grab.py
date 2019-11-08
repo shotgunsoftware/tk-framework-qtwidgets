@@ -40,10 +40,12 @@ class ScreenGrabber(QtGui.QDialog):
         self._click_pos = None
         self._capture_rect = QtCore.QRect()
 
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint |
-                            QtCore.Qt.WindowStaysOnTopHint |
-                            QtCore.Qt.CustomizeWindowHint |
-                            QtCore.Qt.Tool)
+        self.setWindowFlags(
+            QtCore.Qt.FramelessWindowHint
+            | QtCore.Qt.WindowStaysOnTopHint
+            | QtCore.Qt.CustomizeWindowHint
+            | QtCore.Qt.Tool
+        )
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.setCursor(QtCore.Qt.CrossCursor)
         self.setMouseTracking(True)
@@ -89,16 +91,20 @@ class ScreenGrabber(QtGui.QDialog):
 
         # Draw cropping markers at click position
         if click_pos is not None:
-            painter.drawLine(event.rect().left(), click_pos.y(),
-                             event.rect().right(), click_pos.y())
-            painter.drawLine(click_pos.x(), event.rect().top(),
-                             click_pos.x(), event.rect().bottom())
+            painter.drawLine(
+                event.rect().left(), click_pos.y(), event.rect().right(), click_pos.y()
+            )
+            painter.drawLine(
+                click_pos.x(), event.rect().top(), click_pos.x(), event.rect().bottom()
+            )
 
         # Draw cropping markers at current mouse position
-        painter.drawLine(event.rect().left(), mouse_pos.y(),
-                         event.rect().right(), mouse_pos.y())
-        painter.drawLine(mouse_pos.x(), event.rect().top(),
-                         mouse_pos.x(), event.rect().bottom())
+        painter.drawLine(
+            event.rect().left(), mouse_pos.y(), event.rect().right(), mouse_pos.y()
+        )
+        painter.drawLine(
+            mouse_pos.x(), event.rect().top(), mouse_pos.x(), event.rect().bottom()
+        )
 
     def keyPressEvent(self, event):
         """
@@ -133,8 +139,9 @@ class ScreenGrabber(QtGui.QDialog):
         """
         if event.button() == QtCore.Qt.LeftButton and self._click_pos is not None:
             # End click drag operation and commit the current capture rect
-            self._capture_rect = QtCore.QRect(self._click_pos,
-                                              event.globalPos()).normalized()
+            self._capture_rect = QtCore.QRect(
+                self._click_pos, event.globalPos()
+            ).normalized()
             self._click_pos = None
         self.close()
 
@@ -236,6 +243,7 @@ class ExternalCaptureThread(QtCore.QThread):
     This helps avoid the os thinking the application has hung for
     certain applications (e.g. Softimage on Windows)
     """
+
     def __init__(self, path):
         """
         :param path: Path to write the screenshot to
@@ -257,20 +265,24 @@ class ExternalCaptureThread(QtCore.QThread):
                 # use built-in screenshot command on the mac
                 ret_code = os.system("screencapture -m -i -s %s" % self._path)
                 if ret_code != 0:
-                    raise sgtk.TankError("Screen capture tool returned error code %s" % ret_code)
+                    raise sgtk.TankError(
+                        "Screen capture tool returned error code %s" % ret_code
+                    )
 
             elif sys.platform == "linux2":
                 # use image magick
                 ret_code = os.system("import %s" % self._path)
                 if ret_code != 0:
-                    raise sgtk.TankError("Screen capture tool returned error code %s. "
-                                         "For screen capture to work on Linux, you need to have "
-                                         "the imagemagick 'import' executable installed and "
-                                         "in your PATH." % ret_code)
+                    raise sgtk.TankError(
+                        "Screen capture tool returned error code %s. "
+                        "For screen capture to work on Linux, you need to have "
+                        "the imagemagick 'import' executable installed and "
+                        "in your PATH." % ret_code
+                    )
 
             else:
                 raise sgtk.TankError("Unsupported platform.")
-        except Exception, e:
+        except Exception as e:
             self._error = str(e)
 
 
@@ -282,9 +294,9 @@ def _external_screenshot():
     :returns: Captured image
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
-    output_path = tempfile.NamedTemporaryFile(suffix=".png",
-                                              prefix="screencapture_",
-                                              delete=False).name
+    output_path = tempfile.NamedTemporaryFile(
+        suffix=".png", prefix="screencapture_", delete=False
+    ).name
 
     pm = None
     try:
@@ -298,8 +310,7 @@ def _external_screenshot():
         if screenshot_thread.error_message:
             bundle = sgtk.platform.current_bundle()
             bundle.log_debug(
-                "Failed to capture "
-                "screenshot: %s" % screenshot_thread.error_message
+                "Failed to capture " "screenshot: %s" % screenshot_thread.error_message
             )
         else:
             # load into pixmap
@@ -322,8 +333,9 @@ def get_desktop_pixmap(rect):
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
     desktop = QtGui.QApplication.desktop()
-    return QtGui.QPixmap.grabWindow(desktop.winId(), rect.x(), rect.y(),
-                                    rect.width(), rect.height())
+    return QtGui.QPixmap.grabWindow(
+        desktop.winId(), rect.x(), rect.y(), rect.width(), rect.height()
+    )
 
 
 # Backwards compatibility, as this used to be a module-level
@@ -342,9 +354,9 @@ def screen_capture_file(output_path=None):
     """
 
     if output_path is None:
-        output_path = tempfile.NamedTemporaryFile(suffix=".png",
-                                                  prefix="screencapture_",
-                                                  delete=False).name
+        output_path = tempfile.NamedTemporaryFile(
+            suffix=".png", prefix="screencapture_", delete=False
+        ).name
     pixmap = screen_capture()
     pixmap.save(output_path)
     return output_path
