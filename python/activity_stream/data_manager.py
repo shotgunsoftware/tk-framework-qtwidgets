@@ -670,18 +670,20 @@ class ActivityStreamDataHandler(QtCore.QObject):
                         INSERT OR REPLACE INTO activity(activity_id, payload, created_at) 
                         SELECT ?, ?, datetime('now')             
                     """
+                    cursor.execute(sql, (activity_id, blob))
                 else:
                     sql = """
                         INSERT INTO activity(activity_id, payload, created_at) 
                         SELECT ?, ?, datetime('now')
                         WHERE NOT EXISTS(SELECT activity_id FROM activity WHERE activity_id = ?);                
                      """
-                cursor.execute(sql, (activity_id, blob, activity_id))                
+                    cursor.execute(sql, (activity_id, blob, activity_id))
                 if self._force_activity_stream_update:
                     sql = """
                         INSERT OR REPLACE INTO entity (entity_type, entity_id, activity_id, created_at) 
                         SELECT ?, ?, ?, datetime('now')               
                      """
+                    cursor.execute(sql, (entity_type, entity_id, activity_id))
                 else:
                     # now insert entity record
                     sql = """
@@ -689,12 +691,11 @@ class ActivityStreamDataHandler(QtCore.QObject):
                         SELECT ?, ?, ?, datetime('now')
                         WHERE NOT EXISTS(SELECT entity_id FROM entity WHERE entity_type = ? and entity_id = ? and activity_id = ?);                
                      """
-
-                cursor.execute(sql, (entity_type, entity_id, activity_id, entity_type, entity_id, activity_id)) 
+                    cursor.execute(sql, (entity_type, entity_id, activity_id, entity_type, entity_id, activity_id))
 
             connection.commit()
         except:
-            # supress and continue
+            # suppress and continue
             self._bundle.log_exception("Could not add activity stream data "
                                     "to cache database %s" % self._cache_path)
         finally:
@@ -745,7 +746,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             connection.commit()
             
         except:
-            # supress and continue
+            # suppress and continue
             self._bundle.log_exception("Could not add note data "
                                     "to cache database %s" % self._cache_path)
             
@@ -785,7 +786,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         
     def _get_activity_stream(self, sg, data):
         """
-        Actual payload for getting actity stream data from shotgun
+        Actual payload for getting activity stream data from shotgun
         Note: This runs in a different thread and cannot access
         any QT UI components.
         
