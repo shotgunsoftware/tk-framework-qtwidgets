@@ -716,7 +716,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 payload = cPickle.dumps(event, cPickle.HIGHEST_PROTOCOL)
                 blob = sqlite3.Binary(payload)
 
-                # first insert event
+                # first insert the event
                 if self._force_activity_stream_update:
                     sql = """
                         INSERT OR REPLACE INTO activity(activity_id, payload, created_at)
@@ -737,7 +737,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                     """
                     cursor.execute(sql, (entity_type, entity_id, activity_id))
                 else:
-                    # now insert entity record
+                    # now insert the entity record
                     sql = """
                         INSERT INTO entity (entity_type, entity_id, activity_id, created_at)
                         SELECT ?, ?, ?, datetime('now')
@@ -758,7 +758,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
             connection.commit()
         except:
-            # supress and continue
+            # suppress and continue
             self._bundle.log_exception(
                 "Could not add activity stream data "
                 "to cache database %s" % self._cache_path
@@ -813,7 +813,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             connection.commit()
 
         except:
-            # supress and continue
+            # suppress and continue
             self._bundle.log_exception(
                 "Could not add note data " "to cache database %s" % self._cache_path
             )
@@ -855,7 +855,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
     def _get_activity_stream(self, sg, data):
         """
-        Actual payload for getting actity stream data from shotgun
+        Actual payload for getting activity stream data from shotgun
         Note: This runs in a different thread and cannot access
         any QT UI components.
 
