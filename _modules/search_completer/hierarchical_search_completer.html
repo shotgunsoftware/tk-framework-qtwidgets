@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>search_completer.hierarchical_search_completer &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>search_completer.hierarchical_search_completer &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -198,7 +198,9 @@
 
 <span class="kn">from</span> <span class="nn">.search_completer</span> <span class="kn">import</span> <span class="n">SearchCompleter</span>
 
-<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span><span class="p">)</span>
+<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="HierarchicalSearchCompleter"><a class="viewcode-back" href="../../search_completer.html#search_completer.HierarchicalSearchCompleter">[docs]</a><span class="k">class</span> <span class="nc">HierarchicalSearchCompleter</span><span class="p">(</span><span class="n">SearchCompleter</span><span class="p">):</span>
@@ -292,7 +294,10 @@
 <span class="sd">        :paarm text: Text from the current search.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># deferred import to help documentation generation.</span>
-        <span class="kn">from</span> <span class="nn">.hierarchical_search_result_delegate</span> <span class="kn">import</span> <span class="n">HierarchicalSearchResultDelegate</span>
+        <span class="kn">from</span> <span class="nn">.hierarchical_search_result_delegate</span> <span class="kn">import</span> <span class="p">(</span>
+            <span class="n">HierarchicalSearchResultDelegate</span><span class="p">,</span>
+        <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span> <span class="o">=</span> <span class="n">HierarchicalSearchResultDelegate</span><span class="p">(</span><span class="n">popup</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
         <span class="n">popup</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span><span class="p">)</span>
 
@@ -328,7 +333,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_entities_only</span><span class="p">:</span>
             <span class="n">data_matches</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
                 <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">,</span>
-                <span class="n">data_matches</span>
+                <span class="n">data_matches</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -361,8 +366,7 @@
             <span class="n">item</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
             <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_RESULT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>
 
-            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_for_qt_model</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_for_qt_model</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
 
             <span class="n">item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixmaps</span><span class="o">.</span><span class="n">no_thumbnail</span><span class="p">)</span>
 
@@ -422,9 +426,11 @@
         <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
             <span class="c1"># Let it be known that something was picked.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">node_activated</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
-                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">],</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">],</span>
                 <span class="n">data</span><span class="p">[</span><span class="s2">&quot;path_label&quot;</span><span class="p">],</span>
-                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;incremental_path&quot;</span><span class="p">]</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;incremental_path&quot;</span><span class="p">],</span>
             <span class="p">)</span></div>
 </pre></div>
 
@@ -458,7 +464,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

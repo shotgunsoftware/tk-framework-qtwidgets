@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -225,10 +225,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FramelessWindowHint</span> <span class="o">|</span>
-                            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowStaysOnTopHint</span> <span class="o">|</span>
-                            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomizeWindowHint</span> <span class="o">|</span>
-                            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Tool</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FramelessWindowHint</span>
+            <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowStaysOnTopHint</span>
+            <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomizeWindowHint</span>
+            <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Tool</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WA_TranslucentBackground</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CrossCursor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMouseTracking</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
@@ -274,16 +276,20 @@
 
         <span class="c1"># Draw cropping markers at click position</span>
         <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
-                             <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span>
-                             <span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">())</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span>
+                <span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
+            <span class="p">)</span>
 
         <span class="c1"># Draw cropping markers at current mouse position</span>
-        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
-                         <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
-        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span>
-                         <span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">())</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">y</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span>
+            <span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">top</span><span class="p">(),</span> <span class="n">mouse_pos</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -318,8 +324,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c1"># End click drag operation and commit the current capture rect</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span><span class="p">,</span>
-                                              <span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">()</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
@@ -421,6 +428,7 @@
 <span class="sd">    This helps avoid the os thinking the application has hung for</span>
 <span class="sd">    certain applications (e.g. Softimage on Windows)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param path: Path to write the screenshot to</span>
@@ -442,20 +450,24 @@
                 <span class="c1"># use built-in screenshot command on the mac</span>
                 <span class="n">ret_code</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;screencapture -m -i -s </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">ret_code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Screen capture tool returned error code </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ret_code</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span>
+                        <span class="s2">&quot;Screen capture tool returned error code </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ret_code</span>
+                    <span class="p">)</span>
 
             <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;linux2&quot;</span><span class="p">:</span>
                 <span class="c1"># use image magick</span>
                 <span class="n">ret_code</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;import </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">ret_code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Screen capture tool returned error code </span><span class="si">%s</span><span class="s2">. &quot;</span>
-                                         <span class="s2">&quot;For screen capture to work on Linux, you need to have &quot;</span>
-                                         <span class="s2">&quot;the imagemagick &#39;import&#39; executable installed and &quot;</span>
-                                         <span class="s2">&quot;in your PATH.&quot;</span> <span class="o">%</span> <span class="n">ret_code</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span>
+                        <span class="s2">&quot;Screen capture tool returned error code </span><span class="si">%s</span><span class="s2">. &quot;</span>
+                        <span class="s2">&quot;For screen capture to work on Linux, you need to have &quot;</span>
+                        <span class="s2">&quot;the imagemagick &#39;import&#39; executable installed and &quot;</span>
+                        <span class="s2">&quot;in your PATH.&quot;</span> <span class="o">%</span> <span class="n">ret_code</span>
+                    <span class="p">)</span>
 
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Unsupported platform.&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
 
@@ -467,9 +479,9 @@
 <span class="sd">    :returns: Captured image</span>
 <span class="sd">    :rtype: :class:`~PySide.QtGui.QPixmap`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">output_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span>
-                                              <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span>
-                                              <span class="n">delete</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
+        <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">name</span>
 
     <span class="n">pm</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">try</span><span class="p">:</span>
@@ -483,8 +495,7 @@
         <span class="k">if</span> <span class="n">screenshot_thread</span><span class="o">.</span><span class="n">error_message</span><span class="p">:</span>
             <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
             <span class="n">bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span>
-                <span class="s2">&quot;Failed to capture &quot;</span>
-                <span class="s2">&quot;screenshot: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">screenshot_thread</span><span class="o">.</span><span class="n">error_message</span>
+                <span class="s2">&quot;Failed to capture &quot;</span> <span class="s2">&quot;screenshot: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">screenshot_thread</span><span class="o">.</span><span class="n">error_message</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># load into pixmap</span>
@@ -507,8 +518,9 @@
 <span class="sd">    :rtype: :class:`~PySide.QtGui.QPixmap`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="o">.</span><span class="n">grabWindow</span><span class="p">(</span><span class="n">desktop</span><span class="o">.</span><span class="n">winId</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
-                                    <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">())</span></div>
+    <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="o">.</span><span class="n">grabWindow</span><span class="p">(</span>
+        <span class="n">desktop</span><span class="o">.</span><span class="n">winId</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+    <span class="p">)</span></div>
 
 
 <span class="c1"># Backwards compatibility, as this used to be a module-level</span>
@@ -527,9 +539,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">output_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span>
-                                                  <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span>
-                                                  <span class="n">delete</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="bp">False</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">name</span>
     <span class="n">pixmap</span> <span class="o">=</span> <span class="n">screen_capture</span><span class="p">()</span>
     <span class="n">pixmap</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output_path</span></div>
@@ -565,7 +577,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

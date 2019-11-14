@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_search_widget.global_search_widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>shotgun_search_widget.global_search_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -198,9 +198,7 @@
 
 <span class="kn">from</span> <span class="nn">.shotgun_search_widget</span> <span class="kn">import</span> <span class="n">ShotgunSearchWidget</span>
 
-<span class="n">search_completer</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span>
-    <span class="s2">&quot;search_completer&quot;</span>
-<span class="p">)</span>
+<span class="n">search_completer</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;search_completer&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="GlobalSearchWidget"><a class="viewcode-back" href="../../shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget">[docs]</a><span class="k">class</span> <span class="nc">GlobalSearchWidget</span><span class="p">(</span><span class="n">ShotgunSearchWidget</span><span class="p">):</span>
@@ -242,7 +240,9 @@
         <span class="c1"># Taken from:</span>
         <span class="c1"># http://stackoverflow.com/questions/11865129/fail-to-clear-qlineedit-after-selecting-item-from-qcompleter</span>
         <span class="c1"># Only need to listen to one of the two events as both are always emitted by the completer.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">QueuedConnection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">QueuedConnection</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="GlobalSearchWidget.set_searchable_entity_types"><a class="viewcode-back" href="../../shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget.set_searchable_entity_types">[docs]</a>    <span class="k">def</span> <span class="nf">set_searchable_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">types_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -288,7 +288,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

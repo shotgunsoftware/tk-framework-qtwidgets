@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>models.shotgun_sort_filter_proxy_model &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>models.shotgun_sort_filter_proxy_model &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -184,13 +184,13 @@
             
   <h1>Source code for models.shotgun_sort_filter_proxy_model</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
-<span class="c1"># </span>
+<span class="c1">#</span>
 <span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c1"># </span>
-<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
 <span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">import</span> <span class="nn">sgtk</span>
@@ -198,14 +198,13 @@
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 <span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
-    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;shotgun_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span>
 <span class="p">)</span>
 
 <span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
-    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span>
 <span class="p">)</span>
+
 
 <div class="viewcode-block" id="ShotgunSortFilterProxyModel"><a class="viewcode-back" href="../../models.html#models.ShotgunSortFilterProxyModel">[docs]</a><span class="k">class</span> <span class="nc">ShotgunSortFilterProxyModel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -213,6 +212,7 @@
 <span class="sd">    data in a ShotgunModel by given Shotgun fields on the entities</span>
 <span class="sd">    stored therein.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes a new ShotgunSortFilterProxyModel.</span>
@@ -295,7 +295,9 @@
         <span class="c1"># We push the primary sort field to the beginning of the list of</span>
         <span class="c1"># fields that we&#39;re going to sort on, then least the rest in their</span>
         <span class="c1"># existing order to act as secondary sort fields.</span>
-        <span class="n">secondary_sort_fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_by_fields</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_sort_field</span><span class="p">]</span>
+        <span class="n">secondary_sort_fields</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_by_fields</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_sort_field</span>
+        <span class="p">]</span>
 
         <span class="c1"># We are also going to shove &quot;id&quot; to the end of the secondary list</span>
         <span class="c1"># if it is present. This is because it will never be equal between</span>
@@ -303,21 +305,19 @@
         <span class="c1"># we might want to sort by lower in the list. As such, we&#39;ll treat</span>
         <span class="c1"># it as the lowest priority.</span>
         <span class="k">if</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">secondary_sort_fields</span><span class="p">:</span>
-            <span class="n">secondary_sort_fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">secondary_sort_fields</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+            <span class="n">secondary_sort_fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">secondary_sort_fields</span> <span class="k">if</span> <span class="n">f</span> <span class="o">!=</span> <span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
+                <span class="s2">&quot;id&quot;</span>
+            <span class="p">]</span>
 
         <span class="n">sort_fields</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">primary_sort_field</span><span class="p">]</span> <span class="o">+</span> <span class="n">secondary_sort_fields</span>
 
         <span class="k">for</span> <span class="n">sort_by_field</span> <span class="ow">in</span> <span class="n">sort_fields</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">left_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_processable_field_data</span><span class="p">(</span>
-                    <span class="n">sg_left</span><span class="p">,</span>
-                    <span class="n">sort_by_field</span><span class="p">,</span>
-                    <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                    <span class="n">sg_left</span><span class="p">,</span> <span class="n">sort_by_field</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span>
                 <span class="p">)</span>
                 <span class="n">right_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_processable_field_data</span><span class="p">(</span>
-                    <span class="n">sg_right</span><span class="p">,</span>
-                    <span class="n">sort_by_field</span><span class="p">,</span>
-                    <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                    <span class="n">sg_right</span><span class="p">,</span> <span class="n">sort_by_field</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="bp">True</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="c1"># If we got a KeyError, it means that the data we&#39;re trying</span>
@@ -332,7 +332,7 @@
                 <span class="c1"># do based on this field. We&#39;ll just continue on to the rest.</span>
                 <span class="k">continue</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">(</span><span class="n">left_data</span> <span class="o">&lt;</span> <span class="n">right_data</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">left_data</span> <span class="o">&lt;</span> <span class="n">right_data</span>
 
         <span class="k">return</span> <span class="bp">False</span></div>
 
@@ -356,7 +356,7 @@
         <span class="c1"># We only have one column, so column 0 is what we&#39;re</span>
         <span class="c1"># after.</span>
         <span class="n">sg_data</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">get_sg_data</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">source_parent</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">source_parent</span><span class="p">)</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">sg_data</span><span class="p">:</span>
@@ -401,8 +401,7 @@
 <span class="sd">                            sorting operation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data_type</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_data_type</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span><span class="o">.</span><span class="n">get_entity_type</span><span class="p">(),</span>
-            <span class="n">field</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span><span class="o">.</span><span class="n">get_entity_type</span><span class="p">(),</span> <span class="n">field</span>
         <span class="p">)</span>
 
         <span class="c1"># Certain field data types will need to be treated specially</span>
@@ -439,8 +438,7 @@
         <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;date_time&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">sg_data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">processable_data</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">create_human_readable_timestamp</span><span class="p">(</span>
-                    <span class="n">sg_data</span><span class="p">[</span><span class="n">field</span><span class="p">],</span>
-                    <span class="s2">&quot; %I:%M%p&quot;</span><span class="p">,</span>
+                    <span class="n">sg_data</span><span class="p">[</span><span class="n">field</span><span class="p">],</span> <span class="s2">&quot; %I:%M%p&quot;</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">processable_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -450,8 +448,6 @@
             <span class="n">processable_data</span> <span class="o">=</span> <span class="n">sg_data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">processable_data</span></div>
-
-
 </pre></div>
 
            </div>
@@ -484,7 +480,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

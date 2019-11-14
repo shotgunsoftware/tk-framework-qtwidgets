@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -220,9 +220,16 @@
 <span class="sd">    default is ``QtCore.Qt.EditRole``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">display_class</span><span class="p">,</span> <span class="n">editor_class</span><span class="p">,</span>
-                 <span class="n">view</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                 <span class="n">field_data_role</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">sg_entity_type</span><span class="p">,</span>
+        <span class="n">field_name</span><span class="p">,</span>
+        <span class="n">display_class</span><span class="p">,</span>
+        <span class="n">editor_class</span><span class="p">,</span>
+        <span class="n">view</span><span class="p">,</span>
+        <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">field_data_role</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 
@@ -278,9 +285,7 @@
 
         <span class="c1"># let the base class do all the heavy lifting</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFieldDelegateGeneric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span>
-            <span class="n">painter</span><span class="p">,</span>
-            <span class="n">style_options</span><span class="p">,</span>
-            <span class="n">model_index</span>
+            <span class="n">painter</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span>
         <span class="p">)</span>
 
         <span class="c1"># clear out the paint widget&#39;s contents to prevent it from showing in</span>
@@ -360,8 +365,7 @@
 <span class="sd">        :rtype: :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># ensure the field is editable</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">field_is_editable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span>
-                                                 <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">field_is_editable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">None</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">model_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
@@ -450,13 +454,14 @@
 
         <span class="c1"># attempt to set the new value in the model</span>
         <span class="n">successful</span> <span class="o">=</span> <span class="n">src_index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
-            <span class="n">src_index</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_data_role</span><span class="p">)</span>
+            <span class="n">src_index</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_data_role</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">successful</span><span class="p">:</span>
             <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
             <span class="n">bundle</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span>
-                <span class="s2">&quot;Unable to set model data for widget delegate: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">)</span>
+                <span class="s2">&quot;Unable to set model data for widget delegate: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">)</span>
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">editorEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
@@ -567,8 +572,15 @@
 <span class="sd">    stored in the ``SG_ASSOCIATED_FIELD_ROLE`` role.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">display_class</span><span class="p">,</span> <span class="n">editor_class</span><span class="p">,</span>
-                 <span class="n">view</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">sg_entity_type</span><span class="p">,</span>
+        <span class="n">field_name</span><span class="p">,</span>
+        <span class="n">display_class</span><span class="p">,</span>
+        <span class="n">editor_class</span><span class="p">,</span>
+        <span class="n">view</span><span class="p">,</span>
+        <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 
@@ -595,8 +607,13 @@
         <span class="n">field_data_role</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_ASSOCIATED_FIELD_ROLE</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFieldDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">display_class</span><span class="p">,</span> <span class="n">editor_class</span><span class="p">,</span> <span class="n">view</span><span class="p">,</span>
-            <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">field_data_role</span><span class="o">=</span><span class="n">field_data_role</span>
+            <span class="n">sg_entity_type</span><span class="p">,</span>
+            <span class="n">field_name</span><span class="p">,</span>
+            <span class="n">display_class</span><span class="p">,</span>
+            <span class="n">editor_class</span><span class="p">,</span>
+            <span class="n">view</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">field_data_role</span><span class="o">=</span><span class="n">field_data_role</span><span class="p">,</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ShotgunFieldDelegate.setModelData"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.setModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
@@ -636,22 +653,19 @@
                     <span class="n">primary_item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">new_value</span><span class="p">))</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">primary_item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">())</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">bundle</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span>
-                    <span class="s2">&quot;Unable to set icon for widget delegate: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">,))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">bundle</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="s2">&quot;Unable to set icon for widget delegate: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">,))</span>
 
             <span class="k">return</span>
 
         <span class="n">successful</span> <span class="o">=</span> <span class="n">src_index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
-            <span class="n">src_index</span><span class="p">,</span>
-            <span class="n">new_value</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">field_data_role</span>
+            <span class="n">src_index</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_data_role</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">successful</span><span class="p">:</span>
             <span class="n">bundle</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span>
-                <span class="s2">&quot;Unable to set model data for widget delegate: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">)</span>
+                <span class="s2">&quot;Unable to set model data for widget delegate: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">)</span>
             <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_set_widget_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
@@ -699,8 +713,7 @@
 <span class="sd">        that isn&#39;t a proxy model if recursive is True.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">src_idx</span> <span class="o">=</span> <span class="n">idx</span>
-    <span class="k">while</span> <span class="n">src_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="n">src_idx</span><span class="o">.</span><span class="n">model</span><span class="p">(),</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractProxyModel</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">src_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src_idx</span><span class="o">.</span><span class="n">model</span><span class="p">(),</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractProxyModel</span><span class="p">):</span>
         <span class="n">src_idx</span> <span class="o">=</span> <span class="n">src_idx</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">mapToSource</span><span class="p">(</span><span class="n">src_idx</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">recursive</span><span class="p">:</span>
             <span class="k">break</span>
@@ -737,7 +750,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

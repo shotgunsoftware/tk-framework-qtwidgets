@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.bubble_widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>shotgun_fields.bubble_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -236,7 +236,8 @@
 <span class="sd">                border-radius: 5px;</span>
 <span class="sd">                background-color: %s;</span>
 <span class="sd">            }</span>
-<span class="sd">            &quot;&quot;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Button</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Button</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
         <span class="p">)</span>
 
         <span class="c1"># create a remove button for the widget.</span>
@@ -272,9 +273,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
 
         <span class="c1"># emit the &quot;remove_clicked&quot; signal when the button is clicked.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_clicked</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_clicked</span><span class="o">.</span><span class="n">emit</span><span class="p">())</span>
 
 <div class="viewcode-block" id="BubbleWidget.set_text"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.set_text">[docs]</a>    <span class="k">def</span> <span class="nf">set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_text</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -334,7 +333,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># used as a placeholder for a bubble in the editor</span>
-    <span class="n">_OBJECT_REPLACEMENT_CHAR</span> <span class="o">=</span> <span class="nb">unichr</span><span class="p">(</span><span class="mh">0xfffc</span><span class="p">)</span>
+    <span class="n">_OBJECT_REPLACEMENT_CHAR</span> <span class="o">=</span> <span class="nb">unichr</span><span class="p">(</span><span class="mh">0xFFFC</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -350,7 +349,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_text_object</span> <span class="o">=</span> <span class="n">_BubbleTextObject</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">()</span><span class="o">.</span><span class="n">documentLayout</span><span class="p">()</span><span class="o">.</span><span class="n">registerHandler</span><span class="p">(</span>
-            <span class="n">_BubbleTextObject</span><span class="o">.</span><span class="n">OBJECT_TYPE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_text_object</span><span class="p">,</span>
+            <span class="n">_BubbleTextObject</span><span class="o">.</span><span class="n">OBJECT_TYPE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_text_object</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setMouseTracking</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
@@ -371,15 +370,15 @@
         <span class="c1"># create a character format for the bubble</span>
         <span class="n">char_format</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCharFormat</span><span class="p">()</span>
         <span class="n">char_format</span><span class="o">.</span><span class="n">setObjectType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bubble_text_object</span><span class="o">.</span><span class="n">OBJECT_TYPE</span><span class="p">)</span>
-        <span class="n">char_format</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bubble_text_object</span><span class="o">.</span><span class="n">BUBBLE_DATA_PROPERTY</span><span class="p">,</span> <span class="n">bubble_id</span><span class="p">)</span>
+        <span class="n">char_format</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_text_object</span><span class="o">.</span><span class="n">BUBBLE_DATA_PROPERTY</span><span class="p">,</span> <span class="n">bubble_id</span>
+        <span class="p">)</span>
 
         <span class="c1"># keep a reference to the char format so that we can map a cursor to this</span>
         <span class="c1"># bubble later on</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_char_formats</span><span class="p">[</span><span class="n">bubble_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">char_format</span>
 
-        <span class="n">bubble</span><span class="o">.</span><span class="n">remove_clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_bubble</span><span class="p">(</span><span class="n">bubble_id</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="n">bubble</span><span class="o">.</span><span class="n">remove_clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_bubble</span><span class="p">(</span><span class="n">bubble_id</span><span class="p">))</span>
 
         <span class="c1"># insert the bubble character into the text editor and char format it properly</span>
         <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textCursor</span><span class="p">()</span>
@@ -444,7 +443,7 @@
         <span class="c1"># resulting to just adding the scroll values. please fix if you can</span>
         <span class="n">edit_pos</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
             <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizontalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span>
-            <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">()</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">()</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span>
         <span class="p">)</span>
 
         <span class="c1"># for mouse events find the actual widget at the position</span>
@@ -494,7 +493,7 @@
             <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OBJECT_REPLACEMENT_CHAR</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">MoveAnchor</span><span class="p">)</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">MoveAnchor</span><span class="p">)</span>
             <span class="n">char_format</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">charFormat</span><span class="p">()</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_char_formats</span><span class="p">[</span><span class="n">bubble_id</span><span class="p">]</span> <span class="o">!=</span> <span class="n">char_format</span><span class="p">:</span>
@@ -524,7 +523,7 @@
             <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OBJECT_REPLACEMENT_CHAR</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">MoveAnchor</span><span class="p">)</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">MoveAnchor</span><span class="p">)</span>
             <span class="n">char_format</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">charFormat</span><span class="p">()</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">char_format</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_char_formats</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -544,7 +543,9 @@
 <span class="sd">        Returns a :obj:`str` representing the text typed in the editor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">char_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OBJECT_REPLACEMENT_CHAR</span><span class="p">]</span>
+        <span class="n">char_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OBJECT_REPLACEMENT_CHAR</span>
+        <span class="p">]</span>
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">char_list</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BubbleEditWidget.remove_bubble"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.remove_bubble">[docs]</a>    <span class="k">def</span> <span class="nf">remove_bubble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bubble_id</span><span class="p">):</span>
@@ -570,7 +571,7 @@
             <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OBJECT_REPLACEMENT_CHAR</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">MoveAnchor</span><span class="p">)</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextCursor</span><span class="o">.</span><span class="n">MoveAnchor</span><span class="p">)</span>
             <span class="n">char_format</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">charFormat</span><span class="p">()</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_char_formats</span><span class="p">[</span><span class="n">bubble_id</span><span class="p">]</span> <span class="o">!=</span> <span class="n">char_format</span><span class="p">:</span>
@@ -655,14 +656,12 @@
                     <span class="n">painter</span><span class="p">,</span>
                     <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
                     <span class="n">QtGui</span><span class="o">.</span><span class="n">QRegion</span><span class="p">(),</span>
-                    <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">DrawChildren</span>
+                    <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">DrawChildren</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># pyside is using the renderFlags parameter which seems correct</span>
                 <span class="n">bubble</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
-                    <span class="n">painter</span><span class="p">,</span>
-                    <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                    <span class="n">renderFlags</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">DrawChildren</span>
+                    <span class="n">painter</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">renderFlags</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">DrawChildren</span>
                 <span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
@@ -712,7 +711,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

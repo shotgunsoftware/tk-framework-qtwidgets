@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>views.widget_delegate &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>views.widget_delegate &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -184,13 +184,13 @@
             
   <h1>Source code for views.widget_delegate</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2013 Shotgun Software Inc.</span>
-<span class="c1"># </span>
+<span class="c1">#</span>
 <span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c1"># </span>
-<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
 <span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">import</span> <span class="nn">weakref</span>
@@ -200,12 +200,13 @@
 
 <span class="n">USING_PYQT</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s2">&quot;QVariant&quot;</span><span class="p">)</span>
 
+
 <div class="viewcode-block" id="WidgetDelegate"><a class="viewcode-back" href="../../views.html#views.WidgetDelegate">[docs]</a><span class="k">class</span> <span class="nc">WidgetDelegate</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyledItemDelegate</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convenience wrapper that makes it straight forward to use widgets inside of delegates.</span>
 
-<span class="sd">    This class is basically an adapter which lets you connect a view (:class:`~PySide.QtGui.QAbstractItemView`) </span>
-<span class="sd">    with a :class:`~PySide.QtGui.QWidget` of choice. This widget is used to &quot;paint&quot; the view when it is being </span>
+<span class="sd">    This class is basically an adapter which lets you connect a view (:class:`~PySide.QtGui.QAbstractItemView`)</span>
+<span class="sd">    with a :class:`~PySide.QtGui.QWidget` of choice. This widget is used to &quot;paint&quot; the view when it is being</span>
 <span class="sd">    rendered. When editing the item in the view, this class will create an editor widget</span>
 <span class="sd">    as defined by the class.</span>
 
@@ -222,11 +223,12 @@
 <span class="sd">    - :meth:`setEditorData()` - populate the editor with data from the model</span>
 <span class="sd">    - :meth:`setModelData()` - apply the data from the editor back to the model</span>
 
-<span class="sd">    .. note:: If you are using the same widget for all items then you can just implement </span>
-<span class="sd">              the :meth:`_create_widget()` method instead of the separate :meth:`_get_painter_widget()` </span>
+<span class="sd">    .. note:: If you are using the same widget for all items then you can just implement</span>
+<span class="sd">              the :meth:`_create_widget()` method instead of the separate :meth:`_get_painter_widget()`</span>
 <span class="sd">              and :meth:`_create_editor_widget()` methods.</span>
-<span class="sd">    </span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param view: The parent view for this delegate</span>
@@ -276,7 +278,7 @@
             <span class="c1"># or editing.</span>
             <span class="k">return</span> <span class="bp">None</span>
 
-        <span class="c1"># the default implementation just uses the internal __paint_widget </span>
+        <span class="c1"># the default implementation just uses the internal __paint_widget</span>
         <span class="c1"># (creating it if needed) for backwards compatibility</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span><span class="p">():</span>
             <span class="n">paint_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_widget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -293,13 +295,13 @@
 
 <span class="sd">        :param model_index:     The index of the item in the model to return a widget for</span>
 <span class="sd">        :type model_index:      :class:`~PySide.QtCore.QModelIndex`</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param style_options:   Specifies the current Qt style options for this index</span>
 <span class="sd">        :type style_options:    :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param parent:          The parent view that the widget should be parented to</span>
 <span class="sd">        :type parent:           :class:`~PySide.QtGui.QWidget`</span>
-<span class="sd">        </span>
+
 <span class="sd">        :returns:               A QWidget to be used for editing the current index</span>
 <span class="sd">        :rtype:                 :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -320,15 +322,15 @@
 <span class="sd">        on the widget (such as labels, thumbnails etc) based on the data contained</span>
 <span class="sd">        in the model index parameter which is being passed.</span>
 
-<span class="sd">        :param widget: The QWidget (constructed in _create_widget()) which will </span>
-<span class="sd">                       be used to paint the cell. </span>
+<span class="sd">        :param widget: The QWidget (constructed in _create_widget()) which will</span>
+<span class="sd">                       be used to paint the cell.</span>
 <span class="sd">        :type parent:  :class:`~PySide.QtGui.QWidget`</span>
-<span class="sd">        </span>
-<span class="sd">        :param model_index: object representing the data of the object that is </span>
+
+<span class="sd">        :param model_index: object representing the data of the object that is</span>
 <span class="sd">                            about to be drawn.</span>
 <span class="sd">        :type model_index:  :class:`~PySide.QtCore.QModelIndex`</span>
-<span class="sd">        </span>
-<span class="sd">        :param style_options: Object containing specifics about the </span>
+
+<span class="sd">        :param style_options: Object containing specifics about the</span>
 <span class="sd">                              view related state of the cell.</span>
 <span class="sd">        :type style_options:  :class:`~PySide.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -337,14 +339,14 @@
 <div class="viewcode-block" id="WidgetDelegate._create_widget"><a class="viewcode-back" href="../../views.html#views.WidgetDelegate._create_widget">[docs]</a>    <span class="k">def</span> <span class="nf">_create_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This needs to be implemented by any deriving classes unless the separate</span>
-<span class="sd">        methods :meth:`_get_painter_widget()` and :meth:`_create_editor_widget()` </span>
+<span class="sd">        methods :meth:`_get_painter_widget()` and :meth:`_create_editor_widget()`</span>
 <span class="sd">        are implemented instead.</span>
 
 <span class="sd">        :param parent:  QWidget to parent the widget to</span>
 <span class="sd">        :type parent:   :class:`~PySide.QtGui.QWidget`</span>
-<span class="sd">        </span>
+
 <span class="sd">        :returns:       QWidget that will be used to paint grid cells in the view.</span>
-<span class="sd">        :rtype:         :class:`~PySide.QtGui.QWidget` </span>
+<span class="sd">        :rtype:         :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">None</span></div>
 
@@ -374,7 +376,9 @@
 <span class="sd">                                index</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># allow derived class to create the editor widget:</span>
-        <span class="n">editor_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_editor_widget</span><span class="p">(</span><span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">parent_widget</span><span class="p">)</span>
+        <span class="n">editor_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_editor_widget</span><span class="p">(</span>
+            <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">parent_widget</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">editor_widget</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">None</span>
 
@@ -385,15 +389,15 @@
 
         <span class="k">return</span> <span class="n">editor_widget</span>
 
-    <span class="k">def</span> <span class="nf">updateEditorGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor_widget</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>        
+    <span class="k">def</span> <span class="nf">updateEditorGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor_widget</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Subclassed implementation which is typically called  whenever an editor </span>
-<span class="sd">        widget is set up and needs resizing.  This happens immediately after </span>
+<span class="sd">        Subclassed implementation which is typically called  whenever an editor</span>
+<span class="sd">        widget is set up and needs resizing.  This happens immediately after</span>
 <span class="sd">        creation and also for example if the grid element size is changing.</span>
 
 <span class="sd">        :param editor_widget:   The editor that needs resizing/updating</span>
 <span class="sd">        :param style_options:   The style options to use when editing the editor</span>
-<span class="sd">        :param model_index:     The index in the data model that will be edited </span>
+<span class="sd">        :param model_index:     The index in the data model that will be edited</span>
 <span class="sd">                                using this editor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">editor_widget</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">style_options</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span>
@@ -408,7 +412,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># for performance reasons, we are not creating a widget every time</span>
-        <span class="c1"># but merely moving the same widget around. </span>
+        <span class="c1"># but merely moving the same widget around.</span>
         <span class="n">paint_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_painter_widget</span><span class="p">(</span><span class="n">model_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">paint_widget</span><span class="p">:</span>
             <span class="c1"># just paint using the base implementation:</span>
@@ -419,7 +423,7 @@
         <span class="c1"># it&#39;ll appear in the wrong place!</span>
         <span class="n">paint_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
 
-        <span class="c1"># call out to have the widget set the right values            </span>
+        <span class="c1"># call out to have the widget set the right values</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_before_paint</span><span class="p">(</span><span class="n">paint_widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">)</span>
 
         <span class="c1"># now paint!</span>
@@ -428,27 +432,26 @@
             <span class="n">paint_widget</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">style_options</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">style_options</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">())</span>
             <span class="c1"># note that we set the render flags NOT to render the background of the widget</span>
-            <span class="c1"># this makes it consistent with the way the editor widget is mounted inside </span>
+            <span class="c1"># this makes it consistent with the way the editor widget is mounted inside</span>
             <span class="c1"># each element upon hover.</span>
 
             <span class="c1"># WEIRD! It seems pyside and pyqt actually have different signatures for this method</span>
             <span class="k">if</span> <span class="n">USING_PYQT</span><span class="p">:</span>
                 <span class="c1"># pyqt is using the flags parameter, which seems inconsistent with QT</span>
-                <span class="c1"># http://pyqt.sourceforge.net/Docs/PyQt4/qwidget.html#render            </span>
-                <span class="n">paint_widget</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> 
-                                          <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
-                                          <span class="n">QtGui</span><span class="o">.</span><span class="n">QRegion</span><span class="p">(),</span>
-                                          <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">DrawChildren</span><span class="p">)</span>
+                <span class="c1"># http://pyqt.sourceforge.net/Docs/PyQt4/qwidget.html#render</span>
+                <span class="n">paint_widget</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+                    <span class="n">painter</span><span class="p">,</span>
+                    <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                    <span class="n">QtGui</span><span class="o">.</span><span class="n">QRegion</span><span class="p">(),</span>
+                    <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">DrawChildren</span><span class="p">,</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># pyside is using the renderFlags parameter which seems correct</span>
-                <span class="n">paint_widget</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> 
-                                          <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
-                                          <span class="n">renderFlags</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">DrawChildren</span><span class="p">)</span>
+                <span class="n">paint_widget</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+                    <span class="n">painter</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">renderFlags</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">DrawChildren</span>
+                <span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span></div>
-            
-
-
 </pre></div>
 
            </div>
@@ -481,7 +484,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

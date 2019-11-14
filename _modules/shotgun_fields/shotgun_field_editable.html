@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_editable &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>shotgun_fields.shotgun_field_editable &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -200,6 +200,7 @@
 <span class="c1"># This is the stylesheet applied to edit, apply, and done buttons.</span>
 <span class="n">BUTTON_STYLE</span> <span class="o">=</span> <span class="s2">&quot;background-color: none; border: none; min-width: 15px;&quot;</span>
 
+
 <div class="viewcode-block" id="ShotgunFieldEditable"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable">[docs]</a><span class="k">class</span> <span class="nc">ShotgunFieldEditable</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStackedWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps ``DISPLAY`` and ``EDITOR`` widgets into a :class:`~PySide.QtGui.QStackedWidget`</span>
@@ -237,11 +238,11 @@
 
         <span class="c1"># user clicked the button to edit the value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">edit_requested</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="p">))</span>
+            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="p">)</span>
+        <span class="p">)</span>
 
         <span class="c1"># user is done editing</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">done_editing</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">done_editing</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">))</span>
 
         <span class="c1"># apply the new value entered into the editor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_apply_value</span><span class="p">)</span>
@@ -254,8 +255,7 @@
         <span class="c1"># display widget, this should handle a value change from either widget.</span>
         <span class="c1"># if this widget is modified to wait on applying the new value until</span>
         <span class="c1"># after SG has been update, this logic will need to change.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="o">.</span><span class="n">display_widget</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ShotgunFieldEditable.destroy"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_editable.ShotgunFieldEditable.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -372,7 +372,7 @@
             <span class="k">finally</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="p">,</span> <span class="s1">&#39;_begin_edit&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="p">,</span> <span class="s2">&quot;_begin_edit&quot;</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">_begin_edit</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span></div>
@@ -405,7 +405,8 @@
         <span class="c1"># this is the &quot;no edit&quot; label that will show on hover</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_no_edit_lbl</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_no_edit_lbl</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span>
-            <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/not_editable.png&quot;</span><span class="p">))</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/not_editable.png&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_no_edit_lbl</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_no_edit_lbl</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
@@ -573,7 +574,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_done_btn</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/apply_value.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/apply_value.png&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
 
@@ -592,7 +595,7 @@
             <span class="n">btn_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_done_btn</span><span class="p">)</span>
             <span class="n">btn_layout</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">editor_widget</span><span class="p">,</span> <span class="s1">&#39;_IMMEDIATE_APPLY&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">editor_widget</span><span class="p">,</span> <span class="s2">&quot;_IMMEDIATE_APPLY&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span>
             <span class="c1"># widget is set to immediately apply value. no need to display the btn</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_apply_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
@@ -646,9 +649,6 @@
         <span class="c1"># responsible for storing their own values as they are modified</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_widget</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">done_editing</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
-
-
-
 </pre></div>
 
            </div>
@@ -681,7 +681,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

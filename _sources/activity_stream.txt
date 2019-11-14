@@ -24,7 +24,7 @@ All the content in the activity stream is cached and when you request the activi
 stream for an entity, the widget requests only the changes since the last update. The
 data is cached in a shared manner, meaning that a project, shot and task may be showing
 the same updates in their respective streams - and in this case, those updates are only
-pulled down once. 
+pulled down once.
 
 
 ActivityStreamWidget

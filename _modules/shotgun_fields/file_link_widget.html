@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -211,6 +211,7 @@
 
 <span class="sd">    The ``FileLinkWidget`` represents both the ``DISPLAY`` and ``EDITOR`` widget type.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="vm">__metaclass__</span> <span class="o">=</span> <span class="n">ShotgunFieldMeta</span>
     <span class="n">_DISPLAY_TYPE</span> <span class="o">=</span> <span class="s2">&quot;url&quot;</span>
     <span class="n">_EDITOR_TYPE</span> <span class="o">=</span> <span class="s2">&quot;url&quot;</span>
@@ -283,7 +284,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_edit_upload_file_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Upload New File&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_edit_upload_file_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upload_file</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_upload_file_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Replace with Uploaded File&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_upload_file_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="s2">&quot;Replace with Uploaded File&quot;</span><span class="p">,</span> <span class="bp">self</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_upload_file_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upload_file</span><span class="p">)</span>
 
         <span class="c1"># web</span>
@@ -293,17 +296,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_edit_web_page_link_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Edit Web Page Link&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_edit_web_page_link_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_link</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_web_page_link_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Replace with Web Page Link&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_web_page_link_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="s2">&quot;Replace with Web Page Link&quot;</span><span class="p">,</span> <span class="bp">self</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_web_page_link_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edit_link</span><span class="p">)</span>
 
         <span class="c1"># local</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_local_path_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Link to Local File or Directory&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_local_path_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse_local</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_local_path_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Edit Local File or Directory&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edit_local_path_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="s2">&quot;Edit Local File or Directory&quot;</span><span class="p">,</span> <span class="bp">self</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_edit_local_path_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse_local</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_local_path_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Replace with Local File or Directory&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_local_path_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+            <span class="s2">&quot;Replace with Local File or Directory&quot;</span><span class="p">,</span> <span class="bp">self</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_replace_with_local_path_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse_local</span><span class="p">)</span>
 
         <span class="c1"># remove</span>
@@ -412,7 +421,7 @@
             <span class="n">sg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">shotgun</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                <span class="p">[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span>
+                <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span>
                 <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">],</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
@@ -463,9 +472,7 @@
 
         <span class="c1"># show the menu below the button</span>
         <span class="n">popup_menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span>
-                <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">height</span><span class="p">()))</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_remove_link</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -475,11 +482,7 @@
 
         <span class="c1"># clear the value of the field, emit the ``value_changed`` signal.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-            <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_display_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
@@ -578,7 +581,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">350</span><span class="p">)</span>
 
         <span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
-        <span class="n">display</span><span class="o">=</span> <span class="n">display</span>
+        <span class="n">display</span> <span class="o">=</span> <span class="n">display</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Link to Web Page&quot;</span><span class="p">)</span>
 
@@ -646,7 +649,6 @@
     <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;:obj:`str` display name entered by the user.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_input</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
-
 </pre></div>
 
            </div>
@@ -679,7 +681,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>search_completer.global_search_completer &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>search_completer.global_search_completer &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -196,7 +196,9 @@
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
-<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span><span class="p">)</span>
+<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span>
+<span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">.search_completer</span> <span class="kn">import</span> <span class="n">SearchCompleter</span>
 
@@ -283,11 +285,7 @@
             <span class="c1"># the shotgun python-api. this data may be formalized at some point</span>
             <span class="c1"># but for now, only expose the minimum information.</span>
 
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
-            <span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]}</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">None</span></div>
 
@@ -327,6 +325,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># deferred import to help documentation generation.</span>
         <span class="kn">from</span> <span class="nn">.global_search_result_delegate</span> <span class="kn">import</span> <span class="n">GlobalSearchResultDelegate</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span> <span class="o">=</span> <span class="n">GlobalSearchResultDelegate</span><span class="p">(</span><span class="n">popup</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
         <span class="n">popup</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span><span class="p">)</span>
 
@@ -342,17 +341,17 @@
         <span class="c1"># constrain by project in the search</span>
         <span class="n">project_ids</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_search_criteria</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> \
-           <span class="s2">&quot;Project&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_search_criteria</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_search_criteria</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="ow">and</span> <span class="s2">&quot;Project&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_search_criteria</span>
+        <span class="p">):</span>
             <span class="c1"># this is a Project-only search. don&#39;t restrict by the current project id</span>
             <span class="k">pass</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span><span class="p">:</span>
             <span class="n">project_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">execute_text_search</span><span class="p">(</span>
-            <span class="n">text</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_entity_search_criteria</span><span class="p">,</span>
-            <span class="n">project_ids</span>
+            <span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_search_criteria</span><span class="p">,</span> <span class="n">project_ids</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
@@ -386,18 +385,13 @@
             <span class="n">item</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
             <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_RESULT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ROLE</span><span class="p">)</span>
 
-            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_for_qt_model</span><span class="p">(</span><span class="n">d</span><span class="p">),</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_for_qt_model</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
 
             <span class="n">item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixmaps</span><span class="o">.</span><span class="n">no_thumbnail</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="p">:</span>
                 <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">request_thumbnail</span><span class="p">(</span>
-                    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">],</span>
-                    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
-                    <span class="s2">&quot;image&quot;</span><span class="p">,</span>
-                    <span class="n">load_image</span><span class="o">=</span><span class="bp">True</span>
+                    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">load_image</span><span class="o">=</span><span class="bp">True</span>
                 <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_thumb_map</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;item&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">}</span>
 
@@ -434,7 +428,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

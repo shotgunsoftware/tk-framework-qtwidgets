@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>navigation.breadcrumb_widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>navigation.breadcrumb_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -184,13 +184,13 @@
             
   <h1>Source code for navigation.breadcrumb_widget</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
-<span class="c1"># </span>
+<span class="c1">#</span>
 <span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c1"># </span>
-<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
 <span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -203,11 +203,13 @@
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 <span class="kn">from</span> <span class="nn">.ui.breadcrumb_widget</span> <span class="kn">import</span> <span class="n">Ui_BreadcrumbWidget</span>
 
+
 <div class="viewcode-block" id="Breadcrumb"><a class="viewcode-back" href="../../navigation.html#navigation.Breadcrumb">[docs]</a><span class="k">class</span> <span class="nc">Breadcrumb</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Base breadcrumb class that all breadcrumb instances </span>
+<span class="sd">    Base breadcrumb class that all breadcrumb instances</span>
 <span class="sd">    should be derived from</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construction</span>
@@ -223,10 +225,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span></div>
 
+
 <div class="viewcode-block" id="BreadcrumbWidget"><a class="viewcode-back" href="../../navigation.html#navigation.BreadcrumbWidget">[docs]</a><span class="k">class</span> <span class="nc">BreadcrumbWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the BreadcrumbWidget class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent:   The parent QWidget for this control</span>
@@ -245,12 +249,14 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Populate the breadcrumb control with a list of breadcrumbs</span>
 
-<span class="sd">        :param breadcrumbs: A list of breadcrumbs.  Each breadcrumb instance should derive </span>
+<span class="sd">        :param breadcrumbs: A list of breadcrumbs.  Each breadcrumb instance should derive</span>
 <span class="sd">                            from the Breadcrumb class</span>
 <span class="sd">        :type breadcrumbs: list of :class:`Breadcrumb`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># build a single path from the list of crumbs:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&lt;span style=&#39;color:#2C93E2&#39;&gt; &amp;#9656; &lt;/span&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">crumb</span><span class="o">.</span><span class="n">label</span> <span class="k">for</span> <span class="n">crumb</span> <span class="ow">in</span> <span class="n">breadcrumbs</span><span class="p">])</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&lt;span style=&#39;color:#2C93E2&#39;&gt; &amp;#9656; &lt;/span&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">crumb</span><span class="o">.</span><span class="n">label</span> <span class="k">for</span> <span class="n">crumb</span> <span class="ow">in</span> <span class="n">breadcrumbs</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&lt;big&gt;</span><span class="si">%s</span><span class="s2">&lt;/big&gt;&quot;</span> <span class="o">%</span> <span class="n">path</span>
 
         <span class="c1"># and update the label:</span>
@@ -287,7 +293,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

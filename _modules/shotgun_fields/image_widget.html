@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.image_widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>shotgun_fields.image_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -201,8 +201,12 @@
 
 <span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
 
-<span class="n">shotgun_data</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_data&quot;</span><span class="p">)</span>
-<span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
+<span class="n">shotgun_data</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_data&quot;</span>
+<span class="p">)</span>
+<span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="ImageWidget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.image_widget.ImageWidget">[docs]</a><span class="k">class</span> <span class="nc">ImageWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
@@ -211,6 +215,7 @@
 
 <span class="sd">    The ``ImageWidget`` represents both the ``DISPLAY`` and ``EDITOR`` widget type.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="vm">__metaclass__</span> <span class="o">=</span> <span class="n">ShotgunFieldMeta</span>
     <span class="n">_DISPLAY_TYPE</span> <span class="o">=</span> <span class="s2">&quot;image&quot;</span>
     <span class="n">_EDITOR_TYPE</span> <span class="o">=</span> <span class="s2">&quot;image&quot;</span>
@@ -355,9 +360,11 @@
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_display_default</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span> <span class="ow">and</span>
-                <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">)</span> <span class="ow">and</span>
-                <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">value</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="p">):</span>
                 <span class="c1"># the widget isn&#39;t being used as a delegate (which never</span>
                 <span class="c1"># requires downloads) and the value is not a local file or a</span>
                 <span class="c1"># pre-created pixmap. so we need to download it.</span>
@@ -387,19 +394,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_needs_download</span> <span class="o">=</span> <span class="bp">True</span>
 
             <span class="c1"># start up a data retriever to fetch the thumbnail in the background</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span> <span class="o">=</span> <span class="n">shotgun_data</span><span class="o">.</span><span class="n">ShotgunDataRetriever</span><span class="p">(</span><span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bg_task_manager</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span> <span class="o">=</span> <span class="n">shotgun_data</span><span class="o">.</span><span class="n">ShotgunDataRetriever</span><span class="p">(</span>
+                <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bg_task_manager</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_worker_signal</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">work_failure</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_worker_failure</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span>
-            <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span>
-            <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
 
         <span class="c1"># menu display button for showing the popup menu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/image_menu.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/image_menu.png&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
@@ -499,7 +507,8 @@
                 <span class="n">entity_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_task_uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_retriever</span><span class="o">.</span><span class="n">request_thumbnail</span><span class="p">(</span>
-                <span class="n">value</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">,</span> <span class="n">load_image</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">value</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">,</span> <span class="n">load_image</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_needs_download</span> <span class="o">=</span> <span class="bp">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
@@ -535,9 +544,7 @@
             <span class="n">menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popup_display_menu</span>
 
         <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span>
-                <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">height</span><span class="p">()))</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_worker_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
@@ -570,9 +577,7 @@
 <span class="sd">        Scale the pixmap in preparation for display.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span>
-            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">KeepAspectRatio</span><span class="p">,</span>
-            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SmoothTransformation</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">KeepAspectRatio</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SmoothTransformation</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_show_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -597,9 +602,11 @@
 
         <span class="n">img_dialog</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">img_dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span>
-            <span class="s2">&quot;Viewing: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="s2">&quot;Viewing: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span>
+            <span class="o">%</span> <span class="p">(</span>
                 <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_type_display_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">),</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="p">)</span>
 
         <span class="n">lbl</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
@@ -647,9 +654,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">file_path</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">caption</span><span class="o">=</span><span class="s2">&quot;Replace Image&quot;</span><span class="p">,</span>
-            <span class="n">options</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">DontResolveSymlinks</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s2">&quot;Replace Image&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">DontResolveSymlinks</span>
         <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
@@ -690,7 +695,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

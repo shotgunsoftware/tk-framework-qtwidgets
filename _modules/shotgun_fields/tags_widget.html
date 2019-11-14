@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.tags_widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>shotgun_fields.tags_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -201,10 +201,12 @@
 
 <span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
 
+
 <div class="viewcode-block" id="TagsWidget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.tags_widget.TagsWidget">[docs]</a><span class="k">class</span> <span class="nc">TagsWidget</span><span class="p">(</span><span class="n">ElidedLabelBaseWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Display a ``tag_list`` field value as returned by the Shotgun API.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="vm">__metaclass__</span> <span class="o">=</span> <span class="n">ShotgunFieldMeta</span>
     <span class="n">_DISPLAY_TYPE</span> <span class="o">=</span> <span class="s2">&quot;tag_list&quot;</span>
 
@@ -217,12 +219,11 @@
         <span class="n">tag_strings</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
             <span class="n">tag_strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="s2">&quot;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&amp;nbsp;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                    <span class="s2">&quot;:/qtwidgets-shotgun-fields/tag.png&quot;</span><span class="p">,</span> <span class="n">tag</span>
-                <span class="p">)</span>
+                <span class="s2">&quot;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&amp;nbsp;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/tag.png&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="s2">&quot;&amp;nbsp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tag_strings</span><span class="p">)</span></div>
+
 
 <span class="k">class</span> <span class="nc">TagsEditorWidget</span><span class="p">(</span><span class="n">BubbleEditWidget</span><span class="p">):</span>
 
@@ -232,8 +233,8 @@
 
     <span class="c1"># TODO: The following line is commented out so that the class is not</span>
     <span class="c1"># registered as a tag editor. Uncomment when tags are supported.</span>
-    <span class="c1">#__metaclass__ = ShotgunFieldMeta</span>
-    <span class="c1">#_EDITOR_TYPE = &quot;tag_list&quot;</span>
+    <span class="c1"># __metaclass__ = ShotgunFieldMeta</span>
+    <span class="c1"># _EDITOR_TYPE = &quot;tag_list&quot;</span>
 
     <span class="c1"># TODO: some additional validation will need to happen to make sure a valid</span>
     <span class="c1"># tag was entered and that the user can create a tag if one does not exist.</span>
@@ -337,8 +338,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-
-
 </pre></div>
 
            </div>
@@ -371,7 +370,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

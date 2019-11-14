@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -199,7 +199,9 @@
 <span class="kn">from</span> <span class="nn">.ui.context_editor_widget</span> <span class="kn">import</span> <span class="n">Ui_ContextWidget</span>
 
 <span class="c1"># framework imports</span>
-<span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
+<span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span>
+<span class="p">)</span>
 <span class="n">settings</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;settings&quot;</span><span class="p">)</span>
 
 <span class="c1"># internal imports</span>
@@ -210,14 +212,7 @@
 
 <span class="c1"># fields required to create a context from a task entity without falling back to</span>
 <span class="c1"># a SG query</span>
-<span class="n">TASK_QUERY_FIELDS</span> <span class="o">=</span><span class="p">[</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;id&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;content&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;project&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;entity&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;step&quot;</span>
-<span class="p">]</span>
+<span class="n">TASK_QUERY_FIELDS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="ContextWidget"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget">[docs]</a><span class="k">class</span> <span class="nc">ContextWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
@@ -248,7 +243,9 @@
 
         <span class="c1"># the key we&#39;ll use to store/retrieve recent contexts via user settings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings_recent_contexts_key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_recent_contexts_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">project</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">project</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
 
         <span class="c1"># we will do a bg query that requires an id to catch results</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schema_query_id</span> <span class="o">=</span> <span class="bp">None</span>
@@ -279,11 +276,7 @@
         <span class="c1"># constant, but the recents menu will be dynamic. so we build the menu</span>
         <span class="c1"># just before it is shown. these lists hold the QActions for each</span>
         <span class="c1"># group of contexts to show in the menu</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;Related&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;My Tasks&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;Recent&quot;</span><span class="p">:</span> <span class="p">[]</span>
-        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Related&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;My Tasks&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;Recent&quot;</span><span class="p">:</span> <span class="p">[]}</span>
 
         <span class="c1"># set up the UI</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_ContextWidget</span><span class="p">()</span>
@@ -325,14 +318,13 @@
                 <span class="p">]:</span>
                     <span class="c1"># user hit tab/enter/return in search. go with the currently</span>
                     <span class="c1"># highlighted item or the first one</span>
-                    <span class="n">result</span> <span class="o">=</span> \
-                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_current_result</span><span class="p">()</span> <span class="ow">or</span>\
-                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_first_result</span><span class="p">()</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_current_result</span><span class="p">()</span>
+                        <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_first_result</span><span class="p">()</span>
+                    <span class="p">)</span>
                     <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span><span class="p">(</span>
-                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
-                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
                         <span class="p">)</span>
 
         <span class="k">elif</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="p">:</span>
@@ -357,14 +349,13 @@
                 <span class="p">]:</span>
                     <span class="c1"># user hit tab/enter/return in search. go with the currently</span>
                     <span class="c1"># highlighted item or the first one</span>
-                    <span class="n">result</span> <span class="o">=</span> \
-                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_current_result</span><span class="p">()</span> <span class="ow">or</span>\
-                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_first_result</span><span class="p">()</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_current_result</span><span class="p">()</span>
+                        <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">get_first_result</span><span class="p">()</span>
+                    <span class="p">)</span>
                     <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span><span class="p">(</span>
-                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
-                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
                         <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">False</span>
@@ -383,8 +374,7 @@
 
             <span class="c1"># don&#39;t include the user credentials in the serialized context as</span>
             <span class="c1"># it may cause issues with authentication when deserializing</span>
-            <span class="n">serialized_context</span> <span class="o">=</span> <span class="n">recent_context</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span>
-                <span class="n">with_user_credentials</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="n">serialized_context</span> <span class="o">=</span> <span class="n">recent_context</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">with_user_credentials</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
             <span class="n">serialized_contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">serialized_context</span><span class="p">)</span>
 
@@ -394,11 +384,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">store</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_settings_recent_contexts_key</span><span class="p">,</span>
             <span class="n">serialized_contexts</span><span class="p">,</span>
-            <span class="n">scope</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">UserSettings</span><span class="o">.</span><span class="n">SCOPE_PROJECT</span>
+            <span class="n">scope</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">UserSettings</span><span class="o">.</span><span class="n">SCOPE_PROJECT</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ContextWidget.set_context"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_context">[docs]</a>    <span class="k">def</span> <span class="nf">set_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">task_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">link_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget.set_context"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_context">[docs]</a>    <span class="k">def</span> <span class="nf">set_context</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">task_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">link_display_override</span><span class="o">=</span><span class="bp">None</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the context to display in the widget.</span>
 
@@ -418,7 +409,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_context</span><span class="p">(</span>
             <span class="n">context</span><span class="p">,</span>
             <span class="n">task_display_override</span><span class="o">=</span><span class="n">task_display_override</span><span class="p">,</span>
-            <span class="n">link_display_override</span><span class="o">=</span><span class="n">link_display_override</span>
+            <span class="n">link_display_override</span><span class="o">=</span><span class="n">link_display_override</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># ensure the new context is added to the list of recents.</span>
@@ -439,8 +430,7 @@
 
         <span class="c1"># attach the context menu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_menu_btn</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">aboutToShow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_on_about_to_show_contexts_menu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">aboutToShow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_about_to_show_contexts_menu</span><span class="p">)</span>
 
         <span class="c1"># setup the search toggle</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search_btn</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_task_search_toggled</span><span class="p">)</span>
@@ -453,15 +443,12 @@
         <span class="c1"># set up the task manager to the task search widget</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">set_placeholder_text</span><span class="p">(</span><span class="s2">&quot;Search for Tasks...&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span><span class="p">)</span>
 
         <span class="c1"># save as above but for the link search widget</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_placeholder_text</span><span class="p">(</span><span class="s2">&quot;Search for entity link...&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_activated</span><span class="p">)</span>
 
         <span class="c1"># limit the task autocompleter to tasks only.</span>
         <span class="c1"># TODO: limit to tasks linked to the entity types given</span>
@@ -519,12 +506,13 @@
 <span class="sd">        :param str field_name: Shotgun field to restrict based on</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;You must run set_up() before this method can be executed.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;You must run set_up() before this method can be executed.&quot;</span>
+            <span class="p">)</span>
 
         <span class="c1"># Query Shotgun for valid entity types for PublishedFile.entity field</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schema_query_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span>
-            <span class="n">_query_entity_schema</span><span class="p">,</span>
-            <span class="n">task_args</span><span class="o">=</span><span class="p">[</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">]</span>
+            <span class="n">_query_entity_schema</span><span class="p">,</span> <span class="n">task_args</span><span class="o">=</span><span class="p">[</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">]</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ContextWidget.restrict_entity_types"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.restrict_entity_types">[docs]</a>    <span class="k">def</span> <span class="nf">restrict_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_types</span><span class="p">):</span>
@@ -543,8 +531,7 @@
         <span class="n">entity_types_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="p">[])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">entity_types</span><span class="p">)</span>
 
         <span class="c1"># update the types for the link completer</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span>
-            <span class="n">entity_types_dict</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span><span class="n">entity_types_dict</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">context_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -622,8 +609,9 @@
         <span class="c1"># only keep the 5 most recent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Recent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recent_actions</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_build_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tasks</span><span class="p">,</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-        <span class="n">exclude_current_context</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_build_actions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tasks</span><span class="p">,</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">exclude_current_context</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build a list of actions from the supplied tasks. The actions are stored</span>
 <span class="sd">        in the instance&#39;s _menu_actions dictionary and used to build the menu.</span>
@@ -652,9 +640,11 @@
             <span class="n">task_context</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
 
             <span class="c1"># don&#39;t include the current context in this list of actions</span>
-            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="ow">and</span>
-                <span class="n">exclude_current_context</span> <span class="ow">and</span>
-                <span class="n">task_context</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_context</span>
+                <span class="ow">and</span> <span class="n">exclude_current_context</span>
+                <span class="ow">and</span> <span class="n">task_context</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span>
+            <span class="p">):</span>
                 <span class="k">continue</span>
 
             <span class="c1"># build the action and add it to the list</span>
@@ -682,8 +672,7 @@
         <span class="n">action</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">context_display</span><span class="p">)</span>
         <span class="n">action</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">icon_path</span><span class="p">))</span>
         <span class="n">action</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
-        <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_context_activated</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_context_activated</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">action</span>
 
@@ -699,14 +688,14 @@
         <span class="n">serialized_recent_contexts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_settings_recent_contexts_key</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
-            <span class="n">scope</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">UserSettings</span><span class="o">.</span><span class="n">SCOPE_PROJECT</span>
+            <span class="n">scope</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">UserSettings</span><span class="o">.</span><span class="n">SCOPE_PROJECT</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># turn these into QActions to add to the list of recents in the menu</span>
         <span class="k">for</span> <span class="n">serialized_context</span> <span class="ow">in</span> <span class="n">serialized_recent_contexts</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">context</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">Context</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">serialized_context</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Unable to deserialize stored context.&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">recent_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_qaction_for_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
@@ -780,8 +769,7 @@
 
                 <span class="c1"># get the display name for the status code</span>
                 <span class="n">status_display</span> <span class="o">=</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_status_display_name</span><span class="p">(</span>
-                    <span class="n">status_code</span><span class="p">,</span>
-                    <span class="n">project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+                    <span class="n">status_code</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
                 <span class="p">)</span>
 
                 <span class="c1"># get the actions for this code</span>
@@ -853,8 +841,7 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">entity</span><span class="p">:</span>
                     <span class="n">search_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">task</span><span class="p">:</span>
-                    <span class="n">search_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span>
-                        <span class="n">search_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+                    <span class="n">search_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">search_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">search_str</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_str</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">complete</span><span class="p">()</span>
@@ -915,10 +902,7 @@
         <span class="k">elif</span> <span class="n">task_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_query_id</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed query for the current user&#39;s Tasks.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_build_actions</span><span class="p">(</span>
-                <span class="n">result</span><span class="p">,</span>
-                <span class="s2">&quot;Related&quot;</span><span class="p">,</span>
-                <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                <span class="n">exclude_current_context</span><span class="o">=</span><span class="bp">True</span>
+                <span class="n">result</span><span class="p">,</span> <span class="s2">&quot;Related&quot;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">exclude_current_context</span><span class="o">=</span><span class="bp">True</span>
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_task_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">traceback_str</span><span class="p">):</span>
@@ -960,10 +944,7 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Querying related tasks for context: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">context</span><span class="p">,))</span>
 
         <span class="c1"># unique id for entity to use as local cache lookup</span>
-        <span class="n">entity_id</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-            <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
-        <span class="p">)</span>
+        <span class="n">entity_id</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
 
         <span class="c1"># if we&#39;ve queried tasks for this entity before, just return those</span>
         <span class="k">if</span> <span class="n">entity_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_cache</span><span class="p">:</span>
@@ -977,7 +958,7 @@
             <span class="p">[[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">]],</span>
             <span class="c1"># query all fields required to create a context from a task entity</span>
             <span class="c1"># dictionary. see sgtk api `context_from_entity_dictionary`</span>
-            <span class="n">fields</span><span class="o">=</span><span class="n">TASK_QUERY_FIELDS</span>
+            <span class="n">fields</span><span class="o">=</span><span class="n">TASK_QUERY_FIELDS</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># cache the tasks</span>
@@ -994,18 +975,18 @@
 
         <span class="c1"># drill down into the schema to retrieve the valid types for the</span>
         <span class="c1"># field. this is ugly, but will ensure we get a list no matter what</span>
-        <span class="n">entity_types</span> <span class="o">=</span> <span class="n">published_file_entity_schema</span><span class="o">.</span> \
-            <span class="n">get</span><span class="p">(</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span> \
-            <span class="n">get</span><span class="p">(</span><span class="s2">&quot;properties&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span> \
-            <span class="n">get</span><span class="p">(</span><span class="s2">&quot;valid_types&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span> \
-            <span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">entity_types</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">published_file_entity_schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;properties&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;valid_types&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="p">)</span>
 
         <span class="c1"># always include Project and Tasks</span>
         <span class="n">entity_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Project&quot;</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s2">&quot;Limiting context link completer to these entities: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-            <span class="p">(</span><span class="n">entity_types</span><span class="p">,)</span>
+            <span class="s2">&quot;Limiting context link completer to these entities: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entity_types</span><span class="p">,)</span>
         <span class="p">)</span>
 
         <span class="c1"># construct a dictionary that the search widget expects for</span>
@@ -1014,12 +995,10 @@
         <span class="c1"># just use empty list.</span>
         <span class="n">entity_types_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="p">[])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">entity_types</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s2">&quot;Setting searchable entity types to: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entity_types_dict</span><span class="p">,))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting searchable entity types to: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entity_types_dict</span><span class="p">,))</span>
 
         <span class="c1"># update the types for the link completer</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span>
-            <span class="n">entity_types_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span><span class="n">entity_types_dict</span><span class="p">)</span>
 
         <span class="c1"># limit the task search to tasks only.</span>
         <span class="c1"># TODO: limit to tasks linked to entities of the types queried above</span>
@@ -1028,8 +1007,9 @@
         <span class="c1"># now update the types for the task completer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span><span class="n">task_types_dict</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_show_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">task_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">link_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_show_context</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">task_display_override</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">link_display_override</span><span class="o">=</span><span class="bp">None</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show the supplied context in the UI.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1057,8 +1037,7 @@
         <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
             <span class="c1"># given the context, populate any related tasks for the menu</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_related_tasks_query_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_query_related_tasks</span><span class="p">,</span>
-                <span class="n">task_args</span><span class="o">=</span><span class="p">[</span><span class="n">context</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_query_related_tasks</span><span class="p">,</span> <span class="n">task_args</span><span class="o">=</span><span class="p">[</span><span class="n">context</span><span class="p">]</span>
             <span class="p">)</span></div>
 
 
@@ -1082,7 +1061,8 @@
         <span class="c1"># return the name with the appropriate icon in front</span>
         <span class="n">task_type</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
         <span class="n">task_icon</span> <span class="o">=</span> <span class="s2">&quot;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="n">task_type</span><span class="p">),)</span>
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="n">task_type</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="n">display_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&amp;nbsp;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">task_icon</span><span class="p">,</span> <span class="n">task_name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">display_name</span>
@@ -1113,7 +1093,8 @@
         <span class="c1"># return the name with the appropriate icon in front</span>
         <span class="n">entity_type</span> <span class="o">=</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
         <span class="n">entity_icon</span> <span class="o">=</span> <span class="s2">&quot;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="n">entity_type</span><span class="p">),)</span>
+            <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">get_entity_type_icon_url</span><span class="p">(</span><span class="n">entity_type</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="n">display_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&amp;nbsp;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entity_icon</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">display_name</span>
@@ -1142,7 +1123,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">display_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                </span><span class="si">%s</span><span class="s2">&amp;nbsp;&amp;nbsp;&lt;b&gt;&lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/b&gt;&amp;nbsp;&amp;nbsp;</span><span class="si">%s</span><span class="s2"></span>
-<span class="s2">            &quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">link_display</span><span class="p">,</span> <span class="n">task_display</span><span class="p">)</span>
+<span class="s2">            &quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">link_display</span><span class="p">,</span>
+                <span class="n">task_display</span><span class="p">,</span>
+            <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">display_name</span>
 
@@ -1183,14 +1167,14 @@
             <span class="s2">&quot;filter_operator&quot;</span><span class="p">:</span> <span class="s2">&quot;any&quot;</span><span class="p">,</span>
             <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="p">[</span><span class="s2">&quot;task_assignees&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">current_user</span><span class="p">],</span>
-                <span class="p">[</span><span class="s2">&quot;task_assignees.Group.users&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">current_user</span><span class="p">]</span>
-            <span class="p">]</span>
-        <span class="p">}</span>
+                <span class="p">[</span><span class="s2">&quot;task_assignees.Group.users&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">current_user</span><span class="p">],</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
     <span class="p">]</span>
 
     <span class="n">order</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">{</span><span class="s2">&quot;field_name&quot;</span><span class="p">:</span> <span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;asc&quot;</span><span class="p">},</span>
-        <span class="p">{</span><span class="s2">&quot;field_name&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;asc&quot;</span><span class="p">}</span>
+        <span class="p">{</span><span class="s2">&quot;field_name&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;asc&quot;</span><span class="p">},</span>
     <span class="p">]</span>
 
     <span class="c1"># query all fields required to create a context from a task entity</span>
@@ -1198,12 +1182,7 @@
     <span class="n">task_fields</span> <span class="o">=</span> <span class="n">TASK_QUERY_FIELDS</span>
     <span class="n">task_fields</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;sg_status_list&quot;</span><span class="p">])</span>
 
-    <span class="k">return</span> <span class="n">bundle</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-        <span class="s2">&quot;Task&quot;</span><span class="p">,</span>
-        <span class="n">filters</span><span class="p">,</span>
-        <span class="n">fields</span><span class="o">=</span><span class="n">task_fields</span><span class="p">,</span>
-        <span class="n">order</span><span class="o">=</span><span class="n">order</span>
-    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">bundle</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;Task&quot;</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">task_fields</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_query_entity_schema</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
@@ -1220,9 +1199,7 @@
     <span class="n">project</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
 
     <span class="k">return</span> <span class="n">bundle</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">schema_field_read</span><span class="p">(</span>
-        <span class="n">entity_type</span><span class="p">,</span>
-        <span class="n">field_name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span>
-        <span class="n">project_entity</span><span class="o">=</span><span class="n">project</span>
+        <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span> <span class="n">project_entity</span><span class="o">=</span><span class="n">project</span>
     <span class="p">)</span>
 </pre></div>
 
@@ -1256,7 +1233,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

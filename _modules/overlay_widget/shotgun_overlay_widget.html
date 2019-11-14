@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>overlay_widget.shotgun_overlay_widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>overlay_widget.shotgun_overlay_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -198,7 +198,7 @@
 <span class="kn">from</span> <span class="nn">tank.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 <span class="c1"># load resources</span>
-<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span> <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>  <span class="c1"># noqa</span>
 <span class="kn">from</span> <span class="nn">.shotgun_spinning_widget</span> <span class="kn">import</span> <span class="n">ShotgunSpinningWidget</span>
 
 
@@ -243,7 +243,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span> <span class="o">=</span> <span class="n">ShotgunSpinningWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="c1"># We want text to be centered and wrapping words.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextWordWrap</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextWordWrap</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
         <span class="c1"># Allow to open hyperlinks</span>
@@ -317,13 +319,13 @@
         <span class="c1"># Decide which kind of string we need to show.</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
-                <span class="s2">&quot;&lt;font style=&#39;color: </span><span class="si">%s</span><span class="s2">&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&quot;</span> <span class="o">%</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_COLOR</span><span class="p">,</span> <span class="n">payload</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">))</span>
+                <span class="s2">&quot;&lt;font style=&#39;color: </span><span class="si">%s</span><span class="s2">&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_COLOR</span><span class="p">,</span> <span class="n">payload</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">))</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_TEXT</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
-                <span class="s2">&quot;&lt;font style=&#39;color: #</span><span class="si">%s</span><span class="s2">;&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&quot;</span> <span class="o">%</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">INFO_COLOR</span><span class="p">,</span> <span class="n">payload</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">))</span>
+                <span class="s2">&quot;&lt;font style=&#39;color: #</span><span class="si">%s</span><span class="s2">;&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">INFO_COLOR</span><span class="p">,</span> <span class="n">payload</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">))</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -384,6 +386,7 @@
 <span class="sd">    the monitored widget resizes. This is so that the overlay wrapper</span>
 <span class="sd">    class can be informed whenever the Widget gets a resize event.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">resized</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
@@ -425,7 +428,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

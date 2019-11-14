@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.8.5 documentation</title>
+  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.5 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -184,13 +184,13 @@
             
   <h1>Source code for note_input_widget.widget</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2015 Shotgun Software Inc.</span>
-<span class="c1"># </span>
+<span class="c1">#</span>
 <span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
-<span class="c1"># </span>
-<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
 <span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
-<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
-<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -199,34 +199,38 @@
 <span class="kn">import</span> <span class="nn">tempfile</span>
 
 <span class="c1"># local import to avoid cyclic references</span>
-<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span><span class="p">)</span>
-<span class="n">shotgun_data</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_data&quot;</span><span class="p">)</span>
+<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span>
+<span class="p">)</span>
+<span class="n">shotgun_data</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
+    <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_data&quot;</span>
+<span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 <span class="kn">from</span> <span class="nn">sgtk</span> <span class="kn">import</span> <span class="n">TankError</span>
 
 <span class="kn">from</span> <span class="nn">.ui.note_input_widget</span> <span class="kn">import</span> <span class="n">Ui_NoteInputWidget</span>
-<span class="kn">from</span> <span class="nn">.overlaywidget</span> <span class="kn">import</span> <span class="n">SmallOverlayWidget</span>  
- 
- 
+<span class="kn">from</span> <span class="nn">.overlaywidget</span> <span class="kn">import</span> <span class="n">SmallOverlayWidget</span>
+
+
 <div class="viewcode-block" id="NoteInputWidget"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget">[docs]</a><span class="k">class</span> <span class="nc">NoteInputWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Note creation and reply widget with built in screen capture capabilites.</span>
-<span class="sd">    </span>
-<span class="sd">    :signal data_updated: Emitted when a note has been successfully created or </span>
-<span class="sd">        replied to. </span>
-<span class="sd">    :signal close_clicked: Emitted if a user chooses to cancel the note </span>
+
+<span class="sd">    :signal data_updated: Emitted when a note has been successfully created or</span>
+<span class="sd">        replied to.</span>
+<span class="sd">    :signal close_clicked: Emitted if a user chooses to cancel the note</span>
 <span class="sd">        creation by clicking the X button.</span>
 <span class="sd">    :signal entity_created: Emitted when a Shotgun entity is created, which</span>
 <span class="sd">        will be either a Note or Reply entity, depending on situation. The</span>
 <span class="sd">        entity dictionary, as provided by the API, will be sent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">_EDITOR_WIDGET_INDEX</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">_NEW_NOTE_WIDGET_INDEX</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">_ATTACHMENTS_WIDGET_INDEX</span> <span class="o">=</span> <span class="mi">2</span>
-    
+
     <span class="c1"># emitted when shotgun has been updated</span>
     <span class="n">data_updated</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
     <span class="n">close_clicked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
@@ -237,8 +241,7 @@
     <span class="c1">#</span>
     <span class="c1"># dict(entity_type=&quot;Note&quot;, id=1234)</span>
     <span class="n">entity_created</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
-    
-    
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent:              The parent QWidget for this control</span>
@@ -248,30 +251,34 @@
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
         <span class="c1"># now load in the UI that was created in the UI designer</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_NoteInputWidget</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_NoteInputWidget</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_stylesheet</span><span class="p">()</span>
-        
+
         <span class="c1"># set up some handy references</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>        
-        <span class="bp">self</span><span class="o">.</span><span class="n">_camera_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/tk_framework_qtwidgets.note_input_widget/camera_hl.png&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_trash_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/tk_framework_qtwidgets.note_input_widget/trash.png&quot;</span><span class="p">))</span>
-        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_camera_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/tk_framework_qtwidgets.note_input_widget/camera_hl.png&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_trash_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;:/tk_framework_qtwidgets.note_input_widget/trash.png&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+
         <span class="c1"># initialize state variables</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">None</span>      <span class="c1"># async task id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="bp">None</span>        <span class="c1"># current associated entity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="bp">None</span>        <span class="c1"># current associated entity </span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap</span> <span class="o">=</span> <span class="bp">None</span>             <span class="c1"># </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># async task id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># current associated entity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># current associated entity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1">#</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup_after_upload</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># set up an overlay that spins when note is submitted</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span> <span class="o">=</span> <span class="n">SmallOverlayWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        
+
         <span class="c1"># create a separate sg data handler for submission</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="bp">None</span>
-        
+
         <span class="c1"># hook up signals and slots</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_screenshot_or_clear</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">submit</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_submit</span><span class="p">)</span>
@@ -286,8 +293,7 @@
         <span class="c1"># reset state of the UI</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        
-        
+
 <div class="viewcode-block" id="NoteInputWidget.destroy"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        disconnect and prepare for this object</span>
@@ -299,34 +305,30 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_failure</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_failure</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="bp">None</span></div>
-        
 
 <div class="viewcode-block" id="NoteInputWidget.set_bg_task_manager"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the background task manager to use to pull</span>
 <span class="sd">        data in the background. Data calls</span>
 <span class="sd">        to Shotgun will be dispatched via this object.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param task_manager: Background task manager to use</span>
-<span class="sd">        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager` </span>
+<span class="sd">        :type task_manager: :class:`~tk-framework-shotgunutils:task_manager.BackgroundTaskManager`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># To stop the threads in self.ui.text_entry and</span>
         <span class="c1"># self.__sg_data_retriever</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="n">shotgun_data</span><span class="o">.</span><span class="n">ShotgunDataRetriever</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">task_manager</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">task_manager</span>
         <span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_signal</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">work_failure</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_worker_failure</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span></div>
-        
-        
-        
+
     <span class="c1">###########################################################################</span>
     <span class="c1"># internal methods</span>
 
@@ -341,10 +343,7 @@
 <span class="sd">        Allows the user to browse for files to attach to the Note</span>
 <span class="sd">        entity.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">file_paths</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileNames</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="s2">&quot;Select files to attach.&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">file_paths</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Select files to attach.&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">add_files_to_attachments</span><span class="p">(</span><span class="n">file_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
@@ -380,18 +379,18 @@
 
     <span class="k">def</span> <span class="nf">_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Cancel editing, no questions asked </span>
+<span class="sd">        Cancel editing, no questions asked</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_screenshot_or_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Screenshot button is clicked. This either means that </span>
+<span class="sd">        Screenshot button is clicked. This either means that</span>
 <span class="sd">        a screenshot should be taken or that it should be cleared.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="n">screen_grab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;screen_grab&quot;</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="c1"># no pixmap exists - screengrab mode</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Prompting for screenshot...&quot;</span><span class="p">)</span>
@@ -403,20 +402,19 @@
             <span class="c1"># will handle screenshots itself and provide back the</span>
             <span class="c1"># image asynchronously.</span>
             <span class="k">if</span> <span class="n">pixmap</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Got screenshot </span><span class="si">%s</span><span class="s2">x</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pixmap</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> 
-                                                                 <span class="n">pixmap</span><span class="o">.</span><span class="n">height</span><span class="p">()))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span>
+                    <span class="s2">&quot;Got screenshot </span><span class="si">%s</span><span class="s2">x</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pixmap</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+                <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_set_screenshot_pixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
-            
-        
+
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># there is a screenshot - that means the user clicked the trash bit </span>
+            <span class="c1"># there is a screenshot - that means the user clicked the trash bit</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap</span> <span class="o">=</span> <span class="bp">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
-            
+
             <span class="c1"># turn the button into a screenshot button</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_camera_icon</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Take Screenshot&quot;</span><span class="p">)</span>
-
 
     <span class="k">def</span> <span class="nf">_set_screenshot_pixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -433,19 +431,18 @@
         <span class="c1"># turn the button into a delete screenshot button</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trash_icon</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Remove Screenshot&quot;</span><span class="p">)</span>
-        
-        
+
     <span class="k">def</span> <span class="nf">_submit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates items in Shotgun and clears the widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
-                                          <span class="s2">&quot;Please Add Note&quot;</span><span class="p">,</span>
-                                          <span class="s2">&quot;Please add some content before submitting.&quot;</span><span class="p">)</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Please Add Note&quot;</span><span class="p">,</span> <span class="s2">&quot;Please add some content before submitting.&quot;</span>
+            <span class="p">)</span>
             <span class="k">return</span>
-        
+
         <span class="c1"># Call our pre-submit callback if we have one registered.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_submit_callback</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -453,29 +450,33 @@
         <span class="c1"># hide hint label for better ux.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">hint_label</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span><span class="o">.</span><span class="n">start_spin</span><span class="p">()</span>
-        
+
         <span class="c1"># get all publish details from the UI</span>
         <span class="c1"># and submit an async request</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pixmap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;recipient_links&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">get_recipient_links</span><span class="p">()</span>
-        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="p">}</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">}</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attachments&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachments</span>
 
         <span class="c1"># ask the data retriever to execute an async callback</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_submit</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_async_submit</span><span class="p">,</span> <span class="n">data</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Please associate this class with a background task processor.&quot;</span><span class="p">)</span>
-        
+            <span class="k">raise</span> <span class="n">TankError</span><span class="p">(</span>
+                <span class="s2">&quot;Please associate this class with a background task processor.&quot;</span>
+            <span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">_async_submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Actual payload for creating things in shotgun.</span>
 <span class="sd">        Note: This runs in a different thread and cannot access</span>
 <span class="sd">        any QT UI components.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param sg: Shotgun instance</span>
 <span class="sd">        :param data: data dictionary passed in from _submit()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -486,7 +487,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># create a new note</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_submit_note</span><span class="p">(</span><span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-        
+
     <span class="k">def</span> <span class="nf">_async_submit_reply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides functionality for creating a new Reply entity</span>
@@ -499,28 +500,28 @@
 <span class="sd">        :returns:       A Shotgun entity dictionary for the Reply that was created.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">note_link</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]</span>
-        
+
         <span class="c1"># this is an entity - so create a note and link it</span>
-        <span class="n">sg_reply_data</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;Reply&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span> <span class="s2">&quot;entity&quot;</span><span class="p">:</span> <span class="n">note_link</span><span class="p">})</span>
+        <span class="n">sg_reply_data</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="s2">&quot;Reply&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span> <span class="s2">&quot;entity&quot;</span><span class="p">:</span> <span class="n">note_link</span><span class="p">}</span>
+        <span class="p">)</span>
 
         <span class="c1"># if there are any recipients, make sure they are added to the note</span>
         <span class="c1"># but as CCs</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;recipient_links&quot;</span><span class="p">]:</span>
-            <span class="n">existing_to</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="s2">&quot;Note&quot;</span><span class="p">,</span> 
-                                      <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">note_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span> 
-                                      <span class="p">[</span><span class="s2">&quot;addressings_cc&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;addressings_cc&quot;</span><span class="p">)</span>
-            
-            <span class="n">updated_links</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;recipient_links&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">existing_to</span> 
-            
-            <span class="n">sg</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;Note&quot;</span><span class="p">,</span> 
-                      <span class="n">note_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> 
-                      <span class="p">{</span><span class="s2">&quot;addressings_cc&quot;</span><span class="p">:</span> <span class="n">updated_links</span><span class="p">})</span>
-            
+            <span class="n">existing_to</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+                <span class="s2">&quot;Note&quot;</span><span class="p">,</span> <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">note_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span> <span class="p">[</span><span class="s2">&quot;addressings_cc&quot;</span><span class="p">]</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;addressings_cc&quot;</span><span class="p">)</span>
+
+            <span class="n">updated_links</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;recipient_links&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">existing_to</span>
+
+            <span class="n">sg</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;Note&quot;</span><span class="p">,</span> <span class="n">note_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="p">{</span><span class="s2">&quot;addressings_cc&quot;</span><span class="p">:</span> <span class="n">updated_links</span><span class="p">})</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">__upload_thumbnail</span><span class="p">(</span><span class="n">note_link</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__upload_attachments</span><span class="p">(</span><span class="n">note_link</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">sg_reply_data</span>
-        
+
     <span class="k">def</span> <span class="nf">_async_submit_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides functionality for creating a new Note entity</span>
@@ -560,11 +561,7 @@
         <span class="c1"># that created it, we need to make sure that the user is added</span>
         <span class="c1"># to the list.</span>
         <span class="n">entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span>
-            <span class="p">[</span>
-                <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">],</span>
-            <span class="p">],</span>
-            <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;created_by&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span> <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span><span class="p">]],</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;created_by&quot;</span><span class="p">]</span>
         <span class="p">)</span>
 
         <span class="n">entity_created_by</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;created_by&quot;</span><span class="p">)</span>
@@ -591,13 +588,18 @@
             <span class="c1"># activity stream logic to work.</span>
             <span class="c1"># note that because we don&#39;t have the display name for the entity,</span>
             <span class="c1"># we need to retrieve this</span>
-            <span class="n">sg_entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                                    <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span>
-                                    <span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">])</span>
-            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
-                           <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                           <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_entity</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span>
-
+            <span class="n">sg_entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+                <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span>
+                <span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_entity</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">],</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
 
         <span class="k">elif</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Version&quot;</span><span class="p">:</span>
             <span class="c1"># if we are adding a note to a version, link it with the version</span>
@@ -605,14 +607,18 @@
             <span class="c1"># if the version has a task, link the task to the note too.</span>
             <span class="n">sg_version</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
                 <span class="s2">&quot;Version&quot;</span><span class="p">,</span>
-                <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span>
-                <span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;sg_task&quot;</span><span class="p">,</span> <span class="s2">&quot;cached_display_name&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">]</span>
+                <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span>
+                <span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;sg_task&quot;</span><span class="p">,</span> <span class="s2">&quot;cached_display_name&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">],</span>
             <span class="p">)</span>
 
             <span class="c1"># first make a std sg link to the current entity - this to ensure we have a name key present</span>
-            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
-                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span>
+            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">],</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
 
             <span class="c1"># and now add the linked entity, if there is one</span>
             <span class="k">if</span> <span class="n">sg_version</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]:</span>
@@ -630,9 +636,7 @@
             <span class="c1"># if we are adding a note to a task, link the note to the entity that is linked to the</span>
             <span class="c1"># task. The link the task to the note via the task link.</span>
             <span class="n">sg_task</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
-                <span class="s2">&quot;Task&quot;</span><span class="p">,</span>
-                <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span>
-                <span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">]</span>
+                <span class="s2">&quot;Task&quot;</span><span class="p">,</span> <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span> <span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">]</span>
             <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">sg_task</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]:</span>
@@ -651,12 +655,18 @@
             <span class="c1"># no special logic. Just link the note to the current entity.</span>
             <span class="c1"># note that because we don&#39;t have the display name for the entity,</span>
             <span class="c1"># we need to retrieve this</span>
-            <span class="n">sg_entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                                    <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="p">]],</span>
-                                    <span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">])</span>
-            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
-                           <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
-                           <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_entity</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">]</span> <span class="p">}]</span>
+            <span class="n">sg_entity</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+                <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                <span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]],</span>
+                <span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">note_links</span> <span class="o">+=</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">sg_entity</span><span class="p">[</span><span class="s2">&quot;cached_display_name&quot;</span><span class="p">],</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
 
             <span class="c1"># store associated project for use later</span>
             <span class="k">if</span> <span class="n">entity_link</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Project&quot;</span><span class="p">:</span>
@@ -666,7 +676,6 @@
                 <span class="c1"># note - some entity types may not have a project field</span>
                 <span class="c1"># so don&#39;t assume the key exists.</span>
                 <span class="n">entity_project_link</span> <span class="o">=</span> <span class="n">sg_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">)</span>
-
 
         <span class="c1"># step 2 - generate the subject line. The following</span>
         <span class="c1"># convention exists for this:</span>
@@ -707,14 +716,18 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">project</span> <span class="o">=</span> <span class="n">entity_project_link</span>
 
-
         <span class="c1"># this is an entity - so create a note and link it</span>
-        <span class="n">sg_note_data</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;Note&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span>
-                                          <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
-                                          <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="n">project</span><span class="p">,</span>
-                                          <span class="s2">&quot;addressings_to&quot;</span><span class="p">:</span> <span class="n">addressings_to</span><span class="p">,</span>
-                                          <span class="s2">&quot;note_links&quot;</span><span class="p">:</span> <span class="n">note_links</span><span class="p">,</span>
-                                          <span class="s2">&quot;tasks&quot;</span><span class="p">:</span> <span class="n">note_tasks</span> <span class="p">})</span>
+        <span class="n">sg_note_data</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="s2">&quot;Note&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+                <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="n">project</span><span class="p">,</span>
+                <span class="s2">&quot;addressings_to&quot;</span><span class="p">:</span> <span class="n">addressings_to</span><span class="p">,</span>
+                <span class="s2">&quot;note_links&quot;</span><span class="p">:</span> <span class="n">note_links</span><span class="p">,</span>
+                <span class="s2">&quot;tasks&quot;</span><span class="p">:</span> <span class="n">note_tasks</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__upload_thumbnail</span><span class="p">(</span><span class="n">sg_note_data</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__upload_attachments</span><span class="p">(</span><span class="n">sg_note_data</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
@@ -739,7 +752,6 @@
                     <span class="s2">&quot;File does not exist and will not be uploaded: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">file_path</span>
                 <span class="p">)</span>
 
-
     <span class="k">def</span> <span class="nf">__upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">parent_entity</span><span class="p">,</span> <span class="n">sg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uploads any generic file attachments to Shotgun, parenting</span>
@@ -762,39 +774,36 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;Unable to remove file: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
 
-        
     <span class="k">def</span> <span class="nf">__upload_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_entity</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        
+
         <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pixmap&quot;</span><span class="p">]:</span>
-            
+
             <span class="c1"># save it out to a temp file so we can upload it</span>
-            <span class="n">png_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span>
-                                                   <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span>
-                                                   <span class="n">delete</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
-    
+            <span class="n">png_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
+                <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="bp">False</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">name</span>
+
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pixmap&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">png_path</span><span class="p">)</span>
-            
+
             <span class="c1"># create file entity and upload file</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">png_path</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__upload_file</span><span class="p">(</span><span class="n">png_path</span><span class="p">,</span> <span class="n">parent_entity</span><span class="p">,</span> <span class="n">sg</span><span class="p">)</span>           
+                <span class="bp">self</span><span class="o">.</span><span class="n">__upload_file</span><span class="p">(</span><span class="n">png_path</span><span class="p">,</span> <span class="n">parent_entity</span><span class="p">,</span> <span class="n">sg</span><span class="p">)</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">png_path</span><span class="p">)</span>
 
-        
     <span class="k">def</span> <span class="nf">__on_worker_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Asynchronous callback - the worker thread errored.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param uid: Unique id for request that failed</span>
 <span class="sd">        :param msg: Error message</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uid</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span> <span class="c1"># qstring on pyqt, str on pyside</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>  <span class="c1"># qstring on pyqt, str on pyside</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">==</span> <span class="n">uid</span><span class="p">:</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">==</span> <span class="n">uid</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="s2">&quot;Could not create note/reply: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
             <span class="n">full_msg</span> <span class="o">=</span> <span class="s2">&quot;Could not submit note update: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span>
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;Shotgun Error&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-    
 
     <span class="k">def</span> <span class="nf">__on_worker_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">request_type</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -804,9 +813,9 @@
 
 <span class="sd">        :param uid: Unique id for request</span>
 <span class="sd">        :param request_type: String identifying the request class</span>
-<span class="sd">        :param data: the data that was returned </span>
+<span class="sd">        :param data: the data that was returned</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uid</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span> <span class="c1"># qstring on pyqt, str on pyside</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>  <span class="c1"># qstring on pyqt, str on pyside</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">==</span> <span class="n">uid</span><span class="p">:</span>
@@ -816,35 +825,36 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Update call complete! Return data: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">data</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data_updated</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;return_value&quot;</span><span class="p">])</span>
-            
-        
+
     <span class="k">def</span> <span class="nf">__format_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap_obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a screengrab, create a thumbnail object, scaled to 96x75 px</span>
 <span class="sd">        and with a subtle rounded frame.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param pixmap_obj: input screenshot</span>
-<span class="sd">        :returns: 96x75px pixmap </span>
+<span class="sd">        :returns: 96x75px pixmap</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">CANVAS_WIDTH</span> <span class="o">=</span> <span class="mi">96</span>
         <span class="n">CANVAS_HEIGHT</span> <span class="o">=</span> <span class="mi">75</span>
         <span class="n">CORNER_RADIUS</span> <span class="o">=</span> <span class="mi">6</span>
-    
+
         <span class="c1"># get the 512 base image</span>
         <span class="n">base_image</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">CANVAS_WIDTH</span><span class="p">,</span> <span class="n">CANVAS_HEIGHT</span><span class="p">)</span>
         <span class="n">base_image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">transparent</span><span class="p">)</span>
-        
+
         <span class="c1"># scale it down to fit inside a frame of maximum 512x512</span>
-        <span class="n">thumb_scaled</span> <span class="o">=</span> <span class="n">pixmap_obj</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="n">CANVAS_WIDTH</span><span class="p">,</span> 
-                                         <span class="n">CANVAS_HEIGHT</span><span class="p">,</span> 
-                                         <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">KeepAspectRatioByExpanding</span><span class="p">,</span> 
-                                         <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SmoothTransformation</span><span class="p">)</span>  
+        <span class="n">thumb_scaled</span> <span class="o">=</span> <span class="n">pixmap_obj</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span>
+            <span class="n">CANVAS_WIDTH</span><span class="p">,</span>
+            <span class="n">CANVAS_HEIGHT</span><span class="p">,</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">KeepAspectRatioByExpanding</span><span class="p">,</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SmoothTransformation</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="c1"># now composite the thumbnail on top of the base image</span>
         <span class="c1"># bottom align it to make it look nice</span>
         <span class="n">thumb_img</span> <span class="o">=</span> <span class="n">thumb_scaled</span><span class="o">.</span><span class="n">toImage</span><span class="p">()</span>
         <span class="n">brush</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">thumb_img</span><span class="p">)</span>
-        
+
         <span class="n">painter</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="p">(</span><span class="n">base_image</span><span class="p">)</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span><span class="p">)</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span>
@@ -852,19 +862,16 @@
         <span class="n">pen</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;#2C93E2&quot;</span><span class="p">))</span>
         <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
-        
+
         <span class="c1"># note how we have to compensate for the corner radius</span>
-        <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundedRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>  
-                                <span class="mi">0</span><span class="p">,</span> 
-                                <span class="n">CANVAS_WIDTH</span><span class="p">,</span> 
-                                <span class="n">CANVAS_HEIGHT</span><span class="p">,</span> 
-                                <span class="n">CORNER_RADIUS</span><span class="p">,</span> 
-                                <span class="n">CORNER_RADIUS</span><span class="p">)</span>
-        
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundedRect</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">CANVAS_WIDTH</span><span class="p">,</span> <span class="n">CANVAS_HEIGHT</span><span class="p">,</span> <span class="n">CORNER_RADIUS</span><span class="p">,</span> <span class="n">CORNER_RADIUS</span>
+        <span class="p">)</span>
+
         <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
-        
-        <span class="k">return</span> <span class="n">base_image</span>        
-        
+
+        <span class="k">return</span> <span class="n">base_image</span>
+
     <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in a stylesheet from disk</span>
@@ -877,12 +884,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">qss_data</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        
-        
+
     <span class="c1">###########################################################################</span>
     <span class="c1"># public interface</span>
 
-<div class="viewcode-block" id="NoteInputWidget.add_files_to_attachments"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.add_files_to_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">add_files_to_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">,</span> <span class="n">cleanup_after_upload</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">apply_attachments</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="NoteInputWidget.add_files_to_attachments"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.add_files_to_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">add_files_to_attachments</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">,</span> <span class="n">cleanup_after_upload</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">apply_attachments</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the given list of file paths to the attachments list.</span>
 
@@ -934,7 +942,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ATTACHMENTS_WIDGET_INDEX</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_ui</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_attachments</span><span class="p">()</span></div>
-        
+
 <div class="viewcode-block" id="NoteInputWidget.open_editor"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.open_editor">[docs]</a>    <span class="k">def</span> <span class="nf">open_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the editor into its &quot;open mode&quot;</span>
@@ -942,9 +950,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EDITOR_WIDGET_INDEX</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">hint_label</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_ui</span><span class="p">()</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_ui</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span></div>
-        
+
     <span class="k">def</span> <span class="nf">_adjust_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        adjust the UI to be optimal size depending on view</span>
@@ -960,7 +968,7 @@
 <span class="sd">                }</span>
 <span class="sd">                &quot;&quot;&quot;</span>
             <span class="p">)</span>
-             
+
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EDITOR_WIDGET_INDEX</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16777215</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
@@ -970,46 +978,44 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16777215</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-             
+
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;cannot adjust unknown ui mode.&quot;</span><span class="p">)</span>             
-              
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;cannot adjust unknown ui mode.&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="NoteInputWidget.clear"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Clear any input and state and return the widget to its &quot;closed&quot; mode.   </span>
+<span class="sd">        Clear any input and state and return the widget to its &quot;closed&quot; mode.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">attachment_list_tree</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_NEW_NOTE_WIDGET_INDEX</span><span class="p">)</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_ui</span><span class="p">()</span>        
-        
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_ui</span><span class="p">()</span>
+
         <span class="c1"># reset data state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_processing_id</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup_after_upload</span> <span class="o">=</span> <span class="p">[]</span>
-        
+
         <span class="c1"># make sure the screenshot button shows the camera icon</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">hint_label</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_camera_icon</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Take Screenshot&quot;</span><span class="p">)</span>
-        
+
         <span class="k">return</span> <span class="bp">True</span></div>
-        
+
 <div class="viewcode-block" id="NoteInputWidget.set_current_entity"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.set_current_entity">[docs]</a>    <span class="k">def</span> <span class="nf">set_current_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the current entity that this widget is linked against</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param str entity_type: Shotgun entity type</span>
 <span class="sd">        :param int entity_id: Shotgun entity id</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="n">entity_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="n">entity_id</span></div></div>
-
-
 </pre></div>
 
            </div>
@@ -1042,7 +1048,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.5',
+            VERSION:'v2.8.6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
