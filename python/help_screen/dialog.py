@@ -190,7 +190,7 @@ class Dialog(QtGui.QDialog):
             current_page.raise_()
 
             # animate the current page away
-            self.__anim = QtCore.QPropertyAnimation(current_page, "pos")
+            self.__anim = QtCore.QPropertyAnimation(current_page, b"pos")
             self.__anim.setDuration(anim_duration)
             self.__anim.setStartValue(QtCore.QPoint(current_page.x(), current_page.y()))
             self.__anim.setEndValue(
@@ -199,7 +199,7 @@ class Dialog(QtGui.QDialog):
             self.__anim.setEasingCurve(QtCore.QEasingCurve.OutCubic)
 
             # animate the new page in:
-            self.__anim2 = QtCore.QPropertyAnimation(dst_page, "pos")
+            self.__anim2 = QtCore.QPropertyAnimation(dst_page, b"pos")
             self.__anim2.setDuration(anim_duration)
             self.__anim2.setStartValue(
                 QtCore.QPoint(dst_page.x() + page_offset, dst_page.y())
