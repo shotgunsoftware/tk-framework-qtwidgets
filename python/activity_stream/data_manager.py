@@ -718,7 +718,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             for event in events:
                 activity_id = event["id"]
                 payload = sgtk.util.pickle.dumps(event)
-                blob = sqlite3.Binary(payload)
+                blob = sqlite3.Binary(six.ensure_binary(payload))
 
                 # first insert event
                 if self._force_activity_stream_update:
@@ -793,7 +793,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
             # first pickle the note data
             payload = sgtk.util.pickle.dumps(data)
-            blob = sqlite3.Binary(payload)
+            blob = sqlite3.Binary(six.ensure_binary(payload))
 
             # first delete any existing record
             cursor.execute("DELETE FROM note where note_id = ?", (note_id,))
