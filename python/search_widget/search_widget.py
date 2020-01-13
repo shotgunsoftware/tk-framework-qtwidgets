@@ -1,11 +1,11 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 """
@@ -17,15 +17,16 @@ from sgtk.platform.qt import QtCore, QtGui
 
 from .ui.search_widget import Ui_SearchWidget
 
+
 class SearchWidget(QtGui.QWidget):
     """
     Search widget class
     """
 
     # emited when the search QTextField is being edited
-    search_edited = QtCore.Signal(object)# search text
+    search_edited = QtCore.Signal(object)  # search text
     # emited when the search QTextField has been changed (e.g. after hitting enter)
-    search_changed = QtCore.Signal(object)# search text  
+    search_changed = QtCore.Signal(object)  # search text
 
     def __init__(self, parent=None):
         """
@@ -46,18 +47,20 @@ class SearchWidget(QtGui.QWidget):
         self._clear_btn.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._clear_btn.setFlat(True)
         self._clear_btn.setCursor(QtCore.Qt.ArrowCursor)
-        style = ("QPushButton {"
-                 + "border: 0px solid;"
-                 + "image: url(:/tk-framework-qtwidgets/search_widget/clear_search.png);"
-                 + "width: 16;"
-                 + "height: 16;"
-                 + "}"
-                 + "QPushButton::hover {"
-                 + "image: url(:/tk-framework-qtwidgets/search_widget/clear_search_hover.png);"
-                 + "}")
+        style = (
+            "QPushButton {"
+            + "border: 0px solid;"
+            + "image: url(:/tk-framework-qtwidgets/search_widget/clear_search.png);"
+            + "width: 16;"
+            + "height: 16;"
+            + "}"
+            + "QPushButton::hover {"
+            + "image: url(:/tk-framework-qtwidgets/search_widget/clear_search_hover.png);"
+            + "}"
+        )
         self._clear_btn.setStyleSheet(style)
         self._clear_btn.hide()
-        
+
         h_layout = QtGui.QHBoxLayout(self._ui.search_edit)
         h_layout.addStretch()
         h_layout.addWidget(self._clear_btn)
@@ -77,6 +80,7 @@ class SearchWidget(QtGui.QWidget):
         """
         text = self._ui.search_edit.text()
         return self._safe_to_string(text)
+
     # @search_text.setter
     def _set_search_text(self, value):
         """
@@ -84,6 +88,7 @@ class SearchWidget(QtGui.QWidget):
         """
         self._ui.search_edit.setText(value)
         self._clear_btn.setVisible(bool(value))
+
     search_text = property(_get_search_text, _set_search_text)
 
     def set_placeholder_text(self, text):
@@ -113,7 +118,7 @@ class SearchWidget(QtGui.QWidget):
 
     def _on_text_edited(self):
         """
-        Slot triggered when the text has been edited 
+        Slot triggered when the text has been edited
         """
         text = self.search_text
         self._clear_btn.setVisible(bool(text))
@@ -140,7 +145,7 @@ class SearchWidget(QtGui.QWidget):
         if isinstance(value, unicode):
             # convert to utf-8
             return value.encode("utf8")
-    
+
         if hasattr(QtCore, "QString"):
             # running PyQt!
             if isinstance(value, QtCore.QString):
@@ -148,11 +153,6 @@ class SearchWidget(QtGui.QWidget):
                 # unicode, go figure!  Lets play safe and return
                 # a utf-8 string
                 return str(value.toUtf8())
-    
+
         # For everything else, just return as string
-        return str(value)       
-        
-        
-        
-        
-        
+        return str(value)

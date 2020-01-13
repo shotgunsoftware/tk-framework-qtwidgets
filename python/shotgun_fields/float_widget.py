@@ -18,6 +18,7 @@ class FloatWidget(LabelBaseWidget):
     """
     Display a ``float`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "float"
 
@@ -37,6 +38,7 @@ class FloatEditorWidget(QtGui.QDoubleSpinBox):
     Pressing ``Enter`` or ``Return`` when the widget has focus will cause the
     value to be applied and the ``value_changed`` signal to be emitted.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "float"
 
@@ -82,4 +84,3 @@ class FloatEditorWidget(QtGui.QDoubleSpinBox):
         :param value: The value returned by the Shotgun API to be displayed
         """
         self.setValue(value)
-

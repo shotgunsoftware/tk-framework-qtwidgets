@@ -13,7 +13,7 @@ import os
 from tank.platform.qt import QtCore, QtGui
 
 # load resources
-from .ui import resources_rc # noqa
+from .ui import resources_rc  # noqa
 from .shotgun_spinning_widget import ShotgunSpinningWidget
 
 
@@ -58,7 +58,9 @@ class ShotgunOverlayWidget(QtGui.QLabel):
         self._shotgun_spinning_widget = ShotgunSpinningWidget(self)
 
         # We want text to be centered and wrapping words.
-        self.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter | QtCore.Qt.TextWordWrap)
+        self.setAlignment(
+            QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter | QtCore.Qt.TextWordWrap
+        )
         self.setWordWrap(True)
 
         # Allow to open hyperlinks
@@ -132,13 +134,13 @@ class ShotgunOverlayWidget(QtGui.QLabel):
         # Decide which kind of string we need to show.
         if mode == self.MODE_ERROR:
             self.setText(
-                "<font style='color: %s'>%s</font>" %
-                (self.ERROR_COLOR, payload.replace("\n", "<br>"))
+                "<font style='color: %s'>%s</font>"
+                % (self.ERROR_COLOR, payload.replace("\n", "<br>"))
             )
         elif mode == self.MODE_INFO_TEXT:
             self.setText(
-                "<font style='color: #%s;'>%s</font>" %
-                (self.INFO_COLOR, payload.replace("\n", "<br>"))
+                "<font style='color: #%s;'>%s</font>"
+                % (self.INFO_COLOR, payload.replace("\n", "<br>"))
             )
         else:
             self.setText("")
@@ -199,6 +201,7 @@ class ResizeEventFilter(QtCore.QObject):
     the monitored widget resizes. This is so that the overlay wrapper
     class can be informed whenever the Widget gets a resize event.
     """
+
     resized = QtCore.Signal()
 
     def eventFilter(self, obj, event):

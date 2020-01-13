@@ -14,8 +14,12 @@ from sgtk.platform.qt import QtCore
 from .search_result_delegate import SearchResultDelegate
 
 # import the shotgun_model and view modules from the shotgun utils framework
-shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_model = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_model"
+)
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 views = sgtk.platform.current_bundle().import_module("views")
@@ -48,7 +52,9 @@ class GlobalSearchResultDelegate(SearchResultDelegate):
             # thumbnail
             widget.set_thumbnail(self._pixmaps.no_thumbnail)
 
-        data = shotgun_model.get_sanitized_data(model_index, GlobalSearchCompleter.SG_DATA_ROLE)
+        data = shotgun_model.get_sanitized_data(
+            model_index, GlobalSearchCompleter.SG_DATA_ROLE
+        )
         # Example of data stored in the data role:
         # {'status': 'vwd',
         #  'name': 'bunny_010_0050_comp_v001',
@@ -67,8 +73,9 @@ class GlobalSearchResultDelegate(SearchResultDelegate):
 
         if et_url:
             # present thumbnail icon and name
-            content += "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>" % (
-                et_url, underlined_name
+            content += (
+                "<img src='%s'/>&nbsp;&nbsp;<b style='color: rgb(48, 167, 227)';>%s</b>"
+                % (et_url, underlined_name)
             )
         else:
             # present type name name
@@ -78,16 +85,27 @@ class GlobalSearchResultDelegate(SearchResultDelegate):
 
         links = data["links"]
         # note users return weird data so ignore it.
-        if links and links[0] != "" and links[0] != "HumanUser" and links[0] != "ClientUser":
+        if (
+            links
+            and links[0] != ""
+            and links[0] != "HumanUser"
+            and links[0] != "ClientUser"
+        ):
             underlined_link = self._underline_search_term(links[1])
             # there is a referenced entity
             et_url = shotgun_globals.get_entity_type_icon_url(links[0])
             if et_url:
                 # present thumbnail icon and name
-                content += " on <img align=absmiddle src='%s'/>  %s" % (et_url, underlined_link)
+                content += " on <img align=absmiddle src='%s'/>  %s" % (
+                    et_url,
+                    underlined_link,
+                )
             else:
                 # present type name name
                 link_entity_type = links[0]
-                content += " on %s %s" % (shotgun_globals.get_type_display_name(link_entity_type), underlined_link)
+                content += " on %s %s" % (
+                    shotgun_globals.get_type_display_name(link_entity_type),
+                    underlined_link,
+                )
 
         widget.set_text(content)

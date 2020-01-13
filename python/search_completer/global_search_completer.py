@@ -11,7 +11,9 @@
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-shotgun_model = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
+shotgun_model = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_model"
+)
 
 from .search_completer import SearchCompleter
 
@@ -98,11 +100,7 @@ class GlobalSearchCompleter(SearchCompleter):
             # the shotgun python-api. this data may be formalized at some point
             # but for now, only expose the minimum information.
 
-            return {
-                "type": data["type"],
-                "id": data["id"],
-                "name": data["name"],
-            }
+            return {"type": data["type"], "id": data["id"], "name": data["name"]}
         else:
             return None
 
@@ -142,6 +140,7 @@ class GlobalSearchCompleter(SearchCompleter):
         """
         # deferred import to help documentation generation.
         from .global_search_result_delegate import GlobalSearchResultDelegate
+
         self._delegate = GlobalSearchResultDelegate(popup, text)
         popup.setItemDelegate(self._delegate)
 
@@ -157,17 +156,17 @@ class GlobalSearchCompleter(SearchCompleter):
         # constrain by project in the search
         project_ids = []
 
-        if len(self._entity_search_criteria.keys()) == 1 and \
-           "Project" in self._entity_search_criteria:
+        if (
+            len(self._entity_search_criteria.keys()) == 1
+            and "Project" in self._entity_search_criteria
+        ):
             # this is a Project-only search. don't restrict by the current project id
             pass
         elif self._bundle.context.project:
             project_ids.append(self._bundle.context.project["id"])
 
         return self._sg_data_retriever.execute_text_search(
-            text,
-            self._entity_search_criteria,
-            project_ids
+            text, self._entity_search_criteria, project_ids
         )
 
     def _on_select(self, model_index):
@@ -201,18 +200,13 @@ class GlobalSearchCompleter(SearchCompleter):
             item = QtGui.QStandardItem(d["name"])
             item.setData(self.MODE_RESULT, self.MODE_ROLE)
 
-            item.setData(shotgun_model.sanitize_for_qt_model(d),
-                         self.SG_DATA_ROLE)
+            item.setData(shotgun_model.sanitize_for_qt_model(d), self.SG_DATA_ROLE)
 
             item.setIcon(self._pixmaps.no_thumbnail)
 
             if d.get("image") and self._sg_data_retriever:
                 uid = self._sg_data_retriever.request_thumbnail(
-                    d["image"],
-                    d["type"],
-                    d["id"],
-                    "image",
-                    load_image=True
+                    d["image"], d["type"], d["id"], "image", load_image=True
                 )
                 self._thumb_map[uid] = {"item": item}
 

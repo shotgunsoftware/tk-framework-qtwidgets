@@ -13,7 +13,9 @@ from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_delegate import ShotgunFieldDelegateGeneric, ShotgunFieldDelegate
 from .shotgun_field_editable import ShotgunFieldEditable, ShotgunFieldNotEditable
 
-shotgun_globals = sgtk.platform.import_framework("tk-framework-shotgunutils", "shotgun_globals")
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 class ShotgunFieldManager(QtCore.QObject):
@@ -70,14 +72,17 @@ class ShotgunFieldManager(QtCore.QObject):
         """
         if widget_type not in cls._WIDGET_TYPES:
             raise ValueError(
-                "ShotgunFieldManager unable to retrieve fields of type: %s " %
-                (widget_type,)
+                "ShotgunFieldManager unable to retrieve fields of type: %s "
+                % (widget_type,)
             )
 
         # see if theres a widget class registered for this specific entity type
         # and field combination.
-        entity_field_widget_cls = cls.__ENTITY_FIELD_WIDGET_TYPE_CLS_MAP.\
-            get(sg_entity_type, {}).get(field_name, {}).get(widget_type)
+        entity_field_widget_cls = (
+            cls.__ENTITY_FIELD_WIDGET_TYPE_CLS_MAP.get(sg_entity_type, {})
+            .get(field_name, {})
+            .get(widget_type)
+        )
 
         if entity_field_widget_cls:
             # found a widget class for the specific entity+field+type combo
@@ -114,14 +119,16 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if widget_type not in cls._WIDGET_TYPES:
             raise ValueError(
-                "ShotgunFieldManager unable to register unrecognized widget type: %s " %
-                (widget_type,)
+                "ShotgunFieldManager unable to register unrecognized widget type: %s "
+                % (widget_type,)
             )
 
         cls.__WIDGET_TYPE_CLS_MAP.setdefault(field_type, {})[widget_type] = widget_class
 
     @classmethod
-    def register_entity_field_class(cls, entity_type, field_name, widget_class, widget_type):
+    def register_entity_field_class(
+        cls, entity_type, field_name, widget_class, widget_type
+    ):
         """
         Similar to the ``register_class`` method, but registers a widget to be used
         with a specific entity type and field. This is provided to allow very specific
@@ -141,8 +148,8 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if widget_type not in cls._WIDGET_TYPES:
             raise ValueError(
-                "ShotgunFieldManager unable to register unrecognized widgets type: %s " %
-                (widget_type,)
+                "ShotgunFieldManager unable to register unrecognized widgets type: %s "
+                % (widget_type,)
             )
 
         # register with a separate lookup specific to entity+field combo
@@ -201,6 +208,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if not display_class:
             from .label_base_widget import LabelBaseWidget
+
             display_class = LabelBaseWidget
 
         editor_class = self.get_class(sg_entity_type, field_name, self.EDITOR)
@@ -210,10 +218,12 @@ class ShotgunFieldManager(QtCore.QObject):
             display_class,
             editor_class,
             view,
-            bg_task_manager=self._task_manager
+            bg_task_manager=self._task_manager,
         )
 
-    def create_generic_delegate(self, sg_entity_type, field_name, view, field_data_role=QtCore.Qt.EditRole):
+    def create_generic_delegate(
+        self, sg_entity_type, field_name, view, field_data_role=QtCore.Qt.EditRole
+    ):
         """
         Returns a delegate that can be used in the given view to show data from
         the given field from the given entity type.  Unlike ``create_delegate``,
@@ -241,6 +251,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if not display_class:
             from .label_base_widget import LabelBaseWidget
+
             display_class = LabelBaseWidget
 
         editor_class = self.get_class(sg_entity_type, field_name, self.EDITOR)
@@ -251,7 +262,7 @@ class ShotgunFieldManager(QtCore.QObject):
             editor_class,
             view,
             bg_task_manager=self._task_manager,
-            field_data_role=field_data_role
+            field_data_role=field_data_role,
         )
 
     def create_label(self, sg_entity_type, field_name, prefix=None, postfix=None):
@@ -265,14 +276,24 @@ class ShotgunFieldManager(QtCore.QObject):
 
         :returns: :class:`~PySide.QtGui.QLabel`
         """
-        display_name = shotgun_globals.get_field_display_name(sg_entity_type, field_name)
+        display_name = shotgun_globals.get_field_display_name(
+            sg_entity_type, field_name
+        )
         if prefix:
             display_name = prefix + display_name
         if postfix:
             display_name += postfix
         return QtGui.QLabel(display_name)
 
-    def create_widget(self, sg_entity_type, field_name, widget_type=EDITABLE, entity=None, parent=None, **kwargs):
+    def create_widget(
+        self,
+        sg_entity_type,
+        field_name,
+        widget_type=EDITABLE,
+        entity=None,
+        parent=None,
+        **kwargs
+    ):
         """
         Returns a widget associated with the entity and field type if a
         corresponding widget class been registered.
@@ -298,13 +319,16 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if widget_type is self.EDITABLE:
             widget = self._create_editable_widget(
-                sg_entity_type, field_name, entity, parent, **kwargs)
+                sg_entity_type, field_name, entity, parent, **kwargs
+            )
         elif widget_type is self.EDITOR:
             widget = self._create_editor_widget(
-                sg_entity_type, field_name, entity, parent, **kwargs)
+                sg_entity_type, field_name, entity, parent, **kwargs
+            )
         elif widget_type is self.DISPLAY:
             widget = self._create_display_widget(
-                sg_entity_type, field_name, entity, parent, **kwargs)
+                sg_entity_type, field_name, entity, parent, **kwargs
+            )
         else:
             raise TypeError(
                 "Unknown widget type supplied to ShotgunFieldManager."
@@ -325,11 +349,11 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if self._task_manager is None:
             # create our own task manager if one wasn't passed in
-            task_manager = sgtk.platform.import_framework("tk-framework-shotgunutils", "task_manager")
+            task_manager = sgtk.platform.import_framework(
+                "tk-framework-shotgunutils", "task_manager"
+            )
             self._task_manager = task_manager.BackgroundTaskManager(
-                parent=self,
-                max_threads=1,
-                start_processing=True
+                parent=self, max_threads=1, start_processing=True
             )
 
         # let shotgun globals start loading the schema
@@ -367,10 +391,15 @@ class ShotgunFieldManager(QtCore.QObject):
             if "." in field_name:
                 (resolved_entity_type, resolved_field_name) = field_name.split(".")[-2:]
             else:
-                (resolved_entity_type, resolved_field_name) = (sg_entity_type, field_name)
+                (resolved_entity_type, resolved_field_name) = (
+                    sg_entity_type,
+                    field_name,
+                )
 
             # see if this entity+field+type combo has a widget registered
-            widget_cls = self.get_class(resolved_entity_type, resolved_field_name, widget_type)
+            widget_cls = self.get_class(
+                resolved_entity_type, resolved_field_name, widget_type
+            )
             if widget_cls:
                 supported_fields.append(field_name)
                 continue
@@ -383,10 +412,12 @@ class ShotgunFieldManager(QtCore.QObject):
             if widget_type == self.EDITABLE:
 
                 display_cls = self.get_class(
-                    resolved_entity_type, resolved_field_name, widget_type=self.DISPLAY)
+                    resolved_entity_type, resolved_field_name, widget_type=self.DISPLAY
+                )
 
                 editor_cls = self.get_class(
-                    resolved_entity_type, resolved_field_name, widget_type=self.EDITOR)
+                    resolved_entity_type, resolved_field_name, widget_type=self.EDITOR
+                )
 
                 if display_cls and editor_cls:
                     supported_fields.append(field_name)
@@ -396,7 +427,9 @@ class ShotgunFieldManager(QtCore.QObject):
     ############################################################################
     # protected methods
 
-    def _create_display_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+    def _create_display_widget(
+        self, sg_entity_type, field_name, entity=None, parent=None, **kwargs
+    ):
         """
         Returns an instance of the display widget registered for the supplied field type.
 
@@ -438,7 +471,9 @@ class ShotgunFieldManager(QtCore.QObject):
 
         return widget
 
-    def _create_editor_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+    def _create_editor_widget(
+        self, sg_entity_type, field_name, entity=None, parent=None, **kwargs
+    ):
         """
         Returns an instance of the editor widget registered for the supplied field type.
 
@@ -463,7 +498,8 @@ class ShotgunFieldManager(QtCore.QObject):
         # is not editable.
         if not shotgun_globals.field_is_editable(sg_entity_type, field_name):
             display_widget = self._create_display_widget(
-                sg_entity_type, field_name, entity, parent, **kwargs)
+                sg_entity_type, field_name, entity, parent, **kwargs
+            )
             if display_widget:
                 return ShotgunFieldNotEditable(display_widget)
             else:
@@ -495,7 +531,9 @@ class ShotgunFieldManager(QtCore.QObject):
 
         return widget
 
-    def _create_editable_widget(self, sg_entity_type, field_name, entity=None, parent=None, **kwargs):
+    def _create_editable_widget(
+        self, sg_entity_type, field_name, entity=None, parent=None, **kwargs
+    ):
         """
         Returns an instance of the editable widget registered for the supplied field type.
 
@@ -542,7 +580,8 @@ class ShotgunFieldManager(QtCore.QObject):
             return None
 
         display_widget = self._create_display_widget(
-            sg_entity_type, field_name, entity, parent, **kwargs)
+            sg_entity_type, field_name, entity, parent, **kwargs
+        )
 
         # check to make sure the field is editable. if it is not, return a
         # wrapped version of the display widget that indicates that the field
@@ -561,7 +600,8 @@ class ShotgunFieldManager(QtCore.QObject):
             return ShotgunFieldNotEditable(display_widget)
 
         editor_widget = self._create_editor_widget(
-            sg_entity_type, field_name, entity, parent, **kwargs)
+            sg_entity_type, field_name, entity, parent, **kwargs
+        )
 
         # should have both a display and eidtor widget, wrap them up and return
         return ShotgunFieldEditable(display_widget, editor_widget, parent)

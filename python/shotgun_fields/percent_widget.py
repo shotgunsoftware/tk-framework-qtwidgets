@@ -19,6 +19,7 @@ class PercentWidget(LabelBaseWidget):
     """
     Display a ``percent`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "percent"
 
@@ -39,6 +40,7 @@ class PercentEditorWidget(QtGui.QSpinBox):
     Pressing ``Enter`` or ``Return`` when the widget has focus will cause the
     value to be applied and the ``value_changed`` signal to be emitted.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "percent"
 
@@ -85,4 +87,3 @@ class PercentEditorWidget(QtGui.QSpinBox):
         :param value: The value returned by the Shotgun API to be displayed
         """
         self.setValue(value)
-

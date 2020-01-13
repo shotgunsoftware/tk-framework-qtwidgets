@@ -28,5 +28,3 @@ Entity Field Menu
 .. autoclass:: EntityFieldMenu
     :show-inheritance:
     :members:
-
-

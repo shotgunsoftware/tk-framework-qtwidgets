@@ -16,10 +16,12 @@ from .shotgun_field_meta import ShotgunFieldMeta
 
 from .ui import resources_rc
 
+
 class TagsWidget(ElidedLabelBaseWidget):
     """
     Display a ``tag_list`` field value as returned by the Shotgun API.
     """
+
     __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "tag_list"
 
@@ -32,12 +34,11 @@ class TagsWidget(ElidedLabelBaseWidget):
         tag_strings = []
         for tag in value:
             tag_strings.append(
-                "<img src='%s'>&nbsp;%s" % (
-                    ":/qtwidgets-shotgun-fields/tag.png", tag
-                )
+                "<img src='%s'>&nbsp;%s" % (":/qtwidgets-shotgun-fields/tag.png", tag)
             )
 
         return "&nbsp;".join(tag_strings)
+
 
 class TagsEditorWidget(BubbleEditWidget):
 
@@ -47,8 +48,8 @@ class TagsEditorWidget(BubbleEditWidget):
 
     # TODO: The following line is commented out so that the class is not
     # registered as a tag editor. Uncomment when tags are supported.
-    #__metaclass__ = ShotgunFieldMeta
-    #_EDITOR_TYPE = "tag_list"
+    # __metaclass__ = ShotgunFieldMeta
+    # _EDITOR_TYPE = "tag_list"
 
     # TODO: some additional validation will need to happen to make sure a valid
     # tag was entered and that the user can create a tag if one does not exist.
@@ -152,5 +153,3 @@ class TagsEditorWidget(BubbleEditWidget):
         self.clear()
         for tag in value:
             self.add_tag(tag)
-
-
