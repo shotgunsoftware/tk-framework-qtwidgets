@@ -14,7 +14,7 @@ from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor.shotgun_api3.lib import six
+from tank_vendor import six
 
 
 @six.add_metaclass(ShotgunFieldMeta)

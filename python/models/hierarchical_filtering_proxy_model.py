@@ -13,7 +13,7 @@ Proxy model that provides efficient hierarhcical filtering of a tree-based sourc
 """
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor.shotgun_api3.lib import six
+from tank_vendor import six
 
 
 class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):

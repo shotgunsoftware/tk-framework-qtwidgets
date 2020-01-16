@@ -10,7 +10,7 @@
 
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
-from tank_vendor.shotgun_api3.lib import six
+from tank_vendor import six
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 

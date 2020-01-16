@@ -10,7 +10,7 @@
 
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
-from tank_vendor.shotgun_api3.lib import six
+from tank_vendor import six
 
 from .bubble_widget import BubbleEditWidget, BubbleWidget
 from .entity_widget import EntityWidget

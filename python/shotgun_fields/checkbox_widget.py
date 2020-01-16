@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor.shotgun_api3.lib import six
+from tank_vendor import six
 from .shotgun_field_meta import ShotgunFieldMeta
 
 

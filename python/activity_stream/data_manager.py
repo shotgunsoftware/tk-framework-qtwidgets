@@ -15,7 +15,7 @@ import copy
 import time
 import os
 import sys
-from tank_vendor.shotgun_api3.lib import six
+from tank_vendor import six
 import datetime
 import sqlite3
 import hashlib
