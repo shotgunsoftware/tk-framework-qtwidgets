@@ -12,6 +12,7 @@ import os
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
+from tank_vendor import six
 from .shotgun_field_meta import ShotgunFieldMeta
 
 from .ui import resources_rc
@@ -24,6 +25,7 @@ shotgun_globals = sgtk.platform.import_framework(
 )
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class ImageWidget(QtGui.QLabel):
     """
     Display an ``image`` field value as returned by the Shotgun API.
@@ -31,7 +33,6 @@ class ImageWidget(QtGui.QLabel):
     The ``ImageWidget`` represents both the ``DISPLAY`` and ``EDITOR`` widget type.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "image"
     _EDITOR_TYPE = "image"
 

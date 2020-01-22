@@ -15,7 +15,7 @@ import copy
 import time
 import os
 import sys
-import cPickle
+from tank_vendor import six
 import datetime
 import sqlite3
 import hashlib
@@ -604,7 +604,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             res = list(res)
             if len(res) > 0:
                 note_payload = res[0][0]
-                note_data = cPickle.loads(str(note_payload))
+                note_data = sgtk.util.pickle.loads(note_payload)
         except:
             # supress and continue
             self._bundle.log_exception(
@@ -651,7 +651,9 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 note_id = data[2]
                 note_payload = data[3]
 
-                activity_data = cPickle.loads(str(activity_payload))
+                # we're receiving a buffer object, so we should extract the bytes from
+                # it. In Python 2, bytes == str
+                activity_data = sgtk.util.pickle.loads(bytes(activity_payload))
 
                 # if the activity links to a note and this note
                 # has already been registered, skip the activity altogether.
@@ -668,7 +670,9 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 activities[activity_id] = activity_data
 
                 if note_id:
-                    notes[note_id] = cPickle.loads(str(note_payload))
+                    # we're receiving a buffer object, so we should extract the bytes from
+                    # it. In Python 2, bytes == str
+                    notes[note_id] = sgtk.util.pickle.loads(bytes(note_payload))
 
                 # now for items where there is just the note created
                 # and no note updates yet, we haevn't pulled down
@@ -713,52 +717,52 @@ class ActivityStreamDataHandler(QtCore.QObject):
         try:
             for event in events:
                 activity_id = event["id"]
-                payload = cPickle.dumps(event, cPickle.HIGHEST_PROTOCOL)
-                blob = sqlite3.Binary(payload)
+                payload = sgtk.util.pickle.dumps(event)
+                blob = sqlite3.Binary(six.ensure_binary(payload))
 
-                # first insert the event
+                # first insert event
                 if self._force_activity_stream_update:
                     sql = """
                         INSERT OR REPLACE INTO activity(activity_id, payload, created_at)
                         SELECT ?, ?, datetime('now')
                     """
-                    cursor.execute(sql, (activity_id, blob))
+                    params = (activity_id, blob)
                 else:
                     sql = """
                         INSERT INTO activity(activity_id, payload, created_at)
                         SELECT ?, ?, datetime('now')
                         WHERE NOT EXISTS(SELECT activity_id FROM activity WHERE activity_id = ?);
-                     """
-                    cursor.execute(sql, (activity_id, blob, activity_id))
+                    """
+                    params = (activity_id, blob, activity_id)
+
+                cursor.execute(sql, params)
                 if self._force_activity_stream_update:
                     sql = """
                         INSERT OR REPLACE INTO entity (entity_type, entity_id, activity_id, created_at)
                         SELECT ?, ?, ?, datetime('now')
                     """
-                    cursor.execute(sql, (entity_type, entity_id, activity_id))
+                    params = (entity_type, entity_id, activity_id)
                 else:
-                    # now insert the entity record
+                    # now insert entity record
                     sql = """
                         INSERT INTO entity (entity_type, entity_id, activity_id, created_at)
                         SELECT ?, ?, ?, datetime('now')
                         WHERE NOT EXISTS(SELECT entity_id FROM entity WHERE entity_type = ? and entity_id = ? and activity_id = ?);
                     """
-
-                    cursor.execute(
-                        sql,
-                        (
-                            entity_type,
-                            entity_id,
-                            activity_id,
-                            entity_type,
-                            entity_id,
-                            activity_id,
-                        ),
+                    params = (
+                        entity_type,
+                        entity_id,
+                        activity_id,
+                        entity_type,
+                        entity_id,
+                        activity_id,
                     )
+
+                cursor.execute(sql, params)
 
             connection.commit()
         except:
-            # suppress and continue
+            # supress and continue
             self._bundle.log_exception(
                 "Could not add activity stream data "
                 "to cache database %s" % self._cache_path
@@ -788,8 +792,8 @@ class ActivityStreamDataHandler(QtCore.QObject):
         try:
 
             # first pickle the note data
-            payload = cPickle.dumps(data, cPickle.HIGHEST_PROTOCOL)
-            blob = sqlite3.Binary(payload)
+            payload = sgtk.util.pickle.dumps(data)
+            blob = sqlite3.Binary(six.ensure_binary(payload))
 
             # first delete any existing record
             cursor.execute("DELETE FROM note where note_id = ?", (note_id,))
@@ -813,7 +817,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             connection.commit()
 
         except:
-            # suppress and continue
+            # supress and continue
             self._bundle.log_exception(
                 "Could not add note data " "to cache database %s" % self._cache_path
             )
@@ -855,7 +859,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
     def _get_activity_stream(self, sg, data):
         """
-        Actual payload for getting activity stream data from shotgun
+        Actual payload for getting actity stream data from shotgun
         Note: This runs in a different thread and cannot access
         any QT UI components.
 
@@ -941,7 +945,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
         elif isinstance(data, dict):
             new_val = {}
-            for (k, v) in data.iteritems():
+            for (k, v) in data.items():
                 new_val[k] = self.__convert_timestamp_r(v)
             return new_val
 

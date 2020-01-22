@@ -10,6 +10,7 @@
 
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
+from tank_vendor import six
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -18,12 +19,12 @@ shotgun_globals = sgtk.platform.import_framework(
 )
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class StatusListWidget(LabelBaseWidget):
     """
     Display a ``status_list`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "status_list"
 
     def _string_value(self, value):
@@ -45,12 +46,12 @@ class StatusListWidget(LabelBaseWidget):
         return str_val
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class StatusListEditorWidget(QtGui.QComboBox):
     """
     Allows editing of a ``status_list`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "status_list"
     _IMMEDIATE_APPLY = True
 

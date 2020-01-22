@@ -10,16 +10,17 @@
 
 import locale
 from sgtk.platform.qt import QtGui, QtCore
+from tank_vendor import six
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class CurrencyWidget(LabelBaseWidget):
     """
     Display a ``currency`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "currency"
 
     def _string_value(self, value):
@@ -37,6 +38,7 @@ class CurrencyWidget(LabelBaseWidget):
         return val
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
     """
     Allows editing of a ``currency`` field value as returned by the Shotgun API.
@@ -45,7 +47,6 @@ class CurrencyEditorWidget(QtGui.QDoubleSpinBox):
     value to be applied and the ``value_changed`` signal to be emitted.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "currency"
 
     def get_value(self):

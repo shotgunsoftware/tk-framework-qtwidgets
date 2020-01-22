@@ -12,7 +12,7 @@ import os
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-
+from tank_vendor import six
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -20,6 +20,7 @@ from .shotgun_field_meta import ShotgunFieldMeta
 from .ui import resources_rc
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class FileLinkWidget(ElidedLabelBaseWidget):
     """
     Display a ``url`` field value as returned by the Shotgun API.
@@ -27,7 +28,6 @@ class FileLinkWidget(ElidedLabelBaseWidget):
     The ``FileLinkWidget`` represents both the ``DISPLAY`` and ``EDITOR`` widget type.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "url"
     _EDITOR_TYPE = "url"
 

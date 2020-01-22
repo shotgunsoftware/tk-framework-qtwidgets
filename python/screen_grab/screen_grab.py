@@ -165,7 +165,7 @@ class ScreenGrabber(QtGui.QDialog):
             # use an external callback for screen grabbing
             return cls.SCREEN_GRAB_CALLBACK()
 
-        elif sys.platform.startswith("linux"):
+        elif sgtk.util.is_linux():
             # there are known issues with the QT based screen grabbing
             # on linux - some distros don't have a X11 compositing manager
             # so transparent windows aren't supported. In
@@ -189,7 +189,7 @@ class ScreenGrabber(QtGui.QDialog):
 
             return pixmap
 
-        elif sys.platform == "darwin":
+        elif sgtk.util.is_macos():
             # With macosx there are known issues with some
             # multi-diplay setups, so better to use built-in tool
             return _external_screenshot()
@@ -206,7 +206,7 @@ class ScreenGrabber(QtGui.QDialog):
         """
         self._fit_screen_geometry()
         # Start fade in animation
-        fade_anim = QtCore.QPropertyAnimation(self, "_opacity_anim_prop", self)
+        fade_anim = QtCore.QPropertyAnimation(self, b"_opacity_anim_prop", self)
         fade_anim.setStartValue(self._opacity)
         fade_anim.setEndValue(127)
         fade_anim.setDuration(300)
@@ -261,7 +261,7 @@ class ExternalCaptureThread(QtCore.QThread):
 
     def run(self):
         try:
-            if sys.platform == "darwin":
+            if sgtk.util.is_macos():
                 # use built-in screenshot command on the mac
                 ret_code = os.system("screencapture -m -i -s %s" % self._path)
                 if ret_code != 0:
@@ -269,7 +269,7 @@ class ExternalCaptureThread(QtCore.QThread):
                         "Screen capture tool returned error code %s" % ret_code
                     )
 
-            elif sys.platform == "linux2":
+            elif sgtk.util.is_linux():
                 # use image magick
                 ret_code = os.system("import %s" % self._path)
                 if ret_code != 0:

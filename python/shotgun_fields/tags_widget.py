@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from sgtk.platform.qt import QtCore, QtGui
-
+from tank_vendor import six
 from .bubble_widget import BubbleEditWidget, BubbleWidget
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
@@ -17,12 +17,12 @@ from .shotgun_field_meta import ShotgunFieldMeta
 from .ui import resources_rc
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class TagsWidget(ElidedLabelBaseWidget):
     """
     Display a ``tag_list`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "tag_list"
 
     def _string_value(self, value):

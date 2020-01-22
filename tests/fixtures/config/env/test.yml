@@ -1,0 +1,23 @@
+# this is a comment at the top of the file
+engines:
+  # this is a comment after the engines section
+  tk-testengine:
+    apps:
+      tk-testapp:
+        location:
+          type: path
+          path: "{CONFIG_FOLDER}/bundles/test_app"
+    debug_logging: False
+
+    location:
+      type: path
+      path: $SHOTGUN_TEST_ENGINE
+frameworks:
+  tk-framework-qtwidgets_v2.x.x:
+    location:
+      type: path
+      path: $SHOTGUN_CURRENT_REPO_ROOT
+  tk-framework-shotgunutils_v5.x.x:
+    location:
+      type: path
+      path: $SHOTGUN_REPOS_ROOT/tk-framework-shotgunutils

@@ -417,7 +417,7 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         Example to match only ".gif" extensions::
 
-            re.compile(r"\w+[.]gif$")
+            re.compile(r"\\w+[.]gif$")
         """
         return self._attachments_filter
 

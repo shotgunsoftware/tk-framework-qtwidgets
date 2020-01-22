@@ -9,15 +9,16 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from sgtk.platform.qt import QtCore, QtGui
+from tank_vendor import six
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class CheckBoxWidget(QtGui.QCheckBox):
     """
     Displays a ``checkbox`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "checkbox"
     _EDITOR_TYPE = "checkbox"
 

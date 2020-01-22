@@ -11,23 +11,24 @@
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 from sgtk.platform.qt import QtCore, QtGui
+from tank_vendor import six
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class TextWidget(ElidedLabelBaseWidget):
     """
     Display a ``text`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "text"
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class TextEditorWidget(QtGui.QTextEdit):
     """
     Allows editing of a ``text`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "text"
 
     def get_value(self):

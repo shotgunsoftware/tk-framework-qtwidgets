@@ -10,6 +10,7 @@
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
+from tank_vendor import six
 
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
@@ -23,12 +24,12 @@ global_search_widget = sgtk.platform.current_bundle().import_module(
 )
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class EntityWidget(ElidedLabelBaseWidget):
     """
     Display an ``entity`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _DISPLAY_TYPE = "entity"
 
     def _entity_dict_to_html(self, value):
@@ -65,12 +66,12 @@ class EntityWidget(ElidedLabelBaseWidget):
         return self._entity_dict_to_html(value)
 
 
+@six.add_metaclass(ShotgunFieldMeta)
 class EntityEditorWidget(global_search_widget.GlobalSearchWidget):
     """
     Allows editing of a ``entity`` field value as returned by the Shotgun API.
     """
 
-    __metaclass__ = ShotgunFieldMeta
     _EDITOR_TYPE = "entity"
 
     def setup_widget(self):
