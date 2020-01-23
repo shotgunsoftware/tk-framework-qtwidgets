@@ -272,7 +272,7 @@ class ReplyListWidget(QtGui.QWidget):
         for x in (
             self._general_widgets
             + self._reply_widgets
-            + self._attachment_group_widgets.values()
+            + list(self._attachment_group_widgets.values())
         ):
             # remove widget from layout:
             self.ui.reply_layout.removeWidget(x)

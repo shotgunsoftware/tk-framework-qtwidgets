@@ -242,7 +242,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         return reply_button
 
     def get_attachment_group_widget_ids(self):
-        return self._attachment_group_widgets.keys()
+        return list(self._attachment_group_widgets.keys())
 
     def get_attachment_group_widget(self, attachment_group_id):
         """
