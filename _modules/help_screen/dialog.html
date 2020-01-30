@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>help_screen.dialog &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
+  <title>help_screen.dialog &mdash; tk-framework-qtwidgets v2.9.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -249,7 +249,7 @@
 
         <span class="c1"># it seems some versions of linux are having issues with the splash screen mode,</span>
         <span class="c1"># so disable this</span>
-        <span class="k">if</span> <span class="s2">&quot;linux&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tank</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">is_linux</span><span class="p">():</span>
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowStaysOnTopHint</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -375,7 +375,7 @@
             <span class="n">current_page</span><span class="o">.</span><span class="n">raise_</span><span class="p">()</span>
 
             <span class="c1"># animate the current page away</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">current_page</span><span class="p">,</span> <span class="s2">&quot;pos&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">current_page</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;pos&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">current_page</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">current_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setEndValue</span><span class="p">(</span>
@@ -384,7 +384,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setEasingCurve</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">OutCubic</span><span class="p">)</span>
 
             <span class="c1"># animate the new page in:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">dst_page</span><span class="p">,</span> <span class="s2">&quot;pos&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">dst_page</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;pos&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span>
                 <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="n">page_offset</span><span class="p">,</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
@@ -420,7 +420,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Autodesk.
+        &copy; Copyright 2020, Autodesk.
 
     </p>
   </div> 
@@ -441,7 +441,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.6',
+            VERSION:'v2.9.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.bubble_widget &mdash; tk-framework-qtwidgets v2.8.6 documentation</title>
+  <title>shotgun_fields.bubble_widget &mdash; tk-framework-qtwidgets v2.9.0 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.8.6 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.8.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -195,6 +195,7 @@
 
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">tank_vendor.six</span> <span class="kn">import</span> <span class="nb">unichr</span>
 
 
 <div class="viewcode-block" id="BubbleWidget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget">[docs]</a><span class="k">class</span> <span class="nc">BubbleWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="p">):</span>
@@ -489,7 +490,7 @@
 
         <span class="c1"># loop over each character until a replacement character with a known</span>
         <span class="c1"># char format that matches the supplied id is found.</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OBJECT_REPLACEMENT_CHAR</span><span class="p">:</span>
                 <span class="k">continue</span>
 
@@ -690,7 +691,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Autodesk.
+        &copy; Copyright 2020, Autodesk.
 
     </p>
   </div> 
@@ -711,7 +712,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.8.6',
+            VERSION:'v2.9.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
