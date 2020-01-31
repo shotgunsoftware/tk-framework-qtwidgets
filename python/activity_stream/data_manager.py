@@ -604,7 +604,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             res = list(res)
             if len(res) > 0:
                 note_payload = res[0][0]
-                note_data = sgtk.util.pickle.loads(note_payload)
+                note_data = sgtk.util.pickle.loads(bytes(note_payload))
         except:
             # supress and continue
             self._bundle.log_exception(
