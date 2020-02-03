@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.9.0 documentation</title>
+  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.9.1 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.0 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.1 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.1.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -457,7 +457,7 @@
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span>
             <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span>
-            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="p">):</span>
             <span class="c1"># remove widget from layout:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -689,7 +689,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.0',
+            VERSION:'v2.9.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
