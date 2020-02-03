@@ -146,9 +146,12 @@ class HierarchicalSearchCompleter(SearchCompleter):
 
         # When showing only entities, skip entries that aren't.
         if self._show_entities_only:
-            data_matches = filter(
-                lambda x: x["ref"]["type"] is not None and x["ref"]["id"] is not None,
-                data_matches,
+            data_matches = list(
+                filter(
+                    lambda x: x["ref"]["type"] is not None
+                    and x["ref"]["id"] is not None,
+                    data_matches,
+                )
             )
 
         if len(data_matches) == 0:
