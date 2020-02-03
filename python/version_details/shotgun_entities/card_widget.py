@@ -445,7 +445,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         """
         A list of field names currently registered with the item.
         """
-        return self._fields.keys()
+        return list(self._fields.keys())
 
     def _set_fields(self, fields):
         label_exempt = self.label_exempt_fields
