@@ -128,5 +128,8 @@ class Ui_NavigationWidget(object):
 
     def retranslateUi(self, NavigationWidget):
         NavigationWidget.setWindowTitle(QtGui.QApplication.translate("NavigationWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.nav_home_btn.setAccessibleName(QtGui.QApplication.translate("NavigationWidget", "nav_home_btn", None, QtGui.QApplication.UnicodeUTF8))
+        self.nav_prev_btn.setAccessibleName(QtGui.QApplication.translate("NavigationWidget", "nav_prev_btn", None, QtGui.QApplication.UnicodeUTF8))
+        self.nav_next_btn.setAccessibleName(QtGui.QApplication.translate("NavigationWidget", "nav_next_btn", None, QtGui.QApplication.UnicodeUTF8))
 
 from . import resources_rc
