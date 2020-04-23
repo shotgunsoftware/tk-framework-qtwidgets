@@ -13,7 +13,8 @@ import weakref
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-USING_PYQT = hasattr(QtCore, "QVariant")
+USING_PYQT = not hasattr(QtCore, "ClassInfo")  # Only PySide has ClassInfo
+
 
 
 class WidgetDelegate(QtGui.QStyledItemDelegate):
