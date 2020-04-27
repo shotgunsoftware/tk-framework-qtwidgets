@@ -16,7 +16,6 @@ from sgtk.platform.qt import QtCore, QtGui
 USING_PYQT = not hasattr(QtCore, "ClassInfo")  # Only PySide has ClassInfo
 
 
-
 class WidgetDelegate(QtGui.QStyledItemDelegate):
     """
     Convenience wrapper that makes it straight forward to use widgets inside of delegates.
