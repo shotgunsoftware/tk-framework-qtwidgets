@@ -334,14 +334,21 @@ def get_desktop_pixmap(rect):
     :returns: Captured image
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
+    desktop_id = QtGui.QApplication.desktop().winId()
     x_y_w_h = rect.x(), rect.y(), rect.width(), rect.height()
 
     if QT_MAJOR == 5:
         screen = QtGui.QApplication.primaryScreen()
-        pixmap = screen.grabWindow(0, *x_y_w_h)
+        try:
+            pixmap = screen.grabWindow(desktop_id, *x_y_w_h)
+        except TypeError as error:
+            if "quintptr" in str(error):
+                ptr_type = getattr(__builtins__, "long", int)  # Py3 safe long
+                pixmap = screen.grabWindow(ptr_type(desktop_id), *x_y_w_h)
+            else:
+                raise
     elif QT_MAJOR == 4:
-        desktop = QtGui.QApplication.desktop()
-        pixmap = QtGui.QPixmap.grabWindow(desktop.winId(), *x_y_w_h)
+        pixmap = QtGui.QPixmap.grabWindow(desktop_id, *x_y_w_h)
     else:
         message = "Screen capture not implmented for Qt %d"
         raise NotImplementedError(message % QT_MAJOR)
