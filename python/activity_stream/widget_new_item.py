@@ -79,7 +79,7 @@ class NewItemWidget(ActivityStreamBaseWidget):
         else:
             self.user_thumb.setCursor(QtCore.Qt.ArrowCursor)
 
-    interactive = QtCore.Property(bool, _get_interactive, _set_interactive)
+    interactive = property(_get_interactive, _set_interactive)
 
     ##############################################################################
     # public interface

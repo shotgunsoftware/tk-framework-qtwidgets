@@ -72,7 +72,7 @@ class ReplyDialog(QtGui.QDialog):
         self.ui.note_widget.set_current_entity("Note", note_id)
         self._note_id = note_id
 
-    note_id = QtCore.Property(int, _get_note_id, _set_note_id)
+    note_id = property(_get_note_id, _set_note_id)
 
     def close_after_create(self):
         """

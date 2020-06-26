@@ -104,7 +104,7 @@ class ShotgunPlaybackLabel(QtGui.QLabel):
         else:
             self.unsetCursor()
 
-    interactive = QtCore.Property(bool, _get_interactive, _set_interactive)
+    interactive = property(_get_interactive, _set_interactive)
 
     def enterEvent(self, event):
         """

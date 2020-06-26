@@ -264,8 +264,8 @@ class BubbleEditWidget(QtGui.QTextEdit):
 
         # for mouse events find the actual widget at the position
         doc = self.document()
-        cursor_pos = doc.documentLayout().hitTest(edit_pos, QtCore.Qt.ExactHit)
-        char_format = doc.documentLayout().format(cursor_pos)
+        # cursor_pos = doc.documentLayout().hitTest(edit_pos, QtCore.Qt.ExactHit)
+        char_format = doc.documentLayout().formatAt(edit_pos)
         bubble_id = char_format.property(_BubbleTextObject.BUBBLE_DATA_PROPERTY)
         bubble = self.get_bubble(bubble_id)
 
@@ -494,4 +494,4 @@ class _BubbleTextObject(QtGui.QPyTextObject):
         """Returns the ``sizeHint`` for the bubble widget for the supplied char format."""
         bubble_id = char_format.property(self.BUBBLE_DATA_PROPERTY)
         bubble = self.get_bubble(bubble_id)
-        return bubble.sizeHint()
+        return QtCore.QSizeF(bubble.sizeHint())

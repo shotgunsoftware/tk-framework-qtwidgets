@@ -226,7 +226,7 @@ class ScreenGrabber(QtGui.QDialog):
         """
         return self._opacity
 
-    _opacity_anim_prop = QtCore.Property(int, _get_opacity, _set_opacity)
+    _opacity_anim_prop = property(_get_opacity, _set_opacity)
 
     def _fit_screen_geometry(self):
         # Compute the union of all screen geometries, and resize to fit.
