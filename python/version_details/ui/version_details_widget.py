@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'version_details_widget.ui'
 #
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
+#      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,7 +18,7 @@ class Ui_VersionDetailsWidget(object):
         self.verticalLayout_17.setObjectName("verticalLayout_17")
         self.details_title_bar = QtGui.QFrame(VersionDetailsWidget)
         self.details_title_bar.setMinimumSize(QtCore.QSize(0, 13))
-        self.details_title_bar.setMaximumSize(QtCore.QSize(16777215, 13))
+        self.details_title_bar.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.details_title_bar.setFrameShape(QtGui.QFrame.NoFrame)
         self.details_title_bar.setFrameShadow(QtGui.QFrame.Plain)
         self.details_title_bar.setLineWidth(0)
