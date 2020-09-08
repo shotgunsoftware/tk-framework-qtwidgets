@@ -971,6 +971,9 @@ class GroupedListView(QtGui.QAbstractItemView):
             rows.append(index.row())
             index = index.parent()
 
+        if not rows:
+            return QtCore.QRect()
+
         # find the info for the root item:
         root_row = rows[-1]
         if root_row >= len(self._item_info):
