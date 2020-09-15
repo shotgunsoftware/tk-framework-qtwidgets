@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -205,7 +205,7 @@
 <span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
 
 
-<span class="nd">@six.add_metaclass</span><span class="p">(</span><span class="n">ShotgunFieldMeta</span><span class="p">)</span>
+<span class="nd">@six</span><span class="o">.</span><span class="n">add_metaclass</span><span class="p">(</span><span class="n">ShotgunFieldMeta</span><span class="p">)</span>
 <div class="viewcode-block" id="FileLinkWidget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.file_link_widget.FileLinkWidget">[docs]</a><span class="k">class</span> <span class="nc">FileLinkWidget</span><span class="p">(</span><span class="n">ElidedLabelBaseWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Display a ``url`` field value as returned by the Shotgun API.</span>
@@ -248,7 +248,7 @@
             <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">Leave</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="FileLinkWidget.setup_widget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.file_link_widget.FileLinkWidget.setup_widget">[docs]</a>    <span class="k">def</span> <span class="nf">setup_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -257,7 +257,7 @@
 <span class="sd">        Called by the metaclass during initialization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editable</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_popup_btn</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/qtwidgets-shotgun-fields/link_menu.png&quot;</span><span class="p">))</span>
@@ -357,7 +357,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
             <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="s2">&quot;local&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s2">&quot;local_path&quot;</span><span class="p">:</span> <span class="n">file_path</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_display_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
@@ -374,13 +374,13 @@
 <span class="sd">        Opens a custom dialog for the user to input a url and display name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="n">display</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">display</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># get the current url and display if the current link is a web link</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;web&quot;</span><span class="p">:</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-            <span class="n">display</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">display</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="c1"># prompt the user</span>
         <span class="n">edit_link_dialog</span> <span class="o">=</span> <span class="n">_EditWebLinkDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>
@@ -413,7 +413,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">:</span>
             <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">link_type</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">link_type</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;link_type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;upload&quot;</span><span class="p">:</span>
             <span class="c1"># the uploaded urls have timeouts built in. query the current</span>
@@ -447,7 +447,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">:</span>
             <span class="n">link_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">link_type</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">link_type</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">link_type</span><span class="p">:</span>
             <span class="c1"># no link type, display options for each type</span>
@@ -482,7 +482,7 @@
 
         <span class="c1"># clear the value of the field, emit the ``value_changed`` signal.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;link_type&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_display_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
@@ -566,7 +566,7 @@
 <span class="sd">    Class for prompting the user for link url and aname</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the dialog.</span>
 
@@ -606,7 +606,7 @@
 
         <span class="c1"># color the button to match the SG version.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Add Link&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">btn_palette</span><span class="p">)</span>
 
         <span class="n">cancel_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Cancel&quot;</span><span class="p">)</span>
@@ -681,7 +681,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

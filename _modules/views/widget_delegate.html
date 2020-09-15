@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>views.widget_delegate &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>views.widget_delegate &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -240,7 +240,7 @@
         <span class="c1"># all model indexes, keep track of it here.  We use a weakref to track the widget</span>
         <span class="c1"># as it will be parented to another widget which will take care of garbage collection</span>
         <span class="c1"># when needed</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># help the GC</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__editors</span> <span class="o">=</span> <span class="p">[]</span>
@@ -276,14 +276,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">model_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
             <span class="c1"># if the index is invalid, no field widget will be useful for display</span>
             <span class="c1"># or editing.</span>
-            <span class="k">return</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
         <span class="c1"># the default implementation just uses the internal __paint_widget</span>
         <span class="c1"># (creating it if needed) for backwards compatibility</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span><span class="p">():</span>
             <span class="n">paint_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_widget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">paint_widget</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">None</span>
+                <span class="k">return</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">paint_widget</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span><span class="p">()</span></div>
 
@@ -310,7 +310,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">model_index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
             <span class="c1"># if the index is invalid, no field widget will be useful for editing.</span>
-            <span class="k">return</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_widget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span></div>
 
@@ -348,7 +348,7 @@
 <span class="sd">        :returns:       QWidget that will be used to paint grid cells in the view.</span>
 <span class="sd">        :rtype:         :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">None</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
     <span class="c1">########################################################################################</span>
     <span class="c1"># &#39;private&#39; methods that are not meant to be subclassed or called by a deriving class.</span>
@@ -380,7 +380,7 @@
             <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">parent_widget</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">editor_widget</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
         <span class="c1"># keep tabs on all editors to avoid garbage collection problems:</span>
         <span class="c1"># (TODO) confirm that this is necessary as this will lead to the persistance of</span>
@@ -421,7 +421,7 @@
 
         <span class="c1"># make sure that the widget that is just used for painting isn&#39;t visible otherwise</span>
         <span class="c1"># it&#39;ll appear in the wrong place!</span>
-        <span class="n">paint_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">paint_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># call out to have the widget set the right values</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_before_paint</span><span class="p">(</span><span class="n">paint_widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">)</span>
@@ -484,7 +484,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

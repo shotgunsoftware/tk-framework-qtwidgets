@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -344,7 +344,7 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># special methods</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the field manager factory.</span>
 
@@ -357,7 +357,7 @@
         <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">bg_task_manager</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -450,7 +450,7 @@
             <span class="n">field_data_role</span><span class="o">=</span><span class="n">field_data_role</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ShotgunFieldManager.create_label"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_label">[docs]</a>    <span class="k">def</span> <span class="nf">create_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">postfix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunFieldManager.create_label"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_label">[docs]</a>    <span class="k">def</span> <span class="nf">create_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">postfix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a widget that can be used as a label for the given field.</span>
 
@@ -475,8 +475,8 @@
         <span class="n">sg_entity_type</span><span class="p">,</span>
         <span class="n">field_name</span><span class="p">,</span>
         <span class="n">widget_type</span><span class="o">=</span><span class="n">EDITABLE</span><span class="p">,</span>
-        <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -532,21 +532,21 @@
             <span class="c1"># already initialized</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># create our own task manager if one wasn&#39;t passed in</span>
             <span class="n">task_manager</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
                 <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;task_manager&quot;</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">task_manager</span><span class="o">.</span><span class="n">BackgroundTaskManager</span><span class="p">(</span>
-                <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_processing</span><span class="o">=</span><span class="bp">True</span>
+                <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_processing</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">)</span>
 
         <span class="c1"># let shotgun globals start loading the schema</span>
         <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">register_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">)</span>
         <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">run_on_schema_loaded</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__schema_loaded</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="bp">True</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="ShotgunFieldManager.supported_fields"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.supported_fields">[docs]</a>    <span class="k">def</span> <span class="nf">supported_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_names</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunFieldManager.supported_fields"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.supported_fields">[docs]</a>    <span class="k">def</span> <span class="nf">supported_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_names</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the subset of fields from field_names that have an associated widget class.</span>
 <span class="sd">        Field_names may be in &quot;bubbled&quot; notation, for example &quot;sg_task.Task.assignee&quot;.</span>
@@ -613,7 +613,7 @@
     <span class="c1"># protected methods</span>
 
     <span class="k">def</span> <span class="nf">_create_display_widget</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an instance of the display widget registered for the supplied field type.</span>
@@ -634,7 +634,7 @@
 <span class="sd">        :returns: :class:`~PySide.QtGui.QWidget` or ``None`` if the field type has no display widget</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">display_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
-        <span class="n">widget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="n">display_cls</span><span class="p">:</span>
             <span class="c1"># instantiate the widget</span>
@@ -652,12 +652,12 @@
             <span class="c1"># display was requested.</span>
             <span class="n">editor_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDITOR</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">editor_cls</span> <span class="o">==</span> <span class="n">display_cls</span><span class="p">:</span>
-                <span class="n">widget</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">widget</span>
 
     <span class="k">def</span> <span class="nf">_create_editor_widget</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an instance of the editor widget registered for the supplied field type.</span>
@@ -689,11 +689,11 @@
                 <span class="k">return</span> <span class="n">ShotgunFieldNotEditable</span><span class="p">(</span><span class="n">display_widget</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># no guarantee that a display widget has been registered</span>
-                <span class="k">return</span> <span class="bp">None</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
         <span class="c1"># the field is editable, try to get the editor class</span>
         <span class="n">editor_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EDITOR</span><span class="p">)</span>
-        <span class="n">widget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="n">editor_cls</span><span class="p">:</span>
             <span class="c1"># instantiate the widget</span>
@@ -712,12 +712,12 @@
             <span class="k">if</span> <span class="n">display_cls</span> <span class="o">==</span> <span class="n">editor_cls</span><span class="p">:</span>
                 <span class="c1"># display and edit classes are the same. we need to make sure</span>
                 <span class="c1"># we enable the editing</span>
-                <span class="n">widget</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">widget</span>
 
     <span class="k">def</span> <span class="nf">_create_editable_widget</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an instance of the editable widget registered for the supplied field type.</span>
@@ -762,7 +762,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">display_cls</span><span class="p">:</span>
             <span class="c1"># nothing to do if can&#39;t even display the field</span>
-            <span class="k">return</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">display_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_display_widget</span><span class="p">(</span>
             <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
@@ -778,7 +778,7 @@
         <span class="k">if</span> <span class="n">editor_cls</span> <span class="ow">and</span> <span class="n">editor_cls</span> <span class="o">==</span> <span class="n">display_cls</span><span class="p">:</span>
             <span class="c1"># if the editor and display are the same, just return the editing</span>
             <span class="c1"># enabled version of the display widget.</span>
-            <span class="n">display_widget</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">display_widget</span><span class="o">.</span><span class="n">enable_editing</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">display_widget</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">editor_cls</span><span class="p">:</span>
@@ -861,7 +861,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

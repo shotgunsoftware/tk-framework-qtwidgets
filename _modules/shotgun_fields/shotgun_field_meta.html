@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_meta &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>shotgun_fields.shotgun_field_meta &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -344,7 +344,7 @@
 
         <span class="c1"># take over class members if called out via the @take_over decorator</span>
         <span class="k">for</span> <span class="n">member_name</span> <span class="ow">in</span> <span class="n">TAKE_OVER_NAMES</span><span class="p">:</span>
-            <span class="n">member</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mcl</span><span class="p">,</span> <span class="n">member_name</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="n">member</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mcl</span><span class="p">,</span> <span class="n">member_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">member</span><span class="p">:</span>
                 <span class="n">mcl</span><span class="o">.</span><span class="n">take_over_if_not_defined</span><span class="p">(</span><span class="n">member_name</span><span class="p">,</span> <span class="n">member</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">,</span> <span class="n">parents</span><span class="p">)</span>
 
@@ -394,12 +394,12 @@
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span>
-        <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">entity_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">field_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">delegate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">entity_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">field_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">delegate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -429,7 +429,7 @@
         <span class="n">instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFieldMeta</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># set the default member variables</span>
-        <span class="n">instance</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">instance</span><span class="o">.</span><span class="n">_entity</span> <span class="o">=</span> <span class="n">entity</span>
         <span class="n">instance</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="n">entity_type</span>
         <span class="n">instance</span><span class="o">.</span><span class="n">_field_name</span> <span class="o">=</span> <span class="n">field_name</span>
@@ -441,7 +441,7 @@
         <span class="n">instance</span><span class="o">.</span><span class="n">setup_widget</span><span class="p">()</span>
 
         <span class="c1"># then set the value</span>
-        <span class="n">instance</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">entity</span> <span class="ow">and</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">entity</span> <span class="ow">and</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">instance</span>
 
@@ -495,7 +495,7 @@
 <span class="sd">        :param value: The value displayed by the widget</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_display_default</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_display_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -550,7 +550,7 @@
             <span class="c1"># it&#39;s a string anyway so just return</span>
             <span class="k">return</span> <span class="n">value</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
             <span class="c1"># convert to utf-8</span>
             <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
 
@@ -596,7 +596,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

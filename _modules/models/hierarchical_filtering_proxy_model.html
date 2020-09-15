@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>models.hierarchical_filtering_proxy_model &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>models.hierarchical_filtering_proxy_model &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -230,19 +230,19 @@
 <span class="sd">            Construction</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cache_hits</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cache_misses</span> <span class="o">=</span> <span class="mi">0</span>
 
             <span class="c1"># ideally we&#39;d use QPersistentModelIndexes to key into the cache but these</span>
             <span class="c1"># aren&#39;t hashable in earlier versions of PySide!</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_use_persistent_index_keys</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_persistent_index_keys</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># wouldn&#39;t it be nice if there were an in-built mechanism to test if a type was</span>
                 <span class="c1"># hashable!</span>
                 <span class="nb">hash</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPersistentModelIndex</span><span class="p">())</span>
             <span class="k">except</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_use_persistent_index_keys</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_use_persistent_index_keys</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">cache_hit_miss_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -301,13 +301,13 @@
 <span class="sd">            :returns:       The accepted state if the index was found in the cache, otherwise None</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">None</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
             <span class="n">cache_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_cache_key</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
             <span class="n">cache_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">cache_value</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_cache_misses</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">return</span> <span class="bp">None</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
             <span class="n">p_index</span><span class="p">,</span> <span class="n">accepted</span> <span class="o">=</span> <span class="n">cache_value</span>
             <span class="k">if</span> <span class="n">p_index</span> <span class="ow">and</span> <span class="n">p_index</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
@@ -317,7 +317,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># row has changed so results are bad!</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_cache_misses</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">return</span> <span class="bp">None</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
         <span class="k">def</span> <span class="nf">minimize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;</span>
@@ -362,7 +362,7 @@
             <span class="c1"># return a tuple of the reversed indexes:</span>
             <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent:    The parent QObject to use for this instance</span>
 <span class="sd">        :type parent:     :class:`~PySide.QtGui.QWidget`</span>
@@ -374,7 +374,7 @@
             <span class="n">HierarchicalFilteringProxyModel</span><span class="o">.</span><span class="n">_IndexAcceptedCache</span><span class="p">()</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="HierarchicalFilteringProxyModel.enable_caching"><a class="viewcode-back" href="../../models.html#models.HierarchicalFilteringProxyModel.enable_caching">[docs]</a>    <span class="k">def</span> <span class="nf">enable_caching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="HierarchicalFilteringProxyModel.enable_caching"><a class="viewcode-back" href="../../models.html#models.HierarchicalFilteringProxyModel.enable_caching">[docs]</a>    <span class="k">def</span> <span class="nf">enable_caching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allow control over enabling/disabling of the accepted cache used to accelerate</span>
 <span class="sd">        filtering.  Can be used for debug purposes to ensure the caching isn&#39;t the cause</span>
@@ -478,19 +478,19 @@
 
         <span class="c1"># first, see if any children of this item are known to already be accepted</span>
         <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">src_idx</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">child_accepted</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">child_accepted</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
             <span class="c1"># child is accepted so this item must also be accepted</span>
-            <span class="k">return</span> <span class="bp">True</span>
+            <span class="k">return</span> <span class="kc">True</span>
 
         <span class="c1"># next, we need to determine if the parent item has been accepted.  To do this,</span>
         <span class="c1"># search up the hierarchy stopping at the first parent that we know for sure if</span>
         <span class="c1"># it has been accepted or not.</span>
         <span class="n">upstream_indexes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">current_idx</span> <span class="o">=</span> <span class="n">src_idx</span>
-        <span class="n">parent_accepted</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">parent_accepted</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">while</span> <span class="n">current_idx</span> <span class="ow">and</span> <span class="n">current_idx</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
             <span class="n">accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">current_idx</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">accepted</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">accepted</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">parent_accepted</span> <span class="o">=</span> <span class="n">accepted</span>
                 <span class="k">break</span>
             <span class="n">upstream_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_idx</span><span class="p">)</span>
@@ -506,14 +506,14 @@
 
         <span class="k">if</span> <span class="n">parent_accepted</span><span class="p">:</span>
             <span class="c1"># the index we are testing was accepted!</span>
-            <span class="k">return</span> <span class="bp">True</span>
+            <span class="k">return</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="n">src_model</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">(</span><span class="n">src_idx</span><span class="p">):</span>
             <span class="c1"># even though the parent wasn&#39;t accepted, it may still be needed if one or more</span>
             <span class="c1"># children/grandchildren/etc. are accepted:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_child_accepted_r</span><span class="p">(</span><span class="n">src_idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># index wasn&#39;t accepted and has no children</span>
-            <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">setSourceModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -560,18 +560,18 @@
 
         <span class="c1"># check to see if any children of this item are known to have been accepted:</span>
         <span class="n">cached_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">cached_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cached_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># we already computed this so just return the result</span>
             <span class="k">return</span> <span class="n">cached_value</span>
 
         <span class="c1"># need to recursively iterate over children looking for one that is accepted:</span>
-        <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">child_accepted</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">ci</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(</span><span class="n">idx</span><span class="p">)):</span>
             <span class="n">child_idx</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
             <span class="c1"># Check if child item is in cache:</span>
             <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">child_idx</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">child_accepted</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">child_accepted</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># It&#39;s not in the cache so lets see if it&#39;s accepted and add to the cache:</span>
                 <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_row_accepted</span><span class="p">(</span>
                     <span class="n">child_idx</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">idx</span><span class="p">,</span> <span class="n">parent_accepted</span>
@@ -581,7 +581,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">child_accepted</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">(</span><span class="n">child_idx</span><span class="p">):</span>
                 <span class="c1"># This child was not accepted.</span>
                 <span class="c1"># Recurse down and check if any grand children are accepted.</span>
-                <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_child_accepted_r</span><span class="p">(</span><span class="n">child_idx</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+                <span class="n">child_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_child_accepted_r</span><span class="p">(</span><span class="n">child_idx</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">child_accepted</span><span class="p">:</span>
                 <span class="c1"># This child node or one of its descendants indicated that they</span>
@@ -721,7 +721,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

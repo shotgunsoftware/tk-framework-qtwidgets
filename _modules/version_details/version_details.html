@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -276,7 +276,7 @@
     <span class="n">note_metadata_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
     <span class="n">note_attachment_arrived</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a new :class:`~VersionDetailsWidget` object.</span>
 
@@ -286,10 +286,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">VersionDetailsWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pinned</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_versions_ascending</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pinned</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_versions_ascending</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_upload_task_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">bg_task_manager</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_context_menu_actions</span> <span class="o">=</span> <span class="p">[]</span>
@@ -298,9 +298,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_query_uids</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_note_fields</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">NOTE_METADATA_FIELD</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_VersionDetailsWidget</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -389,12 +389,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">version_delegate</span><span class="o">.</span><span class="n">label_exempt_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">entity_version_view</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version_delegate</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">show_sg_stream_button</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">version_items_playable</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">clickable_user_icons</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">show_note_links</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">highlight_new_arrivals</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">notes_are_selectable</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">show_sg_stream_button</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">version_items_playable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">clickable_user_icons</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">show_note_links</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">highlight_new_arrivals</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">notes_are_selectable</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">version_info_model</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">SimpleShotgunModel</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span>
         <span class="p">)</span>
@@ -442,7 +442,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_stylesheet</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">show_title_bar_buttons</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_title_bar_buttons</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># This will handle showing or hiding the dock title bar</span>
         <span class="c1"># depending on what the parent is.</span>
@@ -548,7 +548,7 @@
     <span class="c1">##########################################################################</span>
     <span class="c1"># public methods</span>
 
-<div class="viewcode-block" id="VersionDetailsWidget.add_note_attachments"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.add_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">add_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">,</span> <span class="n">note_entity</span><span class="p">,</span> <span class="n">cleanup_after_upload</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="VersionDetailsWidget.add_note_attachments"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.add_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">add_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">,</span> <span class="n">note_entity</span><span class="p">,</span> <span class="n">cleanup_after_upload</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a given list of files to the note widget as file attachments.</span>
 
@@ -617,14 +617,14 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clears all data from all widgets and views in the details panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_more_info_toggled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_more_info_toggled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">_clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">pages</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">empty_page</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">version_model</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">version_info_model</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="bp">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.select_note"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.select_note">[docs]</a>    <span class="k">def</span> <span class="nf">select_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -784,7 +784,7 @@
             <span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="VersionDetailsWidget.show_new_note_dialog"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="VersionDetailsWidget.show_new_note_dialog"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows a dialog that allows the user to input a new note.</span>
 
@@ -802,7 +802,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">float_button</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">close_button</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="VersionDetailsWidget.set_version_thumbnail"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.set_version_thumbnail">[docs]</a>    <span class="k">def</span> <span class="nf">set_version_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thumbnail_path</span><span class="p">,</span> <span class="n">version_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="VersionDetailsWidget.set_version_thumbnail"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.set_version_thumbnail">[docs]</a>    <span class="k">def</span> <span class="nf">set_version_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thumbnail_path</span><span class="p">,</span> <span class="n">version_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets a Version entity&#39;s thumbnail image in Shotgun. If no Version</span>
 <span class="sd">        id is provided, the current Version entity will be updated.</span>
@@ -830,7 +830,7 @@
 <span class="sd">        :param dock_widget: The parent QDockWidget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span> <span class="o">=</span> <span class="n">dock_widget</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">show_title_bar_buttons</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_title_bar_buttons</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">dock_widget</span><span class="o">.</span><span class="n">dockLocationChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dock_location_changed</span><span class="p">)</span></div>
 
     <span class="c1">##########################################################################</span>
@@ -1029,10 +1029,10 @@
         <span class="c1"># ---- disable the buttons until the schema is cached. set a tooltip</span>
         <span class="c1">#      just in case someone tries to click before the cache is loaded</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Caching SG fields. Please hold...&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Caching SG fields. Please hold...&quot;</span><span class="p">)</span>
 
         <span class="c1"># use the current entity to retrieve the project id to ensure is cached</span>
@@ -1050,10 +1050,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># disable these until the schema is cached</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Select fields to display&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Select fields to display&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_version_list_field_menu_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
@@ -1085,7 +1085,7 @@
                     <span class="p">)</span>
 
                     <span class="n">new_action</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
-                    <span class="n">new_action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                    <span class="n">new_action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
                     <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_fields</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">new_action</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">new_action</span><span class="p">)</span>
@@ -1111,7 +1111,7 @@
                     <span class="k">if</span> <span class="n">remove_action</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
                         <span class="n">actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_fields</span><span class="o">.</span><span class="n">actions</span><span class="p">()</span>
                         <span class="n">id_action</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">actions</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;id&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-                        <span class="n">id_action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                        <span class="n">id_action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_sort_version_list</span><span class="p">(</span><span class="n">id_action</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu</span><span class="o">.</span><span class="n">removeAction</span><span class="p">(</span><span class="n">remove_action</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_fields</span><span class="o">.</span><span class="n">removeAction</span><span class="p">(</span><span class="n">remove_action</span><span class="p">)</span>
@@ -1144,14 +1144,14 @@
 <span class="sd">        :param bool checked: True or False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setUpdatesEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setUpdatesEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">checked</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_info_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Hide info&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
                 <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_fields</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">set_field_visibility</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">set_field_visibility</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_info_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;More info&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
@@ -1159,10 +1159,10 @@
                 <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_fields</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">field_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_persistent_fields</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">set_field_visibility</span><span class="p">(</span>
-                            <span class="n">field_name</span><span class="p">,</span> <span class="bp">False</span>
+                            <span class="n">field_name</span><span class="p">,</span> <span class="kc">False</span>
                         <span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setUpdatesEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setUpdatesEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_selected_version_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1241,14 +1241,14 @@
 
         <span class="n">ascending</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Ascending&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="n">descending</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Descending&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="n">ascending</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">descending</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">descending</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">ascending</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">descending</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">descending</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_directions</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QActionGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_fields</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QActionGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_directions</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_fields</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_directions</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_fields</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_directions</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">ascending</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_directions</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">descending</span><span class="p">)</span>
@@ -1264,7 +1264,7 @@
             <span class="c1"># We store the database field name on the action, but</span>
             <span class="c1"># display the &quot;pretty&quot; name for users.</span>
             <span class="n">action</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
-            <span class="n">action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">((</span><span class="n">field_name</span> <span class="o">==</span> <span class="s2">&quot;id&quot;</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu_fields</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
             <span class="n">field_actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
@@ -1308,13 +1308,13 @@
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;parent_entity_type&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;parent_entity_id&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;file_path&quot;</span><span class="p">])</span>
         <span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cleanup_after_upload&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cleanup_after_upload&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;file_path&quot;</span><span class="p">])</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">pass</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">rescan</span><span class="p">(</span><span class="n">force_activity_stream_update</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">rescan</span><span class="p">(</span><span class="n">force_activity_stream_update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__upload_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1335,7 +1335,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sg</span><span class="o">.</span><span class="n">upload_thumbnail</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;entity_type&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">rescan</span><span class="p">(</span><span class="n">force_activity_stream_update</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">rescan</span><span class="p">(</span><span class="n">force_activity_stream_update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_version_card</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]))</span>
 
     <span class="c1">##########################################################################</span>
@@ -1362,11 +1362,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">isFloating</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_dock_location_changed</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setTitleBarWidget</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setTitleBarWidget</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1">##########################################################################</span>
     <span class="c1"># version list actions</span>
@@ -1390,7 +1390,7 @@
         <span class="c1"># and then reselect to go back to editing.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">version_delegate</span><span class="o">.</span><span class="n">force_reselection</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_sort_version_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_sort_version_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sorts the version list by the field chosen in the sort-by</span>
 <span class="sd">        menu. This also triggers a reselection in the view in</span>
@@ -1474,7 +1474,7 @@
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">supported</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
         <span class="c1"># get the current version entity&#39;s project id</span>
         <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="ow">or</span> <span class="p">{}</span>
@@ -1492,9 +1492,9 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">field_is_visible</span><span class="p">(</span>
             <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span>
         <span class="p">):</span>
-            <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">return</span> <span class="bp">True</span></div>
+        <span class="k">return</span> <span class="kc">True</span></div>
 </pre></div>
 
            </div>
@@ -1527,7 +1527,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -242,9 +242,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_ReplyListWidget</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_note_id</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_note_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span> <span class="o">=</span> <span class="p">{}</span>
@@ -280,7 +280,7 @@
 <span class="sd">        Should be called before the widget is closed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="kc">None</span></div>
 
     <span class="c1">##########################################################################################</span>
     <span class="c1"># public interface</span>
@@ -304,7 +304,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">load_note_data</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
 
         <span class="c1"># now attempt to render the note based on cached data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_process_note</span><span class="p">(</span><span class="n">activity_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">note_id</span><span class="o">=</span><span class="n">note_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_note</span><span class="p">(</span><span class="n">activity_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">note_id</span><span class="o">=</span><span class="n">note_id</span><span class="p">)</span>
 
         <span class="c1"># and read in any updates in the background</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span></div>
@@ -341,7 +341,7 @@
 
         <span class="c1"># before we begin widget operations, turn off visibility</span>
         <span class="c1"># of the whole widget in order to avoid recomputes</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
 
@@ -362,7 +362,7 @@
             <span class="p">)</span>
 
             <span class="n">content_widget</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-            <span class="n">content_widget</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">content_widget</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">content_widget</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">note_content</span><span class="p">)</span>
             <span class="n">content_widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;note_content_label&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">content_widget</span><span class="p">)</span>
@@ -444,7 +444,7 @@
 
         <span class="k">finally</span><span class="p">:</span>
             <span class="c1"># make the window visible again and trigger a redraw</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
 
@@ -462,7 +462,7 @@
             <span class="c1"># remove widget from layout:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="c1"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
-            <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
             <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span> <span class="o">=</span> <span class="p">[]</span>
@@ -503,7 +503,7 @@
         <span class="n">attachment_group</span> <span class="o">=</span> <span class="n">AttachmentGroupWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attachments</span><span class="p">)</span>
 
         <span class="c1"># show an &#39;ATTACHMENTS&#39; header</span>
-        <span class="n">attachment_group</span><span class="o">.</span><span class="n">show_attachments_label</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">attachment_group</span><span class="o">.</span><span class="n">show_attachments_label</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">attachment_group</span><span class="o">.</span><span class="n">OFFSET_NONE</span>
@@ -528,7 +528,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">current_attachments</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">attachment_is_directly_after_note</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">attachment_is_directly_after_note</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">replies_and_attachments</span><span class="p">:</span>
 
@@ -551,7 +551,7 @@
                 <span class="c1"># next bunch of attachments will be after a reply</span>
                 <span class="c1"># rather than directly under the note</span>
                 <span class="c1"># (this affects the visual style)</span>
-                <span class="n">attachment_is_directly_after_note</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">attachment_is_directly_after_note</span> <span class="o">=</span> <span class="kc">False</span>
 
             <span class="k">if</span> <span class="p">(</span>
                 <span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Attachment&quot;</span>
@@ -689,7 +689,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

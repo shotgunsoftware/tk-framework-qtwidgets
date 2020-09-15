@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>playback_label.playback_label &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>playback_label.playback_label &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -235,10 +235,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_play_icon_inactive</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span>
             <span class="s2">&quot;:/tk_framework_qtwidgets.version_label/play_icon_inactive.png&quot;</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_interactive</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interactive</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="ShotgunPlaybackLabel.set_shotgun_data"><a class="viewcode-back" href="../../playback_label.html#playback_label.ShotgunPlaybackLabel.set_shotgun_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_shotgun_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -254,12 +254,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data</span> <span class="o">=</span> <span class="n">sg_data</span>
 
         <span class="c1"># based on the data, figure out if the icon should be active or not</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">sg_data</span> <span class="ow">and</span> <span class="n">sg_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Version&quot;</span><span class="p">:</span>
             <span class="c1"># versions are supported</span>
             <span class="k">if</span> <span class="n">sg_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sg_uploaded_movie&quot;</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
@@ -297,7 +297,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">enterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">leaveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
@@ -306,7 +306,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">leaveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
@@ -377,7 +377,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

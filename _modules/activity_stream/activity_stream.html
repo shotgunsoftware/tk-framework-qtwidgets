@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -272,14 +272,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
         <span class="c1"># customizations</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_show_sg_stream_button</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_clickable_user_icons</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_show_note_links</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_highlight_new_arrivals</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_notes_are_selectable</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_sg_stream_button</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clickable_user_icons</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_note_links</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_highlight_new_arrivals</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_notes_are_selectable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># apply styling</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_stylesheet</span><span class="p">()</span>
@@ -304,15 +304,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">data_updated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rescan</span><span class="p">)</span>
 
         <span class="c1"># keep handles to all widgets to be nice to the GC</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c1"># state management</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
         <span class="c1"># We&#39;ll be keeping a persistent reply dialog available because</span>
@@ -321,7 +321,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span> <span class="o">=</span> <span class="n">ReplyDialog</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">,</span>
-            <span class="n">note_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">note_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">allow_screenshots</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -331,7 +331,7 @@
         <span class="c1"># during the rescan after submission contains anything like additional</span>
         <span class="c1"># attachments that this widget didn&#39;t explicitly handle itself prior to</span>
         <span class="c1"># submission.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_created</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActivityStreamWidget.set_bg_task_manager"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
@@ -354,7 +354,7 @@
 <span class="sd">        Should be called before the widget is closed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="bp">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="kc">None</span></div>
 
     <span class="c1">############################################################################</span>
     <span class="c1"># properties</span>
@@ -615,15 +615,15 @@
     <span class="c1"># public interface</span>
 
     <span class="k">def</span> <span class="nf">select_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
-        <span class="n">selectedWidget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">selectedWidget</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
                 <span class="n">match</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span> <span class="o">==</span> <span class="n">note_id</span>
                 <span class="k">if</span> <span class="n">match</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">widget</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
                     <span class="n">selectedWidget</span> <span class="o">=</span> <span class="n">widget</span>
                 <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">selectedWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">selectedWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">ensureWidgetVisible</span><span class="p">(</span><span class="n">selectedWidget</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActivityStreamWidget.deselect_note"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.deselect_note">[docs]</a>    <span class="k">def</span> <span class="nf">deselect_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -634,7 +634,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">)</span> <span class="ow">and</span> <span class="n">widget</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
-                <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                 <span class="c1"># We only support single selection right now, so we don&#39;t</span>
                 <span class="c1"># need to continue on once we&#39;ve hit a note that&#39;s selected.</span>
                 <span class="k">return</span></div>
@@ -692,7 +692,7 @@
         <span class="c1"># if the project context is None, the entity is a non project entity and it&#39;s NOT</span>
         <span class="c1"># the project entity itself, we don&#39;t have access to any project state.</span>
         <span class="n">no_project_available</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span> <span class="ow">is</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span> <span class="ow">is</span> <span class="kc">None</span>
             <span class="ow">and</span> <span class="n">is_non_project_entity_type</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">!=</span> <span class="s2">&quot;Project&quot;</span>
         <span class="p">)</span>
@@ -700,13 +700,13 @@
         <span class="c1"># also disable note creation in the case we have a site context</span>
         <span class="c1"># and a non-project entity</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ApiUser&quot;</span><span class="p">,</span> <span class="s2">&quot;HumanUser&quot;</span><span class="p">,</span> <span class="s2">&quot;ClientUser&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">no_project_available</span><span class="p">:</span>
             <span class="c1"># we don&#39;t have any project to hang these notes off, so disable</span>
             <span class="c1"># the note integration</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># now load cached data for the given entity</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Setting up db manager....&quot;</span><span class="p">)</span>
@@ -730,7 +730,7 @@
         <span class="c1"># before we begin widget operations, turn off visibility</span>
         <span class="c1"># of the whole widget in order to avoid recomputes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Start building widgets based on cached data...&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
 
             <span class="c1"># we are building the widgets bottom up.</span>
@@ -802,7 +802,7 @@
 
         <span class="k">finally</span><span class="p">:</span>
             <span class="c1"># make the window visible again and trigger a redraw</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...UI building complete!&quot;</span><span class="p">)</span>
 
         <span class="c1">###############################################################</span>
@@ -842,7 +842,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActivityStreamWidget.show_new_note_dialog"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.show_new_note_dialog"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows a dialog that allows the user to input a new note.</span>
 
@@ -852,7 +852,7 @@
 
 <span class="sd">        :param bool modal: Whether the dialog should be shown modally or not.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_id</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Skipping New Note Dialog - No entity loaded.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
@@ -867,7 +867,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">note_dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ActivityStreamWidget.rescan"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.rescan">[docs]</a>    <span class="k">def</span> <span class="nf">rescan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_activity_stream_update</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.rescan"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.rescan">[docs]</a>    <span class="k">def</span> <span class="nf">rescan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_activity_stream_update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Triggers a rescan of the current activity stream data.</span>
 
@@ -910,7 +910,7 @@
         <span class="c1"># NOTE: For some reason this causes a crash when in a PySide2</span>
         <span class="c1"># environment. We&#39;ll only do it if we&#39;re in Qt4 as a result.</span>
         <span class="k">if</span> <span class="n">is_qt4</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># scroll to top</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -924,7 +924,7 @@
                 <span class="c1"># remove widget from layout:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
                 <span class="c1"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
-                <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
                 <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing python data structures&quot;</span><span class="p">)</span>
@@ -933,7 +933,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Removing expanding widget&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-                <span class="n">w</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
                 <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span> <span class="o">=</span> <span class="p">[]</span>
@@ -944,11 +944,11 @@
             <span class="c1"># NOTE: For some reason this causes a crash when in a PySide2</span>
             <span class="c1"># environment. We&#39;ll only do it if we&#39;re in Qt4 as a result.</span>
             <span class="k">if</span> <span class="n">is_qt4</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
             <span class="c1"># Since we have no entity loaded, we don&#39;t need to show</span>
             <span class="c1"># the note widget.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
@@ -959,9 +959,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing the loading widget&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
             <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_populate_note_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_widget</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
@@ -1043,7 +1043,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">get_activity_data</span><span class="p">(</span><span class="n">activity_id</span><span class="p">)</span>
 
-        <span class="n">widget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># factory logic</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;update_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;create&quot;</span><span class="p">:</span>
@@ -1072,11 +1072,11 @@
                     <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
                             <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
-                                <span class="n">w</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
+                                <span class="n">w</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
 
-                    <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
             <span class="k">else</span><span class="p">:</span>
@@ -1401,7 +1401,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

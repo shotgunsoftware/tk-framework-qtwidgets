@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>overlay_widget.shotgun_overlay_widget &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>overlay_widget.shotgun_overlay_widget &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -246,10 +246,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span>
             <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextWordWrap</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWordWrap</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># Allow to open hyperlinks</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setOpenExternalLinks</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setOpenExternalLinks</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
             <span class="n">style</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -289,12 +289,12 @@
 <span class="sd">        :returns: True if message was displayed, False otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_TEXT</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">True</span></div>
+            <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">_set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles the state of the widget. It will set or reset text/pixmap/spinner</span>
 <span class="sd">        depending on the state we&#39;re moving to.</span>
@@ -314,7 +314,7 @@
         <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_PIXMAP</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
         <span class="c1"># Decide which kind of string we need to show.</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
@@ -332,9 +332,9 @@
 
         <span class="c1"># If the widget is not off, make it visible</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_OFF</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">mode</span>
 
@@ -349,23 +349,23 @@
 <span class="sd">        :returns: True if pixmap was displayed, False otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODE_INFO_PIXMAP</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">True</span></div>
+            <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="ShotgunOverlayWidget.hide"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunOverlayWidget.hide">[docs]</a>    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hide_errors</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunOverlayWidget.hide"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunOverlayWidget.hide">[docs]</a>    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hide_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hides the overlay.</span>
 
 <span class="sd">        :param hide_errors: If set to False, errors are not hidden.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">hide_errors</span> <span class="ow">is</span> <span class="bp">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">hide_errors</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_ERROR</span><span class="p">:</span>
             <span class="c1"># an error is displayed - leave it up.</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_spinning_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_OFF</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
 
     <span class="c1">############################################################################################</span>
     <span class="c1"># internal methods</span>
@@ -395,7 +395,7 @@
             <span class="c1"># re-broadcast any resize events</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resized</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
         <span class="c1"># pass it on!</span>
-        <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="kc">False</span>
 </pre></div>
 
            </div>
@@ -428,7 +428,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

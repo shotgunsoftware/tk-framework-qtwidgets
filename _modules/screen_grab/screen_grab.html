@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>screen_grab.screen_grab &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -213,16 +213,16 @@
     <span class="c1"># If set to a callable, it will be used when performing a</span>
     <span class="c1"># screen grab in place of the default behavior defined in</span>
     <span class="c1"># this module.</span>
-    <span class="n">SCREEN_GRAB_CALLBACK</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">SCREEN_GRAB_CALLBACK</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ScreenGrabber</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_opacity</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span>
@@ -233,7 +233,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WA_TranslucentBackground</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CrossCursor</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setMouseTracking</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMouseTracking</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="n">desktop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
         <span class="n">desktop</span><span class="o">.</span><span class="n">resized</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fit_screen_geometry</span><span class="p">)</span>
@@ -252,8 +252,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Convert click and current mouse positions to local space.</span>
         <span class="n">mouse_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QCursor</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
-        <span class="n">click_pos</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">click_pos</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">click_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span><span class="p">)</span>
 
         <span class="n">painter</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -265,7 +265,7 @@
         <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">())</span>
 
         <span class="c1"># Clear the capture area</span>
-        <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">click_pos</span><span class="p">,</span> <span class="n">mouse_pos</span><span class="p">)</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">setCompositionMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">CompositionMode_Clear</span><span class="p">)</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">capture_rect</span><span class="p">)</span>
@@ -275,7 +275,7 @@
         <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
 
         <span class="c1"># Draw cropping markers at click position</span>
-        <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span>
                 <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">(),</span> <span class="n">click_pos</span><span class="o">.</span><span class="n">y</span><span class="p">()</span>
             <span class="p">)</span>
@@ -322,12 +322,12 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mouse release event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># End click drag operation and commit the current capture rect</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_capture_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">()</span>
             <span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_click_pos</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">mouseMoveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
@@ -366,7 +366,7 @@
             <span class="c1">#</span>
             <span class="n">pixmap</span> <span class="o">=</span> <span class="n">_external_screenshot</span><span class="p">()</span>
 
-            <span class="k">if</span> <span class="n">pixmap</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">pixmap</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
                 <span class="n">bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Falling back on internal screen grabber.&quot;</span><span class="p">)</span>
                 <span class="n">tool</span> <span class="o">=</span> <span class="n">ScreenGrabber</span><span class="p">()</span>
                 <span class="n">tool</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
@@ -435,7 +435,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtCore</span><span class="o">.</span><span class="n">QThread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">path</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_error</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -480,10 +480,10 @@
 <span class="sd">    :rtype: :class:`~PySide.QtGui.QPixmap`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">output_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
-        <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="bp">False</span>
+        <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">)</span><span class="o">.</span><span class="n">name</span>
 
-    <span class="n">pm</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># do screenshot with thread so we don&#39;t block anything</span>
         <span class="n">screenshot_thread</span> <span class="o">=</span> <span class="n">ExternalCaptureThread</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
@@ -529,7 +529,7 @@
 <span class="n">screen_capture</span> <span class="o">=</span> <span class="n">ScreenGrabber</span><span class="o">.</span><span class="n">screen_capture</span>
 
 
-<div class="viewcode-block" id="screen_capture_file"><a class="viewcode-back" href="../../screen_grab.html#screen_grab.screen_capture_file">[docs]</a><span class="k">def</span> <span class="nf">screen_capture_file</span><span class="p">(</span><span class="n">output_path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="screen_capture_file"><a class="viewcode-back" href="../../screen_grab.html#screen_grab.screen_capture_file">[docs]</a><span class="k">def</span> <span class="nf">screen_capture_file</span><span class="p">(</span><span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Modally display the screen capture tool, saving to a file.</span>
 
@@ -538,9 +538,9 @@
 <span class="sd">    :returns: path where screenshot was saved.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">output_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
-            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="bp">False</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;screencapture_&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span>
         <span class="p">)</span><span class="o">.</span><span class="n">name</span>
     <span class="n">pixmap</span> <span class="o">=</span> <span class="n">screen_capture</span><span class="p">()</span>
     <span class="n">pixmap</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
@@ -577,7 +577,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

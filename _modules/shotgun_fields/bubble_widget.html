@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.bubble_widget &mdash; tk-framework-qtwidgets v2.9.2 documentation</title>
+  <title>shotgun_fields.bubble_widget &mdash; tk-framework-qtwidgets v2.9.3 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
   
 
   
-    <link rel="top" title="tk-framework-qtwidgets v2.9.2 documentation" href="../../index.html"/>
+    <link rel="top" title="tk-framework-qtwidgets v2.9.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -129,7 +129,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.9.3.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -195,7 +195,7 @@
 
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
-<span class="kn">from</span> <span class="nn">tank_vendor.six</span> <span class="kn">import</span> <span class="nb">unichr</span>
+<span class="kn">from</span> <span class="nn">tank_vendor.six</span> <span class="kn">import</span> <span class="n">unichr</span>
 
 
 <div class="viewcode-block" id="BubbleWidget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget">[docs]</a><span class="k">class</span> <span class="nc">BubbleWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="p">):</span>
@@ -214,7 +214,7 @@
     <span class="c1"># signal emitted when the widget&#39;s remove button was clicked</span>
     <span class="n">remove_clicked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize the widget.</span>
 
 <span class="sd">        :param parent: This widget&#39;s parent widget</span>
@@ -223,7 +223,7 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">BubbleWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="c1"># placeholder for the underlying data this widget represents in the editor</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># should not grow or shrink</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
@@ -247,7 +247,7 @@
         <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
         <span class="n">icon</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">standardIcon</span><span class="p">(</span><span class="n">style</span><span class="o">.</span><span class="n">SP_TitleBarCloseButton</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">setFlat</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">setFlat</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;border: none&quot;</span><span class="p">)</span>
 
         <span class="c1"># placeholder for the bubble&#39;s image</span>
@@ -334,9 +334,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># used as a placeholder for a bubble in the editor</span>
-    <span class="n">_OBJECT_REPLACEMENT_CHAR</span> <span class="o">=</span> <span class="nb">unichr</span><span class="p">(</span><span class="mh">0xFFFC</span><span class="p">)</span>
+    <span class="n">_OBJECT_REPLACEMENT_CHAR</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mh">0xFFFC</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the widget.</span>
 
@@ -353,7 +353,7 @@
             <span class="n">_BubbleTextObject</span><span class="o">.</span><span class="n">OBJECT_TYPE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_text_object</span>
         <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">setMouseTracking</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMouseTracking</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">installEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
 
@@ -436,7 +436,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMouseEvent</span><span class="p">):</span>
             <span class="c1"># only pass on mouse events</span>
-            <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
         <span class="c1"># @todo:</span>
         <span class="c1"># can&#39;t seem to figure out how to map the viewport position to the</span>
@@ -454,9 +454,9 @@
         <span class="n">bubble_id</span> <span class="o">=</span> <span class="n">char_format</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="n">_BubbleTextObject</span><span class="o">.</span><span class="n">BUBBLE_DATA_PROPERTY</span><span class="p">)</span>
         <span class="n">bubble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bubble</span><span class="p">(</span><span class="n">bubble_id</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">bubble</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">bubble</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">IBeamCursor</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ArrowCursor</span><span class="p">)</span>
 
@@ -466,9 +466,9 @@
             <span class="n">child_widget</span> <span class="o">=</span> <span class="n">bubble</span><span class="o">.</span><span class="n">childAt</span><span class="p">(</span><span class="n">bubble_pos</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child_widget</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">):</span>
                 <span class="n">child_widget</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-            <span class="k">return</span> <span class="bp">True</span>
+            <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="BubbleEditWidget.get_bubble"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.get_bubble">[docs]</a>    <span class="k">def</span> <span class="nf">get_bubble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bubble_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -483,7 +483,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">bubble_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_char_formats</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
         <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textCursor</span><span class="p">()</span>
@@ -503,7 +503,7 @@
             <span class="c1"># bubble is in the text</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubble_text_object</span><span class="o">.</span><span class="n">get_bubble</span><span class="p">(</span><span class="n">bubble_id</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">None</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="BubbleEditWidget.get_bubbles"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.get_bubbles">[docs]</a>    <span class="k">def</span> <span class="nf">get_bubbles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -599,7 +599,7 @@
     <span class="n">OBJECT_TYPE</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextFormat</span><span class="o">.</span><span class="n">UserFormat</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">USING_PYQT</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s2">&quot;QVariant&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object.</span>
 
@@ -673,7 +673,7 @@
         <span class="k">if</span> <span class="n">bubble_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubbles</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubbles</span><span class="p">[</span><span class="n">bubble_id</span><span class="p">]</span>
 
-        <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">intrinsicSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">pos_in_document</span><span class="p">,</span> <span class="n">char_format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the ``sizeHint`` for the bubble widget for the supplied char format.&quot;&quot;&quot;</span>
@@ -712,7 +712,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'v2.9.2',
+            VERSION:'v2.9.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
