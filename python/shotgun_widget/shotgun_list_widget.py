@@ -95,6 +95,23 @@ class ShotgunListWidget(ShotgunWidget):
         )
         self._ui.body.setText(_replace_text(key_name, key_value, self._ui.body.text()))
 
+    def clear(self, thumbnail=None):
+        """
+        Clear the widget values.
+
+        :param thumbnail: If a thumbnail is supplied, it will be used as the "empty" thumbnail view
+        """
+
+        # Remove the text
+        self._ui.left_corner.setText("")
+        self._ui.right_corner.setText("")
+        self._ui.body.setText("")
+
+        if not self._thumbnail:
+            return
+
+        self.set_thumbnail(thumbnail)
+
     @staticmethod
     def calculate_size():
         """
