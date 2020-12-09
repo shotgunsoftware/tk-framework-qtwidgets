@@ -76,6 +76,8 @@ class ShotgunFolderWidget(ShotgunWidget):
 
         def _replace_text(name, value, text):
             pattern = "{{<{pattern}>}}".format(pattern=name)
+            # be sure to escape \ character to avoid having KeyError
+            value = value.replace("\\", "\\\\")
             text = re.sub(pattern, value, text)
             return text
 

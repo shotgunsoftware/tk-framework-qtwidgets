@@ -84,7 +84,9 @@ class ShotgunListWidget(ShotgunWidget):
 
         def _replace_text(name, value, text):
             pattern = "{{<{pattern}>}}".format(pattern=name)
-            text = re.sub(pattern, value, text)
+            # be sure to escape \ character to avoid having KeyError
+            value = value.replace("\\", "\\\\")
+            text = re.sub(pattern, r"{}".format(value), text)
             return text
 
         self._ui.left_corner.setText(
