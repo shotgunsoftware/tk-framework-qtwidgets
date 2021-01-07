@@ -545,11 +545,13 @@ class GroupedListView(QtGui.QAbstractItemView):
         ):
             # move to the right of the current item in the same visual row if possible.  If the
             # cursor is at the end of the row then we do nothing.
-            if (
-                (row + 1) < len(self._item_info[parent_row].child_info)
-                and parent_item_info.child_info[row][0]
-                == parent_item_info.child_info[row + 1][0]
-            ):
+            if (row + 1) < len(
+                self._item_info[parent_row].child_info
+            ) and parent_item_info.child_info[row][0] == parent_item_info.child_info[
+                row + 1
+            ][
+                0
+            ]:
                 # just move right 1:
                 row += 1
         elif cursor_action == QtGui.QAbstractItemView.MoveUp:

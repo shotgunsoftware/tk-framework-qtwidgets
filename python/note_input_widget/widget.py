@@ -544,10 +544,38 @@ class NoteInputWidget(QtGui.QWidget):
             },
         )
 
-        self.__upload_thumbnail(sg_note_data, sg, data)
+        png_path = self.__upload_thumbnail(sg_note_data, sg, data)
+
+        # filters = [["id", "is", sg_note_data["id"]]]
+        # fields = ["attachments"]
+        # thumbnail_attachment = sg.find_one("Note", filters, fields)
+        # sg.share_thumbnail(
+        #     entities=[
+        #     {
+        #         "type": sg_note_data["type"],
+        #         "id": sg_note_data["id"]}],
+        #         source_entity={
+        #             "type": "attachments", "id": thumbnail_attachment["attachments"][0]["id"]
+        #     }
+        # )
+        # Works but learn this:
+        # [ERROR tk - framework - qtwidgets] Could not create note / reply: Unable to share
+        # thumbnail: 0 in 'source_entity' parameter[attachments] is not a valid class
+
         self.__upload_attachments(sg_note_data, sg, data)
 
+        sg.upload_thumbnail("Note", sg_note_data["id"], png_path)
+
         return sg_note_data
+
+    def __upload_note_thumbnail(self, sg_note_data, sg):
+        """
+        Re-uploads the pixmap (maybe the attachment - stretch)
+        to the thumbnail Field on the Note entity itself
+
+        :param sg_note_data:    The resulting Note that was created here
+        :param sg:              A Shotgun API handle.
+        """
 
     def __upload_attachments(self, parent_entity, sg, data):
         """
@@ -603,7 +631,9 @@ class NoteInputWidget(QtGui.QWidget):
             # create file entity and upload file
             if os.path.exists(png_path):
                 self.__upload_file(png_path, parent_entity, sg)
-                os.remove(png_path)
+                # os.remove(png_path)
+
+        return png_path
 
     def __on_worker_failure(self, uid, msg):
         """
