@@ -15,48 +15,49 @@
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="tk-framework-qtwidgets v2.9.4 documentation" href="index.html"/>
-        <link rel="next" title="Shotgun Version Details Widget" href="version_details.html"/>
-        <link rel="prev" title="Shotgun Menus" href="shotgun_menus.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Shotgun Version Details Widget" href="version_details.html" />
+    <link rel="prev" title="Shotgun Menus" href="shotgun_menus.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
     <a href='http://developer.shotgunsoftware.com'>
     
         <img style='width: 191px;
-                height: 60px; 
+                height: 60px;
                 margin: 2px;
-                border-radius: 0px; 
-                padding: 0px;' 
+                border-radius: 0px;
+                padding: 0px;'
             src='_static/logo@2x.png'/>
     
     </a>
@@ -89,7 +90,10 @@
     
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
@@ -117,16 +121,16 @@
     <div style='margin-top: 50px;
                 margin-left: 10px;
                 margin-right: 10px;
-                padding: 10px; 
-                color: #b3b3b3; 
+                padding: 10px;
+                color: #b3b3b3;
                 font-size: 70%;
                 border-radius: 3px;
                 background-color: #444;
                 line-height: 18px;
-                '>    
+                '>
     <style>
-        a.custom_post_menu { display: inline; 
-                             padding: 0px; 
+        a.custom_post_menu { display: inline;
+                             padding: 0px;
                              text-decoration: underline; }
     </style>
 
@@ -136,7 +140,7 @@
     
     For more information, please visit
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
-    The code associated with this documentation can be found 
+    The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
@@ -150,32 +154,52 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">tk-framework-qtwidgets</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tk-framework-qtwidgets</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Spinner Widget</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Spinner Widget</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -187,32 +211,1605 @@
 that something is loading.</p>
 <dl class="class">
 <dt id="spinner_widget.SpinnerWidget">
-<em class="property">class </em><code class="descclassname">spinner_widget.</code><code class="descname">SpinnerWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spinner_widget/spinner_widget.html#SpinnerWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spinner_widget.SpinnerWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">spinner_widget.</code><code class="sig-name descname">SpinnerWidget</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spinner_widget/spinner_widget.html#SpinnerWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spinner_widget.SpinnerWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QWidget</span></code></p>
 <p>A simple widget that draws an animated spinner that spins whilst visible.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The parent widget</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The parent widget</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.acceptDrops">
+<code class="sig-name descname">acceptDrops</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.acceptDrops" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.accessibleDescription">
+<code class="sig-name descname">accessibleDescription</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.accessibleDescription" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.accessibleName">
+<code class="sig-name descname">accessibleName</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.accessibleName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.actionEvent">
+<code class="sig-name descname">actionEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QActionEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.actionEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.actions">
+<code class="sig-name descname">actions</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtWidgets.QAction]<a class="headerlink" href="#spinner_widget.SpinnerWidget.actions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.activateWindow">
+<code class="sig-name descname">activateWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.activateWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.addAction">
+<code class="sig-name descname">addAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.addAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.addActions">
+<code class="sig-name descname">addActions</code><span class="sig-paren">(</span><em class="sig-param">self, actions: typing.List[PySide2.QtWidgets.QAction]</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.addActions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.adjustSize">
+<code class="sig-name descname">adjustSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.adjustSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.autoFillBackground">
+<code class="sig-name descname">autoFillBackground</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.autoFillBackground" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.backgroundRole">
+<code class="sig-name descname">backgroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPalette.ColorRole<a class="headerlink" href="#spinner_widget.SpinnerWidget.backgroundRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.backingStore">
+<code class="sig-name descname">backingStore</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QBackingStore<a class="headerlink" href="#spinner_widget.SpinnerWidget.backingStore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.baseSize">
+<code class="sig-name descname">baseSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#spinner_widget.SpinnerWidget.baseSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.blockSignals">
+<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.blockSignals" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.changeEvent">
+<code class="sig-name descname">changeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.changeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.childAt">
+<code class="sig-name descname">childAt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">p: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.childAt" title="Permalink to this definition">¶</a></dt>
+<dd><p>childAt(self, x: int, y: int) -&gt; PySide2.QtWidgets.QWidget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.childEvent">
+<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.childEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.children">
+<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QObject]<a class="headerlink" href="#spinner_widget.SpinnerWidget.children" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.childrenRect">
+<code class="sig-name descname">childrenRect</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#spinner_widget.SpinnerWidget.childrenRect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.childrenRegion">
+<code class="sig-name descname">childrenRegion</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QRegion<a class="headerlink" href="#spinner_widget.SpinnerWidget.childrenRegion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.clearFocus">
+<code class="sig-name descname">clearFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.clearFocus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.clearMask">
+<code class="sig-name descname">clearMask</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.clearMask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.colorCount">
+<code class="sig-name descname">colorCount</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.colorCount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.connect">
+<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2: str</em>, <em class="sig-param">arg__3: typing.Callable</em>, <em class="sig-param">type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect(arg__1: str, arg__2: typing.Callable, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(arg__1: str, arg__2: PySide2.QtCore.QObject, arg__3: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, method: PySide2.QtCore.QMetaMethod, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender: PySide2.QtCore.QObject, signal: str, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.connectNotify">
+<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.connectNotify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.contentsMargins">
+<code class="sig-name descname">contentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QMargins<a class="headerlink" href="#spinner_widget.SpinnerWidget.contentsMargins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.contentsRect">
+<code class="sig-name descname">contentsRect</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#spinner_widget.SpinnerWidget.contentsRect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.contextMenuEvent">
+<code class="sig-name descname">contextMenuEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QContextMenuEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.contextMenuPolicy">
+<code class="sig-name descname">contextMenuPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.ContextMenuPolicy<a class="headerlink" href="#spinner_widget.SpinnerWidget.contextMenuPolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int = 0</em>, <em class="sig-param">initializeWindow: bool = True</em>, <em class="sig-param">destroyOldWindow: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.createWinId">
+<code class="sig-name descname">createWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.createWinId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.createWindowContainer">
+<em class="property">static </em><code class="sig-name descname">createWindowContainer</code><span class="sig-paren">(</span><em class="sig-param">window: PySide2.QtGui.QWindow</em>, <em class="sig-param">parent: PySide2.QtWidgets.QWidget = None</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.WindowFlags = Default(Qt.WindowFlags)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.createWindowContainer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.cursor">
+<code class="sig-name descname">cursor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QCursor<a class="headerlink" href="#spinner_widget.SpinnerWidget.cursor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.customEvent">
+<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.customEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.deleteLater">
+<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.deleteLater" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.depth">
+<code class="sig-name descname">depth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">destroyWindow: bool = True</em>, <em class="sig-param">destroySubWindows: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.devType">
+<code class="sig-name descname">devType</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.devType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.devicePixelRatio">
+<code class="sig-name descname">devicePixelRatio</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.devicePixelRatio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.devicePixelRatioF">
+<code class="sig-name descname">devicePixelRatioF</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#spinner_widget.SpinnerWidget.devicePixelRatioF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.devicePixelRatioFScale">
+<em class="property">static </em><code class="sig-name descname">devicePixelRatioFScale</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#spinner_widget.SpinnerWidget.devicePixelRatioFScale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.disconnect">
+<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>disconnect(arg__1: PySide2.QtCore.QObject, arg__2: str, arg__3: typing.Callable) -&gt; bool
+disconnect(arg__1: str, arg__2: typing.Callable) -&gt; bool
+disconnect(receiver: PySide2.QtCore.QObject, member: str = None) -&gt; bool
+disconnect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, member: PySide2.QtCore.QMetaMethod) -&gt; bool
+disconnect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool
+disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.disconnectNotify">
+<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.disconnectNotify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.dragEnterEvent">
+<code class="sig-name descname">dragEnterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragEnterEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.dragEnterEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.dragLeaveEvent">
+<code class="sig-name descname">dragLeaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragLeaveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.dragLeaveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.dragMoveEvent">
+<code class="sig-name descname">dragMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragMoveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.dragMoveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.dropEvent">
+<code class="sig-name descname">dropEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDropEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.dropEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.dumpObjectInfo">
+<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.dumpObjectTree">
+<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.dynamicPropertyNames">
+<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QByteArray]<a class="headerlink" href="#spinner_widget.SpinnerWidget.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.effectiveWinId">
+<code class="sig-name descname">effectiveWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.effectiveWinId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.emit">
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.emit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.ensurePolished">
+<code class="sig-name descname">ensurePolished</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.ensurePolished" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.enterEvent">
+<code class="sig-name descname">enterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.enterEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.event">
+<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.eventFilter">
+<code class="sig-name descname">eventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">watched: PySide2.QtCore.QObject</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.eventFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.find">
+<em class="property">static </em><code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">arg__1: int</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.find" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.findChild">
+<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: str = ''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#spinner_widget.SpinnerWidget.findChild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.findChildren">
+<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#spinner_widget.SpinnerWidget.findChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>findChildren(self, arg__1: type, arg__2: str = ‘’) -&gt; typing.Iterable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.focusInEvent">
+<code class="sig-name descname">focusInEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.focusInEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.focusNextChild">
+<code class="sig-name descname">focusNextChild</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.focusNextChild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.focusNextPrevChild">
+<code class="sig-name descname">focusNextPrevChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.focusNextPrevChild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.focusOutEvent">
+<code class="sig-name descname">focusOutEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.focusOutEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.focusPolicy">
+<code class="sig-name descname">focusPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.FocusPolicy<a class="headerlink" href="#spinner_widget.SpinnerWidget.focusPolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.focusPreviousChild">
+<code class="sig-name descname">focusPreviousChild</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.focusPreviousChild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.focusProxy">
+<code class="sig-name descname">focusProxy</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.focusProxy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.focusWidget">
+<code class="sig-name descname">focusWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.focusWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.font">
+<code class="sig-name descname">font</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QFont<a class="headerlink" href="#spinner_widget.SpinnerWidget.font" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.fontInfo">
+<code class="sig-name descname">fontInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QFontInfo<a class="headerlink" href="#spinner_widget.SpinnerWidget.fontInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.fontMetrics">
+<code class="sig-name descname">fontMetrics</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QFontMetrics<a class="headerlink" href="#spinner_widget.SpinnerWidget.fontMetrics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.foregroundRole">
+<code class="sig-name descname">foregroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPalette.ColorRole<a class="headerlink" href="#spinner_widget.SpinnerWidget.foregroundRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.frameGeometry">
+<code class="sig-name descname">frameGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#spinner_widget.SpinnerWidget.frameGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.frameSize">
+<code class="sig-name descname">frameSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#spinner_widget.SpinnerWidget.frameSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.geometry">
+<code class="sig-name descname">geometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#spinner_widget.SpinnerWidget.geometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.getContentsMargins">
+<code class="sig-name descname">getContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left: int</em>, <em class="sig-param">top: int</em>, <em class="sig-param">right: int</em>, <em class="sig-param">bottom: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.getContentsMargins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.grab">
+<code class="sig-name descname">grab</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rectangle: PySide2.QtCore.QRect = PySide2.QtCore.QRect(0</em>, <em class="sig-param">0</em>, <em class="sig-param">-1</em>, <em class="sig-param">-1)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPixmap<a class="headerlink" href="#spinner_widget.SpinnerWidget.grab" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.grabGesture">
+<code class="sig-name descname">grabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.GestureType</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.GestureFlags = Default(Qt.GestureFlags)</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.grabGesture" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.grabKeyboard">
+<code class="sig-name descname">grabKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.grabKeyboard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.grabMouse">
+<code class="sig-name descname">grabMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.grabMouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>grabMouse(self, arg__1: PySide2.QtGui.QCursor)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.grabShortcut">
+<code class="sig-name descname">grabShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">key: PySide2.QtGui.QKeySequence</em>, <em class="sig-param">context: PySide2.QtCore.Qt.ShortcutContext = PySide2.QtCore.Qt.ShortcutContext.WindowShortcut</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.grabShortcut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.graphicsEffect">
+<code class="sig-name descname">graphicsEffect</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QGraphicsEffect<a class="headerlink" href="#spinner_widget.SpinnerWidget.graphicsEffect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.graphicsProxyWidget">
+<code class="sig-name descname">graphicsProxyWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QGraphicsProxyWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.graphicsProxyWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.hasFocus">
+<code class="sig-name descname">hasFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.hasFocus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.hasHeightForWidth">
+<code class="sig-name descname">hasHeightForWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.hasHeightForWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.hasMouseTracking">
+<code class="sig-name descname">hasMouseTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.hasMouseTracking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.hasTabletTracking">
+<code class="sig-name descname">hasTabletTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.hasTabletTracking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.height">
+<code class="sig-name descname">height</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.heightForWidth">
+<code class="sig-name descname">heightForWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.heightForWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.heightMM">
+<code class="sig-name descname">heightMM</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.heightMM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.hide">
+<code class="sig-name descname">hide</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.hide" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.inherits">
+<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.inherits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.initPainter">
+<code class="sig-name descname">initPainter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter: PySide2.QtGui.QPainter</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.initPainter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.inputMethodEvent">
+<code class="sig-name descname">inputMethodEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QInputMethodEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.inputMethodEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.inputMethodHints">
+<code class="sig-name descname">inputMethodHints</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.InputMethodHints<a class="headerlink" href="#spinner_widget.SpinnerWidget.inputMethodHints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.inputMethodQuery">
+<code class="sig-name descname">inputMethodQuery</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.InputMethodQuery</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#spinner_widget.SpinnerWidget.inputMethodQuery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.insertAction">
+<code class="sig-name descname">insertAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">before: PySide2.QtWidgets.QAction</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.insertAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.insertActions">
+<code class="sig-name descname">insertActions</code><span class="sig-paren">(</span><em class="sig-param">self, before: PySide2.QtWidgets.QAction, actions: typing.List[PySide2.QtWidgets.QAction]</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.insertActions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.installEventFilter">
+<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.installEventFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.internalWinId">
+<code class="sig-name descname">internalWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.internalWinId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isActiveWindow">
+<code class="sig-name descname">isActiveWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isActiveWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isAncestorOf">
+<code class="sig-name descname">isAncestorOf</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">child: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isAncestorOf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isEnabled">
+<code class="sig-name descname">isEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isEnabledTo">
+<code class="sig-name descname">isEnabledTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isEnabledTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isEnabledToTLW">
+<code class="sig-name descname">isEnabledToTLW</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isEnabledToTLW" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isFullScreen">
+<code class="sig-name descname">isFullScreen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isFullScreen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isHidden">
+<code class="sig-name descname">isHidden</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isHidden" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isLeftToRight">
+<code class="sig-name descname">isLeftToRight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isLeftToRight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isMaximized">
+<code class="sig-name descname">isMaximized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isMaximized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isMinimized">
+<code class="sig-name descname">isMinimized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isMinimized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isModal">
+<code class="sig-name descname">isModal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isModal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isRightToLeft">
+<code class="sig-name descname">isRightToLeft</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isRightToLeft" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isSignalConnected">
+<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isSignalConnected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isTopLevel">
+<code class="sig-name descname">isTopLevel</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isTopLevel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isVisible">
+<code class="sig-name descname">isVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isVisible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isVisibleTo">
+<code class="sig-name descname">isVisibleTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isVisibleTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isWidgetType">
+<code class="sig-name descname">isWidgetType</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isWidgetType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isWindow">
+<code class="sig-name descname">isWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isWindowModified">
+<code class="sig-name descname">isWindowModified</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isWindowModified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.isWindowType">
+<code class="sig-name descname">isWindowType</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.isWindowType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.keyPressEvent">
+<code class="sig-name descname">keyPressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.keyReleaseEvent">
+<code class="sig-name descname">keyReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.keyboardGrabber">
+<em class="property">static </em><code class="sig-name descname">keyboardGrabber</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.keyboardGrabber" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.killTimer">
+<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.killTimer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.layout">
+<code class="sig-name descname">layout</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QLayout<a class="headerlink" href="#spinner_widget.SpinnerWidget.layout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.layoutDirection">
+<code class="sig-name descname">layoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.LayoutDirection<a class="headerlink" href="#spinner_widget.SpinnerWidget.layoutDirection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.leaveEvent">
+<code class="sig-name descname">leaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.leaveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.locale">
+<code class="sig-name descname">locale</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QLocale<a class="headerlink" href="#spinner_widget.SpinnerWidget.locale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.logicalDpiX">
+<code class="sig-name descname">logicalDpiX</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.logicalDpiX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.logicalDpiY">
+<code class="sig-name descname">logicalDpiY</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.logicalDpiY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.lower">
+<code class="sig-name descname">lower</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.lower" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mapFrom">
+<code class="sig-name descname">mapFrom</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#spinner_widget.SpinnerWidget.mapFrom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mapFromGlobal">
+<code class="sig-name descname">mapFromGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#spinner_widget.SpinnerWidget.mapFromGlobal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mapFromParent">
+<code class="sig-name descname">mapFromParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#spinner_widget.SpinnerWidget.mapFromParent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mapTo">
+<code class="sig-name descname">mapTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#spinner_widget.SpinnerWidget.mapTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mapToGlobal">
+<code class="sig-name descname">mapToGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#spinner_widget.SpinnerWidget.mapToGlobal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mapToParent">
+<code class="sig-name descname">mapToParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#spinner_widget.SpinnerWidget.mapToParent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mask">
+<code class="sig-name descname">mask</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QRegion<a class="headerlink" href="#spinner_widget.SpinnerWidget.mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.maximumHeight">
+<code class="sig-name descname">maximumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.maximumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.maximumSize">
+<code class="sig-name descname">maximumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#spinner_widget.SpinnerWidget.maximumSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.maximumWidth">
+<code class="sig-name descname">maximumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.maximumWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.metaObject">
+<code class="sig-name descname">metaObject</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QMetaObject<a class="headerlink" href="#spinner_widget.SpinnerWidget.metaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.metric">
+<code class="sig-name descname">metric</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPaintDevice.PaintDeviceMetric</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.metric" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.minimumHeight">
+<code class="sig-name descname">minimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.minimumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.minimumSize">
+<code class="sig-name descname">minimumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#spinner_widget.SpinnerWidget.minimumSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.minimumSizeHint">
+<code class="sig-name descname">minimumSizeHint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#spinner_widget.SpinnerWidget.minimumSizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.minimumWidth">
+<code class="sig-name descname">minimumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.minimumWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mouseDoubleClickEvent">
+<code class="sig-name descname">mouseDoubleClickEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.mouseDoubleClickEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mouseGrabber">
+<em class="property">static </em><code class="sig-name descname">mouseGrabber</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.mouseGrabber" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mouseMoveEvent">
+<code class="sig-name descname">mouseMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mousePressEvent">
+<code class="sig-name descname">mousePressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.mouseReleaseEvent">
+<code class="sig-name descname">mouseReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.mouseReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.move">
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>move(self, x: int, y: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.moveEvent">
+<code class="sig-name descname">moveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMoveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.moveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.moveToThread">
+<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread: PySide2.QtCore.QThread</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.moveToThread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.nativeEvent">
+<code class="sig-name descname">nativeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">eventType: PySide2.QtCore.QByteArray</em>, <em class="sig-param">message: int</em>, <em class="sig-param">result: int</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.nativeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.nativeParentWidget">
+<code class="sig-name descname">nativeParentWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.nativeParentWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.nextInFocusChain">
+<code class="sig-name descname">nextInFocusChain</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.nextInFocusChain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.normalGeometry">
+<code class="sig-name descname">normalGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#spinner_widget.SpinnerWidget.normalGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.objectName">
+<code class="sig-name descname">objectName</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.objectName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.overrideWindowFlags">
+<code class="sig-name descname">overrideWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.overrideWindowFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.overrideWindowState">
+<code class="sig-name descname">overrideWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state: PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.overrideWindowState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.paintEngine">
+<code class="sig-name descname">paintEngine</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPaintEngine<a class="headerlink" href="#spinner_widget.SpinnerWidget.paintEngine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.paintingActive">
+<code class="sig-name descname">paintingActive</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.paintingActive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.palette">
+<code class="sig-name descname">palette</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPalette<a class="headerlink" href="#spinner_widget.SpinnerWidget.palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.parent">
+<code class="sig-name descname">parent</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QObject<a class="headerlink" href="#spinner_widget.SpinnerWidget.parent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.parentWidget">
+<code class="sig-name descname">parentWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.parentWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.physicalDpiX">
+<code class="sig-name descname">physicalDpiX</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.physicalDpiX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.physicalDpiY">
+<code class="sig-name descname">physicalDpiY</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.physicalDpiY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.pos">
+<code class="sig-name descname">pos</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#spinner_widget.SpinnerWidget.pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.previousInFocusChain">
+<code class="sig-name descname">previousInFocusChain</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.previousInFocusChain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.property">
+<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#spinner_widget.SpinnerWidget.property" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.raise_">
+<code class="sig-name descname">raise_</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.raise_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.receivers">
+<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: str</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.receivers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.rect">
+<code class="sig-name descname">rect</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#spinner_widget.SpinnerWidget.rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.redirected">
+<code class="sig-name descname">redirected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">offset: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPaintDevice<a class="headerlink" href="#spinner_widget.SpinnerWidget.redirected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.registerUserData">
+<em class="property">static </em><code class="sig-name descname">registerUserData</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.registerUserData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.releaseKeyboard">
+<code class="sig-name descname">releaseKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.releaseKeyboard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.releaseMouse">
+<code class="sig-name descname">releaseMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.releaseMouse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.releaseShortcut">
+<code class="sig-name descname">releaseShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.releaseShortcut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.removeAction">
+<code class="sig-name descname">removeAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.removeAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.removeEventFilter">
+<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.removeEventFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.render">
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter: PySide2.QtGui.QPainter</em>, <em class="sig-param">targetOffset: PySide2.QtCore.QPoint</em>, <em class="sig-param">sourceRegion: PySide2.QtGui.QRegion = Default(QRegion)</em>, <em class="sig-param">renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>render(self, target: PySide2.QtGui.QPaintDevice, targetOffset: PySide2.QtCore.QPoint = Default(QPoint), sourceRegion: PySide2.QtGui.QRegion = Default(QRegion), renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren)))</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.repaint">
+<code class="sig-name descname">repaint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.repaint" title="Permalink to this definition">¶</a></dt>
+<dd><p>repaint(self, arg__1: PySide2.QtCore.QRect)
+repaint(self, arg__1: PySide2.QtGui.QRegion)
+repaint(self, x: int, y: int, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.resize">
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>resize(self, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.resizeEvent">
+<code class="sig-name descname">resizeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QResizeEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.resizeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.restoreGeometry">
+<code class="sig-name descname">restoreGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">geometry: PySide2.QtCore.QByteArray</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.restoreGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.saveGeometry">
+<code class="sig-name descname">saveGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QByteArray<a class="headerlink" href="#spinner_widget.SpinnerWidget.saveGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.scroll">
+<code class="sig-name descname">scroll</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dx: int</em>, <em class="sig-param">dy: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.scroll" title="Permalink to this definition">¶</a></dt>
+<dd><p>scroll(self, dx: int, dy: int, arg__3: PySide2.QtCore.QRect)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.sender">
+<code class="sig-name descname">sender</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QObject<a class="headerlink" href="#spinner_widget.SpinnerWidget.sender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.senderSignalIndex">
+<code class="sig-name descname">senderSignalIndex</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.senderSignalIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setAcceptDrops">
+<code class="sig-name descname">setAcceptDrops</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">on: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setAcceptDrops" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setAccessibleDescription">
+<code class="sig-name descname">setAccessibleDescription</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">description: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setAccessibleDescription" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setAccessibleName">
+<code class="sig-name descname">setAccessibleName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setAccessibleName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setAttribute">
+<code class="sig-name descname">setAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WidgetAttribute</em>, <em class="sig-param">on: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setAttribute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setAutoFillBackground">
+<code class="sig-name descname">setAutoFillBackground</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enabled: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setAutoFillBackground" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setBackgroundRole">
+<code class="sig-name descname">setBackgroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setBackgroundRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setBaseSize">
+<code class="sig-name descname">setBaseSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setBaseSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setBaseSize(self, basew: int, baseh: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setContentsMargins">
+<code class="sig-name descname">setContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left: int</em>, <em class="sig-param">top: int</em>, <em class="sig-param">right: int</em>, <em class="sig-param">bottom: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setContentsMargins" title="Permalink to this definition">¶</a></dt>
+<dd><p>setContentsMargins(self, margins: PySide2.QtCore.QMargins)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setContextMenuPolicy">
+<code class="sig-name descname">setContextMenuPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy: PySide2.QtCore.Qt.ContextMenuPolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setContextMenuPolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setCursor">
+<code class="sig-name descname">setCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QCursor</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setCursor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setDisabled">
+<code class="sig-name descname">setDisabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setDisabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setEnabled">
+<code class="sig-name descname">setEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setFixedHeight">
+<code class="sig-name descname">setFixedHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">h: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setFixedHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setFixedSize">
+<code class="sig-name descname">setFixedSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setFixedSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setFixedSize(self, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setFixedWidth">
+<code class="sig-name descname">setFixedWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">w: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setFixedWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setFocus">
+<code class="sig-name descname">setFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setFocus" title="Permalink to this definition">¶</a></dt>
+<dd><p>setFocus(self, reason: PySide2.QtCore.Qt.FocusReason)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setFocusPolicy">
+<code class="sig-name descname">setFocusPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy: PySide2.QtCore.Qt.FocusPolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setFocusPolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setFocusProxy">
+<code class="sig-name descname">setFocusProxy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setFocusProxy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setFont">
+<code class="sig-name descname">setFont</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QFont</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setForegroundRole">
+<code class="sig-name descname">setForegroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setForegroundRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setGeometry">
+<code class="sig-name descname">setGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QRect</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setGeometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>setGeometry(self, x: int, y: int, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setGraphicsEffect">
+<code class="sig-name descname">setGraphicsEffect</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">effect: PySide2.QtWidgets.QGraphicsEffect</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setGraphicsEffect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setHidden">
+<code class="sig-name descname">setHidden</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hidden: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setHidden" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setInputMethodHints">
+<code class="sig-name descname">setInputMethodHints</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hints: PySide2.QtCore.Qt.InputMethodHints</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setInputMethodHints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setLayout">
+<code class="sig-name descname">setLayout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QLayout</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setLayoutDirection">
+<code class="sig-name descname">setLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">direction: PySide2.QtCore.Qt.LayoutDirection</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setLayoutDirection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setLocale">
+<code class="sig-name descname">setLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">locale: PySide2.QtCore.QLocale</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setLocale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setMask">
+<code class="sig-name descname">setMask</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QBitmap</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMask(self, arg__1: PySide2.QtGui.QRegion)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setMaximumHeight">
+<code class="sig-name descname">setMaximumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxh: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setMaximumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setMaximumSize">
+<code class="sig-name descname">setMaximumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setMaximumSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMaximumSize(self, maxw: int, maxh: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setMaximumWidth">
+<code class="sig-name descname">setMaximumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxw: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setMaximumWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setMinimumHeight">
+<code class="sig-name descname">setMinimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minh: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setMinimumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setMinimumSize">
+<code class="sig-name descname">setMinimumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setMinimumSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMinimumSize(self, minw: int, minh: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setMinimumWidth">
+<code class="sig-name descname">setMinimumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minw: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setMinimumWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setMouseTracking">
+<code class="sig-name descname">setMouseTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setMouseTracking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setObjectName">
+<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setObjectName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setPalette">
+<code class="sig-name descname">setPalette</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setPalette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setParent">
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>setParent(self, parent: PySide2.QtWidgets.QWidget, f: PySide2.QtCore.Qt.WindowFlags)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setProperty">
+<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em>, <em class="sig-param">value: typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.setProperty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setShortcutAutoRepeat">
+<code class="sig-name descname">setShortcutAutoRepeat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em>, <em class="sig-param">enable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setShortcutAutoRepeat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setShortcutEnabled">
+<code class="sig-name descname">setShortcutEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em>, <em class="sig-param">enable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setShortcutEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setSizeIncrement">
+<code class="sig-name descname">setSizeIncrement</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setSizeIncrement" title="Permalink to this definition">¶</a></dt>
+<dd><p>setSizeIncrement(self, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setSizePolicy">
+<code class="sig-name descname">setSizePolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QSizePolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setSizePolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>setSizePolicy(self, horizontal: PySide2.QtWidgets.QSizePolicy.Policy, vertical: PySide2.QtWidgets.QSizePolicy.Policy)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setStatusTip">
+<code class="sig-name descname">setStatusTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setStatusTip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setStyle">
+<code class="sig-name descname">setStyle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QStyle</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setStyle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setStyleSheet">
+<code class="sig-name descname">setStyleSheet</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">styleSheet: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setStyleSheet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setTabOrder">
+<em class="property">static </em><code class="sig-name descname">setTabOrder</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setTabOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setTabletTracking">
+<code class="sig-name descname">setTabletTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setTabletTracking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setToolTip">
+<code class="sig-name descname">setToolTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setToolTip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setToolTipDuration">
+<code class="sig-name descname">setToolTipDuration</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">msec: int</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setToolTipDuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setUpdatesEnabled">
+<code class="sig-name descname">setUpdatesEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setUpdatesEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setVisible">
+<code class="sig-name descname">setVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">visible: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setVisible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWhatsThis">
+<code class="sig-name descname">setWhatsThis</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWhatsThis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowFilePath">
+<code class="sig-name descname">setWindowFilePath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filePath: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowFilePath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowFlag">
+<code class="sig-name descname">setWindowFlag</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WindowType</em>, <em class="sig-param">on: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowFlag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowFlags">
+<code class="sig-name descname">setWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowIcon">
+<code class="sig-name descname">setWindowIcon</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">icon: PySide2.QtGui.QIcon</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowIcon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowIconText">
+<code class="sig-name descname">setWindowIconText</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowIconText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowModality">
+<code class="sig-name descname">setWindowModality</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">windowModality: PySide2.QtCore.Qt.WindowModality</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowModality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowModified">
+<code class="sig-name descname">setWindowModified</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowModified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowOpacity">
+<code class="sig-name descname">setWindowOpacity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">level: float</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowOpacity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowRole">
+<code class="sig-name descname">setWindowRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowState">
+<code class="sig-name descname">setWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state: PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.setWindowTitle">
+<code class="sig-name descname">setWindowTitle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.setWindowTitle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.sharedPainter">
+<code class="sig-name descname">sharedPainter</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPainter<a class="headerlink" href="#spinner_widget.SpinnerWidget.sharedPainter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.show">
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.show" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.showFullScreen">
+<code class="sig-name descname">showFullScreen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.showFullScreen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.showMaximized">
+<code class="sig-name descname">showMaximized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.showMaximized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.showMinimized">
+<code class="sig-name descname">showMinimized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.showMinimized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.showNormal">
+<code class="sig-name descname">showNormal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.showNormal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.signalsBlocked">
+<code class="sig-name descname">signalsBlocked</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.signalsBlocked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.size">
+<code class="sig-name descname">size</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#spinner_widget.SpinnerWidget.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.sizeHint">
+<code class="sig-name descname">sizeHint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#spinner_widget.SpinnerWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.sizeIncrement">
+<code class="sig-name descname">sizeIncrement</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#spinner_widget.SpinnerWidget.sizeIncrement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.sizePolicy">
+<code class="sig-name descname">sizePolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QSizePolicy<a class="headerlink" href="#spinner_widget.SpinnerWidget.sizePolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.stackUnder">
+<code class="sig-name descname">stackUnder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.stackUnder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.startTimer">
+<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval: int</em>, <em class="sig-param">timerType: PySide2.QtCore.Qt.TimerType = PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.startTimer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.statusTip">
+<code class="sig-name descname">statusTip</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.statusTip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.style">
+<code class="sig-name descname">style</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QStyle<a class="headerlink" href="#spinner_widget.SpinnerWidget.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.styleSheet">
+<code class="sig-name descname">styleSheet</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.styleSheet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.tabletEvent">
+<code class="sig-name descname">tabletEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QTabletEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.tabletEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.testAttribute">
+<code class="sig-name descname">testAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WidgetAttribute</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.testAttribute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.thread">
+<code class="sig-name descname">thread</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QThread<a class="headerlink" href="#spinner_widget.SpinnerWidget.thread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.timerEvent">
+<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.timerEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.toolTip">
+<code class="sig-name descname">toolTip</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.toolTip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.toolTipDuration">
+<code class="sig-name descname">toolTipDuration</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.toolTipDuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.topLevelWidget">
+<code class="sig-name descname">topLevelWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.topLevelWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.tr">
+<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">arg__2: str = ''</em>, <em class="sig-param">arg__3: int = -1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.tr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.underMouse">
+<code class="sig-name descname">underMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.underMouse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.ungrabGesture">
+<code class="sig-name descname">ungrabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.GestureType</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.ungrabGesture" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.unsetCursor">
+<code class="sig-name descname">unsetCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.unsetCursor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.unsetLayoutDirection">
+<code class="sig-name descname">unsetLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.unsetLayoutDirection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.unsetLocale">
+<code class="sig-name descname">unsetLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.unsetLocale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>update(self, arg__1: PySide2.QtCore.QRect)
+update(self, arg__1: PySide2.QtGui.QRegion)
+update(self, x: int, y: int, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.updateGeometry">
+<code class="sig-name descname">updateGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.updateGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.updateMicroFocus">
+<code class="sig-name descname">updateMicroFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.updateMicroFocus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.updatesEnabled">
+<code class="sig-name descname">updatesEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#spinner_widget.SpinnerWidget.updatesEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.visibleRegion">
+<code class="sig-name descname">visibleRegion</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QRegion<a class="headerlink" href="#spinner_widget.SpinnerWidget.visibleRegion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.whatsThis">
+<code class="sig-name descname">whatsThis</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.whatsThis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.wheelEvent">
+<code class="sig-name descname">wheelEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QWheelEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#spinner_widget.SpinnerWidget.wheelEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.width">
+<code class="sig-name descname">width</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.widthMM">
+<code class="sig-name descname">widthMM</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.widthMM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.winId">
+<code class="sig-name descname">winId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.winId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.window">
+<code class="sig-name descname">window</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#spinner_widget.SpinnerWidget.window" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowFilePath">
+<code class="sig-name descname">windowFilePath</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowFilePath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowFlags">
+<code class="sig-name descname">windowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.WindowFlags<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowHandle">
+<code class="sig-name descname">windowHandle</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QWindow<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowHandle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowIcon">
+<code class="sig-name descname">windowIcon</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QIcon<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowIcon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowIconText">
+<code class="sig-name descname">windowIconText</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowIconText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowModality">
+<code class="sig-name descname">windowModality</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.WindowModality<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowModality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowOpacity">
+<code class="sig-name descname">windowOpacity</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowOpacity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowRole">
+<code class="sig-name descname">windowRole</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowState">
+<code class="sig-name descname">windowState</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.WindowStates<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowTitle">
+<code class="sig-name descname">windowTitle</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowTitle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.windowType">
+<code class="sig-name descname">windowType</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.WindowType<a class="headerlink" href="#spinner_widget.SpinnerWidget.windowType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.x">
+<code class="sig-name descname">x</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spinner_widget.SpinnerWidget.y">
+<code class="sig-name descname">y</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#spinner_widget.SpinnerWidget.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="version_details.html" class="btn btn-neutral float-right" title="Shotgun Version Details Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="version_details.html" class="btn btn-neutral float-right" title="Shotgun Version Details Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="shotgun_menus.html" class="btn btn-neutral" title="Shotgun Menus" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="shotgun_menus.html" class="btn btn-neutral float-left" title="Shotgun Menus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -221,7 +1818,7 @@ that something is loading.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Autodesk.
+        &copy; Copyright 2021, Autodesk
 
     </p>
   </div> 
@@ -237,35 +1834,15 @@ that something is loading.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'v2.9.4',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
   
  
 

@@ -15,48 +15,49 @@
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="tk-framework-qtwidgets v2.9.4 documentation" href="index.html"/>
-        <link rel="next" title="Shotgun Note Input Widget" href="note_input_widget.html"/>
-        <link rel="prev" title="Model Related Classes" href="models.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Shotgun Note Input Widget" href="note_input_widget.html" />
+    <link rel="prev" title="Model Related Classes" href="models.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
     <a href='http://developer.shotgunsoftware.com'>
     
         <img style='width: 191px;
-                height: 60px; 
+                height: 60px;
                 margin: 2px;
-                border-radius: 0px; 
-                padding: 0px;' 
+                border-radius: 0px;
+                padding: 0px;'
             src='_static/logo@2x.png'/>
     
     </a>
@@ -89,7 +90,10 @@
     
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
@@ -121,16 +125,16 @@
     <div style='margin-top: 50px;
                 margin-left: 10px;
                 margin-right: 10px;
-                padding: 10px; 
-                color: #b3b3b3; 
+                padding: 10px;
+                color: #b3b3b3;
                 font-size: 70%;
                 border-radius: 3px;
                 background-color: #444;
                 line-height: 18px;
-                '>    
+                '>
     <style>
-        a.custom_post_menu { display: inline; 
-                             padding: 0px; 
+        a.custom_post_menu { display: inline;
+                             padding: 0px;
                              text-decoration: underline; }
     </style>
 
@@ -140,7 +144,7 @@
     
     For more information, please visit
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
-    The code associated with this documentation can be found 
+    The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
@@ -154,32 +158,52 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">tk-framework-qtwidgets</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tk-framework-qtwidgets</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Navigation Widgets</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Navigation Widgets</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -191,8 +215,8 @@
 be used to track navigation and state.</p>
 <img alt="_images/navigation.png" src="_images/navigation.png" />
 <p>The breadcrumbs widget is a standard widget that displays a history
-of things separated by arrows. This class utilizes the <a class="reference internal" href="elided_label.html#elided_label.ElidedLabel" title="elided_label.ElidedLabel"><code class="xref py py-class docutils literal"><span class="pre">ElidedLabel</span></code></a> widget
-to ensure that names are reduced down nicely in the case there ins&#8217;t enough
+of things separated by arrows. This class utilizes the <a class="reference internal" href="elided_label.html#elided_label.ElidedLabel" title="elided_label.ElidedLabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElidedLabel</span></code></a> widget
+to ensure that names are reduced down nicely in the case there ins’t enough
 space to display the entire history.</p>
 <p>The navigation widget implements the standard home/next/prev concept that can be
 found in several Toolkit apps.</p>
@@ -200,59 +224,47 @@ found in several Toolkit apps.</p>
 <h2>Breadcrumbs<a class="headerlink" href="#breadcrumbs" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="navigation.BreadcrumbWidget">
-<em class="property">class </em><code class="descclassname">navigation.</code><code class="descname">BreadcrumbWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/breadcrumb_widget.html#BreadcrumbWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.BreadcrumbWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">navigation.</code><code class="sig-name descname">BreadcrumbWidget</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/breadcrumb_widget.html#BreadcrumbWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.BreadcrumbWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QWidget</span></code></p>
 <p>Implementation of the BreadcrumbWidget class</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The parent QWidget for this control</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The parent QWidget for this control</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="navigation.BreadcrumbWidget.set">
-<code class="descname">set</code><span class="sig-paren">(</span><em>breadcrumbs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/breadcrumb_widget.html#BreadcrumbWidget.set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.BreadcrumbWidget.set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param">breadcrumbs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/breadcrumb_widget.html#BreadcrumbWidget.set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.BreadcrumbWidget.set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate the breadcrumb control with a list of breadcrumbs</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>breadcrumbs</strong> (list of <a class="reference internal" href="#navigation.Breadcrumb" title="navigation.Breadcrumb"><code class="xref py py-class docutils literal"><span class="pre">Breadcrumb</span></code></a>) &#8211; A list of breadcrumbs.  Each breadcrumb instance should derive
-from the Breadcrumb class</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>breadcrumbs</strong> (list of <a class="reference internal" href="#navigation.Breadcrumb" title="navigation.Breadcrumb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Breadcrumb</span></code></a>) – A list of breadcrumbs.  Each breadcrumb instance should derive
+from the Breadcrumb class</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="navigation.Breadcrumb">
-<em class="property">class </em><code class="descclassname">navigation.</code><code class="descname">Breadcrumb</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/breadcrumb_widget.html#Breadcrumb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.Breadcrumb" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">navigation.</code><code class="sig-name descname">Breadcrumb</code><span class="sig-paren">(</span><em class="sig-param">label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/breadcrumb_widget.html#Breadcrumb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.Breadcrumb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base breadcrumb class that all breadcrumb instances
 should be derived from</p>
 <p>Construction</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>label</strong> &#8211; The label for this breadcrumb</td>
-</tr>
-</tbody>
-</table>
-<dl class="attribute">
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>label</strong> – The label for this breadcrumb</p>
+</dd>
+</dl>
+<dl class="method">
 <dt id="navigation.Breadcrumb.label">
-<code class="descname">label</code><a class="headerlink" href="#navigation.Breadcrumb.label" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The label for this breadcrumb</td>
-</tr>
-</tbody>
-</table>
+<em class="property">property </em><code class="sig-name descname">label</code><a class="headerlink" href="#navigation.Breadcrumb.label" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The label for this breadcrumb</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -262,43 +274,36 @@ should be derived from</p>
 <h2>Home/Next/Prev Navigation<a class="headerlink" href="#home-next-prev-navigation" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="navigation.NavigationWidget">
-<em class="property">class </em><code class="descclassname">navigation.</code><code class="descname">NavigationWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/navigation_widget.html#NavigationWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.NavigationWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">navigation.</code><code class="sig-name descname">NavigationWidget</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/navigation_widget.html#NavigationWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.NavigationWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QWidget</span></code></p>
 <p>Navigation widget containing previous, home and next buttons: [H][&lt;][&gt;].  The
 widget keeps track of the current location within a list and emits signals
 whenever the user navigates via one of the buttons.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal home_clicked:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Emitted when someone clicks the home button</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">Signal navigate(bj):</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Emitted when someone clicks the next or prev buttons.
-A navigation object is passed with the signal.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The parent QWidget</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Signal home_clicked</dt>
+<dd class="field-odd"><p>Emitted when someone clicks the home button</p>
+</dd>
+<dt class="field-even">Signal navigate(bj)</dt>
+<dd class="field-even"><p>Emitted when someone clicks the next or prev buttons.
+A navigation object is passed with the signal.</p>
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The parent QWidget</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="navigation.NavigationWidget.add_destination">
-<code class="descname">add_destination</code><span class="sig-paren">(</span><em>label</em>, <em>destination</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/navigation_widget.html#NavigationWidget.add_destination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.NavigationWidget.add_destination" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_destination</code><span class="sig-paren">(</span><em class="sig-param">label</em>, <em class="sig-param">destination</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/navigation/navigation_widget.html#NavigationWidget.add_destination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#navigation.NavigationWidget.add_destination" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a destination to the widget.  This clears any future destinations
 and sets the current destination to be the one passed in.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>label</strong> &#8211; The label to be used for this destination</li>
-<li><strong>destination</strong> &#8211; The destination object</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> – The label to be used for this destination</p></li>
+<li><p><strong>destination</strong> – The destination object</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -308,15 +313,16 @@ and sets the current destination to be the one passed in.</p>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="note_input_widget.html" class="btn btn-neutral float-right" title="Shotgun Note Input Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="note_input_widget.html" class="btn btn-neutral float-right" title="Shotgun Note Input Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="models.html" class="btn btn-neutral" title="Model Related Classes" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="models.html" class="btn btn-neutral float-left" title="Model Related Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -325,7 +331,7 @@ and sets the current destination to be the one passed in.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Autodesk.
+        &copy; Copyright 2021, Autodesk
 
     </p>
   </div> 
@@ -341,35 +347,15 @@ and sets the current destination to be the one passed in.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'v2.9.4',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
   
  
 

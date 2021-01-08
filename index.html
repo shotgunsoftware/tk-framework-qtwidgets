@@ -15,47 +15,48 @@
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="tk-framework-qtwidgets v2.9.4 documentation" href="#"/>
-        <link rel="next" title="Shotgun Activity Stream Widget" href="activity_stream.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Shotgun Activity Stream Widget" href="activity_stream.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
     <a href='http://developer.shotgunsoftware.com'>
     
         <img style='width: 191px;
-                height: 60px; 
+                height: 60px;
                 margin: 2px;
-                border-radius: 0px; 
-                padding: 0px;' 
+                border-radius: 0px;
+                padding: 0px;'
             src='_static/logo@2x.png'/>
     
     </a>
@@ -88,7 +89,10 @@
     
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
@@ -116,16 +120,16 @@
     <div style='margin-top: 50px;
                 margin-left: 10px;
                 margin-right: 10px;
-                padding: 10px; 
-                color: #b3b3b3; 
+                padding: 10px;
+                color: #b3b3b3;
                 font-size: 70%;
                 border-radius: 3px;
                 background-color: #444;
                 line-height: 18px;
-                '>    
+                '>
     <style>
-        a.custom_post_menu { display: inline; 
-                             padding: 0px; 
+        a.custom_post_menu { display: inline;
+                             padding: 0px;
                              text-decoration: underline; }
     </style>
 
@@ -135,7 +139,7 @@
     
     For more information, please visit
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
-    The code associated with this documentation can be found 
+    The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
@@ -149,32 +153,52 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">tk-framework-qtwidgets</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">tk-framework-qtwidgets</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
-      
-    <li>The QT Widgets Framework</li>
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>The QT Widgets Framework</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -261,24 +285,24 @@
 <div class="section" id="importing-widgets-into-your-app">
 <h2>Importing widgets into your app<a class="headerlink" href="#importing-widgets-into-your-app" title="Permalink to this headline">¶</a></h2>
 <p>Each of the modules in this framework can be used inside your Toolkit Apps.
-They are typically imported via Toolkit&#8217;s special <code class="docutils literal"><span class="pre">import_framework()</span></code> method,
+They are typically imported via Toolkit’s special <code class="docutils literal notranslate"><span class="pre">import_framework()</span></code> method,
 which handles automatic reload and resource management behind the scenes:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">overlay_widget</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s2">&quot;overlay_widget&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">overlay_widget</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s2">&quot;overlay_widget&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>These imports work just like the normal <code class="docutils literal"><span class="pre">import</span></code> call in python and we recommend
+<p>These imports work just like the normal <code class="docutils literal notranslate"><span class="pre">import</span></code> call in python and we recommend
 that they are placed at the top of the file.</p>
 <p>Once you have imported the module, you can access the class or objects inside:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">my_overlay</span> <span class="o">=</span> <span class="n">overlay_widget</span><span class="o">.</span><span class="n">ShotgunOverlayWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_overlay</span> <span class="o">=</span> <span class="n">overlay_widget</span><span class="o">.</span><span class="n">ShotgunOverlayWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="using-widgets-with-qt-designer">
 <span id="widgets-in-designer"></span><h3>Using widgets with QT Designer<a class="headerlink" href="#using-widgets-with-qt-designer" title="Permalink to this headline">¶</a></h3>
-<p>If you are dropping the widgets into QT Designer directly, there isn&#8217;t an option to
-run the <code class="docutils literal"><span class="pre">import_framework</span></code> method. In this case, we recommend adding imports to a wrapper
+<p>If you are dropping the widgets into QT Designer directly, there isn’t an option to
+run the <code class="docutils literal notranslate"><span class="pre">import_framework</span></code> method. In this case, we recommend adding imports to a wrapper
 file and place that next to your other python files. You can for example call this file
-<code class="docutils literal"><span class="pre">qtwidgets.py</span></code> and then do the imports in this file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sgtk</span>
+<code class="docutils literal notranslate"><span class="pre">qtwidgets.py</span></code> and then do the imports in this file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sgtk</span>
 
 <span class="n">note_input_widget</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;note_input_widget&quot;</span><span class="p">)</span>
 <span class="n">NoteInputWidget</span> <span class="o">=</span> <span class="n">note_input_widget</span><span class="o">.</span><span class="n">NoteInputWidget</span>
@@ -287,7 +311,7 @@ file and place that next to your other python files. You can for example call th
 <span class="n">VersionLabel</span> <span class="o">=</span> <span class="n">version_label</span><span class="o">.</span><span class="n">VersionLabel</span>
 </pre></div>
 </div>
-<p>In your designer generated <code class="docutils literal"><span class="pre">.ui</span></code> files, you can now reference these widgets as if they were
+<p>In your designer generated <code class="docutils literal notranslate"><span class="pre">.ui</span></code> files, you can now reference these widgets as if they were
 local to your project.</p>
 </div>
 </div>
@@ -295,12 +319,13 @@ local to your project.</p>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="activity_stream.html" class="btn btn-neutral float-right" title="Shotgun Activity Stream Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="activity_stream.html" class="btn btn-neutral float-right" title="Shotgun Activity Stream Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -310,7 +335,7 @@ local to your project.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Autodesk.
+        &copy; Copyright 2021, Autodesk
 
     </p>
   </div> 
@@ -326,35 +351,15 @@ local to your project.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'v2.9.4',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
   
  
 

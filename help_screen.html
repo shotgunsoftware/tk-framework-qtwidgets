@@ -15,48 +15,49 @@
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="tk-framework-qtwidgets v2.9.4 documentation" href="index.html"/>
-        <link rel="next" title="Model Related Classes" href="models.html"/>
-        <link rel="prev" title="Context Selector Widget" href="context_widget.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Model Related Classes" href="models.html" />
+    <link rel="prev" title="Context Selector Widget" href="context_widget.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
     <a href='http://developer.shotgunsoftware.com'>
     
         <img style='width: 191px;
-                height: 60px; 
+                height: 60px;
                 margin: 2px;
-                border-radius: 0px; 
-                padding: 0px;' 
+                border-radius: 0px;
+                padding: 0px;'
             src='_static/logo@2x.png'/>
     
     </a>
@@ -89,7 +90,10 @@
     
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
@@ -124,16 +128,16 @@
     <div style='margin-top: 50px;
                 margin-left: 10px;
                 margin-right: 10px;
-                padding: 10px; 
-                color: #b3b3b3; 
+                padding: 10px;
+                color: #b3b3b3;
                 font-size: 70%;
                 border-radius: 3px;
                 background-color: #444;
                 line-height: 18px;
-                '>    
+                '>
     <style>
-        a.custom_post_menu { display: inline; 
-                             padding: 0px; 
+        a.custom_post_menu { display: inline;
+                             padding: 0px;
                              text-decoration: underline; }
     </style>
 
@@ -143,7 +147,7 @@
     
     For more information, please visit
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
-    The code associated with this documentation can be found 
+    The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
@@ -157,32 +161,52 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">tk-framework-qtwidgets</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tk-framework-qtwidgets</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Help Screen Popup</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Help Screen Popup</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -199,17 +223,17 @@ to a user. The information is presented as an interactive slide show where the u
 can easily navigate between sides.</p>
 <img alt="_images/help_aspects.png" src="_images/help_aspects.png" />
 <p>You simply provide it with a list of transparent bitmaps sized 650x400 and it will
-create a slideshow with animated transitions and a link to the bundle&#8217;s associated
+create a slideshow with animated transitions and a link to the bundle’s associated
 documentation (retrieved from the manifest).</p>
 <div class="section" id="sample-code">
 <h3>Sample Code<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">help_screen</span></code> module contains a single method that takes care of everything.
+<p>The <code class="docutils literal notranslate"><span class="pre">help_screen</span></code> module contains a single method that takes care of everything.
 Simply create the number of 650x400 images that you want and export them as transparent
-<code class="docutils literal"><span class="pre">png</span></code> files and ensure that the background is transparent (this is not a strict requirement,
+<code class="docutils literal notranslate"><span class="pre">png</span></code> files and ensure that the background is transparent (this is not a strict requirement,
 but it will most likely look strange with a non-transparent background). Add the
 images to the QT resource section of your app and then execute the following code
 to launch the help screen:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># example of how the help screen can be used within your app code</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># example of how the help screen can be used within your app code</span>
 
 <span class="c1"># import the module - note that this is using the special</span>
 <span class="c1"># import_framework code so it won&#39;t work outside an app</span>
@@ -238,23 +262,19 @@ to launch the help screen:</p>
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="help_screen.show_help_screen">
-<code class="descclassname">help_screen.</code><code class="descname">show_help_screen</code><span class="sig-paren">(</span><em>parent</em>, <em>bundle</em>, <em>pixmaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/help_screen/dialog.html#show_help_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#help_screen.show_help_screen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">help_screen.</code><code class="sig-name descname">show_help_screen</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">bundle</em>, <em class="sig-param">pixmaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/help_screen/dialog.html#show_help_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#help_screen.show_help_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show help screen window.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a>) &#8211; Parent window. The help screen will be centered on top of this window.</li>
-<li><strong>bundle</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-core/platform.html#sgtk.platform.Application" title="(in tk-core vv0.19.17)"><code class="xref py py-class docutils literal"><span class="pre">sgtk.platform.Application</span></code></a>,
-<a class="reference external" href="http://developer.shotgunsoftware.com/tk-core/platform.html#sgtk.platform.Engine" title="(in tk-core vv0.19.17)"><code class="xref py py-class docutils literal"><span class="pre">sgtk.platform.Engine</span></code></a> or
-<a class="reference external" href="http://developer.shotgunsoftware.com/tk-core/platform.html#sgtk.platform.Framework" title="(in tk-core vv0.19.17)"><code class="xref py py-class docutils literal"><span class="pre">sgtk.platform.Framework</span></code></a>) &#8211; Bundle object to associate with</li>
-<li><strong>pixmaps</strong> (List of <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QPixmap</span></code></a>) &#8211; List of images, all 650x400 px</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QWidget</span></code></a>) – Parent window. The help screen will be centered on top of this window.</p></li>
+<li><p><strong>bundle</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-core/platform.html#sgtk.platform.Application" title="(in tk-core vv0.19.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Application</span></code></a>,
+<a class="reference external" href="http://developer.shotgunsoftware.com/tk-core/platform.html#sgtk.platform.Engine" title="(in tk-core vv0.19.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Engine</span></code></a> or
+<a class="reference external" href="http://developer.shotgunsoftware.com/tk-core/platform.html#sgtk.platform.Framework" title="(in tk-core vv0.19.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Framework</span></code></a>) – Bundle object to associate with</p></li>
+<li><p><strong>pixmaps</strong> (List of <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QPixmap</span></code></a>) – List of images, all 650x400 px</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -262,15 +282,16 @@ to launch the help screen:</p>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="models.html" class="btn btn-neutral float-right" title="Model Related Classes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="models.html" class="btn btn-neutral float-right" title="Model Related Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="context_widget.html" class="btn btn-neutral" title="Context Selector Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="context_widget.html" class="btn btn-neutral float-left" title="Context Selector Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -279,7 +300,7 @@ to launch the help screen:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Autodesk.
+        &copy; Copyright 2021, Autodesk
 
     </p>
   </div> 
@@ -295,35 +316,15 @@ to launch the help screen:</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'v2.9.4',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
   
  
 

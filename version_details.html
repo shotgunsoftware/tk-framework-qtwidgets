@@ -15,48 +15,49 @@
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="tk-framework-qtwidgets v2.9.4 documentation" href="index.html"/>
-        <link rel="next" title="View Related Classes" href="views.html"/>
-        <link rel="prev" title="Spinner Widget" href="spinner_widget.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="View Related Classes" href="views.html" />
+    <link rel="prev" title="Spinner Widget" href="spinner_widget.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
     <a href='http://developer.shotgunsoftware.com'>
     
         <img style='width: 191px;
-                height: 60px; 
+                height: 60px;
                 margin: 2px;
-                border-radius: 0px; 
-                padding: 0px;' 
+                border-radius: 0px;
+                padding: 0px;'
             src='_static/logo@2x.png'/>
     
     </a>
@@ -89,7 +90,10 @@
     
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
@@ -124,16 +128,16 @@
     <div style='margin-top: 50px;
                 margin-left: 10px;
                 margin-right: 10px;
-                padding: 10px; 
-                color: #b3b3b3; 
+                padding: 10px;
+                color: #b3b3b3;
                 font-size: 70%;
                 border-radius: 3px;
                 background-color: #444;
                 line-height: 18px;
-                '>    
+                '>
     <style>
-        a.custom_post_menu { display: inline; 
-                             padding: 0px; 
+        a.custom_post_menu { display: inline;
+                             padding: 0px;
                              text-decoration: underline; }
     </style>
 
@@ -143,7 +147,7 @@
     
     For more information, please visit
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
-    The code associated with this documentation can be found 
+    The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
@@ -157,32 +161,52 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">tk-framework-qtwidgets</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tk-framework-qtwidgets</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Shotgun Version Details Widget</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Shotgun Version Details Widget</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -208,97 +232,86 @@ and the widget requests only the changes since the last update.</p>
 <h2>VersionDetailsWidget<a class="headerlink" href="#versiondetailswidget" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="version_details.VersionDetailsWidget">
-<em class="property">class </em><code class="descclassname">version_details.</code><code class="descname">VersionDetailsWidget</code><span class="sig-paren">(</span><em>bg_task_manager</em>, <em>parent=None</em>, <em>entity=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">version_details.</code><code class="sig-name descname">VersionDetailsWidget</code><span class="sig-paren">(</span><em class="sig-param">bg_task_manager</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">entity=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QWidget</span></code></p>
 <p>QT Widget that displays details and Note thread data for a given Version
 entity.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_created(object):</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when a Note or Reply entity is created by
+<dl class="field-list simple">
+<dt class="field-odd">Signal entity_created(object)</dt>
+<dd class="field-odd"><p>Fires when a Note or Reply entity is created by
 an underlying widget within the activity stream. Passes on a Shotgun
-entity definition in the form of a dict.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">Signal entity_loaded(object):</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Fires when a Version entity has been loaded by
-the widget. Passes on a Shotgun entity definition in the form of a dict.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal note_selected(int):</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when a Note entity is selected in the widget&#8217;s
-note thread stream. Passes on the entity id of the selected note.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">Signal note_deselected(int):</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Fires when a Note entity is deselected. Passes on
-the entity id of the selected note.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal note_arrived(int, object):</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when a new Note entity arrives and is
-displayed in the widget&#8217;s note thread stream. Passes on the entity id
-and Shotgun entity definition as an int and dict, respectively.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">Signal note_metadata_changed(int, str):</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Fires when the widget successfully
-updates a Note entity&#8217;s metadata field. The Note entity&#8217;s id and the
-new metadata are passed on.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal note_attachment_arrived(int, str):</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Fires when an attachment file
+entity definition in the form of a dict.</p>
+</dd>
+<dt class="field-even">Signal entity_loaded(object)</dt>
+<dd class="field-even"><p>Fires when a Version entity has been loaded by
+the widget. Passes on a Shotgun entity definition in the form of a dict.</p>
+</dd>
+<dt class="field-odd">Signal note_selected(int)</dt>
+<dd class="field-odd"><p>Fires when a Note entity is selected in the widget’s
+note thread stream. Passes on the entity id of the selected note.</p>
+</dd>
+<dt class="field-even">Signal note_deselected(int)</dt>
+<dd class="field-even"><p>Fires when a Note entity is deselected. Passes on
+the entity id of the selected note.</p>
+</dd>
+<dt class="field-odd">Signal note_arrived(int, object)</dt>
+<dd class="field-odd"><p>Fires when a new Note entity arrives and is
+displayed in the widget’s note thread stream. Passes on the entity id
+and Shotgun entity definition as an int and dict, respectively.</p>
+</dd>
+<dt class="field-even">Signal note_metadata_changed(int, str)</dt>
+<dd class="field-even"><p>Fires when the widget successfully
+updates a Note entity’s metadata field. The Note entity’s id and the
+new metadata are passed on.</p>
+</dd>
+<dt class="field-odd">Signal note_attachment_arrived(int, str)</dt>
+<dd class="field-odd"><p>Fires when an attachment file
 associated with a Note entity is successfully downloaded. The Note
-entity id and the path to the file on disk are passed on.</td>
-</tr>
-</tbody>
-</table>
-<p>Constructs a new <a class="reference internal" href="#version_details.VersionDetailsWidget" title="version_details.VersionDetailsWidget"><code class="xref py py-class docutils literal"><span class="pre">VersionDetailsWidget</span></code></a> object.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>parent</strong> &#8211; The widget&#8217;s parent.</li>
-<li><strong>bg_task_manager</strong> &#8211; A <code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code> object.</li>
-<li><strong>entity</strong> &#8211; A Shotgun Version entity dictionary.</li>
+entity id and the path to the file on disk are passed on.</p>
+</dd>
+</dl>
+<p>Constructs a new <a class="reference internal" href="#version_details.VersionDetailsWidget" title="version_details.VersionDetailsWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">VersionDetailsWidget</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The widget’s parent.</p></li>
+<li><p><strong>bg_task_manager</strong> – A <code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code> object.</p></li>
+<li><p><strong>entity</strong> – A Shotgun Version entity dictionary.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="attribute">
+</dd>
+</dl>
+<dl class="method">
 <dt id="version_details.VersionDetailsWidget.current_entity">
-<code class="descname">current_entity</code><a class="headerlink" href="#version_details.VersionDetailsWidget.current_entity" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">current_entity</code><a class="headerlink" href="#version_details.VersionDetailsWidget.current_entity" title="Permalink to this definition">¶</a></dt>
 <dd><p>The current Shotgun entity that is OR will become active in the widget.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="version_details.VersionDetailsWidget.is_pinned">
-<code class="descname">is_pinned</code><a class="headerlink" href="#version_details.VersionDetailsWidget.is_pinned" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">is_pinned</code><a class="headerlink" href="#version_details.VersionDetailsWidget.is_pinned" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the panel is pinned and not processing entity
 updates, and False if it is not pinned.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="version_details.VersionDetailsWidget.note_fields">
-<code class="descname">note_fields</code><a class="headerlink" href="#version_details.VersionDetailsWidget.note_fields" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">note_fields</code><a class="headerlink" href="#version_details.VersionDetailsWidget.note_fields" title="Permalink to this definition">¶</a></dt>
 <dd><p>The list of Note entity field names that are queried and provided
 when note_arrived is emitted.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list(str, ...)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list(str, …)</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="version_details.VersionDetailsWidget.note_threads">
-<code class="descname">note_threads</code><a class="headerlink" href="#version_details.VersionDetailsWidget.note_threads" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">note_threads</code><a class="headerlink" href="#version_details.VersionDetailsWidget.note_threads" title="Permalink to this definition">¶</a></dt>
 <dd><p>The currently loaded Note threads keyed by Note entity id and
 containing a list of Shotgun entity dictionaries.</p>
 <p>Example structure containing a single Note entity:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">6038</span><span class="p">:</span> <span class="p">[</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">6038</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
         <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;This is a test note.&#39;</span><span class="p">,</span>
         <span class="s1">&#39;created_by&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -315,72 +328,65 @@ containing a list of Shotgun entity dictionaries.</p>
 </div>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="version_details.VersionDetailsWidget.attachments_filter">
-<code class="descname">attachments_filter</code><a class="headerlink" href="#version_details.VersionDetailsWidget.attachments_filter" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">attachments_filter</code><a class="headerlink" href="#version_details.VersionDetailsWidget.attachments_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>If set to a compiled regular expression, attachment file names that match
 will be filtered OUT and NOT shown.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="version_details.VersionDetailsWidget.notes_are_selectable">
-<code class="descname">notes_are_selectable</code><a class="headerlink" href="#version_details.VersionDetailsWidget.notes_are_selectable" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">notes_are_selectable</code><a class="headerlink" href="#version_details.VersionDetailsWidget.notes_are_selectable" title="Permalink to this definition">¶</a></dt>
 <dd><p>If True, note entity widgets in the activity stream will be selectable
 by the user.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="version_details.VersionDetailsWidget.pre_submit_callback">
-<code class="descname">pre_submit_callback</code><a class="headerlink" href="#version_details.VersionDetailsWidget.pre_submit_callback" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">pre_submit_callback</code><a class="headerlink" href="#version_details.VersionDetailsWidget.pre_submit_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>The pre-submit callback function, if one is registered. If so, this
 Python callable will be run prior to Note or Reply submission, and
-will be given the calling <code class="xref py py-class docutils literal"><span class="pre">NoteInputWidget</span></code> as its first and
+will be given the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">NoteInputWidget</span></code> as its first and
 only argument.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.add_note_attachments">
-<code class="descname">add_note_attachments</code><span class="sig-paren">(</span><em>file_paths</em>, <em>note_entity</em>, <em>cleanup_after_upload=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_note_attachments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_note_attachments</code><span class="sig-paren">(</span><em class="sig-param">file_paths</em>, <em class="sig-param">note_entity</em>, <em class="sig-param">cleanup_after_upload=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_note_attachments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a given list of files to the note widget as file attachments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file_paths</strong> &#8211; A list of file paths to attach to the
-current note.</li>
-<li><strong>cleanup_after_upload</strong> &#8211; If True, after the files are uploaded
-to Shotgun they will be removed from disk.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_paths</strong> – A list of file paths to attach to the
+current note.</p></li>
+<li><p><strong>cleanup_after_upload</strong> – If True, after the files are uploaded
+to Shotgun they will be removed from disk.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.add_query_fields">
-<code class="descname">add_query_fields</code><span class="sig-paren">(</span><em>fields</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_query_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_query_fields" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_query_fields</code><span class="sig-paren">(</span><em class="sig-param">fields</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_query_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_query_fields" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the given list of Shotgun field names to the list of fields
-that are queried by the version details widget&#8217;s internal data
+that are queried by the version details widget’s internal data
 model. Adding fields this way does not change the display of
 information about the entity in any way.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fields</strong> (<em>[field_name, ...]</em>) &#8211; A list of Shotgun field names to add.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fields</strong> (<em>[</em><em>field_name</em><em>, </em><em>..</em><em>]</em>) – A list of Shotgun field names to add.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.add_version_context_menu_action">
-<code class="descname">add_version_context_menu_action</code><span class="sig-paren">(</span><em>action_definition</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_version_context_menu_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_version_context_menu_action" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds an action to the version tab&#8217;s context menu.</p>
+<code class="sig-name descname">add_version_context_menu_action</code><span class="sig-paren">(</span><em class="sig-param">action_definition</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.add_version_context_menu_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.add_version_context_menu_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an action to the version tab’s context menu.</p>
 <p>Action definitions passed in must take the following form:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">dict</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dict</span><span class="p">(</span>
     <span class="n">callback</span><span class="o">=</span><span class="n">callable</span><span class="p">,</span>
     <span class="n">text</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
     <span class="n">required_selection</span><span class="o">=</span><span class="s2">&quot;single&quot;</span>
@@ -390,41 +396,38 @@ information about the entity in any way.</p>
 <p>Where the callback is a callable object that expects to receive
 a list of Version entity dictionaries as returned by the Shotgun
 Python API. The text key contains the string labels of the action
-in the QMenu, and the required_selection is one of &#8220;single&#8221;, &#8220;multi&#8221;,
-or &#8220;either&#8221;. Any action requiring a &#8220;single&#8221; selection will be enabled
+in the QMenu, and the required_selection is one of “single”, “multi”,
+or “either”. Any action requiring a “single” selection will be enabled
 only if there is a single item selected in the Version list view,
-those requiring &#8220;multi&#8221; selection require 2 or more selected items,
-and the &#8220;either&#8221; requirement results in the action being enabled if
+those requiring “multi” selection require 2 or more selected items,
+and the “either” requirement results in the action being enabled if
 one or more items are selected.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action_definition</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; The action defition to add to the menu.
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action_definition</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – The action defition to add to the menu.
 This takes the form of a dictionary of
 a structure described in the method docs
-above.</td>
-</tr>
-</tbody>
-</table>
+above.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.clear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears all data from all widgets and views in the details panel.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.select_note">
-<code class="descname">select_note</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.select_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.select_note" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">select_note</code><span class="sig-paren">(</span><em class="sig-param">note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.select_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.select_note" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select the note identified by the id. This will trigger a note_selected
 signal to be emitted</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.deselect_note">
-<code class="descname">deselect_note</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.deselect_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.deselect_note" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">deselect_note</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.deselect_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.deselect_note" title="Permalink to this definition">¶</a></dt>
 <dd><p>If a note is currently selected, it will be deselected. This will NOT
 trigger a note_deselected signal to be emitted, as that is only emitted
 when the user triggers the deselection and not via procedural means.</p>
@@ -432,173 +435,1736 @@ when the user triggers the deselection and not via procedural means.</p>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.download_note_attachments">
-<code class="descname">download_note_attachments</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.download_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.download_note_attachments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">download_note_attachments</code><span class="sig-paren">(</span><em class="sig-param">note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.download_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.download_note_attachments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Triggers the attachments linked to the given Note entity to
 be downloaded.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The Note entity id.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The Note entity id.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.get_note_attachments">
-<code class="descname">get_note_attachments</code><span class="sig-paren">(</span><em>note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.get_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.get_note_attachments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_note_attachments</code><span class="sig-paren">(</span><em class="sig-param">note_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.get_note_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.get_note_attachments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the Attachment entities associated with the given Note
 entity.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The Note entity id.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The Note entity id.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.load_data">
-<code class="descname">load_data</code><span class="sig-paren">(</span><em>entity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.load_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">entity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.load_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the given Shotgun entity into the details panel,
 triggering the notes and versions streams to be updated
 relative to the given entity.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entity</strong> &#8211; The Shotgun entity to load. This is a dict in
-the form returned by the Shotgun Python API.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>entity</strong> – The Shotgun entity to load. This is a dict in
+the form returned by the Shotgun Python API.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.save_preferences">
-<code class="descname">save_preferences</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.save_preferences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.save_preferences" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_preferences</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.save_preferences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.save_preferences" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves user preferences to disk.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.set_note_metadata">
-<code class="descname">set_note_metadata</code><span class="sig-paren">(</span><em>note_id</em>, <em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_note_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_note_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets a Note entity&#8217;s metadata in Shotgun.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The Note entity id.</li>
-<li><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The metadata to set in Shotgun.</li>
+<code class="sig-name descname">set_note_metadata</code><span class="sig-paren">(</span><em class="sig-param">note_id</em>, <em class="sig-param">metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_note_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_note_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a Note entity’s metadata in Shotgun.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>note_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The Note entity id.</p></li>
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The metadata to set in Shotgun.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.set_note_screenshot">
-<code class="descname">set_note_screenshot</code><span class="sig-paren">(</span><em>image_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_note_screenshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_note_screenshot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_note_screenshot</code><span class="sig-paren">(</span><em class="sig-param">image_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_note_screenshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_note_screenshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes the given file path to an image and sets the new note
-widget&#8217;s thumbnail image.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image_path</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; A file path to an image file on disk.</td>
-</tr>
-</tbody>
-</table>
+widget’s thumbnail image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image_path</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – A file path to an image file on disk.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.set_pinned">
-<code class="descname">set_pinned</code><span class="sig-paren">(</span><em>checked</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_pinned"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_pinned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the &#8220;pinned&#8221; state of the details panel. When the panel is
+<code class="sig-name descname">set_pinned</code><span class="sig-paren">(</span><em class="sig-param">checked</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_pinned"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_pinned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the “pinned” state of the details panel. When the panel is
 pinned it will not accept updates. It will, however, record the
 most recent entity passed to load_data that was not accepted. If
 the panel is unpinned at a later time, the most recent rejected
 entity update will be executed at that time.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checked</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; True or False</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>checked</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – True or False</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.show_new_note_dialog">
-<code class="descname">show_new_note_dialog</code><span class="sig-paren">(</span><em>modal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.show_new_note_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.show_new_note_dialog" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show_new_note_dialog</code><span class="sig-paren">(</span><em class="sig-param">modal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.show_new_note_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.show_new_note_dialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shows a dialog that allows the user to input a new note.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>modal</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Whether the dialog should be shown modally or not.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>modal</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Whether the dialog should be shown modally or not.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.show_title_bar_buttons">
-<code class="descname">show_title_bar_buttons</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.show_title_bar_buttons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.show_title_bar_buttons" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show_title_bar_buttons</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.show_title_bar_buttons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.show_title_bar_buttons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the visibility of the undock and close buttons in the
-widget&#8217;s title bar.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Whether to show or hide the buttons.</td>
-</tr>
-</tbody>
-</table>
+widget’s title bar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Whether to show or hide the buttons.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.set_version_thumbnail">
-<code class="descname">set_version_thumbnail</code><span class="sig-paren">(</span><em>thumbnail_path</em>, <em>version_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_version_thumbnail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_version_thumbnail" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets a Version entity&#8217;s thumbnail image in Shotgun. If no Version
+<code class="sig-name descname">set_version_thumbnail</code><span class="sig-paren">(</span><em class="sig-param">thumbnail_path</em>, <em class="sig-param">version_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.set_version_thumbnail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.set_version_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a Version entity’s thumbnail image in Shotgun. If no Version
 id is provided, the current Version entity will be updated.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>thumbnail_path</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The path to the thumbnail file on disk.</li>
-<li><strong>version_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The Version entity&#8217;s id. If not provided
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thumbnail_path</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The path to the thumbnail file on disk.</p></li>
+<li><p><strong>version_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The Version entity’s id. If not provided
 then the current Version entity loaded in
-the widget will be used.</li>
+the widget will be used.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="version_details.VersionDetailsWidget.use_styled_title_bar">
-<code class="descname">use_styled_title_bar</code><span class="sig-paren">(</span><em>dock_widget</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.use_styled_title_bar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.use_styled_title_bar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">use_styled_title_bar</code><span class="sig-paren">(</span><em class="sig-param">dock_widget</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/version_details/version_details.html#VersionDetailsWidget.use_styled_title_bar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#version_details.VersionDetailsWidget.use_styled_title_bar" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the use of the included, custom styled title bar is desired, the
 parent QDockWidget can be provided here and the styled title bar will
 be displayed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dock_widget</strong> &#8211; The parent QDockWidget.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dock_widget</strong> – The parent QDockWidget.</p>
+</dd>
+</dl>
 </dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.acceptDrops">
+<code class="sig-name descname">acceptDrops</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.acceptDrops" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.accessibleDescription">
+<code class="sig-name descname">accessibleDescription</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.accessibleDescription" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.accessibleName">
+<code class="sig-name descname">accessibleName</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.accessibleName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.actionEvent">
+<code class="sig-name descname">actionEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QActionEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.actionEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.actions">
+<code class="sig-name descname">actions</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtWidgets.QAction]<a class="headerlink" href="#version_details.VersionDetailsWidget.actions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.activateWindow">
+<code class="sig-name descname">activateWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.activateWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.addAction">
+<code class="sig-name descname">addAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.addAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.addActions">
+<code class="sig-name descname">addActions</code><span class="sig-paren">(</span><em class="sig-param">self, actions: typing.List[PySide2.QtWidgets.QAction]</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.addActions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.adjustSize">
+<code class="sig-name descname">adjustSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.adjustSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.autoFillBackground">
+<code class="sig-name descname">autoFillBackground</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.autoFillBackground" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.backgroundRole">
+<code class="sig-name descname">backgroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPalette.ColorRole<a class="headerlink" href="#version_details.VersionDetailsWidget.backgroundRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.backingStore">
+<code class="sig-name descname">backingStore</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QBackingStore<a class="headerlink" href="#version_details.VersionDetailsWidget.backingStore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.baseSize">
+<code class="sig-name descname">baseSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#version_details.VersionDetailsWidget.baseSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.blockSignals">
+<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.blockSignals" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.changeEvent">
+<code class="sig-name descname">changeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.changeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.childAt">
+<code class="sig-name descname">childAt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">p: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.childAt" title="Permalink to this definition">¶</a></dt>
+<dd><p>childAt(self, x: int, y: int) -&gt; PySide2.QtWidgets.QWidget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.childEvent">
+<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.childEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.children">
+<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QObject]<a class="headerlink" href="#version_details.VersionDetailsWidget.children" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.childrenRect">
+<code class="sig-name descname">childrenRect</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#version_details.VersionDetailsWidget.childrenRect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.childrenRegion">
+<code class="sig-name descname">childrenRegion</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QRegion<a class="headerlink" href="#version_details.VersionDetailsWidget.childrenRegion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.clearFocus">
+<code class="sig-name descname">clearFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.clearFocus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.clearMask">
+<code class="sig-name descname">clearMask</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.clearMask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.closeEvent">
+<code class="sig-name descname">closeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QCloseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.colorCount">
+<code class="sig-name descname">colorCount</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.colorCount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.connect">
+<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2: str</em>, <em class="sig-param">arg__3: typing.Callable</em>, <em class="sig-param">type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect(arg__1: str, arg__2: typing.Callable, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(arg__1: str, arg__2: PySide2.QtCore.QObject, arg__3: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, method: PySide2.QtCore.QMetaMethod, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender: PySide2.QtCore.QObject, signal: str, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.connectNotify">
+<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.connectNotify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.contentsMargins">
+<code class="sig-name descname">contentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QMargins<a class="headerlink" href="#version_details.VersionDetailsWidget.contentsMargins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.contentsRect">
+<code class="sig-name descname">contentsRect</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#version_details.VersionDetailsWidget.contentsRect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.contextMenuEvent">
+<code class="sig-name descname">contextMenuEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QContextMenuEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.contextMenuPolicy">
+<code class="sig-name descname">contextMenuPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.ContextMenuPolicy<a class="headerlink" href="#version_details.VersionDetailsWidget.contextMenuPolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int = 0</em>, <em class="sig-param">initializeWindow: bool = True</em>, <em class="sig-param">destroyOldWindow: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.createWinId">
+<code class="sig-name descname">createWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.createWinId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.createWindowContainer">
+<em class="property">static </em><code class="sig-name descname">createWindowContainer</code><span class="sig-paren">(</span><em class="sig-param">window: PySide2.QtGui.QWindow</em>, <em class="sig-param">parent: PySide2.QtWidgets.QWidget = None</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.WindowFlags = Default(Qt.WindowFlags)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.createWindowContainer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.cursor">
+<code class="sig-name descname">cursor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QCursor<a class="headerlink" href="#version_details.VersionDetailsWidget.cursor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.customEvent">
+<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.customEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.deleteLater">
+<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.deleteLater" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.depth">
+<code class="sig-name descname">depth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">destroyWindow: bool = True</em>, <em class="sig-param">destroySubWindows: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.devType">
+<code class="sig-name descname">devType</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.devType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.devicePixelRatio">
+<code class="sig-name descname">devicePixelRatio</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.devicePixelRatio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.devicePixelRatioF">
+<code class="sig-name descname">devicePixelRatioF</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#version_details.VersionDetailsWidget.devicePixelRatioF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.devicePixelRatioFScale">
+<em class="property">static </em><code class="sig-name descname">devicePixelRatioFScale</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#version_details.VersionDetailsWidget.devicePixelRatioFScale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.disconnect">
+<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>disconnect(arg__1: PySide2.QtCore.QObject, arg__2: str, arg__3: typing.Callable) -&gt; bool
+disconnect(arg__1: str, arg__2: typing.Callable) -&gt; bool
+disconnect(receiver: PySide2.QtCore.QObject, member: str = None) -&gt; bool
+disconnect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, member: PySide2.QtCore.QMetaMethod) -&gt; bool
+disconnect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool
+disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.disconnectNotify">
+<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.disconnectNotify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.dragEnterEvent">
+<code class="sig-name descname">dragEnterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragEnterEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.dragEnterEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.dragLeaveEvent">
+<code class="sig-name descname">dragLeaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragLeaveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.dragLeaveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.dragMoveEvent">
+<code class="sig-name descname">dragMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragMoveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.dragMoveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.dropEvent">
+<code class="sig-name descname">dropEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDropEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.dropEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.dumpObjectInfo">
+<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.dumpObjectTree">
+<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.dynamicPropertyNames">
+<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QByteArray]<a class="headerlink" href="#version_details.VersionDetailsWidget.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.effectiveWinId">
+<code class="sig-name descname">effectiveWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.effectiveWinId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.emit">
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.emit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.ensurePolished">
+<code class="sig-name descname">ensurePolished</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.ensurePolished" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.enterEvent">
+<code class="sig-name descname">enterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.enterEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.event">
+<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.eventFilter">
+<code class="sig-name descname">eventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">watched: PySide2.QtCore.QObject</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.eventFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.find">
+<em class="property">static </em><code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">arg__1: int</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.find" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.findChild">
+<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: str = ''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#version_details.VersionDetailsWidget.findChild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.findChildren">
+<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#version_details.VersionDetailsWidget.findChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>findChildren(self, arg__1: type, arg__2: str = ‘’) -&gt; typing.Iterable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.focusInEvent">
+<code class="sig-name descname">focusInEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.focusInEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.focusNextChild">
+<code class="sig-name descname">focusNextChild</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.focusNextChild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.focusNextPrevChild">
+<code class="sig-name descname">focusNextPrevChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.focusNextPrevChild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.focusOutEvent">
+<code class="sig-name descname">focusOutEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.focusOutEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.focusPolicy">
+<code class="sig-name descname">focusPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.FocusPolicy<a class="headerlink" href="#version_details.VersionDetailsWidget.focusPolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.focusPreviousChild">
+<code class="sig-name descname">focusPreviousChild</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.focusPreviousChild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.focusProxy">
+<code class="sig-name descname">focusProxy</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.focusProxy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.focusWidget">
+<code class="sig-name descname">focusWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.focusWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.font">
+<code class="sig-name descname">font</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QFont<a class="headerlink" href="#version_details.VersionDetailsWidget.font" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.fontInfo">
+<code class="sig-name descname">fontInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QFontInfo<a class="headerlink" href="#version_details.VersionDetailsWidget.fontInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.fontMetrics">
+<code class="sig-name descname">fontMetrics</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QFontMetrics<a class="headerlink" href="#version_details.VersionDetailsWidget.fontMetrics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.foregroundRole">
+<code class="sig-name descname">foregroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPalette.ColorRole<a class="headerlink" href="#version_details.VersionDetailsWidget.foregroundRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.frameGeometry">
+<code class="sig-name descname">frameGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#version_details.VersionDetailsWidget.frameGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.frameSize">
+<code class="sig-name descname">frameSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#version_details.VersionDetailsWidget.frameSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.geometry">
+<code class="sig-name descname">geometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#version_details.VersionDetailsWidget.geometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.getContentsMargins">
+<code class="sig-name descname">getContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left: int</em>, <em class="sig-param">top: int</em>, <em class="sig-param">right: int</em>, <em class="sig-param">bottom: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.getContentsMargins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.grab">
+<code class="sig-name descname">grab</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rectangle: PySide2.QtCore.QRect = PySide2.QtCore.QRect(0</em>, <em class="sig-param">0</em>, <em class="sig-param">-1</em>, <em class="sig-param">-1)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPixmap<a class="headerlink" href="#version_details.VersionDetailsWidget.grab" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.grabGesture">
+<code class="sig-name descname">grabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.GestureType</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.GestureFlags = Default(Qt.GestureFlags)</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.grabGesture" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.grabKeyboard">
+<code class="sig-name descname">grabKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.grabKeyboard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.grabMouse">
+<code class="sig-name descname">grabMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.grabMouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>grabMouse(self, arg__1: PySide2.QtGui.QCursor)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.grabShortcut">
+<code class="sig-name descname">grabShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">key: PySide2.QtGui.QKeySequence</em>, <em class="sig-param">context: PySide2.QtCore.Qt.ShortcutContext = PySide2.QtCore.Qt.ShortcutContext.WindowShortcut</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.grabShortcut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.graphicsEffect">
+<code class="sig-name descname">graphicsEffect</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QGraphicsEffect<a class="headerlink" href="#version_details.VersionDetailsWidget.graphicsEffect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.graphicsProxyWidget">
+<code class="sig-name descname">graphicsProxyWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QGraphicsProxyWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.graphicsProxyWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.hasFocus">
+<code class="sig-name descname">hasFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.hasFocus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.hasHeightForWidth">
+<code class="sig-name descname">hasHeightForWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.hasHeightForWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.hasMouseTracking">
+<code class="sig-name descname">hasMouseTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.hasMouseTracking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.hasTabletTracking">
+<code class="sig-name descname">hasTabletTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.hasTabletTracking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.height">
+<code class="sig-name descname">height</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.heightForWidth">
+<code class="sig-name descname">heightForWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.heightForWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.heightMM">
+<code class="sig-name descname">heightMM</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.heightMM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.hide">
+<code class="sig-name descname">hide</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.hide" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.hideEvent">
+<code class="sig-name descname">hideEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QHideEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.hideEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.inherits">
+<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.inherits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.initPainter">
+<code class="sig-name descname">initPainter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter: PySide2.QtGui.QPainter</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.initPainter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.inputMethodEvent">
+<code class="sig-name descname">inputMethodEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QInputMethodEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.inputMethodEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.inputMethodHints">
+<code class="sig-name descname">inputMethodHints</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.InputMethodHints<a class="headerlink" href="#version_details.VersionDetailsWidget.inputMethodHints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.inputMethodQuery">
+<code class="sig-name descname">inputMethodQuery</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.InputMethodQuery</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#version_details.VersionDetailsWidget.inputMethodQuery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.insertAction">
+<code class="sig-name descname">insertAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">before: PySide2.QtWidgets.QAction</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.insertAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.insertActions">
+<code class="sig-name descname">insertActions</code><span class="sig-paren">(</span><em class="sig-param">self, before: PySide2.QtWidgets.QAction, actions: typing.List[PySide2.QtWidgets.QAction]</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.insertActions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.installEventFilter">
+<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.installEventFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.internalWinId">
+<code class="sig-name descname">internalWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.internalWinId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isActiveWindow">
+<code class="sig-name descname">isActiveWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isActiveWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isAncestorOf">
+<code class="sig-name descname">isAncestorOf</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">child: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isAncestorOf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isEnabled">
+<code class="sig-name descname">isEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isEnabledTo">
+<code class="sig-name descname">isEnabledTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isEnabledTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isEnabledToTLW">
+<code class="sig-name descname">isEnabledToTLW</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isEnabledToTLW" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isFullScreen">
+<code class="sig-name descname">isFullScreen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isFullScreen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isHidden">
+<code class="sig-name descname">isHidden</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isHidden" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isLeftToRight">
+<code class="sig-name descname">isLeftToRight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isLeftToRight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isMaximized">
+<code class="sig-name descname">isMaximized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isMaximized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isMinimized">
+<code class="sig-name descname">isMinimized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isMinimized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isModal">
+<code class="sig-name descname">isModal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isModal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isRightToLeft">
+<code class="sig-name descname">isRightToLeft</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isRightToLeft" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isSignalConnected">
+<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isSignalConnected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isTopLevel">
+<code class="sig-name descname">isTopLevel</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isTopLevel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isVisible">
+<code class="sig-name descname">isVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isVisible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isVisibleTo">
+<code class="sig-name descname">isVisibleTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isVisibleTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isWidgetType">
+<code class="sig-name descname">isWidgetType</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isWidgetType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isWindow">
+<code class="sig-name descname">isWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isWindowModified">
+<code class="sig-name descname">isWindowModified</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isWindowModified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.isWindowType">
+<code class="sig-name descname">isWindowType</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.isWindowType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.keyPressEvent">
+<code class="sig-name descname">keyPressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.keyReleaseEvent">
+<code class="sig-name descname">keyReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.keyboardGrabber">
+<em class="property">static </em><code class="sig-name descname">keyboardGrabber</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.keyboardGrabber" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.killTimer">
+<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.killTimer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.layout">
+<code class="sig-name descname">layout</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QLayout<a class="headerlink" href="#version_details.VersionDetailsWidget.layout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.layoutDirection">
+<code class="sig-name descname">layoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.LayoutDirection<a class="headerlink" href="#version_details.VersionDetailsWidget.layoutDirection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.leaveEvent">
+<code class="sig-name descname">leaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.leaveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.locale">
+<code class="sig-name descname">locale</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QLocale<a class="headerlink" href="#version_details.VersionDetailsWidget.locale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.logicalDpiX">
+<code class="sig-name descname">logicalDpiX</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.logicalDpiX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.logicalDpiY">
+<code class="sig-name descname">logicalDpiY</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.logicalDpiY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.lower">
+<code class="sig-name descname">lower</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.lower" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mapFrom">
+<code class="sig-name descname">mapFrom</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#version_details.VersionDetailsWidget.mapFrom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mapFromGlobal">
+<code class="sig-name descname">mapFromGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#version_details.VersionDetailsWidget.mapFromGlobal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mapFromParent">
+<code class="sig-name descname">mapFromParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#version_details.VersionDetailsWidget.mapFromParent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mapTo">
+<code class="sig-name descname">mapTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#version_details.VersionDetailsWidget.mapTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mapToGlobal">
+<code class="sig-name descname">mapToGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#version_details.VersionDetailsWidget.mapToGlobal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mapToParent">
+<code class="sig-name descname">mapToParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#version_details.VersionDetailsWidget.mapToParent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mask">
+<code class="sig-name descname">mask</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QRegion<a class="headerlink" href="#version_details.VersionDetailsWidget.mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.maximumHeight">
+<code class="sig-name descname">maximumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.maximumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.maximumSize">
+<code class="sig-name descname">maximumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#version_details.VersionDetailsWidget.maximumSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.maximumWidth">
+<code class="sig-name descname">maximumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.maximumWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.metaObject">
+<code class="sig-name descname">metaObject</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QMetaObject<a class="headerlink" href="#version_details.VersionDetailsWidget.metaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.metric">
+<code class="sig-name descname">metric</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPaintDevice.PaintDeviceMetric</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.metric" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.minimumHeight">
+<code class="sig-name descname">minimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.minimumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.minimumSize">
+<code class="sig-name descname">minimumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#version_details.VersionDetailsWidget.minimumSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.minimumSizeHint">
+<code class="sig-name descname">minimumSizeHint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#version_details.VersionDetailsWidget.minimumSizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.minimumWidth">
+<code class="sig-name descname">minimumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.minimumWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mouseDoubleClickEvent">
+<code class="sig-name descname">mouseDoubleClickEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.mouseDoubleClickEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mouseGrabber">
+<em class="property">static </em><code class="sig-name descname">mouseGrabber</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.mouseGrabber" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mouseMoveEvent">
+<code class="sig-name descname">mouseMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mousePressEvent">
+<code class="sig-name descname">mousePressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.mouseReleaseEvent">
+<code class="sig-name descname">mouseReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.mouseReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.move">
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>move(self, x: int, y: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.moveEvent">
+<code class="sig-name descname">moveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMoveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.moveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.moveToThread">
+<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread: PySide2.QtCore.QThread</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.moveToThread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.nativeEvent">
+<code class="sig-name descname">nativeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">eventType: PySide2.QtCore.QByteArray</em>, <em class="sig-param">message: int</em>, <em class="sig-param">result: int</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.nativeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.nativeParentWidget">
+<code class="sig-name descname">nativeParentWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.nativeParentWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.nextInFocusChain">
+<code class="sig-name descname">nextInFocusChain</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.nextInFocusChain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.normalGeometry">
+<code class="sig-name descname">normalGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#version_details.VersionDetailsWidget.normalGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.objectName">
+<code class="sig-name descname">objectName</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.objectName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.overrideWindowFlags">
+<code class="sig-name descname">overrideWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.overrideWindowFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.overrideWindowState">
+<code class="sig-name descname">overrideWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state: PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.overrideWindowState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.paintEngine">
+<code class="sig-name descname">paintEngine</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPaintEngine<a class="headerlink" href="#version_details.VersionDetailsWidget.paintEngine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.paintEvent">
+<code class="sig-name descname">paintEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QPaintEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.paintEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.paintingActive">
+<code class="sig-name descname">paintingActive</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.paintingActive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.palette">
+<code class="sig-name descname">palette</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPalette<a class="headerlink" href="#version_details.VersionDetailsWidget.palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.parent">
+<code class="sig-name descname">parent</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QObject<a class="headerlink" href="#version_details.VersionDetailsWidget.parent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.parentWidget">
+<code class="sig-name descname">parentWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.parentWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.physicalDpiX">
+<code class="sig-name descname">physicalDpiX</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.physicalDpiX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.physicalDpiY">
+<code class="sig-name descname">physicalDpiY</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.physicalDpiY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.pos">
+<code class="sig-name descname">pos</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#version_details.VersionDetailsWidget.pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.previousInFocusChain">
+<code class="sig-name descname">previousInFocusChain</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.previousInFocusChain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.property">
+<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#version_details.VersionDetailsWidget.property" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.raise_">
+<code class="sig-name descname">raise_</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.raise_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.receivers">
+<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: str</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.receivers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.rect">
+<code class="sig-name descname">rect</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QRect<a class="headerlink" href="#version_details.VersionDetailsWidget.rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.redirected">
+<code class="sig-name descname">redirected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">offset: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPaintDevice<a class="headerlink" href="#version_details.VersionDetailsWidget.redirected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.registerUserData">
+<em class="property">static </em><code class="sig-name descname">registerUserData</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.registerUserData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.releaseKeyboard">
+<code class="sig-name descname">releaseKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.releaseKeyboard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.releaseMouse">
+<code class="sig-name descname">releaseMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.releaseMouse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.releaseShortcut">
+<code class="sig-name descname">releaseShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.releaseShortcut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.removeAction">
+<code class="sig-name descname">removeAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.removeAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.removeEventFilter">
+<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.removeEventFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.render">
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter: PySide2.QtGui.QPainter</em>, <em class="sig-param">targetOffset: PySide2.QtCore.QPoint</em>, <em class="sig-param">sourceRegion: PySide2.QtGui.QRegion = Default(QRegion)</em>, <em class="sig-param">renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>render(self, target: PySide2.QtGui.QPaintDevice, targetOffset: PySide2.QtCore.QPoint = Default(QPoint), sourceRegion: PySide2.QtGui.QRegion = Default(QRegion), renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren)))</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.repaint">
+<code class="sig-name descname">repaint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.repaint" title="Permalink to this definition">¶</a></dt>
+<dd><p>repaint(self, arg__1: PySide2.QtCore.QRect)
+repaint(self, arg__1: PySide2.QtGui.QRegion)
+repaint(self, x: int, y: int, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.resize">
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>resize(self, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.resizeEvent">
+<code class="sig-name descname">resizeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QResizeEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.resizeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.restoreGeometry">
+<code class="sig-name descname">restoreGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">geometry: PySide2.QtCore.QByteArray</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.restoreGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.saveGeometry">
+<code class="sig-name descname">saveGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QByteArray<a class="headerlink" href="#version_details.VersionDetailsWidget.saveGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.scroll">
+<code class="sig-name descname">scroll</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dx: int</em>, <em class="sig-param">dy: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.scroll" title="Permalink to this definition">¶</a></dt>
+<dd><p>scroll(self, dx: int, dy: int, arg__3: PySide2.QtCore.QRect)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.sender">
+<code class="sig-name descname">sender</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QObject<a class="headerlink" href="#version_details.VersionDetailsWidget.sender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.senderSignalIndex">
+<code class="sig-name descname">senderSignalIndex</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.senderSignalIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setAcceptDrops">
+<code class="sig-name descname">setAcceptDrops</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">on: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setAcceptDrops" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setAccessibleDescription">
+<code class="sig-name descname">setAccessibleDescription</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">description: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setAccessibleDescription" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setAccessibleName">
+<code class="sig-name descname">setAccessibleName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setAccessibleName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setAttribute">
+<code class="sig-name descname">setAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WidgetAttribute</em>, <em class="sig-param">on: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setAttribute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setAutoFillBackground">
+<code class="sig-name descname">setAutoFillBackground</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enabled: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setAutoFillBackground" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setBackgroundRole">
+<code class="sig-name descname">setBackgroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setBackgroundRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setBaseSize">
+<code class="sig-name descname">setBaseSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setBaseSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setBaseSize(self, basew: int, baseh: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setContentsMargins">
+<code class="sig-name descname">setContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left: int</em>, <em class="sig-param">top: int</em>, <em class="sig-param">right: int</em>, <em class="sig-param">bottom: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setContentsMargins" title="Permalink to this definition">¶</a></dt>
+<dd><p>setContentsMargins(self, margins: PySide2.QtCore.QMargins)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setContextMenuPolicy">
+<code class="sig-name descname">setContextMenuPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy: PySide2.QtCore.Qt.ContextMenuPolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setContextMenuPolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setCursor">
+<code class="sig-name descname">setCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QCursor</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setCursor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setDisabled">
+<code class="sig-name descname">setDisabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setDisabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setEnabled">
+<code class="sig-name descname">setEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setFixedHeight">
+<code class="sig-name descname">setFixedHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">h: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setFixedHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setFixedSize">
+<code class="sig-name descname">setFixedSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setFixedSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setFixedSize(self, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setFixedWidth">
+<code class="sig-name descname">setFixedWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">w: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setFixedWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setFocus">
+<code class="sig-name descname">setFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setFocus" title="Permalink to this definition">¶</a></dt>
+<dd><p>setFocus(self, reason: PySide2.QtCore.Qt.FocusReason)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setFocusPolicy">
+<code class="sig-name descname">setFocusPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy: PySide2.QtCore.Qt.FocusPolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setFocusPolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setFocusProxy">
+<code class="sig-name descname">setFocusProxy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setFocusProxy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setFont">
+<code class="sig-name descname">setFont</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QFont</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setForegroundRole">
+<code class="sig-name descname">setForegroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setForegroundRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setGeometry">
+<code class="sig-name descname">setGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QRect</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setGeometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>setGeometry(self, x: int, y: int, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setGraphicsEffect">
+<code class="sig-name descname">setGraphicsEffect</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">effect: PySide2.QtWidgets.QGraphicsEffect</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setGraphicsEffect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setHidden">
+<code class="sig-name descname">setHidden</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hidden: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setHidden" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setInputMethodHints">
+<code class="sig-name descname">setInputMethodHints</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hints: PySide2.QtCore.Qt.InputMethodHints</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setInputMethodHints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setLayout">
+<code class="sig-name descname">setLayout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QLayout</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setLayoutDirection">
+<code class="sig-name descname">setLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">direction: PySide2.QtCore.Qt.LayoutDirection</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setLayoutDirection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setLocale">
+<code class="sig-name descname">setLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">locale: PySide2.QtCore.QLocale</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setLocale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setMask">
+<code class="sig-name descname">setMask</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QBitmap</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMask(self, arg__1: PySide2.QtGui.QRegion)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setMaximumHeight">
+<code class="sig-name descname">setMaximumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxh: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setMaximumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setMaximumSize">
+<code class="sig-name descname">setMaximumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setMaximumSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMaximumSize(self, maxw: int, maxh: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setMaximumWidth">
+<code class="sig-name descname">setMaximumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxw: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setMaximumWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setMinimumHeight">
+<code class="sig-name descname">setMinimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minh: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setMinimumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setMinimumSize">
+<code class="sig-name descname">setMinimumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setMinimumSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMinimumSize(self, minw: int, minh: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setMinimumWidth">
+<code class="sig-name descname">setMinimumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minw: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setMinimumWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setMouseTracking">
+<code class="sig-name descname">setMouseTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setMouseTracking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setObjectName">
+<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setObjectName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setPalette">
+<code class="sig-name descname">setPalette</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setPalette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setParent">
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>setParent(self, parent: PySide2.QtWidgets.QWidget, f: PySide2.QtCore.Qt.WindowFlags)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setProperty">
+<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em>, <em class="sig-param">value: typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.setProperty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setShortcutAutoRepeat">
+<code class="sig-name descname">setShortcutAutoRepeat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em>, <em class="sig-param">enable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setShortcutAutoRepeat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setShortcutEnabled">
+<code class="sig-name descname">setShortcutEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em>, <em class="sig-param">enable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setShortcutEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setSizeIncrement">
+<code class="sig-name descname">setSizeIncrement</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setSizeIncrement" title="Permalink to this definition">¶</a></dt>
+<dd><p>setSizeIncrement(self, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setSizePolicy">
+<code class="sig-name descname">setSizePolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QSizePolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setSizePolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>setSizePolicy(self, horizontal: PySide2.QtWidgets.QSizePolicy.Policy, vertical: PySide2.QtWidgets.QSizePolicy.Policy)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setStatusTip">
+<code class="sig-name descname">setStatusTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setStatusTip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setStyle">
+<code class="sig-name descname">setStyle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QStyle</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setStyle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setStyleSheet">
+<code class="sig-name descname">setStyleSheet</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">styleSheet: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setStyleSheet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setTabOrder">
+<em class="property">static </em><code class="sig-name descname">setTabOrder</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setTabOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setTabletTracking">
+<code class="sig-name descname">setTabletTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setTabletTracking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setToolTip">
+<code class="sig-name descname">setToolTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setToolTip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setToolTipDuration">
+<code class="sig-name descname">setToolTipDuration</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">msec: int</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setToolTipDuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setUpdatesEnabled">
+<code class="sig-name descname">setUpdatesEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setUpdatesEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setVisible">
+<code class="sig-name descname">setVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">visible: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setVisible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWhatsThis">
+<code class="sig-name descname">setWhatsThis</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWhatsThis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowFilePath">
+<code class="sig-name descname">setWindowFilePath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filePath: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowFilePath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowFlag">
+<code class="sig-name descname">setWindowFlag</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WindowType</em>, <em class="sig-param">on: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowFlag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowFlags">
+<code class="sig-name descname">setWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowIcon">
+<code class="sig-name descname">setWindowIcon</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">icon: PySide2.QtGui.QIcon</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowIcon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowIconText">
+<code class="sig-name descname">setWindowIconText</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowIconText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowModality">
+<code class="sig-name descname">setWindowModality</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">windowModality: PySide2.QtCore.Qt.WindowModality</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowModality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowModified">
+<code class="sig-name descname">setWindowModified</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowModified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowOpacity">
+<code class="sig-name descname">setWindowOpacity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">level: float</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowOpacity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowRole">
+<code class="sig-name descname">setWindowRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowState">
+<code class="sig-name descname">setWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state: PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.setWindowTitle">
+<code class="sig-name descname">setWindowTitle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.setWindowTitle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.sharedPainter">
+<code class="sig-name descname">sharedPainter</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPainter<a class="headerlink" href="#version_details.VersionDetailsWidget.sharedPainter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.show">
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.show" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.showEvent">
+<code class="sig-name descname">showEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QShowEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.showEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.showFullScreen">
+<code class="sig-name descname">showFullScreen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.showFullScreen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.showMaximized">
+<code class="sig-name descname">showMaximized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.showMaximized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.showMinimized">
+<code class="sig-name descname">showMinimized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.showMinimized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.showNormal">
+<code class="sig-name descname">showNormal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.showNormal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.signalsBlocked">
+<code class="sig-name descname">signalsBlocked</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.signalsBlocked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.size">
+<code class="sig-name descname">size</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#version_details.VersionDetailsWidget.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.sizeHint">
+<code class="sig-name descname">sizeHint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#version_details.VersionDetailsWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.sizeIncrement">
+<code class="sig-name descname">sizeIncrement</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QSize<a class="headerlink" href="#version_details.VersionDetailsWidget.sizeIncrement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.sizePolicy">
+<code class="sig-name descname">sizePolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QSizePolicy<a class="headerlink" href="#version_details.VersionDetailsWidget.sizePolicy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.stackUnder">
+<code class="sig-name descname">stackUnder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.stackUnder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.startTimer">
+<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval: int</em>, <em class="sig-param">timerType: PySide2.QtCore.Qt.TimerType = PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.startTimer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.statusTip">
+<code class="sig-name descname">statusTip</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.statusTip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.style">
+<code class="sig-name descname">style</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QStyle<a class="headerlink" href="#version_details.VersionDetailsWidget.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.styleSheet">
+<code class="sig-name descname">styleSheet</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.styleSheet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.tabletEvent">
+<code class="sig-name descname">tabletEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QTabletEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.tabletEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.testAttribute">
+<code class="sig-name descname">testAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WidgetAttribute</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.testAttribute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.thread">
+<code class="sig-name descname">thread</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QThread<a class="headerlink" href="#version_details.VersionDetailsWidget.thread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.timerEvent">
+<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.timerEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.toolTip">
+<code class="sig-name descname">toolTip</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.toolTip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.toolTipDuration">
+<code class="sig-name descname">toolTipDuration</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.toolTipDuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.topLevelWidget">
+<code class="sig-name descname">topLevelWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.topLevelWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.tr">
+<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">arg__2: str = ''</em>, <em class="sig-param">arg__3: int = -1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.tr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.underMouse">
+<code class="sig-name descname">underMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.underMouse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.ungrabGesture">
+<code class="sig-name descname">ungrabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.GestureType</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.ungrabGesture" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.unsetCursor">
+<code class="sig-name descname">unsetCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.unsetCursor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.unsetLayoutDirection">
+<code class="sig-name descname">unsetLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.unsetLayoutDirection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.unsetLocale">
+<code class="sig-name descname">unsetLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.unsetLocale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>update(self, arg__1: PySide2.QtCore.QRect)
+update(self, arg__1: PySide2.QtGui.QRegion)
+update(self, x: int, y: int, w: int, h: int)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.updateGeometry">
+<code class="sig-name descname">updateGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.updateGeometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.updateMicroFocus">
+<code class="sig-name descname">updateMicroFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.updateMicroFocus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.updatesEnabled">
+<code class="sig-name descname">updatesEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#version_details.VersionDetailsWidget.updatesEnabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.visibleRegion">
+<code class="sig-name descname">visibleRegion</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QRegion<a class="headerlink" href="#version_details.VersionDetailsWidget.visibleRegion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.whatsThis">
+<code class="sig-name descname">whatsThis</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.whatsThis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.wheelEvent">
+<code class="sig-name descname">wheelEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QWheelEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#version_details.VersionDetailsWidget.wheelEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.width">
+<code class="sig-name descname">width</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.widthMM">
+<code class="sig-name descname">widthMM</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.widthMM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.winId">
+<code class="sig-name descname">winId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.winId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.window">
+<code class="sig-name descname">window</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#version_details.VersionDetailsWidget.window" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowFilePath">
+<code class="sig-name descname">windowFilePath</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.windowFilePath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowFlags">
+<code class="sig-name descname">windowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.WindowFlags<a class="headerlink" href="#version_details.VersionDetailsWidget.windowFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowHandle">
+<code class="sig-name descname">windowHandle</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QWindow<a class="headerlink" href="#version_details.VersionDetailsWidget.windowHandle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowIcon">
+<code class="sig-name descname">windowIcon</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QIcon<a class="headerlink" href="#version_details.VersionDetailsWidget.windowIcon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowIconText">
+<code class="sig-name descname">windowIconText</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.windowIconText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowModality">
+<code class="sig-name descname">windowModality</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.WindowModality<a class="headerlink" href="#version_details.VersionDetailsWidget.windowModality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowOpacity">
+<code class="sig-name descname">windowOpacity</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#version_details.VersionDetailsWidget.windowOpacity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowRole">
+<code class="sig-name descname">windowRole</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.windowRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowState">
+<code class="sig-name descname">windowState</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.WindowStates<a class="headerlink" href="#version_details.VersionDetailsWidget.windowState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowTitle">
+<code class="sig-name descname">windowTitle</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#version_details.VersionDetailsWidget.windowTitle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.windowType">
+<code class="sig-name descname">windowType</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.Qt.WindowType<a class="headerlink" href="#version_details.VersionDetailsWidget.windowType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.x">
+<code class="sig-name descname">x</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="version_details.VersionDetailsWidget.y">
+<code class="sig-name descname">y</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#version_details.VersionDetailsWidget.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -607,15 +2173,16 @@ be displayed.</p>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="views.html" class="btn btn-neutral float-right" title="View Related Classes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="views.html" class="btn btn-neutral float-right" title="View Related Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="spinner_widget.html" class="btn btn-neutral" title="Spinner Widget" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="spinner_widget.html" class="btn btn-neutral float-left" title="Spinner Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -624,7 +2191,7 @@ be displayed.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Autodesk.
+        &copy; Copyright 2021, Autodesk
 
     </p>
   </div> 
@@ -640,35 +2207,15 @@ be displayed.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'v2.9.4',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
   
  
 

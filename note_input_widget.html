@@ -15,48 +15,49 @@
 
   
   
+  
+  
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="tk-framework-qtwidgets v2.9.4 documentation" href="index.html"/>
-        <link rel="next" title="Text Overlay Widget" href="overlay_widget.html"/>
-        <link rel="prev" title="Navigation Widgets" href="navigation.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Text Overlay Widget" href="overlay_widget.html" />
+    <link rel="prev" title="Navigation Widgets" href="navigation.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
     <a href='http://developer.shotgunsoftware.com'>
     
         <img style='width: 191px;
-                height: 60px; 
+                height: 60px;
                 margin: 2px;
-                border-radius: 0px; 
-                padding: 0px;' 
+                border-radius: 0px;
+                padding: 0px;'
             src='_static/logo@2x.png'/>
     
     </a>
@@ -89,7 +90,10 @@
     
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
@@ -121,16 +125,16 @@
     <div style='margin-top: 50px;
                 margin-left: 10px;
                 margin-right: 10px;
-                padding: 10px; 
-                color: #b3b3b3; 
+                padding: 10px;
+                color: #b3b3b3;
                 font-size: 70%;
                 border-radius: 3px;
                 background-color: #444;
                 line-height: 18px;
-                '>    
+                '>
     <style>
-        a.custom_post_menu { display: inline; 
-                             padding: 0px; 
+        a.custom_post_menu { display: inline;
+                             padding: 0px;
                              text-decoration: underline; }
     </style>
 
@@ -140,7 +144,7 @@
     
     For more information, please visit
     <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
-    The code associated with this documentation can be found 
+    The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
@@ -154,32 +158,52 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">tk-framework-qtwidgets</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tk-framework-qtwidgets</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Shotgun Note Input Widget</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Shotgun Note Input Widget</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -199,131 +223,114 @@ case of a reply.</p>
 <h2>NoteInputWidget<a class="headerlink" href="#noteinputwidget" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="note_input_widget.NoteInputWidget">
-<em class="property">class </em><code class="descclassname">note_input_widget.</code><code class="descname">NoteInputWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">note_input_widget.</code><code class="sig-name descname">NoteInputWidget</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QWidget</span></code></p>
 <p>Note creation and reply widget with built in screen capture capabilites.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal data_updated:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Emitted when a note has been successfully created or
-replied to.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">Signal close_clicked:</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Emitted if a user chooses to cancel the note
-creation by clicking the X button.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_created:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Emitted when a Shotgun entity is created, which
+<dl class="field-list simple">
+<dt class="field-odd">Signal data_updated</dt>
+<dd class="field-odd"><p>Emitted when a note has been successfully created or
+replied to.</p>
+</dd>
+<dt class="field-even">Signal close_clicked</dt>
+<dd class="field-even"><p>Emitted if a user chooses to cancel the note
+creation by clicking the X button.</p>
+</dd>
+<dt class="field-odd">Signal entity_created</dt>
+<dd class="field-odd"><p>Emitted when a Shotgun entity is created, which
 will be either a Note or Reply entity, depending on situation. The
-entity dictionary, as provided by the API, will be sent.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code></a>) &#8211; The parent QWidget for this control</td>
-</tr>
-</tbody>
-</table>
+entity dictionary, as provided by the API, will be sent.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The parent QWidget for this control</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.destroy">
-<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>disconnect and prepare for this object
 to be garbage collected</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.set_bg_task_manager">
-<code class="descname">set_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.set_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_bg_task_manager</code><span class="sig-paren">(</span><em class="sig-param">task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.set_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specify the background task manager to use to pull
 data in the background. Data calls
 to Shotgun will be dispatched via this object.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.8)"><code class="xref py py-class docutils literal"><span class="pre">BackgroundTaskManager</span></code></a>) &#8211; Background task manager to use</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.add_files_to_attachments">
-<code class="descname">add_files_to_attachments</code><span class="sig-paren">(</span><em>file_paths</em>, <em>cleanup_after_upload=False</em>, <em>apply_attachments=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.add_files_to_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.add_files_to_attachments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_files_to_attachments</code><span class="sig-paren">(</span><em class="sig-param">file_paths</em>, <em class="sig-param">cleanup_after_upload=False</em>, <em class="sig-param">apply_attachments=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.add_files_to_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.add_files_to_attachments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the given list of file paths to the attachments list.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file_paths</strong> &#8211; A list of file paths to attach.</li>
-<li><strong>cleanup_after_upload</strong> &#8211; If True, the given files will be
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_paths</strong> – A list of file paths to attach.</p></li>
+<li><p><strong>cleanup_after_upload</strong> – If True, the given files will be
 removed once they are uploaded to
-Shotgun.</li>
-<li><strong>apply_attachments</strong> &#8211; If True, files added to the attachments
+Shotgun.</p></li>
+<li><p><strong>apply_attachments</strong> – If True, files added to the attachments
 list will be applied and ready for upload.
-This is normally handled by the &#8220;check&#8221;
+This is normally handled by the “check”
 button when accepting user-added files, but
 if this method is used to procedurally add
 attachments then this option must be used to
 ensure that the files end up attached to the
-Note when it is created.</li>
+Note when it is created.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.allow_screenshots">
-<code class="descname">allow_screenshots</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.allow_screenshots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.allow_screenshots" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">allow_screenshots</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.allow_screenshots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.allow_screenshots" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows or disallows screenshots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<code class="xref py py-class docutils literal"><span class="pre">Boolean</span></code>) &#8211; Allow or disallow screenshots.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Boolean</span></code>) – Allow or disallow screenshots.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.open_attachments">
-<code class="descname">open_attachments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.open_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.open_attachments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the attachments editor into its &#8220;open mode&#8221; which will
+<code class="sig-name descname">open_attachments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.open_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.open_attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the attachments editor into its “open mode” which will
 allow the user to attach files to the note.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.open_editor">
-<code class="descname">open_editor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.open_editor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.open_editor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the editor into its &#8220;open mode&#8221;
+<code class="sig-name descname">open_editor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.open_editor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.open_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the editor into its “open mode”
 where a user can type in stuff</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear any input and state and return the widget to its &#8220;closed&#8221; mode.</p>
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear any input and state and return the widget to its “closed” mode.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="note_input_widget.NoteInputWidget.set_current_entity">
-<code class="descname">set_current_entity</code><span class="sig-paren">(</span><em>entity_type</em>, <em>entity_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.set_current_entity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.set_current_entity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_current_entity</code><span class="sig-paren">(</span><em class="sig-param">entity_type</em>, <em class="sig-param">entity_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.set_current_entity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.set_current_entity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specify the current entity that this widget is linked against</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>entity_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Shotgun entity type</li>
-<li><strong>entity_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Shotgun entity id</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entity_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Shotgun entity type</p></li>
+<li><p><strong>entity_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Shotgun entity id</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -333,9 +340,9 @@ where a user can type in stuff</p>
 <h2>NoteInputDialog<a class="headerlink" href="#noteinputdialog" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="note_input_widget.NoteInputDialog">
-<em class="property">class </em><code class="descclassname">note_input_widget.</code><code class="descname">NoteInputDialog</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/dialog.html#NoteInputDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputDialog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QDialog.html#PySide.QtGui.QDialog" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QDialog</span></code></a></p>
-<p>A dialog wrapper for the <a class="reference internal" href="#note_input_widget.NoteInputWidget" title="note_input_widget.NoteInputWidget"><code class="xref py py-class docutils literal"><span class="pre">NoteInputWidget</span></code></a> widget.</p>
+<em class="property">class </em><code class="sig-prename descclassname">note_input_widget.</code><code class="sig-name descname">NoteInputDialog</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/dialog.html#NoteInputDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QDialog</span></code></p>
+<p>A dialog wrapper for the <a class="reference internal" href="#note_input_widget.NoteInputWidget" title="note_input_widget.NoteInputWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoteInputWidget</span></code></a> widget.</p>
 <p>Constructor.</p>
 </dd></dl>
 
@@ -344,15 +351,16 @@ where a user can type in stuff</p>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="overlay_widget.html" class="btn btn-neutral float-right" title="Text Overlay Widget" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="overlay_widget.html" class="btn btn-neutral float-right" title="Text Overlay Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="navigation.html" class="btn btn-neutral" title="Navigation Widgets" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="navigation.html" class="btn btn-neutral float-left" title="Navigation Widgets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -361,7 +369,7 @@ where a user can type in stuff</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Autodesk.
+        &copy; Copyright 2021, Autodesk
 
     </p>
   </div> 
@@ -377,35 +385,15 @@ where a user can type in stuff</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'v2.9.4',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
   
  
 
