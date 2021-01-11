@@ -333,8 +333,13 @@ def get_desktop_pixmap(rect):
     :rtype: :class:`~PySide.QtGui.QPixmap`
     """
     desktop = QtGui.QApplication.desktop()
+    device_ratio = QtGui.QApplication.devicePixelRatio(QtGui.QApplication.instance())
     return QtGui.QPixmap.grabWindow(
-        desktop.winId(), rect.x(), rect.y(), rect.width(), rect.height()
+        desktop.winId(),
+        rect.x() * device_ratio,
+        rect.y() * device_ratio,
+        rect.width() * device_ratio,
+        rect.height() * device_ratio,
     )
 
 

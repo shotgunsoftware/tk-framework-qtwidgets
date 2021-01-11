@@ -102,8 +102,7 @@ class SearchWidget(QtGui.QWidget):
             self._ui.search_edit.setPlaceholderText(text)
 
     def clear(self):
-        """
-        """
+        """"""
         self._ui.search_edit.setText("")
         self._clear_btn.hide()
 

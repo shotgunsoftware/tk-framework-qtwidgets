@@ -32,8 +32,9 @@ class TestFramework(TankTestBase):
         self.setup_fixtures()
         context = sgtk.Context(self.tk, project=self.project)
         self.engine = sgtk.platform.start_engine("tk-testengine", self.tk, context)
-        self._app = sgtk.platform.qt.QtGui.QApplication.instance() or sgtk.platform.qt.QtGui.QApplication(
-            []
+        self._app = (
+            sgtk.platform.qt.QtGui.QApplication.instance()
+            or sgtk.platform.qt.QtGui.QApplication([])
         )
 
     def tearDown(self):
