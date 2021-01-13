@@ -661,7 +661,7 @@ class NoteInputWidget(QtGui.QWidget):
         thumb_scaled = pixmap_obj.scaled(
             CANVAS_WIDTH,
             CANVAS_HEIGHT,
-            QtCore.Qt.KeepAspectRatioByExpanding,
+            QtCore.Qt.IgnoreAspectRatio,
             QtCore.Qt.SmoothTransformation,
         )
 
