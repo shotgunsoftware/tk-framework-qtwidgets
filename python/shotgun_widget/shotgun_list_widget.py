@@ -13,6 +13,7 @@ from tank.util import sgre as re
 
 from .shotgun_widget import ShotgunWidget
 from .ui.shotgun_list_widget import Ui_ShotgunListWidget
+from ..utils import convert_token_string
 
 
 class ShotgunListWidget(ShotgunWidget):
@@ -66,13 +67,9 @@ class ShotgunListWidget(ShotgunWidget):
         :param sg_data: Dictionary of Shotgun data we want to use to replace the tokens with.
         """
 
-        self._ui.left_corner.setText(
-            self._convert_token_string(self._top_left, sg_data)
-        )
-        self._ui.right_corner.setText(
-            self._convert_token_string(self._top_right, sg_data)
-        )
-        self._ui.body.setText(self._convert_token_string(self._body, sg_data))
+        self._ui.left_corner.setText(convert_token_string(self._top_left, sg_data))
+        self._ui.right_corner.setText(convert_token_string(self._top_right, sg_data))
+        self._ui.body.setText(convert_token_string(self._body, sg_data))
 
     def replace_extra_key(self, key_name, key_value):
         """
