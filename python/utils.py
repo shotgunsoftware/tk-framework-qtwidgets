@@ -9,10 +9,10 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import datetime
-import re
 
 import sgtk
 from sgtk import TankError
+from tank.util import sgre as re
 
 shotgun_globals = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_globals",

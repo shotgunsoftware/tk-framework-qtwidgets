@@ -36,13 +36,8 @@ omitted from the final result. Examples of this syntax:
 - {[Name: ]code[<br>]}           # Same but with a post line break
 """
 
-import datetime
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from sgtk import TankError
-from tank.util import sgre as re
-
-from ..utils import get_hyperlink_html
 
 shotgun_globals = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_globals",
