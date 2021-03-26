@@ -1958,7 +1958,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
         """
 
-        # Calculate tehe width of the action
+        # Calculate the width of the action
         width = action.padding * 2
         name = action.get_name(self.parent(), index)
         if name:
@@ -2346,23 +2346,14 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 if not text:
                     continue
 
-                # TODO TEST if we actually need to elide the text or not..
-                doc, _ = self._elide_text(option, rect.width(), text)
-
-                # No need to elide the text, the text line height will remain teh same.
+                # No need to elide the text, the text line height will remain the same.
                 text_line_doc = self._create_text_document(option)
                 text_line_doc.setHtml(text)
-
-                # TODO Remove this
-                h = text_line_doc.size().height()
-                if h != doc.size().height():
-                    elided_height = doc.size().height()
-                    print("HEIGHT DIFF!")
 
                 # Append the text line height and substract the text doc margin since when the text
                 # is actually rendered, it will be rendered in one text document, instead of a
                 # text document per line (text document in this case needs to be created per line
-                # to calculate teh individual line heights).
+                # to calculate the individual line heights).
                 height += text_line_doc.size().height() - text_doc_margins
                 if height > available_height:
                     # Text exceeds the maximum height, indicate the text should be clipped.
