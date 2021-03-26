@@ -13,6 +13,7 @@ import datetime
 import sgtk
 from sgtk import TankError
 from tank.util import sgre as re
+from tank_vendor import six
 
 shotgun_globals = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_globals",
@@ -74,17 +75,26 @@ def convert_token_string(token_str, sg_data):
         return ""
 
     for token in resolve_tokens(token_str):
+        sg_field = None
+        sg_value = None
+        i = 0
+        while sg_field is None and i < len(token["sg_fields"]):
+            field = token["sg_fields"][i]
+            if field in sg_data:
+                sg_value = sg_data[field]
+                sg_field = field
+            i += 1
 
-        # no value has been found in the Shotgun data for the fields
-        if not list(set(token["sg_fields"]) & set(sg_data.keys())):
-            continue
+        if sg_field is None:
+            # None of the token sg_fields were foudn in the sg_data. Get an
+            # empty display phrase to display.
+            if len(token["sg_fields"]) > 0:
+                sg_field = token["sg_fields"][-1]
+                resolved_value = get_empty_display(sg_data["type"], sg_field)
+            else:
+                resolved_value = ""
 
-        for sg_field in token["sg_fields"]:
-            sg_value = sg_data.get(sg_field)
-            if sg_value:
-                break
-
-        if (sg_value is None or sg_value == []) and (
+        elif (sg_value is None or sg_value == []) and (
             token["pre_roll"] or token["post_roll"]
         ):
             # shotgun value is empty
@@ -94,20 +104,26 @@ def convert_token_string(token_str, sg_data):
             # e.g. Hello {[Shot:]sg_shot} becomes:
             # for shot abc: 'Hello Shot:abc'
             # for shot <empty>: 'Hello '
-            token_str = token_str.replace("{%s}" % token["full_token"], "")
+            # token_str = token_str.replace("{%s}" % token["full_token"], "")
+            resolved_value = ""
 
         else:
             resolved_value = sg_field_to_str(
-                sg_data["type"], sg_field, sg_value, token["directive"]
+                sg_data["type"], sg_field, sg_value, token["directives"]
             )
 
-            # potentially add pre/and post
+            # Add pre and post rolles
             if token["pre_roll"]:
-                resolved_value = "%s%s" % (token["pre_roll"], resolved_value)
+                resolved_value = "{pre_roll}{value}".format(
+                    pre_roll=token["pre_roll"], value=resolved_value,
+                )
             if token["post_roll"]:
-                resolved_value = "%s%s" % (resolved_value, token["post_roll"])
-            # and replace the token with the value
-            token_str = token_str.replace("{%s}" % token["full_token"], resolved_value)
+                resolved_value = "{value}{post_roll}".format(
+                    value=resolved_value, post_roll=token["post_roll"],
+                )
+
+        # Replace the token with the value
+        token_str = token_str.replace("{%s}" % token["full_token"], resolved_value)
 
     return token_str
 
@@ -159,7 +175,7 @@ def resolve_tokens(token_str):
 
         pre_roll = None
         post_roll = None
-        directive = None
+        directives = None
 
         processed_token = raw_token
 
@@ -178,7 +194,10 @@ def resolve_tokens(token_str):
         if "::" in processed_token:
             # we have a special formatting directive
             # e.g. created_at::ago
-            (sg_field_str, directive) = processed_token.split("::")
+            # (sg_field_str, directive) = processed_token.split("::")
+            sg_field_and_directives = processed_token.split("::")
+            sg_field_str = sg_field_and_directives[0]
+            directives = sg_field_and_directives[1:]
         else:
             sg_field_str = processed_token
 
@@ -193,7 +212,7 @@ def resolve_tokens(token_str):
             {
                 "full_token": raw_token,
                 "sg_fields": sg_fields,
-                "directive": directive,
+                "directives": directives,
                 "pre_roll": pre_roll,
                 "post_roll": post_roll,
             }
@@ -215,6 +234,8 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
         - nolink: don't return a <a href> style hyperlink for links, instead just
         return a string.
 
+        - typeonly: Show only the type for hte links
+
     Version Number directives:
         - zeropadded: Pad the version number with up to three zeros
         - A format string that contains a single argument specifier to substitute the
@@ -227,16 +248,20 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
     :returns: The Shotgun field formatted as a string
     """
 
-    str_val = ""
+    str_val = None
 
     if value is None:
-        return shotgun_globals.get_empty_phrase(sg_type, sg_field)
+        return get_empty_display(sg_type, sg_field)
 
-    elif isinstance(value, dict) and set(["type", "id", "name"]) == set(value.keys()):
+    directives = directive or []
+    if isinstance(directives, six.string_types):
+        directives = [directives]
+
+    if isinstance(value, dict) and set(["type", "id", "name"]) == set(value.keys()):
 
         # entity link
 
-        if directive == "showtype":
+        if "showtype" in directives:
             # links are displayed as "Shot ABC123"
 
             # get the nice name from our schema
@@ -249,12 +274,15 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
             # links are just "ABC123"
             link_name = value["name"]
 
-        if directive == "nolink":
+        if "nolink" in directives:
             str_val = link_name
         else:
             str_val = get_hyperlink_html(
                 url="sgtk:%s:%s" % (value["type"], value["id"]), name=link_name,
             )
+
+        if "typeonly" in directives:
+            str_val = shotgun_globals.get_type_display_name(value["type"])
 
     elif isinstance(value, list):
         # list of items
@@ -278,21 +306,47 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
                 str_val,
             )
     elif sg_field == "version_number":
-        if directive:
-            if directive == "zeropadded":
-                directive = "%03d"
-            str_val = directive % value
+        if directives:
+            if "zeropadded" in directives:
+                str_format = "%03d"
+            else:
+                str_format = directives[0]
+
+            str_val = str_format % value
 
     elif sg_field == "type":
-        if directive == "showtype":
+        if "showtype" in directives:
             str_val = shotgun_globals.get_type_display_name(value)
 
-    else:
+    if str_val is None:
         str_val = str(value)
         # make sure it gets formatted correctly in html
         str_val = str_val.replace("\n", "<br>")
 
     return str_val
+
+
+def get_empty_display(sg_type, sg_field):
+    """
+    Get the empty display value for the given Shotgun entity type and field.
+    If a schema is not found for hte given type and field, it is assumed that
+    the field is a plain string that should be displayed.
+
+    :param sg_type: Shotgun data type
+    :param sg_field: Shotgun field name
+    :return: The empty display phrase
+    :rtype: str
+    """
+
+    try:
+        shotgun_globals.get_data_type(sg_type, sg_field)
+        # A schema was found, indicating a valid Shotgun type and field, so now look
+        # up the empty phrase for the type and field.
+        return shotgun_globals.get_empty_phrase(sg_type, sg_field)
+    except Exception:
+        # Schema could not be found for the given Shotgun type and field, the
+        # field is a plain string, which is our empty display value.
+        return sg_field
 
 
 def create_human_readable_timestamp(datetime_obj):

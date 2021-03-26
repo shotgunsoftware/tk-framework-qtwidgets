@@ -30,3 +30,4 @@ from . import shotgun_menus
 from . import shotgun_widget
 from . import version_details
 from . import context_selector
+from . import delegates
