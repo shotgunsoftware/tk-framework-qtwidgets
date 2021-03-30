@@ -85,27 +85,28 @@ def convert_token_string(token_str, sg_data):
                 sg_field = field
             i += 1
 
-        if sg_field is None:
-            # None of the token sg_fields were foudn in the sg_data. Get an
-            # empty display phrase to display.
-            if len(token["sg_fields"]) > 0:
-                sg_field = token["sg_fields"][-1]
-                resolved_value = get_empty_display(sg_data["type"], sg_field)
-            else:
+        # if sg_field is None or sg_value is None or sg_value == []:
+        if sg_field is None or not sg_value:
+            # None of the token sg_fields were found in the sg_data. Check whether or not to
+            # display an "empty" or default text.
+            if token["pre_roll"] or token["post_roll"]:
+                # For tokens with pre or post rolls, just display an empty string.
                 resolved_value = ""
+            else:
+                # Use the last fallback field to display an "empty" phrase.
+                if len(token["sg_fields"]) > 0:
+                    sg_field = token["sg_fields"][-1]
 
-        elif (sg_value is None or sg_value == []) and (
-            token["pre_roll"] or token["post_roll"]
-        ):
-            # shotgun value is empty
-            # if we have a pre or post roll part of the token
-            # then we basicaly just skip the display of both
-            # those and the value entirely
-            # e.g. Hello {[Shot:]sg_shot} becomes:
-            # for shot abc: 'Hello Shot:abc'
-            # for shot <empty>: 'Hello '
-            # token_str = token_str.replace("{%s}" % token["full_token"], "")
-            resolved_value = ""
+                if not sg_field:
+                    resolved_value = ""
+                else:
+                    if is_valid_entity_type_field(sg_data["type"], sg_field):
+                        resolved_value = shotgun_globals.get_empty_phrase(
+                            sg_data["type"], sg_field
+                        )
+                    else:
+                        # The 'sg_field' is just fallback text to display.
+                        resolved_value = sg_field
 
         else:
             resolved_value = sg_field_to_str(
@@ -251,16 +252,14 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
     str_val = None
 
     if value is None:
-        return get_empty_display(sg_type, sg_field)
+        return shotgun_globals.get_empty_phrase(sg_type, sg_field)
 
     directives = directive or []
     if isinstance(directives, six.string_types):
         directives = [directives]
 
     if isinstance(value, dict) and set(["type", "id", "name"]) == set(value.keys()):
-
         # entity link
-
         if "showtype" in directives:
             # links are displayed as "Shot ABC123"
 
@@ -326,27 +325,26 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
     return str_val
 
 
-def get_empty_display(sg_type, sg_field):
+def is_valid_entity_type_field(sg_type, sg_field):
     """
-    Get the empty display value for the given Shotgun entity type and field.
-    If a schema is not found for hte given type and field, it is assumed that
-    the field is a plain string that should be displayed.
+    Return True if the given Shotgun entity type and field are valid by checking if a schema
+    can be found for them.
 
-    :param sg_type: Shotgun data type
-    :param sg_field: Shotgun field name
-    :return: The empty display phrase
-    :rtype: str
+    :param sg_type: Shotgun data type.
+    :param sg_field: Shotgun field name.
+    :return: True if valid else False.
+    :rtype: bool
     """
 
     try:
         shotgun_globals.get_data_type(sg_type, sg_field)
-        # A schema was found, indicating a valid Shotgun type and field, so now look
-        # up the empty phrase for the type and field.
-        return shotgun_globals.get_empty_phrase(sg_type, sg_field)
-    except Exception:
-        # Schema could not be found for the given Shotgun type and field, the
-        # field is a plain string, which is our empty display value.
-        return sg_field
+        # A schema was found, indicating a valid Shotgun type and field.
+        is_valid = True
+    except ValueError:
+        # Schema could not be found for the given Shotgun type and field.
+        is_valid = False
+
+    return is_valid
 
 
 def create_human_readable_timestamp(datetime_obj):
