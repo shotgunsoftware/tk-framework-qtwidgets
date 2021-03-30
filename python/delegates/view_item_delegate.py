@@ -116,6 +116,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Padding around the whole item rect
         self._item_padding = 0
 
+        # Font to set on the QTextDocument. If None, the font from the QStyleOptionViewItem will be used.
+        self._font = None
+
         # The pen used to paint the background (the background brush is customized through the model data
         # role BackgroundRole). The pen is responsible for rendering a border around the item rect.
         self._background_pen = QtCore.Qt.NoPen
@@ -487,6 +490,18 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     @item_padding.setter
     def item_padding(self, padding):
         self._item_padding = padding
+
+    @property
+    def font(self):
+        """
+        Get or set the font used to render the item text. If not specified, the QStyleOptionViewItem font value
+        will be used.
+        """
+        return self._font
+
+    @font.setter
+    def font(self, value):
+        self._font = value
 
     @property
     def background_pen(self):
@@ -2259,9 +2274,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         doc = QtGui.QTextDocument()
-        # The option font is initialized in the QStyledItemDelegate `initStyleOption`
-        # method, the font is set based on the model index data for the QtCore.Qt.FontRole.
-        doc.setDefaultFont(option.font)
+        # Use the font set on the delegate. If not set, default to theoption font is initialized
+        # in the QStyledItemDelegate `initStyleOption` method, the font is set based on the model
+        # index data for the QtCore.Qt.FontRole.
+        doc.setDefaultFont(self.font or option.font)
         doc.setDocumentMargin(self.text_document_margin)
 
         text_option = QtGui.QTextOption(doc.defaultTextOption())
