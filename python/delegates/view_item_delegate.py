@@ -142,11 +142,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._expand_label = "Show More..."
         # The text shown for the expand action when the item is currently expanded to show hidden content
         self._collapse_label = "Show Less..."
-        # The expand action object
+        # Colors to use for the expand button based on the state. NOTE: transparent background will be
+        # ignore with certain QStyles (e.g. Alias, VRED styles ignore transparent backgrounds).
         active_color = QtGui.QApplication.palette().button().color()
         active_color.setAlpha(100)
         hover_color = QtGui.QApplication.palette().button().color()
         hover_color.setAlpha(240)
+        # The expand action object
         self._expand_action = ViewItemAction(
             {
                 "name": self._expand_label,
