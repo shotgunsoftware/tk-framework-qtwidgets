@@ -33,6 +33,8 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
 
         super(ThumbnailViewItemDelegate, self).__init__(parent)
 
+        # Default size
+        self._thumbnail_size = QtCore.QSize(128, 128)
         self._text_document_margin = 5
         self._visible_lines = 2
 
