@@ -1411,6 +1411,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             if option.widget:
                 button_option.initFrom(option.widget)
 
+            button_option.fontMetrics = option.fontMetrics
             # Set the draw rect for the action
             button_option.rect = rect
             # Allow override the default action name
@@ -1441,11 +1442,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 button_option.icon = action.icon
                 button_option.iconSize = action.icon_size
 
-            if action.palette:
-                # Override the palette entirely by the action's palette, if defined.
-                button_option.palette = action.palette
+            # Set the action palette
+            button_option.palette = option.palette
 
-            elif action.palette_brushes:
+            if action.palette_brushes:
                 # FIXME find a better way to specifiy the palette color based on hover state.
                 # e.g. is there a way leverage the palette color group and roles?
                 if hover:
@@ -1461,7 +1461,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 brush = option.palette.buttonText() if hover else option.palette.light()
                 button_option.palette.setBrush(QtGui.QPalette.ButtonText, brush)
 
-            # Get the style object to draw the action button.
+            # Get the style object that controls how the action button is rendered.
             style = (
                 option.widget.style() if option.widget else QtGui.QApplication.style()
             )
@@ -1470,10 +1470,36 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # is required in the future, this may need to change to render a QToolButton using
             # QStyleOptionToolButton options
             painter.save()
-            style.drawControl(QtGui.QStyle.CE_PushButton, button_option, painter)
+            painter.setFont(option.font)
+
+            # FIXME ideally style.drawControl would be called to render the whole button:
+            # style.drawControl(QtGui.QStyle.CE_PushButton, button_option, painter)
+            # But there are issues with certain styles, so for now we will reimplement the QCommonStyle
+            # drawControl case for CE_PushButton ourselves:
+            style.proxy().drawControl(
+                QtGui.QStyle.CE_PushButtonBevel, button_option, painter
+            )
+            subopt = QtGui.QStyleOptionButton(button_option)
+            subopt.rect = style.subElementRect(
+                QtGui.QStyle.SE_PushButtonContents, button_option, option.widget
+            )
+            style.proxy().drawControl(QtGui.QStyle.CE_PushButtonLabel, subopt, painter)
+            if button_option.state & QtGui.QStyle.State_HasFocus:
+                fropt = QtGui.QStyleOptionFocusRect()
+                fropt.backgroundColor = option.backgroundBrush.color()
+                fropt.palette = button_option.palette
+                fropt.state = button_option.state
+                fropt.fontMetrics = button_option.fontMetrics
+                fropt.rect = style.subElementRect(
+                    QtGui.QStyle.SE_PushButtonFocusRect, button_option, option.widget
+                )
+                style.proxy().drawPrimitive(
+                    QtGui.QStyle.PE_FrameFocusRect, fropt, painter
+                )
+
             painter.restore()
 
-            # Draw a tooltip, if the index or action define one. Tooltip will display if the cursor
+            # Set a timer to draw a tooltip, if the index or action defines one. Tooltip will display if the cursor
             # has been hovering over the action for at least 500ms.
             tooltip = index_data.get("tooltip", action.tooltip)
             if hover and tooltip:
@@ -1785,7 +1811,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         item_action_data = self._get_actions(option, index, return_all, positions)
 
         for position, actions in item_action_data.items():
-            # The offset will indicate where the next action boudning rect should start.
+            # The offset will indicate where the next action bounding rect should start.
             offset = self.button_margin
 
             for action in actions:
@@ -2585,10 +2611,6 @@ class ViewItemAction:
         {
             # Text to display in a tooltip when the cursor is over the action
             "key": "tooltip",
-        },
-        {
-            # The palette to set for the action button
-            "key": "palette",
         },
         {
             # Specific palette brushes to set for the action button. Palette brushes
