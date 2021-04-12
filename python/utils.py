@@ -14,6 +14,7 @@ import sgtk
 from sgtk import TankError
 from tank.util import sgre as re
 from tank_vendor import six
+from tank_vendor.shotgun_api3 import sg_timezone
 
 shotgun_globals = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_globals",
@@ -237,7 +238,10 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
 
         - typeonly: Show only the type for hte links
 
-    Version Number directives:
+    Timestamp directives ('created_at', 'updated_at'):
+        - short_timestamp: Display a shorter timestamp, e.g. 1h, 1d, 1w, etc.
+
+    Version Number directives ('version_number'):
         - zeropadded: Pad the version number with up to three zeros
         - A format string that contains a single argument specifier to substitute the
           version number integer value; e.g. '%03d' will achieve the same as 'zeropadded'.
@@ -291,8 +295,8 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
         str_val = ", ".join(link_urls)
 
     elif sg_field in ["created_at", "updated_at"]:
-        created_datetime = datetime.datetime.fromtimestamp(value)
-        (str_val, _) = create_human_readable_timestamp(created_datetime)
+        timestamp_format = directives[0] if directives else None
+        (str_val, _) = create_human_readable_timestamp(value, timestamp_format)
 
     elif sg_field == "sg_status_list":
         str_val = shotgun_globals.get_status_display_name(value)
@@ -347,7 +351,7 @@ def is_valid_entity_type_field(sg_type, sg_field):
     return is_valid
 
 
-def create_human_readable_timestamp(datetime_obj):
+def create_human_readable_timestamp(datetime_value, timestamp_format):
     """
     Formats a time stamp the way dates are formatted in the
     Shotgun activity stream. Examples of output:
@@ -356,35 +360,98 @@ def create_human_readable_timestamp(datetime_obj):
     This year: 24 June 10:32
     Last year and earlier: 12 December 2007
 
-    :param datetime_obj: Datetime obj to format
+    :param datetime_value: The datetime value to format
+    :type datetime_obj: datetime.datetime | float
+    :param timestamp_format: Formatting hint
+    :type timestamp_format: str; supported types:
+        'short_timestamp': e.g. 1h, 1d, 1w, 1mo, 1yr
     :returns: date str
     """
+
+    if datetime_value is None:
+        return "No timestamp", ""
+
+    if isinstance(datetime_value, datetime.datetime):
+        datetime_obj = datetime_value
+
+    elif isinstance(datetime_value, float):
+        datetime_obj = datetime.datetime.fromtimestamp(
+            datetime_value, tz=sg_timezone.LocalTimezone()
+        )
+    else:
+        # Unsupported datetime value type
+        raise TankError(
+            "Could not parse datetime value of type '{type}'".format(
+                type=type(datetime_value).__name__
+            )
+        )
+
     # standard format
     full_time_str = datetime_obj.strftime("%a %d %b %Y %H:%M")
+    now = datetime.datetime.now(sg_timezone.LocalTimezone())
 
-    if datetime_obj > datetime.datetime.now():
+    if datetime_obj > now:
         # future times are reported precisely
         return full_time_str, full_time_str
 
     # get the delta and components
-    delta = datetime.datetime.now() - datetime_obj
+    delta = now - datetime_obj
 
     # the timedelta structure does not have all units; bigger units are converted
     # into given smaller ones (hours -> seconds, minutes -> seconds, weeks > days, ...)
     # but we need all units:
+    delta_years = delta.days // 365
     delta_weeks = delta.days // 7
     delta_days = delta.days
+    delta_hours = delta.seconds // (60 * 60)
+    delta_minutes = delta.seconds // 60
+    short_format = timestamp_format == "short_timestamp"
 
-    if delta_weeks > 52:
-        # more than one year ago - 26 June 2012
-        time_str = datetime_obj.strftime("%d %b %Y %H:%M")
+    if delta_years > 0:
+        # more than one year ago
+        if short_format:
+            time_str = "{years}y".format(years=delta_years)
+        else:
+            # e.g. 26 June 2012
+            time_str = datetime_obj.strftime("%d %b %Y %H:%M")
 
-    elif delta_days > 1:
-        # ~ more than one week ago - 26 June
-        time_str = datetime_obj.strftime("%d %b %H:%M")
+    elif delta_weeks > 0:
+        # more than one week agao
+        if short_format:
+            time_str = "{weeks}w".format(weeks=delta_weeks)
+        else:
+            # e.g. 26 June
+            time_str = datetime_obj.strftime("%d %b %H:%M")
 
+    elif delta_days > 0:
+        # more than one day ago
+        if short_format:
+            time_str = "{days}d".format(days=delta_days)
+        else:
+            # e.g. 26 June
+            time_str = datetime_obj.strftime("%d %b %H:%M")
+
+    elif delta_hours > 0:
+        # today more than an hour agao
+        if short_format:
+            time_str = "{hours}h".format(hours=delta_hours)
+        else:
+            # e.g. 23:22
+            time_str = datetime_obj.strftime("%H:%M")
+
+    elif delta_minutes > 0:
+        # today more than a minute ago
+        if short_format:
+            time_str = "{mins}m".format(mins=delta_minutes)
+        else:
+            # e.g. 23:22
+            time_str = datetime_obj.strftime("%H:%M")
     else:
-        # earlier today - display timestamp - 23:22
-        time_str = datetime_obj.strftime("%H:%M")
+        # today within seconds ago
+        if short_format:
+            time_str = "{seconds}s".format(seconds=delta.seconds)
+        else:
+            # e.g. 23:22
+            time_str = datetime_obj.strftime("%H:%M")
 
     return time_str, full_time_str
