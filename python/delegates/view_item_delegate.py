@@ -1466,9 +1466,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     pixmap = pixmap.scaledToHeight(
                         option.rect.height() * self.badge_height_pct
                     )
-                # if pixmap.height() > self.icon_size.height():
-                #     # Scale the pixmap to fit neatly into a corner
-                #     pixmap = pixmap.scaledToHeight(self.icon_size.height())
 
                 pixmap_size = pixmap.size()
 
@@ -2131,18 +2128,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         height = option.rect.height()
         thumbnail = thumbnail.scaledToHeight(height)
 
-        # width = self.thumbnail_width
         if self.thumbnail_width < 0:
-            # if thumbnail.height() > height:
-            # thumbnail = thumbnail.scaledToHeight(height)
             width = thumbnail.width()
         else:
-            # width = max(thumbnail.width(), self.thumbnail_width)
             width = self.thumbnail_width
-        # if width < 0:
-        # if thumbnail.height() > height:
-        # thumbnail = thumbnail.scaledToHeight(height)
-        # width = thumbnail.width()
 
         rect.setSize(QtCore.QSize(width, height))
 
@@ -2521,11 +2510,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :return: The created QTextDocument object.
         :rtype: :class:`sgtk.platform.qt.QtGui.QTextDocument`
         """
-
-        # f = option.font
-        # ps = f.pointSize()
-        # psf = f.pointSizeF()
-        # px = f.pixelSize()
 
         doc = QtGui.QTextDocument()
         # Use the font set on the delegate. If not set, default to theoption font is initialized
