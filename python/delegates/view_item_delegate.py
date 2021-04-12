@@ -26,7 +26,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     A generic delegate to display items in a view.
     """
 
-    # Positions for actions. None-floating actions will adjust the content to
+    # Positions for actions. Non-floating actions will adjust the content to
     # fit inline (e.g. not floating on top)
     POSITIONS = [
         "float-top-left",
