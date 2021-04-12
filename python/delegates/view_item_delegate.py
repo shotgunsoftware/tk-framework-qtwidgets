@@ -125,7 +125,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Fix the item's thumbnail size
         self._thumbnail_size = QtCore.QSize()
         # Set this value to scale the thumbnail size as the item height changes.
-        self._thumbnail_scale_value = None
+        self._thumbnail_scale_value = 1.5
+        # Positioning of the thumbnail withint the available thumbnail rect. Empty tuple will default
+        # to center the the thumbnail.
+        self.thumbnail_position = ()
         # The extent used to convert a QIcon to QPixmap
         self._pixmap_extent = 512
         # The size used for icons
@@ -134,19 +137,30 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # icon is rendered over a rect, if that rect height is 100 and the `badge_height_pct` is 0.5,
         # then the badge icon maximum height will be 50). Note that badge icons will only be scaled
         # down to fit, not scaled up if the icon size is smaller than the max height.
+        # self._badge_height_pct = None
         self._badge_height_pct = 1.0 / 3.0
 
         # Button padding and margin values
-        self._button_margin = 10
+        self._button_margin = 7
         self._button_padding = 4
         # Text document margin
-        self._text_document_margin = 8
+        self._text_document_margin = 0
         # Padding around the whole item rect
-        self._item_padding = 0
+        self._item_padding = self.Padding.new(2)
+        self._text_padding = self.Padding.new(8)
+        self._thumbnail_padding = self.Padding.new(0)
 
         # Font to set on the QTextDocument. If None, the font from the QStyleOptionViewItem will be used.
         self._font = None
 
+        # Radius values for rounding item and thumbnail rects.
+        self._item_x_radius = 4.0
+        self._item_y_radius = 4.0
+        self._thumbnail_x_radius = 4.0
+        self._thumbnail_y_radius = 4.0
+
+        # The pen used to draw the thumbnail (add a border around the pixmap rect).
+        self._thumbnail_pen = QtCore.Qt.NoPen
         # The pen used to paint the background (the background brush is customized through the model data
         # role BackgroundRole). The pen is responsible for rendering a border around the item rect.
         self._background_pen = QtCore.Qt.NoPen
@@ -159,6 +173,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         # Enable painting selection on hover
         self._show_hover_selection = True
+        # Enable showing tooltips when text is clipped
+        self._show_text_tooltip = True
 
         # Values used to draw the animated loading image
         self._seconds_per_spin = 3
@@ -168,41 +184,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._actions = {}
         # The cursor shape that will be set when the current cursor is hovering over a "clickable" thing
         self._action_hover_cursor = QtCore.Qt.PointingHandCursor
-
-        # The text shown for the expand action when there is content hidden
-        self._expand_label = "Show More..."
-        # The text shown for the expand action when the item is currently expanded to show hidden content
-        self._collapse_label = "Show Less..."
-        # Colors to use for the expand button based on the state. NOTE: transparent background will be
-        # ignore with certain QStyles (e.g. Alias, VRED styles ignore transparent backgrounds).
-        active_color = QtGui.QApplication.palette().button().color()
-        active_color.setAlpha(100)
-        hover_color = QtGui.QApplication.palette().button().color()
-        hover_color.setAlpha(240)
-        # The expand action object
-        self._expand_action = ViewItemAction(
-            {
-                "name": self._expand_label,
-                "palette_brushes": {
-                    "active": [
-                        (
-                            QtGui.QPalette.Active,
-                            QtGui.QPalette.Button,
-                            QtGui.QBrush(active_color),
-                        ),
-                    ],
-                    "hover": [
-                        (
-                            QtGui.QPalette.Active,
-                            QtGui.QPalette.Button,
-                            QtGui.QBrush(hover_color),
-                        ),
-                    ],
-                },
-                "callback": self._expand_item,
-                "get_data": self._get_expand_action_data,
-            }
-        )
 
     @property
     def thumbnail_role(self):
@@ -373,7 +354,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     def item_height(self, height):
         self._item_height = height
 
-        if self._item_height > 0 and self._thumbnail_scale_value is not None:
+        if (
+            self._thumbnail_scale_value is not None
+            and self._item_height is not None
+            and self._item_height > 0
+        ):
             # Scale the thumbnail width as the row height changes.
             self.thumbnail_width = self._item_height * self._thumbnail_scale_value
 
@@ -511,13 +496,52 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     def item_padding(self):
         """
         Get or set the view item padding. This value will add padding to the view item rect.
-        TODO separte the item padding out into top, bottom, left, right.
         """
         return self._item_padding
 
     @item_padding.setter
     def item_padding(self, padding):
-        self._item_padding = padding
+        self._item_padding = None
+        if isinstance(padding, self.Padding):
+            self._item_padding = padding
+        elif isinstance(padding, (int, float)):
+            self._item_padding = self.Padding.new(padding)
+        else:
+            raise ValueError("Invalid padding value {}".format(padding))
+
+    @property
+    def thumbnail_padding(self):
+        """
+        Get or set the padding for the item thumbnail.
+        """
+        return self._thumbnail_padding
+
+    @thumbnail_padding.setter
+    def thumbnail_padding(self, padding):
+        self._thumbnail_padding = None
+        if isinstance(padding, self.Padding):
+            self._thumbnail_padding = padding
+        elif isinstance(padding, (int, float)):
+            self._thumbnail_padding = self.Padding.new(padding)
+        else:
+            raise ValueError("Invalid padding value {}".format(padding))
+
+    @property
+    def text_padding(self):
+        """
+        Get or set the padding for the item text.
+        """
+        return self._text_padding
+
+    @text_padding.setter
+    def text_padding(self, padding):
+        self._text_padding = None
+        if isinstance(padding, self.Padding):
+            self._text_padding = padding
+        elif isinstance(padding, (int, float)):
+            self._text_padding = self.Padding.new(padding)
+        else:
+            raise ValueError("Invalid padding value {}".format(padding))
 
     @property
     def font(self):
@@ -588,6 +612,17 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._show_hover_selection = show
 
     @property
+    def show_text_tooltip(self):
+        """
+        Get or set the flag indicating to show a tooltip if the item text has been elided.
+        """
+        return self._show_text_tooltip
+
+    @show_text_tooltip.setter
+    def show_text_tooltip(self, show):
+        self._show_text_tooltip = show
+
+    @property
     def action_hover_cursor(self):
         """
         Get or set the cursor :class:`sgtk.platform.qt.QtGui.QCursor` for when an action button is
@@ -598,40 +633,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     @action_hover_cursor.setter
     def action_hover_cursor(self, cursor):
         self._action_hover_cursor = cursor
-
-    @property
-    def expand_label(self):
-        """
-        Get or set the text label for the row expand action.
-        """
-        return self._expand_label
-
-    @expand_label.setter
-    def expand_label(self, name):
-        self.expand_label = name
-
-    @property
-    def collapse_label(self):
-        """
-        Get or set the text label for the row collapse action.
-        """
-        return self._collapse_label
-
-    @collapse_label.setter
-    def collapse_label(self, name):
-        self.collapse_label = name
-
-    @property
-    def expand_action(self):
-        """
-        Get or set the expand action object displayed to expand and collapse the item height to show and hide
-        item text content.
-        """
-        return self._expand_action
-
-    @expand_action.setter
-    def expand_action(self, action):
-        self._expand_action = action
 
     @staticmethod
     def has_mouse_tracking(option):
@@ -812,6 +813,21 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             item_action = ViewItemAction(action)
             self._actions.setdefault(position, []).append(item_action)
 
+    def add_action(self, action, position=FLOAT_BOTTOM_RIGHT):
+        """
+        Convenience method to add an action. See `add_actions`.
+
+        :param actions: The actions to add.
+        :type actions: list<dict>, where each dict represents the action. The dict will be passed to
+                       the ViewItemAction constructor to create a ViewItemAction object.
+        :param position: The position to display the actions.
+        :type position: POSITION enum, defaults to float on the bottom right of the item rect.
+
+        :return: None
+        """
+
+        return self.add_actions([action], position)
+
     def remove_actions(self, positions=None):
         """
         Remove the actions at the specified position. If positions are not specified, remove
@@ -845,6 +861,23 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         self._thumbnail_scale_value = scale_value
 
+    def get_displayed_text(self, index):
+        """
+        Return the text that is displayed for the item. The text will be plain (not rich HTML).
+        This may be useful for filtering items displayed by this delegate, since the model data
+        may be formatted by the delegate before being displayed.
+
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        """
+
+        # Create dummy view options and rect, in order to get the text.
+        dummy_option = QtGui.QStyleOptionViewItem()
+        dummy_rect = QtCore.QRect(0, 0, -1, -1)
+        doc, _ = self._get_text_document(dummy_option, index, dummy_rect, clip=False)
+
+        return doc.toPlainText()
+
     ###############################################################################################
     # Override :class:`sgtk.platform.qt.QtGui.QStyledItemDelegate` methods
 
@@ -863,7 +896,12 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         # Adjust the option rect to account for padding around the view item content.
-        option.rect.adjust(self.item_padding, self.item_padding, -self.item_padding, 0)
+        option.rect.adjust(
+            self.item_padding.left,
+            self.item_padding.top,
+            -self.item_padding.right,
+            -self.item_padding.bottom,
+        )
 
         super(ViewItemDelegate, self).initStyleOption(option, index)
 
@@ -918,15 +956,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             and event.button() == QtCore.Qt.LeftButton
         ):
             action = self._action_at(view_option, index, event.pos())
-            if action:
+            if action and action.callback:
                 # Left mouse click on an action will trigger the action callback method.
-                # TODO handle action "disabled" state
                 action.callback(self.parent(), index, event.pos())
                 return True
 
         elif event.type() == QtCore.QEvent.MouseMove:
             if self.action_hover_cursor and view_option.widget:
-                if self._action_at(view_option, index, event.pos()):
+                action = self._action_at(view_option, index, event.pos())
+                if action and action.callback:
                     # Set the cursor to indicate it is over an action item.
                     view_option.widget.setCursor(self.action_hover_cursor)
                 else:
@@ -982,8 +1020,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             width = -1
         # For valid width values, ensure it is the minumum width and add padding.
         if width >= 0:
-            width = max(width, self.min_width)
-            width += self.item_padding
+            width = max(width, self.thumbnail_width, self.min_width)
+            width += self.item_padding.left + self.item_padding.right
+            width += self.text_padding.left + self.text_padding.right
 
         # Calculate the height of the item.
         index_height = self.get_value(index, self.height_role)
@@ -998,11 +1037,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 # set to must not have uniform items set for this to resize properly.
                 text_rect = QtCore.QRect(view_option.rect)
                 text_rect.setWidth(width)
-                text_height = (
-                    self._get_text_document(view_option, index, text_rect, clip=False)
-                    .size()
-                    .height()
+                text_doc, _ = self._get_text_document(
+                    view_option, index, text_rect, clip=False
                 )
+                text_height = text_doc.size().height()
                 height_for_visible_lines = self._get_visible_lines_height(option)
                 height = max(text_height, height_for_visible_lines)
             else:
@@ -1018,7 +1056,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # For valid height values, ensure it is the minumum height and add padding.
         if height >= 0:
             height = max(height, self.min_height)
-            height += self.item_padding
+            height += self.item_padding.top + self.item_padding.bottom
+            height += self.text_padding.top + self.text_padding.bottom
 
         return QtCore.QSize(width, height)
 
@@ -1046,6 +1085,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         view_option = QtGui.QStyleOptionViewItem(option)
         self.initStyleOption(view_option, index)
 
+        if self._check_item_expand_state(view_option, index):
+            # Item was expanded or collapsed, a repaint will be triggered with the items
+            # new size according to its expanded state.
+            return
+
         painter.save()
         painter.setRenderHints(
             QtGui.QPainter.Antialiasing | QtGui.QPainter.TextAntialiasing
@@ -1058,7 +1102,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         thumbnail_rect = self._draw_thumbnail(painter, view_option, index)
 
         # Badges
-        self._draw_badges(painter, view_option, thumbnail_rect, index)
+        self._draw_icon_badges(painter, view_option, thumbnail_rect, index)
 
         # Text body
         self._draw_text(painter, view_option, index)
@@ -1107,9 +1151,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         painter.save()
+        painter.setBrush(QtGui.QBrush(option.backgroundBrush))
         painter.setPen(self.background_pen)
-        painter.fillRect(option.rect, QtGui.QBrush(option.backgroundBrush))
-        painter.drawRect(option.rect)
+        painter.drawRoundedRect(option.rect, self._item_x_radius, self._item_y_radius)
         painter.restore()
 
     def _draw_loading(self, painter, option, index):
@@ -1187,8 +1231,14 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if not self.separator_role:
             return
 
-        if not self.get_value(index, self.separator_role):
+        separator = self.get_value(index, self.separator_role)
+        if not separator:
             return
+
+        # TODO support decorations in the separator (e.g. icon or text with the horizontal line)
+        position = self.POSITIONS[self.BOTTOM]
+        if isinstance(separator, dict):
+            position = separator.get("position", position)
 
         if self.separator_brush == QtCore.Qt.NoBrush:
             color = (
@@ -1202,9 +1252,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         else:
             pen = QtGui.QPen(self.separator_brush.color())
 
-        # Draw the line from the bottom left corner to bottom right
-        start = option.rect.bottomLeft()
-        end = option.rect.bottomRight()
+        if position == self.POSITIONS[self.TOP]:
+            start = option.rect.topLeft()
+            end = option.rect.topRight()
+        else:
+            # Draw the line from the bottom left corner to bottom right
+            start = option.rect.bottomLeft()
+            end = option.rect.bottomRight()
 
         painter.save()
         painter.setBrush(self._separator_brush)
@@ -1240,7 +1294,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         painter.save()
         painter.setPen(pen)
         painter.setBrush(brush)
-        painter.drawRect(option.rect)
+        painter.drawRoundedRect(option.rect, self._item_x_radius, self._item_y_radius)
         painter.restore()
 
     def _draw_thumbnail(self, painter, option, index):
@@ -1262,7 +1316,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         thumbnail = self._get_thumbnail(index)
 
         if thumbnail:
-            available_rect = self._get_thumbnail_rect(option, index)
+            available_rect = self._get_thumbnail_rect(option, index, thumbnail)
             available_size = available_rect.size()
 
             # Scale the thumbnail to the available space
@@ -1276,8 +1330,25 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             if thumbnail.size() != available_size:
                 thumbnail_rect = QtCore.QRect(available_rect)
                 thumbnail_rect.setSize(thumbnail.size())
-                dx = (available_rect.width() - thumbnail.size().width()) / 2
-                dy = (available_rect.height() - thumbnail.size().height()) / 2
+
+                # Calculate horizontal offset
+                if self.LEFT in self.thumbnail_position:
+                    dx = 0
+                elif self.RIGHT in self.thumbnail_position:
+                    dx = available_rect.width() - thumbnail.size().width()
+                else:
+                    # Default to center horizontally
+                    dx = (available_rect.width() - thumbnail.size().width()) / 2
+
+                # Calculate vertical offset
+                if self.TOP in self.thumbnail_position:
+                    dy = 0
+                elif self.BOTTOM in self.thumbnail_position:
+                    dy = available_rect.height() - thumbnail.size().height()
+                else:
+                    # Default to center vertically
+                    dy = (available_rect.height() - thumbnail.size().height()) / 2
+
                 thumbnail_top_left = thumbnail_rect.topLeft()
                 thumbnail_rect.moveTo(
                     thumbnail_top_left.x() + dx, thumbnail_top_left.y() + dy
@@ -1286,12 +1357,37 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             else:
                 thumbnail_rect = available_rect
 
-            painter.drawPixmap(thumbnail_rect, thumbnail)
+            # Create a brush with the thumbnail as a texture, so that the painter can draw the pixmap
+            # as a rounded rect.
+            pixmap = QtGui.QBrush(thumbnail)
+
+            # Draw the pixmap
+            painter.save()
+            painter.setPen(self._thumbnail_pen)
+            painter.setBrush(pixmap)
+            painter.translate(thumbnail_rect.topLeft())
+            painter.drawRoundedRect(
+                0,
+                0,
+                thumbnail_rect.width(),
+                thumbnail_rect.height(),
+                self._thumbnail_x_radius,
+                self._thumbnail_y_radius,
+            )
+            painter.restore()
 
             if DEBUG_PAINT:
                 painter.save()
+                painter.translate(thumbnail_rect.topLeft())
                 painter.setPen(QtGui.QPen(QtCore.Qt.yellow))
-                painter.drawRect(available_rect)
+                painter.drawRoundedRect(
+                    0,
+                    0,
+                    thumbnail_rect.width(),
+                    thumbnail_rect.height(),
+                    self._thumbnail_x_radius,
+                    self._thumbnail_y_radius,
+                )
                 painter.restore()
         else:
             available_rect = QtCore.QRect()
@@ -1299,7 +1395,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         return thumbnail_rect
 
-    def _draw_badges(self, painter, option, bounding_rect, index):
+    def _draw_icon_badges(self, painter, option, bounding_rect, index):
         """
         Draw the badges for this index item. This method supports drawing up to four
         badges, one is each corner of the given `bounding_rect`.
@@ -1335,16 +1431,44 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if not badge_data:
             return
 
+        if isinstance(badge_data, QtGui.QPixmap):
+            # Default to bottom right if only a pixmap given.
+            badge_data = {"bottom-right": badge_data}
+
         if isinstance(badge_data, dict):
-            for position, pixmap in badge_data.items():
-                if not pixmap or not isinstance(pixmap, QtGui.QPixmap):
+            for position, pixmap_data in badge_data.items():
+                if not pixmap_data:
                     continue
 
-                if pixmap.height() > option.rect.height() * self.badge_height_pct:
+                # The pixmap to display for the icon badge
+                pixmap = None
+                # Inset will display the badge inside the bounding rect, otherwise the badge
+                # will be display centered over the corner corresponding to the badge position.
+                inset = True
+                if isinstance(pixmap_data, QtGui.QPixmap):
+                    pixmap = pixmap_data
+                elif isinstance(pixmap_data, dict):
+                    pixmap = pixmap_data.get("pixmap", None)
+                    inset = pixmap_data.get("inset", True)
+
+                if isinstance(pixmap, QtGui.QIcon):
+                    pixmap = self._convert_icon_to_pixmap(pixmap)
+
+                if not pixmap or not isinstance(pixmap, QtGui.QPixmap):
+                    # Skip, invalid pixmap data.
+                    continue
+
+                if (
+                    self.badge_height_pct
+                    and pixmap.height() > option.rect.height() * self.badge_height_pct
+                ):
                     # Scale the pixmap to fit neatly into a corner
                     pixmap = pixmap.scaledToHeight(
                         option.rect.height() * self.badge_height_pct
                     )
+                # if pixmap.height() > self.icon_size.height():
+                #     # Scale the pixmap to fit neatly into a corner
+                #     pixmap = pixmap.scaledToHeight(self.icon_size.height())
 
                 pixmap_size = pixmap.size()
 
@@ -1352,52 +1476,68 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     self.POSITIONS[self.TOP_LEFT],
                     self.POSITIONS[self.FLOAT_TOP_LEFT],
                 ):
-                    point = QtCore.QPoint(
-                        bounding_rect.left() + self.button_padding,
-                        bounding_rect.top() + self.button_padding,
-                    )
+                    if inset:
+                        point = QtCore.QPoint(
+                            bounding_rect.left() + self.button_padding,
+                            bounding_rect.top() + self.button_padding,
+                        )
+                    else:
+                        point = bounding_rect.topLeft()
+                        point += QtCore.QPoint(
+                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                        )
+
                 elif position in (
                     self.POSITIONS[self.TOP_RIGHT],
                     self.POSITIONS[self.FLOAT_TOP_RIGHT],
                 ):
-                    point = QtCore.QPoint(
-                        bounding_rect.right()
-                        - self.button_padding
-                        - pixmap_size.width(),
-                        bounding_rect.top() + self.button_padding,
-                    )
+                    if inset:
+                        point = QtCore.QPoint(
+                            bounding_rect.right()
+                            - self.button_padding
+                            - pixmap_size.width(),
+                            bounding_rect.top() + self.button_padding,
+                        )
+                    else:
+                        point = bounding_rect.topRight()
+                        point += QtCore.QPoint(
+                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                        )
                 elif position in (
                     self.POSITIONS[self.BOTTOM_LEFT],
                     self.POSITIONS[self.FLOAT_BOTTOM_LEFT],
                 ):
-                    point = QtCore.QPoint(
-                        bounding_rect.left() + self.button_padding,
-                        bounding_rect.bottom()
-                        - self.button_padding
-                        - pixmap_size.height(),
-                    )
+                    if inset:
+                        point = QtCore.QPoint(
+                            bounding_rect.left() + self.button_padding,
+                            bounding_rect.bottom()
+                            - self.button_padding
+                            - pixmap_size.height(),
+                        )
+                    else:
+                        point = bounding_rect.bottomLeft()
+                        point += QtCore.QPoint(
+                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                        )
                 else:
                     # Default to bottom right corner.
-                    point = QtCore.QPoint(
-                        bounding_rect.right()
-                        - self.button_padding
-                        - pixmap_size.height(),
-                        bounding_rect.bottom()
-                        - self.button_padding
-                        - pixmap_size.height(),
-                    )
+                    if inset:
+                        point = QtCore.QPoint(
+                            bounding_rect.right()
+                            - self.button_padding
+                            - pixmap_size.height(),
+                            bounding_rect.bottom()
+                            - self.button_padding
+                            - pixmap_size.height(),
+                        )
+                    else:
+                        point = bounding_rect.bottomRight()
+                        point += QtCore.QPoint(
+                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                        )
 
                 badge_rect = QtCore.QRect(point, pixmap.size())
                 painter.drawPixmap(badge_rect, pixmap)
-
-        elif isinstance(badge_data, QtGui.QPixmap):
-            # Draw bottom right if no position given.
-            point = QtCore.QPoint(
-                bounding_rect.right() - self.button_padding - pixmap_size.height(),
-                bounding_rect.bottom() - self.button_padding - pixmap_size.height(),
-            )
-            badge_rect = QtCore.QRect(point, pixmap.size())
-            painter.drawPixmap(badge_rect, badge_data)
 
     def _draw_text(self, painter, option, index):
         """
@@ -1418,7 +1558,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if not rect.isValid():
             return
 
-        doc = self._get_text_document(option, index, rect)
+        doc, elided = self._get_text_document(option, index, rect)
 
         painter.save()
         painter.translate(rect.topLeft())
@@ -1431,6 +1571,29 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             painter.setPen(QtGui.QPen(QtCore.Qt.red))
             painter.drawRect(rect)
             painter.restore()
+
+        if self.show_text_tooltip and self.is_hover(option):
+            # Show a tooltip with the full text if it was elided, or clipped and auto-expand is disabled.
+
+            if not elided:
+                # FIXME header eliding is not detected in the _get_text_document method
+                _, elided = self._get_header_text(
+                    index, option, rect, return_elided=True
+                )
+
+            clipped = False
+            if not elided and self.expand_role is None:
+                # Auto-expand disabled, check if text clipped.
+                text = self._get_text(index)
+                clipped = self._is_text_clipped(option, rect, text)
+
+            if elided or clipped:
+                # Show plain text in the tooltip, remove any trailing white space and ensure single line spacing.
+                full_text = self.get_displayed_text(index).strip().replace("\n\n", "\n")
+                QtCore.QTimer.singleShot(
+                    500,
+                    lambda o=option, r=rect, t=full_text: self._draw_tooltip(o, r, t),
+                )
 
     def _draw_actions(self, painter, option, index):
         """
@@ -1494,8 +1657,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 button_option.state |= QtGui.QStyle.State_MouseOver
 
             # Set the action icon
-            if action.icon:
-                button_option.icon = action.icon
+            icon = index_data.get("icon", action.icon)
+            if icon:
+                button_option.icon = icon
                 button_option.iconSize = action.icon_size
 
             # Set the action palette
@@ -1514,7 +1678,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             elif button_option.features & QtGui.QStyleOptionButton.Flat:
                 # Invert text color for flat buttons
-                brush = option.palette.buttonText() if hover else option.palette.light()
+                if not hover or action.callback is None:
+                    brush = option.palette.light()
+                else:
+                    brush = option.palette.buttonText()
                 button_option.palette.setBrush(QtGui.QPalette.ButtonText, brush)
 
             # Get the style object that controls how the action button is rendered.
@@ -1644,7 +1811,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             self._get_header_text(index, option, rect)
         ] + self.get_display_values_list(index, self.text_role)
 
-    def _get_header_text(self, index, option=None, rect=None):
+    def _get_header_text(self, index, option=None, rect=None, return_elided=False):
         """
         Return the header text data to display.
 
@@ -1667,12 +1834,17 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param rect: The bounding rect for the text. When specified with `option`, the
                      header text will be elided, if necessary.
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
+        :param return_elided: Flag indicating whether or not to return a tuple including the
+                              text with a boolean flag indicating if the text was elided or not.
+        :type return_elideD: bool (defualt is False)
 
-        :return: The formatted header text.
-        :rtype: str
+        :return: The formatted header text, as well as a boolean flag indicating if the header
+                 text was elided.
+        :rtype: tuple<str,bool>
 
         """
 
+        elided = False
         title = self.get_display_values_list(index, self.header_role, flat=True) or ""
         subtitle = (
             self.get_display_values_list(index, self.subtitle_role, flat=True) or ""
@@ -1680,26 +1852,36 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         if not title and not subtitle:
             # No title or subtitle found, just return an empty string.
-            return ""
+            return ("", elided) if return_elided else ""
 
         title_html = ""
         subtitle_html = ""
 
+        do_elide = option and rect and rect.isValid()
+        if do_elide:
+            # FIXME for now we've just picked an arbitrary value to account for the HTML table offset
+            # to the available width for the text
+            target_width = rect.width() - 20
+        else:
+            target_width = -1
+
         if not subtitle:
             # There is only a title
-            if option and rect and rect.isValid():
+            if do_elide:
                 # Elide the title when the option and rect are provided, and there is text overflow.
-                _, html = self._elide_text(option, rect.width(), title)
-                title = six.ensure_text(html)
+                _, elided_title = self._elide_text(option, target_width, title)
+                elided = title != elided_title
+                title = six.ensure_text(elided_title)
 
             title_html = '<td align="left width="100%"">{text}</td>'.format(text=title)
 
         elif not title:
             # There is only a subtitle
-            if option and rect and rect.isValid():
+            if do_elide:
                 # Elide the title when the option and rect are provided, and there is text overflow.
-                _, html = self._elide_text(option, rect.width(), subtitle)
-                subtitle = six.ensure_text(html)
+                _, elided_subtitle = self._elide_text(option, target_width, subtitle)
+                elided = subtitle != elided_subtitle
+                subtitle = six.ensure_text(elided_subtitle)
 
             subtitle_html = '<td align="right" width="100%">{text}</td>'.format(
                 text=subtitle
@@ -1710,22 +1892,21 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             title_width_str = ""
             subtitle_width_str = ""
 
-            if option and rect and rect.isValid():
+            if do_elide:
                 # Elide the title and subttile when the option and rect are provided, and there
                 # is text overflow.
+                title_ideal_width = self._html_text_width(option, title)
+                subtitle_ideal_width = self._html_text_width(option, subtitle)
 
-                title_ideal_width = self.html_text_width(option, title)
-                subtitle_ideal_width = self.html_text_width(option, subtitle)
-
-                if (title_ideal_width + subtitle_ideal_width) > rect.width():
+                if (title_ideal_width + subtitle_ideal_width) > target_width:
                     # There is overflow, title and or subtitle should be elided.
-                    title_width_pct = title_ideal_width / rect.width()
-                    subtitle_width_pct = subtitle_ideal_width / rect.width()
+                    title_width_pct = title_ideal_width / target_width
+                    subtitle_width_pct = subtitle_ideal_width / target_width
 
                     if title_width_pct > 0.5 and subtitle_width_pct > 0.5:
                         # Title and subtitle are fighting for space, just split it in half.
-                        title_width = 0.5 * rect.width()
-                        subtitle_width = 0.5 * rect.width()
+                        title_width = 0.5 * target_width
+                        subtitle_width = 0.5 * target_width
                         title_width_str = 'width="50%"'
                         subtitle_width_str = 'width="50%"'
 
@@ -1733,8 +1914,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                         # The subtitle takes up less than half of the space, extend the title to
                         # the subtitle, and elide it if it still has overflow.
                         title_width_pct = 1.0 - subtitle_width_pct
-                        title_width = title_width_pct * rect.width()
-                        subtitle_width = subtitle_width_pct * rect.width()
+                        title_width = title_width_pct * target_width
+                        subtitle_width = subtitle_width_pct * target_width
                         title_width_str = 'width="{}%"'.format(
                             int(title_width_pct * 100)
                         )
@@ -1745,9 +1926,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         # The title takes up less than half of the space, extend the subtitle to
                         # the title, and elide it if it still has overflow.
-                        title_width = title_width_pct * rect.width()
+                        title_width = title_width_pct * target_width
                         subtitle_width_pct = 1.0 - title_width_pct
-                        subtitle_width = subtitle_width_pct * rect.width()
+                        subtitle_width = subtitle_width_pct * target_width
                         title_width_str = 'width="{}%"'.format(
                             int(title_width_pct * 100)
                         )
@@ -1755,10 +1936,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                             int(subtitle_width_pct * 100)
                         )
 
-                    _, title = self._elide_text(option, title_width, title)
-                    _, subtitle = self._elide_text(option, subtitle_width, subtitle)
-                    title = six.ensure_text(title)
-                    subtitle = six.ensure_text(subtitle)
+                    _, elided_title = self._elide_text(option, title_width, title)
+                    _, elided_subtitle = self._elide_text(
+                        option, subtitle_width, subtitle
+                    )
+                    elided = title != elided_title or subtitle != elided_subtitle
+                    title = six.ensure_text(elided_title)
+                    subtitle = six.ensure_text(elided_subtitle)
 
             title_html = '<td align="left" {width}>{text}</td>'.format(
                 width=title_width_str, text=title
@@ -1767,13 +1951,16 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 width=subtitle_width_str, text=subtitle
             )
 
-        return (
-            '<table width="100%" cellspacing="0" border="{border}"><tr>{title_cell}{subtitle_cell}</tr></table>'
+        # The final formatted text
+        formatted_header = (
+            '<table width="100%" border="{border}"><tr>{title_cell}{subtitle_cell}</tr></table>'
         ).format(
             title_cell=title_html,
             subtitle_cell=subtitle_html,
             border="1" if DEBUG_PAINT else "0",
         )
+
+        return (formatted_header, elided) if return_elided else formatted_header
 
     def _get_text_document(self, option, index, rect, clip=True):
         """
@@ -1789,12 +1976,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param rect: The bounding rect for the text.
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
 
-        :return: The text document containing all text for the item.
-        :rtype: :class:`sgtk.platform.qt.QtGui.QTextDocument`
+        :return: A tuple containing the text document containing all text for the item and
+                 a flag indicating if any of the text was elided during formatting.
+        :rtype: tuple<:class:`sgtk.platform.qt.QtGui.QTextDocument`, bool>
         """
 
         text = self._get_text(index, option, rect)
-        html = self._format_html_text(option, index, rect, text, clip)
+        html, elided = self._format_html_text(option, index, rect, text, clip)
 
         doc = self._create_text_document(option)
         if rect.isValid() and rect.width() > 0:
@@ -1802,7 +1990,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         doc.setHtml(html)
 
-        return doc
+        return (doc, elided)
 
     def _get_actions(self, option, index, return_all=False, positions=None):
         """
@@ -1874,17 +2062,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 # Get the bounding rect for this action
                 rect = self._get_action_rect(option, index, position, offset, action)
                 # Increment the offset to get the next action boudning rect.
-                offset += rect.width() + action.padding
+                offset += rect.width() + self.button_margin
                 rects.append((action, rect))
-
-        # Add the expand action when all actions should be returnd or no position is specified.
-        if self.expand_action and (return_all or positions is None):
-            rects.append(
-                (
-                    self.expand_action,
-                    self._get_expand_action_rect(option, index, return_all),
-                )
-            )
 
         return rects
 
@@ -1925,7 +2104,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         return QtCore.QRect(origin, self.icon_size)
 
-    def _get_thumbnail_rect(self, option, index):
+    def _get_thumbnail_rect(self, option, index, thumbnail=None):
         """
         Return the boudning rect for the item's thumbnail. The bounding rect will be
         positioned on the left of the option rect.
@@ -1939,7 +2118,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
         """
 
-        thumbnail = self._get_thumbnail(index)
+        if thumbnail is None:
+            thumbnail = self._get_thumbnail(index)
+
         if not thumbnail:
             return QtCore.QRect()
 
@@ -1948,25 +2129,32 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Set the thumbnail rect size to the size of the thumbnail, after it has been scaled
         # to fit to the option rect height.
         height = option.rect.height()
-        width = self.thumbnail_width
-        if width < 0:
-            if thumbnail.height() > height:
-                thumbnail = thumbnail.scaledToHeight(height)
+        thumbnail = thumbnail.scaledToHeight(height)
+
+        # width = self.thumbnail_width
+        if self.thumbnail_width < 0:
+            # if thumbnail.height() > height:
+            # thumbnail = thumbnail.scaledToHeight(height)
             width = thumbnail.width()
+        else:
+            # width = max(thumbnail.width(), self.thumbnail_width)
+            width = self.thumbnail_width
+        # if width < 0:
+        # if thumbnail.height() > height:
+        # thumbnail = thumbnail.scaledToHeight(height)
+        # width = thumbnail.width()
 
         rect.setSize(QtCore.QSize(width, height))
 
         # Bump the thumbnail to the left, if there are non-floating actions on the left.
-        dx = self.button_margin
-        left_positions = (self.LEFT, self.TOP_LEFT, self.BOTTOM_LEFT)
-        left_offset = max(
-            [
-                self._get_actions_position_width(option, index, pos)
-                for pos in left_positions
-            ]
+        dx = (
+            self._get_actions_left_offset(option, index, include_margin=True)
+            + self.thumbnail_padding.left
         )
-        dx += left_offset
-        rect.adjust(dx, 0, 0, 0)
+        dx2 = self.thumbnail_padding.right
+        dy = self.thumbnail_padding.top
+        dy2 = self.thumbnail_padding.bottom
+        rect.adjust(dx, dy, -dx2, -dy2)
 
         return rect
 
@@ -1985,40 +2173,30 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
         """
 
-        rect = QtCore.QRectF(option.rect)
+        rect = QtCore.QRect(option.rect)
 
-        dx = self.button_margin
-        dx2 = self.button_margin
-
-        # Adjust to the left, if there are non-floating actions on the left.
-        left_positions = (self.LEFT, self.TOP_LEFT, self.BOTTOM_LEFT)
-        left_offset = max(
-            [
-                self._get_actions_position_width(option, index, pos)
-                for pos in left_positions
-            ]
-        )
-        dx += left_offset
-
-        # Adjust to the right, if there are non-floating actions on the right.
-        right_positions = (self.RIGHT, self.TOP_RIGHT, self.BOTTOM_RIGHT)
-        right_offset = max(
-            [
-                self._get_actions_position_width(option, index, pos)
-                for pos in right_positions
-            ]
-        )
-        dx2 += right_offset
-
-        # Adjust the rect to the left, when displaying the loading indicator.
-        loading_rect = self._get_loading_rect(option, index)
-        dx2 += loading_rect.width() + self.button_padding
-
-        # Adjust text to be on the right of the thumbnail
         thumbnail_rect = self._get_thumbnail_rect(option, index)
-        dx += thumbnail_rect.width()
+        if thumbnail_rect.isValid():
+            # Just set the rect left edge to the thumbnail rect right edge.
+            rect.setLeft(thumbnail_rect.right())
+            dx = 0
+        else:
+            # Get the actions offset from the left to adjust the text rect.
+            dx = self._get_actions_left_offset(option, index, include_margin=False)
+        dx += self.text_padding.left
 
-        rect.adjust(dx, 0, -dx2, 0)
+        # Get the actions offset from the right to adjust to the text rect.
+        dx2 = self._get_actions_right_offset(option, index, include_margin=False)
+
+        loading_rect = self._get_loading_rect(option, index)
+        if loading_rect.isValid():
+            # Adjust the rect to the left, when displaying the loading indicator.
+            dx2 = max(dx2, loading_rect.width() + self.button_margin)
+        dx2 += self.text_padding.right
+
+        dy = self.text_padding.top
+        dy2 = self.text_padding.bottom
+        rect.adjust(dx, dy, -dx2, -dy2)
         return rect
 
     def _get_action_rect(self, option, index, position, offset, action):
@@ -2042,9 +2220,12 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
         """
 
+        index_data = action.get_data(self.parent(), index)
+        name = index_data.get("name", action.name)
+        icon = index_data.get("icon", action.icon)
+
         # Calculate the width of the action
         width = action.padding * 2
-        name = action.get_name(self.parent(), index)
         if name:
             # Add the width of the text
             width += option.fontMetrics.width(name)
@@ -2052,14 +2233,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 # Add padding between the icon and text
                 width += 14
 
-        if action.icon:
+        if icon:
             # Add the width of the icon
             width += action.icon_size.width()
 
         # Set the height to the greater of the text height and the icon height. Add padding
         # defined by the action
         height = (
-            max(option.fontMetrics.height(), action.icon_size.height()) + action.padding
+            max(option.fontMetrics.height(), action.icon_size.height())
+            + action.padding * 2
         )
 
         # Calculate the top left (origin) point, based on the position and offset, to draw the action rect
@@ -2095,46 +2277,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         return QtCore.QRect(origin, QtCore.QSize(width, height))
 
-    def _get_expand_action_rect(self, option, index, force_show=False):
-        """
-        Returns the bounding rect for the expand action. The expand action will
-        be positioned on the bottom of the option rect, spanning the full item
-        width.
-
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
-        :param index: The index of the item.
-        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: The bounding rect for the item expand action.
-        :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
-        """
-
-        if (
-            not self.expand_action
-            or not self.expand_action.is_visible(self.parent(), index)
-            or not self._show_expand_hint(option, index)
-        ):
-            return QtCore.QRect()
-
-        if not (
-            force_show
-            or self.expand_action.show_always
-            or (self.expand_action.show_on_selected and self.is_selected(option))
-            or (self.expand_action.show_on_hover and self.is_hover(option))
-        ):
-            return QtCore.QRect()
-
-        rect = QtCore.QRect(option.rect)
-        height = (
-            max(option.fontMetrics.height(), self.expand_action.icon_size.height())
-            + self.expand_action.padding
-        )
-        top = rect.bottom() - height
-        rect.setTop(top)
-
-        return rect
-
     def _get_actions_position_width(self, option, index, position):
         """
         Return the width of for all actions combined in the given position.
@@ -2153,9 +2295,86 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         width = 0
         actions = self._get_action_and_rects(option, index, positions=[position])
         for action, action_rect in actions:
-            width += action_rect.width() + action.padding
+            width += action_rect.width() + self.button_margin
 
         return width
+
+    def _get_actions_left_offset(self, option, index, include_margin=False):
+        """
+        Convenience method to get the offset from the left side actions. This will return the
+        horizontal offset from the left of the option rect, where the actions on the left side
+        span to.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        :param include_margin: Add margin to actions offset.
+        :type include_margin: bool
+
+        :return: The horizontal offset from the left side of the option rect where the left
+                 side actions end.
+        :rtype: int
+        """
+
+        return self._get_actions_offset(
+            option, index, (self.LEFT, self.TOP_LEFT, self.BOTTOM_LEFT), include_margin
+        )
+
+    def _get_actions_right_offset(self, option, index, include_margin=False):
+        """
+        Convenience method to get the offset from the right side actions. This will return the
+        horizontal offset from the right of the option rect, where the actions on the right side
+        span to.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        :param include_margin: Add margin to actions offset.
+        :type include_margin: bool
+
+        :return: The horizontal offset from the right side of the option rect where the right
+                 side actions end.
+        :rtype: int
+        """
+
+        return self._get_actions_offset(
+            option, index, (self.RIGHT, self.TOP_RIGHT, self.BOTTOM_RIGHT)
+        )
+
+    def _get_actions_offset(self, option, index, positions, include_margin=False):
+        """
+        Convenience method to get the offset for the actions in the given positions. This will
+        return the offset from the edge of the option rect, to how far the actions span.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        :param position: The positions of the actions to calculate the offset for. When more than one
+                         position is provided, the positions should be oriented from the same side (e.g.
+                         top left, bottom left and left).
+        :type position: tuple<POSITION>, where POSITION is one of the position enums
+        :param include_margin: Add margin to actions offset.
+        :type include_margin: bool
+
+        :return: The offset from the edge of the option rect to how far the actions span.
+        :rtype: int
+        """
+
+        offset = max(
+            [self._get_actions_position_width(option, index, pos) for pos in positions]
+        )
+
+        if offset > 0:
+            # Add the margin from the option rect to the first action.
+            # offset += self.button_margin
+            if include_margin:
+                # Optionally add margin at the end of the actions.
+                offset += self.button_margin
+
+        return offset
 
     ######################################################################################################
     # Private methods
@@ -2212,18 +2431,58 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         return icon.pixmap(self.pixmap_extent) if icon else None
 
-    def _expand_item(self, view, index, pos):
+    def _check_item_expand_state(self, option, index):
+        """
+        Check if an item expand state should change (expand to show all text or collapse
+        to hide text). If the cursor is hovering over the item and the item text is clipped,
+        expand the item height to show all text. If the cursor is not hovering over the item
+        and the item was expanded to show all text, nwo collapse the item.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: True if the item exapnd state was changed (either expanded or collapsed).
+        :rtype: bool
+        """
+
+        if self.expand_role is None:
+            return False
+
+        text = self._get_text(index)
+        text_rect = self._get_text_rect(option, index)
+        clipped = self._is_text_clipped(option, text_rect, text)
+        is_expanded = self.get_value(index, self.expand_role)
+
+        state_changed = False
+        hover = self.is_hover(option)
+        if hover and clipped and not is_expanded:
+            # Cursor is hovering over an item whose text is vertically clipped. Set the
+            # index model data to expand, and return immediately before painting anything.
+            # Updating the index to expand will trigger a paint event with the size large
+            # enough so that the text is no longer clipped.
+            self._toggle_expand_item(index, True)
+            state_changed = True
+
+        elif not hover and not clipped and is_expanded:
+            # This item was expanded on hover, but now the cursor has moved off of it.
+            # Update the index data to collapse the item height. Return immediately
+            # before painting anything, as the index update will re-trigger a paint
+            # event with the new size.
+            self._toggle_expand_item(index, False)
+            state_changed = True
+
+        return state_changed
+
+    def _toggle_expand_item(self, index, expand_flag=None):
         """
         Expand the item to display all text. To expand the item, the item index data
         will be set to indicate that the item should expand to display all of its
         text data, then a `sizeHintChanged` signal is emitted to re-render the item.
 
-        :param view: The view object that this delegate belongs to.
-        :type view: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
         :param index: The model index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-        :param pos: The cursor position at the time of requesting to expand the item.
-        :type pos: :class:`sgtk.platform.qt.QtCore.QPoint`
 
         :return: None
         """
@@ -2231,36 +2490,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if self.expand_role is None:
             return
 
-        expand_flag = self.get_value(index, self.expand_role)
-        index.model().setData(index, not expand_flag, self.expand_role)
+        if expand_flag is None:
+            expand_flag = not self.get_value(index, self.expand_role)
 
+        index.model().setData(index, expand_flag, self.expand_role)
         self.sizeHintChanged.emit(index)
-
-    def _show_expand_hint(self, option, index):
-        """
-        Returns True if the expand action should be displayed for the item. The expand
-        action should be displayed when the item's text data is not all displayed (e.g.
-        it is clipped due to the current text bounding rect).
-
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
-        :param index: The index of the item.
-        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: True if the expand action should be shown, else False.
-        :rtype: bool
-        """
-
-        if not self.expand_role:
-            return False
-
-        if self._is_expanded(index):
-            # Show the expand option to allow the item to be collapsed again.
-            return True
-
-        text = self._get_text(index)
-        text_rect = self._get_text_rect(option, index)
-        return self._is_text_clipped(option, text_rect, text)
 
     def _is_expanded(self, index):
         """
@@ -2275,32 +2509,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         return self.expand_role and self.get_value(index, self.expand_role)
 
-    def _get_expand_action_data(self, parent, index):
-        """
-        Callback triggered when the delegate requests data for the expand action at the
-        given index.
-
-        :param parent: The parent of deleaget who requested the data.
-        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
-        :param index: The model item index
-        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: The expand action data.
-        :rtype: dict, e.g.:
-            {
-                "name": str,                                               # Override the default action name for this index
-                "visible": bool,                                           # Flag indicating whether the action is displayed or not
-                "state": :class:`sgtk.platform.qt.QtGui.QStyle.StateFlag`  # Flag indicating state of the icon
-                                                                        # e.g. enabled/disabled, on/off, etc.
-            }
-        """
-
-        name = self.collapse_label if self._is_expanded(index) else self.expand_label
-
-        return {
-            "name": name,
-        }
-
     def _create_text_document(self, option):
         """
         Return a new QTextDocument object. Whenever a QTextDocument is required, this
@@ -2313,6 +2521,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :return: The created QTextDocument object.
         :rtype: :class:`sgtk.platform.qt.QtGui.QTextDocument`
         """
+
+        # f = option.font
+        # ps = f.pointSize()
+        # psf = f.pointSizeF()
+        # px = f.pixelSize()
 
         doc = QtGui.QTextDocument()
         # Use the font set on the delegate. If not set, default to theoption font is initialized
@@ -2354,25 +2567,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         doc.setHtml(html_lines)
         return doc.size().height()
 
-    def has_overflow(self, option, width, text):
-        """
-        Return True if the rendered text width is greater than the given widdth (e.g. there
-        will be overlfow).
-
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
-        :parm width: The maximum available width for the text.
-        :type width: int
-        :param text: The text to check for overflow.
-        :type text: str
-
-        :return: True if the text width exceeds the maximum available width, else False.
-        :rtype: bool
-        """
-
-        return self.html_text_width(option, text) > width
-
-    def html_text_width(self, option, text):
+    def _html_text_width(self, option, text):
         """
         Return the width of the rendered HTML text.
 
@@ -2417,7 +2612,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         # Go through the text lines one by one, adding up each line height and
         # returning True immediately if the text goes beyond the rect height.
-        while line_num < len(text_lines) and height < rect.height():
+        while line_num < len(text_lines):  # and height < rect.height():
+            # while line_num < len(text_lines) and height < rect.height():
             line = text_lines[line_num].strip()
             line_num += 1
 
@@ -2463,13 +2659,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param clip: True if the text should be clipped when there is overflow, else False
                      will return all text even if there is overflow.
 
-        :return: The html formatted text.
-        :rtype: str
+        :return: A tuple containging the html formatted text and a flag indicating if the
+                 any of the text was elided during formatting.
+        :rtype: tuple<str, bool>
         """
 
         html_lines = []
         line_count = 0
         line_num = 0
+        elided = False
 
         if clip:
             # Keep track of the height when the text will be clipped if exceeds the maximum height.
@@ -2542,6 +2740,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         html_lines.append(elided_text)
 
+                    elided = True
+
                 line_count += 1
 
         # Remove trailing new line
@@ -2549,7 +2749,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             html_lines = html_lines[:-1]
 
         # Return a single string, lines are separated by HTML line break tags.
-        return "".join(html_lines)
+        formatted_str = "".join(html_lines)
+        return (formatted_str, elided)
 
     def _elide_text(self, option, target_width, text, elide_mode=QtCore.Qt.ElideRight):
         """
@@ -2700,7 +2901,7 @@ class ViewItemAction(object):
         {
             # Callback function used to execute some operations when the action is "clicked"
             "key": "callback",
-            "default": lambda parent, index: None,
+            "default": None,
         },
     ]
 
