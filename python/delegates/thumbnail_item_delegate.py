@@ -33,10 +33,8 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
 
         super(ThumbnailViewItemDelegate, self).__init__(parent)
 
-        # Default size
-        self._thumbnail_size = QtCore.QSize(128, 128)
-        self._text_document_margin = 5
-        self._visible_lines = 2
+        self._thumbnail_size = QtCore.QSize(164, 128)
+        self.thumbnail_position = (self.TOP,)
 
     def sizeHint(self, option, index):
         """
@@ -60,24 +58,27 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         view_option = QtGui.QStyleOptionViewItem(option)
         self.initStyleOption(view_option, index)
 
-        width = max(self.thumbnail_width, self.min_width)
+        # The size hint will mainly be based off of the thumbnail rect.
+        thumbnail_rect = self._get_thumbnail_rect(option, index)
 
         # Get the full height of the item text.
         text_rect = self._get_text_rect(view_option, index)
-        text_doc = self._get_text_document(view_option, index, text_rect, clip=False)
+        text_doc, _ = self._get_text_document(view_option, index, text_rect, clip=False)
         text_height = text_doc.size().height()
 
-        if self.get_value(index, self.thumbnail_role):
-            # Item height is the thumbnail height plus the text height.
-            height = self.thumbnail_height
-            height += max(text_height, self._get_visible_lines_height(option))
-        else:
-            # No thumbnail, height is just the text height.
-            height = text_height
+        width = thumbnail_rect.width()
+        height = thumbnail_rect.height() + max(
+            text_height, self._get_visible_lines_height(option)
+        )
 
-        # Add item padding
-        width += self.item_padding
-        height += self.item_padding
+        # Add padding
+        width += self.item_padding.left + self.item_padding.right
+        width += self.thumbnail_padding.left + self.thumbnail_padding.right
+
+        height += self.item_padding.top + self.item_padding.bottom
+        height += self.text_padding.top + self.text_padding.bottom
+        if thumbnail_rect.isValid():
+            height += self.thumbnail_padding.top + self.thumbnail_padding.bottom
 
         return QtCore.QSize(width, height)
 
@@ -97,11 +98,13 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         """
 
         if self.short_text_role:
-            return self.get_display_values_list(index, self.short_text_role)
+            return [
+                self._get_header_text(index, option, rect)
+            ] + self.get_display_values_list(index, self.short_text_role)
 
-        return super(ThumbnailViewItemDelegate, self)._get_text(index)
+        return super(ThumbnailViewItemDelegate, self)._get_text(index, option, rect)
 
-    def _get_thumbnail_rect(self, option, index):
+    def _get_thumbnail_rect(self, option, index, thumbnail=None):
         """
         Override the base ViewItemDelegate method.
 
@@ -119,12 +122,25 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
         """
 
-        if not self.get_value(index, self.thumbnail_role):
+        if thumbnail is None:
+            thumbnail = self._get_thumbnail(index)
+
+        if not thumbnail:
             return QtCore.QRect()
 
         rect = QtCore.QRect(option.rect)
         width = max(self.thumbnail_size.width(), self.min_width)
+        # Account for extra text padding
+        width += max(0, self.text_padding.left - self.thumbnail_padding.left)
+        width += max(0, self.text_padding.right - self.thumbnail_padding.right)
+
         rect.setSize(QtCore.QSize(width, self.thumbnail_size.height()))
+        rect.adjust(
+            self.thumbnail_padding.left,
+            self.thumbnail_padding.top,
+            -self.thumbnail_padding.right,
+            -self.thumbnail_padding.bottom,
+        )
 
         return rect
 
@@ -145,7 +161,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
         """
 
-        if not self.get_value(index, self.thumbnail_role):
+        if not self._get_thumbnail(index):
             return super(ThumbnailViewItemDelegate, self)._get_text_rect(option, index)
 
         rect = QtCore.QRect(option.rect)
@@ -155,4 +171,43 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         rect.setSize(QtCore.QSize(rect.width(), rect.height() - self.thumbnail_height))
         rect.moveTo(top_left)
 
+        rect.adjust(
+            self.text_padding.left,
+            self.text_padding.top,
+            -self.text_padding.right,
+            -self.text_padding.bottom,
+        )
+
         return rect
+
+    def _get_loading_rect(self, option, index):
+        """
+        Override the base ViewItemDelegate method.
+
+        Return the bounding rect for the item's loading icon. An invalid rect will be
+        returned if the item is not in a loading state. The bounding rect will be positioned
+        to the right in the option rect, and centered vertically.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: The bounding rect for the item's loading indicator. The rect will be invalid
+                 if there is no loading indicatorto display.
+        :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
+        """
+
+        if not self.loading_role:
+            return QtCore.QRect()
+
+        loading = self.get_value(index, self.loading_role)
+        if not loading:
+            return QtCore.QRect()
+
+        origin = QtCore.QPoint(
+            option.rect.right() - self.button_margin - self.icon_size.width(),
+            option.rect.bottom() - self.button_margin - self.icon_size.height(),
+        )
+
+        return QtCore.QRect(origin, self.icon_size)
