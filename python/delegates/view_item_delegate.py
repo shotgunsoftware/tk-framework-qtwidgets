@@ -64,11 +64,32 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         CENTER,
     ) = range(len(POSITIONS))
 
+    class Padding(object):
+        """
+        Convenience class structure to store padding values.
+        """
+
+        def __init__(self, top, right, bottom, left):
+            """
+            Padding constructor.
+            """
+
+            self.top = top
+            self.right = right
+            self.bottom = bottom
+            self.left = left
+
+        @classmethod
+        def new(cls, padding):
+            """
+            Factory method to create a padding object with equal padding all around.
+            """
+
+            return cls(padding, padding, padding, padding)
+
     def __init__(self, view=None):
         """
-        Constructor
-
-        Set up the delegate's default values.
+        ViewItemDelegate constructor. Sets the default values.
 
         :param view: The view that this delegate will be used with.
         :type view: :class:`sgkt.platform.qt.QtGui.QAbstractItemView`
