@@ -41,6 +41,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         "bottom-right",
         "left",
         "right",
+        "top",
+        "bottom",
+        "center",
     ]
     # Enum for the POSITIONS
     (
@@ -56,6 +59,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         BOTTOM_RIGHT,
         LEFT,
         RIGHT,
+        TOP,
+        BOTTOM,
+        CENTER,
     ) = range(len(POSITIONS))
 
     def __init__(self, view=None):
