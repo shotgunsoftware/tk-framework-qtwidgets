@@ -97,7 +97,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         super(ViewItemDelegate, self).__init__(view)
 
-        # The item data model roles used to retrieve the item's data to display.
+        # The item data model roles used to retrieve the item's data to display. See ViewItemRolesMixin for
+        # more details about the item data roles.
         self._thumbnail_role = QtCore.Qt.DecorationRole
         self._header_role = QtCore.Qt.DisplayRole
         self._subtitle_role = None
@@ -940,7 +941,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             # Fall through to allow the base implementation to perform any other mouse move event handling
 
-        # Fallback to the base implementation
         return super(ViewItemDelegate, self).editorEvent(
             event, model, view_option, index
         )
@@ -1080,6 +1080,14 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         painter.restore()
 
+        if DEBUG_PAINT:
+            painter.save()
+            painter.setPen(QtGui.QPen(QtCore.Qt.magenta))
+            painter.drawRect(option.rect)
+            painter.setPen(QtGui.QPen(QtCore.Qt.cyan))
+            painter.drawRect(view_option.rect)
+            painter.restore()
+
     ######################################################################################################
     # Draw Methods
     # Override any of these draw methods to customize how that particular aspect of the item is rendered.
@@ -1146,6 +1154,12 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         painter.setPen(pen)
         painter.drawArc(rect, -start_angle * 16, self._spin_arc_len * 16)
         painter.restore()
+
+        if DEBUG_PAINT:
+            painter.save()
+            painter.setPen(QtGui.QPen(QtCore.Qt.magenta))
+            painter.drawRect(rect)
+            painter.restore()
 
         # Emit a data changed signal for the index to continue painting the animation until
         # the item has finished loading.
@@ -2621,7 +2635,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         return (doc, doc.toHtml())
 
 
-class ViewItemAction:
+class ViewItemAction(object):
     """
     Class object to handle rendering item actions in the :class:`ViewItemDelegate`.
     """
