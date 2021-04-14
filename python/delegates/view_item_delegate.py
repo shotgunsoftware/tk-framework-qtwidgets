@@ -1115,9 +1115,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Thumbnail
         thumbnail_rect = self._draw_thumbnail(painter, view_option, index)
 
-        # Badges
-        self._draw_icon_badges(painter, view_option, thumbnail_rect, index)
-
         # Text body
         self._draw_text(painter, view_option, index)
 
@@ -1135,6 +1132,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             self.show_hover_selection and self.is_hover(view_option)
         ):
             self._draw_selection(painter, view_option)
+
+        # Badges
+        self._draw_icon_badges(painter, view_option, thumbnail_rect, index)
 
         painter.restore()
 
