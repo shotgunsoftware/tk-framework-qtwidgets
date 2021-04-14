@@ -1583,28 +1583,14 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             painter.drawRect(rect)
             painter.restore()
 
-        if self.show_text_tooltip and self.is_hover(option):
-            # Show a tooltip with the full text if it was elided, or clipped and auto-expand is disabled.
+        # Draw the text tooltip. Check if text is elided here, since we've arleady did
+        # some work to check for text eliding.
+        if not elided:
+            # FIXME we need to specifically check the header if it was elided, as this does not
+            # get caught in the main `_get_text_document` method.
+            _, elided = self._get_header_text(index, option, rect, return_elided=True)
 
-            if not elided:
-                # FIXME header eliding is not detected in the _get_text_document method
-                _, elided = self._get_header_text(
-                    index, option, rect, return_elided=True
-                )
-
-            clipped = False
-            if not elided and self.expand_role is None:
-                # Auto-expand disabled, check if text clipped.
-                text = self._get_text(index)
-                clipped = self._is_text_clipped(option, rect, text)
-
-            if elided or clipped:
-                # Show plain text in the tooltip, remove any trailing white space and ensure single line spacing.
-                full_text = self.get_displayed_text(index).strip().replace("\n\n", "\n")
-                QtCore.QTimer.singleShot(
-                    500,
-                    lambda o=option, r=rect, t=full_text: self._draw_tooltip(o, r, t),
-                )
+        self._draw_text_tooltip(option, rect, index, elided)
 
     def _draw_actions(self, painter, option, index):
         """
@@ -1765,6 +1751,74 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if cursor_pos and rect.contains(cursor_pos):
             global_pos = QtGui.QCursor().pos()
             QtGui.QToolTip.showText(global_pos, text, option.widget, rect)
+
+    def _draw_text_tooltip(self, option, rect, index, elided=None):
+        """
+        Show a tooltip for the item's text if it has been elided or clipped. Text tooltips will
+        only be drawn if:
+            1. The `show_text_tooltip` property is True
+            2. The `override_item_tooltip` property is True or the item does not have a tooltip
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :param rect: The rect to check if the cursor is over.
+        :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        :param elided: True if the text has already been processed and is elided, else False. If
+                       set to None, the text has not been processed.
+
+        :return: None
+        """
+
+        # Only show tooltips if enabled and the cursor is hovering
+        if not self.show_text_tooltip or not self.is_hover(option):
+            return
+
+        try:
+            # Try to get the item associated with this index, to check if it has a tooltip set.
+            if isinstance(index.model(), QtGui.QSortFilterProxyModel):
+                source_index = index.model().mapToSource(index)
+                item = source_index.model().itemFromIndex(source_index)
+            else:
+                item = index.model().itemFromIndex(index)
+
+            item_tooltip = item.toolTip()
+        except AttributeError:
+            # Failed to extract the tooltip from the index .
+            item = None
+            item_tooltip = None
+
+        if self._override_item_tooltip or not item_tooltip:
+            # Tooltip override was set or the item does not have a tooltip, so show our tooltip
+            # with the full text if it was elided, or clipped and auto-expand is disabled.
+
+            if elided is None:
+                # Text has not yet been processed for eliding, let's check here.
+                _, elided = self._get_text_document(option, index, rect)
+                if not elided:
+                    # FIXME header eliding is not detected in the _get_text_document method
+                    _, elided = self._get_header_text(
+                        index, option, rect, return_elided=True
+                    )
+
+            clipped = False
+            if not elided and self.expand_role is None:
+                # Auto-expand disabled, check if text clipped.
+                text = self._get_text(index)
+                clipped = self._is_text_clipped(option, rect, text)
+
+            if elided or clipped:
+                # Override the item tooltip by clearing it before showing the tooltip we want.
+                if item and item_tooltip:
+                    item.setToolTip(None)
+
+                # Show plain text in the tooltip, remove any trailing white space and ensure single line spacing.
+                full_text = self.get_displayed_text(index).strip().replace("\n\n", "\n")
+                QtCore.QTimer.singleShot(
+                    500,
+                    lambda o=option, r=rect, t=full_text: self._draw_tooltip(o, r, t),
+                )
 
     ######################################################################################################
     # Getter methods to retrieve the item data to display. Override any of these methods to customize the
