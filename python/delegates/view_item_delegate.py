@@ -175,6 +175,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._show_hover_selection = True
         # Enable showing tooltips when text is clipped
         self._show_text_tooltip = True
+        # Override the QStandardItem object toolitp
+        self._override_item_tooltip = False
 
         # Values used to draw the animated loading image
         self._seconds_per_spin = 3
@@ -617,6 +619,19 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Get or set the flag indicating to show a tooltip if the item text has been elided.
         """
         return self._show_text_tooltip
+
+    @property
+    def override_item_tooltip(self):
+        """
+        Get or set the flag indicating to override the tooltip set on the QStandardItem object. Note that
+        this will only affect indexes that have an associated QStandardItem (e.g. the index model derives
+        from the QStandardItemModel class).
+        """
+        return self._override_item_tooltip
+
+    @override_item_tooltip.setter
+    def override_item_tooltip(self, override):
+        self._override_item_tooltip = override
 
     @show_text_tooltip.setter
     def show_text_tooltip(self, show):
