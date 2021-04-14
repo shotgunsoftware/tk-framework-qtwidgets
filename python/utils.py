@@ -241,6 +241,10 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
     Timestamp directives ('created_at', 'updated_at'):
         - short_timestamp: Display a shorter timestamp, e.g. 1h, 1d, 1w, etc.
 
+    Status directives ('sg_status_list'):
+        - text: Display only the text
+        - icon: Display only the icon
+
     Version Number directives ('version_number'):
         - zeropadded: Pad the version number with up to three zeros
         - A format string that contains a single argument specifier to substitute the
@@ -258,9 +262,16 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
     if value is None:
         return shotgun_globals.get_empty_phrase(sg_type, sg_field)
 
+    # Allow multiple directives
     directives = directive or []
     if isinstance(directives, six.string_types):
         directives = [directives]
+
+    # Get the relative field from deep links; e.g. published_file_type.PublishedFileType.sg_status_list
+    # will get the 'sg_status_list' as the relative field. This is to ensure that the correct formatting
+    # is applied to deeply linked fields.
+    relative_sg_field = sg_field.split(".")[-1]
+    sg_field_names = set((sg_field, relative_sg_field))
 
     if isinstance(value, dict) and set(["type", "id", "name"]) == set(value.keys()):
         # entity link
@@ -294,21 +305,27 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
             link_urls.append(sg_field_to_str(sg_type, sg_field, list_item, directive))
         str_val = ", ".join(link_urls)
 
-    elif sg_field in ["created_at", "updated_at"]:
+    # elif sg_field in ["created_at", "updated_at"]:
+    elif sg_field_names & set(("created_at", "updated_at")):
         timestamp_format = directives[0] if directives else None
         (str_val, _) = create_human_readable_timestamp(value, timestamp_format)
 
-    elif sg_field == "sg_status_list":
-        str_val = shotgun_globals.get_status_display_name(value)
+    # elif sg_field == "sg_status_list":
+    elif "sg_status_list" in sg_field_names:
+        str_val = ""
+        if not directives or "text" in directives:
+            str_val = shotgun_globals.get_status_display_name(value)
 
-        color_str = shotgun_globals.get_status_color(value)
-        if color_str:
+        if not directives or "icon" in directives:
             # append colored box to indicate status color
-            str_val = "<span style='color: rgb(%s)'>" "&#9608;</span>&nbsp;%s" % (
-                color_str,
-                str_val,
-            )
-    elif sg_field == "version_number":
+            color_str = shotgun_globals.get_status_color(value)
+            if color_str:
+                str_val = "<span style='color: rgb(%s)'>" "&#9608;</span>&nbsp;%s" % (
+                    color_str,
+                    str_val,
+                )
+    # elif sg_field == "version_number":
+    elif "version_number" in sg_field_names:
         if directives:
             if "zeropadded" in directives:
                 str_format = "%03d"
@@ -317,7 +334,8 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
 
             str_val = str_format % value
 
-    elif sg_field == "type":
+    # elif sg_field == "type":
+    elif "type" in sg_field_names:
         if "showtype" in directives:
             str_val = shotgun_globals.get_type_display_name(value)
 

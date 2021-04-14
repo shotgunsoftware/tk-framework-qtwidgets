@@ -164,8 +164,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # The pen used to paint the background (the background brush is customized through the model data
         # role BackgroundRole). The pen is responsible for rendering a border around the item rect.
         self._background_pen = QtCore.Qt.NoPen
-        # The pen used to draw the loading indicator.
-        self._loading_pen = None
+        # The brush and pen used to draw the loading indicator.
+        self._loading_pen = QtCore.Qt.NoPen
+        self._loading_brush = QtGui.QBrush(QtGui.QColor(0, 0, 0, 100))
         # The brush used to paint the selection. The palette highlight brush will be used if not set.
         self._selection_brush = None
         # The brush used to paint the item separator, if there is one.
@@ -579,6 +580,18 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     @loading_pen.setter
     def loading_pen(self, pen):
         self._loading_pen = pen
+
+    @property
+    def loading_brush(self):
+        """
+        Get or set the :class:`sgtk.platform.qt.QtGui.QBrush` brush used to paint the background of the item
+        loading rect.
+        """
+        return self._loading_brush
+
+    @loading_brush.setter
+    def loading_brush(self, brush):
+        self._loading_brush = brush
 
     @property
     def selection_brush(self):
@@ -1124,9 +1137,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Separator
         self._draw_separator(painter, view_option, index)
 
-        # Loading decoration
-        self._draw_loading(painter, view_option, index)
-
         # Selection
         if self.is_selected(view_option) or (
             self.show_hover_selection and self.is_hover(view_option)
@@ -1135,6 +1145,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         # Badges
         self._draw_icon_badges(painter, view_option, thumbnail_rect, index)
+
+        # Loading decoration
+        self._draw_loading(painter, view_option, index)
 
         painter.restore()
 
@@ -1190,6 +1203,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         rect = self._get_loading_rect(option, index)
         if not rect.isValid():
             return
+
+        if self._loading_brush and self._loading_brush != QtCore.Qt.NoBrush:
+            # Paint the background while loading.
+            painter.save()
+            painter.setBrush(self._loading_brush)
+            painter.drawRoundedRect(
+                option.rect, self._item_x_radius, self._item_y_radius
+            )
+            painter.restore()
 
         # Calculate spin angle as a function of time so that all spinners appear in sync
         # This uses the same function as the SpinnerWidget
@@ -1467,6 +1489,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
                 if isinstance(pixmap, QtGui.QIcon):
                     pixmap = self._convert_icon_to_pixmap(pixmap)
+                elif isinstance(pixmap, six.string_types):
+                    pixmap = QtGui.QPixmap(pixmap)
 
                 if not pixmap or not isinstance(pixmap, QtGui.QPixmap):
                     # Skip, invalid pixmap data.
@@ -2802,6 +2826,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             html_lines = html_lines[:-1]
 
         # Return a single string, lines are separated by HTML line break tags.
+        html_lines = [six.ensure_str(line) for line in html_lines]
         formatted_str = "".join(html_lines)
         return (formatted_str, elided)
 
