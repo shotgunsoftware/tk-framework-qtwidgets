@@ -100,9 +100,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # The item data model roles used to retrieve the item's data to display. See ViewItemRolesMixin for
         # more details about the item data roles.
         self._thumbnail_role = QtCore.Qt.DecorationRole
-        self._header_role = QtCore.Qt.DisplayRole
+        self._header_role = None
         self._subtitle_role = None
-        self._text_role = None
+        self._text_role = QtCore.Qt.DisplayRole
         self._short_text_role = None
         self._icon_role = None
         self._expand_role = None
