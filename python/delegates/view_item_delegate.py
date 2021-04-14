@@ -1936,7 +1936,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 # Elide the title when the option and rect are provided, and there is text overflow.
                 _, elided_title = self._elide_text(option, target_width, title)
                 elided = title != elided_title
-                title = six.ensure_text(elided_title)
+                title = six.ensure_str(elided_title)
 
             title_html = '<td align="left width="100%"">{text}</td>'.format(text=title)
 
@@ -1946,7 +1946,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 # Elide the title when the option and rect are provided, and there is text overflow.
                 _, elided_subtitle = self._elide_text(option, target_width, subtitle)
                 elided = subtitle != elided_subtitle
-                subtitle = six.ensure_text(elided_subtitle)
+                subtitle = six.ensure_str(elided_subtitle)
 
             subtitle_html = '<td align="right" width="100%">{text}</td>'.format(
                 text=subtitle
@@ -2006,8 +2006,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                         option, subtitle_width, subtitle
                     )
                     elided = title != elided_title or subtitle != elided_subtitle
-                    title = six.ensure_text(elided_title)
-                    subtitle = six.ensure_text(elided_subtitle)
+                    title = six.ensure_str(elided_title)
+                    subtitle = six.ensure_str(elided_subtitle)
 
             title_html = '<td align="left" {width}>{text}</td>'.format(
                 width=title_width_str, text=title
