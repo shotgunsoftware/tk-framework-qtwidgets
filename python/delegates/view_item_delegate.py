@@ -1100,10 +1100,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         view_option = QtGui.QStyleOptionViewItem(option)
         self.initStyleOption(view_option, index)
 
-        if self._check_item_expand_state(view_option, index):
-            # Item was expanded or collapsed, a repaint will be triggered with the items
-            # new size according to its expanded state.
-            return
+        # Check if the index should be expanded or collapsed, and update the index
+        # model data to render the correct row height for the index.
+        self._update_index_expand_state(view_option, index)
 
         painter.save()
         painter.setRenderHints(
