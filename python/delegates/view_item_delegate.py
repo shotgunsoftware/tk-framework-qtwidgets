@@ -2488,12 +2488,16 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         return icon.pixmap(self.pixmap_extent) if icon else None
 
-    def _check_item_expand_state(self, option, index):
+    def _update_index_expand_state(self, option, index):
         """
         Check if an item expand state should change (expand to show all text or collapse
-        to hide text). If the cursor is hovering over the item and the item text is clipped,
-        expand the item height to show all text. If the cursor is not hovering over the item
-        and the item was expanded to show all text, nwo collapse the item.
+        to hide text).
+
+        If the cursor is hovering over the item or the item is selected, and the item
+        text is clipped, then set the index model data to signal to the delegate to
+        expand the item height to show all text.
+
+        If the cursor is not hovering over the item and the item was expanded to show all text, now collapse the item.
 
         :param option: The option used for rendering the item.
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
@@ -2514,19 +2518,16 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         state_changed = False
         hover = self.is_hover(option)
-        if hover and clipped and not is_expanded:
-            # Cursor is hovering over an item whose text is vertically clipped. Set the
-            # index model data to expand, and return immediately before painting anything.
-            # Updating the index to expand will trigger a paint event with the size large
-            # enough so that the text is no longer clipped.
+        selected = self.is_selected(option)
+        if (hover or selected) and clipped and not is_expanded:
+            # Cursor is hovering over an item, or item is selected, and its text is vertically
+            # clipped. Set the index data flag to expand the row height.
             self._toggle_expand_item(index, True)
             state_changed = True
 
-        elif not hover and not clipped and is_expanded:
-            # This item was expanded on hover, but now the cursor has moved off of it.
-            # Update the index data to collapse the item height. Return immediately
-            # before painting anything, as the index update will re-trigger a paint
-            # event with the new size.
+        elif not (hover or selected) and not clipped and is_expanded:
+            # This item was expanded on hover or due to selection, but now is deselected or the
+            # cursor has moved off of it. Update the index data to collapse the item height.
             self._toggle_expand_item(index, False)
             state_changed = True
 
