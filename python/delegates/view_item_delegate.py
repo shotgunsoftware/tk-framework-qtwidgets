@@ -2284,8 +2284,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Calculate the width of the action
         width = action.padding * 2
         if name:
-            # Add the width of the text
-            width += option.fontMetrics.width(name)
+            # Add the width of the text, and a little buffer
+            width += option.fontMetrics.width(name) + 5
             if action.icon:
                 # Add padding between the icon and text
                 width += 14
