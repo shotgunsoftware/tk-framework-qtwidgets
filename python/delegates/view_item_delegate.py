@@ -2802,6 +2802,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             html_lines = html_lines[:-1]
 
         # Return a single string, lines are separated by HTML line break tags.
+        html_lines = [six.ensure_str(line) for line in html_lines]
         formatted_str = "".join(html_lines)
         return (formatted_str, elided)
 
