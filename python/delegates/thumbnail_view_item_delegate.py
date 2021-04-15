@@ -7,6 +7,7 @@
 # By accessing, using, copying or modifying this work you indicate your
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Autodesk, Inc.
+from time import time
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
@@ -66,7 +67,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         text_doc, _ = self._get_text_document(view_option, index, text_rect, clip=False)
         text_height = text_doc.size().height()
 
-        width = thumbnail_rect.width()
+        width = max(thumbnail_rect.width(), self.min_width)
         height = thumbnail_rect.height() + max(
             text_height, self._get_visible_lines_height(option)
         )
@@ -81,6 +82,76 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
             height += self.thumbnail_padding.top + self.thumbnail_padding.bottom
 
         return QtCore.QSize(width, height)
+
+    def _draw_loading(self, painter, option, index):
+        """
+        Override the base method to draw the loader.
+
+        Draw the animated loading indicator. This default implementation will render an arc rotating
+        in a circle for as long as the item data indicates that the item is in a loading state.
+
+        The formula used to render the spinning loader is borrowed from the :class:`SpinnerWidget`.
+
+        :param painter: the object used for painting.
+        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: None
+        """
+
+        # if index.parent().isValid():
+        # rect = self._get_loading_rect(option, index)
+        # if not rect.isValid():
+        # return
+
+        # color = QtGui.QColor(0, 0, 0, 200)
+        # brush = QtGui.QBrush(color)
+
+        # painter.save()
+        # painter.setBrush(brush)
+        # painter.drawRoundedRect(option.rect, self._item_x_radius, self._item_y_radius)
+        # painter.restore()
+
+        super(ThumbnailViewItemDelegate, self)._draw_loading(painter, option, index)
+
+    def _get_loading_rect(self, option, index):
+        """
+        Override the base ViewItemDelegate method.
+
+        Return the bounding rect for the item's loading icon. An invalid rect will be
+        returned if the item is not in a loading state. The bounding rect will be positioned
+        to the right in the option rect, and centered vertically.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: The bounding rect for the item's loading indicator. The rect will be invalid
+                 if there is no loading indicatorto display.
+        :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
+        """
+
+        # if not index.parent().isValid():
+        #
+        # return super(ThumbnailViewItemDelegate, self)._get_loading_rect(option, index)
+
+        if not self.loading_role:
+            return QtCore.QRect()
+
+        loading = self.get_value(index, self.loading_role)
+        if not loading:
+            return QtCore.QRect()
+
+        center = QtCore.QPoint(
+            option.rect.left() + option.rect.width() / 2 - self.icon_size.width() / 2,
+            option.rect.top() + option.rect.height() / 2 - self.icon_size.height() / 2,
+        )
+
+        return QtCore.QRect(center, self.icon_size)
 
     def _get_text(self, index, option=None, rect=None):
         """
@@ -179,35 +250,3 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         )
 
         return rect
-
-    def _get_loading_rect(self, option, index):
-        """
-        Override the base ViewItemDelegate method.
-
-        Return the bounding rect for the item's loading icon. An invalid rect will be
-        returned if the item is not in a loading state. The bounding rect will be positioned
-        to the right in the option rect, and centered vertically.
-
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
-        :param index: The index of the item.
-        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: The bounding rect for the item's loading indicator. The rect will be invalid
-                 if there is no loading indicatorto display.
-        :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
-        """
-
-        if not self.loading_role:
-            return QtCore.QRect()
-
-        loading = self.get_value(index, self.loading_role)
-        if not loading:
-            return QtCore.QRect()
-
-        origin = QtCore.QPoint(
-            option.rect.right() - self.button_margin - self.icon_size.width(),
-            option.rect.bottom() - self.button_margin - self.icon_size.height(),
-        )
-
-        return QtCore.QRect(origin, self.icon_size)
