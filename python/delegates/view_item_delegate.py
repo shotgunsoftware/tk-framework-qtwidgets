@@ -1253,6 +1253,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if self._loading_brush and self._loading_brush != QtCore.Qt.NoBrush:
             # Paint the background while loading.
             painter.save()
+            painter.setPen(QtCore.Qt.NoPen)
             painter.setBrush(self._loading_brush)
             painter.drawRoundedRect(
                 option.rect, self._item_x_radius, self._item_y_radius
