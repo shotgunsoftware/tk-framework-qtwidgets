@@ -8,7 +8,6 @@
 
 from tank.platform.qt import QtCore, QtGui
 
-
 class Ui_ShotgunListWidget(object):
     def setupUi(self, ShotgunListWidget):
         ShotgunListWidget.setObjectName("ShotgunListWidget")

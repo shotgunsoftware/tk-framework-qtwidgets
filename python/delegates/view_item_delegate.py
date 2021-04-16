@@ -1489,6 +1489,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
                 if isinstance(pixmap, QtGui.QIcon):
                     pixmap = self._convert_icon_to_pixmap(pixmap)
+                elif isinstance(pixmap, six.string_types):
+                    pixmap = QtGui.QPixmap(pixmap)
 
                 if not pixmap or not isinstance(pixmap, QtGui.QPixmap):
                     # Skip, invalid pixmap data.
