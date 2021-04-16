@@ -150,6 +150,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._text_padding = self.Padding.new(8)
         self._thumbnail_padding = self.Padding.new(0)
 
+        # Text alignment (TOP | BOTTOM | CENTER). NOTE this aligns the text within the text bounding rect,
+        # meaning that the text block will be aligned within the available text area, but text itself will
+        # remain left-aligned. To implement aligning the text itself, a custom QTextDocumentLayout class
+        # is required. There is another limitation to text horizontal alignment when there is a header
+        # and/or subtitle present; horizontal alignment will have no effect since the header and subtitle
+        # cause the text block to span the full available text bounding rect width.
+        self._text_rect_halign = self.LEFT
+        self._text_rect_valign = self.TOP
+
         # Font to set on the QTextDocument. If None, the font from the QStyleOptionViewItem will be used.
         self._font = None
 
@@ -545,6 +554,43 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             self._text_padding = self.Padding.new(padding)
         else:
             raise ValueError("Invalid padding value {}".format(padding))
+
+    @property
+    def text_rect_halign(self):
+        """
+        Get or set the text block horizontal alignment. This aligns the text block, not the text lines themselves (e.g. the
+        block of text will be aligned within the available space, but the text lines will remain aligned left). Horizontal
+        alignment will have no effect if there is a header and/or subtitle present (this causes the text block to expand
+        to the full available width).
+        """
+        return self._text_rect_halign
+
+    @text_rect_halign.setter
+    def text_rect_halign(self, alignment):
+        if alignment not in (self.LEFT, self.RIGHT, self.CENTER):
+            raise ValueError(
+                "Text horizontal alignment '{align}' not supported. Must be one of 'LEFT', 'RIGHT, 'CENTER'".format(
+                    align=alignment
+                )
+            )
+        self._text_rect_halign = alignment
+
+    @property
+    def text_rect_valign(self):
+        """
+        Get or set the text block vertical alignment.
+        """
+        return self._text_rect_valign
+
+    @text_rect_valign.setter
+    def text_rect_valign(self, alignment):
+        if alignment not in (self.TOP, self.BOTTOM, self.CENTER):
+            raise ValueError(
+                "Text vertical alignment '{align}' not supported. Must be one of 'TOP', 'BOTTOM, 'CENTER'".format(
+                    align=alignment
+                )
+            )
+        self._text_rect_valign = alignment
 
     @property
     def font(self):
@@ -1595,8 +1641,33 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         doc, elided = self._get_text_document(option, index, rect)
 
+        # Vertical text alignment
+        text_height = doc.size().height()
+        available_height = rect.height()
+        dy = 0
+        if text_height < available_height:
+            if self.text_rect_valign == self.CENTER:
+                dy = (available_height - text_height) / 2
+
+            elif self.text_rect_valign == self.BOTTOM:
+                dy = available_height - text_height
+
+        # Horizontal text alignment
+        text_width = doc.idealWidth()
+        available_width = rect.width()
+        dx = 0
+        if text_width < available_width:
+            if self.text_rect_halign == self.CENTER:
+                dx = (available_width - text_width) / 2
+
+            elif self.text_rect_halign == self.RIGHT:
+                dx = available_width - text_width
+
+        # Get the point to translate the painter, before drawing the text.
+        origin = QtCore.QPoint(rect.left() + dx, rect.top() + dy)
+
         painter.save()
-        painter.translate(rect.topLeft())
+        painter.translate(origin)
         doc.drawContents(painter)
         painter.restore()
 
