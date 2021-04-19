@@ -242,8 +242,9 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
         - short_timestamp: Display a shorter timestamp, e.g. 1h, 1d, 1w, etc.
 
     Status directives ('sg_status_list'):
-        - text: Display only the text
-        - icon: Display only the icon
+        - text: Display the status name as is
+        - displaytext: Display the user friendly status
+        - icon: Display the icon
 
     Version Number directives ('version_number'):
         - zeropadded: Pad the version number with up to three zeros
@@ -305,26 +306,35 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
             link_urls.append(sg_field_to_str(sg_type, sg_field, list_item, directive))
         str_val = ", ".join(link_urls)
 
-    # elif sg_field in ["created_at", "updated_at"]:
     elif sg_field_names & set(("created_at", "updated_at")):
         timestamp_format = directives[0] if directives else None
         (str_val, _) = create_human_readable_timestamp(value, timestamp_format)
 
-    # elif sg_field == "sg_status_list":
     elif "sg_status_list" in sg_field_names:
-        str_val = ""
-        if not directives or "text" in directives:
-            str_val = shotgun_globals.get_status_display_name(value)
+        if not directives:
+            # No directives given, default to show the icon and display text (in that order).
+            directives = ["icon", "displaytext"]
 
-        if not directives or "icon" in directives:
-            # append colored box to indicate status color
-            color_str = shotgun_globals.get_status_color(value)
-            if color_str:
-                str_val = "<span style='color: rgb(%s)'>" "&#9608;</span>&nbsp;%s" % (
-                    color_str,
-                    str_val,
-                )
-    # elif sg_field == "version_number":
+        # Go through the directives and build the status string in order of the given directives
+        # e.g. the default directives, ["icon", "dispalytext"], will display the status icon and
+        # then the user friendly status name ("In Progress" instead of "ip").
+        str_vals = []
+        for d in directives:
+            if d == "text":
+                str_vals.append(value)
+            elif d == "displaytext":
+                str_vals.append(shotgun_globals.get_status_display_name(value))
+            elif d == "icon":
+                color_str = shotgun_globals.get_status_color(value)
+                if color_str:
+                    str_vals.append(
+                        "<span style='color: rgb(%s)'>" "&#9608;</span>" % color_str
+                    )
+            else:
+                assert False, "Unknown directive for 'sg_status_list' field"
+
+        str_val = " ".join(str_vals)
+
     elif "version_number" in sg_field_names:
         if directives:
             if "zeropadded" in directives:
