@@ -1528,7 +1528,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 # Inset will display the badge inside the bounding rect, otherwise the badge
                 # will be display centered over the corner corresponding to the badge position.
                 inset = True
-                if isinstance(pixmap_data, QtGui.QPixmap):
+                if isinstance(pixmap_data, (QtGui.QIcon, QtGui.QPixmap)):
                     pixmap = pixmap_data
                 elif isinstance(pixmap_data, dict):
                     pixmap = pixmap_data.get("pixmap", None)
