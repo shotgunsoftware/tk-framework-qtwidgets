@@ -186,7 +186,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Enable showing tooltips when text is clipped
         self._show_text_tooltip = True
         # Override the QStandardItem object toolitp
-        self._override_item_tooltip = False
+        self._override_item_tooltip = True
 
         # Values used to draw the animated loading image
         self._seconds_per_spin = 3
