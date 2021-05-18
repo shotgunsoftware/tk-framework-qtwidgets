@@ -12,142 +12,12 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
 from .filter_item import FilterItem
-
-# shotgun_menus = sgtk.platform.import_framework(
-# "tk-framework-qtwidgets", "shotgun_menus"
-# )
-# ShotgunMenu = shotgun_menus.ShotgunMenu
+from .filter_item_widget import FilterItemWidget
 from ..shotgun_menus import ShotgunMenu
 
-
-class FilterMenuItemWidget(QtGui.QWidget):
-    """
-    """
-
-    FILTER_TYPES = {""}
-
-    filter_item_checked = QtCore.Signal(int)
-    filter_item_text_changed = QtCore.Signal(str)
-
-    def __init__(self, filter_data, parent=None):
-        """
-        """
-
-        super(FilterMenuItemWidget, self).__init__(parent)
-
-        # Widget style
-        # self.setStyleSheet(":hover{background:palette(light)}");
-
-        self.checkbox = None
-        self.line_edit = None
-
-        layout = QtGui.QHBoxLayout()
-        layout.setAlignment(QtCore.Qt.AlignLeft)
-        self.setLayout(layout)
-
-    @classmethod
-    def create(cls, filter_data, parent=None):
-        """
-        """
-
-        filter_type = filter_data.get("filter_type")
-        if not filter_type:
-            raise sgtk.TankError("Missing required filter type.")
-
-        if filter_type in (FilterItem.TYPE_NUMBER):
-            return LineEditFilterMenuItemWidget(filter_data, parent)
-
-        # Default to choices filter widget
-        # if filter_type in (
-        # FilterItem.TYPE_STR,
-        # FilterItem.TYPE_TEXT
-        # ):
-        return ChoicesFilterMenuItemWidget(filter_data, parent)
-
-    def has_value(self):
-        """
-        """
-
-        if self.checkbox and self.checkbox.isChecked():
-            return True
-
-        if self.line_edit and self.line_edit.text():
-            return True
-
-        return False
-
-    def action_triggered(self):
-        """
-        """
-
-        if self.checkbox:
-            self.checkbox.setChecked(not self.checkbox.isChecked())
-
-    def paintEvent(self, event):
-        """
-        """
-
-        super(FilterMenuItemWidget, self).paintEvent(event)
-
-        painter = QtGui.QPainter()
-        painter.begin(self)
-
-        painter.end()
-
-
-class ChoicesFilterMenuItemWidget(FilterMenuItemWidget):
-    """
-    """
-
-    def __init__(self, filter_data, parent=None):
-        """
-        Constructor
-        """
-
-        super(ChoicesFilterMenuItemWidget, self).__init__(filter_data, parent)
-
-        layout = self.layout()
-
-        self.checkbox = QtGui.QCheckBox()
-        self.checkbox.stateChanged.connect(self.filter_item_checked)
-        layout.addWidget(self.checkbox)
-
-        icon = filter_data.get("icon")
-        if icon:
-            icon_label = QtGui.QLabel()
-            icon_label.setPixmap(icon.pixmap(14))
-            layout.addWidget(icon_label)
-
-        name = filter_data.get("display_name", filter_data.get("filter_value"))
-        label = QtGui.QLabel(name)
-        layout.addWidget(label)
-
-        count = filter_data.get("count")
-        if count:
-            count_label = QtGui.QLabel()
-            count_label.setText(str(count))
-            layout.addStretch()
-            layout.addWidget(count_label)
-
-
-class LineEditFilterMenuItemWidget(FilterMenuItemWidget):
-    """
-    """
-
-    def __init__(self, filter_data, parent=None):
-        super(LineEditFilterMenuItemWidget, self).__init__(filter_data, parent=parent)
-
-        layout = self.layout()
-
-        # name = filter_data.get("display_name", filter_data.get("filter_value"))
-        # label = QtGui.QLabel(name)
-        # layout.addWidget(label)
-
-        # TODO filter operation may demand a different tyep of filter widget
-
-        self.line_edit = QtGui.QLineEdit()
-        self.line_edit.textChanged.connect(self.filter_item_text_changed)
-        layout.addWidget(self.line_edit)
+shotgun_globals = sgtk.platform.import_framework(
+    "tk-framework-shotgunutils", "shotgun_globals"
+)
 
 
 class FilterMenu(ShotgunMenu):
@@ -205,11 +75,8 @@ class FilterMenu(ShotgunMenu):
             for filter_def in filter_defs:
                 filter_item = FilterItem.create(filter_def)
 
-                # name = filter_data.get("display_name", filter_data.get("filter_value"))
-
-                # action = QtGui.QAction(name, parent)
                 action = QtGui.QWidgetAction(parent)
-                widget = FilterMenuItemWidget.create(filter_def)
+                widget = FilterItemWidget.create(filter_def)
                 widget.filter_item_checked.connect(
                     lambda state, a=action: self._filter_item_changed(a, state)
                 )
@@ -295,7 +162,6 @@ class FilterMenu(ShotgunMenu):
                 filter_item
                 for filter_item, action in filters
                 if action.defaultWidget().has_value()
-                # if action.isChecked()
             ]
             if active_filters:
                 active_group_filters.append(
@@ -317,15 +183,119 @@ class ShotgunFilterMenu(FilterMenu):
     entity type to the FilterMenu.
     """
 
-    def __init__(self, entity_type, parent):
+    def __init__(self, shotgun_model, parent):
         """
         """
 
-        filters = self.build_filters(entity_type)
+        filters = self.get_entity_filters(shotgun_model)
         super(ShotgunFilterMenu, self).__init__(filters, parent)
 
     @staticmethod
-    def build_filters(entity_type):
+    def get_entity_filters(entity_model):
         """
+        Return a list of filters for task entity.
         """
-        # TODO
+
+        bundle = sgtk.platform.current_bundle()
+        if bundle.tank.pipeline_configuration.is_site_configuration():
+            # site configuration (no project id). Return None which is
+            # consistent with core.
+            project_id = None
+        else:
+            project_id = bundle.tank.pipeline_configuration.get_project_id()
+
+        # TODO assert it is a shotgun model and has this method to get the entity type
+        entity_type = entity_model.get_entity_type()
+
+        entity_type = entity_model.get_entity_type()
+        fields = shotgun_globals.get_entity_fields(entity_type, project_id=project_id)
+        fields.sort()
+
+        # TODO configure these via param or something
+        valid_field_types = [
+            "text",
+            "number",
+            "status_list",
+        ]
+        invalid_field_types = ["image"]
+
+        # FIXME more automated way to retrieve shotgun field data from model
+        def get_index_field_data(index, sg_field):
+            if not index.isValid():
+                return None
+            item = index.model().item(index.row(), index.column())
+            sg_data = item.get_sg_data()
+            return sg_data.get(sg_field)
+
+        filter_data = {}
+
+        for group_row in range(entity_model.rowCount()):
+            entity_item = entity_model.item(group_row)
+            sg_data = entity_item.get_sg_data()
+
+            # FIXME if this is a group header.. it has no sg data - but its children do..
+            if not sg_data:
+                continue
+
+            for field, value in sg_data.items():
+                if field not in fields:
+                    continue
+
+                field_type = shotgun_globals.get_data_type(
+                    entity_type, field, project_id
+                )
+                # if field_type not in valid_field_types:
+                if field_type in invalid_field_types:
+                    continue
+
+                field_display = shotgun_globals.get_field_display_name(
+                    entity_type, field, project_id
+                )
+                field_id = field
+
+                if isinstance(value, list):
+                    values_list = value
+                else:
+                    values_list = [value]
+
+                for val in values_list:
+                    if isinstance(val, dict):
+                        # assuming it is an entity dict
+                        value_id = val.get("name", str(val))
+                        field_display = "{} {}".format(
+                            shotgun_globals.get_type_display_name(
+                                val.get("type"), project_id
+                            ),
+                            field_display,
+                        )
+                    else:
+                        value_id = val
+
+                    if field_id in filter_data:
+                        filter_data[field_id]["values"].setdefault(
+                            value_id, {}
+                        ).setdefault("count", 0)
+                        filter_data[field_id]["values"][value_id]["count"] += 1
+                        filter_data[field_id]["values"][value_id]["value"] = val
+                    else:
+                        filter_data[field_id] = {
+                            "name": field_display,
+                            "type": field_type,
+                            "values": {value_id: {"value": val, "count": 1}},
+                        }
+                    # TODO icons?
+                    # filter_data[field]["values"][value]["icon"] = entity_item.model().get_entity_icon(entity_type)
+
+        filters = [
+            {
+                # "filter_type": FilterItem.TYPE_LIST,
+                "filter_type": data["type"],
+                "filter_op": FilterItem.OP_EQUAL,
+                # "filter_value": data["values"].keys(),
+                "filter_value": data["values"],
+                "name": data["name"],
+                "data_func": lambda i, f=field: get_index_field_data(i, f),
+            }
+            for field, data in filter_data.items()
+        ]
+        return filters

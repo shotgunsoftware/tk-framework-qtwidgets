@@ -9,5 +9,5 @@
 # not expressly granted therein are reserved by Autodesk, Inc.
 
 from .filter_item import FilterItem
-from .filter_menu import FilterMenu
+from .filter_menu import FilterMenu, ShotgunFilterMenu
 from .tree_proxy_model import TreeProxyModel
