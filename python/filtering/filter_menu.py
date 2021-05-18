@@ -31,6 +31,11 @@ class FilterMenu(ShotgunMenu):
         """
 
         super(FilterMenu, self).__init__(parent)
+        self.build_menu(filters)
+
+    def build_menu(self, filters):
+        """
+        """
 
         self._group_filters = []
 
@@ -75,7 +80,8 @@ class FilterMenu(ShotgunMenu):
             for filter_def in filter_defs:
                 filter_item = FilterItem.create(filter_def)
 
-                action = QtGui.QWidgetAction(parent)
+                # action = QtGui.QWidgetAction(parent)
+                action = QtGui.QWidgetAction(self.parentWidget())
                 widget = FilterItemWidget.create(filter_def)
                 widget.filter_item_checked.connect(
                     lambda state, a=action: self._filter_item_changed(a, state)
@@ -195,6 +201,10 @@ class ShotgunFilterMenu(FilterMenu):
         """
         Return a list of filters for task entity.
         """
+
+        # check if it's a ShotgunModel specifically?
+        if not hasattr(entity_model, "get_entity_type"):
+            return []
 
         bundle = sgtk.platform.current_bundle()
         if bundle.tank.pipeline_configuration.is_site_configuration():
