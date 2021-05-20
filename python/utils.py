@@ -396,6 +396,8 @@ def create_human_readable_timestamp(datetime_value, timestamp_format):
     :returns: date str
     """
 
+    # TODO move to shotgun_globals.date_time
+
     if datetime_value is None:
         return "No timestamp", ""
 

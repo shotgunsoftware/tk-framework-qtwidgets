@@ -7,10 +7,12 @@
 # By accessing, using, copying or modifying this work you indicate your
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
+import datetime
 
 import sgtk
 from sgtk.platform.qt import QtCore
 from tank_vendor import six
+from tank_vendor.shotgun_api3 import sg_timezone
 
 
 class FilterItem(object):
@@ -40,12 +42,28 @@ class FilterItem(object):
     # FIXME mapping types between shotgun and filtering
     # Shotgun field types
     TYPE_TEXT = "text"
+    TYPE_DATE = "date"
+    TYPE_DATETIME = "date_time"
     TYPE_STATUS_LIST = "status_list"
     TYPE_ENTITY = "entity"
     TYPE_MULTI_ENTITY = "multi_entity"
     # The group type is a special type that contains a list of filters itself and its operation
     # is either AND or OR the list of filters
     TYPE_GROUP = "group"
+
+    DEFAULT_OPS = {
+        TYPE_BOOL: OP_EQUAL,  # Should we use OP_IS_TRUE/IS_FALSE ?
+        TYPE_STR: OP_IN,
+        TYPE_TEXT: OP_IN,
+        TYPE_NUMBER: OP_EQUAL,
+        TYPE_LIST: OP_IN,
+        TYPE_STATUS_LIST: OP_IN,
+        TYPE_ENTITY: OP_EQUAL,
+        TYPE_MULTI_ENTITY: OP_EQUAL,
+        TYPE_DATE: OP_EQUAL,
+        TYPE_DATETIME: OP_EQUAL,
+        TYPE_GROUP: OP_AND,
+    }
 
     def __init__(
         self,
@@ -102,12 +120,94 @@ class FilterItem(object):
             self.TYPE_BOOL: self.is_bool_valid,
             self.TYPE_STR: self.is_str_valid,
             self.TYPE_TEXT: self.is_str_valid,
+            self.TYPE_DATE: self.is_datetime_valid,
+            self.TYPE_DATETIME: self.is_datetime_valid,
             self.TYPE_STATUS_LIST: self.is_str_valid,
             self.TYPE_NUMBER: self.is_number_valid,
             self.TYPE_LIST: self.is_list_valid,
             self.TYPE_ENTITY: self.is_entity_valid,
             self.TYPE_MULTI_ENTITY: self.is_multi_entity_valid,
         }
+
+    @staticmethod
+    def get_datetime_bucket(dt):
+        """
+        TODO move to shotgun_globals.date_time
+        """
+
+        if isinstance(dt, six.string_types):
+            dt = datetime.datetime.strptime(dt, "%Y-%m-%d")
+            epoch = datetime.datetime.utcfromtimestamp(0)
+            dt = (dt - epoch).total_seconds()
+
+        if isinstance(dt, float):
+            dt = datetime.datetime.fromtimestamp(dt, tz=sg_timezone.LocalTimezone())
+
+        if not isinstance(dt, datetime.datetime):
+            raise TypeError(
+                "Cannot convert value type '{}' to datetime".format(type(dt))
+            )
+
+        now = datetime.datetime.now(sg_timezone.LocalTimezone())
+        today = now.date()
+        date_value = dt.date()
+
+        if date_value == today:
+            return "Today"
+
+        yesterday = now - datetime.timedelta(days=1)
+        if date_value == yesterday.date():
+            return "Yesterday"
+
+        tomorrow = now + datetime.timedelta(days=1)
+        if date_value == tomorrow.date():
+            return "Tomorrow"
+
+        # Far future is roughly 4 months (4 times 4 weeks)
+        far_future = today + datetime.timedelta(days=-today.weekday(), weeks=4 * 4)
+        if date_value > far_future:
+            return "Far Future"
+
+        long_ago = today - datetime.timedelta(days=-today.weekday(), weeks=4 * 4)
+        if date_value < long_ago:
+            return "Long Ago"
+
+        last_monday = today - datetime.timedelta(days=today.weekday())
+        last_last_monday = today - datetime.timedelta(days=today.weekday(), weeks=2)
+        last_last_last_monday = today - datetime.timedelta(
+            days=today.weekday(), weeks=3
+        )
+        next_monday = today + datetime.timedelta(days=-today.weekday(), weeks=1)
+        next_next_monday = today + datetime.timedelta(days=-today.weekday(), weeks=2)
+        next_next_next_monday = today + datetime.timedelta(
+            days=-today.weekday(), weeks=3
+        )
+
+        if date_value < last_last_last_monday:
+            return "Last Few Months"
+
+        if date_value < last_last_monday:
+            return "Last Few Weeks"
+
+        if date_value < last_monday:
+            return "Last Week"
+
+        if last_monday <= date_value < next_monday:
+            return "This Week"
+
+        if next_monday <= date_value < next_next_monday:
+            return "Next Week"
+
+        if date_value > next_next_next_monday:
+            return "Next Few Months"
+
+        if date_value > next_next_monday:
+            return "Next Few Weeks"
+
+        assert (
+            False
+        ), "Datetime value was not able to be converted to bucket, will default to plain datetime string"
+        return dt.strftime("%x")
 
     @classmethod
     def create(cls, data):
@@ -141,23 +241,19 @@ class FilterItem(object):
         )
 
     @classmethod
+    def default_op_for_type(cls, filter_type):
+        """
+        """
+
+        return cls.DEFAULT_OPS.get(filter_type, FilterItem.OP_EQUAL)
+
+    @classmethod
     def is_group_op(cls, op):
         """
         Return True if the filter item operation is valid.
         """
 
         return op in (cls.OP_AND, cls.OP_OR)
-
-    # @property
-    # def filter_value(self):
-    #     """
-    #     Get or set the value fo the filter.
-    #     """
-    #     return self._filter_value
-
-    # @filter_value.setter
-    # def filter_value(self, value):
-    #     self._filter_value = value
 
     def is_group(self):
         """
@@ -296,6 +392,18 @@ class FilterItem(object):
         assert False, "Unsupported operation for filter type 'number'"
         return False
 
+    def is_datetime_valid(self, value):
+        """
+        Filter the incoming datetime value.
+        """
+
+        if self.filter_op == self.OP_EQUAL:
+            datetiem_bucket = self.get_datetime_bucket(value)
+            return datetiem_bucket == self.filter_value
+
+        assert False, "Unsupported operation for filter type 'datetime'"
+        return False
+
     def is_list_valid(self, values_list):
         """
         Filter the incoming list value.
@@ -307,6 +415,9 @@ class FilterItem(object):
         """
 
         values_list = values_list or []
+
+        if not isinstance(values_list, list):
+            values_list = [values_list]
 
         if self.filter_op == self.OP_IN:
             for value in values_list:

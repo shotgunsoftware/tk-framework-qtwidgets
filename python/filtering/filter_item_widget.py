@@ -13,13 +13,12 @@ from sgtk.platform.qt import QtCore, QtGui
 
 from .filter_item import FilterItem
 from ..shotgun_menus import ShotgunMenu
+from ..search_widget import SearchWidget
 
 
 class FilterItemWidget(QtGui.QWidget):
     """
     """
-
-    FILTER_TYPES = {""}
 
     filter_item_checked = QtCore.Signal(int)
     filter_item_text_changed = QtCore.Signal(str)
@@ -49,34 +48,35 @@ class FilterItemWidget(QtGui.QWidget):
         if not filter_type:
             raise sgtk.TankError("Missing required filter type.")
 
-        if filter_type in (FilterItem.TYPE_NUMBER):
+        if filter_type in (
+            FilterItem.TYPE_NUMBER,
+            FilterItem.TYPE_STR,
+            FilterItem.TYPE_TEXT,
+        ):
             return LineEditFilterItemWidget(filter_data, parent)
 
+        # if filter_type in (FilterItem.TYPE_DATE, FilterItem.TYPE_DATETIME):
+        #     return DateTimeFilterItemWidget(filter_data, parent)
+
         # Default to choices filter widget
-        # if filter_type in (
-        # FilterItem.TYPE_STR,
-        # FilterItem.TYPE_TEXT
-        # ):
         return ChoicesFilterItemWidget(filter_data, parent)
 
     def has_value(self):
         """
         """
-
-        if self.checkbox and self.checkbox.isChecked():
-            return True
-
-        if self.line_edit and self.line_edit.text():
-            return True
-
-        return False
+        raise sgtk.TankError("Abstract class method not overriden")
 
     def action_triggered(self):
         """
+        Override this method to provide any functionality.
         """
 
-        if self.checkbox:
-            self.checkbox.setChecked(not self.checkbox.isChecked())
+    def clear_value(self):
+        """
+        Override this method to provide any functionality.
+        """
+
+        raise sgtk.TankError("Abstract class method not overriden")
 
     def paintEvent(self, event):
         """
@@ -88,6 +88,18 @@ class FilterItemWidget(QtGui.QWidget):
         painter.begin(self)
 
         painter.end()
+
+
+# class DateTimeFilterItemWidget(FilterItem):
+#     """
+#     """
+
+#     def __init__(self, filter_data, parent=None):
+#         """
+#         Constructor
+#         """
+
+#         super(DateTimeFilterItemWidget, self).__init__(filter_data, parent)
 
 
 class ChoicesFilterItemWidget(FilterItemWidget):
@@ -124,6 +136,22 @@ class ChoicesFilterItemWidget(FilterItemWidget):
             layout.addStretch()
             layout.addWidget(count_label)
 
+    def has_value(self):
+        return self.checkbox.isChecked()
+
+    def action_triggered(self):
+        """
+        """
+
+        # Keep the item checkbox with the action check
+        self.checkbox.setChecked(not self.checkbox.isChecked())
+
+    def clear_value(self):
+        """
+        """
+
+        self.checkbox.setChecked(False)
+
 
 class LineEditFilterItemWidget(FilterItemWidget):
     """
@@ -140,6 +168,25 @@ class LineEditFilterItemWidget(FilterItemWidget):
 
         # TODO filter operation may demand a different tyep of filter widget
 
-        self.line_edit = QtGui.QLineEdit()
-        self.line_edit.textChanged.connect(self.filter_item_text_changed)
+        # self.line_edit = QtGui.QLineEdit()
+        self.line_edit = SearchWidget(self)
+        # self.line_edit.textChanged.connect(self.filter_item_text_changed)
+        self.line_edit.search_edited.connect(self._text_changed)
         layout.addWidget(self.line_edit)
+
+    def has_value(self):
+        return self.line_edit.search_text
+        # return self.line_edit.text()
+
+    def clear_value(self):
+        """
+        """
+
+        self.line_edit.clear()
+        # self.line_edit._on_clear_clicked()
+
+    def _text_changed(self, text):
+        """
+        """
+
+        self.filter_item_text_changed.emit(text)
