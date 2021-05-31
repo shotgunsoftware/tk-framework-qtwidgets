@@ -68,7 +68,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         """
         if not self.field_manager:
             raise RuntimeError(
-                "No ShotgunFieldManager has been set, unable to add fields."
+                "No ShotGridFieldManager has been set, unable to add fields."
             )
 
         if field_name in self.fields:
@@ -316,7 +316,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
     def _set_entity(self, entity):
         if not self.field_manager:
             raise RuntimeError(
-                "No ShotgunFieldManager has been set, unable to set entity."
+                "No ShotGridFieldManager has been set, unable to set entity."
             )
 
         # Don't bother if it's the same entity we already have.

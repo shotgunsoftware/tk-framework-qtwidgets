@@ -72,7 +72,7 @@ class ShotgunFieldManager(QtCore.QObject):
         """
         if widget_type not in cls._WIDGET_TYPES:
             raise ValueError(
-                "ShotgunFieldManager unable to retrieve fields of type: %s "
+                "ShotGridFieldManager unable to retrieve fields of type: %s "
                 % (widget_type,)
             )
 
@@ -119,7 +119,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if widget_type not in cls._WIDGET_TYPES:
             raise ValueError(
-                "ShotgunFieldManager unable to register unrecognized widget type: %s "
+                "ShotGridFieldManager unable to register unrecognized widget type: %s "
                 % (widget_type,)
             )
 
@@ -148,7 +148,7 @@ class ShotgunFieldManager(QtCore.QObject):
 
         if widget_type not in cls._WIDGET_TYPES:
             raise ValueError(
-                "ShotgunFieldManager unable to register unrecognized widgets type: %s "
+                "ShotGridFieldManager unable to register unrecognized widgets type: %s "
                 % (widget_type,)
             )
 
@@ -331,7 +331,7 @@ class ShotgunFieldManager(QtCore.QObject):
             )
         else:
             raise TypeError(
-                "Unknown widget type supplied to ShotgunFieldManager."
+                "Unknown widget type supplied to ShotGridFieldManager."
                 "create_widget: %s" % (widget_type,)
             )
 

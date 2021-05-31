@@ -1,8 +1,8 @@
-Shotgun Search Widget
+ShotGrid Search Widget
 #############################################
 
-The Shotgun search widgets are similar to the global search and hierarchical
-search found in Shotgun. They return a number of matches based on text
+The ShotGrid search widgets are similar to the global search and hierarchical
+search found in ShotGrid. They return a number of matches based on text
 that is being typed in by the user.
 
 .. image:: images/global_search.png

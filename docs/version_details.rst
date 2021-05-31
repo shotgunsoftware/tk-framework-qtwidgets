@@ -1,4 +1,4 @@
-Shotgun Version Details Widget
+ShotGrid Version Details Widget
 #############################################
 
 Introduction
@@ -15,7 +15,7 @@ is provided, with the ability for a user to customize what fields they see.
 
 Caching policy
 -----------------------------------
-As with the Shotgun Activity Stream Widget, all the content in the Notes tab is cached,
+As with the ShotGrid Activity Stream Widget, all the content in the Notes tab is cached,
 and the widget requests only the changes since the last update.
 
 VersionDetailsWidget
