@@ -150,11 +150,11 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         # validate the class definition to make sure it implements the needed interface
         if ("_DISPLAY_TYPE" not in class_dict) and ("_EDITOR_TYPE" not in class_dict):
             raise ValueError(
-                "ShotGridFieldMeta classes must have a _DISPLAY_TYPE or _EDITOR_TYPE member variable"
+                "ShotgunFieldMeta classes must have a _DISPLAY_TYPE or _EDITOR_TYPE member variable"
             )
         if "__init__" in class_dict:
             raise ValueError(
-                "ShotGridFieldMeta classes cannot define their own constructor"
+                "ShotgunFieldMeta classes cannot define their own constructor"
             )
 
         # take over class members if called out via the @take_over decorator

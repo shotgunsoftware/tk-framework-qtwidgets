@@ -75,11 +75,11 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         # validate the class definition to make sure it implements the needed interface
         if "_FIELD_TYPE" not in class_dict:
             raise ValueError(
-                "ShotGridFieldMeta classes must have a _FIELD_TYPE member variable"
+                "ShotgunFieldMeta classes must have a _FIELD_TYPE member variable"
             )
         if "__init__" in class_dict:
             raise ValueError(
-                "ShotGridFieldMeta classes cannot define their own constructor"
+                "ShotgunFieldMeta classes cannot define their own constructor"
             )
 
         # take over interface methods if they have not already been defined
