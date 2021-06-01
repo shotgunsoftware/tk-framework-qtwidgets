@@ -1,5 +1,5 @@
 ShotGrid Menus
-#############
+##############
 
 Introduction
 ============
@@ -12,7 +12,7 @@ building menus that interact with ShotGrid.
 ----
 
 ShotGrid Menu
-------------
+-------------
 
 .. currentmodule:: shotgun_menus
 
