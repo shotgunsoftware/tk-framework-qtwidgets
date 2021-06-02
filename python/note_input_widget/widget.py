@@ -618,7 +618,7 @@ class NoteInputWidget(QtGui.QWidget):
         if self._processing_id == uid:
             self._bundle.log_error("Could not create note/reply: %s" % msg)
             full_msg = "Could not submit note update: %s" % msg
-            QtGui.QMessageBox.critical(None, "Shotgun Error", msg)
+            QtGui.QMessageBox.critical(None, "ShotGrid Error", msg)
 
     def __on_worker_signal(self, uid, request_type, data):
         """
