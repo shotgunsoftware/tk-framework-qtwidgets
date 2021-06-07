@@ -1,12 +1,12 @@
-Shotgun Activity Stream Widget
+ShotGrid Activity Stream Widget
 #############################################
 
 Introduction
 ======================================
 
 The activity stream widget is a QT widget that renders the activity stream for a
-given Shotgun entity. The functionality is similar to that in the activity stream
-found inside the Shotgun web application. Publishes and Versions show up with thumbnails,
+given ShotGrid entity. The functionality is similar to that in the activity stream
+found inside the ShotGrid web application. Publishes and Versions show up with thumbnails,
 optionally with playback links. Notes show up with replies and attachments and you can
 reply to notes directly in the activity stream.
 

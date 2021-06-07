@@ -7,10 +7,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Note Input Widget &mdash; tk-framework-qtwidgets v2.9.4 documentation</title>
+  <title>Shotgun Note Input Widget &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
   
 
   
@@ -51,7 +52,7 @@
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
           
-    <a href='http://developer.shotgunsoftware.com'>
+    <a href='http://developer.shotgridsoftware.com'>
     
         <img style='width: 191px;
                 height: 60px;
@@ -94,10 +95,10 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">ShotGrid Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">ShotGrid Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
@@ -108,12 +109,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">ShotGrid Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_details.html">Shotgun Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -138,12 +139,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://support.shotgridsoftware.com/home'>Shotgun Support</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -209,7 +210,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="shotgun-note-input-widget">
+  <section id="shotgun-note-input-widget">
 <h1>Shotgun Note Input Widget<a class="headerlink" href="#shotgun-note-input-widget" title="Permalink to this headline">¶</a></h1>
 <p>The note editor widget makes it easy to add notes in Toolkit.</p>
 <img alt="_images/note_reply.png" src="_images/note_reply.png" />
@@ -219,7 +220,7 @@ If you start typing &#64;xyz, an auto completer will kick in and show matching
 groups and users. Once added to the note text, these users will automatically
 be included in the TO list in the case of a new note and in the CC list in the
 case of a reply.</p>
-<div class="section" id="noteinputwidget">
+<section id="noteinputwidget">
 <h2>NoteInputWidget<a class="headerlink" href="#noteinputwidget" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="note_input_widget.NoteInputWidget">
@@ -259,7 +260,7 @@ data in the background. Data calls
 to Shotgun will be dispatched via this object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
+<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
 </dd>
 </dl>
 </dd></dl>
@@ -335,8 +336,8 @@ where a user can type in stuff</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="noteinputdialog">
+</section>
+<section id="noteinputdialog">
 <h2>NoteInputDialog<a class="headerlink" href="#noteinputdialog" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="note_input_widget.NoteInputDialog">
@@ -346,8 +347,8 @@ where a user can type in stuff</p>
 <p>Constructor.</p>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

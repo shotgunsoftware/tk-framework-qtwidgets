@@ -7,10 +7,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Context Selector Widget &mdash; tk-framework-qtwidgets v2.9.4 documentation</title>
+  <title>Context Selector Widget &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
   
 
   
@@ -39,7 +40,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Help Screen Popup" href="help_screen.html" />
-    <link rel="prev" title="Shotgun Search Widget" href="shotgun_search_widget.html" /> 
+    <link rel="prev" title="ShotGrid Search Widget" href="shotgun_search_widget.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +52,7 @@
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
           
-    <a href='http://developer.shotgunsoftware.com'>
+    <a href='http://developer.shotgridsoftware.com'>
     
         <img style='width: 191px;
                 height: 60px;
@@ -94,22 +95,22 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">ShotGrid Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">ShotGrid Search Widget</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">ShotGrid Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_details.html">Shotgun Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -134,12 +135,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://support.shotgridsoftware.com/home'>Shotgun Support</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -205,7 +206,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="context-selector-widget">
+  <section id="context-selector-widget">
 <h1>Context Selector Widget<a class="headerlink" href="#context-selector-widget" title="Permalink to this headline">¶</a></h1>
 <p>This widget is a standardized context selection UI, suitable to be
 dropped in when a Toolkit App needs a user to select a context:</p>
@@ -264,7 +265,7 @@ override args.</p>
 any background set up tasks, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
+<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
 </dd>
 </dl>
 </dd></dl>
@@ -369,32 +370,32 @@ as the tooltip for the link selection widget</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.actionEvent">
-<code class="sig-name descname">actionEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QActionEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.actionEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">actionEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QActionEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.actionEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.actions">
-<code class="sig-name descname">actions</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtWidgets.QAction]<a class="headerlink" href="#context_selector.ContextWidget.actions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">actions</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#context_selector.ContextWidget.actions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.activateWindow">
-<code class="sig-name descname">activateWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.activateWindow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">activateWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.activateWindow" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.addAction">
-<code class="sig-name descname">addAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.addAction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">addAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action:PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.addAction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.addActions">
-<code class="sig-name descname">addActions</code><span class="sig-paren">(</span><em class="sig-param">self, actions: typing.List[PySide2.QtWidgets.QAction]</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.addActions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">addActions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">actions:typing.Sequence</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.addActions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.adjustSize">
-<code class="sig-name descname">adjustSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.adjustSize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">adjustSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.adjustSize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -419,28 +420,28 @@ as the tooltip for the link selection widget</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.blockSignals">
-<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.blockSignals" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b:bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.blockSignals" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.changeEvent">
-<code class="sig-name descname">changeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.changeEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">changeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.changeEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.childAt">
-<code class="sig-name descname">childAt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">p: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#context_selector.ContextWidget.childAt" title="Permalink to this definition">¶</a></dt>
-<dd><p>childAt(self, x: int, y: int) -&gt; PySide2.QtWidgets.QWidget</p>
+<code class="sig-name descname">childAt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">p:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#context_selector.ContextWidget.childAt" title="Permalink to this definition">¶</a></dt>
+<dd><p>childAt(self, x:int, y:int) -&gt; PySide2.QtWidgets.QWidget</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.childEvent">
-<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.childEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.childEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.children">
-<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QObject]<a class="headerlink" href="#context_selector.ContextWidget.children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#context_selector.ContextWidget.children" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -455,12 +456,12 @@ as the tooltip for the link selection widget</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.clearFocus">
-<code class="sig-name descname">clearFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.clearFocus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clearFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.clearFocus" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.clearMask">
-<code class="sig-name descname">clearMask</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.clearMask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clearMask</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.clearMask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -470,7 +471,7 @@ as the tooltip for the link selection widget</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.closeEvent">
-<code class="sig-name descname">closeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QCloseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.closeEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">closeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QCloseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.closeEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -480,17 +481,17 @@ as the tooltip for the link selection widget</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.connect">
-<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2: str</em>, <em class="sig-param">arg__3: typing.Callable</em>, <em class="sig-param">type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>connect(arg__1: str, arg__2: typing.Callable, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
-connect(arg__1: str, arg__2: PySide2.QtCore.QObject, arg__3: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
-connect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, method: PySide2.QtCore.QMetaMethod, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
-connect(sender: PySide2.QtCore.QObject, signal: str, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
-connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
+<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2:bytes</em>, <em class="sig-param">arg__3:typing.Callable</em>, <em class="sig-param">type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect(self, arg__1:bytes, arg__2:typing.Callable, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(self, arg__1:bytes, arg__2:PySide2.QtCore.QObject, arg__3:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(self, sender:PySide2.QtCore.QObject, signal:bytes, member:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender:PySide2.QtCore.QObject, signal:PySide2.QtCore.QMetaMethod, receiver:PySide2.QtCore.QObject, method:PySide2.QtCore.QMetaMethod, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender:PySide2.QtCore.QObject, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.connectNotify">
-<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.connectNotify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.connectNotify" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -505,7 +506,7 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.contextMenuEvent">
-<code class="sig-name descname">contextMenuEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QContextMenuEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">contextMenuEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QContextMenuEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -515,17 +516,17 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int = 0</em>, <em class="sig-param">initializeWindow: bool = True</em>, <em class="sig-param">destroyOldWindow: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int=0</em>, <em class="sig-param">initializeWindow:bool=True</em>, <em class="sig-param">destroyOldWindow:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.create" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.createWinId">
-<code class="sig-name descname">createWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.createWinId" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">createWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.createWinId" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.createWindowContainer">
-<em class="property">static </em><code class="sig-name descname">createWindowContainer</code><span class="sig-paren">(</span><em class="sig-param">window: PySide2.QtGui.QWindow</em>, <em class="sig-param">parent: PySide2.QtWidgets.QWidget = None</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.WindowFlags = Default(Qt.WindowFlags)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#context_selector.ContextWidget.createWindowContainer" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">createWindowContainer</code><span class="sig-paren">(</span><em class="sig-param">window:PySide2.QtGui.QWindow</em>, <em class="sig-param">parent:typing.Union[PySide2.QtWidgets.QWidget</em>, <em class="sig-param">NoneType]=None</em>, <em class="sig-param">flags:PySide2.QtCore.Qt.WindowFlags=Default(Qt.WindowFlags)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#context_selector.ContextWidget.createWindowContainer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -535,12 +536,12 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.customEvent">
-<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.customEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.customEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.deleteLater">
-<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.deleteLater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.deleteLater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -550,7 +551,7 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">destroyWindow: bool = True</em>, <em class="sig-param">destroySubWindows: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">destroyWindow:bool=True</em>, <em class="sig-param">destroySubWindows:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.destroy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -575,53 +576,53 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.disconnect">
-<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>disconnect(arg__1: PySide2.QtCore.QObject, arg__2: str, arg__3: typing.Callable) -&gt; bool
-disconnect(arg__1: str, arg__2: typing.Callable) -&gt; bool
-disconnect(receiver: PySide2.QtCore.QObject, member: str = None) -&gt; bool
-disconnect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, member: PySide2.QtCore.QMetaMethod) -&gt; bool
-disconnect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool
-disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool</p>
+<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>disconnect(arg__1:PySide2.QtCore.QObject, arg__2:bytes, arg__3:typing.Callable) -&gt; bool
+disconnect(self, arg__1:bytes, arg__2:typing.Callable) -&gt; bool
+disconnect(self, receiver:PySide2.QtCore.QObject, member:typing.Union[bytes, NoneType]=None) -&gt; bool
+disconnect(self, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes) -&gt; bool
+disconnect(sender:PySide2.QtCore.QObject, signal:PySide2.QtCore.QMetaMethod, receiver:PySide2.QtCore.QObject, member:PySide2.QtCore.QMetaMethod) -&gt; bool
+disconnect(sender:PySide2.QtCore.QObject, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes) -&gt; bool</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.disconnectNotify">
-<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.disconnectNotify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.disconnectNotify" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.dragEnterEvent">
-<code class="sig-name descname">dragEnterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragEnterEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.dragEnterEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dragEnterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QDragEnterEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.dragEnterEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.dragLeaveEvent">
-<code class="sig-name descname">dragLeaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragLeaveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.dragLeaveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dragLeaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QDragLeaveEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.dragLeaveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.dragMoveEvent">
-<code class="sig-name descname">dragMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragMoveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.dragMoveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dragMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QDragMoveEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.dragMoveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.dropEvent">
-<code class="sig-name descname">dropEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDropEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.dropEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dropEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QDropEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.dropEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.dumpObjectInfo">
-<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.dumpObjectTree">
-<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.dynamicPropertyNames">
-<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QByteArray]<a class="headerlink" href="#context_selector.ContextWidget.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#context_selector.ContextWidget.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -631,43 +632,44 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.emit">
-<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.emit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bytes</em>, <em class="sig-param">*args:None</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.emit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.ensurePolished">
-<code class="sig-name descname">ensurePolished</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.ensurePolished" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ensurePolished</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.ensurePolished" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.enterEvent">
-<code class="sig-name descname">enterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.enterEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">enterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.enterEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.event">
-<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.event" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.event" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.find">
-<em class="property">static </em><code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">arg__1: int</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#context_selector.ContextWidget.find" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#context_selector.ContextWidget.find" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.findChild">
-<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: str = ''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#context_selector.ContextWidget.findChild" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:type</em>, <em class="sig-param">arg__2:str=''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#context_selector.ContextWidget.findChild" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.findChildren">
-<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#context_selector.ContextWidget.findChildren" title="Permalink to this definition">¶</a></dt>
-<dd><p>findChildren(self, arg__1: type, arg__2: str = ‘’) -&gt; typing.Iterable</p>
+<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:type</em>, <em class="sig-param">arg__2:PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#context_selector.ContextWidget.findChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>findChildren(self, arg__1:type, arg__2:PySide2.QtCore.QRegularExpression) -&gt; typing.Iterable
+findChildren(self, arg__1:type, arg__2:str=’’) -&gt; typing.Iterable</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.focusInEvent">
-<code class="sig-name descname">focusInEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.focusInEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">focusInEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.focusInEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -677,12 +679,12 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.focusNextPrevChild">
-<code class="sig-name descname">focusNextPrevChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.focusNextPrevChild" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">focusNextPrevChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next:bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.focusNextPrevChild" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.focusOutEvent">
-<code class="sig-name descname">focusOutEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.focusOutEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">focusOutEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.focusOutEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -742,33 +744,33 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.getContentsMargins">
-<code class="sig-name descname">getContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left: int</em>, <em class="sig-param">top: int</em>, <em class="sig-param">right: int</em>, <em class="sig-param">bottom: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.getContentsMargins" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.Tuple<a class="headerlink" href="#context_selector.ContextWidget.getContentsMargins" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.grab">
-<code class="sig-name descname">grab</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rectangle: PySide2.QtCore.QRect = PySide2.QtCore.QRect(0</em>, <em class="sig-param">0</em>, <em class="sig-param">-1</em>, <em class="sig-param">-1)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPixmap<a class="headerlink" href="#context_selector.ContextWidget.grab" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">grab</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rectangle:PySide2.QtCore.QRect=PySide2.QtCore.QRect(0</em>, <em class="sig-param">0</em>, <em class="sig-param">-1</em>, <em class="sig-param">-1)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPixmap<a class="headerlink" href="#context_selector.ContextWidget.grab" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.grabGesture">
-<code class="sig-name descname">grabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.GestureType</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.GestureFlags = Default(Qt.GestureFlags)</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.grabGesture" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">grabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type:PySide2.QtCore.Qt.GestureType</em>, <em class="sig-param">flags:PySide2.QtCore.Qt.GestureFlags=Default(Qt.GestureFlags)</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.grabGesture" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.grabKeyboard">
-<code class="sig-name descname">grabKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.grabKeyboard" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">grabKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.grabKeyboard" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.grabMouse">
-<code class="sig-name descname">grabMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.grabMouse" title="Permalink to this definition">¶</a></dt>
-<dd><p>grabMouse(self, arg__1: PySide2.QtGui.QCursor)</p>
+<code class="sig-name descname">grabMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.grabMouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>grabMouse(self, arg__1:PySide2.QtGui.QCursor) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.grabShortcut">
-<code class="sig-name descname">grabShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">key: PySide2.QtGui.QKeySequence</em>, <em class="sig-param">context: PySide2.QtCore.Qt.ShortcutContext = PySide2.QtCore.Qt.ShortcutContext.WindowShortcut</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.grabShortcut" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">grabShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">key:PySide2.QtGui.QKeySequence</em>, <em class="sig-param">context:PySide2.QtCore.Qt.ShortcutContext=PySide2.QtCore.Qt.ShortcutContext.WindowShortcut</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.grabShortcut" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -808,7 +810,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.heightForWidth">
-<code class="sig-name descname">heightForWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.heightForWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">heightForWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.heightForWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -818,27 +820,27 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.hide">
-<code class="sig-name descname">hide</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.hide" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hide</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.hide" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.hideEvent">
-<code class="sig-name descname">hideEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QHideEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.hideEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hideEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QHideEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.hideEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.inherits">
-<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.inherits" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname:bytes</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.inherits" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.initPainter">
-<code class="sig-name descname">initPainter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter: PySide2.QtGui.QPainter</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.initPainter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initPainter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter:PySide2.QtGui.QPainter</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.initPainter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.inputMethodEvent">
-<code class="sig-name descname">inputMethodEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QInputMethodEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.inputMethodEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">inputMethodEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QInputMethodEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.inputMethodEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -848,22 +850,22 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.inputMethodQuery">
-<code class="sig-name descname">inputMethodQuery</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.InputMethodQuery</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#context_selector.ContextWidget.inputMethodQuery" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">inputMethodQuery</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.InputMethodQuery</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#context_selector.ContextWidget.inputMethodQuery" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.insertAction">
-<code class="sig-name descname">insertAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">before: PySide2.QtWidgets.QAction</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.insertAction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insertAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">before:PySide2.QtWidgets.QAction</em>, <em class="sig-param">action:PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.insertAction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.insertActions">
-<code class="sig-name descname">insertActions</code><span class="sig-paren">(</span><em class="sig-param">self, before: PySide2.QtWidgets.QAction, actions: typing.List[PySide2.QtWidgets.QAction]</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.insertActions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insertActions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">before:PySide2.QtWidgets.QAction</em>, <em class="sig-param">actions:typing.Sequence</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.insertActions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.installEventFilter">
-<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.installEventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.installEventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -878,7 +880,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.isAncestorOf">
-<code class="sig-name descname">isAncestorOf</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">child: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.isAncestorOf" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isAncestorOf</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">child:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.isAncestorOf" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -888,7 +890,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.isEnabledTo">
-<code class="sig-name descname">isEnabledTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.isEnabledTo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isEnabledTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.isEnabledTo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -933,7 +935,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.isSignalConnected">
-<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.isSignalConnected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.isSignalConnected" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -948,7 +950,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.isVisibleTo">
-<code class="sig-name descname">isVisibleTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.isVisibleTo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isVisibleTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.isVisibleTo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -973,12 +975,12 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.keyPressEvent">
-<code class="sig-name descname">keyPressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">keyPressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.keyReleaseEvent">
-<code class="sig-name descname">keyReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">keyReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -988,7 +990,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.killTimer">
-<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.killTimer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.killTimer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1003,7 +1005,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.leaveEvent">
-<code class="sig-name descname">leaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.leaveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">leaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.leaveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1023,37 +1025,37 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.lower">
-<code class="sig-name descname">lower</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.lower" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lower</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.lower" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mapFrom">
-<code class="sig-name descname">mapFrom</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapFrom" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapFrom</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapFrom" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mapFromGlobal">
-<code class="sig-name descname">mapFromGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapFromGlobal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapFromGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapFromGlobal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mapFromParent">
-<code class="sig-name descname">mapFromParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapFromParent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapFromParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapFromParent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mapTo">
-<code class="sig-name descname">mapTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapTo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapTo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mapToGlobal">
-<code class="sig-name descname">mapToGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapToGlobal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapToGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapToGlobal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mapToParent">
-<code class="sig-name descname">mapToParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapToParent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapToParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#context_selector.ContextWidget.mapToParent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1083,7 +1085,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.metric">
-<code class="sig-name descname">metric</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPaintDevice.PaintDeviceMetric</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.metric" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">metric</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPaintDevice.PaintDeviceMetric</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.metric" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1108,7 +1110,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mouseDoubleClickEvent">
-<code class="sig-name descname">mouseDoubleClickEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.mouseDoubleClickEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mouseDoubleClickEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.mouseDoubleClickEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1118,38 +1120,38 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mouseMoveEvent">
-<code class="sig-name descname">mouseMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mouseMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mousePressEvent">
-<code class="sig-name descname">mousePressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mousePressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.mousePressEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.mouseReleaseEvent">
-<code class="sig-name descname">mouseReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.mouseReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mouseReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.mouseReleaseEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.move">
-<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.move" title="Permalink to this definition">¶</a></dt>
-<dd><p>move(self, x: int, y: int)</p>
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>move(self, x:int, y:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.moveEvent">
-<code class="sig-name descname">moveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMoveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.moveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">moveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QMoveEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.moveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.moveToThread">
-<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread: PySide2.QtCore.QThread</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.moveToThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread:PySide2.QtCore.QThread</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.moveToThread" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.nativeEvent">
-<code class="sig-name descname">nativeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">eventType: PySide2.QtCore.QByteArray</em>, <em class="sig-param">message: int</em>, <em class="sig-param">result: int</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.nativeEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">nativeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">eventType:PySide2.QtCore.QByteArray</em>, <em class="sig-param">message:int</em><span class="sig-paren">)</span> &#x2192; typing.Tuple<a class="headerlink" href="#context_selector.ContextWidget.nativeEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1174,12 +1176,12 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.overrideWindowFlags">
-<code class="sig-name descname">overrideWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.overrideWindowFlags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">overrideWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type:PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.overrideWindowFlags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.overrideWindowState">
-<code class="sig-name descname">overrideWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state: PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.overrideWindowState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">overrideWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state:PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.overrideWindowState" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1189,7 +1191,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.paintEvent">
-<code class="sig-name descname">paintEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QPaintEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.paintEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">paintEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QPaintEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.paintEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1234,17 +1236,17 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.property">
-<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#context_selector.ContextWidget.property" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:bytes</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#context_selector.ContextWidget.property" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.raise_">
-<code class="sig-name descname">raise_</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.raise_" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">raise_</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.raise_" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.receivers">
-<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: str</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.receivers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:bytes</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.receivers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1254,7 +1256,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.redirected">
-<code class="sig-name descname">redirected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">offset: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPaintDevice<a class="headerlink" href="#context_selector.ContextWidget.redirected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">redirected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">offset:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPaintDevice<a class="headerlink" href="#context_selector.ContextWidget.redirected" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1264,57 +1266,57 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.releaseKeyboard">
-<code class="sig-name descname">releaseKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.releaseKeyboard" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">releaseKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.releaseKeyboard" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.releaseMouse">
-<code class="sig-name descname">releaseMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.releaseMouse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">releaseMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.releaseMouse" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.releaseShortcut">
-<code class="sig-name descname">releaseShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.releaseShortcut" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">releaseShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.releaseShortcut" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.removeAction">
-<code class="sig-name descname">removeAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.removeAction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">removeAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action:PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.removeAction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.removeEventFilter">
-<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.removeEventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.removeEventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.render">
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter: PySide2.QtGui.QPainter</em>, <em class="sig-param">targetOffset: PySide2.QtCore.QPoint</em>, <em class="sig-param">sourceRegion: PySide2.QtGui.QRegion = Default(QRegion)</em>, <em class="sig-param">renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.render" title="Permalink to this definition">¶</a></dt>
-<dd><p>render(self, target: PySide2.QtGui.QPaintDevice, targetOffset: PySide2.QtCore.QPoint = Default(QPoint), sourceRegion: PySide2.QtGui.QRegion = Default(QRegion), renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren)))</p>
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter:PySide2.QtGui.QPainter</em>, <em class="sig-param">targetOffset:PySide2.QtCore.QPoint</em>, <em class="sig-param">sourceRegion:PySide2.QtGui.QRegion=Default(QRegion)</em>, <em class="sig-param">renderFlags:PySide2.QtWidgets.QWidget.RenderFlags=Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>render(self, target:PySide2.QtGui.QPaintDevice, targetOffset:PySide2.QtCore.QPoint=Default(QPoint), sourceRegion:PySide2.QtGui.QRegion=Default(QRegion), renderFlags:PySide2.QtWidgets.QWidget.RenderFlags=Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.repaint">
-<code class="sig-name descname">repaint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.repaint" title="Permalink to this definition">¶</a></dt>
-<dd><p>repaint(self, arg__1: PySide2.QtCore.QRect)
-repaint(self, arg__1: PySide2.QtGui.QRegion)
-repaint(self, x: int, y: int, w: int, h: int)</p>
+<code class="sig-name descname">repaint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.repaint" title="Permalink to this definition">¶</a></dt>
+<dd><p>repaint(self, arg__1:PySide2.QtCore.QRect) -&gt; None
+repaint(self, arg__1:PySide2.QtGui.QRegion) -&gt; None
+repaint(self, x:int, y:int, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.resize">
-<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.resize" title="Permalink to this definition">¶</a></dt>
-<dd><p>resize(self, w: int, h: int)</p>
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>resize(self, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.resizeEvent">
-<code class="sig-name descname">resizeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QResizeEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.resizeEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">resizeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QResizeEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.resizeEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.restoreGeometry">
-<code class="sig-name descname">restoreGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">geometry: PySide2.QtCore.QByteArray</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.restoreGeometry" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">restoreGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">geometry:PySide2.QtCore.QByteArray</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.restoreGeometry" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1323,9 +1325,14 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="context_selector.ContextWidget.screen">
+<code class="sig-name descname">screen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QScreen<a class="headerlink" href="#context_selector.ContextWidget.screen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="context_selector.ContextWidget.scroll">
-<code class="sig-name descname">scroll</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dx: int</em>, <em class="sig-param">dy: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.scroll" title="Permalink to this definition">¶</a></dt>
-<dd><p>scroll(self, dx: int, dy: int, arg__3: PySide2.QtCore.QRect)</p>
+<code class="sig-name descname">scroll</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dx:int</em>, <em class="sig-param">dy:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.scroll" title="Permalink to this definition">¶</a></dt>
+<dd><p>scroll(self, dx:int, dy:int, arg__3:PySide2.QtCore.QRect) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
@@ -1340,333 +1347,334 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setAcceptDrops">
-<code class="sig-name descname">setAcceptDrops</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">on: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setAcceptDrops" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAcceptDrops</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">on:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setAcceptDrops" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setAccessibleDescription">
-<code class="sig-name descname">setAccessibleDescription</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">description: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setAccessibleDescription" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAccessibleDescription</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">description:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setAccessibleDescription" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setAccessibleName">
-<code class="sig-name descname">setAccessibleName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setAccessibleName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAccessibleName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setAccessibleName" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setAttribute">
-<code class="sig-name descname">setAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WidgetAttribute</em>, <em class="sig-param">on: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setAttribute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.WidgetAttribute</em>, <em class="sig-param">on:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setAttribute" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setAutoFillBackground">
-<code class="sig-name descname">setAutoFillBackground</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enabled: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setAutoFillBackground" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAutoFillBackground</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enabled:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setAutoFillBackground" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setBackgroundRole">
-<code class="sig-name descname">setBackgroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setBackgroundRole" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setBackgroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setBackgroundRole" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setBaseSize">
-<code class="sig-name descname">setBaseSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setBaseSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>setBaseSize(self, basew: int, baseh: int)</p>
+<code class="sig-name descname">setBaseSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setBaseSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setBaseSize(self, basew:int, baseh:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setContentsMargins">
-<code class="sig-name descname">setContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left: int</em>, <em class="sig-param">top: int</em>, <em class="sig-param">right: int</em>, <em class="sig-param">bottom: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setContentsMargins" title="Permalink to this definition">¶</a></dt>
-<dd><p>setContentsMargins(self, margins: PySide2.QtCore.QMargins)</p>
+<code class="sig-name descname">setContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left:int</em>, <em class="sig-param">top:int</em>, <em class="sig-param">right:int</em>, <em class="sig-param">bottom:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setContentsMargins" title="Permalink to this definition">¶</a></dt>
+<dd><p>setContentsMargins(self, margins:PySide2.QtCore.QMargins) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setContextMenuPolicy">
-<code class="sig-name descname">setContextMenuPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy: PySide2.QtCore.Qt.ContextMenuPolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setContextMenuPolicy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setContextMenuPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy:PySide2.QtCore.Qt.ContextMenuPolicy</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setContextMenuPolicy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setCursor">
-<code class="sig-name descname">setCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QCursor</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setCursor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QCursor</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setCursor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setDisabled">
-<code class="sig-name descname">setDisabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setDisabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setDisabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setDisabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setEnabled">
-<code class="sig-name descname">setEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setEnabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setEnabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setFixedHeight">
-<code class="sig-name descname">setFixedHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">h: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setFixedHeight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFixedHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">h:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setFixedHeight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setFixedSize">
-<code class="sig-name descname">setFixedSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setFixedSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>setFixedSize(self, w: int, h: int)</p>
+<code class="sig-name descname">setFixedSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setFixedSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setFixedSize(self, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setFixedWidth">
-<code class="sig-name descname">setFixedWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">w: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setFixedWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFixedWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">w:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setFixedWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setFocus">
-<code class="sig-name descname">setFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setFocus" title="Permalink to this definition">¶</a></dt>
-<dd><p>setFocus(self, reason: PySide2.QtCore.Qt.FocusReason)</p>
+<code class="sig-name descname">setFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setFocus" title="Permalink to this definition">¶</a></dt>
+<dd><p>setFocus(self, reason:PySide2.QtCore.Qt.FocusReason) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setFocusPolicy">
-<code class="sig-name descname">setFocusPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy: PySide2.QtCore.Qt.FocusPolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setFocusPolicy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFocusPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy:PySide2.QtCore.Qt.FocusPolicy</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setFocusPolicy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setFocusProxy">
-<code class="sig-name descname">setFocusProxy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setFocusProxy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFocusProxy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setFocusProxy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setFont">
-<code class="sig-name descname">setFont</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QFont</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setFont" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFont</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QFont</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setFont" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setForegroundRole">
-<code class="sig-name descname">setForegroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setForegroundRole" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setForegroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setForegroundRole" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setGeometry">
-<code class="sig-name descname">setGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QRect</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setGeometry" title="Permalink to this definition">¶</a></dt>
-<dd><p>setGeometry(self, x: int, y: int, w: int, h: int)</p>
+<code class="sig-name descname">setGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QRect</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setGeometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>setGeometry(self, x:int, y:int, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setGraphicsEffect">
-<code class="sig-name descname">setGraphicsEffect</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">effect: PySide2.QtWidgets.QGraphicsEffect</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setGraphicsEffect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setGraphicsEffect</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">effect:PySide2.QtWidgets.QGraphicsEffect</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setGraphicsEffect" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setHidden">
-<code class="sig-name descname">setHidden</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hidden: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setHidden" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setHidden</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hidden:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setHidden" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setInputMethodHints">
-<code class="sig-name descname">setInputMethodHints</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hints: PySide2.QtCore.Qt.InputMethodHints</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setInputMethodHints" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setInputMethodHints</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hints:PySide2.QtCore.Qt.InputMethodHints</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setInputMethodHints" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setLayout">
-<code class="sig-name descname">setLayout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QLayout</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setLayout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setLayout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QLayout</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setLayout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setLayoutDirection">
-<code class="sig-name descname">setLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">direction: PySide2.QtCore.Qt.LayoutDirection</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setLayoutDirection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">direction:PySide2.QtCore.Qt.LayoutDirection</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setLayoutDirection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setLocale">
-<code class="sig-name descname">setLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">locale: PySide2.QtCore.QLocale</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setLocale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">locale:PySide2.QtCore.QLocale</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setLocale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setMask">
-<code class="sig-name descname">setMask</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QBitmap</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setMask" title="Permalink to this definition">¶</a></dt>
-<dd><p>setMask(self, arg__1: PySide2.QtGui.QRegion)</p>
+<code class="sig-name descname">setMask</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QBitmap</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMask(self, arg__1:PySide2.QtGui.QRegion) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setMaximumHeight">
-<code class="sig-name descname">setMaximumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxh: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setMaximumHeight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMaximumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxh:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setMaximumHeight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setMaximumSize">
-<code class="sig-name descname">setMaximumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setMaximumSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>setMaximumSize(self, maxw: int, maxh: int)</p>
+<code class="sig-name descname">setMaximumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setMaximumSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMaximumSize(self, maxw:int, maxh:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setMaximumWidth">
-<code class="sig-name descname">setMaximumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxw: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setMaximumWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMaximumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxw:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setMaximumWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setMinimumHeight">
-<code class="sig-name descname">setMinimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minh: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setMinimumHeight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMinimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minh:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setMinimumHeight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setMinimumSize">
-<code class="sig-name descname">setMinimumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setMinimumSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>setMinimumSize(self, minw: int, minh: int)</p>
+<code class="sig-name descname">setMinimumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setMinimumSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMinimumSize(self, minw:int, minh:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setMinimumWidth">
-<code class="sig-name descname">setMinimumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minw: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setMinimumWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMinimumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minw:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setMinimumWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setMouseTracking">
-<code class="sig-name descname">setMouseTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setMouseTracking" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMouseTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setMouseTracking" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setObjectName">
-<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setObjectName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setObjectName" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setPalette">
-<code class="sig-name descname">setPalette</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setPalette" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setPalette</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPalette</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setPalette" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setParent">
-<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setParent" title="Permalink to this definition">¶</a></dt>
-<dd><p>setParent(self, parent: PySide2.QtWidgets.QWidget, f: PySide2.QtCore.Qt.WindowFlags)</p>
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>setParent(self, parent:PySide2.QtWidgets.QWidget) -&gt; None
+setParent(self, parent:PySide2.QtWidgets.QWidget, f:PySide2.QtCore.Qt.WindowFlags) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setProperty">
-<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em>, <em class="sig-param">value: typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.setProperty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:bytes</em>, <em class="sig-param">value:typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.setProperty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setShortcutAutoRepeat">
-<code class="sig-name descname">setShortcutAutoRepeat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em>, <em class="sig-param">enable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setShortcutAutoRepeat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setShortcutAutoRepeat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em>, <em class="sig-param">enable:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setShortcutAutoRepeat" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setShortcutEnabled">
-<code class="sig-name descname">setShortcutEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em>, <em class="sig-param">enable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setShortcutEnabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setShortcutEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em>, <em class="sig-param">enable:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setShortcutEnabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setSizeIncrement">
-<code class="sig-name descname">setSizeIncrement</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setSizeIncrement" title="Permalink to this definition">¶</a></dt>
-<dd><p>setSizeIncrement(self, w: int, h: int)</p>
+<code class="sig-name descname">setSizeIncrement</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setSizeIncrement" title="Permalink to this definition">¶</a></dt>
+<dd><p>setSizeIncrement(self, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setSizePolicy">
-<code class="sig-name descname">setSizePolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QSizePolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setSizePolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>setSizePolicy(self, horizontal: PySide2.QtWidgets.QSizePolicy.Policy, vertical: PySide2.QtWidgets.QSizePolicy.Policy)</p>
+<code class="sig-name descname">setSizePolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QSizePolicy</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setSizePolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>setSizePolicy(self, horizontal:PySide2.QtWidgets.QSizePolicy.Policy, vertical:PySide2.QtWidgets.QSizePolicy.Policy) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setStatusTip">
-<code class="sig-name descname">setStatusTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setStatusTip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setStatusTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setStatusTip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setStyle">
-<code class="sig-name descname">setStyle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QStyle</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setStyle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setStyle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QStyle</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setStyle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setStyleSheet">
-<code class="sig-name descname">setStyleSheet</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">styleSheet: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setStyleSheet" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setStyleSheet</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">styleSheet:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setStyleSheet" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setTabOrder">
-<em class="property">static </em><code class="sig-name descname">setTabOrder</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setTabOrder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">setTabOrder</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setTabOrder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setTabletTracking">
-<code class="sig-name descname">setTabletTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setTabletTracking" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setTabletTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setTabletTracking" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setToolTip">
-<code class="sig-name descname">setToolTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setToolTip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setToolTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setToolTip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setToolTipDuration">
-<code class="sig-name descname">setToolTipDuration</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">msec: int</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setToolTipDuration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setToolTipDuration</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">msec:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setToolTipDuration" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setUpdatesEnabled">
-<code class="sig-name descname">setUpdatesEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setUpdatesEnabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setUpdatesEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setUpdatesEnabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setVisible">
-<code class="sig-name descname">setVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">visible: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setVisible" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">visible:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setVisible" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWhatsThis">
-<code class="sig-name descname">setWhatsThis</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWhatsThis" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWhatsThis</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWhatsThis" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowFilePath">
-<code class="sig-name descname">setWindowFilePath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filePath: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowFilePath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowFilePath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filePath:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowFilePath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowFlag">
-<code class="sig-name descname">setWindowFlag</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WindowType</em>, <em class="sig-param">on: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowFlag</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.WindowType</em>, <em class="sig-param">on:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowFlags">
-<code class="sig-name descname">setWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowFlags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type:PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowFlags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowIcon">
-<code class="sig-name descname">setWindowIcon</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">icon: PySide2.QtGui.QIcon</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowIcon" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowIcon</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">icon:PySide2.QtGui.QIcon</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowIcon" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowIconText">
-<code class="sig-name descname">setWindowIconText</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowIconText" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowIconText</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowIconText" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowModality">
-<code class="sig-name descname">setWindowModality</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">windowModality: PySide2.QtCore.Qt.WindowModality</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowModality" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowModality</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">windowModality:PySide2.QtCore.Qt.WindowModality</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowModality" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowModified">
-<code class="sig-name descname">setWindowModified</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowModified" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowModified</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowModified" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowOpacity">
-<code class="sig-name descname">setWindowOpacity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">level: float</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowOpacity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowOpacity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">level:float</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowOpacity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowRole">
-<code class="sig-name descname">setWindowRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowRole" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowRole" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowState">
-<code class="sig-name descname">setWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state: PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state:PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowState" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.setWindowTitle">
-<code class="sig-name descname">setWindowTitle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.setWindowTitle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowTitle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.setWindowTitle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1676,32 +1684,32 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.show">
-<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.show" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.show" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.showEvent">
-<code class="sig-name descname">showEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QShowEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.showEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QShowEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.showEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.showFullScreen">
-<code class="sig-name descname">showFullScreen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.showFullScreen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showFullScreen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.showFullScreen" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.showMaximized">
-<code class="sig-name descname">showMaximized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.showMaximized" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showMaximized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.showMaximized" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.showMinimized">
-<code class="sig-name descname">showMinimized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.showMinimized" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showMinimized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.showMinimized" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.showNormal">
-<code class="sig-name descname">showNormal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.showNormal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showNormal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.showNormal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1731,12 +1739,12 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.stackUnder">
-<code class="sig-name descname">stackUnder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.stackUnder" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stackUnder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.stackUnder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.startTimer">
-<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval: int</em>, <em class="sig-param">timerType: PySide2.QtCore.Qt.TimerType = PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.startTimer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval:int</em>, <em class="sig-param">timerType:PySide2.QtCore.Qt.TimerType=PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#context_selector.ContextWidget.startTimer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1756,12 +1764,12 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.tabletEvent">
-<code class="sig-name descname">tabletEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QTabletEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.tabletEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tabletEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QTabletEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.tabletEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.testAttribute">
-<code class="sig-name descname">testAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WidgetAttribute</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.testAttribute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">testAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.WidgetAttribute</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#context_selector.ContextWidget.testAttribute" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1771,7 +1779,7 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.timerEvent">
-<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.timerEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.timerEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1791,7 +1799,7 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.tr">
-<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">arg__2: str = ''</em>, <em class="sig-param">arg__3: int = -1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#context_selector.ContextWidget.tr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bytes</em>, <em class="sig-param">arg__2:bytes=b''</em>, <em class="sig-param">arg__3:int=-1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#context_selector.ContextWidget.tr" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1801,40 +1809,40 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.ungrabGesture">
-<code class="sig-name descname">ungrabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.GestureType</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.ungrabGesture" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ungrabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type:PySide2.QtCore.Qt.GestureType</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.ungrabGesture" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.unsetCursor">
-<code class="sig-name descname">unsetCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.unsetCursor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unsetCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.unsetCursor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.unsetLayoutDirection">
-<code class="sig-name descname">unsetLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.unsetLayoutDirection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unsetLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.unsetLayoutDirection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.unsetLocale">
-<code class="sig-name descname">unsetLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.unsetLocale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unsetLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.unsetLocale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>update(self, arg__1: PySide2.QtCore.QRect)
-update(self, arg__1: PySide2.QtGui.QRegion)
-update(self, x: int, y: int, w: int, h: int)</p>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>update(self, arg__1:PySide2.QtCore.QRect) -&gt; None
+update(self, arg__1:PySide2.QtGui.QRegion) -&gt; None
+update(self, x:int, y:int, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.updateGeometry">
-<code class="sig-name descname">updateGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.updateGeometry" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">updateGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.updateGeometry" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.updateMicroFocus">
-<code class="sig-name descname">updateMicroFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.updateMicroFocus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">updateMicroFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.updateMicroFocus" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1854,7 +1862,7 @@ update(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="context_selector.ContextWidget.wheelEvent">
-<code class="sig-name descname">wheelEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QWheelEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#context_selector.ContextWidget.wheelEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wheelEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QWheelEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#context_selector.ContextWidget.wheelEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1944,7 +1952,7 @@ update(self, x: int, y: int, w: int, h: int)</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -1957,7 +1965,7 @@ update(self, x: int, y: int, w: int, h: int)</p>
         <a href="help_screen.html" class="btn btn-neutral float-right" title="Help Screen Popup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="shotgun_search_widget.html" class="btn btn-neutral float-left" title="Shotgun Search Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="shotgun_search_widget.html" class="btn btn-neutral float-left" title="ShotGrid Search Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

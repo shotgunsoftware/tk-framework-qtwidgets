@@ -1,18 +1,18 @@
-Shotgun Menus
-#############
+ShotGrid Menus
+##############
 
 Introduction
 ============
 
-The Shotgun Menus class provide a standardized interface, look and feel for
-building menus that interact with Shotgun.
+The ShotGrid Menus class provide a standardized interface, look and feel for
+building menus that interact with ShotGrid.
 
 .. image:: images/shotgun_menus.png
 
 ----
 
-Shotgun Menu
-------------
+ShotGrid Menu
+-------------
 
 .. currentmodule:: shotgun_menus
 

@@ -7,10 +7,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Search Completers &mdash; tk-framework-qtwidgets v2.9.4 documentation</title>
+  <title>ShotGrid Search Completers &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
   
 
   
@@ -38,7 +39,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Shotgun Search Widget" href="shotgun_search_widget.html" />
+    <link rel="next" title="ShotGrid Search Widget" href="shotgun_search_widget.html" />
     <link rel="prev" title="Auto-Elide label" href="elided_label.html" /> 
 </head>
 
@@ -51,7 +52,7 @@
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
           
-    <a href='http://developer.shotgunsoftware.com'>
+    <a href='http://developer.shotgridsoftware.com'>
     
         <img style='width: 191px;
                 height: 60px;
@@ -94,26 +95,26 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Shotgun Search Completers</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ShotGrid Search Completers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#global-search-completer">Global Search Completer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hierarchical-search-completer">Hierarchical Search Completer</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">ShotGrid Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">ShotGrid Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_details.html">Shotgun Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -138,12 +139,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://support.shotgridsoftware.com/home'>Shotgun Support</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -192,7 +193,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Shotgun Search Completers</li>
+      <li>ShotGrid Search Completers</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -209,12 +210,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="shotgun-search-completers">
-<h1>Shotgun Search Completers<a class="headerlink" href="#shotgun-search-completers" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="global-search-completer">
+  <section id="shotgrid-search-completers">
+<h1>ShotGrid Search Completers<a class="headerlink" href="#shotgrid-search-completers" title="Permalink to this headline">¶</a></h1>
+<section id="global-search-completer">
 <h2>Global Search Completer<a class="headerlink" href="#global-search-completer" title="Permalink to this headline">¶</a></h2>
 <p>The global search completer is a QCompleter instance for use with widgets
-that allow input of Shotgun entities. The completer can be customized to
+that allow input of ShotGrid entities. The completer can be customized to
 search across a given set of entity types.</p>
 <p>Once a user selects an object, a signal fires to indicate that an entity
 was activated.</p>
@@ -296,7 +297,7 @@ dictionary which looks like this:</p>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.blockSignals">
-<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.blockSignals" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b:bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.blockSignals" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -306,12 +307,12 @@ dictionary which looks like this:</p>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.childEvent">
-<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.childEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.childEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.children">
-<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QObject]<a class="headerlink" href="#search_completer.GlobalSearchCompleter.children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#search_completer.GlobalSearchCompleter.children" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -322,7 +323,7 @@ dictionary which looks like this:</p>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.complete">
-<code class="sig-name descname">complete</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rect: PySide2.QtCore.QRect = Default(QRect)</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.complete" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">complete</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rect:PySide2.QtCore.QRect=Default(QRect)</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.complete" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -357,17 +358,17 @@ dictionary which looks like this:</p>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.connect">
-<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2: str</em>, <em class="sig-param">arg__3: typing.Callable</em>, <em class="sig-param">type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>connect(arg__1: str, arg__2: typing.Callable, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
-connect(arg__1: str, arg__2: PySide2.QtCore.QObject, arg__3: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
-connect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, method: PySide2.QtCore.QMetaMethod, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
-connect(sender: PySide2.QtCore.QObject, signal: str, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
-connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
+<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2:bytes</em>, <em class="sig-param">arg__3:typing.Callable</em>, <em class="sig-param">type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect(self, arg__1:bytes, arg__2:typing.Callable, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(self, arg__1:bytes, arg__2:PySide2.QtCore.QObject, arg__3:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(self, sender:PySide2.QtCore.QObject, signal:bytes, member:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender:PySide2.QtCore.QObject, signal:PySide2.QtCore.QMetaMethod, receiver:PySide2.QtCore.QObject, method:PySide2.QtCore.QMetaMethod, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender:PySide2.QtCore.QObject, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.connectNotify">
-<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.connectNotify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.connectNotify" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -387,12 +388,12 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.customEvent">
-<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.customEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.customEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.deleteLater">
-<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.deleteLater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.deleteLater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -403,48 +404,48 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.disconnect">
-<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>disconnect(arg__1: PySide2.QtCore.QObject, arg__2: str, arg__3: typing.Callable) -&gt; bool
-disconnect(arg__1: str, arg__2: typing.Callable) -&gt; bool
-disconnect(receiver: PySide2.QtCore.QObject, member: str = None) -&gt; bool
-disconnect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, member: PySide2.QtCore.QMetaMethod) -&gt; bool
-disconnect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool
-disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool</p>
+<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>disconnect(arg__1:PySide2.QtCore.QObject, arg__2:bytes, arg__3:typing.Callable) -&gt; bool
+disconnect(self, arg__1:bytes, arg__2:typing.Callable) -&gt; bool
+disconnect(self, receiver:PySide2.QtCore.QObject, member:typing.Union[bytes, NoneType]=None) -&gt; bool
+disconnect(self, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes) -&gt; bool
+disconnect(sender:PySide2.QtCore.QObject, signal:PySide2.QtCore.QMetaMethod, receiver:PySide2.QtCore.QObject, member:PySide2.QtCore.QMetaMethod) -&gt; bool
+disconnect(sender:PySide2.QtCore.QObject, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes) -&gt; bool</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.disconnectNotify">
-<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.disconnectNotify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.disconnectNotify" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.dumpObjectInfo">
-<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.dumpObjectTree">
-<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.dynamicPropertyNames">
-<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QByteArray]<a class="headerlink" href="#search_completer.GlobalSearchCompleter.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#search_completer.GlobalSearchCompleter.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.emit">
-<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.emit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bytes</em>, <em class="sig-param">*args:None</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.emit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.event">
-<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.event" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.event" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.eventFilter">
-<code class="sig-name descname">eventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">o: PySide2.QtCore.QObject</em>, <em class="sig-param">e: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.eventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">eventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">o:PySide2.QtCore.QObject</em>, <em class="sig-param">e:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.eventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -454,13 +455,14 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.findChild">
-<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: str = ''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#search_completer.GlobalSearchCompleter.findChild" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:type</em>, <em class="sig-param">arg__2:str=''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#search_completer.GlobalSearchCompleter.findChild" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.findChildren">
-<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#search_completer.GlobalSearchCompleter.findChildren" title="Permalink to this definition">¶</a></dt>
-<dd><p>findChildren(self, arg__1: type, arg__2: str = ‘’) -&gt; typing.Iterable</p>
+<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:type</em>, <em class="sig-param">arg__2:PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#search_completer.GlobalSearchCompleter.findChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>findChildren(self, arg__1:type, arg__2:PySide2.QtCore.QRegularExpression) -&gt; typing.Iterable
+findChildren(self, arg__1:type, arg__2:str=’’) -&gt; typing.Iterable</p>
 </dd></dl>
 
 <dl class="method">
@@ -495,17 +497,17 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.inherits">
-<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.inherits" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname:bytes</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.inherits" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.installEventFilter">
-<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.installEventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.installEventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.isSignalConnected">
-<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.isSignalConnected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.isSignalConnected" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -520,7 +522,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.killTimer">
-<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.killTimer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.killTimer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -545,7 +547,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.moveToThread">
-<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread: PySide2.QtCore.QThread</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.moveToThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread:PySide2.QtCore.QThread</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.moveToThread" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -560,7 +562,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.pathFromIndex">
-<code class="sig-name descname">pathFromIndex</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">index: PySide2.QtCore.QModelIndex</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#search_completer.GlobalSearchCompleter.pathFromIndex" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">pathFromIndex</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">index:PySide2.QtCore.QModelIndex</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#search_completer.GlobalSearchCompleter.pathFromIndex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -570,12 +572,12 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.property">
-<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#search_completer.GlobalSearchCompleter.property" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:bytes</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#search_completer.GlobalSearchCompleter.property" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.receivers">
-<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: str</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#search_completer.GlobalSearchCompleter.receivers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:bytes</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#search_completer.GlobalSearchCompleter.receivers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -585,7 +587,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.removeEventFilter">
-<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.removeEventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.removeEventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -611,82 +613,82 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setCaseSensitivity">
-<code class="sig-name descname">setCaseSensitivity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">caseSensitivity: PySide2.QtCore.Qt.CaseSensitivity</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCaseSensitivity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCaseSensitivity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">caseSensitivity:PySide2.QtCore.Qt.CaseSensitivity</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCaseSensitivity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setCompletionColumn">
-<code class="sig-name descname">setCompletionColumn</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column: int</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCompletionColumn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCompletionColumn</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCompletionColumn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setCompletionMode">
-<code class="sig-name descname">setCompletionMode</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">mode: PySide2.QtWidgets.QCompleter.CompletionMode</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCompletionMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCompletionMode</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">mode:PySide2.QtWidgets.QCompleter.CompletionMode</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCompletionMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setCompletionPrefix">
-<code class="sig-name descname">setCompletionPrefix</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">prefix: str</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCompletionPrefix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCompletionPrefix</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">prefix:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCompletionPrefix" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setCompletionRole">
-<code class="sig-name descname">setCompletionRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">role: int</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCompletionRole" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCompletionRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">role:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCompletionRole" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setCurrentRow">
-<code class="sig-name descname">setCurrentRow</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">row: int</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCurrentRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCurrentRow</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">row:int</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setCurrentRow" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setFilterMode">
-<code class="sig-name descname">setFilterMode</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterMode: PySide2.QtCore.Qt.MatchFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setFilterMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFilterMode</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterMode:PySide2.QtCore.Qt.MatchFlags</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setFilterMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setMaxVisibleItems">
-<code class="sig-name descname">setMaxVisibleItems</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxItems: int</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setMaxVisibleItems" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMaxVisibleItems</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxItems:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setMaxVisibleItems" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setModel">
-<code class="sig-name descname">setModel</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">c: PySide2.QtCore.QAbstractItemModel</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setModel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setModel</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">c:PySide2.QtCore.QAbstractItemModel</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setModel" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setModelSorting">
-<code class="sig-name descname">setModelSorting</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">sorting: PySide2.QtWidgets.QCompleter.ModelSorting</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setModelSorting" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setModelSorting</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">sorting:PySide2.QtWidgets.QCompleter.ModelSorting</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setModelSorting" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setObjectName">
-<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setObjectName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setObjectName" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setParent">
-<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setParent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setParent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setPopup">
-<code class="sig-name descname">setPopup</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">popup: PySide2.QtWidgets.QAbstractItemView</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setPopup" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setPopup</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">popup:PySide2.QtWidgets.QAbstractItemView</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setPopup" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setProperty">
-<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em>, <em class="sig-param">value: typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setProperty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:bytes</em>, <em class="sig-param">value:typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setProperty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setWidget">
-<code class="sig-name descname">setWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">widget: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setWidget" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">widget:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setWidget" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.setWrapAround">
-<code class="sig-name descname">setWrapAround</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">wrap: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.setWrapAround" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWrapAround</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">wrap:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.setWrapAround" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -697,7 +699,7 @@ data in the background. Data calls
 to Shotgun will be dispatched via this object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
+<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
 </dd>
 </dl>
 </dd></dl>
@@ -709,12 +711,12 @@ to Shotgun will be dispatched via this object.</p>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.splitPath">
-<code class="sig-name descname">splitPath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">path: str</em><span class="sig-paren">)</span> &#x2192; typing.List[str]<a class="headerlink" href="#search_completer.GlobalSearchCompleter.splitPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">splitPath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">path:str</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#search_completer.GlobalSearchCompleter.splitPath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.startTimer">
-<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval: int</em>, <em class="sig-param">timerType: PySide2.QtCore.Qt.TimerType = PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#search_completer.GlobalSearchCompleter.startTimer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval:int</em>, <em class="sig-param">timerType:PySide2.QtCore.Qt.TimerType=PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#search_completer.GlobalSearchCompleter.startTimer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -724,12 +726,12 @@ to Shotgun will be dispatched via this object.</p>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.timerEvent">
-<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.GlobalSearchCompleter.timerEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.GlobalSearchCompleter.timerEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.GlobalSearchCompleter.tr">
-<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">arg__2: str = ''</em>, <em class="sig-param">arg__3: int = -1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#search_completer.GlobalSearchCompleter.tr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bytes</em>, <em class="sig-param">arg__2:bytes=b''</em>, <em class="sig-param">arg__3:int=-1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#search_completer.GlobalSearchCompleter.tr" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -744,11 +746,11 @@ to Shotgun will be dispatched via this object.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="hierarchical-search-completer">
+</section>
+<section id="hierarchical-search-completer">
 <h2>Hierarchical Search Completer<a class="headerlink" href="#hierarchical-search-completer" title="Permalink to this headline">¶</a></h2>
 <p>The hierarchical search completer is a QCompleter instance for use with widgets
-that allow input of Shotgun entities. The completer can be customized to search
+that allow input of ShotGrid entities. The completer can be customized to search
 in a site’s complete hierarchy or in a single project.</p>
 <p>Once a user selects an object, a signal fires to indicate that a node from the
 hierarchy was selected.</p>
@@ -804,7 +806,7 @@ are supported at the moment.</p>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.blockSignals">
-<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.blockSignals" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b:bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.blockSignals" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -814,12 +816,12 @@ are supported at the moment.</p>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.childEvent">
-<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.childEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.childEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.children">
-<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QObject]<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.children" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -830,7 +832,7 @@ are supported at the moment.</p>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.complete">
-<code class="sig-name descname">complete</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rect: PySide2.QtCore.QRect = Default(QRect)</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.complete" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">complete</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rect:PySide2.QtCore.QRect=Default(QRect)</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.complete" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -865,17 +867,17 @@ are supported at the moment.</p>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.connect">
-<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2: str</em>, <em class="sig-param">arg__3: typing.Callable</em>, <em class="sig-param">type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>connect(arg__1: str, arg__2: typing.Callable, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
-connect(arg__1: str, arg__2: PySide2.QtCore.QObject, arg__3: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
-connect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, method: PySide2.QtCore.QMetaMethod, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
-connect(sender: PySide2.QtCore.QObject, signal: str, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
-connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
+<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2:bytes</em>, <em class="sig-param">arg__3:typing.Callable</em>, <em class="sig-param">type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect(self, arg__1:bytes, arg__2:typing.Callable, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(self, arg__1:bytes, arg__2:PySide2.QtCore.QObject, arg__3:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(self, sender:PySide2.QtCore.QObject, signal:bytes, member:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender:PySide2.QtCore.QObject, signal:PySide2.QtCore.QMetaMethod, receiver:PySide2.QtCore.QObject, method:PySide2.QtCore.QMetaMethod, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender:PySide2.QtCore.QObject, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.connectNotify">
-<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.connectNotify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.connectNotify" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -895,12 +897,12 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.customEvent">
-<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.customEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.customEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.deleteLater">
-<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.deleteLater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.deleteLater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -911,48 +913,48 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.disconnect">
-<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>disconnect(arg__1: PySide2.QtCore.QObject, arg__2: str, arg__3: typing.Callable) -&gt; bool
-disconnect(arg__1: str, arg__2: typing.Callable) -&gt; bool
-disconnect(receiver: PySide2.QtCore.QObject, member: str = None) -&gt; bool
-disconnect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, member: PySide2.QtCore.QMetaMethod) -&gt; bool
-disconnect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool
-disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool</p>
+<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>disconnect(arg__1:PySide2.QtCore.QObject, arg__2:bytes, arg__3:typing.Callable) -&gt; bool
+disconnect(self, arg__1:bytes, arg__2:typing.Callable) -&gt; bool
+disconnect(self, receiver:PySide2.QtCore.QObject, member:typing.Union[bytes, NoneType]=None) -&gt; bool
+disconnect(self, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes) -&gt; bool
+disconnect(sender:PySide2.QtCore.QObject, signal:PySide2.QtCore.QMetaMethod, receiver:PySide2.QtCore.QObject, member:PySide2.QtCore.QMetaMethod) -&gt; bool
+disconnect(sender:PySide2.QtCore.QObject, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes) -&gt; bool</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.disconnectNotify">
-<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.disconnectNotify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.disconnectNotify" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.dumpObjectInfo">
-<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.dumpObjectTree">
-<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.dynamicPropertyNames">
-<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QByteArray]<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.emit">
-<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.emit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bytes</em>, <em class="sig-param">*args:None</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.emit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.event">
-<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.event" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.event" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.eventFilter">
-<code class="sig-name descname">eventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">o: PySide2.QtCore.QObject</em>, <em class="sig-param">e: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.eventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">eventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">o:PySide2.QtCore.QObject</em>, <em class="sig-param">e:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.eventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -962,13 +964,14 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.findChild">
-<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: str = ''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.findChild" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:type</em>, <em class="sig-param">arg__2:str=''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.findChild" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.findChildren">
-<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.findChildren" title="Permalink to this definition">¶</a></dt>
-<dd><p>findChildren(self, arg__1: type, arg__2: str = ‘’) -&gt; typing.Iterable</p>
+<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:type</em>, <em class="sig-param">arg__2:PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.findChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>findChildren(self, arg__1:type, arg__2:PySide2.QtCore.QRegularExpression) -&gt; typing.Iterable
+findChildren(self, arg__1:type, arg__2:str=’’) -&gt; typing.Iterable</p>
 </dd></dl>
 
 <dl class="method">
@@ -1003,17 +1006,17 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.inherits">
-<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.inherits" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname:bytes</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.inherits" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.installEventFilter">
-<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.installEventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.installEventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.isSignalConnected">
-<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.isSignalConnected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.isSignalConnected" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1028,7 +1031,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.killTimer">
-<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.killTimer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.killTimer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1053,7 +1056,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.moveToThread">
-<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread: PySide2.QtCore.QThread</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.moveToThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread:PySide2.QtCore.QThread</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.moveToThread" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1068,7 +1071,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.pathFromIndex">
-<code class="sig-name descname">pathFromIndex</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">index: PySide2.QtCore.QModelIndex</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.pathFromIndex" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">pathFromIndex</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">index:PySide2.QtCore.QModelIndex</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.pathFromIndex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1078,12 +1081,12 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.property">
-<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.property" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:bytes</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.property" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.receivers">
-<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: str</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.receivers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:bytes</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.receivers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1093,7 +1096,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.removeEventFilter">
-<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.removeEventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.removeEventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1119,82 +1122,82 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setCaseSensitivity">
-<code class="sig-name descname">setCaseSensitivity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">caseSensitivity: PySide2.QtCore.Qt.CaseSensitivity</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCaseSensitivity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCaseSensitivity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">caseSensitivity:PySide2.QtCore.Qt.CaseSensitivity</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCaseSensitivity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setCompletionColumn">
-<code class="sig-name descname">setCompletionColumn</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column: int</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCompletionColumn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCompletionColumn</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCompletionColumn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setCompletionMode">
-<code class="sig-name descname">setCompletionMode</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">mode: PySide2.QtWidgets.QCompleter.CompletionMode</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCompletionMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCompletionMode</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">mode:PySide2.QtWidgets.QCompleter.CompletionMode</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCompletionMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setCompletionPrefix">
-<code class="sig-name descname">setCompletionPrefix</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">prefix: str</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCompletionPrefix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCompletionPrefix</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">prefix:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCompletionPrefix" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setCompletionRole">
-<code class="sig-name descname">setCompletionRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">role: int</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCompletionRole" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCompletionRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">role:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCompletionRole" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setCurrentRow">
-<code class="sig-name descname">setCurrentRow</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">row: int</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCurrentRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCurrentRow</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">row:int</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setCurrentRow" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setFilterMode">
-<code class="sig-name descname">setFilterMode</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterMode: PySide2.QtCore.Qt.MatchFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setFilterMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFilterMode</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterMode:PySide2.QtCore.Qt.MatchFlags</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setFilterMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setMaxVisibleItems">
-<code class="sig-name descname">setMaxVisibleItems</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxItems: int</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setMaxVisibleItems" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMaxVisibleItems</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxItems:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setMaxVisibleItems" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setModel">
-<code class="sig-name descname">setModel</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">c: PySide2.QtCore.QAbstractItemModel</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setModel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setModel</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">c:PySide2.QtCore.QAbstractItemModel</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setModel" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setModelSorting">
-<code class="sig-name descname">setModelSorting</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">sorting: PySide2.QtWidgets.QCompleter.ModelSorting</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setModelSorting" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setModelSorting</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">sorting:PySide2.QtWidgets.QCompleter.ModelSorting</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setModelSorting" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setObjectName">
-<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setObjectName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setObjectName" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setParent">
-<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setParent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setParent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setPopup">
-<code class="sig-name descname">setPopup</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">popup: PySide2.QtWidgets.QAbstractItemView</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setPopup" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setPopup</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">popup:PySide2.QtWidgets.QAbstractItemView</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setPopup" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setProperty">
-<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em>, <em class="sig-param">value: typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setProperty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:bytes</em>, <em class="sig-param">value:typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setProperty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setWidget">
-<code class="sig-name descname">setWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">widget: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setWidget" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWidget</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">widget:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setWidget" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.setWrapAround">
-<code class="sig-name descname">setWrapAround</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">wrap: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setWrapAround" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWrapAround</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">wrap:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.setWrapAround" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1205,7 +1208,7 @@ data in the background. Data calls
 to Shotgun will be dispatched via this object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
+<dd class="field-odd"><p><strong>task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Background task manager to use</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1217,12 +1220,12 @@ to Shotgun will be dispatched via this object.</p>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.splitPath">
-<code class="sig-name descname">splitPath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">path: str</em><span class="sig-paren">)</span> &#x2192; typing.List[str]<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.splitPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">splitPath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">path:str</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.splitPath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.startTimer">
-<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval: int</em>, <em class="sig-param">timerType: PySide2.QtCore.Qt.TimerType = PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.startTimer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval:int</em>, <em class="sig-param">timerType:PySide2.QtCore.Qt.TimerType=PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.startTimer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1232,12 +1235,12 @@ to Shotgun will be dispatched via this object.</p>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.timerEvent">
-<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.timerEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.timerEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="search_completer.HierarchicalSearchCompleter.tr">
-<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">arg__2: str = ''</em>, <em class="sig-param">arg__3: int = -1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.tr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bytes</em>, <em class="sig-param">arg__2:bytes=b''</em>, <em class="sig-param">arg__3:int=-1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#search_completer.HierarchicalSearchCompleter.tr" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1286,8 +1289,8 @@ to Shotgun will be dispatched via this object.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -1297,7 +1300,7 @@ to Shotgun will be dispatched via this object.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="shotgun_search_widget.html" class="btn btn-neutral float-right" title="Shotgun Search Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="shotgun_search_widget.html" class="btn btn-neutral float-right" title="ShotGrid Search Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="elided_label.html" class="btn btn-neutral float-left" title="Auto-Elide label" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

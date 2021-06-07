@@ -7,10 +7,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Auto-Elide label &mdash; tk-framework-qtwidgets v2.9.4 documentation</title>
+  <title>Auto-Elide label &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
   
 
   
@@ -38,8 +39,8 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Shotgun Search Completers" href="search_completer.html" />
-    <link rel="prev" title="Shotgun Activity Stream Widget" href="activity_stream.html" /> 
+    <link rel="next" title="ShotGrid Search Completers" href="search_completer.html" />
+    <link rel="prev" title="ShotGrid Activity Stream Widget" href="activity_stream.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +52,7 @@
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
           
-    <a href='http://developer.shotgunsoftware.com'>
+    <a href='http://developer.shotgridsoftware.com'>
     
         <img style='width: 191px;
                 height: 60px;
@@ -94,22 +95,22 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">ShotGrid Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">ShotGrid Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">ShotGrid Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Shotgun Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_details.html">Shotgun Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -134,12 +135,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://support.shotgridsoftware.com/home'>Shotgun Support</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -205,7 +206,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="auto-elide-label">
+  <section id="auto-elide-label">
 <h1>Auto-Elide label<a class="headerlink" href="#auto-elide-label" title="Permalink to this headline">¶</a></h1>
 <p>This simple yet commonly used class helps add an elide (a “…” at the end)
 to text when it doesn’t fit within a given space.</p>
@@ -277,32 +278,32 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.actionEvent">
-<code class="sig-name descname">actionEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QActionEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.actionEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">actionEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QActionEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.actionEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.actions">
-<code class="sig-name descname">actions</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtWidgets.QAction]<a class="headerlink" href="#elided_label.ElidedLabel.actions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">actions</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#elided_label.ElidedLabel.actions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.activateWindow">
-<code class="sig-name descname">activateWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.activateWindow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">activateWindow</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.activateWindow" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.addAction">
-<code class="sig-name descname">addAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.addAction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">addAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action:PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.addAction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.addActions">
-<code class="sig-name descname">addActions</code><span class="sig-paren">(</span><em class="sig-param">self, actions: typing.List[PySide2.QtWidgets.QAction]</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.addActions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">addActions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">actions:typing.Sequence</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.addActions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.adjustSize">
-<code class="sig-name descname">adjustSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.adjustSize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">adjustSize</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.adjustSize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -332,7 +333,7 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.blockSignals">
-<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.blockSignals" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">blockSignals</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">b:bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.blockSignals" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -342,23 +343,23 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.changeEvent">
-<code class="sig-name descname">changeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.changeEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">changeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.changeEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.childAt">
-<code class="sig-name descname">childAt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">p: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#elided_label.ElidedLabel.childAt" title="Permalink to this definition">¶</a></dt>
-<dd><p>childAt(self, x: int, y: int) -&gt; PySide2.QtWidgets.QWidget</p>
+<code class="sig-name descname">childAt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">p:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#elided_label.ElidedLabel.childAt" title="Permalink to this definition">¶</a></dt>
+<dd><p>childAt(self, x:int, y:int) -&gt; PySide2.QtWidgets.QWidget</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.childEvent">
-<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.childEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">childEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QChildEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.childEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.children">
-<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QObject]<a class="headerlink" href="#elided_label.ElidedLabel.children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#elided_label.ElidedLabel.children" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -373,17 +374,17 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.clear">
-<code class="sig-name descname">clear</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.clear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.clear" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.clearFocus">
-<code class="sig-name descname">clearFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.clearFocus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clearFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.clearFocus" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.clearMask">
-<code class="sig-name descname">clearMask</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.clearMask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clearMask</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.clearMask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -393,7 +394,7 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.closeEvent">
-<code class="sig-name descname">closeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QCloseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.closeEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">closeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QCloseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.closeEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -403,17 +404,17 @@ should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.connect">
-<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2: str</em>, <em class="sig-param">arg__3: typing.Callable</em>, <em class="sig-param">type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>connect(arg__1: str, arg__2: typing.Callable, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
-connect(arg__1: str, arg__2: PySide2.QtCore.QObject, arg__3: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
-connect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, method: PySide2.QtCore.QMetaMethod, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
-connect(sender: PySide2.QtCore.QObject, signal: str, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
-connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
+<em class="property">static </em><code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtCore.QObject</em>, <em class="sig-param">arg__2:bytes</em>, <em class="sig-param">arg__3:typing.Callable</em>, <em class="sig-param">type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect(self, arg__1:bytes, arg__2:typing.Callable, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(self, arg__1:bytes, arg__2:PySide2.QtCore.QObject, arg__3:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool
+connect(self, sender:PySide2.QtCore.QObject, signal:bytes, member:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender:PySide2.QtCore.QObject, signal:PySide2.QtCore.QMetaMethod, receiver:PySide2.QtCore.QObject, method:PySide2.QtCore.QMetaMethod, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection
+connect(sender:PySide2.QtCore.QObject, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes, type:PySide2.QtCore.Qt.ConnectionType=PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.connectNotify">
-<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.connectNotify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.connectNotify" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -428,7 +429,7 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.contextMenuEvent">
-<code class="sig-name descname">contextMenuEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev: PySide2.QtGui.QContextMenuEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">contextMenuEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev:PySide2.QtGui.QContextMenuEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -438,17 +439,17 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int = 0</em>, <em class="sig-param">initializeWindow: bool = True</em>, <em class="sig-param">destroyOldWindow: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int=0</em>, <em class="sig-param">initializeWindow:bool=True</em>, <em class="sig-param">destroyOldWindow:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.create" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.createWinId">
-<code class="sig-name descname">createWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.createWinId" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">createWinId</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.createWinId" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.createWindowContainer">
-<em class="property">static </em><code class="sig-name descname">createWindowContainer</code><span class="sig-paren">(</span><em class="sig-param">window: PySide2.QtGui.QWindow</em>, <em class="sig-param">parent: PySide2.QtWidgets.QWidget = None</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.WindowFlags = Default(Qt.WindowFlags)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#elided_label.ElidedLabel.createWindowContainer" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">createWindowContainer</code><span class="sig-paren">(</span><em class="sig-param">window:PySide2.QtGui.QWindow</em>, <em class="sig-param">parent:typing.Union[PySide2.QtWidgets.QWidget</em>, <em class="sig-param">NoneType]=None</em>, <em class="sig-param">flags:PySide2.QtCore.Qt.WindowFlags=Default(Qt.WindowFlags)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#elided_label.ElidedLabel.createWindowContainer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -458,12 +459,12 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.customEvent">
-<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.customEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">customEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.customEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.deleteLater">
-<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.deleteLater" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">deleteLater</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.deleteLater" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -473,7 +474,7 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">destroyWindow: bool = True</em>, <em class="sig-param">destroySubWindows: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">destroyWindow:bool=True</em>, <em class="sig-param">destroySubWindows:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.destroy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -498,58 +499,58 @@ connect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QO
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.disconnect">
-<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>disconnect(arg__1: PySide2.QtCore.QObject, arg__2: str, arg__3: typing.Callable) -&gt; bool
-disconnect(arg__1: str, arg__2: typing.Callable) -&gt; bool
-disconnect(receiver: PySide2.QtCore.QObject, member: str = None) -&gt; bool
-disconnect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, member: PySide2.QtCore.QMetaMethod) -&gt; bool
-disconnect(sender: PySide2.QtCore.QObject, signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool
-disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; bool</p>
+<em class="property">static </em><code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtCore.QMetaObject.Connection</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>disconnect(arg__1:PySide2.QtCore.QObject, arg__2:bytes, arg__3:typing.Callable) -&gt; bool
+disconnect(self, arg__1:bytes, arg__2:typing.Callable) -&gt; bool
+disconnect(self, receiver:PySide2.QtCore.QObject, member:typing.Union[bytes, NoneType]=None) -&gt; bool
+disconnect(self, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes) -&gt; bool
+disconnect(sender:PySide2.QtCore.QObject, signal:PySide2.QtCore.QMetaMethod, receiver:PySide2.QtCore.QObject, member:PySide2.QtCore.QMetaMethod) -&gt; bool
+disconnect(sender:PySide2.QtCore.QObject, signal:bytes, receiver:PySide2.QtCore.QObject, member:bytes) -&gt; bool</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.disconnectNotify">
-<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.disconnectNotify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnectNotify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.disconnectNotify" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.dragEnterEvent">
-<code class="sig-name descname">dragEnterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragEnterEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.dragEnterEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dragEnterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QDragEnterEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.dragEnterEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.dragLeaveEvent">
-<code class="sig-name descname">dragLeaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragLeaveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.dragLeaveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dragLeaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QDragLeaveEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.dragLeaveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.dragMoveEvent">
-<code class="sig-name descname">dragMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDragMoveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.dragMoveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dragMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QDragMoveEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.dragMoveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.drawFrame">
-<code class="sig-name descname">drawFrame</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPainter</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.drawFrame" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">drawFrame</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPainter</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.drawFrame" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.dropEvent">
-<code class="sig-name descname">dropEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QDropEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.dropEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dropEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QDropEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.dropEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.dumpObjectInfo">
-<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dumpObjectInfo</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.dumpObjectInfo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.dumpObjectTree">
-<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dumpObjectTree</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.dumpObjectTree" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.dynamicPropertyNames">
-<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List[PySide2.QtCore.QByteArray]<a class="headerlink" href="#elided_label.ElidedLabel.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dynamicPropertyNames</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.List<a class="headerlink" href="#elided_label.ElidedLabel.dynamicPropertyNames" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -559,48 +560,49 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.emit">
-<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.emit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bytes</em>, <em class="sig-param">*args:None</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.emit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.ensurePolished">
-<code class="sig-name descname">ensurePolished</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.ensurePolished" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ensurePolished</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.ensurePolished" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.enterEvent">
-<code class="sig-name descname">enterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.enterEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">enterEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.enterEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.event">
-<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">e: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.event" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">event</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">e:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.event" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.eventFilter">
-<code class="sig-name descname">eventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">watched: PySide2.QtCore.QObject</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.eventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">eventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">watched:PySide2.QtCore.QObject</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.eventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.find">
-<em class="property">static </em><code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">arg__1: int</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#elided_label.ElidedLabel.find" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; PySide2.QtWidgets.QWidget<a class="headerlink" href="#elided_label.ElidedLabel.find" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.findChild">
-<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: str = ''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#elided_label.ElidedLabel.findChild" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">findChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:type</em>, <em class="sig-param">arg__2:str=''</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#elided_label.ElidedLabel.findChild" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.findChildren">
-<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: type</em>, <em class="sig-param">arg__2: PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#elided_label.ElidedLabel.findChildren" title="Permalink to this definition">¶</a></dt>
-<dd><p>findChildren(self, arg__1: type, arg__2: str = ‘’) -&gt; typing.Iterable</p>
+<code class="sig-name descname">findChildren</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:type</em>, <em class="sig-param">arg__2:PySide2.QtCore.QRegExp</em><span class="sig-paren">)</span> &#x2192; typing.Iterable<a class="headerlink" href="#elided_label.ElidedLabel.findChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>findChildren(self, arg__1:type, arg__2:PySide2.QtCore.QRegularExpression) -&gt; typing.Iterable
+findChildren(self, arg__1:type, arg__2:str=’’) -&gt; typing.Iterable</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.focusInEvent">
-<code class="sig-name descname">focusInEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev: PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.focusInEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">focusInEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev:PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.focusInEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -610,12 +612,12 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.focusNextPrevChild">
-<code class="sig-name descname">focusNextPrevChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next: bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.focusNextPrevChild" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">focusNextPrevChild</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next:bool</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.focusNextPrevChild" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.focusOutEvent">
-<code class="sig-name descname">focusOutEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev: PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.focusOutEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">focusOutEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev:PySide2.QtGui.QFocusEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.focusOutEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -700,33 +702,33 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.getContentsMargins">
-<code class="sig-name descname">getContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left: int</em>, <em class="sig-param">top: int</em>, <em class="sig-param">right: int</em>, <em class="sig-param">bottom: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.getContentsMargins" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; typing.Tuple<a class="headerlink" href="#elided_label.ElidedLabel.getContentsMargins" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.grab">
-<code class="sig-name descname">grab</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rectangle: PySide2.QtCore.QRect = PySide2.QtCore.QRect(0</em>, <em class="sig-param">0</em>, <em class="sig-param">-1</em>, <em class="sig-param">-1)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPixmap<a class="headerlink" href="#elided_label.ElidedLabel.grab" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">grab</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">rectangle:PySide2.QtCore.QRect=PySide2.QtCore.QRect(0</em>, <em class="sig-param">0</em>, <em class="sig-param">-1</em>, <em class="sig-param">-1)</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPixmap<a class="headerlink" href="#elided_label.ElidedLabel.grab" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.grabGesture">
-<code class="sig-name descname">grabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.GestureType</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.GestureFlags = Default(Qt.GestureFlags)</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.grabGesture" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">grabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type:PySide2.QtCore.Qt.GestureType</em>, <em class="sig-param">flags:PySide2.QtCore.Qt.GestureFlags=Default(Qt.GestureFlags)</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.grabGesture" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.grabKeyboard">
-<code class="sig-name descname">grabKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.grabKeyboard" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">grabKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.grabKeyboard" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.grabMouse">
-<code class="sig-name descname">grabMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.grabMouse" title="Permalink to this definition">¶</a></dt>
-<dd><p>grabMouse(self, arg__1: PySide2.QtGui.QCursor)</p>
+<code class="sig-name descname">grabMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.grabMouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>grabMouse(self, arg__1:PySide2.QtGui.QCursor) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.grabShortcut">
-<code class="sig-name descname">grabShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">key: PySide2.QtGui.QKeySequence</em>, <em class="sig-param">context: PySide2.QtCore.Qt.ShortcutContext = PySide2.QtCore.Qt.ShortcutContext.WindowShortcut</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.grabShortcut" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">grabShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">key:PySide2.QtGui.QKeySequence</em>, <em class="sig-param">context:PySide2.QtCore.Qt.ShortcutContext=PySide2.QtCore.Qt.ShortcutContext.WindowShortcut</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.grabShortcut" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -776,7 +778,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.heightForWidth">
-<code class="sig-name descname">heightForWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.heightForWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">heightForWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.heightForWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -786,12 +788,12 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.hide">
-<code class="sig-name descname">hide</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.hide" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hide</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.hide" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.hideEvent">
-<code class="sig-name descname">hideEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QHideEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.hideEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hideEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QHideEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.hideEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -801,22 +803,22 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.inherits">
-<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.inherits" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">inherits</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">classname:bytes</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.inherits" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.initPainter">
-<code class="sig-name descname">initPainter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter: PySide2.QtGui.QPainter</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.initPainter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initPainter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter:PySide2.QtGui.QPainter</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.initPainter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.initStyleOption">
-<code class="sig-name descname">initStyleOption</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">option: PySide2.QtWidgets.QStyleOptionFrame</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.initStyleOption" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">initStyleOption</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">option:PySide2.QtWidgets.QStyleOptionFrame</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.initStyleOption" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.inputMethodEvent">
-<code class="sig-name descname">inputMethodEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QInputMethodEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.inputMethodEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">inputMethodEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QInputMethodEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.inputMethodEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -826,22 +828,22 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.inputMethodQuery">
-<code class="sig-name descname">inputMethodQuery</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.InputMethodQuery</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#elided_label.ElidedLabel.inputMethodQuery" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">inputMethodQuery</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.InputMethodQuery</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#elided_label.ElidedLabel.inputMethodQuery" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.insertAction">
-<code class="sig-name descname">insertAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">before: PySide2.QtWidgets.QAction</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.insertAction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insertAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">before:PySide2.QtWidgets.QAction</em>, <em class="sig-param">action:PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.insertAction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.insertActions">
-<code class="sig-name descname">insertActions</code><span class="sig-paren">(</span><em class="sig-param">self, before: PySide2.QtWidgets.QAction, actions: typing.List[PySide2.QtWidgets.QAction]</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.insertActions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insertActions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">before:PySide2.QtWidgets.QAction</em>, <em class="sig-param">actions:typing.Sequence</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.insertActions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.installEventFilter">
-<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.installEventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">installEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filterObj:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.installEventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -856,7 +858,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.isAncestorOf">
-<code class="sig-name descname">isAncestorOf</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">child: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.isAncestorOf" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isAncestorOf</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">child:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.isAncestorOf" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -866,7 +868,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.isEnabledTo">
-<code class="sig-name descname">isEnabledTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.isEnabledTo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isEnabledTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.isEnabledTo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -911,7 +913,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.isSignalConnected">
-<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.isSignalConnected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isSignalConnected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:PySide2.QtCore.QMetaMethod</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.isSignalConnected" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -926,7 +928,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.isVisibleTo">
-<code class="sig-name descname">isVisibleTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.isVisibleTo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isVisibleTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.isVisibleTo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -951,12 +953,12 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.keyPressEvent">
-<code class="sig-name descname">keyPressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev: PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">keyPressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev:PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.keyPressEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.keyReleaseEvent">
-<code class="sig-name descname">keyReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">keyReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QKeyEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -966,7 +968,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.killTimer">
-<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.killTimer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">killTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.killTimer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -981,7 +983,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.leaveEvent">
-<code class="sig-name descname">leaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.leaveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">leaveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.leaveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1006,37 +1008,37 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.lower">
-<code class="sig-name descname">lower</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.lower" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lower</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.lower" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mapFrom">
-<code class="sig-name descname">mapFrom</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapFrom" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapFrom</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapFrom" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mapFromGlobal">
-<code class="sig-name descname">mapFromGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapFromGlobal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapFromGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapFromGlobal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mapFromParent">
-<code class="sig-name descname">mapFromParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapFromParent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapFromParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapFromParent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mapTo">
-<code class="sig-name descname">mapTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapTo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapTo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapTo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mapToGlobal">
-<code class="sig-name descname">mapToGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapToGlobal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapToGlobal</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapToGlobal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mapToParent">
-<code class="sig-name descname">mapToParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapToParent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mapToParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtCore.QPoint<a class="headerlink" href="#elided_label.ElidedLabel.mapToParent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1071,7 +1073,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.metric">
-<code class="sig-name descname">metric</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPaintDevice.PaintDeviceMetric</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.metric" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">metric</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPaintDevice.PaintDeviceMetric</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.metric" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1101,7 +1103,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mouseDoubleClickEvent">
-<code class="sig-name descname">mouseDoubleClickEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.mouseDoubleClickEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mouseDoubleClickEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.mouseDoubleClickEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1111,33 +1113,33 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mouseMoveEvent">
-<code class="sig-name descname">mouseMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mouseMoveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev:PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mousePressEvent">
-<code class="sig-name descname">mousePressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mousePressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev:PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.mousePressEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.mouseReleaseEvent">
-<code class="sig-name descname">mouseReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev: PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.mouseReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mouseReleaseEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ev:PySide2.QtGui.QMouseEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.mouseReleaseEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.move">
-<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.move" title="Permalink to this definition">¶</a></dt>
-<dd><p>move(self, x: int, y: int)</p>
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>move(self, x:int, y:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.moveEvent">
-<code class="sig-name descname">moveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QMoveEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.moveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">moveEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QMoveEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.moveEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.moveToThread">
-<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread: PySide2.QtCore.QThread</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.moveToThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">moveToThread</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">thread:PySide2.QtCore.QThread</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.moveToThread" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1147,7 +1149,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.nativeEvent">
-<code class="sig-name descname">nativeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">eventType: PySide2.QtCore.QByteArray</em>, <em class="sig-param">message: int</em>, <em class="sig-param">result: int</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.nativeEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">nativeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">eventType:PySide2.QtCore.QByteArray</em>, <em class="sig-param">message:int</em><span class="sig-paren">)</span> &#x2192; typing.Tuple<a class="headerlink" href="#elided_label.ElidedLabel.nativeEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1177,12 +1179,12 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.overrideWindowFlags">
-<code class="sig-name descname">overrideWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.overrideWindowFlags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">overrideWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type:PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.overrideWindowFlags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.overrideWindowState">
-<code class="sig-name descname">overrideWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state: PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.overrideWindowState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">overrideWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state:PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.overrideWindowState" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1192,7 +1194,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.paintEvent">
-<code class="sig-name descname">paintEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPaintEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.paintEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">paintEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPaintEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.paintEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1247,17 +1249,17 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.property">
-<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#elided_label.ElidedLabel.property" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">property</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:bytes</em><span class="sig-paren">)</span> &#x2192; typing.Any<a class="headerlink" href="#elided_label.ElidedLabel.property" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.raise_">
-<code class="sig-name descname">raise_</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.raise_" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">raise_</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.raise_" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.receivers">
-<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal: str</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.receivers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">receivers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">signal:bytes</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.receivers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1267,7 +1269,7 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.redirected">
-<code class="sig-name descname">redirected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">offset: PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPaintDevice<a class="headerlink" href="#elided_label.ElidedLabel.redirected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">redirected</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">offset:PySide2.QtCore.QPoint</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QPaintDevice<a class="headerlink" href="#elided_label.ElidedLabel.redirected" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1277,52 +1279,52 @@ disconnect(signal: str, receiver: PySide2.QtCore.QObject, member: str) -&gt; boo
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.releaseKeyboard">
-<code class="sig-name descname">releaseKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.releaseKeyboard" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">releaseKeyboard</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.releaseKeyboard" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.releaseMouse">
-<code class="sig-name descname">releaseMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.releaseMouse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">releaseMouse</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.releaseMouse" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.releaseShortcut">
-<code class="sig-name descname">releaseShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.releaseShortcut" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">releaseShortcut</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.releaseShortcut" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.removeAction">
-<code class="sig-name descname">removeAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action: PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.removeAction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">removeAction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action:PySide2.QtWidgets.QAction</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.removeAction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.removeEventFilter">
-<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj: PySide2.QtCore.QObject</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.removeEventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">removeEventFilter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">obj:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.removeEventFilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.render">
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter: PySide2.QtGui.QPainter</em>, <em class="sig-param">targetOffset: PySide2.QtCore.QPoint</em>, <em class="sig-param">sourceRegion: PySide2.QtGui.QRegion = Default(QRegion)</em>, <em class="sig-param">renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.render" title="Permalink to this definition">¶</a></dt>
-<dd><p>render(self, target: PySide2.QtGui.QPaintDevice, targetOffset: PySide2.QtCore.QPoint = Default(QPoint), sourceRegion: PySide2.QtGui.QRegion = Default(QRegion), renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren)))</p>
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">painter:PySide2.QtGui.QPainter</em>, <em class="sig-param">targetOffset:PySide2.QtCore.QPoint</em>, <em class="sig-param">sourceRegion:PySide2.QtGui.QRegion=Default(QRegion)</em>, <em class="sig-param">renderFlags:PySide2.QtWidgets.QWidget.RenderFlags=Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>render(self, target:PySide2.QtGui.QPaintDevice, targetOffset:PySide2.QtCore.QPoint=Default(QPoint), sourceRegion:PySide2.QtGui.QRegion=Default(QRegion), renderFlags:PySide2.QtWidgets.QWidget.RenderFlags=Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.repaint">
-<code class="sig-name descname">repaint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.repaint" title="Permalink to this definition">¶</a></dt>
-<dd><p>repaint(self, arg__1: PySide2.QtCore.QRect)
-repaint(self, arg__1: PySide2.QtGui.QRegion)
-repaint(self, x: int, y: int, w: int, h: int)</p>
+<code class="sig-name descname">repaint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.repaint" title="Permalink to this definition">¶</a></dt>
+<dd><p>repaint(self, arg__1:PySide2.QtCore.QRect) -&gt; None
+repaint(self, arg__1:PySide2.QtGui.QRegion) -&gt; None
+repaint(self, x:int, y:int, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.resize">
-<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.resize" title="Permalink to this definition">¶</a></dt>
-<dd><p>resize(self, w: int, h: int)</p>
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>resize(self, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.restoreGeometry">
-<code class="sig-name descname">restoreGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">geometry: PySide2.QtCore.QByteArray</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.restoreGeometry" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">restoreGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">geometry:PySide2.QtCore.QByteArray</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.restoreGeometry" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1331,9 +1333,14 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="elided_label.ElidedLabel.screen">
+<code class="sig-name descname">screen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; PySide2.QtGui.QScreen<a class="headerlink" href="#elided_label.ElidedLabel.screen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="elided_label.ElidedLabel.scroll">
-<code class="sig-name descname">scroll</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dx: int</em>, <em class="sig-param">dy: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.scroll" title="Permalink to this definition">¶</a></dt>
-<dd><p>scroll(self, dx: int, dy: int, arg__3: PySide2.QtCore.QRect)</p>
+<code class="sig-name descname">scroll</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dx:int</em>, <em class="sig-param">dy:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.scroll" title="Permalink to this definition">¶</a></dt>
+<dd><p>scroll(self, dx:int, dy:int, arg__3:PySide2.QtCore.QRect) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
@@ -1358,434 +1365,435 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setAcceptDrops">
-<code class="sig-name descname">setAcceptDrops</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">on: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setAcceptDrops" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAcceptDrops</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">on:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setAcceptDrops" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setAccessibleDescription">
-<code class="sig-name descname">setAccessibleDescription</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">description: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setAccessibleDescription" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAccessibleDescription</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">description:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setAccessibleDescription" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setAccessibleName">
-<code class="sig-name descname">setAccessibleName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setAccessibleName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAccessibleName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setAccessibleName" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setAlignment">
-<code class="sig-name descname">setAlignment</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.Alignment</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setAlignment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAlignment</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.Alignment</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setAlignment" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setAttribute">
-<code class="sig-name descname">setAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WidgetAttribute</em>, <em class="sig-param">on: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setAttribute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.WidgetAttribute</em>, <em class="sig-param">on:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setAttribute" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setAutoFillBackground">
-<code class="sig-name descname">setAutoFillBackground</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enabled: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setAutoFillBackground" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAutoFillBackground</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enabled:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setAutoFillBackground" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setBackgroundRole">
-<code class="sig-name descname">setBackgroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setBackgroundRole" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setBackgroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setBackgroundRole" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setBaseSize">
-<code class="sig-name descname">setBaseSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setBaseSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>setBaseSize(self, basew: int, baseh: int)</p>
+<code class="sig-name descname">setBaseSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setBaseSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setBaseSize(self, basew:int, baseh:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setBuddy">
-<code class="sig-name descname">setBuddy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setBuddy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setBuddy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setBuddy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setContentsMargins">
-<code class="sig-name descname">setContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left: int</em>, <em class="sig-param">top: int</em>, <em class="sig-param">right: int</em>, <em class="sig-param">bottom: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setContentsMargins" title="Permalink to this definition">¶</a></dt>
-<dd><p>setContentsMargins(self, margins: PySide2.QtCore.QMargins)</p>
+<code class="sig-name descname">setContentsMargins</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">left:int</em>, <em class="sig-param">top:int</em>, <em class="sig-param">right:int</em>, <em class="sig-param">bottom:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setContentsMargins" title="Permalink to this definition">¶</a></dt>
+<dd><p>setContentsMargins(self, margins:PySide2.QtCore.QMargins) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setContextMenuPolicy">
-<code class="sig-name descname">setContextMenuPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy: PySide2.QtCore.Qt.ContextMenuPolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setContextMenuPolicy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setContextMenuPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy:PySide2.QtCore.Qt.ContextMenuPolicy</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setContextMenuPolicy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setCursor">
-<code class="sig-name descname">setCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QCursor</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setCursor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QCursor</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setCursor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setDisabled">
-<code class="sig-name descname">setDisabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setDisabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setDisabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setDisabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setEnabled">
-<code class="sig-name descname">setEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setEnabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setEnabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFixedHeight">
-<code class="sig-name descname">setFixedHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">h: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFixedHeight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFixedHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">h:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFixedHeight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFixedSize">
-<code class="sig-name descname">setFixedSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFixedSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>setFixedSize(self, w: int, h: int)</p>
+<code class="sig-name descname">setFixedSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFixedSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setFixedSize(self, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFixedWidth">
-<code class="sig-name descname">setFixedWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">w: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFixedWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFixedWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">w:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFixedWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFocus">
-<code class="sig-name descname">setFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFocus" title="Permalink to this definition">¶</a></dt>
-<dd><p>setFocus(self, reason: PySide2.QtCore.Qt.FocusReason)</p>
+<code class="sig-name descname">setFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFocus" title="Permalink to this definition">¶</a></dt>
+<dd><p>setFocus(self, reason:PySide2.QtCore.Qt.FocusReason) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFocusPolicy">
-<code class="sig-name descname">setFocusPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy: PySide2.QtCore.Qt.FocusPolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFocusPolicy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFocusPolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">policy:PySide2.QtCore.Qt.FocusPolicy</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFocusPolicy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFocusProxy">
-<code class="sig-name descname">setFocusProxy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFocusProxy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFocusProxy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFocusProxy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFont">
-<code class="sig-name descname">setFont</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QFont</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFont" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFont</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QFont</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFont" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setForegroundRole">
-<code class="sig-name descname">setForegroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setForegroundRole" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setForegroundRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPalette.ColorRole</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setForegroundRole" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFrameRect">
-<code class="sig-name descname">setFrameRect</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QRect</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFrameRect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFrameRect</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QRect</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFrameRect" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFrameShadow">
-<code class="sig-name descname">setFrameShadow</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QFrame.Shadow</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFrameShadow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFrameShadow</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QFrame.Shadow</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFrameShadow" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFrameShape">
-<code class="sig-name descname">setFrameShape</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QFrame.Shape</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFrameShape" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFrameShape</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QFrame.Shape</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFrameShape" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setFrameStyle">
-<code class="sig-name descname">setFrameStyle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setFrameStyle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setFrameStyle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setFrameStyle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setGeometry">
-<code class="sig-name descname">setGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QRect</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setGeometry" title="Permalink to this definition">¶</a></dt>
-<dd><p>setGeometry(self, x: int, y: int, w: int, h: int)</p>
+<code class="sig-name descname">setGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QRect</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setGeometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>setGeometry(self, x:int, y:int, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setGraphicsEffect">
-<code class="sig-name descname">setGraphicsEffect</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">effect: PySide2.QtWidgets.QGraphicsEffect</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setGraphicsEffect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setGraphicsEffect</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">effect:PySide2.QtWidgets.QGraphicsEffect</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setGraphicsEffect" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setHidden">
-<code class="sig-name descname">setHidden</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hidden: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setHidden" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setHidden</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hidden:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setHidden" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setIndent">
-<code class="sig-name descname">setIndent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setIndent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setIndent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setIndent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setInputMethodHints">
-<code class="sig-name descname">setInputMethodHints</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hints: PySide2.QtCore.Qt.InputMethodHints</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setInputMethodHints" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setInputMethodHints</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hints:PySide2.QtCore.Qt.InputMethodHints</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setInputMethodHints" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setLayout">
-<code class="sig-name descname">setLayout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QLayout</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setLayout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setLayout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QLayout</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setLayout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setLayoutDirection">
-<code class="sig-name descname">setLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">direction: PySide2.QtCore.Qt.LayoutDirection</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setLayoutDirection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">direction:PySide2.QtCore.Qt.LayoutDirection</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setLayoutDirection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setLineWidth">
-<code class="sig-name descname">setLineWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setLineWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setLineWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setLineWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setLocale">
-<code class="sig-name descname">setLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">locale: PySide2.QtCore.QLocale</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setLocale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">locale:PySide2.QtCore.QLocale</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setLocale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMargin">
-<code class="sig-name descname">setMargin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMargin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMargin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMargin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMask">
-<code class="sig-name descname">setMask</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QBitmap</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMask" title="Permalink to this definition">¶</a></dt>
-<dd><p>setMask(self, arg__1: PySide2.QtGui.QRegion)</p>
+<code class="sig-name descname">setMask</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QBitmap</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMask(self, arg__1:PySide2.QtGui.QRegion) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMaximumHeight">
-<code class="sig-name descname">setMaximumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxh: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMaximumHeight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMaximumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxh:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMaximumHeight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMaximumSize">
-<code class="sig-name descname">setMaximumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMaximumSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>setMaximumSize(self, maxw: int, maxh: int)</p>
+<code class="sig-name descname">setMaximumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMaximumSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMaximumSize(self, maxw:int, maxh:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMaximumWidth">
-<code class="sig-name descname">setMaximumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxw: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMaximumWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMaximumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">maxw:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMaximumWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMidLineWidth">
-<code class="sig-name descname">setMidLineWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMidLineWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMidLineWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMidLineWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMinimumHeight">
-<code class="sig-name descname">setMinimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minh: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMinimumHeight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMinimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minh:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMinimumHeight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMinimumSize">
-<code class="sig-name descname">setMinimumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMinimumSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>setMinimumSize(self, minw: int, minh: int)</p>
+<code class="sig-name descname">setMinimumSize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMinimumSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>setMinimumSize(self, minw:int, minh:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMinimumWidth">
-<code class="sig-name descname">setMinimumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minw: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMinimumWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMinimumWidth</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">minw:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMinimumWidth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMouseTracking">
-<code class="sig-name descname">setMouseTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMouseTracking" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMouseTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMouseTracking" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setMovie">
-<code class="sig-name descname">setMovie</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">movie: PySide2.QtGui.QMovie</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setMovie" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMovie</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">movie:PySide2.QtGui.QMovie</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setMovie" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setNum">
-<code class="sig-name descname">setNum</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: float</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setNum" title="Permalink to this definition">¶</a></dt>
-<dd><p>setNum(self, arg__1: int)</p>
+<code class="sig-name descname">setNum</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:float</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setNum" title="Permalink to this definition">¶</a></dt>
+<dd><p>setNum(self, arg__1:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setObjectName">
-<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setObjectName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setObjectName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setObjectName" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setOpenExternalLinks">
-<code class="sig-name descname">setOpenExternalLinks</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">open: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setOpenExternalLinks" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setOpenExternalLinks</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">open:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setOpenExternalLinks" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setPalette">
-<code class="sig-name descname">setPalette</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPalette</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setPalette" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setPalette</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPalette</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setPalette" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setParent">
-<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setParent" title="Permalink to this definition">¶</a></dt>
-<dd><p>setParent(self, parent: PySide2.QtWidgets.QWidget, f: PySide2.QtCore.Qt.WindowFlags)</p>
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">parent:PySide2.QtCore.QObject</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>setParent(self, parent:PySide2.QtWidgets.QWidget) -&gt; None
+setParent(self, parent:PySide2.QtWidgets.QWidget, f:PySide2.QtCore.Qt.WindowFlags) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setPicture">
-<code class="sig-name descname">setPicture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPicture</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setPicture" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setPicture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPicture</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setPicture" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setPixmap">
-<code class="sig-name descname">setPixmap</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtGui.QPixmap</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setPixmap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setPixmap</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtGui.QPixmap</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setPixmap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setProperty">
-<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name: str</em>, <em class="sig-param">value: typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.setProperty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setProperty</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">name:bytes</em>, <em class="sig-param">value:typing.Any</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.setProperty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setScaledContents">
-<code class="sig-name descname">setScaledContents</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setScaledContents" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setScaledContents</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setScaledContents" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setSelection">
-<code class="sig-name descname">setSelection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: int</em>, <em class="sig-param">arg__2: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setSelection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setSelection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:int</em>, <em class="sig-param">arg__2:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setSelection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setShortcutAutoRepeat">
-<code class="sig-name descname">setShortcutAutoRepeat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em>, <em class="sig-param">enable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setShortcutAutoRepeat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setShortcutAutoRepeat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em>, <em class="sig-param">enable:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setShortcutAutoRepeat" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setShortcutEnabled">
-<code class="sig-name descname">setShortcutEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id: int</em>, <em class="sig-param">enable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setShortcutEnabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setShortcutEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id:int</em>, <em class="sig-param">enable:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setShortcutEnabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setSizeIncrement">
-<code class="sig-name descname">setSizeIncrement</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.QSize</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setSizeIncrement" title="Permalink to this definition">¶</a></dt>
-<dd><p>setSizeIncrement(self, w: int, h: int)</p>
+<code class="sig-name descname">setSizeIncrement</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.QSize</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setSizeIncrement" title="Permalink to this definition">¶</a></dt>
+<dd><p>setSizeIncrement(self, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setSizePolicy">
-<code class="sig-name descname">setSizePolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QSizePolicy</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setSizePolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>setSizePolicy(self, horizontal: PySide2.QtWidgets.QSizePolicy.Policy, vertical: PySide2.QtWidgets.QSizePolicy.Policy)</p>
+<code class="sig-name descname">setSizePolicy</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QSizePolicy</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setSizePolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>setSizePolicy(self, horizontal:PySide2.QtWidgets.QSizePolicy.Policy, vertical:PySide2.QtWidgets.QSizePolicy.Policy) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setStatusTip">
-<code class="sig-name descname">setStatusTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setStatusTip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setStatusTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setStatusTip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setStyle">
-<code class="sig-name descname">setStyle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QStyle</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setStyle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setStyle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QStyle</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setStyle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setStyleSheet">
-<code class="sig-name descname">setStyleSheet</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">styleSheet: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setStyleSheet" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setStyleSheet</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">styleSheet:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setStyleSheet" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setTabOrder">
-<em class="property">static </em><code class="sig-name descname">setTabOrder</code><span class="sig-paren">(</span><em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setTabOrder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">setTabOrder</code><span class="sig-paren">(</span><em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em>, <em class="sig-param">arg__2:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setTabOrder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setTabletTracking">
-<code class="sig-name descname">setTabletTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setTabletTracking" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setTabletTracking</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setTabletTracking" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setTextFormat">
-<code class="sig-name descname">setTextFormat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.TextFormat</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setTextFormat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setTextFormat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.TextFormat</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setTextFormat" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setTextInteractionFlags">
-<code class="sig-name descname">setTextInteractionFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">flags: PySide2.QtCore.Qt.TextInteractionFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setTextInteractionFlags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setTextInteractionFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">flags:PySide2.QtCore.Qt.TextInteractionFlags</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setTextInteractionFlags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setToolTip">
-<code class="sig-name descname">setToolTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setToolTip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setToolTip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setToolTip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setToolTipDuration">
-<code class="sig-name descname">setToolTipDuration</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">msec: int</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setToolTipDuration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setToolTipDuration</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">msec:int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setToolTipDuration" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setUpdatesEnabled">
-<code class="sig-name descname">setUpdatesEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setUpdatesEnabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setUpdatesEnabled</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">enable:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setUpdatesEnabled" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setVisible">
-<code class="sig-name descname">setVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">visible: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setVisible" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">visible:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setVisible" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWhatsThis">
-<code class="sig-name descname">setWhatsThis</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWhatsThis" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWhatsThis</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWhatsThis" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowFilePath">
-<code class="sig-name descname">setWindowFilePath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filePath: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowFilePath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowFilePath</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filePath:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowFilePath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowFlag">
-<code class="sig-name descname">setWindowFlag</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WindowType</em>, <em class="sig-param">on: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowFlag</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.WindowType</em>, <em class="sig-param">on:bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowFlags">
-<code class="sig-name descname">setWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowFlags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowFlags</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type:PySide2.QtCore.Qt.WindowFlags</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowFlags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowIcon">
-<code class="sig-name descname">setWindowIcon</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">icon: PySide2.QtGui.QIcon</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowIcon" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowIcon</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">icon:PySide2.QtGui.QIcon</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowIcon" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowIconText">
-<code class="sig-name descname">setWindowIconText</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowIconText" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowIconText</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowIconText" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowModality">
-<code class="sig-name descname">setWindowModality</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">windowModality: PySide2.QtCore.Qt.WindowModality</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowModality" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowModality</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">windowModality:PySide2.QtCore.Qt.WindowModality</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowModality" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowModified">
-<code class="sig-name descname">setWindowModified</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowModified" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowModified</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowModified" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowOpacity">
-<code class="sig-name descname">setWindowOpacity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">level: float</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowOpacity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowOpacity</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">level:float</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowOpacity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowRole">
-<code class="sig-name descname">setWindowRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowRole" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowRole</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowRole" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowState">
-<code class="sig-name descname">setWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state: PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowState</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state:PySide2.QtCore.Qt.WindowStates</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowState" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWindowTitle">
-<code class="sig-name descname">setWindowTitle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWindowTitle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWindowTitle</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWindowTitle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.setWordWrap">
-<code class="sig-name descname">setWordWrap</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">on: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.setWordWrap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setWordWrap</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">on:bool</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.setWordWrap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1795,32 +1803,32 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.show">
-<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.show" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.show" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.showEvent">
-<code class="sig-name descname">showEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QShowEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.showEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QShowEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.showEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.showFullScreen">
-<code class="sig-name descname">showFullScreen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.showFullScreen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showFullScreen</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.showFullScreen" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.showMaximized">
-<code class="sig-name descname">showMaximized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.showMaximized" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showMaximized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.showMaximized" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.showMinimized">
-<code class="sig-name descname">showMinimized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.showMinimized" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showMinimized</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.showMinimized" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.showNormal">
-<code class="sig-name descname">showNormal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.showNormal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">showNormal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.showNormal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1845,12 +1853,12 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.stackUnder">
-<code class="sig-name descname">stackUnder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.stackUnder" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stackUnder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtWidgets.QWidget</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.stackUnder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.startTimer">
-<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval: int</em>, <em class="sig-param">timerType: PySide2.QtCore.Qt.TimerType = PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.startTimer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">startTimer</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interval:int</em>, <em class="sig-param">timerType:PySide2.QtCore.Qt.TimerType=PySide2.QtCore.Qt.TimerType.CoarseTimer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#elided_label.ElidedLabel.startTimer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1870,12 +1878,12 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.tabletEvent">
-<code class="sig-name descname">tabletEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QTabletEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.tabletEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tabletEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QTabletEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.tabletEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.testAttribute">
-<code class="sig-name descname">testAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: PySide2.QtCore.Qt.WidgetAttribute</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.testAttribute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">testAttribute</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:PySide2.QtCore.Qt.WidgetAttribute</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#elided_label.ElidedLabel.testAttribute" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1895,7 +1903,7 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.timerEvent">
-<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.timerEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">timerEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtCore.QTimerEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.timerEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1915,7 +1923,7 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.tr">
-<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1: str</em>, <em class="sig-param">arg__2: str = ''</em>, <em class="sig-param">arg__3: int = -1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#elided_label.ElidedLabel.tr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tr</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">arg__1:bytes</em>, <em class="sig-param">arg__2:bytes=b''</em>, <em class="sig-param">arg__3:int=-1</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#elided_label.ElidedLabel.tr" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1925,40 +1933,40 @@ repaint(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.ungrabGesture">
-<code class="sig-name descname">ungrabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type: PySide2.QtCore.Qt.GestureType</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.ungrabGesture" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ungrabGesture</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">type:PySide2.QtCore.Qt.GestureType</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.ungrabGesture" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.unsetCursor">
-<code class="sig-name descname">unsetCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.unsetCursor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unsetCursor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.unsetCursor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.unsetLayoutDirection">
-<code class="sig-name descname">unsetLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.unsetLayoutDirection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unsetLayoutDirection</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.unsetLayoutDirection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.unsetLocale">
-<code class="sig-name descname">unsetLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.unsetLocale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unsetLocale</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.unsetLocale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>update(self, arg__1: PySide2.QtCore.QRect)
-update(self, arg__1: PySide2.QtGui.QRegion)
-update(self, x: int, y: int, w: int, h: int)</p>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>update(self, arg__1:PySide2.QtCore.QRect) -&gt; None
+update(self, arg__1:PySide2.QtGui.QRegion) -&gt; None
+update(self, x:int, y:int, w:int, h:int) -&gt; None</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.updateGeometry">
-<code class="sig-name descname">updateGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.updateGeometry" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">updateGeometry</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.updateGeometry" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.updateMicroFocus">
-<code class="sig-name descname">updateMicroFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.updateMicroFocus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">updateMicroFocus</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.updateMicroFocus" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1978,7 +1986,7 @@ update(self, x: int, y: int, w: int, h: int)</p>
 
 <dl class="method">
 <dt id="elided_label.ElidedLabel.wheelEvent">
-<code class="sig-name descname">wheelEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event: PySide2.QtGui.QWheelEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#elided_label.ElidedLabel.wheelEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wheelEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">event:PySide2.QtGui.QWheelEvent</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#elided_label.ElidedLabel.wheelEvent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2073,7 +2081,7 @@ update(self, x: int, y: int, w: int, h: int)</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -2083,10 +2091,10 @@ update(self, x: int, y: int, w: int, h: int)</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="search_completer.html" class="btn btn-neutral float-right" title="Shotgun Search Completers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="search_completer.html" class="btn btn-neutral float-right" title="ShotGrid Search Completers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="activity_stream.html" class="btn btn-neutral float-left" title="Shotgun Activity Stream Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="activity_stream.html" class="btn btn-neutral float-left" title="ShotGrid Activity Stream Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

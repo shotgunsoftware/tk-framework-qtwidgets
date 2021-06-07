@@ -7,10 +7,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Field Widgets &mdash; tk-framework-qtwidgets v2.9.4 documentation</title>
+  <title>ShotGrid Field Widgets &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
   
 
   
@@ -38,7 +39,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Shotgun Menus" href="shotgun_menus.html" />
+    <link rel="next" title="ShotGrid Menus" href="shotgun_menus.html" />
     <link rel="prev" title="Screen Capture Widget" href="screen_grab.html" /> 
 </head>
 
@@ -51,7 +52,7 @@
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
           
-    <a href='http://developer.shotgunsoftware.com'>
+    <a href='http://developer.shotgridsoftware.com'>
     
         <img style='width: 191px;
                 height: 60px;
@@ -94,19 +95,19 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Shotgun Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Shotgun Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Shotgun Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">ShotGrid Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">ShotGrid Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Shotgun Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">ShotGrid Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Shotgun Field Widgets</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ShotGrid Field Widgets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#field-widget-manager">Field Widget Manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#field-widget-metaclass">Field Widget Metaclass</a></li>
@@ -145,9 +146,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#todos-known-issues">TODOs &amp; Known Issues</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Shotgun Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_details.html">Shotgun Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -172,12 +173,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.9.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.0.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://support.shotgunsoftware.com/home'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://support.shotgridsoftware.com/home'>Shotgun Support</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -226,7 +227,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Shotgun Field Widgets</li>
+      <li>ShotGrid Field Widgets</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -243,23 +244,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="shotgun-field-widgets">
-<h1>Shotgun Field Widgets<a class="headerlink" href="#shotgun-field-widgets" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
+  <section id="shotgrid-field-widgets">
+<h1>ShotGrid Field Widgets<a class="headerlink" href="#shotgrid-field-widgets" title="Permalink to this headline">¶</a></h1>
+<section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">shotgun_fields</span></code> module provides access to Qt widgets that correspond
-to the field types available on Shotgun entities. The purpose of these widgets
-is to make it easier to build apps that interact with Shotgun in a standardized
+to the field types available on ShotGrid entities. The purpose of these widgets
+is to make it easier to build apps that interact with ShotGrid in a standardized
 way.</p>
 <img alt="_images/shotgun_fields.png" src="_images/shotgun_fields.png" />
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="field-widget-manager">
+<section id="field-widget-manager">
 <h2>Field Widget Manager<a class="headerlink" href="#field-widget-manager" title="Permalink to this headline">¶</a></h2>
 <p>Access to individual field widgets is provided by the <a class="reference internal" href="#shotgun_fields.ShotgunFieldManager" title="shotgun_fields.ShotgunFieldManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShotgunFieldManager</span></code></a>
 factory class via the <code class="docutils literal notranslate"><span class="pre">create_widget()</span></code> method. Additional convenience methods
 are avaialble on the class for creating delegates and labels corresponding to the
-supplied Shotgun entity type and field.</p>
+supplied ShotGrid entity type and field.</p>
 <dl class="class">
 <dt id="shotgun_fields.ShotgunFieldManager">
 <em class="property">class </em><code class="sig-prename descclassname">shotgun_fields.</code><code class="sig-name descname">ShotgunFieldManager</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">bg_task_manager=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_fields/shotgun_field_manager.html#ShotgunFieldManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_fields.ShotgunFieldManager" title="Permalink to this definition">¶</a></dt>
@@ -282,7 +283,7 @@ provided by the class</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – Parent object</p></li>
-<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Optional Task manager.  If this is not passed in one will be created
+<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Optional Task manager.  If this is not passed in one will be created
 when the object is initialized.</p></li>
 </ul>
 </dd>
@@ -370,7 +371,7 @@ to display an icon (or not) based on the field value rather than a standard
 field from the given entity type.  This delegate is designed to be used by items
 from a shotgun_model’s additional columns.  It assumes that the value for the field
 will be stored in the <code class="docutils literal notranslate"><span class="pre">SG_ASSOCIATED_FIELD_ROLE</span></code>
-(via the <a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShotgunModel</span></code></a>) role of
+(via the <a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv5.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShotgunModel</span></code></a>) role of
 its current index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -493,9 +494,9 @@ display widget registered.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="field-widget-metaclass">
+<section id="field-widget-metaclass">
 <h2>Field Widget Metaclass<a class="headerlink" href="#field-widget-metaclass" title="Permalink to this headline">¶</a></h2>
 <p>All field widgets use the <a class="reference internal" href="#shotgun_fields.shotgun_field_meta.ShotgunFieldMeta" title="shotgun_fields.shotgun_field_meta.ShotgunFieldMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShotgunFieldMeta</span></code></a> class as their <code class="docutils literal notranslate"><span class="pre">__metaclass__</span></code>
 in order to provide a consistent API across widgets of different types and to
@@ -569,7 +570,7 @@ constructor for the class’ superclass.</p></li>
 <li><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QWidget</span></code></a>) – Parent widget</p></li>
 <li><p><strong>entity</strong> (<em>Whatever is returned by the Shotgun API for this field</em>) – The Shotgun entity dictionary to pull the field value from.</p></li>
 <li><p><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Shotgun field name</p></li>
-<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – The task manager the widget will use if it needs to run a task</p></li>
+<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – The task manager the widget will use if it needs to run a task</p></li>
 </ul>
 </dd>
 </dl>
@@ -644,18 +645,18 @@ This mainly provides a display hint to the <a class="reference internal" href="#
 </ul>
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="field-widgets">
+<section id="field-widgets">
 <h2>Field Widgets<a class="headerlink" href="#field-widgets" title="Permalink to this headline">¶</a></h2>
 <p>The following is a list of all of the widgets available by default via the
 <a class="reference internal" href="#shotgun_fields.ShotgunFieldManager" title="shotgun_fields.ShotgunFieldManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShotgunFieldManager</span></code></a>. Instances of these classes are created by calling
 the manager’s <code class="docutils literal notranslate"><span class="pre">create_widget()</span></code> method.</p>
 <hr class="docutils" />
-<div class="section" id="checkbox">
+<section id="checkbox">
 <h3>Checkbox<a class="headerlink" href="#checkbox" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">CheckBoxWidget</span></code> class serves as both editor and display for <code class="docutils literal notranslate"><span class="pre">checkbox</span></code>
-field types in Shotgun. When requested as a <code class="docutils literal notranslate"><span class="pre">DISPLAY</span></code> type from a field manager
+field types in ShotGrid. When requested as a <code class="docutils literal notranslate"><span class="pre">DISPLAY</span></code> type from a field manager
 instance, the returned widget will simply be disabled.</p>
 <img alt="_images/field_checkbox.png" src="_images/field_checkbox.png" />
 <dl class="class">
@@ -730,9 +731,9 @@ and display.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="currency">
+<section id="currency">
 <h3>Currency<a class="headerlink" href="#currency" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_currency.png" src="_images/field_currency.png" />
 <dl class="class">
@@ -855,9 +856,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="date-and-time">
+<section id="date-and-time">
 <h3>Date And Time<a class="headerlink" href="#date-and-time" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_datetime.png" src="_images/field_datetime.png" />
 <dl class="class">
@@ -980,9 +981,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="date">
+<section id="date">
 <h3>Date<a class="headerlink" href="#date" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_date.png" src="_images/field_date.png" />
 <dl class="class">
@@ -1105,9 +1106,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="duration">
+<section id="duration">
 <h3>Duration<a class="headerlink" href="#duration" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1115,9 +1116,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 is not yet API support for display options like hours vs. days, numbers of
 hours in a workday, etc.</p>
 </div>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="entity">
+<section id="entity">
 <h3>Entity<a class="headerlink" href="#entity" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_entity.png" src="_images/field_entity.png" />
 <dl class="class">
@@ -1247,9 +1248,9 @@ signal.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="file-link">
+<section id="file-link">
 <h3>File Link<a class="headerlink" href="#file-link" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_file_link.png" src="_images/field_file_link.png" />
 <dl class="class">
@@ -1332,9 +1333,9 @@ and display.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="float">
+<section id="float">
 <h3>Float<a class="headerlink" href="#float" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_float.png" src="_images/field_float.png" />
 <dl class="class">
@@ -1457,9 +1458,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="footage">
+<section id="footage">
 <h3>Footage<a class="headerlink" href="#footage" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_footage.png" src="_images/field_footage.png" />
 <dl class="class">
@@ -1582,9 +1583,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="image">
+<section id="image">
 <h3>Image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_image.png" src="_images/field_image.png" />
 <dl class="class">
@@ -1679,9 +1680,9 @@ object.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="list">
+<section id="list">
 <h3>List<a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_list.png" src="_images/field_list.png" />
 <dl class="class">
@@ -1802,9 +1803,9 @@ object.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="multi-entity">
+<section id="multi-entity">
 <h3>Multi Entity<a class="headerlink" href="#multi-entity" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_multi_entity.png" src="_images/field_multi_entity.png" />
 <dl class="class">
@@ -1905,9 +1906,9 @@ object.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="number">
+<section id="number">
 <h3>Number<a class="headerlink" href="#number" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_number.png" src="_images/field_number.png" />
 <dl class="class">
@@ -2030,9 +2031,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="percent">
+<section id="percent">
 <h3>Percent<a class="headerlink" href="#percent" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_percent.png" src="_images/field_percent.png" />
 <dl class="class">
@@ -2155,9 +2156,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="status-list">
+<section id="status-list">
 <h3>Status List<a class="headerlink" href="#status-list" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_status_list.png" src="_images/field_status_list.png" />
 <dl class="class">
@@ -2278,9 +2279,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="tags">
+<section id="tags">
 <h3>Tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_tags.png" src="_images/field_tags.png" />
 <dl class="class">
@@ -2347,9 +2348,9 @@ value to be applied and the <code class="docutils literal notranslate"><span cla
 <p>There is no editor widget for <code class="docutils literal notranslate"><span class="pre">tags</span></code> because the python API does
 not currently support editing fields of this type.</p>
 </div>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="text">
+<section id="text">
 <h3>Text<a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_text.png" src="_images/field_text.png" />
 <dl class="class">
@@ -2470,18 +2471,18 @@ not currently support editing fields of this type.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="timecode">
+<section id="timecode">
 <h3>Timecode<a class="headerlink" href="#timecode" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There are no widgets available for the <code class="docutils literal notranslate"><span class="pre">timecode</span></code> field yet since there
 is not yet API support for an associated <code class="docutils literal notranslate"><span class="pre">fps</span></code> field.</p>
 </div>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="url-template">
+<section id="url-template">
 <h3>Url Template<a class="headerlink" href="#url-template" title="Permalink to this headline">¶</a></h3>
 <img alt="_images/field_url_template.png" src="_images/field_url_template.png" />
 <dl class="class">
@@ -2548,10 +2549,10 @@ is not yet API support for an associated <code class="docutils literal notransla
 <p>There is no editor widget for <code class="docutils literal notranslate"><span class="pre">url_templates</span></code> because the python API does
 not currently support editing fields of this type.</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 <hr class="docutils" />
-<div class="section" id="editable-widgets">
+<section id="editable-widgets">
 <h2>Editable Widgets<a class="headerlink" href="#editable-widgets" title="Permalink to this headline">¶</a></h2>
 <p>Requesting the <code class="docutils literal notranslate"><span class="pre">EDITABLE</span></code> type for a field via the manager will return a
 <code class="docutils literal notranslate"><span class="pre">ShotgunFieldEditable</span></code> instance. This widget is a stacked widget that includes
@@ -2669,13 +2670,13 @@ nothing.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="base-classes">
+<section id="base-classes">
 <h2>Base Classes<a class="headerlink" href="#base-classes" title="Permalink to this headline">¶</a></h2>
 <p>The following classes are used as base classes in one or more field widgets and
 may prove useful when diving into the details of a widget’s implementation.</p>
-<div class="section" id="bubble-edit-widget">
+<section id="bubble-edit-widget">
 <h3>Bubble Edit Widget<a class="headerlink" href="#bubble-edit-widget" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">BubbleEditWidget</span></code> class is used as a base class for editing a list of
 objects. The <a class="reference internal" href="#shotgun_fields.multi_entity_widget.MultiEntityEditorWidget" title="shotgun_fields.multi_entity_widget.MultiEntityEditorWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiEntityEditorWidget</span></code></a> is a subclass of the
@@ -2780,9 +2781,9 @@ interaction and decide when a new “bubble” should be added to the widget.</p
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="bubble-widget">
+<section id="bubble-widget">
 <h3>Bubble Widget<a class="headerlink" href="#bubble-widget" title="Permalink to this headline">¶</a></h3>
 <p>This class represents individual “bubbles” managed within a <code class="docutils literal notranslate"><span class="pre">BubbleEditWidget</span></code>
 subclasses.</p>
@@ -2855,9 +2856,9 @@ bubble could represent any type of data.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="label-base-widget">
+<section id="label-base-widget">
 <h3>Label Base Widget<a class="headerlink" href="#label-base-widget" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">LabelBaseWidget</span></code> provides a very simple base class for many of the display
 widgets above. It provides the basic interface required by classes using the
@@ -2869,9 +2870,9 @@ widgets above. It provides the basic interface required by classes using the
 <p>Display any Shotgun field value than can be directly rendered as a string.</p>
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="elided-label-base-widget">
+<section id="elided-label-base-widget">
 <h3>Elided Label Base Widget<a class="headerlink" href="#elided-label-base-widget" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">ElidedLabelBaseWidget</span></code> is nearly identical to the <code class="docutils literal notranslate"><span class="pre">LabelBaseWidget</span></code>
 except that it will elide its display text when the text is too long to display
@@ -2883,10 +2884,10 @@ in the layout.</p>
 <p>Display any Shotgun field value than can be directly rendered as a string.</p>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 <hr class="docutils" />
-<div class="section" id="field-widget-delegates">
+<section id="field-widget-delegates">
 <h2>Field Widget Delegates<a class="headerlink" href="#field-widget-delegates" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate">
@@ -2906,7 +2907,7 @@ display the field info</p></li>
 <li><p><strong>editor_class</strong> – A shotgun field <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a> to
 edit the field info</p></li>
 <li><p><strong>view</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The parent view for this delegate</p></li>
-<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgunsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.7.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Optional Task manager.  If this is not passed in
+<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Optional Task manager.  If this is not passed in
 one will be created when the delegate widget is created.</p></li>
 </ul>
 </dd>
@@ -2929,64 +2930,64 @@ the item index.</p>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="example-code">
+<section id="example-code">
 <h2>Example Code<a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h2>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">Populate a QTableWidget with the results of a Shotgun query</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ExampleTableWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<div class="code-block-caption"><span class="caption-text">Populate a QTableWidget with the results of a ShotGrid query</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ExampleTableWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
@@ -3005,7 +3006,7 @@ the item index.</p>
         <span class="c1"># grab all of the fields on the entity type</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">schema_field_read</span><span class="p">(</span><span class="n">entity_type</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-        <span class="c1"># query Shotgun for the entities to display</span>
+        <span class="c1"># query ShotGrid for the entities to display</span>
         <span class="n">entities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_query</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">)</span>
 
         <span class="c1"># set the headers for each field</span>
@@ -3043,33 +3044,33 @@ the item index.</p>
 </div>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">Display data from a ShotgunModel in a TableView</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ExampleTableView</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ExampleTableView</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
@@ -3099,8 +3100,8 @@ the item index.</p>
 </pre></div>
 </td></tr></table></div>
 </div>
-</div>
-<div class="section" id="todos-known-issues">
+</section>
+<section id="todos-known-issues">
 <h2>TODOs &amp; Known Issues<a class="headerlink" href="#todos-known-issues" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Bubble widget does not display characters properly in some scenarios</p></li>
@@ -3109,10 +3110,10 @@ the item index.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">ElidedLabel</span></code> causes draw lagging when used in editable widget in Grid/Form layout</p></li>
 <li><p>The note input widget should be updated to use the global completer</p></li>
 <li><p>The status list widget editor should also use colors for visual hint like display widget</p></li>
-<li><p>shotgun model to auto update SG on changes still to come</p></li>
+<li><p>ShotGrid model to auto update SG on changes still to come</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -3122,7 +3123,7 @@ the item index.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="shotgun_menus.html" class="btn btn-neutral float-right" title="Shotgun Menus" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="shotgun_menus.html" class="btn btn-neutral float-right" title="ShotGrid Menus" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="screen_grab.html" class="btn btn-neutral float-left" title="Screen Capture Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
