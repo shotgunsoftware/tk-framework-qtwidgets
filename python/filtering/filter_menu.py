@@ -526,7 +526,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self._add_filter_groups(sorted_field_ids)
 
         # The menu layout may have changd, ensure it is positioned nicely.
-        self.adjust_position()
+        self._adjust_position()
 
     def _add_filter_groups(self, field_ids, ignore_existing=True):
         """
@@ -818,6 +818,20 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         return self._filter_groups[field_id].filter_actions.get(filter_id)
 
+    def _adjust_position(self):
+        """
+        Adjust the menu to ensure all actions are visible.
+        """
+
+        sz = self.sizeHint()
+        desktop = QtGui.QApplication.desktop()
+        geom = desktop.availableGeometry(self)
+        available_height = geom.height() - self.y()
+
+        if sz.height() > available_height:
+            adjust_y = max(0, geom.bottom() - sz.height())
+            self.setGeometry(self.x(), adjust_y, sz.width(), sz.height())
+
     ################################################################################################
     # Callbacks
     ################################################################################################
@@ -862,21 +876,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self._refresh_menu([field_id])
 
         # Adjust menu position after removing actions that may have altered the menu layout.
-        self.adjust_position()
-
-    def adjust_position(self):
-        """
-        Adjust the menu to ensure all actions are visible.
-        """
-
-        sz = self.sizeHint()
-        desktop = QtGui.QApplication.desktop()
-        geom = desktop.availableGeometry(self)
-        available_height = geom.height() - self.y()
-
-        if sz.height() > available_height:
-            adjust_y = max(0, geom.bottom() - sz.height())
-            self.setGeometry(self.x(), adjust_y, sz.width(), sz.height())
+        self._adjust_position()
 
     def _filter_widget_checked(self, action, state):
         """
