@@ -19,6 +19,16 @@ from tank_vendor import six
 import sgtk
 
 
+import sys
+
+if os.environ.get("DEBUG_TESTS") == "1":
+    sys.path.append("/Users/oues/python_libs")
+    import ptvsd
+
+    ptvsd.enable_attach()
+    ptvsd.wait_for_attach()
+
+
 class TestFramework(TankTestBase):
     """
     Very basic tests for the framework.
@@ -125,6 +135,7 @@ class TestFramework(TankTestBase):
                     getargspec = inspect.getargspec
                 else:
                     getargspec = inspect.getfullargspec
+                spec = getargspec(attr.__init__)
                 # Look at the parameter list for this widget's __init__ method
                 for arg in getargspec(attr.__init__).args:
                     # For each required parameter, we'll pass in an instance
@@ -143,6 +154,14 @@ class TestFramework(TankTestBase):
                         )
                     elif arg == "sg_entity_type":
                         params["sg_entity_type"] = "Asset"
+
+                    elif arg == "filter_data":
+                        # FilterItemWidget
+                        params[arg] = {"display_name": "Name"}
+
+                    elif arg in ("filter_id", "group_id"):
+                        # FilterItemWidget
+                        params[arg] = "id"
 
                 # Add the widget and show it, don't worry about the rest.
                 # It. Just. Works.
