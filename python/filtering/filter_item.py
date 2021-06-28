@@ -306,6 +306,9 @@ class FilterItem(object):
             pass
 
         elif self.filter_type == self.FilterType.GROUP:
+            if value is None:
+                value = []
+
             if not isinstance(value, list):
                 raise TypeError(
                     "Attempting to set invalid value '{value}' for '{type}' filter type".format(
