@@ -23,7 +23,7 @@ except:
     sgtk.platform.qt.QtGui = importer.QtGui
 
 
-class TestListModel(QtCore.QAbstractListModel):
+class _TestListModel(QtCore.QAbstractListModel):
     """
     A subclass of the Qt QAbstractListModel. A very basic model to use for testing.
     """
@@ -33,7 +33,7 @@ class TestListModel(QtCore.QAbstractListModel):
         Constructor.
         """
 
-        super(TestListModel, self).__init__(*args, **kwargs)
+        super(_TestListModel, self).__init__(*args, **kwargs)
 
         self._data = []
         self._map_role_to_column = {QtCore.Qt.DisplayRole: 0}

@@ -34,8 +34,8 @@ except:
 from tank_test.tank_test_base import TankTestBase
 from tank_test.tank_test_base import setUpModule  # noqa
 
-from list_model import TestListModel
-from data_object import TestDataObject
+from list_model import _TestListModel
+from data_object import _TestDataObject
 
 
 class TestFiltersDefinition(TankTestBase):
@@ -99,7 +99,7 @@ class TestFiltersDefinition(TankTestBase):
         )
 
         # NOTE when using the source/proxy model, the data must be set on the source model, or it will be empty.
-        self.source_model = TestListModel()
+        self.source_model = _TestListModel()
         self.proxy_model = self.FilterItemProxyModel()
         self.proxy_model.setSourceModel(self.source_model)
 
@@ -127,10 +127,10 @@ class TestFiltersDefinition(TankTestBase):
             [{"field_1": "value 1", "field_2": "value 2", "field_3": "value 3",}],
         ]
         self.object_data = [
-            [TestDataObject(1, "1", True)],
-            [TestDataObject(2, "2", False)],
-            [TestDataObject(1, "2", True)],
-            [TestDataObject(3, "1", False)],
+            [_TestDataObject(1, "1", True)],
+            [_TestDataObject(2, "2", False)],
+            [_TestDataObject(1, "2", True)],
+            [_TestDataObject(3, "1", False)],
         ]
         self.sg_data = [
             [
@@ -468,7 +468,7 @@ class TestFiltersDefinition(TankTestBase):
                             value_data = data_values[value_id]
                             assert set(value_data.keys()) == expected_value_keys
 
-                    elif isinstance(index_data, TestDataObject):
+                    elif isinstance(index_data, _TestDataObject):
                         for field, value in vars(index_data.__class__).items():
                             if not isinstance(value, property):
                                 continue
@@ -544,7 +544,7 @@ class TestFiltersDefinition(TankTestBase):
                             )
                             value_counts[field_id][value_id] += 1
 
-                    elif isinstance(index_data, TestDataObject):
+                    elif isinstance(index_data, _TestDataObject):
                         for field, value in vars(index_data.__class__).items():
                             if not isinstance(value, property):
                                 continue

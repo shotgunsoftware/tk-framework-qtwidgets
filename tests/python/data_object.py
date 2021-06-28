@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Autodesk Inc.
 
 
-class TestDataObject(object):
+class _TestDataObject(object):
     """
     Class used for generating test data objects.
     """

@@ -30,7 +30,7 @@ except:
 from tank_test.tank_test_base import TankTestBase
 from tank_test.tank_test_base import setUpModule  # noqa
 
-from list_model import TestListModel
+from list_model import _TestListModel
 
 
 class TestFilterMenu(TankTestBase):
@@ -71,7 +71,7 @@ class TestFilterMenu(TankTestBase):
             [{"number_field": 2, "bool_field": True,}],
             [{"number_field": 2, "string_field": "two",}],
         ]
-        self.source_model = TestListModel()
+        self.source_model = _TestListModel()
         self.source_model.set_internal_data(model_data)
         self.proxy_model = self.FilterItemProxyModel()
         self.proxy_model.setSourceModel(self.source_model)
