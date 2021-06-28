@@ -23,7 +23,7 @@ shotgun_globals = sgtk.platform.import_framework(
 )
 
 
-class FiltersDefinition(object):
+class FilterDefinition(object):
     """
     A class object that defines a defintion for a set of filters that are determined by the source
     model's data.
@@ -539,7 +539,7 @@ class FiltersDefinition(object):
             return None
 
 
-class FilterMenuFiltersDefinition(FiltersDefinition):
+class FilterMenuFiltersDefinition(FilterDefinition):
     """
     Subclass of the FilterDefinition class that is designed specifically to work with the
     FilterMenu class. The filters set from the FilterMenu are used to help determine if indexes
@@ -556,7 +556,7 @@ class FilterMenuFiltersDefinition(FiltersDefinition):
 
         super(FilterMenuFiltersDefinition, self).__init__()
 
-        # The FilterMenu assoicated with this FiltersDefinition.
+        # The FilterMenu assoicated with this FilterDefinition.
         self._filter_menu = filter_menu
 
     def _proxy_filter_accepts_row(self, index):

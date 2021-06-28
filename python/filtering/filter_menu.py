@@ -294,7 +294,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
     def refresh(self):
         """
-        Rebuild the FiltersDefinition from the current model data and update the menu with the
+        Rebuild the FilterDefinition from the current model data and update the menu with the
         new filter definition.
         """
 
@@ -423,7 +423,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         self.addSeparator()
 
-        # Build the FiltersDefinition and add the filter items based on the definition.
+        # Build the FilterDefinition and add the filter items based on the definition.
         self.refresh()
 
         # If any filters were set during initialization, update the active filter and emit a signal
@@ -438,14 +438,14 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     @sgtk.LogManager.log_timing
     def _refresh_menu(self, field_ids=None):
         """
-        Update the menu based on the current FiltersDefinition.
+        Update the menu based on the current FilterDefinition.
 
         Iterate through the filter items by field group:
-            - Filter item field groups will be removed as a whole, if the current FiltersDefinition
+            - Filter item field groups will be removed as a whole, if the current FilterDefinition
               does have a record of the field.
-            - Individual filter items will be removed, if the FiltersDefinition no longer has a
+            - Individual filter items will be removed, if the FilterDefinition no longer has a
               record of it.
-            - Filter item counts will be updated according to the current FiltersDefinition
+            - Filter item counts will be updated according to the current FilterDefinition
             - Individual filter items will be added, if the field it belongs to already exists
             - Filter item field groups will be added, if no field exists yet
 

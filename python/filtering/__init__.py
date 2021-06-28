@@ -8,7 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Autodesk, Inc.
 
-from .filter_definition import FiltersDefinition, FilterMenuFiltersDefinition
+from .filter_definition import FilterDefinition, FilterMenuFiltersDefinition
 from .filter_item import FilterItem
 from .filter_item_widget import (
     FilterItemWidget,
