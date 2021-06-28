@@ -35,13 +35,6 @@ filtering_dir = os.path.abspath(os.path.join(base_dir, "filtering"))
 sys.path.extend([base_dir, filtering_dir])
 from filter_item import FilterItem
 
-if os.environ.get("DEBUG_TESTS") == "1":
-    sys.path.append("/Users/oues/python_libs")
-    import ptvsd
-
-    ptvsd.enable_attach()
-    ptvsd.wait_for_attach()
-
 
 ####################################################################################################
 # FilterITem Fixtures

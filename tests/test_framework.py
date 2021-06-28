@@ -19,16 +19,6 @@ from tank_vendor import six
 import sgtk
 
 
-import sys
-
-if os.environ.get("DEBUG_TESTS") == "1":
-    sys.path.append("/Users/oues/python_libs")
-    import ptvsd
-
-    ptvsd.enable_attach()
-    ptvsd.wait_for_attach()
-
-
 class TestFramework(TankTestBase):
     """
     Very basic tests for the framework.

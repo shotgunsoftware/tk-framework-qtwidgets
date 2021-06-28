@@ -38,14 +38,6 @@ from list_model import TestListModel
 from data_object import TestDataObject
 
 
-if os.environ.get("DEBUG_TESTS") == "1":
-    sys.path.append("/Users/oues/python_libs")
-    import ptvsd
-
-    ptvsd.enable_attach()
-    ptvsd.wait_for_attach()
-
-
 class TestFiltersDefinition(TankTestBase):
     """
     Test the filtering FilterDefinition class.

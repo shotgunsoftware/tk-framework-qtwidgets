@@ -33,14 +33,6 @@ from tank_test.tank_test_base import setUpModule  # noqa
 from list_model import TestListModel
 
 
-if os.environ.get("DEBUG_TESTS") == "1":
-    sys.path.append("/Users/oues/python_libs")
-    import ptvsd
-
-    ptvsd.enable_attach()
-    ptvsd.wait_for_attach()
-
-
 class TestFilterMenu(TankTestBase):
     """
     Test the filtering FilterDefinition class.
