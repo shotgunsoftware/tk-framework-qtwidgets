@@ -31,3 +31,4 @@ from . import shotgun_widget
 from . import version_details
 from . import context_selector
 from . import delegates
+from . import filtering

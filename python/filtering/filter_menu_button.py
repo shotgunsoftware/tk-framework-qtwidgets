@@ -1,0 +1,87 @@
+# Copyright (c) 2021 Autodesk Inc.
+#
+# CONFIDENTIAL AND PROPRIETARY
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
+# Source Code License included in this distribution package. See LICENSE.
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
+# not expressly granted therein are reserved by Autodesk Inc.
+import sgtk
+from sgtk.platform.qt import QtCore, QtGui
+
+from .ui import resources_rc
+
+from .filter_menu import FilterMenu
+
+
+class FilterMenuButton(QtGui.QToolButton):
+    """
+    A QToolButton to be used with the FilterMenu class.
+    """
+
+    def __init__(self, parent=None, text=None, icon=None):
+        """
+        Constructor.
+
+        :param parent: The parent widget.
+        :type parent: :class:`sgtk.platform.qt.QtGui.QWidget`
+        :param text: The text displayed on the button.
+        :type text: str
+        :param icon: The button icon.
+        :type icon: :class:`sgtk.platform.qt.QtGui.QIcon`
+        """
+
+        super(FilterMenuButton, self).__init__(parent)
+
+        if not icon:
+            icon = QtGui.QIcon()
+            icon.addPixmap(
+                QtGui.QPixmap(
+                    ":tk_framework_qtwidgets.filtering/icons/filter-active.png"
+                ),
+                QtGui.QIcon.Normal,
+                QtGui.QIcon.On,
+            )
+            icon.addPixmap(
+                QtGui.QPixmap(
+                    ":tk_framework_qtwidgets.filtering/icons/filter-inactive.png"
+                ),
+                QtGui.QIcon.Normal,
+                QtGui.QIcon.Off,
+            )
+
+        self.setCheckable(True)
+        self.setPopupMode(QtGui.QToolButton.InstantPopup)
+        self.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
+        self.setIcon(icon)
+        self.setText(text or "Filter")
+
+    def setMenu(self, menu):
+        """
+        Override the QMenu method.
+
+        Enforce the menu to be of type `FilterMenu`. Connect the menu's filters changed
+        signal to update the menu button accordingly.
+        """
+
+        assert isinstance(
+            menu, FilterMenu
+        ), "FilterMenuButton menu must be of type '{}'".format(
+            FilterMenu.__class__.__name__
+        )
+
+        if self.menu():
+            self.menu().filters_changed.disconnect(self._menu_filters_changed)
+
+        super(FilterMenuButton, self).setMenu(menu)
+
+        self.menu().filters_changed.connect(self._menu_filters_changed)
+
+    def _menu_filters_changed(self):
+        """
+        Callback triggered when the menu filters have changed.
+        """
+
+        # Update the menu button icon to indicate whether or not the menu has any active filtering.
+        self.setChecked(self.menu().has_filtering)
