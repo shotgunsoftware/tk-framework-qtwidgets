@@ -108,6 +108,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         # Flag indicating the the menu is currently being refreshed
         self._is_refreshing = False
+        # Flag indicating that the menu triggered a refresh through a model layoutChanged signal
+        self._menu_triggered_refresh = False
 
         # Connect signals/slots
         self.aboutToShow.connect(self._about_to_show)
@@ -302,6 +304,15 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         if self._is_refreshing:
             return
+
+        if self.sender() != self:
+            # A workaround (until we have async refresh) to avoid the model layoutChanged signal
+            # from hammering the refresh, we only want to refresh if the menu itself caused the
+            # layoutChanged signal to fire.
+            if not self._menu_triggered_refresh:
+                return
+
+            self._menu_triggered_refresh = False
 
         # Emit signal about to refresh and set the flag to avoid recursive refreshing.
         self.menu_about_to_be_refreshed.emit()
@@ -857,6 +868,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         assert self._proxy_model
 
         if self._proxy_model:
+            self._menu_triggered_refresh = True
             self._proxy_model.set_filter_items([self.active_filter])
 
     def _toggle_filter_group(self, action, state):
