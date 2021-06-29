@@ -83,40 +83,6 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
 
         return QtCore.QSize(width, height)
 
-    def _draw_loading(self, painter, option, index):
-        """
-        Override the base method to draw the loader.
-
-        Draw the animated loading indicator. This default implementation will render an arc rotating
-        in a circle for as long as the item data indicates that the item is in a loading state.
-
-        The formula used to render the spinning loader is borrowed from the :class:`SpinnerWidget`.
-
-        :param painter: the object used for painting.
-        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
-        :param index: The index of the item.
-        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
-        """
-
-        # if index.parent().isValid():
-        # rect = self._get_loading_rect(option, index)
-        # if not rect.isValid():
-        # return
-
-        # color = QtGui.QColor(0, 0, 0, 200)
-        # brush = QtGui.QBrush(color)
-
-        # painter.save()
-        # painter.setBrush(brush)
-        # painter.drawRoundedRect(option.rect, self._item_x_radius, self._item_y_radius)
-        # painter.restore()
-
-        super(ThumbnailViewItemDelegate, self)._draw_loading(painter, option, index)
-
     def _get_loading_rect(self, option, index):
         """
         Override the base ViewItemDelegate method.
@@ -134,10 +100,6 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
                  if there is no loading indicatorto display.
         :rtype: :class:`sgtk.platform.qt.QtCore.QRect`
         """
-
-        # if not index.parent().isValid():
-        #
-        # return super(ThumbnailViewItemDelegate, self)._get_loading_rect(option, index)
 
         if not self.loading_role:
             return QtCore.QRect()
