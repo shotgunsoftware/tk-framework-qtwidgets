@@ -296,10 +296,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         """
         Rebuild the FilterDefinition from the current model data and update the menu with the
         new filter definition.
+
+        TODO: bulid the filter definition async - performance starts to degrade at ~400 model items.
         """
 
         if self._is_refreshing:
-            # Menu is already refreshing
             return
 
         # Emit signal about to refresh and set the flag to avoid recursive refreshing.
