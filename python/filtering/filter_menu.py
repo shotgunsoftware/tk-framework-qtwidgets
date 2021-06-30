@@ -62,7 +62,73 @@ class NoCloseOnActionTriggerShotgunMenu(ShotgunMenu):
 
 class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     """
-    A menu that can be hooked up with a model and view to provide filtering functionality.
+    A menu that provides filtering functionality.
+
+    How the menu's filter options are built:
+        A QSortFilterProxyModel is set for the menu, and the filter menu options reflect the data
+        in the model. The menu's FilterDefinition processes the model data and constructs a dictionary
+        of data that contains the filter data for each of the model items. The FilterDefintion is then
+        used to populate the menu with the filter QAction/QWidgetAction items.
+
+    When the menu is updated/refreshed:
+        The filter menu is refreshed based on the current model data on showing the menu, to ensure
+        the filter options reflect the current model data accurately. The menu is also refreshed
+        when the filter options are modified, which changes the model data. The menu may also be
+        forced to be refreshed on calling the `refresh` method with param `force` as True.
+
+    Example usage:
+
+        # Create the menu
+        filter_menu = FilterMenu(parent)
+
+        # Set the proxy model that contains the data to be filtered on. This must be called
+        # before the menu is initialized since the menu requires a model to build the filter
+        # items (if there is no model, there will be no filter options. The proxy model must
+        # inherit from the QSortFilterProxyModel class.
+        #
+        # If 'connect_signals' is True, the filter model is also expected to have the method
+        # 'set_filter_items'; the FilterItemProxyModel and FilterItemTreeProxyModel classes
+        # implement this method, and are designed to work with this FilterMenu class.
+        #
+        # If `connect_signals` is not True, the caller will need to connect to the signal
+        # `filters_changed` signal, which the menu emits, when filters have been modified and
+        # the proxy model requires updating.
+        filter_menu.set_filter_model(proxy_model, connect_signals=True)
+
+        # Initialize the menu. This will clear the menu and set up the static menu actions (e.g.
+        # "Clear Filters", "More Filters") and refresh the menu to display available filter
+        # options (if the model has any data loaded).
+        filter_menu.initialize_menu()
+
+        # Create a QToolButton and set the filter menu on it. The FilterMenuButton class is not
+        # required, any QToolButton class may be used. The benefit of the FilterMenuButton class
+        # is that it is designed to work with the FilterMenu specfically, for example, the icon
+        # will be updated when the menu has active filtering to visually indicate the data is
+        # filtered.
+        filter_button = FilterMenuButton(parent)
+        filter_button.setMenu(filter_menu)
+
+    Optional:
+
+        # By default, the filter menu options are built from the menu's model data, and the
+        # model item data role, QtCore.Qt.DisplayRole, is used to extract the data from the model.
+        # This can be overriden by using `set_filter_roles` and providing a new list of roles
+        # that will be used to extract the model data.
+        self._filter_menu.set_filter_roles(
+            [
+                QtCore.Qt.DisplayRole,
+                filter_menu.proxy_model.SOME_ITEM_DATA_ROLE,
+                ...
+            ]
+        )
+
+        # Call `set_ignore_fields` to ignore certain data when building the filters.
+        filter_menu.set_ignore_fields(
+            [
+                "{ROLE}.{FIELD_NAME},  # For non SG data, fields are of the format "role.field", e.g. "QtCore.Qt.DisplayRole.name"
+                "{SG_ENTITY_TYPE}.{FIELD_NAME}",  # For SG data, fields are of the format "entity_type.field", e.g. "Task.code"
+            ]
+        )
     """
 
     # Signal emitted when the filters have changed by modifying the menu options/actions.
@@ -264,7 +330,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         :type connect_signals: bool
         """
 
-        assert hasattr(filter_model, "filter_items"), "Invalid filter model"
         assert hasattr(
             filter_model, "sourceModel"
         ), "Filter model must be a subclass of QSortFilterProxyModel"
@@ -287,6 +352,12 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         if connect_signals:
             self._proxy_model.layoutChanged.connect(self.refresh)
+
+            # Sanity check for faster debugging. The filter model is expected to have the method 'set_filter_items'
+            # when connecting the slot '_update_filter_model_cb'.
+            assert hasattr(
+                filter_model, "set_filter_items"
+            ), "Expected filter model to have attribute `set_filter_items`"
             self.filters_changed.connect(self._update_filter_model_cb)
 
             # TODO enable signal/slot connection for smarter menu update
@@ -305,10 +376,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         if self._is_refreshing:
             return
 
-        if not force and self.sender() != self:
-            # A workaround (until we have async refresh) to avoid the model layoutChanged signal
-            # from hammering the refresh, we only want to refresh if the menu itself caused the
-            # layoutChanged signal to fire.
+        # Allow refresh if the filter menu itself called the refresh slot directly, or triggered the
+        # refresh via signal/slot. Until we have async refresh, this is to avoid the model signals
+        # (like layoutChanged) from hammering the refresh on each model data change.
+        # If an outside caller requires a refresh, pass the force flag as True.
+        if not force and self.sender() is not None and self.sender() != self:
             if not self._menu_triggered_refresh:
                 return
 
@@ -865,8 +937,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         Update the filter model to reflect the current filtering set based on the menu.
         """
 
-        assert self._proxy_model
-
         if self._proxy_model:
             self._menu_triggered_refresh = True
             self._proxy_model.set_filter_items([self.active_filter])
@@ -966,6 +1036,7 @@ class ShotgunFilterMenu(FilterMenu):
 
         super(ShotgunFilterMenu, self).__init__(parent)
 
+        # Use the SG_DATA_ROLE to extract the data from the ShotgunModel.
         self.set_filter_roles([ShotgunModel.SG_DATA_ROLE])
 
     def set_filter_model(self, filter_model, connect_signals=True):
@@ -974,6 +1045,13 @@ class ShotgunFilterMenu(FilterMenu):
 
         Ensure the filter_model is a subclass of the ShotgunModel class. Update the menu when the
         model emits its data_refreshed signal.
+
+        :param filter_model: The ShotgunModelthat is used to build the menu filters.
+        :type filter_model: :class:`sgtk.platform.qt.QSortFilterProxyModel`
+        :param connect_signals: Whether or not to connect model signals to
+                                the appropriate filter menu methods; e.g. model
+                                layoutChanged and data_refreshed signals will rebuild the menu.
+        :type connect_signals: bool
         """
 
         assert isinstance(filter_model.sourceModel(), ShotgunModel)

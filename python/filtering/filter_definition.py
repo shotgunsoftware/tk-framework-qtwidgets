@@ -25,10 +25,60 @@ shotgun_globals = sgtk.platform.import_framework(
 
 class FilterDefinition(object):
     """
-    A class object that defines a defintion for a set of filters that are determined by the source
-    model's data.
+    A class object that defines a defintion for a set of filters that are determined by model data.
 
-    TODO add example of what a definition looks like
+    The definition is built by going through each item in the model. For each item, the data for
+    each of the `filter_roles` defined is extracted from the item, and that data is further
+    processed to create a filter definition for that item's data. The data is processed based on the
+    type of data:
+
+        dictionary:
+            A filter item is added for each of the key-value pairs. The field id for these filter
+            items will be the "role.field", where the 'field' is one of the dictionary keys. The
+            filter id for these filter items will be the "field_id.value", where the 'value' is the
+            string representation of the filter value.
+        object:
+            A filter item is added for each of the object's defined properties. The field id for
+            these filter items will be the "role.field", where the 'field' is one of the object
+            property names. The filter id for these filter items will be the "field_id.value", where
+            the 'value' is the string representation of the filter value.
+        SG data:
+            A filter item is added for each of the SG field-value pairs. The field id for these filter
+            items will be the "sg_entity_type.field", where the 'sg_entity_type' is the entity type for
+            the sg data and the'field' is one of the sg data dictionary keys. The filter id for these
+            filter items will be the "field_id.value", where the 'value' is the string representation
+            of the filter value.
+
+        primitive data:
+            One filter item is added for the primitive data. The field id for these filter items will
+            be "role.None". Primitive data is not "grouped" so the field (group) is "None". The filter
+            id for these filter items will be the "field_id.value", where the 'value' is the string
+            representation of the filter value.
+
+    Example of a resulting filter definition:
+        {
+            "field_1": {
+                "name": The display name for the filter field,
+                "type": The data type for this filter field,
+                "values": {
+                    "value_1": {
+                        "name": The display name for this filter field value,
+                        "value": The actual value for this filter field value,
+                        "count": The number of items in the model that have this value,
+                        "icon": The icon to display for this filter field value,
+                    }
+                },
+                "data_func": A function that takes parameters: index, role, field. This
+                             function is used to get the data from the index used to
+                             perform the necessary comparison for filtering.
+            },
+            "field_2": { ... },
+            "field_3": { ... },
+            ...
+        }
+
+    The keys of the definition are the unique identifier for the field (or group) of filters. The keys of
+    the inner "values" dict are the filter ids.
     """
 
     def __init__(self):
