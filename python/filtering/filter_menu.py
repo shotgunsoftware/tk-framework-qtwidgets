@@ -294,7 +294,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # self.source_model.rowsRemoved.connect(self._remove_filters)
             # self.source_model.dataChanged.connect(self._update_filters)
 
-    def refresh(self):
+    def refresh(self, force=False):
         """
         Rebuild the FilterDefinition from the current model data and update the menu with the
         new filter definition.
@@ -305,7 +305,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         if self._is_refreshing:
             return
 
-        if self.sender() != self:
+        if not force and self.sender() != self:
             # A workaround (until we have async refresh) to avoid the model layoutChanged signal
             # from hammering the refresh, we only want to refresh if the menu itself caused the
             # layoutChanged signal to fire.
