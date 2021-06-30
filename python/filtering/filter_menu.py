@@ -1059,9 +1059,9 @@ class ShotgunFilterMenu(FilterMenu):
         source_model = self._get_source_model()
 
         if source_model is not None:
-            source_model.data_refreshed.disconnect()
+            source_model.data_refreshed.disconnect(self.refresh)
 
         super(ShotgunFilterMenu, self).set_filter_model(filter_model, connect_signals)
 
-        if source_model is not None:
+        if connect_signals and source_model is not None:
             source_model.data_refreshed.connect(self.refresh)

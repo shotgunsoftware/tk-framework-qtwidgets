@@ -526,7 +526,6 @@ class FilterDefinition(object):
                     "data_func": lambda i, r=role, f=field: self.get_index_data(
                         i, r, f
                     ),
-                    "icon": icon,
                 }
 
     def _proxy_filter_accepts_row(self, index):
