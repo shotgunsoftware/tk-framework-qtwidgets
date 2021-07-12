@@ -171,6 +171,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         # The filter model and its source model, that the filters in this menu are built bsaed on.
         self._proxy_model = None
+        self._source_model = None
 
         # Flag indicating the the menu is currently being refreshed
         self._is_refreshing = False
@@ -335,10 +336,15 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         ), "Filter model must be a subclass of QSortFilterProxyModel"
 
         if self._proxy_model:
-            self._proxy_model.layoutChanged.disconnect()
-            self.filters_changed.disconnect(self._update_filter_model_cb)
+            try:
+                self._proxy_model.layoutChanged.disconnect()
+                self.filters_changed.disconnect(self._update_filter_model_cb)
+            except RuntimeError:
+                # Signals were never connected
+                pass
 
         self._proxy_model = filter_model
+        self._source_model = filter_model.sourceModel()
         self._filters_def.proxy_model = self._proxy_model
 
         try:
@@ -863,16 +869,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # it safe to use the widget class name as part of the id.
         return "{}.{}".format(field_id, "TextFilterItemWidget")
 
-    def _get_source_model(self):
-        """
-        Get the source model that the filtres in this menu are built based on.
-        """
-
-        if self._proxy_model:
-            return self._proxy_model.sourceModel()
-
-        return None
-
     def _get_filter_group_items(self, field_id):
         """
         Convenience method to get all filter items for a given group.
@@ -1056,12 +1052,21 @@ class ShotgunFilterMenu(FilterMenu):
 
         assert isinstance(filter_model.sourceModel(), ShotgunModel)
 
-        source_model = self._get_source_model()
-
-        if source_model is not None:
-            source_model.data_refreshed.disconnect(self.refresh)
+        if self._source_model is not None:
+            try:
+                self._source_model.data_refreshed.disconnect(self.data_refreshed)
+            except RuntimeError:
+                # Signals were never connected.
+                pass
 
         super(ShotgunFilterMenu, self).set_filter_model(filter_model, connect_signals)
 
-        if connect_signals and source_model is not None:
-            source_model.data_refreshed.connect(self.refresh)
+        if connect_signals and self._source_model is not None:
+            self._source_model.data_refreshed.connect(self.data_refreshed)
+
+    def data_refreshed(self):
+        """
+        Slot triggered on SG model `data_refreshed` signal. Force a menu refresh.
+        """
+
+        self.refresh(force=True)
