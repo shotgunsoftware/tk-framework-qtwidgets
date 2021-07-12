@@ -819,7 +819,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         filter_widget = ChoicesFilterItemWidget(
             filter_id, field_id, {"display_name": field_name,},
         )
-        # filter_group.show_hide_action = action
 
         action = QtGui.QWidgetAction(self._more_filters_menu)
         action.setCheckable(True)
