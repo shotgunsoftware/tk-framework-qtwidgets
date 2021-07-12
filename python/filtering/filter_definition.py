@@ -376,7 +376,10 @@ class FilterDefinition(object):
             return
 
         field_id = "{role}.{field}".format(role=role, field=field)
-        field_display = str(field).title().replace("_", " ")
+        if field is None:
+            field_display = "Display"
+        else:
+            field_display = str(field).title().replace("_", " ")
 
         if not self._filters_accept_index(index, field_id):
             # Do not add filters for index data that is not accepted
