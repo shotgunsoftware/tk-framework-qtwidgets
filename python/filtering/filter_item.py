@@ -367,9 +367,6 @@ class FilterItem(object):
                 )
 
         elif self.filter_type == self.FilterType.DICT:
-            if isinstance(value, six.string_types):
-                print("Hmmm?")
-
             if not isinstance(value, (dict, six.string_types)):
                 raise TypeError(
                     "Attempting to set invalid value '{value}' for '{type}' filter type".format(
