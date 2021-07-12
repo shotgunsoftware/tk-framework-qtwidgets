@@ -338,7 +338,8 @@ class FilterMenuGroup(object):
                 self.set_action_visible(action, False)
 
         # Set the new visibility for the header action
-        self.set_action_visible(self.header_action, visible)
+        if self.header_action:
+            self.set_action_visible(self.header_action, visible)
 
         if not visible:
             # Reset the show limit
