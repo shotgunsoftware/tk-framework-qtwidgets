@@ -72,15 +72,16 @@ class FilterMenuButton(QtGui.QToolButton):
         )
 
         if self.menu():
-            self.menu().filters_changed.disconnect(self._menu_filters_changed)
+            self.menu().filters_changed.disconnect(self.update_button_checked)
 
         super(FilterMenuButton, self).setMenu(menu)
 
-        self.menu().filters_changed.connect(self._menu_filters_changed)
+        self.menu().filters_changed.connect(self.update_button_checked)
 
-    def _menu_filters_changed(self):
+    def update_button_checked(self):
         """
-        Callback triggered when the menu filters have changed.
+        Callback triggered when the menu filters have changed. Update the button's checked state
+        based on the menu's current filtering.
         """
 
         # Update the menu button icon to indicate whether or not the menu has any active filtering.
