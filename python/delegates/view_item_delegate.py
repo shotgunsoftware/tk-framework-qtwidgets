@@ -822,21 +822,24 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         data = ViewItemDelegate.get_value(index, role)
         values_list = None
 
-        if isinstance(data, list):
-            values_list = data
+        if data is None:
+            values_list = []
 
-        if isinstance(data, six.string_types):
+        elif isinstance(data, six.string_types):
             values_list = [data]
 
-        if (
-            isinstance(data, tuple)
-            and isinstance(data[0], six.string_types)
-            and isinstance(data[1], dict)
-        ):
-            # Special string formatting data
-            values_list = [convert_token_string(data[0], data[1])]
+        elif isinstance(data, (list, tuple)):
+            if (
+                len(data) == 2
+                and isinstance(data[0], six.string_types)
+                and isinstance(data[1], dict)
+            ):
+                # Special SG string formatting data
+                values_list = [convert_token_string(data[0], data[1])]
+            else:
+                values_list = list(data)
 
-        if isinstance(data, dict):
+        elif isinstance(data, dict):
             values_list = []
             for key, value in data.items():
                 if isinstance(key, six.string_types) and isinstance(
@@ -845,9 +848,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     values_list.append("<b>%s</b>:  %s" % (key, value))
             return values_list
 
-        if values_list is None:
-            # Unable to parse data
-            return []
+        else:
+            # Ensure items in values_list are strings
+            values_list = [str(data)]
 
         if flat:
             # Return the values listed flattened
