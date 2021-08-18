@@ -709,6 +709,29 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._action_hover_cursor = cursor
 
     @staticmethod
+    def get_option_widget(option):
+        """
+        Return the widget for the QStyleOptionviewItem object.
+
+        NOTE: This method should be used to retrieve the QStyleOptionViewItem's widget property.
+        For different version of Qt, the widget is stored in different properties.
+
+        :param option: The option to get the widget from.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+
+        :return: The option's widget object.
+        :rtype: :class:`sgtk.platform.qt.QtGui.QWidget`
+        """
+
+        widget = option.widget
+
+        if widget is None:
+            # For Qt version < 5.12
+            widget = option.styleObject
+
+        return widget
+
+    @staticmethod
     def has_mouse_tracking(option):
         """
         Return True if the item's option widget has mouse tracking enabled.
@@ -720,7 +743,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :rtype: bool
         """
 
-        return option.widget and option.widget.hasMouseTracking()
+        widget = ViewItemDelegate.get_option_widget(option)
+        return widget and widget.hasMouseTracking()
 
     @staticmethod
     def get_cursor_pos(option):
@@ -737,7 +761,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         if ViewItemDelegate.has_mouse_tracking(option):
-            return option.widget.mapFromGlobal(QtGui.QCursor.pos())
+            widget = ViewItemDelegate.get_option_widget(option)
+            return widget.mapFromGlobal(QtGui.QCursor.pos())
 
         return None
 
@@ -1039,13 +1064,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 return True
 
         elif event.type() == QtCore.QEvent.MouseMove:
-            if self.action_hover_cursor and view_option.widget:
+            widget = self.get_option_widget(view_option)
+
+            if self.action_hover_cursor and widget:
                 action = self._action_at(view_option, index, event.pos())
                 if action and action.callback:
                     # Set the cursor to indicate it is over an action item.
-                    view_option.widget.setCursor(self.action_hover_cursor)
+                    widget.setCursor(self.action_hover_cursor)
                 else:
-                    view_option.widget.unsetCursor()
+                    widget.unsetCursor()
 
             # Emit a data changed signal for the index to paint according to the mouse move
             # event (e.g. hover selection).
@@ -1161,6 +1188,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Initialize the view option
         view_option = QtGui.QStyleOptionViewItem(option)
         self.initStyleOption(view_option, index)
+        # The styleObject propety is cleared by initStyleOption, but for Qt versions < 5.12 the
+        # styleObject is required since that is where the option's widget is stored (instead of
+        # option.widget property as in Qt >= 5.12), so we will just reset the styleObject back
+        # to the incoming options' styleObject value.
+        view_option.styleObject = option.styleObject
 
         # Check if the index should be expanded or collapsed, and update the index
         # model data to render the correct row height for the index.
@@ -1272,9 +1304,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if self.loading_pen:
             pen = self.loading_pen
         else:
+            widget = self.get_option_widget(option)
             color = (
-                option.palette.color(option.widget.foregroundRole())
-                if option.widget
+                option.palette.color(widget.foregroundRole())
+                if widget
                 else option.palette.text().color()
             )
             pen = QtGui.QPen(color)
@@ -1327,9 +1360,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             position = separator.get("position", position)
 
         if self.separator_brush == QtCore.Qt.NoBrush:
+            widget = self.get_option_widget(option)
             color = (
-                option.palette.color(option.widget.foregroundRole())
-                if option.widget
+                option.palette.color(widget.foregroundRole())
+                if widget
                 else option.palette.text().color()
             )
             pen = QtGui.QPen(color)
@@ -1723,8 +1757,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             # Build the button options used to draw the action.
             button_option = QtGui.QStyleOptionButton()
-            if option.widget:
-                button_option.initFrom(option.widget)
+            widget = self.get_option_widget(option)
+            if widget:
+                button_option.initFrom(widget)
 
             button_option.fontMetrics = option.fontMetrics
             # Set the draw rect for the action
@@ -1781,9 +1816,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 button_option.palette.setBrush(QtGui.QPalette.ButtonText, brush)
 
             # Get the style object that controls how the action button is rendered.
-            style = (
-                option.widget.style() if option.widget else QtGui.QApplication.style()
-            )
+            style = widget.style() if widget else QtGui.QApplication.style()
 
             # Finally draw the action in the style of QPushButton. If more complex functionality
             # is required in the future, this may need to change to render a QToolButton using
@@ -1800,7 +1833,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             )
             subopt = QtGui.QStyleOptionButton(button_option)
             subopt.rect = style.subElementRect(
-                QtGui.QStyle.SE_PushButtonContents, button_option, option.widget
+                QtGui.QStyle.SE_PushButtonContents, button_option, widget
             )
             style.proxy().drawControl(QtGui.QStyle.CE_PushButtonLabel, subopt, painter)
             if button_option.state & QtGui.QStyle.State_HasFocus:
@@ -1810,7 +1843,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 fropt.state = button_option.state
                 fropt.fontMetrics = button_option.fontMetrics
                 fropt.rect = style.subElementRect(
-                    QtGui.QStyle.SE_PushButtonFocusRect, button_option, option.widget
+                    QtGui.QStyle.SE_PushButtonFocusRect, button_option, widget
                 )
                 style.proxy().drawPrimitive(
                     QtGui.QStyle.PE_FrameFocusRect, fropt, painter
@@ -1847,9 +1880,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         cursor_pos = self.get_cursor_pos(option)
+        widget = self.get_option_widget(option)
+
         if cursor_pos and rect.contains(cursor_pos):
             global_pos = QtGui.QCursor().pos()
-            QtGui.QToolTip.showText(global_pos, text, option.widget, rect)
+            QtGui.QToolTip.showText(global_pos, text, widget, rect)
 
     def _draw_text_tooltip(self, option, rect, index, elided=None):
         """

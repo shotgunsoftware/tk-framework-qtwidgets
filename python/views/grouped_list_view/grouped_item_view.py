@@ -767,9 +767,18 @@ class GroupedItemView(QtGui.QAbstractItemView):
                     # the group widget is visible
                     option = QtGui.QStyleOptionViewItem()
                     option.initFrom(self)
-                    # Set the option widget to this view object
-                    option.widget = self
                     option.rect = rect
+                    try:
+                        # Try to set the option widget to this view object. This will only work in
+                        # Qt version >=5.12
+                        option.widget = self
+                    except AttributeError:
+                        # This error will occur for Qt versions < 5.12, since the widget property is
+                        # not writable in these older versions. The option widget is stored in the
+                        # option.styleObject internal property on `initFrom(widget)`, so we can just
+                        # ignore this error.
+                        pass
+
                     # Group items are not selectable, take focus or receive mouse hover events.
                     option.state &= ~QtGui.QStyle.State_Selected
                     option.state &= ~QtGui.QStyle.State_HasFocus
@@ -813,9 +822,17 @@ class GroupedItemView(QtGui.QAbstractItemView):
                             # though.
                             option = QtGui.QStyleOptionViewItem()
                             option.initFrom(self)
-                            # Set the option widget to this view object
-                            option.widget = self
                             option.rect = child_rect
+                            try:
+                                # Try to set the option widget to this view object. This will only work in
+                                # Qt version >=5.12
+                                option.widget = self
+                            except AttributeError:
+                                # This error will occur for Qt versions < 5.12, since the widget property is
+                                # not writable in these older versions. The option widget is stored in the
+                                # option.styleObject internal property on `initFrom(widget)`, so we can just
+                                # ignore this error.
+                                pass
 
                             # Set the selected state on the option
                             if self.selectionModel().isSelected(child_index):
