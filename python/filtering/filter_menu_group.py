@@ -50,7 +50,7 @@ class FilterMenuGroup(object):
         self.more_actions = []
         # This action will trigger showing more items in the group incrementall. It will always
         # be shown as the last item in the group.
-        self.show_more_action = QtGui.QAction("Show More...")
+        self.show_more_action = QtGui.QAction("Show More...", None)
         self.show_more_action.triggered.connect(self.show_more)
 
     @staticmethod

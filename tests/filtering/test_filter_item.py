@@ -1214,12 +1214,6 @@ def test_filter_item_method_is_number_valid_bad_op(filter_item):
         ),
         (
             (FilterItem.FilterType.DATETIME, FilterItem.FilterOp.EQUAL),
-            datetime.now(),
-            datetime.today(),
-            False,
-        ),
-        (
-            (FilterItem.FilterType.DATETIME, FilterItem.FilterOp.EQUAL),
             "Today",
             "Today",
             True,
