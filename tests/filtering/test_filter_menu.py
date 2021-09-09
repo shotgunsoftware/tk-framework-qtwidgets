@@ -45,8 +45,7 @@ class TestFilterMenu(TankTestBase):
 
         super(TestFilterMenu, self).setUp()
         self.setup_fixtures()
-        self.project_name = os.path.basename(self.project_root)
-        context = self.tk.context_from_entity(self.project["type"], self.project["id"])
+        context = sgtk.Context(self.tk, project=self.project)
         self.engine = sgtk.platform.start_engine("tk-testengine", self.tk, context)
 
         # We can't load modules from a test because load_framework can only be called
