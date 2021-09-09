@@ -807,16 +807,16 @@ class FilterItem(object):
             if value is None:
                 value = ""
 
-            regex = QtCore.QRegularExpression(
-                self.filter_value, QtCore.QRegularExpression.CaseInsensitiveOption
+            regex = QtCore.QRegExp(
+                self.filter_value, QtCore.Qt.CaseInsensitive, QtCore.QRegExp.FixedString
             )
-            match = regex.match(value)
+            match = regex.indexIn(value)
 
             if self.filter_op == self.FilterOp.IN:
-                return match.hasMatch()
+                return match >= 0
 
             if self.filter_op == self.FilterOp.NOT_IN:
-                return not match.hasMatch()
+                return match < 0
 
         assert False, "Unsupported operation for filter type 'str'"
         return False
