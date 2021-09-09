@@ -15,10 +15,9 @@ from sgtk.platform.qt import QtCore, QtGui
 from tank.util import sgre as re
 from tank_vendor import six
 
-from ..utils import convert_token_string
+utils = sgtk.platform.current_bundle().import_module("utils")
 
 DEBUG_PAINT = False
-# DEBUG_PAINT = True
 
 
 class ViewItemDelegate(QtGui.QStyledItemDelegate):
@@ -70,9 +69,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         def __init__(self, top, right, bottom, left):
-            """
-            Padding constructor.
-            """
+            # """
+            # Padding constructor.
+            # """
 
             self.top = top
             self.right = right
@@ -717,7 +716,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         For different version of Qt, the widget is stored in different properties.
 
         :param option: The option to get the widget from.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
         :return: The option's widget object.
         :rtype: :class:`sgtk.platform.qt.QtGui.QWidget`
@@ -737,7 +736,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Return True if the item's option widget has mouse tracking enabled.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
         :return: True if the item has mouse tracking enabled.
         :rtype: bool
@@ -754,7 +753,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         mouse tracking enabled.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
         :return: The cursor position relative to the option widget.
         :rtype: :class:`sgkt.platform.qt.QtCore.QPoint`
@@ -772,7 +771,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Return True if the item is selected.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
         :return: True if the item is selected, else False.
         :rtype: bool
@@ -788,7 +787,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         does not have mouse tracking enabeld.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
         :return: True if the mouse is over the item, else False.
         :rtype: bool
@@ -860,7 +859,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 and isinstance(data[1], dict)
             ):
                 # Special SG string formatting data
-                values_list = [convert_token_string(data[0], data[1])]
+                values_list = [utils.convert_token_string(data[0], data[1])]
             else:
                 values_list = list(data)
 
@@ -991,7 +990,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         the option (e.g. sizeHint, paint, etc.).
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :return: None
@@ -1016,7 +1015,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param parent: The editor's parent widget.
         :type parent: :class:`sgtk.platform.qt.QtGui.QWidget`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :return: The editor widget for the item.
@@ -1042,7 +1041,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param model: The model of the item.
         :type model: :class:`sgtk.platform.qt.QtCore.QAbstractItemModel`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :return: True if the event was handled, else False (it was ignored).
@@ -1094,7 +1093,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Returns the size hint for the view item.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         """
@@ -1175,7 +1174,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -1253,7 +1252,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
         :return: None
         """
@@ -1274,7 +1273,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -1340,7 +1339,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -1395,7 +1394,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
         :return: None
         """
@@ -1426,7 +1425,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -1534,7 +1533,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param bounding_rect: The rect that the badge icons will be overlayed.
         :type bounding_rect: :class:`sgtk.platform.qt.QtCore.QRect`
         :param index: The index of the item.
@@ -1666,7 +1665,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -1734,7 +1733,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -1870,7 +1869,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Show a tooltip at the current cursor position, if it is hovering over the given rect.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param rect: The rect to check if the cursor is over.
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
         :param text: The tooltip text to display.
@@ -1894,7 +1893,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             2. The `override_item_tooltip` property is True or the item does not have a tooltip
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param rect: The rect to check if the cursor is over.
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
         :param index: The index of the item.
@@ -1997,7 +1996,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param option: The option used for rendering the item. When specified with `rect`,
                        the header text will be elided, if necessary.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param rect: The bounding rect for the text. When specified with `option`, the
                      header text will be elided, if necessary.
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
@@ -2029,7 +2028,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param option: The option used for rendering the item. When specified with `rect`,
                        the header text will be elided, if necessary.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param rect: The bounding rect for the text. When specified with `option`, the
                      header text will be elided, if necessary.
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
@@ -2169,7 +2168,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         the bounding rect and size of the text.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The item model index.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param rect: The bounding rect for the text.
@@ -2196,7 +2195,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Retun all of the actions that are valid for this item.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The item model index.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param return_all: Return all actions no matter what.
@@ -2237,7 +2236,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Return a list of tuples of the view item actions and their respective rect.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The item model index.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param return_all: Return all actions no matter what.
@@ -2278,7 +2277,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         to the right in the option rect, and centered vertically.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -2309,7 +2308,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         positioned on the left of the option rect.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -2356,7 +2355,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         of option's rect and span the rest of the option rect width.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -2395,7 +2394,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Returns the bounding rect for the view item action.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param position: The position of the action
@@ -2473,7 +2472,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Return the width of for all actions combined in the given position.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param position: The position of the action
@@ -2497,7 +2496,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         span to.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param include_margin: Add margin to actions offset.
@@ -2519,7 +2518,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         span to.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param include_margin: Add margin to actions offset.
@@ -2540,7 +2539,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         return the offset from the edge of the option rect, to how far the actions span.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param position: The positions of the actions to calculate the offset for. When more than one
@@ -2576,7 +2575,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         is not enabled on the option widget, this will always return False.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param rect: The rect to check if the cursor is over.
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
 
@@ -2592,7 +2591,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Return the action at the given point `pos`.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param pos: The point to check intersection with action bounding rect.
@@ -2634,7 +2633,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         If the cursor is not hovering over the item and the item was expanded to show all text, now collapse the item.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -2708,7 +2707,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         for the item text are consistent (e.g. font, document margin, etc.).
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
         :return: The created QTextDocument object.
         :rtype: :class:`sgtk.platform.qt.QtGui.QTextDocument`
@@ -2733,7 +2732,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         to calculate the height per line.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param line_text: The placehoder text used to calculate the line height. The specific
                           text should not affect the overall height.
         :type line_text: str
@@ -2759,7 +2758,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Return the width of the rendered HTML text.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param text: The text to check for overflow.
         :type text: str
 
@@ -2780,7 +2779,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         to the view item bounding rect.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param rect: The text bounding rect
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
         :param text_lines: The text to check if it fits inside the given rect,
@@ -2835,7 +2834,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Format the HTML text.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param rect: The text bounding rect

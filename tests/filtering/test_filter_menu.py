@@ -55,12 +55,11 @@ class TestFilterMenu(TankTestBase):
 
         # Get a few modules that will be useful later on when instantiating widgets.
         filtering = qt_fw.import_module("filtering")
-        models = qt_fw.import_module("models")
 
         # Define the filtering modules as class members for test methods to access
         self.FilterDefinition = filtering.FilterDefinition
         self.FilterItem = filtering.FilterItem
-        self.FilterItemProxyModel = models.FilterItemProxyModel
+        self.FilterItemProxyModel = filtering.FilterItemProxyModel
         self.FilterMenu = filtering.FilterMenu
         self.ChoicesFilterItemWidget = filtering.ChoicesFilterItemWidget
         self.TextFilterItemWidget = filtering.TextFilterItemWidget

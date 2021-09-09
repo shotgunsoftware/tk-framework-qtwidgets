@@ -12,7 +12,7 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from tank_vendor import six
 
-from ..search_widget import SearchWidget
+search_widget = sgtk.platform.current_bundle().import_module("search_widget")
 
 
 class FilterItemWidget(QtGui.QWidget):
@@ -79,6 +79,7 @@ class FilterItemWidget(QtGui.QWidget):
 
         return self._group_id
 
+    @property
     def name(self):
         """
         Return the dispaly text for this widget.
@@ -86,6 +87,7 @@ class FilterItemWidget(QtGui.QWidget):
 
         raise sgtk.TankError("Abstract class method not overriden")
 
+    @property
     def value(self):
         """
         Return the widget's current value.
@@ -211,6 +213,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         finally:
             painter.end()
 
+    @FilterItemWidget.name.getter
     def name(self):
         """
         Return the widget's label text, this is the display name for this widget.
@@ -218,6 +221,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
 
         return self.label.text()
 
+    @FilterItemWidget.value.getter
     def value(self):
         """
         Return whether or not the widget's checkbox is checked.
@@ -272,7 +276,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         """
 
         if isinstance(state, ChoicesFilterItemWidget):
-            self.set_value(state.value())
+            self.set_value(state.value)
 
         elif isinstance(state, bool):
             self.set_value(state)
@@ -309,7 +313,7 @@ class TextFilterItemWidget(FilterItemWidget):
 
         self._name = filter_data.get("display_name", "")
 
-        self.line_edit = SearchWidget(self)
+        self.line_edit = search_widget.SearchWidget(self)
         self.line_edit.search_edited.connect(self.value_changed.emit)
 
         layout = QtGui.QHBoxLayout()
@@ -317,6 +321,7 @@ class TextFilterItemWidget(FilterItemWidget):
         layout.addWidget(self.line_edit)
         self.setLayout(layout)
 
+    @FilterItemWidget.name.getter
     def name(self):
         """
         The display name for this widget.
@@ -324,6 +329,7 @@ class TextFilterItemWidget(FilterItemWidget):
 
         return self._name
 
+    @FilterItemWidget.value.getter
     def value(self):
         """
         Return the search widget's text value.
@@ -336,7 +342,7 @@ class TextFilterItemWidget(FilterItemWidget):
         Return True if the search widget has text, else False.
         """
 
-        return bool(self.value())
+        return bool(self.value)
 
     def set_value(self, value):
         """

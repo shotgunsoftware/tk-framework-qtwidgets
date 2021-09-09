@@ -41,11 +41,6 @@ from data_object import _TestDataObject
 class TestFiltersDefinition(TankTestBase):
     """
     Test the filtering FilterDefinition class.
-
-    TODO:
-      - Add tests using FilterItemTreeProxyModel
-      - Add tests using ShotgunModel classes
-      - More exhaustive testing on SG data
     """
 
     def setUp(self):
@@ -65,12 +60,11 @@ class TestFiltersDefinition(TankTestBase):
         su_fw = self.engine.apps["tk-testapp"].frameworks["tk-framework-shotgunutils"]
 
         # Get a few modules that will be useful later on when instantiating widgets.
-        models = qt_fw.import_module("models")
         filtering = qt_fw.import_module("filtering")
 
         # Define the filtering modules as class members for test methods to access
         self.FilterDefinition = filtering.FilterDefinition
-        self.FilterItemProxyModel = models.FilterItemProxyModel
+        self.FilterItemProxyModel = filtering.FilterItemProxyModel
 
         # FIXME cannot use patch to mock the shotgun_globals methods because it fails to import the module, so just
         # manually patch the methods used in FilterDefinition

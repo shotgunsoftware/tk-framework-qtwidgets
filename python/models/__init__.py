@@ -12,7 +12,3 @@
 # source model
 from .hierarchical_filtering_proxy_model import HierarchicalFilteringProxyModel
 from .shotgun_sort_filter_proxy_model import ShotgunSortFilterProxyModel
-
-# List and tree proxy models to be used with the FilterMenu
-from .filter_item_proxy_model import FilterItemProxyModel
-from .filter_item_tree_proxy_model import FilterItemTreeProxyModel

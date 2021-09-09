@@ -11,21 +11,26 @@
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-from ..filtering.filter_item import FilterItem
+from .filter_item import FilterItem
+
+# from ..models import HierarchicalFilteringProxyModel
+models = sgtk.platform.current_bundle().import_module("models")
 
 
-class FilterItemProxyModel(QtGui.QSortFilterProxyModel):
+class FilterItemTreeProxyModel(models.HierarchicalFilteringProxyModel):
     """
-    A filter proxy model that filters the source model data using a list of
-    FilterItem objects.
+    A filter proxy model that filters the source tree model data using a list of
+    FilterItem objects. This provides similar functionality as the
+    FilterItemFilterProxyModel, except for models that need to inherit from the
+    HierarchicalfilteringProxyModel.
     """
 
     def __init__(self, *args, **kwargs):
         """
-        Constructor.
+        Constructor
         """
 
-        super(FilterItemProxyModel, self).__init__(*args, **kwargs)
+        super(FilterItemTreeProxyModel, self).__init__(*args, **kwargs)
 
         # Default to AND all of the filter items upon filtering.
         self._group_op = FilterItem.FilterOp.AND
@@ -46,7 +51,7 @@ class FilterItemProxyModel(QtGui.QSortFilterProxyModel):
     @property
     def filter_items(self):
         """
-        Get or set the list of FilterItem objects used to filter the model data.
+        Get or set the filter items used to filter the model data.
         """
         return self._filter_items
 
@@ -64,9 +69,9 @@ class FilterItemProxyModel(QtGui.QSortFilterProxyModel):
             self.invalidateFilter()
             self.layoutChanged.emit()
 
-    def filterAcceptsRow(self, src_row, src_parent_idx):
+    def _is_row_accepted(self, src_row, src_parent_idx, parent_accepted):
         """
-        Overrides the base QSortFilterProxyModel implementation.
+        Override the base method implementation.
 
         Return True if the the row is accepted by the filter items. The row is
         accepted if the data is accepted by the list of FilterItems OR'ed or
@@ -76,6 +81,8 @@ class FilterItemProxyModel(QtGui.QSortFilterProxyModel):
         :type src_row: int
         :param src_parent_idx: The parent index of the source model's row to filter.
         :type src_parent_idx: :class:`sgtk.platform.qt.QModelIndex`
+        :param parent_accepted: True if the parent is known already to be accepted, else False.
+        :type parent_accepted: bool
 
         :return: True if the row is accepted, else False.
         :rtype: bool

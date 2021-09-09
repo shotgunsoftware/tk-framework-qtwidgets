@@ -1,34 +1,31 @@
-# Copyright (c) 2021 Shotgun Software Inc.
+# Copyright (c) 2021 Autodesk Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
+# This work is provided "AS IS" and subject to the ShotGrid Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
 # By accessing, using, copying or modifying this work you indicate your
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
-# not expressly granted therein are reserved by Shotgun Software Inc.
+# agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights
+# not expressly granted therein are reserved by Autodesk Inc.
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-from ..models import HierarchicalFilteringProxyModel
-from ..filtering.filter_item import FilterItem
+from .filter_item import FilterItem
 
 
-class FilterItemTreeProxyModel(HierarchicalFilteringProxyModel):
+class FilterItemProxyModel(QtGui.QSortFilterProxyModel):
     """
-    A filter proxy model that filters the source tree model data using a list of
-    FilterItem objects. This provides similar functionality as the
-    FilterItemFilterProxyModel, except for models that need to inherit from the
-    HierarchicalfilteringProxyModel.
+    A filter proxy model that filters the source model data using a list of
+    FilterItem objects.
     """
 
     def __init__(self, *args, **kwargs):
         """
-        Constructor
+        Constructor.
         """
 
-        super(FilterItemTreeProxyModel, self).__init__(*args, **kwargs)
+        super(FilterItemProxyModel, self).__init__(*args, **kwargs)
 
         # Default to AND all of the filter items upon filtering.
         self._group_op = FilterItem.FilterOp.AND
@@ -49,7 +46,7 @@ class FilterItemTreeProxyModel(HierarchicalFilteringProxyModel):
     @property
     def filter_items(self):
         """
-        Get or set the filter items used to filter the model data.
+        Get or set the list of FilterItem objects used to filter the model data.
         """
         return self._filter_items
 
@@ -67,9 +64,9 @@ class FilterItemTreeProxyModel(HierarchicalFilteringProxyModel):
             self.invalidateFilter()
             self.layoutChanged.emit()
 
-    def _is_row_accepted(self, src_row, src_parent_idx, parent_accepted):
+    def filterAcceptsRow(self, src_row, src_parent_idx):
         """
-        Override the base method implementation.
+        Overrides the base QSortFilterProxyModel implementation.
 
         Return True if the the row is accepted by the filter items. The row is
         accepted if the data is accepted by the list of FilterItems OR'ed or
@@ -79,8 +76,6 @@ class FilterItemTreeProxyModel(HierarchicalFilteringProxyModel):
         :type src_row: int
         :param src_parent_idx: The parent index of the source model's row to filter.
         :type src_parent_idx: :class:`sgtk.platform.qt.QModelIndex`
-        :param parent_accepted: True if the parent is known already to be accepted, else False.
-        :type parent_accepted: bool
 
         :return: True if the row is accepted, else False.
         :rtype: bool

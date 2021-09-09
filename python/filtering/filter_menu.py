@@ -27,7 +27,8 @@ from .filter_item_widget import (
     TextFilterItemWidget,
 )
 from .filter_menu_group import FilterMenuGroup
-from ..shotgun_menus import ShotgunMenu
+
+shotgun_menus = sgtk.platform.current_bundle().import_module("shotgun_menus")
 
 shotgun_model = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_model"
@@ -35,7 +36,7 @@ shotgun_model = sgtk.platform.import_framework(
 ShotgunModel = shotgun_model.ShotgunModel
 
 
-class NoCloseOnActionTriggerShotgunMenu(ShotgunMenu):
+class NoCloseOnActionTriggerShotgunMenu(shotgun_menus.ShotgunMenu):
     """
     ShotgunMenu subclass that prevents the menu from closing when an action is triggered.
     """
@@ -76,7 +77,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         when the filter options are modified, which changes the model data. The menu may also be
         forced to be refreshed on calling the `refresh` method with param `force` as True.
 
-    Example usage:
+    Example usage::
 
         # Create the menu
         filter_menu = FilterMenu(parent)
@@ -108,7 +109,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         filter_button = FilterMenuButton(parent)
         filter_button.setMenu(filter_menu)
 
-    Optional:
+    Optional::
 
         # By default, the filter menu options are built from the menu's model data, and the
         # model item data role, QtCore.Qt.DisplayRole, is used to extract the data from the model.
@@ -129,6 +130,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 "{SG_ENTITY_TYPE}.{FIELD_NAME}",  # For SG data, fields are of the format "entity_type.field", e.g. "Task.code"
             ]
         )
+
     """
 
     # Signal emitted when the filters have changed by modifying the menu options/actions.
@@ -274,7 +276,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 action = self._get_filter_group_action(field_id, filter_item.id)
                 widget = action.defaultWidget()
                 if widget.has_value():
-                    state[field_id][filter_item.id] = widget.value()
+                    state[field_id][filter_item.id] = widget.value
 
         return state
 
@@ -283,7 +285,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         Restore the menu to the given state.
 
         :param state: The menu state to restore.
-        :type state: dict, e.g.:
+        :type state: dict
+
+        e.g.::
+
             state = {
                 "field_id_1": {
                     "filter_id_1": "filter_id_1_value",
@@ -295,6 +300,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 },
                 ...
             }
+
         """
 
         updated = False
@@ -838,7 +844,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # Add the new action and then move it into alphabetical order.
         self._more_filters_menu.addAction(action)
         more_filters_actions = sorted(
-            self._more_filters_menu.actions(), key=lambda a: a.defaultWidget().name(),
+            self._more_filters_menu.actions(), key=lambda a: a.defaultWidget().name,
         )
         action_index = more_filters_actions.index(action)
         if action_index + 1 < len(more_filters_actions):

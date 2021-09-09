@@ -48,7 +48,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         by this delegate.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -92,7 +92,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         to the right in the option rect, and centered vertically.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -147,7 +147,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         property is ignored here.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 
@@ -186,7 +186,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         full width and take up the remaining height of the option rect.
 
         :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
 

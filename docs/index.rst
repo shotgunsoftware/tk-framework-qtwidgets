@@ -13,6 +13,8 @@ Contents:
    search_completer
    shotgun_search_widget
    context_widget
+   delegates
+   filtering
    help_screen
    models
    navigation
@@ -22,6 +24,7 @@ Contents:
    screen_grab
    shotgun_fields
    shotgun_menus
+   shotgun_widget
    spinner_widget
    version_details
    views
