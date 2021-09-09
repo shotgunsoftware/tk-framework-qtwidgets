@@ -1,12 +1,12 @@
-# Copyright (c) 2021 Shotgun Software Inc.
+# Copyright (c) 2021 Autodesk Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
+# This work is provided "AS IS" and subject to the ShotGrid Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
 # By accessing, using, copying or modifying this work you indicate your
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
-# not expressly granted therein are reserved by Shotgun Software Inc.
+# agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights
+# not expressly granted therein are reserved by Autodesk Inc.
 from datetime import datetime, timedelta
 import numbers
 
@@ -601,7 +601,7 @@ class FilterItem(object):
     def get_datetime_bucket(dt):
         """
         This attempts to get the datetime bucket for the given datetime passed. Datetime buckets
-        follow the same logic as the Shotgun Web UI.
+        follow the same logic as the ShotGrid Web UI.
 
         NOTE should we move this to shotgun_globals.date_time module?
 
@@ -648,17 +648,17 @@ class FilterItem(object):
         if date_value == tomorrow.date():
             return "Tomorrow"
 
-        # Shotgun Web UI calculates Far Future as more than 120 days (30 days times 4, roughly 4 months)
+        # ShotGrid Web UI calculates Far Future as more than 120 days (30 days times 4, roughly 4 months)
         far_future = today + timedelta(days=30 * 4)
         if date_value > far_future:
             return "Far Future"
 
-        # Shotgun Web UI calculates Long Ago similarly to Far Future
+        # ShotGrid Web UI calculates Long Ago similarly to Far Future
         long_ago = today - timedelta(days=30 * 4)
         if date_value < long_ago:
             return "Long Ago"
 
-        # Shotgun Web UI calculates months ago as at least four weeks passed
+        # ShotGrid Web UI calculates months ago as at least four weeks passed
         four_weeks_ago = today - timedelta(weeks=4)
         if date_value < four_weeks_ago:
             return "Last Few Months"
@@ -667,7 +667,7 @@ class FilterItem(object):
         if date_value > four_weeks_ahead:
             return "Next Few Months"
 
-        # Shotgun Web UI calculates week boundaries from Sunday; e.g. Last week will be any day from today
+        # ShotGrid Web UI calculates week boundaries from Sunday; e.g. Last week will be any day from today
         # until (and including) last Sunday
         # Past weeks
         days_since_sunday = today.weekday() + 1
