@@ -891,7 +891,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         Convenience method to split html text by line break tags.
         """
 
-        return re.split("<br\s*/?>", html_text)
+        return re.split(r"<br\s*/?>", html_text)
 
     ######################################################################################################
     # Public methods
