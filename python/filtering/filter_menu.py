@@ -201,6 +201,18 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         """
         return bool(self._active_filter and self._active_filter.filters)
 
+    @staticmethod
+    def set_widget_action_default_widget_value(widget_action, checked):
+        """
+        Convenience method to set the QWidgetAction's default widget's value to the checked value
+        of the QWidgetAction.
+
+        This is mainly used by the QWidgetAction's triggered callback to handle different
+        triggered signal signatures between Qt versions.
+        """
+
+        widget_action.defaultWidget().set_value(widget_action.isChecked())
+
     #############################################@##################################################
     # Public methods
     #############################################@##################################################
@@ -316,7 +328,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 if action:
                     self.blockSignals(True)
                     try:
-                        action.defaultWidget().set_value(value)
+                        action.defaultWidget().value = value
                         filter_group.show_action(action)
                         updated = True
                     finally:
@@ -755,7 +767,12 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         widget_action.setDefaultWidget(widget)
         widget_action.setCheckable(True)
-        widget_action.triggered.connect(widget.set_value)
+
+        widget_action.triggered.connect(
+            lambda checked=None, a=widget_action: self.set_widget_action_default_widget_value(
+                a, checked
+            )
+        )
 
         return widget_action
 
@@ -829,7 +846,13 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         action = QtGui.QWidgetAction(self._more_filters_menu)
         action.setCheckable(True)
         action.setDefaultWidget(filter_widget)
-        action.triggered.connect(filter_widget.set_value)
+
+        action.triggered.connect(
+            lambda checked=None, a=action: self.set_widget_action_default_widget_value(
+                a, checked
+            )
+        )
+
         filter_group.show_hide_action = action
 
         checked = self._field_visibility.get(field_id, False)

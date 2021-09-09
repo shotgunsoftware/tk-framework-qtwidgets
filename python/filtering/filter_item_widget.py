@@ -95,19 +95,27 @@ class FilterItemWidget(QtGui.QWidget):
 
         raise sgtk.TankError("Abstract class method not overriden")
 
-    def has_value(self):
+    @value.setter
+    def value(self, value):
         """
-        Return True if the widget has a value, else False.
+        Set the widget's value.
+
+        :param value: The value to set the widget's value to.
+        :type value: any
         """
 
         raise sgtk.TankError("Abstract class method not overriden")
 
     def set_value(self, value):
         """
-        Set the widget's value.
+        Convenience method to set the value for callback.
+        """
 
-        :param value: The value to set the widget's value to.
-        :type value: any
+        self.value = value
+
+    def has_value(self):
+        """
+        Return True if the widget has a value, else False.
         """
 
         raise sgtk.TankError("Abstract class method not overriden")
@@ -229,14 +237,8 @@ class ChoicesFilterItemWidget(FilterItemWidget):
 
         return self.checkbox.isChecked()
 
-    def has_value(self):
-        """
-        Return True if the widget's checkbox is checked, else False.
-        """
-
-        return self.checkbox.isChecked()
-
-    def set_value(self, value):
+    @value.setter
+    def value(self, value):
         """
         Set the widget's value by checking or unchecking the widget's checkbox based on the value.
 
@@ -253,19 +255,26 @@ class ChoicesFilterItemWidget(FilterItemWidget):
                 self.count_label.update()
 
             if "checked" in value:
-                self.set_value(value["checked"])
+                self.value = value["checked"]
 
         else:
             assert (
                 False
             ), "Attempting to set ChoicesFilterItemWidget value with invalid data"
 
+    def has_value(self):
+        """
+        Return True if the widget's checkbox is checked, else False.
+        """
+
+        return self.value
+
     def clear_value(self):
         """
         Clear the widget's value by unchecking the widget's checkbox.
         """
 
-        self.set_value(False)
+        self.value = False
 
     def restore(self, state):
         """
@@ -276,10 +285,10 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         """
 
         if isinstance(state, ChoicesFilterItemWidget):
-            self.set_value(state.value)
+            self.value = state.value
 
         elif isinstance(state, bool):
-            self.set_value(state)
+            self.value = state
 
         else:
             assert (
@@ -337,14 +346,8 @@ class TextFilterItemWidget(FilterItemWidget):
 
         return self.line_edit.search_text
 
-    def has_value(self):
-        """
-        Return True if the search widget has text, else False.
-        """
-
-        return bool(self.value)
-
-    def set_value(self, value):
+    @value.setter
+    def value(self, value):
         """
         Set the search widget's text value.
 
@@ -359,12 +362,19 @@ class TextFilterItemWidget(FilterItemWidget):
         self.line_edit.search_text = value
         self.value_changed.emit(value)
 
+    def has_value(self):
+        """
+        Return True if the search widget has text, else False.
+        """
+
+        return bool(self.value)
+
     def clear_value(self):
         """
         Clear the search widget's text.
         """
 
-        self.set_value("")
+        self.value = ""
 
     def restore(self, state):
         """
@@ -375,10 +385,10 @@ class TextFilterItemWidget(FilterItemWidget):
         """
 
         if isinstance(state, TextFilterItemWidget):
-            self.set_value(state.line_edit.search_text)
+            self.value = state.line_edit.search_text
 
         elif isinstance(state, six.string_types):
-            self.set_value(state)
+            self.value = state
 
         else:
             assert False, "Cannot restore TextFilterItemWidget state from '{}'".format(
