@@ -534,7 +534,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             # NOTE!!!! - cannot use the actual spinning animation because
             # this triggers the GIL bug where signals from threads
             # will deadlock the GIL
-            self.__overlay.show_message("Loading Shotgun Data...")
+            self.__overlay.show_message("Loading ShotGrid Data...")
 
         all_reply_users = []
         attachment_requests = []
@@ -563,7 +563,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             if self.show_sg_stream_button:
                 sg_stream_button = QtGui.QPushButton(self)
                 sg_stream_button.setText(
-                    "Click here to see the Activity stream in Shotgun."
+                    "Click here to see the Activity stream in ShotGrid."
                 )
                 sg_stream_button.setObjectName("full_shotgun_stream_button")
                 sg_stream_button.setCursor(QtCore.Qt.PointingHandCursor)
@@ -611,7 +611,7 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._loading_widget.setAlignment(
                 QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop
             )
-            self._loading_widget.setText("Loading data from Shotgun...")
+            self._loading_widget.setText("Loading data from ShotGrid...")
             self._loading_widget.setObjectName("loading_widget")
             self.ui.activity_stream_layout.addWidget(self._loading_widget)
 

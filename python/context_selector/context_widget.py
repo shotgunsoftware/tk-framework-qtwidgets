@@ -736,7 +736,7 @@ class ContextWidget(QtGui.QWidget):
         # failed to query the current user's tasks
         elif task_id == self._my_tasks_query_id:
             logger.warn(
-                "Unable to query tasks for the current Shotgun user."
+                "Unable to query tasks for the current ShotGrid user."
                 "Error Message: %s.\n%s" % (message, traceback_str)
             )
 
