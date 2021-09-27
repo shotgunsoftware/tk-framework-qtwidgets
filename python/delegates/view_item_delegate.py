@@ -96,6 +96,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         super(ViewItemDelegate, self).__init__(view)
 
+        # Store the view widget to fall back on for older versions of Qt, where the QStyleOption does not
+        # have a widget or styleObject property
+        self._view = view
+
         # The item data model roles used to retrieve the item's data to display. See ViewItemRolesMixin for
         # more details about the item data roles.
         self._thumbnail_role = QtCore.Qt.DecorationRole
@@ -708,62 +712,25 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._action_hover_cursor = cursor
 
     @staticmethod
-    def get_option_widget(option):
+    def get_option_background_brush(option):
         """
-        Return the widget for the QStyleOptionviewItem object.
+        Return the background brush for the QStyleOptionviewItem object.
 
-        NOTE: This method should be used to retrieve the QStyleOptionViewItem's widget property.
-        For different version of Qt, the widget is stored in different properties.
+        NOTE: This method should be used to retrieve the QStyleOptionViewItem's
+        backgroundBrush property. For different version of Qt, the backgroundBrush
+        property may not exist.
 
-        :param option: The option to get the widget from.
+        :param option: The option to get the background brush from.
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
 
-        :return: The option's widget object.
-        :rtype: :class:`sgtk.platform.qt.QtGui.QWidget`
+        :return: The option's background brush object.
+        :rtype: :class:`sgtk.platform.qt.QtGui.QBrush`
         """
 
-        widget = option.widget
-
-        if widget is None:
-            # For Qt version < 5.12
-            widget = option.styleObject
-
-        return widget
-
-    @staticmethod
-    def has_mouse_tracking(option):
-        """
-        Return True if the item's option widget has mouse tracking enabled.
-
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
-
-        :return: True if the item has mouse tracking enabled.
-        :rtype: bool
-        """
-
-        widget = ViewItemDelegate.get_option_widget(option)
-        return widget and widget.hasMouseTracking()
-
-    @staticmethod
-    def get_cursor_pos(option):
-        """
-        Return the mouse cursor position relative to the item's widget. This
-        will always return False if the option's widget does not have
-        mouse tracking enabled.
-
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
-
-        :return: The cursor position relative to the option widget.
-        :rtype: :class:`sgkt.platform.qt.QtCore.QPoint`
-        """
-
-        if ViewItemDelegate.has_mouse_tracking(option):
-            widget = ViewItemDelegate.get_option_widget(option)
-            return widget.mapFromGlobal(QtGui.QCursor.pos())
-
-        return None
+        try:
+            return option.backgroundBrush
+        except AttributeError:
+            return option.palette.brush(QtGui.QPalette.Background)
 
     @staticmethod
     def is_selected(option):
@@ -778,24 +745,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         return option.state & QtGui.QStyle.State_Selected
-
-    @staticmethod
-    def is_hover(option):
-        """
-        Return True if the mouse is over the item. This will always return
-        False if the option does not have a widget or the option's widget
-        does not have mouse tracking enabeld.
-
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
-
-        :return: True if the mouse is over the item, else False.
-        :rtype: bool
-        """
-
-        return ViewItemDelegate.has_mouse_tracking(option) and (
-            option.state & QtGui.QStyle.State_MouseOver
-        )
 
     @staticmethod
     def get_value(index, role, default_value=None):
@@ -895,6 +844,84 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
     ######################################################################################################
     # Public methods
+
+    def is_hover(self, option):
+        """
+        Return True if the mouse is over the item. This will always return
+        False if the option does not have a widget or the option's widget
+        does not have mouse tracking enabeld.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+
+        :return: True if the mouse is over the item, else False.
+        :rtype: bool
+        """
+
+        return self.has_mouse_tracking(option) and (
+            option.state & QtGui.QStyle.State_MouseOver
+        )
+
+    def has_mouse_tracking(self, option):
+        """
+        Return True if the item's option widget has mouse tracking enabled.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+
+        :return: True if the item has mouse tracking enabled.
+        :rtype: bool
+        """
+
+        widget = self.get_option_widget(option)
+        return widget and widget.hasMouseTracking()
+
+    def get_cursor_pos(self, option):
+        """
+        Return the mouse cursor position relative to the item's widget. This
+        will always return False if the option's widget does not have
+        mouse tracking enabled.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+
+        :return: The cursor position relative to the option widget.
+        :rtype: :class:`sgkt.platform.qt.QtCore.QPoint`
+        """
+
+        if self.has_mouse_tracking(option):
+            widget = self.get_option_widget(option)
+            return widget.mapFromGlobal(QtGui.QCursor.pos())
+
+        return None
+
+    def get_option_widget(self, option):
+        """
+        Return the widget for the QStyleOptionviewItem object.
+
+        NOTE: This method should be used to retrieve the QStyleOptionViewItem's widget property.
+        For different version of Qt, the widget is stored in different properties.
+
+        :param option: The option to get the widget from.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+
+        :return: The option's widget object.
+        :rtype: :class:`sgtk.platform.qt.QtGui.QWidget`
+        """
+
+        try:
+            widget = option.widget
+        except AttributeError:
+            widget = None
+
+        if widget is None:
+            try:
+                widget = option.styleObject
+            except AttributeError:
+                # Fall back to the delegate's view
+                widget = self._view
+
+        return widget
 
     def add_actions(self, actions, position=FLOAT_BOTTOM_RIGHT):
         """
@@ -1191,7 +1218,12 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # styleObject is required since that is where the option's widget is stored (instead of
         # option.widget property as in Qt >= 5.12), so we will just reset the styleObject back
         # to the incoming options' styleObject value.
-        view_option.styleObject = option.styleObject
+        try:
+            view_option.styleObject = option.styleObject
+        except AttributeError:
+            # Fall back to use the view as the style object for Qt versions where QStyleOption
+            # does not have a widget or styleObject property.
+            view_option.styleObject = self._view
 
         # Check if the index should be expanded or collapsed, and update the index
         # model data to render the correct row height for the index.
@@ -1258,7 +1290,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         painter.save()
-        painter.setBrush(QtGui.QBrush(option.backgroundBrush))
+        painter.setBrush(QtGui.QBrush(self.get_option_background_brush(option)))
         painter.setPen(self.background_pen)
         painter.drawRoundedRect(option.rect, self._item_x_radius, self._item_y_radius)
         painter.restore()
@@ -1837,7 +1869,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             style.proxy().drawControl(QtGui.QStyle.CE_PushButtonLabel, subopt, painter)
             if button_option.state & QtGui.QStyle.State_HasFocus:
                 fropt = QtGui.QStyleOptionFocusRect()
-                fropt.backgroundColor = option.backgroundBrush.color()
+                fropt.backgroundColor = self.get_option_background_brush(option).color()
                 fropt.palette = button_option.palette
                 fropt.state = button_option.state
                 fropt.fontMetrics = button_option.fontMetrics
