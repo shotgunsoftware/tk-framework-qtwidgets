@@ -18,5 +18,6 @@ from .grouped_list_view.grouped_list_view_item_delegate import (
     GroupedListViewItemDelegate,
 )
 from .grouped_list_view.group_widget_base import GroupWidgetBase
+from .grouped_list_view.grouped_item_view import GroupedItemView
 
 from .shotgun_tableview import ShotgunTableView
