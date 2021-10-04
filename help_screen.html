@@ -7,8 +7,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Help Screen Popup &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
@@ -24,10 +23,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -213,9 +212,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="help-screen-popup">
+  <div class="section" id="help-screen-popup">
 <h1>Help Screen Popup<a class="headerlink" href="#help-screen-popup" title="Permalink to this headline">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <img alt="_images/help_overview.png" src="_images/help_overview.png" />
 <p>The help popup is a window which presents a series of help images to the user,
@@ -226,7 +225,7 @@ can easily navigate between sides.</p>
 <p>You simply provide it with a list of transparent bitmaps sized 650x400 and it will
 create a slideshow with animated transitions and a link to the bundle’s associated
 documentation (retrieved from the manifest).</p>
-<section id="sample-code">
+<div class="section" id="sample-code">
 <h3>Sample Code<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">help_screen</span></code> module contains a single method that takes care of everything.
 Simply create the number of 650x400 images that you want and export them as transparent
@@ -257,29 +256,33 @@ to launch the help screen:</p>
 <span class="n">help_screen</span><span class="o">.</span><span class="n">show_help_screen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">(),</span> <span class="n">app</span><span class="p">,</span> <span class="n">help_pix</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="api-reference">
+</div>
+</div>
+<div class="section" id="api-reference">
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="help_screen.show_help_screen">
-<code class="sig-prename descclassname">help_screen.</code><code class="sig-name descname">show_help_screen</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">bundle</em>, <em class="sig-param">pixmaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/help_screen/dialog.html#show_help_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#help_screen.show_help_screen" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">help_screen.</code><code class="descname">show_help_screen</code><span class="sig-paren">(</span><em>parent</em>, <em>bundle</em>, <em>pixmaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/help_screen/dialog.html#show_help_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#help_screen.show_help_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show help screen window.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QWidget</span></code></a>) – Parent window. The help screen will be centered on top of this window.</p></li>
-<li><p><strong>bundle</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Application" title="(in tk-core vv0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Application</span></code></a>,
-<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Engine" title="(in tk-core vv0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Engine</span></code></a> or
-<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Framework" title="(in tk-core vv0.20.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Framework</span></code></a>) – Bundle object to associate with</p></li>
-<li><p><strong>pixmaps</strong> (List of <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QPixmap</span></code></a>) – List of images, all 650x400 px</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QWidget</span></code></a>) – Parent window. The help screen will be centered on top of this window.</li>
+<li><strong>bundle</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Application" title="(in tk-core vv0.20.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Application</span></code></a>,
+<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Engine" title="(in tk-core vv0.20.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Engine</span></code></a> or
+<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Framework" title="(in tk-core vv0.20.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Framework</span></code></a>) – Bundle object to associate with</li>
+<li><strong>pixmaps</strong> (List of <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QPixmap</span></code></a>) – List of images, all 650x400 px</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

@@ -7,8 +7,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Screen Capture Widget &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
@@ -24,10 +23,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -206,7 +205,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="screen-capture-widget">
+  <div class="section" id="screen-capture-widget">
 <h1>Screen Capture Widget<a class="headerlink" href="#screen-capture-widget" title="Permalink to this headline">¶</a></h1>
 <p>The screen capture widgets makes it easy to take screenshots.
 Similar to pressing CMD+SHIFT+4/CMD+SHIFT+3 on the mac, this widget implements
@@ -214,51 +213,56 @@ several different ways in which the screen can be captured, either via
 a cross hair style selection or by grabbing the entire screen.</p>
 <dl class="function">
 <dt id="screen_grab.get_desktop_pixmap">
-<code class="sig-prename descclassname">screen_grab.</code><code class="sig-name descname">get_desktop_pixmap</code><span class="sig-paren">(</span><em class="sig-param">rect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#get_desktop_pixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.get_desktop_pixmap" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">screen_grab.</code><code class="descname">get_desktop_pixmap</code><span class="sig-paren">(</span><em>rect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#get_desktop_pixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.get_desktop_pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs a screen capture on the specified rectangle.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>rect</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QRect.html#PySide.QtCore.QRect" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QRect</span></code></a>) – Rectangle to capture</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Captured image</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code></a></p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rect</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QRect.html#PySide.QtCore.QRect" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QRect</span></code></a>) – Rectangle to capture</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Captured image</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code></a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="screen_grab.screen_capture">
-<code class="sig-prename descclassname">screen_grab.</code><code class="sig-name descname">screen_capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#screen_grab.screen_capture" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">screen_grab.</code><code class="descname">screen_capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#screen_grab.screen_capture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modally displays the screen capture tool.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Captured screen</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code></a></p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Captured screen</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code></a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="screen_grab.screen_capture_file">
-<code class="sig-prename descclassname">screen_grab.</code><code class="sig-name descname">screen_capture_file</code><span class="sig-paren">(</span><em class="sig-param">output_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#screen_capture_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.screen_capture_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">screen_grab.</code><code class="descname">screen_capture_file</code><span class="sig-paren">(</span><em>output_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#screen_capture_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.screen_capture_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modally display the screen capture tool, saving to a file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>output_path</strong> – Path to save to. If no path is specified,
-a temp path is generated.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>path where screenshot was saved.</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>output_path</strong> – Path to save to. If no path is specified,
+a temp path is generated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path where screenshot was saved.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-</section>
+</div>
 
 
            </div>
