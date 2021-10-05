@@ -1,0 +1,476 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>delegates.thumbnail_view_item_delegate &mdash; tk-framework-qtwidgets v2.10.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+    <a href='http://developer.shotgridsoftware.com'>
+    
+        <img style='width: 191px;
+                height: 60px;
+                margin: 2px;
+                border-radius: 0px;
+                padding: 0px;'
+            src='../../_static/logo@2x.png'/>
+    
+    </a>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">ShotGrid Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">ShotGrid Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">ShotGrid Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../context_widget.html">Context Selector Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../delegates.html">Delegates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">ShotGrid Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">ShotGrid Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Shotgun Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">ShotGrid Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+
+    <a href='genindex.html'>Alphabetic Index</a>
+
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px;
+                color: #b3b3b3;
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>
+    <style>
+        a.custom_post_menu { display: inline;
+                             padding: 0px;
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> v2.10.1.<br>
+    
+        This documentation is part of the Shotgun Pipeline Toolkit.
+    
+    For more information, please visit
+    <a class=custom_post_menu href='https://support.shotgridsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tk-framework-qtwidgets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>delegates.thumbnail_view_item_delegate</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for delegates.thumbnail_view_item_delegate</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2021 Autodesk, Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Autodesk, Inc.</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">tank.util</span> <span class="kn">import</span> <span class="n">sgre</span> <span class="k">as</span> <span class="n">re</span>
+
+<span class="kn">from</span> <span class="nn">.view_item_delegate</span> <span class="kn">import</span> <span class="n">ViewItemDelegate</span>
+
+
+<div class="viewcode-block" id="ThumbnailViewItemDelegate"><a class="viewcode-back" href="../../delegates.html#delegates.ThumbnailViewItemDelegate">[docs]</a><span class="k">class</span> <span class="nc">ThumbnailViewItemDelegate</span><span class="p">(</span><span class="n">ViewItemDelegate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A subclass of the ViewItemDelegate, where the thumbnail is the focus of the display, and</span>
+<span class="sd">    is more compact (ideal for items with less text).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+
+<span class="sd">        Call the base constructor and set up properties specific to this delegate class.</span>
+
+<span class="sd">        :param parent: The parent widget that will be used with this delegate.</span>
+<span class="sd">        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">ThumbnailViewItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_size</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">164</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="ThumbnailViewItemDelegate.sizeHint"><a class="viewcode-back" href="../../delegates.html#delegates.ThumbnailViewItemDelegate.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the base ViewItemDelegate method.</span>
+
+<span class="sd">        The size hint is based on the thumbnail size. The width is set to the thumbnail</span>
+<span class="sd">        width, plus the item padding. If the min_width property is set, the width will be</span>
+<span class="sd">        at least the min_width. The height is set to the thumbnail height, plus the height</span>
+<span class="sd">        of the text and item padding. Currently, the min_height property is not supported</span>
+<span class="sd">        by this delegate.</span>
+
+<span class="sd">        :param option: The option used for rendering the item.</span>
+<span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: The size hint for this index.</span>
+<span class="sd">        :rtype: :class:`sgtk.platform.qt.QtCore.QSize`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">view_option</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionViewItem</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initStyleOption</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># The size hint will mainly be based off of the thumbnail rect.</span>
+        <span class="n">thumbnail_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_thumbnail_rect</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># Get the full height of the item text.</span>
+        <span class="n">text_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_rect</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="n">text_doc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_document</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">text_rect</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">text_height</span> <span class="o">=</span> <span class="n">text_doc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_width</span><span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="n">text_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_visible_lines_height</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Add padding</span>
+        <span class="n">width</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">left</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">right</span>
+        <span class="n">width</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">left</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">right</span>
+
+        <span class="n">height</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">top</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">bottom</span>
+        <span class="n">height</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">top</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">bottom</span>
+        <span class="k">if</span> <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">height</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">top</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">bottom</span>
+
+        <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_loading_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the base ViewItemDelegate method.</span>
+
+<span class="sd">        Return the bounding rect for the item&#39;s loading icon. An invalid rect will be</span>
+<span class="sd">        returned if the item is not in a loading state. The bounding rect will be positioned</span>
+<span class="sd">        to the right in the option rect, and centered vertically.</span>
+
+<span class="sd">        :param option: The option used for rendering the item.</span>
+<span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: The bounding rect for the item&#39;s loading indicator. The rect will be invalid</span>
+<span class="sd">                 if there is no loading indicatorto display.</span>
+<span class="sd">        :rtype: :class:`sgtk.platform.qt.QtCore.QRect`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">loading_role</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
+
+        <span class="n">loading</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loading_role</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">loading</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
+
+        <span class="n">center</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+            <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rect</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the base ViewItemDelegate method.</span>
+
+<span class="sd">        Return the text data to display. The text data will be the data retrieved from the</span>
+<span class="sd">        short_text_role. If the short_text_role is not defined, the base implementaiton</span>
+<span class="sd">        will be called.</span>
+
+<span class="sd">        :param index: The item model index.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: A list, where each item represents a text line in the item&#39;s whole text.</span>
+<span class="sd">        :rtype: list&lt;str&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">short_text_role</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_header_text</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
+            <span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_display_values_list</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">short_text_role</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ThumbnailViewItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_get_text</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_thumbnail_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">thumbnail</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the base ViewItemDelegate method.</span>
+
+<span class="sd">        Return the bounding rect for the item&#39;s thumbnail. The bounding rect will be</span>
+<span class="sd">        positioned at the top of the option rect, span the full width and height will</span>
+<span class="sd">        be set to the `thumbnail_size` property height. NOTE that the `min_height`</span>
+<span class="sd">        property is ignored here.</span>
+
+<span class="sd">        :param option: The option used for rendering the item.</span>
+<span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: The bounding rect for the item thumbnail.</span>
+<span class="sd">        :rtype: :class:`sgtk.platform.qt.QtCore.QRect`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">thumbnail</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">thumbnail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_thumbnail</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">thumbnail</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
+
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_size</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_width</span><span class="p">)</span>
+        <span class="c1"># Account for extra text padding</span>
+        <span class="n">width</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">left</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">right</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+
+        <span class="n">rect</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_size</span><span class="o">.</span><span class="n">height</span><span class="p">()))</span>
+        <span class="n">rect</span><span class="o">.</span><span class="n">adjust</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">left</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">top</span><span class="p">,</span>
+            <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">right</span><span class="p">,</span>
+            <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">bottom</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rect</span>
+
+    <span class="k">def</span> <span class="nf">_get_text_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the base ViewItemDelegate method.</span>
+
+<span class="sd">        Return the bounding rect for the item&#39;s text. The bounding rect will be</span>
+<span class="sd">        positioned directly under the bounding rect of the thumbnail, span the</span>
+<span class="sd">        full width and take up the remaining height of the option rect.</span>
+
+<span class="sd">        :param option: The option used for rendering the item.</span>
+<span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: The bounding rect for the item text.</span>
+<span class="sd">        :rtype: :class:`sgtk.platform.qt.QtCore.QRect`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_thumbnail</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ThumbnailViewItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_get_text_rect</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span>
+        <span class="n">top_left</span> <span class="o">=</span> <span class="n">rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">()</span>
+        <span class="n">top_left</span><span class="o">.</span><span class="n">setY</span><span class="p">(</span><span class="n">top_left</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_height</span><span class="p">)</span>
+
+        <span class="n">rect</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_height</span><span class="p">))</span>
+        <span class="n">rect</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">top_left</span><span class="p">)</span>
+
+        <span class="n">rect</span><span class="o">.</span><span class="n">adjust</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">left</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">top</span><span class="p">,</span>
+            <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">right</span><span class="p">,</span>
+            <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">bottom</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rect</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Autodesk
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-2114792-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>

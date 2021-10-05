@@ -1,0 +1,350 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>filtering.filter_menu_button &mdash; tk-framework-qtwidgets v2.10.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+    <a href='http://developer.shotgridsoftware.com'>
+    
+        <img style='width: 191px;
+                height: 60px;
+                margin: 2px;
+                border-radius: 0px;
+                padding: 0px;'
+            src='../../_static/logo@2x.png'/>
+    
+    </a>
+    
+
+          
+            <a href="../../index.html" class="icon icon-home"> tk-framework-qtwidgets
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">ShotGrid Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">ShotGrid Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">ShotGrid Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../context_widget.html">Context Selector Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../delegates.html">Delegates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">ShotGrid Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">ShotGrid Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Shotgun Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">ShotGrid Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
+</ul>
+
+            
+          
+
+    <a href='genindex.html'>Alphabetic Index</a>
+
+    <div style='margin-top: 50px;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px;
+                color: #b3b3b3;
+                font-size: 70%;
+                border-radius: 3px;
+                background-color: #444;
+                line-height: 18px;
+                '>
+    <style>
+        a.custom_post_menu { display: inline;
+                             padding: 0px;
+                             text-decoration: underline; }
+    </style>
+
+    <b>tk-framework-qtwidgets</b> v2.10.1.<br>
+    
+        This documentation is part of the Shotgun Pipeline Toolkit.
+    
+    For more information, please visit
+    <a class=custom_post_menu href='https://support.shotgridsoftware.com/home'>Shotgun Support</a>.
+    The code associated with this documentation can be found
+    <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
+
+    </div>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">tk-framework-qtwidgets</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>filtering.filter_menu_button</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for filtering.filter_menu_button</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2021 Autodesk Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the ShotGrid Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Autodesk Inc.</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
+
+<span class="kn">from</span> <span class="nn">.filter_menu</span> <span class="kn">import</span> <span class="n">FilterMenu</span>
+
+
+<div class="viewcode-block" id="FilterMenuButton"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenuButton">[docs]</a><span class="k">class</span> <span class="nc">FilterMenuButton</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A QToolButton to be used with the FilterMenu class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor.</span>
+
+<span class="sd">        :param parent: The parent widget.</span>
+<span class="sd">        :type parent: :class:`sgtk.platform.qt.QtGui.QWidget`</span>
+<span class="sd">        :param text: The text displayed on the button.</span>
+<span class="sd">        :type text: str</span>
+<span class="sd">        :param icon: The button icon.</span>
+<span class="sd">        :type icon: :class:`sgtk.platform.qt.QtGui.QIcon`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">FilterMenuButton</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">icon</span><span class="p">:</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">()</span>
+            <span class="n">icon</span><span class="o">.</span><span class="n">addPixmap</span><span class="p">(</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span>
+                    <span class="s2">&quot;:tk_framework_qtwidgets.filtering/icons/filter-active.png&quot;</span>
+                <span class="p">),</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">On</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">icon</span><span class="o">.</span><span class="n">addPixmap</span><span class="p">(</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span>
+                    <span class="s2">&quot;:tk_framework_qtwidgets.filtering/icons/filter-inactive.png&quot;</span>
+                <span class="p">),</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">Off</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPopupMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QToolButton</span><span class="o">.</span><span class="n">InstantPopup</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolButtonStyle</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolButtonTextBesideIcon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span> <span class="ow">or</span> <span class="s2">&quot;Filter&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FilterMenuButton.setMenu"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenuButton.setMenu">[docs]</a>    <span class="k">def</span> <span class="nf">setMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menu</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the QMenu method.</span>
+
+<span class="sd">        Enforce the menu to be of type `FilterMenu`. Connect the menu&#39;s filters changed</span>
+<span class="sd">        signal to update the menu button accordingly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">menu</span><span class="p">,</span> <span class="n">FilterMenu</span>
+        <span class="p">),</span> <span class="s2">&quot;FilterMenuButton menu must be of type &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">FilterMenu</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">filters_changed</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_button_checked</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">FilterMenuButton</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">filters_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_button_checked</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FilterMenuButton.update_button_checked"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenuButton.update_button_checked">[docs]</a>    <span class="k">def</span> <span class="nf">update_button_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback triggered when the menu filters have changed. Update the button&#39;s checked state</span>
+<span class="sd">        based on the menu&#39;s current filtering.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Update the menu button icon to indicate whether or not the menu has any active filtering.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">has_filtering</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Autodesk
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-2114792-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>

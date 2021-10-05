@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Help Screen Popup &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
+  <title>Help Screen Popup &mdash; tk-framework-qtwidgets v2.10.1 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Model Related Classes" href="models.html" />
-    <link rel="prev" title="Context Selector Widget" href="context_widget.html" /> 
+    <link rel="prev" title="Filtering" href="filtering.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,6 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">ShotGrid Search Completers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">ShotGrid Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context_widget.html">Context Selector Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delegates.html">Delegates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filtering.html">Filtering</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Help Screen Popup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#sample-code">Sample Code</a></li>
@@ -115,6 +117,7 @@
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_widget.html">Shotgun Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
@@ -141,7 +144,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.1.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -270,9 +273,9 @@ to launch the help screen:</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QWidget</span></code></a>) – Parent window. The help screen will be centered on top of this window.</li>
-<li><strong>bundle</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Application" title="(in tk-core vv0.20.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Application</span></code></a>,
-<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Engine" title="(in tk-core vv0.20.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Engine</span></code></a> or
-<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Framework" title="(in tk-core vv0.20.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Framework</span></code></a>) – Bundle object to associate with</li>
+<li><strong>bundle</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Application" title="(in tk-core vv0.20.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Application</span></code></a>,
+<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Engine" title="(in tk-core vv0.20.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Engine</span></code></a> or
+<a class="reference external" href="http://developer.shotgridsoftware.com/tk-core/platform.html#sgtk.platform.Framework" title="(in tk-core vv0.20.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.Framework</span></code></a>) – Bundle object to associate with</li>
 <li><strong>pixmaps</strong> (List of <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QPixmap</span></code></a>) – List of images, all 650x400 px</li>
 </ul>
 </td>
@@ -295,7 +298,7 @@ to launch the help screen:</p>
         <a href="models.html" class="btn btn-neutral float-right" title="Model Related Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="context_widget.html" class="btn btn-neutral float-left" title="Context Selector Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="filtering.html" class="btn btn-neutral float-left" title="Filtering" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

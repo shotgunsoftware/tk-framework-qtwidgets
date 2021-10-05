@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ShotGrid Field Widgets &mdash; tk-framework-qtwidgets v2.10.0 documentation</title>
+  <title>ShotGrid Field Widgets &mdash; tk-framework-qtwidgets v2.10.1 documentation</title>
   
 
   
@@ -99,6 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="search_completer.html">ShotGrid Search Completers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">ShotGrid Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context_widget.html">Context Selector Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delegates.html">Delegates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filtering.html">Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
@@ -146,6 +148,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_widget.html">Shotgun Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
@@ -172,7 +175,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.1.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -286,7 +289,7 @@ provided by the class</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – Parent object</li>
-<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Optional Task manager.  If this is not passed in one will be created
+<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Optional Task manager.  If this is not passed in one will be created
 when the object is initialized.</li>
 </ul>
 </td>
@@ -388,7 +391,7 @@ to display an icon (or not) based on the field value rather than a standard
 field from the given entity type.  This delegate is designed to be used by items
 from a shotgun_model’s additional columns.  It assumes that the value for the field
 will be stored in the <code class="docutils literal notranslate"><span class="pre">SG_ASSOCIATED_FIELD_ROLE</span></code>
-(via the <a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv5.8.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShotgunModel</span></code></a>) role of
+(via the <a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/shotgun_model.html#shotgun_model.ShotgunModel" title="(in tk-framework-shotgunutils vv5.8.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShotgunModel</span></code></a>) role of
 its current index.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -611,7 +614,7 @@ constructor for the class’ superclass.</li>
 <li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PySide.QtGui.QWidget</span></code></a>) – Parent widget</li>
 <li><strong>entity</strong> (<em>Whatever is returned by the Shotgun API for this field</em>) – The Shotgun entity dictionary to pull the field value from.</li>
 <li><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Shotgun field name</li>
-<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – The task manager the widget will use if it needs to run a task</li>
+<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – The task manager the widget will use if it needs to run a task</li>
 </ul>
 </td>
 </tr>
@@ -3424,7 +3427,7 @@ display the field info</li>
 <li><strong>editor_class</strong> – A shotgun field <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a> to
 edit the field info</li>
 <li><strong>view</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The parent view for this delegate</li>
-<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Optional Task manager.  If this is not passed in
+<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – Optional Task manager.  If this is not passed in
 one will be created when the delegate widget is created.</li>
 </ul>
 </td>
