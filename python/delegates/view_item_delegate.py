@@ -3246,5 +3246,8 @@ class ViewItemAction(object):
         :rtype: bool
         """
 
-        is_enabled = self.state(parent, index) & QtGui.QStyle.State_Enabled
-        return self.callback and is_enabled
+        if not self.callback:
+            return False
+
+        # Check if the button state is enabled
+        return self.state(parent, index) & QtGui.QStyle.State_Enabled
