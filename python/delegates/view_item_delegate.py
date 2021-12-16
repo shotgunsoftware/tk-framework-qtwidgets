@@ -1084,7 +1084,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             and event.button() == QtCore.Qt.LeftButton
         ):
             action = self._action_at(view_option, index, event.pos())
-            if action and action.callback:
+            if action and action.is_clickable(self.parent(), index):
                 # Left mouse click on an action will trigger the action callback method.
                 action.callback(self.parent(), index, event.pos())
                 return True
@@ -1094,7 +1094,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             if self.action_hover_cursor and widget:
                 action = self._action_at(view_option, index, event.pos())
-                if action and action.callback:
+                if action and action.is_clickable(self.parent(), index):
                     # Set the cursor to indicate it is over an action item.
                     widget.setCursor(self.action_hover_cursor)
                 else:
@@ -1804,14 +1804,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             # Set the action state. If the action has an icon, the state will also toggle
             # the icon based on what flags are set.
-            state = index_data.get("state", None)
-            if state is not None:
-                button_option.state = state
-            else:
-                # Default state, if not explicitly defined.
-                button_option.state = (
-                    QtGui.QStyle.State_Active | QtGui.QStyle.State_Enabled
-                )
+            button_option.state = index_data.get(
+                "state", QtGui.QStyle.State_Active | QtGui.QStyle.State_Enabled
+            )
 
             # Add the hover state, if the current cursor position intersects the action rect.
             hover = self._hit_box_test(option, rect)
@@ -1827,9 +1822,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # Set the action palette
             button_option.palette = option.palette
 
+            # FIXME find a better way to specifiy the palette color based on button state.
+            # e.g. is there a way leverage the palette color group and roles?
             if action.palette_brushes:
-                # FIXME find a better way to specifiy the palette color based on hover state.
-                # e.g. is there a way leverage the palette color group and roles?
                 if hover:
                     brushes = action.palette_brushes["hover"]
                 else:
@@ -1845,6 +1840,22 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 else:
                     brush = option.palette.buttonText()
                 button_option.palette.setBrush(QtGui.QPalette.ButtonText, brush)
+
+            # Override the palette if the button is diabled
+            # This is a work aroudn because the QStyle draw methods do not seem to render the
+            # "disabled" state for the button, even when the palette "Disabled" color group is set
+            if button_option.state & QtGui.QStyle.State_Enabled:
+                # Button enabled - leave the palette as is
+                pass
+            else:
+                # Button disabled - set the button and button text brushes to render a 'greyed out' look
+                disabledButtonText = button_option.palette.buttonText()
+                disabledButtonTextColor = disabledButtonText.color()
+                disabledButtonTextColor.setAlpha(50)
+                disabledButtonText.setColor(disabledButtonTextColor)
+                button_option.palette.setBrush(
+                    QtGui.QPalette.ButtonText, disabledButtonText
+                )
 
             # Get the style object that controls how the action button is rendered.
             style = widget.style() if widget else QtGui.QApplication.style()
