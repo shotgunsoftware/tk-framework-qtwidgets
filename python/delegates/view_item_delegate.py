@@ -3091,10 +3091,11 @@ class ViewItemAction(object):
         },
         {
             # Specific palette brushes to set for the action button. Palette brushes
-            # list items should be in the format of a tuple, e.g.:
+            # dict maps brush type to list of brush items, which should be in the
+            # format of a tuple, e.g.:
             #   (QPalette.ColorGroup, QPalette.ColorRole, QBrush)
             "key": "palette_brushes",
-            "default": [],
+            "default": {},
         },
         {
             # Flag indicating if this action should always been shown, no matter what the state is
@@ -3186,6 +3187,24 @@ class ViewItemAction(object):
         index_data = self.get_data(parent, index)
         return index_data.get("visible", True)
 
+    def state(self, parent, index):
+        """
+        Convenience method to get the state of the action for the given index.
+
+        :param parent: The parent of delegate who requested the data.
+        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
+        :param index: The model item index
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: The action state.
+        :rtype: QState
+        """
+
+        index_data = self.get_data(parent, index)
+        return index_data.get(
+            "state", QtGui.QStyle.State_Active | QtGui.QStyle.State_Enabled
+        )
+
     def get_name(self, parent, index):
         """
         Convenience method to get the current action name for the given index. The
@@ -3202,3 +3221,19 @@ class ViewItemAction(object):
 
         index_data = self.get_data(parent, index)
         return index_data.get("name", self.name)
+
+    def is_clickable(self, parent, index):
+        """
+        An action is clickable if it has a callback and is in an enabled state.
+
+        :param parent: The parent of deleaget who requested the data.
+        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
+        :param index: The model item index
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: True if the action is clickable, else False.
+        :rtype: bool
+        """
+
+        is_enabled = self.state(parent, index) & QtGui.QStyle.State_Enabled
+        return self.callback and is_enabled
