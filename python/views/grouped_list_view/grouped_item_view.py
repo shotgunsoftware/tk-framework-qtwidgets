@@ -83,6 +83,7 @@ class GroupedItemView(QtGui.QAbstractItemView):
         self._border = QtCore.QSize(6, 6)
         self._group_spacing = 30
         self._item_spacing = QtCore.QSize(4, 4)
+        self._group_items_selectable = False
 
     # @property
     def _get_border(self):
@@ -128,6 +129,18 @@ class GroupedItemView(QtGui.QAbstractItemView):
         self.viewport().update()
 
     item_spacing = property(_get_item_spacing, _set_item_spacing)
+
+    @property
+    def group_items_selectable(self):
+        """
+        Get or set the property to allow group header items to be selectable or not. When set to True, group header
+        items may receive select, focus and hover events.
+        """
+        return self._group_items_selectable
+
+    @group_items_selectable.setter
+    def group_items_selectable(self, selectable):
+        self._group_items_selectable = selectable
 
     def toggle_expand(self, index):
         """
@@ -779,10 +792,21 @@ class GroupedItemView(QtGui.QAbstractItemView):
                         # ignore this error.
                         pass
 
-                    # Group items are not selectable, take focus or receive mouse hover events.
-                    option.state &= ~QtGui.QStyle.State_Selected
-                    option.state &= ~QtGui.QStyle.State_HasFocus
-                    option.state &= ~QtGui.QStyle.State_MouseOver
+                    if self.group_items_selectable:
+                        if self.selectionModel().isSelected(index):
+                            option.state |= QtGui.QStyle.State_Selected
+                        if index == self.currentIndex():
+                            option.state |= QtGui.QStyle.State_HasFocus
+                        if index == hover_index:
+                            option.state |= QtGui.QStyle.State_MouseOver
+                        else:
+                            option.state &= ~QtGui.QStyle.State_MouseOver
+                    else:
+                        # Group items are not selectable, take focus or receive mouse hover events.
+                        option.state &= ~QtGui.QStyle.State_Selected
+                        option.state &= ~QtGui.QStyle.State_HasFocus
+                        option.state &= ~QtGui.QStyle.State_MouseOver
+
                     self.itemDelegate().paint(painter, option, index)
 
                 # add the group rectangle height to the y-offset
