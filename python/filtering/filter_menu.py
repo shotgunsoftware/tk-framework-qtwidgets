@@ -231,6 +231,16 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         for field in fields:
             self._field_visibility[field] = True
 
+    def set_accept_fields(self, fields):
+        """
+        Set the fields to ignore when building the filter definition for the menu.
+
+        :param fields: The fields to ignore
+        :type fields: list<str>
+        """
+
+        self._filters_def.accept_fields = fields
+
     def set_ignore_fields(self, fields):
         """
         Set the fields to ignore when building the filter definition for the menu.
