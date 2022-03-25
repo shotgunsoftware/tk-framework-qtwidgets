@@ -663,7 +663,16 @@ class GroupedItemView(QtGui.QAbstractItemView):
         y_offset = self._border.height()
         for row, item_info in enumerate(self._item_info):
 
-            # we only allow selection of child items so we can skip testing the group/top level:
+            if self.group_items_selectable:
+                local_selection_rect = selection_rect.translated(0, -y_offset)
+                if item_info.rect.intersects(local_selection_rect):
+                    print("group selected", row)
+                    index = self.model().index(row, 0)
+                    selection.select(index, index)
+                    y_offset += self._item_spacing.height() + self._group_spacing
+                    continue
+
+            # check for selection of child items
             y_offset += item_info.rect.height()
 
             if not item_info.collapsed:
