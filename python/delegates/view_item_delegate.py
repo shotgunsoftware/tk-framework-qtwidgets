@@ -3188,6 +3188,13 @@ class ViewItemAction(object):
             "key": "checkbox_width",
             "default": CHECKBOX_WIDTH,
         },
+        {
+            # Flag indicating to draw the action or not, but maintains space for the action regardless of
+            # if it is drawn or not (e.g. this action acts as a spacer, which may be desirable to keep
+            # actions lined up in each row of the delegate's view)
+            "key": "placeholder",
+            "default": False,
+        },
     ]
 
     def __init__(self, data):
