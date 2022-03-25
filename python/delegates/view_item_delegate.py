@@ -2681,7 +2681,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         actions_and_rects = self._get_action_and_rects(option, index, return_all=True)
-        for action, rect in actions_and_rects:
+
+        # Check for actions in reverse order, since the actions added last will appear in the "front"
+        for action, rect in actions_and_rects[::-1]:
             if rect.contains(pos):
                 return action
 
