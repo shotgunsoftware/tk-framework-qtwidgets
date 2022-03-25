@@ -1795,7 +1795,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             index_data = action.get_data(self.parent(), index)
 
             # Do not draw the action if it is not visible for this index.
-            if not index_data.get("visible", True):
+            if not index_data.get("visible", True) or index_data.get(
+                "placeholder", False
+            ):
                 continue
 
             # Build the button options used to draw the action.
