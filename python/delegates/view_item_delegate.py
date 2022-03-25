@@ -1849,13 +1849,14 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 for (color_group, color_role, brush) in brushes:
                     button_option.palette.setBrush(color_group, color_role, brush)
 
-            elif button_option.features & QtGui.QStyleOptionButton.Flat:
-                # Invert text color for flat buttons
+            elif is_flat:
+                # Invert text color for flat buttons for higher contrast
                 if not hover or action.callback is None:
                     brush = option.palette.light()
                 else:
                     brush = option.palette.buttonText()
                 button_option.palette.setBrush(QtGui.QPalette.ButtonText, brush)
+                button_option.palette.setBrush(QtGui.QPalette.Window, brush)
 
             # Override the palette if the button is diabled
             # This is a work aroudn because the QStyle draw methods do not seem to render the
