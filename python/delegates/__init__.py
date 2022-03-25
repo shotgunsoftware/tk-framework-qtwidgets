@@ -8,6 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Autodesk, Inc.
 
-from .view_item_delegate import ViewItemDelegate
+from .view_item_delegate import ViewItemDelegate, ViewItemAction
 from .thumbnail_view_item_delegate import ThumbnailViewItemDelegate
 from .view_item_roles_mixin import ViewItemRolesMixin
