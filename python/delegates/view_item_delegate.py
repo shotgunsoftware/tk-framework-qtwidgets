@@ -1085,8 +1085,20 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         ):
             action = self._action_at(view_option, index, event.pos())
             if action and action.is_clickable(self.parent(), index):
-                # Left mouse click on an action will trigger the action callback method.
-                action.callback(self.parent(), index, event.pos())
+                if action.type == ViewItemAction.ACTION_TYPE_CHECKBOX:
+                    # Toggle the index CheckStateRole data from checked to unchecked (or vice-versa)
+                    if index.data(QtCore.Qt.CheckStateRole) == QtCore.Qt.Checked:
+                        new_check_state = QtCore.Qt.Unchecked
+                    else:
+                        new_check_state = QtCore.Qt.Checked
+                    index.model().setData(
+                        index, new_check_state, QtCore.Qt.CheckStateRole
+                    )
+                else:
+                    # Trigger the action callback function
+                    action.callback(self.parent(), index, event.pos())
+
+                # Return True to incate the event has been handled.
                 return True
 
         elif event.type() == QtCore.QEvent.MouseMove:
@@ -1095,7 +1107,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             if self.action_hover_cursor and widget:
                 action = self._action_at(view_option, index, event.pos())
                 if action and action.is_clickable(self.parent(), index):
-                    # Set the cursor to indicate it is over an action item.
+                    # Set the cursor to indicate the action is clickable
                     widget.setCursor(self.action_hover_cursor)
                 else:
                     widget.unsetCursor()
@@ -1822,6 +1834,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # Set the action palette
             button_option.palette = option.palette
 
+            is_flat = button_option.features & QtGui.QStyleOptionButton.Flat
+
             # FIXME find a better way to specifiy the palette color based on button state.
             # e.g. is there a way leverage the palette color group and roles?
             if action.palette_brushes:
@@ -1866,30 +1880,45 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             painter.save()
             painter.setFont(option.font)
 
-            # FIXME ideally style.drawControl would be called to render the whole button:
-            # style.drawControl(QtGui.QStyle.CE_PushButton, button_option, painter)
-            # But there are issues with certain styles, so for now we will reimplement the QCommonStyle
-            # drawControl case for CE_PushButton ourselves:
-            style.proxy().drawControl(
-                QtGui.QStyle.CE_PushButtonBevel, button_option, painter
-            )
-            subopt = QtGui.QStyleOptionButton(button_option)
-            subopt.rect = style.subElementRect(
-                QtGui.QStyle.SE_PushButtonContents, button_option, widget
-            )
-            style.proxy().drawControl(QtGui.QStyle.CE_PushButtonLabel, subopt, painter)
-            if button_option.state & QtGui.QStyle.State_HasFocus:
-                fropt = QtGui.QStyleOptionFocusRect()
-                fropt.backgroundColor = self.get_option_background_brush(option).color()
-                fropt.palette = button_option.palette
-                fropt.state = button_option.state
-                fropt.fontMetrics = button_option.fontMetrics
-                fropt.rect = style.subElementRect(
-                    QtGui.QStyle.SE_PushButtonFocusRect, button_option, widget
+            if action.type == ViewItemAction.ACTION_TYPE_CHECKBOX and not icon:
+                # Draw a QCheckBox if the action type is a checkbox and there is no icon (if an icon is
+                # specified, it will just be drawn as a QPushButton).
+                style.proxy().drawControl(
+                    QtGui.QStyle.CE_CheckBox, button_option, painter
                 )
-                style.proxy().drawPrimitive(
-                    QtGui.QStyle.PE_FrameFocusRect, fropt, painter
+            else:
+                # Default to draw a QPushButton
+
+                # FIXME ideally style.drawControl would be called to render the whole button:
+                # style.drawControl(QtGui.QStyle.CE_PushButton, button_option, painter)
+                # But there are issues with certain styles, so for now we will reimplement the QCommonStyle
+                # drawControl case for CE_PushButton ourselves:
+                if not is_flat:
+                    style.proxy().drawControl(
+                        QtGui.QStyle.CE_PushButtonBevel, button_option, painter
+                    )
+
+                subopt = QtGui.QStyleOptionButton(button_option)
+                subopt.rect = style.subElementRect(
+                    QtGui.QStyle.SE_PushButtonContents, button_option, widget
                 )
+                style.proxy().drawControl(
+                    QtGui.QStyle.CE_PushButtonLabel, subopt, painter
+                )
+                if button_option.state & QtGui.QStyle.State_HasFocus:
+                    fropt = QtGui.QStyleOptionFocusRect()
+                    fropt.backgroundColor = self.get_option_background_brush(
+                        option
+                    ).color()
+                    fropt.palette = button_option.palette
+                    fropt.state = button_option.state
+                    fropt.fontMetrics = button_option.fontMetrics
+                    fropt.rect = style.subElementRect(
+                        QtGui.QStyle.SE_PushButtonFocusRect, button_option, widget
+                    )
+                    style.proxy().drawPrimitive(
+                        QtGui.QStyle.PE_FrameFocusRect, fropt, painter
+                    )
 
             painter.restore()
 
@@ -2456,6 +2485,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         index_data = action.get_data(self.parent(), index)
         name = index_data.get("name", action.name)
         icon = index_data.get("icon", action.icon)
+        action_type = index_data.get("type", action.type)
 
         # Calculate the width of the action
         width = action.padding * 2
@@ -2469,6 +2499,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if icon:
             # Add the width of the icon
             width += action.icon_size.width()
+        elif action_type == ViewItemAction.ACTION_TYPE_CHECKBOX:
+            # Add the width for a QCheckBox
+            width += index_data.get("checkbox_width", action.checkbox_width)
 
         # Set the height to the greater of the text height and the icon height. Add padding
         # defined by the action
