@@ -3071,6 +3071,16 @@ class ViewItemAction(object):
     Class object to handle rendering item actions in the :class:`ViewItemDelegate`.
     """
 
+    # Enum to describe the type of view item action.
+    (
+        ACTION_TYPE_BUTTON,  # A clickable button
+        ACTION_TYPE_CHECKBOX,  # A checkbox (checkable button)
+        ACTION_TYPE_ICON,  # Display only icon
+    ) = range(3)
+
+    # Default width for a checkbox action
+    CHECKBOX_WIDTH = 18
+
     # The action attributes that will be used to initialize the object.
     _ATTRIBUTES = [
         {
@@ -3078,6 +3088,7 @@ class ViewItemAction(object):
             "key": "name",
             "default": "",
         },
+        {"key": "type", "default": ACTION_TYPE_BUTTON,},
         {
             # The action button option style features
             "key": "features",
@@ -3133,6 +3144,11 @@ class ViewItemAction(object):
             # Callback function used to execute some operations when the action is "clicked"
             "key": "callback",
             "default": None,
+        },
+        {
+            # Set a specific width for a checkbox (with no icon) action type
+            "key": "checkbox_width",
+            "default": CHECKBOX_WIDTH,
         },
     ]
 
@@ -3235,7 +3251,9 @@ class ViewItemAction(object):
 
     def is_clickable(self, parent, index):
         """
-        An action is clickable if it has a callback and is in an enabled state.
+        An action is clickable if:
+            1. It is a checkbox action or has a callback
+            2. It is in an enabled state
 
         :param parent: The parent of deleaget who requested the data.
         :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
@@ -3246,8 +3264,8 @@ class ViewItemAction(object):
         :rtype: bool
         """
 
-        if not self.callback:
-            return False
+        if self.type == self.ACTION_TYPE_CHECKBOX or self.callback:
+            # The action is clickable if it is a checkbox or it has a callback, and the state is enabled.
+            return self.state(parent, index) & QtGui.QStyle.State_Enabled
 
-        # Check if the button state is enabled
-        return self.state(parent, index) & QtGui.QStyle.State_Enabled
+        return False
