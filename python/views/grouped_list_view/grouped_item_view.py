@@ -666,7 +666,6 @@ class GroupedItemView(QtGui.QAbstractItemView):
             if self.group_items_selectable:
                 local_selection_rect = selection_rect.translated(0, -y_offset)
                 if item_info.rect.intersects(local_selection_rect):
-                    print("group selected", row)
                     index = self.model().index(row, 0)
                     selection.select(index, index)
                     y_offset += self._item_spacing.height() + self._group_spacing
