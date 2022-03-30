@@ -1192,9 +1192,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # The height is fixed for all items.
             height = self.item_height
 
-        # Ensure height is not None
+        # Ensure height is not None, set it to -1 to indicate no size hint for height
         if height is None:
             height = -1
+
         # For valid height values, ensure it is the minumum height and add padding.
         if height >= 0:
             height = max(height, self.min_height)
