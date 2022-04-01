@@ -3149,6 +3149,10 @@ class ViewItemAction(object):
             "key": "padding",
             "default": 4,
         },
+        {"key": "padding_top", "default": None,},
+        {"key": "padding_right", "default": None,},
+        {"key": "padding_bottom", "default": None,},
+        {"key": "padding_left", "default": None,},
         {
             # Text to display in a tooltip when the cursor is over the action
             "key": "tooltip",
@@ -3323,3 +3327,31 @@ class ViewItemAction(object):
             return self.state(parent, index) & QtGui.QStyle.State_Enabled
 
         return False
+
+    def get_padding_top(self):
+        """
+        Return the padding for above the action.
+        """
+
+        return self.padding_top or self.padding
+
+    def get_padding_right(self):
+        """
+        Return the padding to the right of the action.
+        """
+
+        return self.padding_right or self.padding
+
+    def get_padding_bottom(self):
+        """
+        Return the padding for below the action.
+        """
+
+        return self.padding_bottom or self.padding
+
+    def get_padding_left(self):
+        """
+        Return the padding to the left of the action.
+        """
+
+        return self.padding_left or self.padding
