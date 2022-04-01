@@ -1191,7 +1191,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 )
                 text_height = text_doc.size().height()
                 height_for_visible_lines = self._get_visible_lines_height(option)
-                height = max(text_height, height_for_visible_lines)
+                height_for_actions = self._get_actions_maximum_height(option, index)
+                height = max(text_height, height_for_visible_lines, height_for_actions)
             else:
                 # Set the height the value defined by the index data.
                 height = index_height
@@ -2575,6 +2576,26 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             width += action_rect.width() + self.button_margin
 
         return width
+
+    def _get_actions_maximum_height(self, option, index):
+        """
+        Return the maximum height of all actions.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: The maximum height value of all the actions.
+        :rtype: int
+        """
+
+        height = 0
+        actions = self._get_action_and_rects(option, index, return_all=True)
+        for _, action_rect in actions:
+            height = max(height, action_rect.height())
+
+        return height + self.action_item_margin
 
     def _get_actions_left_offset(self, option, index, include_margin=False):
         """
