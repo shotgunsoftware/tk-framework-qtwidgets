@@ -1083,8 +1083,17 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         ):
             action = self._action_at(view_option, index, event.pos())
             if action and action.is_clickable(self.parent(), index):
-                if action.type == ViewItemAction.ACTION_TYPE_CHECKBOX:
-                    # Toggle the index CheckStateRole data from checked to unchecked (or vice-versa)
+
+                if action.callback:
+                    # Trigger the action callback function if the action defines one
+                    action.callback(self.parent(), index, event.pos())
+
+                elif action.type in ViewItemAction.checkable_types():
+                    # The default behaviour for checkable actions is to set the index check state role data;
+                    # however, this only works if there is a single checkable action for the index, or else
+                    # each checkable action will modify the same data role property. For multiple checkable
+                    # actions for an index (item), callbacks for each action need to be defined.
+
                     if index.data(QtCore.Qt.CheckStateRole) == QtCore.Qt.Checked:
                         new_check_state = QtCore.Qt.Unchecked
                     else:
@@ -1092,9 +1101,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     index.model().setData(
                         index, new_check_state, QtCore.Qt.CheckStateRole
                     )
+
                 else:
-                    # Trigger the action callback function
-                    action.callback(self.parent(), index, event.pos())
+                    assert False, "Action is clickable but has no callback to execute"
 
                 # Return True to incate the event has been handled.
                 return True
