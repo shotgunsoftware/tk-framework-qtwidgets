@@ -3110,13 +3110,18 @@ class ViewItemAction(object):
 
     # Enum to describe the type of view item action.
     (
-        ACTION_TYPE_BUTTON,  # A clickable button
-        ACTION_TYPE_CHECKBOX,  # A checkbox (checkable button)
-        ACTION_TYPE_ICON,  # Display only icon
-    ) = range(3)
+        TYPE_PUSH_BUTTON,
+        TYPE_RADIO_BUTTON,
+        TYPE_CHECK_BOX,
+        TYPE_PROGRESS_BAR,
+        TYPE_ICON,
+    ) = range(5)
 
-    # Default width for a checkbox action
-    CHECKBOX_WIDTH = 18
+    # Default widths for action types
+    DEFAULT_WIDTHS = {
+        TYPE_RADIO_BUTTON: 6,
+        TYPE_PROGRESS_BAR: 100,
+    }
 
     # The action attributes that will be used to initialize the object.
     _ATTRIBUTES = [
@@ -3125,7 +3130,7 @@ class ViewItemAction(object):
             "key": "name",
             "default": "",
         },
-        {"key": "type", "default": ACTION_TYPE_BUTTON,},
+        {"key": "type", "default": TYPE_PUSH_BUTTON,},
         {
             # The action button option style features
             "key": "features",
@@ -3218,6 +3223,11 @@ class ViewItemAction(object):
                 data[attr_name] if attr_name in data else attribute.get("default", None)
             )
             setattr(self, attr_name, value)
+
+    @classmethod
+    def checkable_types(cls):
+        """Return a tuple icontaining the types that can be checked."""
+        return (cls.TYPE_CHECK_BOX, cls.TYPE_RADIO_BUTTON)
 
     def set_icon(self, icon):
         """
