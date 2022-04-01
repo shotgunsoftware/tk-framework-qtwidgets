@@ -2497,30 +2497,31 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         index_data = action.get_data(self.parent(), index)
         name = index_data.get("name", action.name)
         icon = index_data.get("icon", action.icon)
-        action_type = index_data.get("type", action.type)
 
         # Calculate the width of the action
-        width = action.padding * 2
+        width = index_data.get(
+            "padding_left", action.get_padding_left()
+        ) + index_data.get("padding_right", action.get_padding_right())
+
+        # Extend the width for the text
         if name:
-            # Add the width of the text, and a little buffer
             width += option.fontMetrics.width(name) + 5
-            if action.icon:
-                # Add padding between the icon and text
-                width += 14
 
+        # Extend the width for the icon
         if icon:
-            # Add the width of the icon
             width += action.icon_size.width()
-        elif action_type == ViewItemAction.ACTION_TYPE_CHECKBOX:
-            # Add the width for a QCheckBox
-            width += index_data.get("checkbox_width", action.checkbox_width)
 
-        # Set the height to the greater of the text height and the icon height. Add padding
-        # defined by the action
-        height = (
-            max(option.fontMetrics.height(), action.icon_size.height())
-            + action.padding * 2
-        )
+        # Extend the width for by the width hint
+        width += index_data.get("width", action.width_hint())
+
+        # Set the height to the height of a single text line, plus padding.
+        height = index_data.get(
+            "padding_top", action.get_padding_top()
+        ) + index_data.get("padding_bottom", action.get_padding_bottom())
+        if index_data.get("adjust_height_to_icon", False):
+            height += action.icon_size.height()
+        else:
+            height += option.fontMetrics.height()
 
         # Calculate the top left (origin) point, based on the position and offset, to draw the action rect
         if position in (self.TOP_LEFT, self.FLOAT_TOP_LEFT):
