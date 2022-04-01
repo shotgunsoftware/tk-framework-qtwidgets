@@ -142,7 +142,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._badge_height_pct = 1.0 / 3.0
 
         # Button padding and margin values
-        self._button_margin = 7
+        self._action_item_margin = 7
         self._button_padding = 4
         # Text document margin
         self._text_document_margin = 0
@@ -472,15 +472,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._badge_height_pct = pct
 
     @property
-    def button_margin(self):
+    def action_item_margin(self):
         """
         Get or set the margin used for buttons.
         """
-        return self._button_margin
+        return self._action_item_margin
 
-    @button_margin.setter
-    def button_margin(self, margin):
-        self._button_margin = margin
+    @action_item_margin.setter
+    def action_item_margin(self, margin):
+        self._action_item_margin = margin
 
     @property
     def button_padding(self):
@@ -2338,13 +2338,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         for position, actions in item_action_data.items():
             # The offset will indicate where the next action bounding rect should start.
-            offset = self.button_margin
+            offset = self.action_item_margin
 
             for action in actions:
                 # Get the bounding rect for this action
                 rect = self._get_action_rect(option, index, position, offset, action)
                 # Increment the offset to get the next action boudning rect.
-                offset += rect.width() + self.button_margin
+                offset += rect.width() + self.action_item_margin
                 rects.append((action, rect))
 
         return rects
@@ -2378,7 +2378,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             return QtCore.QRect()
 
         origin = QtCore.QPoint(
-            option.rect.right() - self.button_margin - self.icon_size.width(),
+            option.rect.right() - self.action_item_margin - self.icon_size.width(),
             option.rect.top()
             + (option.rect.height() / 2)
             - (self.icon_size.height() / 2),
@@ -2465,7 +2465,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         loading_rect = self._get_loading_rect(option, index)
         if loading_rect.isValid():
             # Adjust the rect to the left, when displaying the loading indicator.
-            dx2 = max(dx2, loading_rect.width() + self.button_margin)
+            dx2 = max(dx2, loading_rect.width() + self.action_item_margin)
         dx2 += self.text_padding.right
 
         dy = self.text_padding.top
@@ -2525,22 +2525,23 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Calculate the top left (origin) point, based on the position and offset, to draw the action rect
         if position in (self.TOP_LEFT, self.FLOAT_TOP_LEFT):
             origin = QtCore.QPoint(
-                option.rect.left() + offset, option.rect.top() + self.button_margin,
+                option.rect.left() + offset,
+                option.rect.top() + self.action_item_margin,
             )
         elif position in (self.TOP_RIGHT, self.FLOAT_TOP_RIGHT):
             origin = QtCore.QPoint(
                 option.rect.right() - offset - width,
-                option.rect.top() + self.button_margin,
+                option.rect.top() + self.action_item_margin,
             )
         elif position in (self.BOTTOM_LEFT, self.FLOAT_BOTTOM_LEFT):
             origin = QtCore.QPoint(
                 option.rect.left() + offset,
-                option.rect.bottom() - height - self.button_margin,
+                option.rect.bottom() - height - self.action_item_margin,
             )
         elif position in (self.BOTTOM_RIGHT, self.FLOAT_BOTTOM_RIGHT):
             origin = QtCore.QPoint(
                 option.rect.right() - offset - width,
-                option.rect.bottom() - height - self.button_margin,
+                option.rect.bottom() - height - self.action_item_margin,
             )
         elif position in (self.LEFT, self.FLOAT_LEFT):
             origin = QtCore.QPoint(
@@ -2572,8 +2573,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         width = 0
         actions = self._get_action_and_rects(option, index, positions=[position])
-        for action, action_rect in actions:
-            width += action_rect.width() + self.button_margin
+        for _, action_rect in actions:
+            width += action_rect.width() + self.action_item_margin
 
         return width
 
@@ -2667,10 +2668,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         if offset > 0:
             # Add the margin from the option rect to the first action.
-            # offset += self.button_margin
             if include_margin:
                 # Optionally add margin at the end of the actions.
-                offset += self.button_margin
+                offset += self.action_item_margin
 
         return offset
 
