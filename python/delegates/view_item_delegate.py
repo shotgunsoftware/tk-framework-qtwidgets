@@ -3173,7 +3173,7 @@ class ViewItemAction(object):
         {
             # Flag indicatin to show the action when the action's item is selected
             "key": "show_on_selected",
-            "default": False,
+            "default": True,
         },
         {
             # Flag indicatin to show the action when the action's item is hovered over
