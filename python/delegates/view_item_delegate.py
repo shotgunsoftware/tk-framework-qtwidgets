@@ -3310,8 +3310,9 @@ class ViewItemAction(object):
     def is_clickable(self, parent, index):
         """
         An action is clickable if:
-            1. It is a checkbox action or has a callback
-            2. It is in an enabled state
+            1. It is visible and not a placeholder
+            2. It is a checkbox or radio action, or has a callback
+            3. It is in an enabled state
 
         :param parent: The parent of deleaget who requested the data.
         :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
@@ -3322,8 +3323,11 @@ class ViewItemAction(object):
         :rtype: bool
         """
 
-        if self.type == self.ACTION_TYPE_CHECKBOX or self.callback:
-            # The action is clickable if it is a checkbox or it has a callback, and the state is enabled.
+        index_data = self.get_data(parent, index)
+        if not index_data.get("visible", True) or index_data.get("placeholder", False):
+            return False
+
+        if self.callback or self.type in self.checkable_types():
             return self.state(parent, index) & QtGui.QStyle.State_Enabled
 
         return False
