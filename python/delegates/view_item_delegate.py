@@ -3192,9 +3192,9 @@ class ViewItemAction(object):
             "default": None,
         },
         {
-            # Set a specific width for a checkbox (with no icon) action type
-            "key": "checkbox_width",
-            "default": CHECKBOX_WIDTH,
+            # Set a fixed width for the action
+            "key": "width",
+            "default": None,
         },
         {
             # Flag indicating to draw the action or not, but maintains space for the action regardless of
@@ -3327,6 +3327,21 @@ class ViewItemAction(object):
             return self.state(parent, index) & QtGui.QStyle.State_Enabled
 
         return False
+
+    def width_hint(self):
+        """
+        Get the suggested width to display the action.
+
+        :param parent: The parent of deleaget who requested the data.
+        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
+        :param index: The model item index
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: The width hint for action.
+        :rtype: int
+        """
+
+        return self.DEFAULT_WIDTHS.get(self.type, 0)
 
     def get_padding_top(self):
         """
