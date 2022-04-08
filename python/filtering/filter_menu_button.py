@@ -10,9 +10,8 @@
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-from .ui import resources_rc
-
 from .filter_menu import FilterMenu
+from ..sg_qicons import SGQIcon
 
 
 class FilterMenuButton(QtGui.QToolButton):
@@ -35,21 +34,7 @@ class FilterMenuButton(QtGui.QToolButton):
         super(FilterMenuButton, self).__init__(parent)
 
         if not icon:
-            icon = QtGui.QIcon()
-            icon.addPixmap(
-                QtGui.QPixmap(
-                    ":tk_framework_qtwidgets.filtering/icons/filter-active.png"
-                ),
-                QtGui.QIcon.Normal,
-                QtGui.QIcon.On,
-            )
-            icon.addPixmap(
-                QtGui.QPixmap(
-                    ":tk_framework_qtwidgets.filtering/icons/filter-inactive.png"
-                ),
-                QtGui.QIcon.Normal,
-                QtGui.QIcon.Off,
-            )
+            icon = SGQIcon.Filter()
 
         self.setCheckable(True)
         self.setPopupMode(QtGui.QToolButton.InstantPopup)

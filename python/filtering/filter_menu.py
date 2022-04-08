@@ -17,8 +17,6 @@ from sgtk.platform.qt import QtCore, QtGui
 from tank.util import sgre
 from tank_vendor import six
 
-from .ui import resources_rc
-
 from .filter_definition import FilterMenuFiltersDefinition
 from .filter_item import FilterItem
 from .filter_item_widget import (
