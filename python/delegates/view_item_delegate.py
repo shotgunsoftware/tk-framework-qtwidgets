@@ -2698,21 +2698,24 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         name = index_data.get("name", action.name)
         icon = index_data.get("icon", action.icon)
 
-        # Calculate the width of the action
-        width = index_data.get(
-            "padding_left", action.get_padding_left()
-        ) + index_data.get("padding_right", action.get_padding_right())
+        if index_data.get("width", None) == "100%":
+            width = option.rect.width()
+        else:
+            # Calculate the width of the action
+            width = index_data.get(
+                "padding_left", action.get_padding_left()
+            ) + index_data.get("padding_right", action.get_padding_right())
 
-        # Extend the width for the text
-        if name:
-            width += option.fontMetrics.width(name) + 5
+            # Extend the width for the text
+            if name:
+                width += option.fontMetrics.width(name) + 5
 
-        # Extend the width for the icon
-        if icon:
-            width += action.icon_size.width()
+            # Extend the width for the icon
+            if icon:
+                width += action.icon_size.width()
 
-        # Extend the width for by the width hint
-        width += index_data.get("width", action.width_hint())
+            # Extend the width for by the width hint
+            width += index_data.get("width", action.width_hint())
 
         # Set the height to the height of a single text line, plus padding.
         height = index_data.get(
@@ -2754,6 +2757,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 option.rect.right() - offset - width,
                 option.rect.top() + (option.rect.height() / 2) - (height / 2),
             )
+        elif position == self.CENTER:
+            origin = QtCore.QPoint(
+                option.rect.left() + (option.rect.width() / 2) - (width / 2),
+                option.rect.top() + (option.rect.height() / 2) - (height / 2),
+            )
+        else:
+            assert False, "Unsupported action position '{}'".format(position)
 
         return QtCore.QRect(origin, QtCore.QSize(width, height))
 
