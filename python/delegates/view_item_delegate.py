@@ -1094,14 +1094,12 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     # however, this only works if there is a single checkable action for the index, or else
                     # each checkable action will modify the same data role property. For multiple checkable
                     # actions for an index (item), callbacks for each action need to be defined.
-
-                    if index.data(QtCore.Qt.CheckStateRole) == QtCore.Qt.Checked:
+                    check_state_role = action.check_state_role
+                    if index.data(check_state_role) == QtCore.Qt.Checked:
                         new_check_state = QtCore.Qt.Unchecked
                     else:
                         new_check_state = QtCore.Qt.Checked
-                    index.model().setData(
-                        index, new_check_state, QtCore.Qt.CheckStateRole
-                    )
+                    index.model().setData(index, new_check_state, check_state_role)
 
                 else:
                     assert False, "Action is clickable but has no callback to execute"
@@ -3433,6 +3431,12 @@ class ViewItemAction(object):
             # actions lined up in each row of the delegate's view)
             "key": "placeholder",
             "default": False,
+        },
+        {
+            # The Qt.ItemDataRole to use set/get the action's check state data. This is usefule if an
+            # item has more than one checkable action
+            "key": "check_state_role",
+            "default": QtCore.Qt.CheckStateRole,
         },
     ]
 
