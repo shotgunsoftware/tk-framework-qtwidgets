@@ -89,8 +89,10 @@ class SGQIcon(QtGui.QIcon):
 
     @classmethod
     def RedBullet(cls, size=MEDIUM):
-        icon = cls.resource_path("bullet_red", size)
-        return cls(icon)
+        return cls(
+            normal_off=cls.resource_path("bullet_inactive", size),
+            normal_on=cls.resource_path("bullet_active", size),
+        )
 
     @classmethod
     def Lock(cls, size=MEDIUM):
