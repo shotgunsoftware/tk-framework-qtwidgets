@@ -16,8 +16,11 @@ from .filter_menu import FilterMenu
 sg_qicons = sgtk.platform.current_bundle().import_module("sg_qicons")
 SGQIcon = sg_qicons.SGQIcon
 
+sg_qwidgets = sgtk.platform.current_bundle().import_module("sg_qwidgets")
+SGQToolButton = sg_qwidgets.SGQToolButton
 
-class FilterMenuButton(QtGui.QToolButton):
+
+class FilterMenuButton(SGQToolButton):
     """
     A QToolButton to be used with the FilterMenu class.
     """

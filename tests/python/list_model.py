@@ -14,7 +14,7 @@ import sgtk
 try:
     from sgtk.platform.qt import QtCore
 except:
-    # components also use PySide, so make sure  we have this loaded up correctly
+    # components also use PySide, so make sure we have this loaded up correctly
     # before starting auto-doc.
     from tank.util.qt_importer import QtImporter
 
