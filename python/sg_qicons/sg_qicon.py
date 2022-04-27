@@ -26,7 +26,9 @@ class SGQIcon(QtGui.QIcon):
     # Enum for icon sizes
     # The pixel dimensions are suggested but not enforced for each size.
     # NOTE that not all icons will be available in all sizes.
-    (SMALL, MEDIUM, LARGE, EXTRA_LARGE,) = range(4)  # 16x16  # 20x20  # 32x32  # 40x40
+    (SMALL, MEDIUM, LARGE, EXTRA_LARGE,) = range(
+        4
+    )  # 16x16  # 20x20  # 32x32  # 40x40
 
     # Icon size name (used to get icon resource path)
     SIZES = {
@@ -50,12 +52,16 @@ class SGQIcon(QtGui.QIcon):
 
         if normal_off:
             self.addPixmap(
-                QtGui.QPixmap(normal_off), QtGui.QIcon.Normal, QtGui.QIcon.Off,
+                QtGui.QPixmap(normal_off),
+                QtGui.QIcon.Normal,
+                QtGui.QIcon.Off,
             )
 
         if normal_on:
             self.addPixmap(
-                QtGui.QPixmap(normal_on), QtGui.QIcon.Normal, QtGui.QIcon.On,
+                QtGui.QPixmap(normal_on),
+                QtGui.QIcon.Normal,
+                QtGui.QIcon.On,
             )
 
     @classmethod
@@ -73,7 +79,9 @@ class SGQIcon(QtGui.QIcon):
         """
 
         return ":/tk-framework-qtwidgets/icons/{icon_name}_{sz}.{ext}".format(
-            icon_name=name, sz=cls.SIZES.get(size, cls.MEDIUM), ext=ext,
+            icon_name=name,
+            sz=cls.SIZES.get(size, cls.MEDIUM),
+            ext=ext,
         )
 
     ##########################################################################################################

@@ -1627,7 +1627,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         point = bounding_rect.topLeft()
                         point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                            -pixmap_size.width() / 2.0,
+                            -pixmap_size.height() / 2.0,
                         )
 
                 elif position in (
@@ -1644,7 +1645,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         point = bounding_rect.topRight()
                         point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                            -pixmap_size.width() / 2.0,
+                            -pixmap_size.height() / 2.0,
                         )
                 elif position in (
                     self.POSITIONS[self.BOTTOM_LEFT],
@@ -1660,7 +1662,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         point = bounding_rect.bottomLeft()
                         point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                            -pixmap_size.width() / 2.0,
+                            -pixmap_size.height() / 2.0,
                         )
                 else:
                     # Default to bottom right corner.
@@ -1676,7 +1679,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         point = bounding_rect.bottomRight()
                         point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                            -pixmap_size.width() / 2.0,
+                            -pixmap_size.height() / 2.0,
                         )
 
                 badge_rect = QtCore.QRect(point, pixmap.size())
@@ -3369,7 +3373,10 @@ class ViewItemAction(object):
             "key": "name",
             "default": "",
         },
-        {"key": "type", "default": TYPE_PUSH_BUTTON,},
+        {
+            "key": "type",
+            "default": TYPE_PUSH_BUTTON,
+        },
         {
             # The action button option style features
             "key": "features",
@@ -3388,10 +3395,22 @@ class ViewItemAction(object):
             "key": "padding",
             "default": 4,
         },
-        {"key": "padding_top", "default": None,},
-        {"key": "padding_right", "default": None,},
-        {"key": "padding_bottom", "default": None,},
-        {"key": "padding_left", "default": None,},
+        {
+            "key": "padding_top",
+            "default": None,
+        },
+        {
+            "key": "padding_right",
+            "default": None,
+        },
+        {
+            "key": "padding_bottom",
+            "default": None,
+        },
+        {
+            "key": "padding_left",
+            "default": None,
+        },
         {
             # Text to display in a tooltip when the cursor is over the action
             "key": "tooltip",
