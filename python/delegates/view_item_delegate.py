@@ -3429,12 +3429,12 @@ class ViewItemAction(object):
             "default": False,
         },
         {
-            # Flag indicatin to show the action when the action's item is selected
+            # Flag indicating to show the action when the action's item is selected
             "key": "show_on_selected",
             "default": True,
         },
         {
-            # Flag indicatin to show the action when the action's item is hovered over
+            # Flag indicating to show the action when the action's item is hovered over
             "key": "show_on_hover",
             "default": True,
         },
