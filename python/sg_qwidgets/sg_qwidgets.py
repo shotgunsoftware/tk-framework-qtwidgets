@@ -49,7 +49,7 @@ class SGQWidget(QtGui.QWidget):
     (assuming the DCC does not define their own widget classes with the same name, which they are unlikely to
     do so).
 
-    TODO add support for other QWidget subclasses. Currently only QToolButton is supported.
+    TODO add support for other QWidget subclasses. Currently only QWidget and QToolButton is supported.
     """
 
     def __init__(
