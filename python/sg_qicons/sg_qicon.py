@@ -21,6 +21,8 @@ class SGQIcon(QtGui.QIcon):
     This class subclasses QtGui.QIcon but does not intend to provide additional functionality. The main
     purpose is to define factory classmethods to create an icon, which provides a convenience to the caller
     sine they no longer need to know the exact path to the icon resource.
+
+    TODO add all icons used throughout Toolkit here.
     """
 
     # Enum for icon sizes
