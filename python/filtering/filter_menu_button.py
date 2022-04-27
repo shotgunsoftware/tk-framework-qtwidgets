@@ -7,11 +7,14 @@
 # By accessing, using, copying or modifying this work you indicate your
 # agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Autodesk Inc.
+
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
 from .filter_menu import FilterMenu
-from ..sg_qicons import SGQIcon
+
+sg_qicons = sgtk.platform.current_bundle().import_module("sg_qicons")
+SGQIcon = sg_qicons.SGQIcon
 
 
 class FilterMenuButton(QtGui.QToolButton):

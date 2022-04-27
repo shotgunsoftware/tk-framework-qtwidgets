@@ -11,7 +11,8 @@
 import sgtk
 from sgtk.platform.qt import QtGui
 
-from ..sg_qicons import SGQIcon
+sg_qicons = sgtk.platform.current_bundle().import_module("sg_qicons")
+SGQIcon = sg_qicons.SGQIcon
 
 
 class SGQWidget(QtGui.QWidget):
