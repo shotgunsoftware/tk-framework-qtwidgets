@@ -23,6 +23,7 @@ class SGQIcon(QtGui.QIcon):
     sine they no longer need to know the exact path to the icon resource.
 
     TODO add all icons used throughout Toolkit here.
+    TODO support all modes for a QIcon (Active, Disabled, Selected)
     """
 
     # Enum for icon sizes
