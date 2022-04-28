@@ -93,6 +93,21 @@ class SGQIcon(QtGui.QIcon):
     #
 
     @classmethod
+    def ValidationOk(cls, size=MEDIUM):
+        icon = cls.resource_path("validation_ok", size)
+        return cls(icon)
+
+    @classmethod
+    def ValidationWarning(cls, size=MEDIUM):
+        icon = cls.resource_path("validation_warning", size)
+        return cls(icon)
+
+    @classmethod
+    def ValidationError(cls, size=MEDIUM):
+        icon = cls.resource_path("validation_error", size)
+        return cls(icon)
+
+    @classmethod
     def RedRefresh(cls, size=MEDIUM):
         icon = cls.resource_path("refresh_red", size)
         return cls(icon)
@@ -159,4 +174,11 @@ class SGQIcon(QtGui.QIcon):
         return cls(
             normal_off=cls.resource_path("view_grid_inactive", size),
             normal_on=cls.resource_path("view_grid_active", size),
+        )
+
+    @classmethod
+    def Toggle(cls, size=MEDIUM):
+        return cls(
+            normal_off=cls.resource_path("toggle_inactive", size),
+            normal_on=cls.resource_path("toggle_active", size),
         )
