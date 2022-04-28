@@ -2439,11 +2439,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         # The final formatted text
         formatted_header = (
-            '<table width="100%" border="{border}"><tr>{title_cell}{subtitle_cell}</tr></table>'
+            '<table width="100%" cellpadding="0" cellspacing="0" border="{border}"><tr>{title_cell}{subtitle_cell}</tr></table>'
         ).format(
             title_cell=title_html,
             subtitle_cell=subtitle_html,
-            border="1" if DEBUG_PAINT else "0",
+            border="1" if DEBUG_PAINT else "none",
         )
 
         return (formatted_header, elided) if return_elided else formatted_header
