@@ -2398,7 +2398,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         title_html = ""
         subtitle_html = ""
 
-        do_elide = option and rect and rect.isValid()
+        do_elide = self.elide_header and option and rect and rect.isValid()
         if do_elide:
             # FIXME for now we've just picked an arbitrary value to account for the HTML table offset
             # to the available width for the text
@@ -2410,7 +2410,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # There is only a title
             if do_elide:
                 # Elide the title when the option and rect are provided, and there is text overflow.
-                _, elided_title = self._elide_text(option, target_width, title)
+                _, elided_title = self._get_elided_text(option, target_width, title)
                 elided = title != elided_title
                 title = six.ensure_str(elided_title)
 
@@ -2420,7 +2420,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # There is only a subtitle
             if do_elide:
                 # Elide the title when the option and rect are provided, and there is text overflow.
-                _, elided_subtitle = self._elide_text(option, target_width, subtitle)
+                _, elided_subtitle = self._get_elided_text(
+                    option, target_width, subtitle
+                )
                 elided = subtitle != elided_subtitle
                 subtitle = six.ensure_str(elided_subtitle)
 
@@ -2477,8 +2479,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                             int(subtitle_width_pct * 100)
                         )
 
-                    _, elided_title = self._elide_text(option, title_width, title)
-                    _, elided_subtitle = self._elide_text(
+                    _, elided_title = self._get_elided_text(option, title_width, title)
+                    _, elided_subtitle = self._get_elided_text(
                         option, subtitle_width, subtitle
                     )
                     elided = title != elided_title or subtitle != elided_subtitle
@@ -3276,13 +3278,20 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     # Exceeded the number of visible lines. Stop formatting.
                     break
 
-                # Because the text is allowed to be HTML formatted, in order to elide an
-                # individual line (if necessary), the text must be rendered using a
-                # QTextDocument which then the document can be used to determine if the
-                # formatted text exceeds the maximum width. A side effect of eliding the
-                # text using a QTextDocument is that the resulting elided text will be
-                # a full HTML doc string.
-                doc, elided_text = self._elide_text(option, rect.width(), text)
+                if self.elide_text:
+                    # Because the text is allowed to be HTML formatted, in order to elide an
+                    # individual line (if necessary), the text must be rendered using a
+                    # QTextDocument which then the document can be used to determine if the
+                    # formatted text exceeds the maximum width. A side effect of eliding the
+                    # text using a QTextDocument is that the resulting elided text will be
+                    # a full HTML doc string.
+                    doc, elided_text = self._get_elided_text(option, rect.width(), text)
+                else:
+                    # Even though the text is not elided, still need to get the text document
+                    # to measure the text height for clipping
+                    doc = self._create_text_document(option)
+                    doc.setHtml(text)
+                    elided_text = None
 
                 if clip:
                     height += doc.size().height() - margin_offset
@@ -3290,7 +3299,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                         # Text height exceeded the maximum. Stop formatting.
                         break
 
-                if text == elided_text:
+                if elided_text is None or text == elided_text:
                     # Text did not change, just add the text and a line break.
                     html_lines.append(text)
                     html_lines.append("<br/>")
@@ -3317,11 +3326,17 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         formatted_str = "".join(html_lines)
         return (formatted_str, elided)
 
-    def _elide_text(self, option, target_width, text, elide_mode=QtCore.Qt.ElideRight):
+    def _get_elided_text(
+        self, option, target_width, text, elide_mode=QtCore.Qt.ElideRight
+    ):
         """
         Elide the text if the width exceeds the given `target_width`. This slightly tweaks
         the implementation from :class:`ElidedLabel` method `_elide_text`.
 
+        :param option: The view option the text is rendered in.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param target_width: The desired width for the text
+        :type target_width: int
         :param text: The text to elide
         :type text: str
         :param elide_mode: The elide mode to use
