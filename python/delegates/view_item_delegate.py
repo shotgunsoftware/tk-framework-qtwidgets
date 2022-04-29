@@ -126,6 +126,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # The number of visible lines to show (e.g. text will be cut off to this defined number of lines)
         self._visible_lines = -1
 
+        # The default qss to apply to the text document style sheet
+        self._document_style_sheet = None
+        # Text document line height spacing. NOTE: this will be ignored if the default style sheet is set.
+        self._line_height = 1.0
+
+        # Turn on text eliding, if False, text will be wrapped
+        self._elide_text = True
+        self._elide_header = True
+
         # Fix the item's width and height. These will be ignored if set to None. When set to -1, these will
         # expand to the full available space.
         self._item_width = None
@@ -354,6 +363,52 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     @visible_lines.setter
     def visible_lines(self, lines):
         self._visible_lines = lines
+
+    @property
+    def document_style_sheet(self):
+        """
+        Get or set the default qss for the text document style sheet. This will affect the text style and layout of the item.
+        """
+        return self._document_style_sheet
+
+    @document_style_sheet.setter
+    def document_style_sheet(self, qss):
+        self._document_style_sheet = qss
+
+    @property
+    def line_height(self):
+        """
+        Get or set the text line height spacing.
+
+        NOTE that this property is ignored if the `document_style_sheet` property is not None.
+        """
+        return self._line_height
+
+    @line_height.setter
+    def line_height(self, value):
+        self._line_height = value
+
+    @property
+    def elide_text(self):
+        """
+        Get or set the flag indicating if the main text should be elided. If False, text will be wrapped.
+        """
+        return self._elide_text
+
+    @elide_text.setter
+    def elide_text(self, on):
+        self._elide_text = on
+
+    @property
+    def elide_header(self):
+        """
+        Get or set the flag indicating if the header text should be elided. If False, text will be wrapped.
+        """
+        return self._elide_header
+
+    @elide_header.setter
+    def elide_header(self, on):
+        self._elide_header = on
 
     @property
     def item_width(self):
