@@ -1218,14 +1218,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # Set the width to the value defined by the index data.
             width = self.get_value(index, self.width_role)
 
-        # Ensure width is not None
         if width is None:
-            width = -1
+            # Default to the option rect width if not set
+            width = option.rect.width()
+
         # For valid width values, ensure it is the minumum width and add padding.
         if width >= 0:
             width = max(width, self.thumbnail_width, self.min_width)
-            width += self.item_padding.left + self.item_padding.right
-            width += self.text_padding.left + self.text_padding.right
 
         # Calculate the height of the item.
         index_height = self.get_value(index, self.height_role)
@@ -1238,8 +1237,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             if index_height is None or index_height < 0:
                 # The item height expands to the height of the text. NOTE the view that this delegate is
                 # set to must not have uniform items set for this to resize properly.
-                text_rect = QtCore.QRect(view_option.rect)
-                text_rect.setWidth(width)
+
+                text_rect = self._get_text_rect(view_option, index)
                 text_doc, _ = self._get_text_document(
                     view_option, index, text_rect, clip=False
                 )
@@ -2525,12 +2524,22 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         text = self._get_text(index, option, rect)
+
+        # # TEMP hack
+        # for i, value in enumerate(text[1:]):
+        #     text[i+1] = "<span>{}</span>".format(value)
+
         html, elided = self._format_html_text(option, index, rect, text, clip)
 
         doc = self._create_text_document(option)
         if rect.isValid() and rect.width() > 0:
             doc.setTextWidth(rect.width())
 
+        style_sheet = (
+            self.document_style_sheet
+            or "p, span {{ line-height: {}; }}".format(self.line_height)
+        )
+        doc.setDefaultStyleSheet(style_sheet)
         doc.setHtml(html)
 
         return (doc, elided)
