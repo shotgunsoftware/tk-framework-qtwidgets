@@ -127,9 +127,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._visible_lines = -1
 
         # The default qss to apply to the text document style sheet
-        self._document_style_sheet = None
-        # Text document line height spacing. NOTE: this will be ignored if the default style sheet is set.
-        self._line_height = 1.0
+        self._document_style_sheet = ""
 
         # Turn on text eliding, if False, text will be wrapped
         self._elide_text = True
@@ -374,19 +372,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     @document_style_sheet.setter
     def document_style_sheet(self, qss):
         self._document_style_sheet = qss
-
-    @property
-    def line_height(self):
-        """
-        Get or set the text line height spacing.
-
-        NOTE that this property is ignored if the `document_style_sheet` property is not None.
-        """
-        return self._line_height
-
-    @line_height.setter
-    def line_height(self, value):
-        self._line_height = value
 
     @property
     def elide_text(self):
@@ -2525,21 +2510,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         text = self._get_text(index, option, rect)
 
-        # # TEMP hack
-        # for i, value in enumerate(text[1:]):
-        #     text[i+1] = "<span>{}</span>".format(value)
-
         html, elided = self._format_html_text(option, index, rect, text, clip)
 
         doc = self._create_text_document(option)
         if rect.isValid() and rect.width() > 0:
             doc.setTextWidth(rect.width())
 
-        style_sheet = (
-            self.document_style_sheet
-            or "p, span {{ line-height: {}; }}".format(self.line_height)
-        )
-        doc.setDefaultStyleSheet(style_sheet)
+        doc.setDefaultStyleSheet(self.document_style_sheet)
         doc.setHtml(html)
 
         return (doc, elided)
