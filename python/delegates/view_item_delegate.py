@@ -2509,14 +2509,12 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         text = self._get_text(index, option, rect)
-
         html, elided = self._format_html_text(option, index, rect, text, clip)
 
         doc = self._create_text_document(option)
         if rect.isValid() and rect.width() > 0:
             doc.setTextWidth(rect.width())
 
-        doc.setDefaultStyleSheet(self.document_style_sheet)
         doc.setHtml(html)
 
         return (doc, elided)
@@ -3084,6 +3082,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # in the QStyledItemDelegate `initStyleOption` method, the font is set based on the model
         # index data for the QtCore.Qt.FontRole.
         doc.setDefaultFont(self.font or option.font)
+        doc.setDefaultStyleSheet(self.document_style_sheet)
         doc.setDocumentMargin(self.text_document_margin)
 
         text_option = QtGui.QTextOption(doc.defaultTextOption())
