@@ -49,8 +49,6 @@ class SGQWidget(QtGui.QWidget):
     with the DCC. This means we can be confident that the styles in our .qss only affect the Toolkit widgets
     (assuming the DCC does not define their own widget classes with the same name, which they are unlikely to
     do so).
-
-    TODO add support for other QWidget subclasses. Currently only QWidget and QToolButton is supported.
     """
 
     def __init__(
@@ -141,7 +139,7 @@ class SGQWidget(QtGui.QWidget):
 
 class SGQToolButton(QtGui.QToolButton):
     """
-    ShotGrid widget class wrapper for QToolButton.
+    ShotGrid wrapper class for QCheckBox widget.
     """
 
     def __init__(
@@ -176,3 +174,443 @@ class SGQToolButton(QtGui.QToolButton):
 
         self.setIcon(icon)
         self.setCheckable(checkable)
+
+
+class SGQCheckBox(QtGui.QCheckBox):
+    """
+    ShotGrid wrapper class for QCheckBox widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQComboBox(QtGui.QComboBox):
+    """
+    ShotGrid wrapper class for QComboBox widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQCommandLinkButton(QtGui.QCommandLinkButton):
+    """
+    ShotGrid wrapper class for QCommandLinkButton widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQDateEdit(QtGui.QDateEdit):
+    """
+    ShotGrid wrapper class for QDateEdit widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQDateTimeEdit(QtGui.QDateTimeEdit):
+    """
+    ShotGrid wrapper class for QDateTimeEdit widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQDial(QtGui.QDial):
+    """
+    ShotGrid wrapper class for QDial widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQDoubleSpinBox(QtGui.QDoubleSpinBox):
+    """
+    ShotGrid wrapper class for QDoubleSpinBox widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQFocusFrame(QtGui.QFocusFrame):
+    """
+    ShotGrid wrapper class for QFocusFrame widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQFontComboBox(QtGui.QFontComboBox):
+    """
+    ShotGrid wrapper class for QFontComboBox widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQLCDNumber(QtGui.QLCDNumber):
+    """
+    ShotGrid wrapper class for QLCDNumber widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQLabel(QtGui.QLabel):
+    """
+    ShotGrid wrapper class for QLabel widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQLineEdit(QtGui.QLineEdit):
+    """
+    ShotGrid wrapper class for QLineEdit widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQMenu(QtGui.QMenu):
+    """
+    ShotGrid wrapper class for QMenu widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQProgressBar(QtGui.QProgressBar):
+    """
+    ShotGrid wrapper class for QProgressBar widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQPushButton(QtGui.QPushButton):
+    """
+    ShotGrid wrapper class for QSGQPushButtonwidget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQRadioButton(QtGui.QRadioButton):
+    """
+    ShotGrid wrapper class for QRadioButton widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQScrollArea(QtGui.QScrollArea):
+    """
+    ShotGrid wrapper class for QScrollArea widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQScrollBar(QtGui.QScrollBar):
+    """
+    ShotGrid wrapper class for QScrollBar widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQSizeGrip(QtGui.QSizeGrip):
+    """
+    ShotGrid wrapper class for QSizeGrip widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQSlider(QtGui.QSlider):
+    """
+    ShotGrid wrapper class for QSlider widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQSpinBox(QtGui.QSpinBox):
+    """
+    ShotGrid wrapper class for QSpinBox widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTabBar(QtGui.QTabBar):
+    """
+    ShotGrid wrapper class for QTabBar widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTabWidget(QtGui.QTabWidget):
+    """
+    ShotGrid wrapper class for QTabWidget widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTimeEdit(QtGui.QTimeEdit):
+    """
+    ShotGrid wrapper class for QTimeEdit widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQToolBox(QtGui.QToolBox):
+    """
+    ShotGrid wrapper class for QToolBox widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQCalendarWidget(QtGui.QCalendarWidget):
+    """
+    ShotGrid wrapper class for QCalendarWidget widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQColumnView(QtGui.QColumnView):
+    """
+    ShotGrid wrapper class for QColumnView widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQDataWidgetMapper(QtGui.QDataWidgetMapper):
+    """
+    ShotGrid wrapper class for QDataWidgetMapper widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQListView(QtGui.QListView):
+    """
+    ShotGrid wrapper class for QListview widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTableView(QtGui.QTableView):
+    """
+    ShotGrid wrapper class for QTableView widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTreeView(QtGui.QTreeView):
+    """
+    ShotGrid wrapper class for QTreeView widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQUndoView(QtGui.QUndoView):
+    """
+    ShotGrid wrapper class for QUndoView widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQAbstractButton(QtGui.QAbstractButton):
+    """
+    ShotGrid wrapper class for QAbstractButton widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQAbstractScrollArea(QtGui.QAbstractScrollArea):
+    """
+    ShotGrid wrapper class for QAbstractScrollArea widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQAbstractSlider(QtGui.QAbstractSlider):
+    """
+    ShotGrid wrapper class for QAbstractSlider widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQAbstractSpinBox(QtGui.QAbstractSpinBox):
+    """
+    ShotGrid wrapper class for QAbstractSpinBox widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQDialog(QtGui.QDialog):
+    """
+    ShotGrid wrapper class for QDialog widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQFrame(QtGui.QFrame):
+    """
+    ShotGrid wrapper class for QFrame widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQButtonGroup(QtGui.QButtonGroup):
+    """
+    ShotGrid wrapper class for QButtonGroup widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQGroupBox(QtGui.QGroupBox):
+    """
+    ShotGrid wrapper class for QGroupBox widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQSplitter(QtGui.QSplitter):
+    """
+    ShotGrid wrapper class for QSplitter widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQSplitterHandle(QtGui.QSplitterHandle):
+    """
+    ShotGrid wrapper class for QSplitterHandle widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQStackedWidget(QtGui.QStackedWidget):
+    """
+    ShotGrid wrapper class for QStackedWidget widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQDockWidget(QtGui.QDockWidget):
+    """
+    ShotGrid wrapper class for QDockWidget widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQActionGroup(QtGui.QActionGroup):
+    """
+    ShotGrid wrapper class for QActionGroup widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQMenuBar(QtGui.QMenuBar):
+    """
+    ShotGrid wrapper class for QMenuBar widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQStatusBar(QtGui.QStatusBar):
+    """
+    ShotGrid wrapper class for QStatusBar widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQWidgetAction(QtGui.QWidgetAction):
+    """
+    ShotGrid wrapper class for QWidgetAction widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQToolBar(QtGui.QToolBar):
+    """
+    ShotGrid wrapper class for QToolBar widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQListWidget(QtGui.QListWidget):
+    """
+    ShotGrid wrapper class for QListWidget widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQListWidgetItem(QtGui.QListWidgetItem):
+    """
+    ShotGrid wrapper class for QListWidgetItem widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTableWidget(QtGui.QTableWidget):
+    """
+    ShotGrid wrapper class for QTableWidget widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTableWidgetItem(QtGui.QTableWidgetItem):
+    """
+    ShotGrid wrapper class for QTableWidgetItem widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTreeWidget(QtGui.QTreeWidget):
+    """
+    ShotGrid wrapper class for QTreeWidget widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
+class SGQTreeWidgetItem(QtGui.QTreeWidgetItem):
+    """
+    ShotGrid wrapper class for QTreeWidgetItem widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
