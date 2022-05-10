@@ -2156,8 +2156,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Set the action icon
         icon = index_data.get("icon", action.icon)
         if icon:
+            icon_size = index_data.get("icon_size") or action.icon_size
             button_option.icon = icon
-            button_option.iconSize = action.icon_size
+            button_option.iconSize = icon_size
 
         # Apply any additional features defined by the action.
         if action.features:
@@ -2742,6 +2743,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         index_data = action.get_data(self.parent(), index)
         name = index_data.get("name", action.name)
         icon = index_data.get("icon", action.icon)
+        icon_size = index_data.get("icon_size") or action.icon_size
 
         if index_data.get("width", None) == "100%":
             width = option.rect.width()
@@ -2757,7 +2759,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             # Extend the width for the icon
             if icon:
-                width += action.icon_size.width()
+                width += icon_size.width()
 
             # Extend the width for by the width hint
             width += index_data.get("width", action.width_hint())
@@ -2767,7 +2769,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             "padding_top", action.get_padding_top()
         ) + index_data.get("padding_bottom", action.get_padding_bottom())
         if index_data.get("adjust_height_to_icon", False):
-            height += action.icon_size.height()
+            height += icon_size.height()
         else:
             height += option.fontMetrics.height()
 
