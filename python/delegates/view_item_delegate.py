@@ -1467,16 +1467,19 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         """
 
-        if self.selection_brush:
+        if self.selection_brush == QtCore.Qt.NoBrush:
+            brush = QtCore.Qt.NoBrush
+            pen = QtCore.Qt.NoPen
+        elif self.selection_brush:
             brush = self.selection_brush
-            pen = QtGui.QPen(brush.color())
+            pen = QtGui.QPen(QtCore.Qt.NoPen)
+            pen.setWidth(2)
         else:
             pen = QtGui.QPen(option.palette.highlight().color())
+            pen.setWidth(2)
             fill_color = pen.color()
             fill_color.setAlpha(30)
             brush = QtGui.QBrush(fill_color)
-
-        pen.setWidth(2)
 
         painter.save()
         painter.setPen(pen)
