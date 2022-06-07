@@ -40,7 +40,8 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
 shotgun_globals = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils", "shotgun_globals",
+    "tk-framework-shotgunutils",
+    "shotgun_globals",
 )
 
 logger = sgtk.platform.get_logger(__name__)

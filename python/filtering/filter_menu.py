@@ -840,7 +840,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         field_id = filter_group.group_id
         filter_id = "{}.MoreFilters".format(field_id)
         filter_widget = ChoicesFilterItemWidget(
-            filter_id, field_id, {"display_name": field_name,},
+            filter_id,
+            field_id,
+            {
+                "display_name": field_name,
+            },
         )
 
         action = QtGui.QWidgetAction(self._more_filters_menu)
@@ -867,7 +871,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # Add the new action and then move it into alphabetical order.
         self._more_filters_menu.addAction(action)
         more_filters_actions = sorted(
-            self._more_filters_menu.actions(), key=lambda a: a.defaultWidget().name,
+            self._more_filters_menu.actions(),
+            key=lambda a: a.defaultWidget().name,
         )
         action_index = more_filters_actions.index(action)
         if action_index + 1 < len(more_filters_actions):

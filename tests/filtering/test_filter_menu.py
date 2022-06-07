@@ -64,10 +64,31 @@ class TestFilterMenu(TankTestBase):
         self.TextFilterItemWidget = filtering.TextFilterItemWidget
 
         model_data = [
-            [{"number_field": 1, "string_field": "one", "bool_field": True,}],
-            [{"string_field": "two", "bool_field": False,}],
-            [{"number_field": 2, "bool_field": True,}],
-            [{"number_field": 2, "string_field": "two",}],
+            [
+                {
+                    "number_field": 1,
+                    "string_field": "one",
+                    "bool_field": True,
+                }
+            ],
+            [
+                {
+                    "string_field": "two",
+                    "bool_field": False,
+                }
+            ],
+            [
+                {
+                    "number_field": 2,
+                    "bool_field": True,
+                }
+            ],
+            [
+                {
+                    "number_field": 2,
+                    "string_field": "two",
+                }
+            ],
         ]
         self.source_model = _TestListModel()
         self.source_model.set_internal_data(model_data)

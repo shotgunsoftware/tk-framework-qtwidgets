@@ -319,9 +319,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         self.selection_changed.emit(self.selected, self._note_id)
 
     def _add_attachment_group(self, attachments, after_note):
-        """
-
-        """
+        """ """
         curr_attachment_group_widget_id = len(self._attachment_group_widgets)
         attachment_group = AttachmentGroupWidget(
             parent=self,
