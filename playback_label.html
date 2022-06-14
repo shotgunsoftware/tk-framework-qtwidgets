@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ShotGrid Playback Label Widget &mdash; tk-framework-qtwidgets v2.10.3 documentation</title>
+  <title>ShotGrid Playback Label Widget &mdash; tk-framework-qtwidgets master documentation</title>
   
 
   
@@ -137,7 +137,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.3.<br>
+    <b>tk-framework-qtwidgets</b> master.<br>
     
         This documentation is part of the Shotgun Pipeline Toolkit.
     
@@ -243,67 +243,6 @@ the import in a module. For more information on how to do this, see <a class="re
 <span class="n">label</span><span class="o">.</span><span class="n">playback_clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">some_callback</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
-<dt id="playback_label.ShotgunPlaybackLabel">
-<em class="property">class </em><code class="descclassname">playback_label.</code><code class="descname">ShotgunPlaybackLabel</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/playback_label/playback_label.html#ShotgunPlaybackLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QLabel</span></code></p>
-<p>Subclassed <code class="docutils literal notranslate"><span class="pre">QLabel</span></code> that displays a playback icon
-centered above its content.</p>
-<p>While it is technically possible to use
-this label with text based content, we strongly recommend
-using it with a pixmap. Typically this is a Shotgun thumbnail.</p>
-<p>By populating an instance with shotgun version data
-via the <a class="reference internal" href="#playback_label.ShotgunPlaybackLabel.set_shotgun_data" title="playback_label.ShotgunPlaybackLabel.set_shotgun_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_shotgun_data()</span></code></a> method, the label
-will look at the data and determine whether a playback
-icon should be displayed or not. In the case an icon is
-displayed, a playback_clicked signal may be emitted.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal playback_clicked(dict):</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">The playback icon was clicked.
-This signal passes the shotgun version data specified in
-via the <a class="reference internal" href="#playback_label.ShotgunPlaybackLabel.set_shotgun_data" title="playback_label.ShotgunPlaybackLabel.set_shotgun_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_shotgun_data()</span></code></a> method back
-to the caller.</td>
-</tr>
-</tbody>
-</table>
-<p>Constructor</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> – QT parent object</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="playback_label.ShotgunPlaybackLabel.set_shotgun_data">
-<code class="descname">set_shotgun_data</code><span class="sig-paren">(</span><em>sg_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/playback_label/playback_label.html#ShotgunPlaybackLabel.set_shotgun_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel.set_shotgun_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets shotgun data associated with this label.
-This data will be used to drive the logic which is
-used to determine if the label should exhibit the playback icon or not.</p>
-<p>If you for example are passing a Shotgun data dictionary reprensenting
-a version, make sure to include the various quicktime and frame fields.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_data</strong> – Shotgun data dictionary</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="playback_label.ShotgunPlaybackLabel.playable">
-<code class="descname">playable</code><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel.playable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if the label is playable given its current Shotgun data.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 
 
