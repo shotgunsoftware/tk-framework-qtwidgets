@@ -78,8 +78,8 @@ class TestFiltersDefinition(TankTestBase):
             self.shotgun_globals.get_field_display_name
         )
         self.shotgun_globals_get_data_type = self.shotgun_globals.get_data_type
-        self.shotgun_globals.is_valid_entity_type = lambda entity_type, project_id: bool(
-            entity_type
+        self.shotgun_globals.is_valid_entity_type = (
+            lambda entity_type, project_id: bool(entity_type)
         )
         self.shotgun_globals.get_type_display_name = (
             lambda entity_type, project_id: entity_type
@@ -115,9 +115,27 @@ class TestFiltersDefinition(TankTestBase):
             [12.34],
         ]
         self.dict_data = [
-            [{"field_1": 1, "field_2": 2, "field_3": 3,}],
-            [{"field_1": "value 1", "field_2": "value 2", "field_3": "value 3",}],
-            [{"field_1": "value 1", "field_2": "value 2", "field_3": "value 3",}],
+            [
+                {
+                    "field_1": 1,
+                    "field_2": 2,
+                    "field_3": 3,
+                }
+            ],
+            [
+                {
+                    "field_1": "value 1",
+                    "field_2": "value 2",
+                    "field_3": "value 3",
+                }
+            ],
+            [
+                {
+                    "field_1": "value 1",
+                    "field_2": "value 2",
+                    "field_3": "value 3",
+                }
+            ],
         ]
         self.object_data = [
             [_TestDataObject(1, "1", True)],
@@ -333,7 +351,10 @@ class TestFiltersDefinition(TankTestBase):
 
             for field in data_set_fields:
                 for role in fd.filter_roles:
-                    field_id = "{role}.{field}".format(role=role, field=field,)
+                    field_id = "{role}.{field}".format(
+                        role=role,
+                        field=field,
+                    )
                     assert fd.get_field_data(field_id) != {}
 
                     # Still should not have the bad field id
@@ -428,7 +449,14 @@ class TestFiltersDefinition(TankTestBase):
             fd.build()
 
             model = fd.get_source_model()
-            expected_value_keys = set(["name", "value", "count", "icon",])
+            expected_value_keys = set(
+                [
+                    "name",
+                    "value",
+                    "count",
+                    "icon",
+                ]
+            )
             for row in range(model.rowCount()):
                 index = model.index(row, 0)
 

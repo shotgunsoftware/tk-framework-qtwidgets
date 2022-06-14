@@ -122,8 +122,7 @@ class FilterMenuGroup(object):
 
     @staticmethod
     def get_primary_sort(action):
-        """
-        """
+        """ """
 
         return 0 if action.isChecked() else 1
 

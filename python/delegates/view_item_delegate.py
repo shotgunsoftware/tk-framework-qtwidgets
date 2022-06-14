@@ -1634,7 +1634,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         point = bounding_rect.topLeft()
                         point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                            -pixmap_size.width() / 2.0,
+                            -pixmap_size.height() / 2.0,
                         )
 
                 elif position in (
@@ -1651,7 +1652,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         point = bounding_rect.topRight()
                         point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                            -pixmap_size.width() / 2.0,
+                            -pixmap_size.height() / 2.0,
                         )
                 elif position in (
                     self.POSITIONS[self.BOTTOM_LEFT],
@@ -1667,7 +1669,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         point = bounding_rect.bottomLeft()
                         point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                            -pixmap_size.width() / 2.0,
+                            -pixmap_size.height() / 2.0,
                         )
                 else:
                     # Default to bottom right corner.
@@ -1683,7 +1686,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     else:
                         point = bounding_rect.bottomRight()
                         point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0, -pixmap_size.height() / 2.0,
+                            -pixmap_size.width() / 2.0,
+                            -pixmap_size.height() / 2.0,
                         )
 
                 badge_rect = QtCore.QRect(point, pixmap.size())
@@ -2469,7 +2473,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # Calculate the top left (origin) point, based on the position and offset, to draw the action rect
         if position in (self.TOP_LEFT, self.FLOAT_TOP_LEFT):
             origin = QtCore.QPoint(
-                option.rect.left() + offset, option.rect.top() + self.button_margin,
+                option.rect.left() + offset,
+                option.rect.top() + self.button_margin,
             )
         elif position in (self.TOP_RIGHT, self.FLOAT_TOP_RIGHT):
             origin = QtCore.QPoint(

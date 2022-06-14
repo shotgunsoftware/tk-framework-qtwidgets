@@ -17,7 +17,8 @@ from tank_vendor import six
 from tank_vendor.shotgun_api3 import sg_timezone
 
 shotgun_globals = sgtk.platform.import_framework(
-    "tk-framework-shotgunutils", "shotgun_globals",
+    "tk-framework-shotgunutils",
+    "shotgun_globals",
 )
 
 
@@ -117,11 +118,13 @@ def convert_token_string(token_str, sg_data):
             # Add pre and post rolles
             if token["pre_roll"]:
                 resolved_value = "{pre_roll}{value}".format(
-                    pre_roll=token["pre_roll"], value=resolved_value,
+                    pre_roll=token["pre_roll"],
+                    value=resolved_value,
                 )
             if token["post_roll"]:
                 resolved_value = "{value}{post_roll}".format(
-                    value=resolved_value, post_roll=token["post_roll"],
+                    value=resolved_value,
+                    post_roll=token["post_roll"],
                 )
 
         # Replace the token with the value
@@ -293,7 +296,8 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
             str_val = link_name
         else:
             str_val = get_hyperlink_html(
-                url="sgtk:%s:%s" % (value["type"], value["id"]), name=link_name,
+                url="sgtk:%s:%s" % (value["type"], value["id"]),
+                name=link_name,
             )
 
         if "typeonly" in directives:
