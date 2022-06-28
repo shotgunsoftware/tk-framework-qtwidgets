@@ -272,6 +272,14 @@ class SGQLineEdit(QtGui.QLineEdit):
     """
 
 
+class SGQTextEdit(QtGui.QTextEdit):
+    """
+    ShotGrid wrapper class for QTextEdit widget.
+
+    No additional functionality for this wrapper class, other than declaring it as a subclass.
+    """
+
+
 class SGQMenu(QtGui.QMenu):
     """
     ShotGrid wrapper class for QMenu widget.
