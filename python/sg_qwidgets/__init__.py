@@ -23,6 +23,7 @@ from .sg_qwidgets import (
     SGQLCDNumber,
     SGQLabel,
     SGQLineEdit,
+    SGQTextEdit,
     SGQMenu,
     SGQProgressBar,
     SGQPushButton,
