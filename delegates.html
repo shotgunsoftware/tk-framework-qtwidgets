@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Delegates &mdash; tk-framework-qtwidgets master documentation</title>
+  <title>Delegates &mdash; tk-framework-qtwidgets v2.10.3 documentation</title>
   
 
   
@@ -137,12 +137,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> master.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.3.<br>
     
-        This documentation is part of the Shotgun Pipeline Toolkit.
+        This documentation is part of the ShotGrid Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -211,6 +211,746 @@
   <div class="section" id="delegates">
 <h1>Delegates<a class="headerlink" href="#delegates" title="Permalink to this headline">¶</a></h1>
 <p>Flexible delegates to set up with a Qt model and view to display the data</p>
+<dl class="class">
+<dt id="delegates.ViewItemDelegate">
+<em class="property">class </em><code class="descclassname">delegates.</code><code class="descname">ViewItemDelegate</code><span class="sig-paren">(</span><em>view=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QStyledItemDelegate</span></code></p>
+<p>A generic delegate to display items in a view.</p>
+<p>ViewItemDelegate constructor. Sets the default values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>view</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgkt.platform.qt.QtGui.QAbstractItemView</span></code>) – The view that this delegate will be used with.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="delegates.ViewItemDelegate.Padding">
+<em class="property">class </em><code class="descname">Padding</code><span class="sig-paren">(</span><em>top</em>, <em>right</em>, <em>bottom</em>, <em>left</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.Padding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.Padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Convenience class structure to store padding values.</p>
+<dl class="classmethod">
+<dt id="delegates.ViewItemDelegate.Padding.new">
+<em class="property">classmethod </em><code class="descname">new</code><span class="sig-paren">(</span><em>padding</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.Padding.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.Padding.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method to create a padding object with equal padding all around.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.thumbnail_role">
+<code class="descname">thumbnail_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.thumbnail_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data ‘thumbnail’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).
+This role is used to retrieve the view item thumbnail; e.g. thumbnail = index.idata(thumbnail_role).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.header_role">
+<code class="descname">header_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.header_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data ‘title’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).
+This role is used to retrieve the view item title text; e.g. text = index.data(header_role).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.subtitle_role">
+<code class="descname">subtitle_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.subtitle_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data ‘subtitle’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).
+This role is used to retrieve the view item subtitle text; e.g. text = index.data(subtitle_role).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.text_role">
+<code class="descname">text_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.text_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data ‘text’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).
+This role is used to retrieve the view item main text; e.g. text = index.data(text_role).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.short_text_role">
+<code class="descname">short_text_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.short_text_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>). This
+role is used to retrieve the view item shortened text; e.g. text = index.data(short_text_role).
+The view item shortened text may be useful for thumbnail items that do not display well with
+longer text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.icon_role">
+<code class="descname">icon_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.icon_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data ‘icon’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).
+This role is used to retrieve the view item icons; e.g. icons = index.data(icon_role). Icons are
+optional images that can be displayed on the item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.width_role">
+<code class="descname">width_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.width_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data item ‘width’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.height_role">
+<code class="descname">height_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.height_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data item ‘height’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.expand_role">
+<code class="descname">expand_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.expand_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data item ‘expand’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).
+When this role is set, it will allow item rows to expand and collapse based on the text height.
+The index.data model does not need to do any additional work to enable this functionality, aside
+from providing a role for the delegate to use.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.loading_role">
+<code class="descname">loading_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.loading_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data ‘loading’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).
+The  data for this role will determine if a loading icon will be drawn for the view item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.separator_role">
+<code class="descname">separator_role</code><a class="headerlink" href="#delegates.ViewItemDelegate.separator_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the index model data ‘separator’ role (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>).
+The data for this role will determine if a separator will be drawn for the view item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.visible_lines">
+<code class="descname">visible_lines</code><a class="headerlink" href="#delegates.ViewItemDelegate.visible_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the number of text lines the view item should display. This will omit any text that
+is beyond the number of visible lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.item_width">
+<code class="descname">item_width</code><a class="headerlink" href="#delegates.ViewItemDelegate.item_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the view item width. Set to None to ignore this property.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.item_height">
+<code class="descname">item_height</code><a class="headerlink" href="#delegates.ViewItemDelegate.item_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the view item row height. If -1, this property is ignored.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.min_width">
+<code class="descname">min_width</code><a class="headerlink" href="#delegates.ViewItemDelegate.min_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the minimum width for an item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.min_height">
+<code class="descname">min_height</code><a class="headerlink" href="#delegates.ViewItemDelegate.min_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the minimum height for an item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.thumbnail_size">
+<code class="descname">thumbnail_size</code><a class="headerlink" href="#delegates.ViewItemDelegate.thumbnail_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the preferred size for the view item thumbnail. The value will be used to
+render the thumbnail, but the size of the thumbnail is not guaranteed to be the exact
+<cite>thumbnail_size</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.thumbnail_width">
+<code class="descname">thumbnail_width</code><a class="headerlink" href="#delegates.ViewItemDelegate.thumbnail_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the preferred thumbnail width. Convenience property to set the width of the
+<cite>thumbnail_size</cite> property.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.thumbnail_height">
+<code class="descname">thumbnail_height</code><a class="headerlink" href="#delegates.ViewItemDelegate.thumbnail_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the preferred thumbnail height. Convenience property to set the height of the
+<cite>thumbnail_size</cite> property.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.pixmap_extent">
+<code class="descname">pixmap_extent</code><a class="headerlink" href="#delegates.ViewItemDelegate.pixmap_extent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the extent used when converting <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QIcon</span></code> to a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">sgkt.platformqt.QtGui.QPixmap</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.icon_size">
+<code class="descname">icon_size</code><a class="headerlink" href="#delegates.ViewItemDelegate.icon_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the icon size for the view item action icons.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.badge_height_pct">
+<code class="descname">badge_height_pct</code><a class="headerlink" href="#delegates.ViewItemDelegate.badge_height_pct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the percentage value used to calculate the maximum badge icon height (e.g. badge
+icon is rendered over a rect, if that rect height is 100 and the <cite>badge_height_pct</cite> is 0.5,
+then the badge icon maximum height will be 50). Note that badge icons will only be scaled
+down to fit, not scaled up if the icon size is smaller than the max height.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.button_margin">
+<code class="descname">button_margin</code><a class="headerlink" href="#delegates.ViewItemDelegate.button_margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the margin used for buttons.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.button_padding">
+<code class="descname">button_padding</code><a class="headerlink" href="#delegates.ViewItemDelegate.button_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the padding used for buttons.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.text_document_margin">
+<code class="descname">text_document_margin</code><a class="headerlink" href="#delegates.ViewItemDelegate.text_document_margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the margin for the view item text. A <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QTextDocument</span></code> is used to
+render the view item text, this value will be used to set the QTextDocument margin property.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.item_padding">
+<code class="descname">item_padding</code><a class="headerlink" href="#delegates.ViewItemDelegate.item_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the view item padding. This value will add padding to the view item rect.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.thumbnail_padding">
+<code class="descname">thumbnail_padding</code><a class="headerlink" href="#delegates.ViewItemDelegate.thumbnail_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the padding for the item thumbnail.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.text_padding">
+<code class="descname">text_padding</code><a class="headerlink" href="#delegates.ViewItemDelegate.text_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the padding for the item text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.text_rect_halign">
+<code class="descname">text_rect_halign</code><a class="headerlink" href="#delegates.ViewItemDelegate.text_rect_halign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the text block horizontal alignment. This aligns the text block, not the text lines themselves (e.g. the
+block of text will be aligned within the available space, but the text lines will remain aligned left). Horizontal
+alignment will have no effect if there is a header and/or subtitle present (this causes the text block to expand
+to the full available width).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.text_rect_valign">
+<code class="descname">text_rect_valign</code><a class="headerlink" href="#delegates.ViewItemDelegate.text_rect_valign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the text block vertical alignment.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.font">
+<code class="descname">font</code><a class="headerlink" href="#delegates.ViewItemDelegate.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the font used to render the item text. If not specified, the QStyleOptionViewItem font value
+will be used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.background_pen">
+<code class="descname">background_pen</code><a class="headerlink" href="#delegates.ViewItemDelegate.background_pen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QGui.QPen</span></code> pen used to draw the view item background.
+Setting this value will add a border around the view item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.loading_pen">
+<code class="descname">loading_pen</code><a class="headerlink" href="#delegates.ViewItemDelegate.loading_pen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QPen</span></code> pen used to draw the item loading indicator.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.loading_brush">
+<code class="descname">loading_brush</code><a class="headerlink" href="#delegates.ViewItemDelegate.loading_brush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QBrush</span></code> brush used to paint the background of the item
+loading rect.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.selection_brush">
+<code class="descname">selection_brush</code><a class="headerlink" href="#delegates.ViewItemDelegate.selection_brush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QGui.QBrush</span></code> used to draw the view item selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.separator_brush">
+<code class="descname">separator_brush</code><a class="headerlink" href="#delegates.ViewItemDelegate.separator_brush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QGui.QBrush</span></code> used to draw the view item separator.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.show_hover_selection">
+<code class="descname">show_hover_selection</code><a class="headerlink" href="#delegates.ViewItemDelegate.show_hover_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the flag indicating to draw selection on hover or not. The default is set to True.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.override_item_tooltip">
+<code class="descname">override_item_tooltip</code><a class="headerlink" href="#delegates.ViewItemDelegate.override_item_tooltip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the flag indicating to override the tooltip set on the QStandardItem object. Note that
+this will only affect indexes that have an associated QStandardItem (e.g. the index model derives
+from the QStandardItemModel class).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.show_text_tooltip">
+<code class="descname">show_text_tooltip</code><a class="headerlink" href="#delegates.ViewItemDelegate.show_text_tooltip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the flag indicating to show a tooltip if the item text has been elided.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="delegates.ViewItemDelegate.action_hover_cursor">
+<code class="descname">action_hover_cursor</code><a class="headerlink" href="#delegates.ViewItemDelegate.action_hover_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the cursor <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QCursor</span></code> for when an action button is
+hovered over.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="delegates.ViewItemDelegate.get_option_background_brush">
+<em class="property">static </em><code class="descname">get_option_background_brush</code><span class="sig-paren">(</span><em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.get_option_background_brush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.get_option_background_brush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the background brush for the QStyleOptionviewItem object.</p>
+<p>NOTE: This method should be used to retrieve the QStyleOptionViewItem’s
+backgroundBrush property. For different version of Qt, the backgroundBrush
+property may not exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option to get the background brush from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The option’s background brush object.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QBrush</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="delegates.ViewItemDelegate.is_selected">
+<em class="property">static </em><code class="descname">is_selected</code><span class="sig-paren">(</span><em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.is_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.is_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the item is selected.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the item is selected, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="delegates.ViewItemDelegate.get_value">
+<em class="property">static </em><code class="descname">get_value</code><span class="sig-paren">(</span><em>index</em>, <em>role</em>, <em>default_value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the index.data for the given role. If the data returned is
+a function, return the value of the executing the function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>role</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>) – The item data role</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The value for the index and role. If the value found is None,
+the default_value will be returned.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="delegates.ViewItemDelegate.get_display_values_list">
+<em class="property">static </em><code class="descname">get_display_values_list</code><span class="sig-paren">(</span><em>index</em>, <em>role</em>, <em>flat=False</em>, <em>join_char=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.get_display_values_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.get_display_values_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of display string values. Each return item in the list
+represents a text line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>role</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>) – The item data role</li>
+<li><strong>flat</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – If True, the value returned will be the list of values joined
+by the ‘join_char’ (default join char is “”)</li>
+<li><strong>join_char</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Used to join the list of values to return a single value, when
+<cite>flat</cite> is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of display values. An empty list is returned if no data
+is found, or was unable to parse the data for the index’s role.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list&lt;str&gt;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="delegates.ViewItemDelegate.split_html_lines">
+<em class="property">static </em><code class="descname">split_html_lines</code><span class="sig-paren">(</span><em>html_text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.split_html_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.split_html_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to split html text by line break tags.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.is_hover">
+<code class="descname">is_hover</code><span class="sig-paren">(</span><em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.is_hover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.is_hover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the mouse is over the item. This will always return
+False if the option does not have a widget or the option’s widget
+does not have mouse tracking enabeld.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the mouse is over the item, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.has_mouse_tracking">
+<code class="descname">has_mouse_tracking</code><span class="sig-paren">(</span><em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.has_mouse_tracking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.has_mouse_tracking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the item’s option widget has mouse tracking enabled.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the item has mouse tracking enabled.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.get_cursor_pos">
+<code class="descname">get_cursor_pos</code><span class="sig-paren">(</span><em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.get_cursor_pos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.get_cursor_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the mouse cursor position relative to the item’s widget. This
+will always return False if the option’s widget does not have
+mouse tracking enabled.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The cursor position relative to the option widget.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgkt.platform.qt.QtCore.QPoint</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.get_option_widget">
+<code class="descname">get_option_widget</code><span class="sig-paren">(</span><em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.get_option_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.get_option_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the widget for the QStyleOptionviewItem object.</p>
+<p>NOTE: This method should be used to retrieve the QStyleOptionViewItem’s widget property.
+For different version of Qt, the widget is stored in different properties.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option to get the widget from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The option’s widget object.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QWidget</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.add_actions">
+<code class="descname">add_actions</code><span class="sig-paren">(</span><em>actions</em>, <em>position=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.add_actions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.add_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add actions that will be made available to show for each item. This method should be used to
+add actions to the <cite>_actions</cite> field instead of editing it directly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>actions</strong> (<em>list&lt;dict&gt;</em><em>, </em><em>where each dict represents the action. The dict will be passed to
+the ViewItemAction constructor to create a ViewItemAction object.</em>) – The actions to add.</li>
+<li><strong>position</strong> (<em>POSITION enum</em><em>, </em><em>defaults to float on the bottom right of the item rect.</em>) – The position to display the actions.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.add_action">
+<code class="descname">add_action</code><span class="sig-paren">(</span><em>action</em>, <em>position=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.add_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.add_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to add an action. See <cite>add_actions</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>actions</strong> (<em>list&lt;dict&gt;</em><em>, </em><em>where each dict represents the action. The dict will be passed to
+the ViewItemAction constructor to create a ViewItemAction object.</em>) – The actions to add.</li>
+<li><strong>position</strong> (<em>POSITION enum</em><em>, </em><em>defaults to float on the bottom right of the item rect.</em>) – The position to display the actions.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.remove_actions">
+<code class="descname">remove_actions</code><span class="sig-paren">(</span><em>positions=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.remove_actions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.remove_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the actions at the specified position. If positions are not specified, remove
+all actions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>positions</strong> (<em>list&lt;POSITION&gt;</em><em>, </em><em>where POSITION is one of the POSITIONS enum.</em>) – The list of positions to remove actions from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.scale_thumbnail_to_item_height">
+<code class="descname">scale_thumbnail_to_item_height</code><span class="sig-paren">(</span><em>scale_value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.scale_thumbnail_to_item_height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.scale_thumbnail_to_item_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>If scale_value is not None, the thumbnail width will scale with the row height by a factor
+of <cite>scale_value</cite> (e.g. thumbnail_width = item_height * scale_value). This is convenient when
+the item size is adjusted dynmaically (e.g. using a slider) and this will scale up and down
+the thumbnail with the item size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scale_value</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – The value to scale the thumbnail by.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.get_displayed_text">
+<code class="descname">get_displayed_text</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.get_displayed_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.get_displayed_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the text that is displayed for the item. The text will be plain (not rich HTML).
+This may be useful for filtering items displayed by this delegate, since the model data
+may be formatted by the delegate before being displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index of the item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.initStyleOption">
+<code class="descname">initStyleOption</code><span class="sig-paren">(</span><em>option</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.initStyleOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.initStyleOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyledItemDelegate</span></code> method.</p>
+<p>Initialize the option used for rendering the item. This should be called before using
+the option (e.g. sizeHint, paint, etc.).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</li>
+<li><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index of the item.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.createEditor">
+<code class="descname">createEditor</code><span class="sig-paren">(</span><em>parent</em>, <em>option</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.createEditor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.createEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyledItemDelegate</span></code> method.</p>
+<p>This default implementation does not provide an editor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QWidget</span></code>) – The editor’s parent widget.</li>
+<li><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</li>
+<li><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index of the item.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The editor widget for the item.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QWidget</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.editorEvent">
+<code class="descname">editorEvent</code><span class="sig-paren">(</span><em>event</em>, <em>model</em>, <em>option</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.editorEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.editorEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyledItemDelegate</span></code> method.</p>
+<p>Listens for left mouse button press events to check if a view item action
+should be triggered.</p>
+<p>If mouse tracking has been enabled on the option’s widget, this method
+will listens and act on mouse move events, even if there is no editor
+set up for the item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QEvent</span></code>) – The event that triggered the editing. Mouse events are sent to
+this method even if they do not start editing the item.</li>
+<li><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QAbstractItemModel</span></code>) – The model of the item.</li>
+<li><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</li>
+<li><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index of the item.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the event was handled, else False (it was ignored).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.sizeHint">
+<code class="descname">sizeHint</code><span class="sig-paren">(</span><em>option</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.sizeHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyledItemDelegate</span></code> method.</p>
+<p>Returns the size hint for the view item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</li>
+<li><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index of the item.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="delegates.ViewItemDelegate.paint">
+<code class="descname">paint</code><span class="sig-paren">(</span><em>painter</em>, <em>option</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/view_item_delegate.html#ViewItemDelegate.paint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ViewItemDelegate.paint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides <code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyledItemDelegate</span></code> method.</p>
+<p>The main paint method that draws each item in the view. Override specific draw
+methods to customize the rendered item, if needed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>painter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgkt.platform.qt.QtGui.QPainter</span></code>) – the object used for painting.</li>
+<li><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</li>
+<li><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index of the item.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="delegates.ThumbnailViewItemDelegate">
+<em class="property">class </em><code class="descclassname">delegates.</code><code class="descname">ThumbnailViewItemDelegate</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/thumbnail_view_item_delegate.html#ThumbnailViewItemDelegate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ThumbnailViewItemDelegate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">delegates.view_item_delegate.ViewItemDelegate</span></code></p>
+<p>A subclass of the ViewItemDelegate, where the thumbnail is the focus of the display, and
+is more compact (ideal for items with less text).</p>
+<p>Constructor</p>
+<p>Call the base constructor and set up properties specific to this delegate class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QAbstractItemView</span></code>) – The parent widget that will be used with this delegate.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="delegates.ThumbnailViewItemDelegate.sizeHint">
+<code class="descname">sizeHint</code><span class="sig-paren">(</span><em>option</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/delegates/thumbnail_view_item_delegate.html#ThumbnailViewItemDelegate.sizeHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#delegates.ThumbnailViewItemDelegate.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the base ViewItemDelegate method.</p>
+<p>The size hint is based on the thumbnail size. The width is set to the thumbnail
+width, plus the item padding. If the min_width property is set, the width will be
+at least the min_width. The height is set to the thumbnail height, plus the height
+of the text and item padding. Currently, the min_height property is not supported
+by this delegate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>option</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QStyleOptionViewItem</span></code>) – The option used for rendering the item.</li>
+<li><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index of the item.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The size hint for this index.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QSize</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

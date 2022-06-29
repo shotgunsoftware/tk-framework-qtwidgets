@@ -137,10 +137,10 @@
 
     <b>tk-framework-qtwidgets</b> v2.10.3.<br>
     
-        This documentation is part of the Shotgun Pipeline Toolkit.
+        This documentation is part of the ShotGrid Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -754,11 +754,13 @@
         <span class="p">):</span>
             <span class="c1"># move to the right of the current item in the same visual row if possible.  If the</span>
             <span class="c1"># cursor is at the end of the row then we do nothing.</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">parent_row</span><span class="p">]</span><span class="o">.</span><span class="n">child_info</span><span class="p">)</span>
-                <span class="ow">and</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-                <span class="o">==</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_item_info</span><span class="p">[</span><span class="n">parent_row</span><span class="p">]</span><span class="o">.</span><span class="n">child_info</span>
+            <span class="p">)</span> <span class="ow">and</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">parent_item_info</span><span class="o">.</span><span class="n">child_info</span><span class="p">[</span>
+                <span class="n">row</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="p">][</span>
+                <span class="mi">0</span>
+            <span class="p">]:</span>
                 <span class="c1"># just move right 1:</span>
                 <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">elif</span> <span class="n">cursor_action</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">MoveUp</span><span class="p">:</span>

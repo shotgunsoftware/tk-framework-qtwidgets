@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Screen Capture Widget &mdash; tk-framework-qtwidgets master documentation</title>
+  <title>Screen Capture Widget &mdash; tk-framework-qtwidgets v2.10.3 documentation</title>
   
 
   
@@ -137,12 +137,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> master.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.3.<br>
     
-        This documentation is part of the Shotgun Pipeline Toolkit.
+        This documentation is part of the ShotGrid Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -214,6 +214,57 @@
 Similar to pressing CMD+SHIFT+4/CMD+SHIFT+3 on the mac, this widget implements
 several different ways in which the screen can be captured, either via
 a cross hair style selection or by grabbing the entire screen.</p>
+<dl class="function">
+<dt id="screen_grab.get_desktop_pixmap">
+<code class="descclassname">screen_grab.</code><code class="descname">get_desktop_pixmap</code><span class="sig-paren">(</span><em>rect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#get_desktop_pixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.get_desktop_pixmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a screen capture on the specified rectangle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rect</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QRect.html#PySide.QtCore.QRect" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QRect</span></code></a>) – Rectangle to capture</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Captured image</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="screen_grab.screen_capture">
+<code class="descclassname">screen_grab.</code><code class="descname">screen_capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#screen_grab.screen_capture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modally displays the screen capture tool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Captured screen</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="screen_grab.screen_capture_file">
+<code class="descclassname">screen_grab.</code><code class="descname">screen_capture_file</code><span class="sig-paren">(</span><em>output_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#screen_capture_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.screen_capture_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modally display the screen capture tool, saving to a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>output_path</strong> – Path to save to. If no path is specified,
+a temp path is generated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path where screenshot was saved.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 

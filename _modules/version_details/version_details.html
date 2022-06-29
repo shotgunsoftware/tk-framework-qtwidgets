@@ -137,10 +137,10 @@
 
     <b>tk-framework-qtwidgets</b> v2.10.3.<br>
     
-        This documentation is part of the Shotgun Pipeline Toolkit.
+        This documentation is part of the ShotGrid Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -929,8 +929,10 @@
         <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">qss_file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
-            <span class="n">qss_data</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">_resolve_sg_stylesheet_tokens</span><span class="p">(</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">qss_data</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">_resolve_sg_stylesheet_tokens</span><span class="p">(</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">qss_data</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>

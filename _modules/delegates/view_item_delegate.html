@@ -137,10 +137,10 @@
 
     <b>tk-framework-qtwidgets</b> v2.10.3.<br>
     
-        This documentation is part of the Shotgun Pipeline Toolkit.
+        This documentation is part of the ShotGrid Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -1843,7 +1843,8 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">()</span>
                         <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
                         <span class="p">)</span>
 
                 <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span>
@@ -1860,7 +1861,8 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">topRight</span><span class="p">()</span>
                         <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
                         <span class="p">)</span>
                 <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM_LEFT</span><span class="p">],</span>
@@ -1876,7 +1878,8 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottomLeft</span><span class="p">()</span>
                         <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
                         <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># Default to bottom right corner.</span>
@@ -1892,7 +1895,8 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottomRight</span><span class="p">()</span>
                         <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
                         <span class="p">)</span>
 
                 <span class="n">badge_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
@@ -2678,7 +2682,8 @@
         <span class="c1"># Calculate the top left (origin) point, based on the position and offset, to draw the action rect</span>
         <span class="k">if</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP_LEFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_TOP_LEFT</span><span class="p">):</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span><span class="p">,</span>
+                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span>
+                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP_RIGHT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_TOP_RIGHT</span><span class="p">):</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>

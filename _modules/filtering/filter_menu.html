@@ -137,10 +137,10 @@
 
     <b>tk-framework-qtwidgets</b> v2.10.3.<br>
     
-        This documentation is part of the Shotgun Pipeline Toolkit.
+        This documentation is part of the ShotGrid Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>Shotgun Support</a>.
+    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -1049,7 +1049,11 @@
         <span class="n">field_id</span> <span class="o">=</span> <span class="n">filter_group</span><span class="o">.</span><span class="n">group_id</span>
         <span class="n">filter_id</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.MoreFilters&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field_id</span><span class="p">)</span>
         <span class="n">filter_widget</span> <span class="o">=</span> <span class="n">ChoicesFilterItemWidget</span><span class="p">(</span>
-            <span class="n">filter_id</span><span class="p">,</span> <span class="n">field_id</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">field_name</span><span class="p">,},</span>
+            <span class="n">filter_id</span><span class="p">,</span>
+            <span class="n">field_id</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">field_name</span><span class="p">,</span>
+            <span class="p">},</span>
         <span class="p">)</span>
 
         <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidgetAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="p">)</span>
@@ -1076,7 +1080,8 @@
         <span class="c1"># Add the new action and then move it into alphabetical order.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="n">more_filters_actions</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="o">.</span><span class="n">actions</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">defaultWidget</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="o">.</span><span class="n">actions</span><span class="p">(),</span>
+            <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">defaultWidget</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">action_index</span> <span class="o">=</span> <span class="n">more_filters_actions</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">action_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">more_filters_actions</span><span class="p">):</span>
