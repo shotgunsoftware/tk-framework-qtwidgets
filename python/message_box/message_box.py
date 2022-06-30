@@ -62,6 +62,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
         self.setModal(True)
         self.setMinimumWidth(450)
 
+        self._show_remember_checkbox = False
         self._always_show_details = False
         self._show_details_text = "Show Details..."
         self._hide_details_text = "Hide Details..."
@@ -119,7 +120,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
         # Initially start with the details hidden, until the details text is set
         self._details_text_widget.hide()
         self._details_button.hide()
-        self._remember_checkbox_widget.hide()
+        self._remember_checkbox_widget.setVisible(self._show_remember_checkbox)
 
     ###########################################################################################
     # Properties
@@ -297,7 +298,8 @@ class MessageBox(sg_qwidgets.SGQDialog):
         :type show: bool
         """
 
-        self._remember_checkbox_widget.setVisible(show)
+        self._show_remember_checkbox = show
+        self._remember_checkbox_widget.setVisible(self._show_remember_checkbox)
 
     def set_remember_checkbox_text(self, text):
         """
@@ -317,7 +319,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
         :rtype: bool
         """
 
-        if self._remember_checkbox.isVisible():
+        if self._show_remember_checkbox:
             return self._remember_checkbox.isChecked()
 
         return None
