@@ -64,6 +64,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
 
         self._show_remember_checkbox = False
         self._always_show_details = False
+        self._details_visible = False
         self._show_details_text = "Show Details..."
         self._hide_details_text = "Hide Details..."
         self._button_clicked = None
@@ -243,6 +244,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
         """
 
         if self._always_show_details:
+            self._details_visible = True
             self._details_text_widget.setVisible(True)
             # Hide the button that show/hides the detailed text when it is always shown
             self._details_button.hide()
@@ -253,10 +255,10 @@ class MessageBox(sg_qwidgets.SGQDialog):
 
             # Get the current visibility of the details text, toggle its visibility and set
             # the button text accordingly
-            visible = not self._details_text.isVisible()
-            self._details_text_widget.setVisible(visible)
+            self._details_visible = not self._details_text.isVisible()
+            self._details_text_widget.setVisible(self._details_visible)
 
-            if visible:
+            if self._details_visible:
                 self._details_button.setText(self._hide_details_text)
             else:
                 self._details_button.setText(self._show_details_text)
@@ -274,7 +276,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
 
         self._show_details_text = text
 
-        if not self._details_text.isVisible():
+        if not self._details_visible:
             self._details_button.setText(self._show_details_text)
 
     def set_hide_details_text(self, text):
@@ -287,7 +289,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
 
         self._hide_details_text = text
 
-        if self._details_text.isVisible():
+        if self._details_visible:
             self._details_button.setText(self._hide_details_text)
 
     def show_remember_checkbox(self, show):
