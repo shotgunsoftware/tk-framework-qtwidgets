@@ -317,7 +317,10 @@ class MessageBox(sg_qwidgets.SGQDialog):
         :rtype: bool
         """
 
-        return self._remember_checkbox.isChecked()
+        if self._remember_checkbox.isVisible():
+            return self._remember_checkbox.isChecked()
+
+        return None
 
     ###########################################################################################
     # Protected functions
