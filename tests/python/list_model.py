@@ -21,6 +21,7 @@ except:
     importer = QtImporter()
     sgtk.platform.qt.QtCore = importer.QtCore
     sgtk.platform.qt.QtGui = importer.QtGui
+    from sgtk.platform.qt import QtCore
 
 
 class _TestListModel(QtCore.QAbstractListModel):
