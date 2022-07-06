@@ -29,16 +29,19 @@ class SGQIcon(QtGui.QIcon):
     # Enum for icon sizes
     # The pixel dimensions are suggested but not enforced for each size.
     # NOTE that not all icons will be available in all sizes.
-    (SMALL, MEDIUM, LARGE, EXTRA_LARGE,) = range(
-        4
-    )  # 16x16  # 20x20  # 32x32  # 40x40
+    (
+        SIZE_16x16,
+        SIZE_20x20,
+        SIZE_32x32,
+        SIZE_40x40,
+    ) = range(4)
 
     # Icon size name (used to get icon resource path)
     SIZES = {
-        SMALL: "small",
-        MEDIUM: "medium",
-        LARGE: "large",
-        EXTRA_LARGE: "extra_large",
+        SIZE_16x16: "16x16",
+        SIZE_20x20: "20x20",
+        SIZE_32x32: "32x32",
+        SIZE_40x40: "40x40",
     }
 
     def __init__(self, normal_off=None, normal_on=None):
@@ -75,7 +78,7 @@ class SGQIcon(QtGui.QIcon):
         :param name: The file name of the icon (not including the size suffix or file extension).
         :type name: str
         :param size: The icon size suffix (indicating which icon size to use). Should be one of:
-            'small', 'medium', 'large', 'extra_large'
+            'SIZE_16x16', SIZE_32x32', 'SIZE_40x40'
         :type size: str
         :param ext: The file extension for the icon. Default='png'
         :type ext: str
@@ -83,7 +86,7 @@ class SGQIcon(QtGui.QIcon):
 
         return ":/tk-framework-qtwidgets/icons/{icon_name}_{sz}.{ext}".format(
             icon_name=name,
-            sz=cls.SIZES.get(size, cls.MEDIUM),
+            sz=cls.SIZES.get(size, cls.SIZE_20x20),
             ext=ext,
         )
 
@@ -94,91 +97,91 @@ class SGQIcon(QtGui.QIcon):
     #
 
     @classmethod
-    def ValidationOk(cls, size=MEDIUM):
+    def ValidationOk(cls, size=SIZE_20x20):
         icon = cls.resource_path("validation_ok", size)
         return cls(icon)
 
     @classmethod
-    def ValidationWarning(cls, size=MEDIUM):
+    def ValidationWarning(cls, size=SIZE_20x20):
         icon = cls.resource_path("validation_warning", size)
         return cls(icon)
 
     @classmethod
-    def ValidationError(cls, size=MEDIUM):
+    def ValidationError(cls, size=SIZE_20x20):
         icon = cls.resource_path("validation_error", size)
         return cls(icon)
 
     @classmethod
-    def RedRefresh(cls, size=MEDIUM):
+    def RedRefresh(cls, size=SIZE_20x20):
         icon = cls.resource_path("refresh_red", size)
         return cls(icon)
 
     @classmethod
-    def RedBullet(cls, size=MEDIUM):
+    def RedBullet(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("bullet_inactive", size),
             normal_on=cls.resource_path("bullet_active", size),
         )
 
     @classmethod
-    def Lock(cls, size=MEDIUM):
+    def Lock(cls, size=SIZE_20x20):
         icon = cls.resource_path("lock", size)
         return cls(icon)
 
     @classmethod
-    def GreenCheckMark(cls, size=MEDIUM):
+    def GreenCheckMark(cls, size=SIZE_20x20):
         icon = cls.resource_path("check_mark_green", size)
         return cls(icon)
 
     @classmethod
-    def RedCheckMark(cls, size=MEDIUM):
+    def RedCheckMark(cls, size=SIZE_20x20):
         icon = cls.resource_path("check_mark_red", size)
         return cls(icon)
 
     @classmethod
-    def Filter(cls, size=MEDIUM):
+    def Filter(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("filter_inactive", size),
             normal_on=cls.resource_path("filter_active", size),
         )
 
     @classmethod
-    def Info(cls, size=MEDIUM):
+    def Info(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("info_inactive", size),
             normal_on=cls.resource_path("info_active", size),
         )
 
     @classmethod
-    def TreeArrow(cls, size=MEDIUM):
+    def TreeArrow(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("tree_arrow_expanded", size),
             normal_on=cls.resource_path("tree_arrow_collapsed", size),
         )
 
     @classmethod
-    def ListViewMode(cls, size=MEDIUM):
+    def ListViewMode(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("view_list_inactive", size),
             normal_on=cls.resource_path("view_list_active", size),
         )
 
     @classmethod
-    def ThumbnailViewMode(cls, size=MEDIUM):
+    def ThumbnailViewMode(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("view_thumbnail_inactive", size),
             normal_on=cls.resource_path("view_thumbnail_active", size),
         )
 
     @classmethod
-    def GridViewMode(cls, size=MEDIUM):
+    def GridViewMode(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("view_grid_inactive", size),
             normal_on=cls.resource_path("view_grid_active", size),
         )
 
     @classmethod
-    def Toggle(cls, size=MEDIUM):
+    def Toggle(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("toggle_inactive", size),
             normal_on=cls.resource_path("toggle_active", size),
