@@ -118,7 +118,8 @@ class FilterDefinition(object):
         """
         Get or set the fields that will are accepted when building the filter definition.
 
-        Set this list to None or empty to accept all fields.
+        Set the value of this property None or the empty list if the filter should accept all
+        given fields (e.g. it does not ignore any fields).
         """
         return self._accept_fields
 
