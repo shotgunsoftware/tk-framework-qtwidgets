@@ -58,7 +58,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
 
         super(MessageBox, self).__init__(parent)
 
-        self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.setModal(True)
         self.setMinimumWidth(450)
 
