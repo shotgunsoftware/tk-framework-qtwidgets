@@ -335,6 +335,9 @@ class SGQSizeGrip(QtGui.QSizeGrip):
     No additional functionality for this wrapper class, other than declaring it as a subclass.
     """
 
+    def __init__(self, parent):
+        super(SGQSizeGrip, self).__init__(parent)
+
 
 class SGQSlider(QtGui.QSlider):
     """
@@ -518,6 +521,10 @@ class SGQSplitterHandle(QtGui.QSplitterHandle):
 
     No additional functionality for this wrapper class, other than declaring it as a subclass.
     """
+
+    # def __init__(self, orientation=QtCore.Qt.Orientation.Horizontal, splitter_parent=None):
+    def __init__(self, orientation, splitter_parent):
+        super(SGQSplitterHandle, self).__init__(orientation, splitter_parent)
 
 
 class SGQStackedWidget(QtGui.QStackedWidget):

@@ -18,6 +18,18 @@ from tank_test.tank_test_base import setUpModule  # noqa
 from tank_vendor import six
 import sgtk
 
+try:
+    from sgtk.platform.qt import QtCore, QtGui
+except:
+    # components also use PySide, so make sure we have this loaded up correctly
+    # before starting auto-doc.
+    from tank.util.qt_importer import QtImporter
+
+    importer = QtImporter()
+    sgtk.platform.qt.QtCore = importer.QtCore
+    sgtk.platform.qt.QtGui = importer.QtGui
+    from sgtk.platform.qt import QtCore, QtGui
+
 
 class TestFramework(TankTestBase):
     """
@@ -133,16 +145,20 @@ class TestFramework(TankTestBase):
                     # of the right type.
                     if arg == "parent":
                         params["parent"] = parent
+
                     elif arg == "sg_model":
                         params["sg_model"] = shotgun_model.ShotgunModel(
                             parent=self._app, bg_task_manager=bg_task_manager
                         )
+
                     elif arg == "bg_task_manager":
                         params["bg_task_manager"] = bg_task_manager
+
                     elif arg == "fields_manager":
                         params["fields_manager"] = field_manager.ShotgunFieldManager(
                             parent=parent, bg_task_manager=bg_task_manager
                         )
+
                     elif arg == "sg_entity_type":
                         params["sg_entity_type"] = "Asset"
 
@@ -153,6 +169,14 @@ class TestFramework(TankTestBase):
                     elif arg in ("filter_id", "group_id"):
                         # FilterItemWidget
                         params[arg] = "id"
+
+                    elif arg == "splitter_parent":
+                        # SGQSplitterHandle
+                        params[arg] = QtGui.QSplitter(parent)
+
+                    elif arg == "orientation":
+                        # SGQSplitterHandle
+                        params[arg] = QtCore.Qt.Orientation.Horizontal
 
                 # Add the widget and show it, don't worry about the rest.
                 # It. Just. Works.
