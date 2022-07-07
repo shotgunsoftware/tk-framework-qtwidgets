@@ -74,7 +74,7 @@ class TestFramework(TankTestBase):
         In lieu of a proper test suite that fully tests the widgets, we'll at least
         instantiate all the widgets in a tight loop.
 
-        Careful, there be dragons.
+        Careful, there be dragons (that cause this test to fail randomly).
         """
 
         # We can't load modules from a test because load_framework can only be called
