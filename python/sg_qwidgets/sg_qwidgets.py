@@ -335,6 +335,9 @@ class SGQSizeGrip(QtGui.QSizeGrip):
     No additional functionality for this wrapper class, other than declaring it as a subclass.
     """
 
+    def __init__(self, parent):
+        super(SGQSizeGrip, self).__init__(parent)
+
 
 class SGQSlider(QtGui.QSlider):
     """
