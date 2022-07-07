@@ -443,38 +443,6 @@ class SGQUndoView(QtGui.QUndoView):
     """
 
 
-class SGQAbstractButton(QtGui.QAbstractButton):
-    """
-    ShotGrid wrapper class for QAbstractButton widget.
-
-    No additional functionality for this wrapper class, other than declaring it as a subclass.
-    """
-
-
-class SGQAbstractScrollArea(QtGui.QAbstractScrollArea):
-    """
-    ShotGrid wrapper class for QAbstractScrollArea widget.
-
-    No additional functionality for this wrapper class, other than declaring it as a subclass.
-    """
-
-
-class SGQAbstractSlider(QtGui.QAbstractSlider):
-    """
-    ShotGrid wrapper class for QAbstractSlider widget.
-
-    No additional functionality for this wrapper class, other than declaring it as a subclass.
-    """
-
-
-class SGQAbstractSpinBox(QtGui.QAbstractSpinBox):
-    """
-    ShotGrid wrapper class for QAbstractSpinBox widget.
-
-    No additional functionality for this wrapper class, other than declaring it as a subclass.
-    """
-
-
 class SGQDialog(QtGui.QDialog):
     """
     ShotGrid wrapper class for QDialog widget.
