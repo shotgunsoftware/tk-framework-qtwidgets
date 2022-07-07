@@ -138,9 +138,22 @@ class TestFramework(TankTestBase):
                     getargspec = inspect.getargspec
                 else:
                     getargspec = inspect.getfullargspec
-                spec = getargspec(attr.__init__)
+
+                try:
+                    spec = getargspec(attr.__init__)
+                except TypeError as error:
+                    if six.PY2 and module_name == "sg_qwidgets":
+                        # Skip SG wrapper classes for Qt widgets in python2 - the __init__
+                        # method cannot be found in python2 using the getargspec even though
+                        # there is no issue instantiating these widgets
+                        continue
+
+                    # Failed to get the spec for the __init__ method, raise the error
+                    raise error
+
                 # Look at the parameter list for this widget's __init__ method
-                for arg in getargspec(attr.__init__).args:
+                spec_args = spec.args
+                for arg in spec_args:
                     # For each required parameter, we'll pass in an instance
                     # of the right type.
                     if arg == "parent":
