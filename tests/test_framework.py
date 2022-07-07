@@ -191,9 +191,11 @@ class TestFramework(TankTestBase):
                         # SGQSplitterHandle
                         params[arg] = QtCore.Qt.Orientation.Horizontal
 
-                # Add the widget and show it, don't worry about the rest.
-                # It. Just. Works.
-                attr(**params).show()
+                # Finally create the widget, no need to show it.
+                widget = attr(**params)
+                assert widget
+                # Clean it up right away as it is no longer needed
+                widget.destroy()
 
         self._app.processEvents()
         parent.destroy()
