@@ -18,6 +18,18 @@ from tank_test.tank_test_base import setUpModule  # noqa
 from tank_vendor import six
 import sgtk
 
+try:
+    from sgtk.platform.qt import QtCore, QtGui
+except:
+    # components also use PySide, so make sure we have this loaded up correctly
+    # before starting auto-doc.
+    from tank.util.qt_importer import QtImporter
+
+    importer = QtImporter()
+    sgtk.platform.qt.QtCore = importer.QtCore
+    sgtk.platform.qt.QtGui = importer.QtGui
+    from sgtk.platform.qt import QtCore, QtGui
+
 
 class TestFramework(TankTestBase):
     """
@@ -62,7 +74,7 @@ class TestFramework(TankTestBase):
         In lieu of a proper test suite that fully tests the widgets, we'll at least
         instantiate all the widgets in a tight loop.
 
-        Careful, there be dragons.
+        Careful, there be dragons (that cause this test to fail randomly).
         """
 
         # We can't load modules from a test because load_framework can only be called
@@ -126,23 +138,40 @@ class TestFramework(TankTestBase):
                     getargspec = inspect.getargspec
                 else:
                     getargspec = inspect.getfullargspec
-                spec = getargspec(attr.__init__)
+
+                try:
+                    spec = getargspec(attr.__init__)
+                except TypeError as error:
+                    if six.PY2 and module_name == "sg_qwidgets":
+                        # Skip SG wrapper classes for Qt widgets in python2 - the __init__
+                        # method cannot be found in python2 using the getargspec even though
+                        # there is no issue instantiating these widgets
+                        continue
+
+                    # Failed to get the spec for the __init__ method, raise the error
+                    raise error
+
                 # Look at the parameter list for this widget's __init__ method
-                for arg in getargspec(attr.__init__).args:
+                spec_args = spec.args
+                for arg in spec_args:
                     # For each required parameter, we'll pass in an instance
                     # of the right type.
                     if arg == "parent":
                         params["parent"] = parent
+
                     elif arg == "sg_model":
                         params["sg_model"] = shotgun_model.ShotgunModel(
                             parent=self._app, bg_task_manager=bg_task_manager
                         )
+
                     elif arg == "bg_task_manager":
                         params["bg_task_manager"] = bg_task_manager
+
                     elif arg == "fields_manager":
                         params["fields_manager"] = field_manager.ShotgunFieldManager(
                             parent=parent, bg_task_manager=bg_task_manager
                         )
+
                     elif arg == "sg_entity_type":
                         params["sg_entity_type"] = "Asset"
 
@@ -154,9 +183,19 @@ class TestFramework(TankTestBase):
                         # FilterItemWidget
                         params[arg] = "id"
 
-                # Add the widget and show it, don't worry about the rest.
-                # It. Just. Works.
-                attr(**params).show()
+                    elif arg == "splitter_parent":
+                        # SGQSplitterHandle
+                        params[arg] = QtGui.QSplitter(parent)
+
+                    elif arg == "orientation":
+                        # SGQSplitterHandle
+                        params[arg] = QtCore.Qt.Orientation.Horizontal
+
+                # Finally create the widget, no need to show it.
+                widget = attr(**params)
+                assert widget
+                # Clean it up right away as it is no longer needed
+                widget.destroy()
 
         self._app.processEvents()
         parent.destroy()

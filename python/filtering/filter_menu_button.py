@@ -7,15 +7,20 @@
 # By accessing, using, copying or modifying this work you indicate your
 # agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Autodesk Inc.
+
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-from .ui import resources_rc
-
 from .filter_menu import FilterMenu
 
+sg_qicons = sgtk.platform.current_bundle().import_module("sg_qicons")
+SGQIcon = sg_qicons.SGQIcon
 
-class FilterMenuButton(QtGui.QToolButton):
+sg_qwidgets = sgtk.platform.current_bundle().import_module("sg_qwidgets")
+SGQToolButton = sg_qwidgets.SGQToolButton
+
+
+class FilterMenuButton(SGQToolButton):
     """
     A QToolButton to be used with the FilterMenu class.
     """
@@ -35,21 +40,7 @@ class FilterMenuButton(QtGui.QToolButton):
         super(FilterMenuButton, self).__init__(parent)
 
         if not icon:
-            icon = QtGui.QIcon()
-            icon.addPixmap(
-                QtGui.QPixmap(
-                    ":tk_framework_qtwidgets.filtering/icons/filter-active.png"
-                ),
-                QtGui.QIcon.Normal,
-                QtGui.QIcon.On,
-            )
-            icon.addPixmap(
-                QtGui.QPixmap(
-                    ":tk_framework_qtwidgets.filtering/icons/filter-inactive.png"
-                ),
-                QtGui.QIcon.Normal,
-                QtGui.QIcon.Off,
-            )
+            icon = SGQIcon.filter()
 
         self.setCheckable(True)
         self.setPopupMode(QtGui.QToolButton.InstantPopup)

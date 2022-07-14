@@ -189,7 +189,7 @@ class FilterItem(object):
                 ("and non-group filters types can not use group filter operations"),
             )
 
-        # For not group filter items, there must be a filter role or data function passed so that index data
+        # For non group filter items, there must be a filter role or data function passed so that index data
         # can be retrieved on checking if an index is accepted by the filter item.
         if not is_group_filter and filter_role is None and data_func is None:
             raise ValueError(

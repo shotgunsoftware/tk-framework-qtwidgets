@@ -69,9 +69,18 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         def __init__(self, top, right, bottom, left):
-            # """
-            # Padding constructor.
-            # """
+            """
+            Create the Padding object.
+
+            :param top: The top padding value.
+            :type top: int
+            :param right: The right padding value.
+            :type right: int
+            :param bottom: The bottom padding value.
+            :type bottom: int
+            :param left: The left padding value.
+            :type left: int
+            """
 
             self.top = top
             self.right = right
@@ -117,6 +126,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # The number of visible lines to show (e.g. text will be cut off to this defined number of lines)
         self._visible_lines = -1
 
+        # The default qss to apply to the text document style sheet
+        self._document_style_sheet = ""
+
+        # Turn on text eliding, if False, text will be wrapped
+        self._elide_text = True
+        self._elide_header = True
+
         # Fix the item's width and height. These will be ignored if set to None. When set to -1, these will
         # expand to the full available space.
         self._item_width = None
@@ -140,11 +156,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # icon is rendered over a rect, if that rect height is 100 and the `badge_height_pct` is 0.5,
         # then the badge icon maximum height will be 50). Note that badge icons will only be scaled
         # down to fit, not scaled up if the icon size is smaller than the max height.
-        # self._badge_height_pct = None
         self._badge_height_pct = 1.0 / 3.0
 
         # Button padding and margin values
-        self._button_margin = 7
+        self._action_item_margin = 7
         self._button_padding = 4
         # Text document margin
         self._text_document_margin = 0
@@ -348,6 +363,39 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._visible_lines = lines
 
     @property
+    def document_style_sheet(self):
+        """
+        Get or set the default qss for the text document style sheet. This will affect the text style and layout of the item.
+        """
+        return self._document_style_sheet
+
+    @document_style_sheet.setter
+    def document_style_sheet(self, qss):
+        self._document_style_sheet = qss
+
+    @property
+    def elide_text(self):
+        """
+        Get or set the flag indicating if the main text should be elided. If False, text will be wrapped.
+        """
+        return self._elide_text
+
+    @elide_text.setter
+    def elide_text(self, on):
+        self._elide_text = on
+
+    @property
+    def elide_header(self):
+        """
+        Get or set the flag indicating if the header text should be elided. If False, text will be wrapped.
+        """
+        return self._elide_header
+
+    @elide_header.setter
+    def elide_header(self, on):
+        self._elide_header = on
+
+    @property
     def item_width(self):
         """
         Get or set the view item width. Set to None to ignore this property.
@@ -474,15 +522,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._badge_height_pct = pct
 
     @property
-    def button_margin(self):
+    def action_item_margin(self):
         """
         Get or set the margin used for buttons.
         """
-        return self._button_margin
+        return self._action_item_margin
 
-    @button_margin.setter
-    def button_margin(self, margin):
-        self._button_margin = margin
+    @action_item_margin.setter
+    def action_item_margin(self, margin):
+        self._action_item_margin = margin
 
     @property
     def button_padding(self):
@@ -933,8 +981,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                        the ViewItemAction constructor to create a ViewItemAction object.
         :param position: The position to display the actions.
         :type position: POSITION enum, defaults to float on the bottom right of the item rect.
-
-        :return: None
         """
 
         for action in actions:
@@ -950,8 +996,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                        the ViewItemAction constructor to create a ViewItemAction object.
         :param position: The position to display the actions.
         :type position: POSITION enum, defaults to float on the bottom right of the item rect.
-
-        :return: None
         """
 
         return self.add_actions([action], position)
@@ -963,8 +1007,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         :param positions: The list of positions to remove actions from.
         :type positions: list<POSITION>, where POSITION is one of the POSITIONS enum.
-
-        :return: None
         """
 
         if not positions:
@@ -983,8 +1025,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         :param scale_value: The value to scale the thumbnail by.
         :type scale_value: float
-
-        :return: None
         """
 
         self._thumbnail_scale_value = scale_value
@@ -1020,7 +1060,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-        :return: None
         """
 
         # Adjust the option rect to account for padding around the view item content.
@@ -1084,9 +1123,28 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             and event.button() == QtCore.Qt.LeftButton
         ):
             action = self._action_at(view_option, index, event.pos())
-            if action and action.callback:
-                # Left mouse click on an action will trigger the action callback method.
-                action.callback(self.parent(), index, event.pos())
+            if action and action.is_clickable(self.parent(), index):
+
+                if action.callback:
+                    # Trigger the action callback function if the action defines one
+                    action.callback(self.parent(), index, event.pos())
+
+                elif action.type in ViewItemAction.checkable_types():
+                    # The default behaviour for checkable actions is to set the index check state role data;
+                    # however, this only works if there is a single checkable action for the index, or else
+                    # each checkable action will modify the same data role property. For multiple checkable
+                    # actions for an index (item), callbacks for each action need to be defined.
+                    check_state_role = action.check_state_role
+                    if index.data(check_state_role) == QtCore.Qt.Checked:
+                        new_check_state = QtCore.Qt.Unchecked
+                    else:
+                        new_check_state = QtCore.Qt.Checked
+                    index.model().setData(index, new_check_state, check_state_role)
+
+                else:
+                    assert False, "Action is clickable but has no callback to execute"
+
+                # Return True to incate the event has been handled.
                 return True
 
         elif event.type() == QtCore.QEvent.MouseMove:
@@ -1094,8 +1152,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             if self.action_hover_cursor and widget:
                 action = self._action_at(view_option, index, event.pos())
-                if action and action.callback:
-                    # Set the cursor to indicate it is over an action item.
+                if action and action.is_clickable(self.parent(), index):
+                    # Set the cursor to indicate the action is clickable
                     widget.setCursor(self.action_hover_cursor)
                 else:
                     widget.unsetCursor()
@@ -1145,14 +1203,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # Set the width to the value defined by the index data.
             width = self.get_value(index, self.width_role)
 
-        # Ensure width is not None
         if width is None:
-            width = -1
+            # Default to the option rect width if not set
+            width = option.rect.width()
+
         # For valid width values, ensure it is the minumum width and add padding.
         if width >= 0:
             width = max(width, self.thumbnail_width, self.min_width)
-            width += self.item_padding.left + self.item_padding.right
-            width += self.text_padding.left + self.text_padding.right
 
         # Calculate the height of the item.
         index_height = self.get_value(index, self.height_role)
@@ -1165,14 +1222,15 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             if index_height is None or index_height < 0:
                 # The item height expands to the height of the text. NOTE the view that this delegate is
                 # set to must not have uniform items set for this to resize properly.
-                text_rect = QtCore.QRect(view_option.rect)
-                text_rect.setWidth(width)
+
+                text_rect = self._get_text_rect(view_option, index)
                 text_doc, _ = self._get_text_document(
                     view_option, index, text_rect, clip=False
                 )
                 text_height = text_doc.size().height()
                 height_for_visible_lines = self._get_visible_lines_height(option)
-                height = max(text_height, height_for_visible_lines)
+                height_for_actions = self._get_actions_maximum_height(option, index)
+                height = max(text_height, height_for_visible_lines, height_for_actions)
             else:
                 # Set the height the value defined by the index data.
                 height = index_height
@@ -1180,9 +1238,10 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # The height is fixed for all items.
             height = self.item_height
 
-        # Ensure height is not None
+        # Ensure height is not None, set it to -1 to indicate no size hint for height
         if height is None:
             height = -1
+
         # For valid height values, ensure it is the minumum height and add padding.
         if height >= 0:
             height = max(height, self.min_height)
@@ -1204,8 +1263,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
         """
 
         if not index.isValid():
@@ -1234,31 +1291,18 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             QtGui.QPainter.Antialiasing | QtGui.QPainter.TextAntialiasing
         )
 
-        # Background
         self._draw_background(painter, view_option)
-
-        # Thumbnail
         thumbnail_rect = self._draw_thumbnail(painter, view_option, index)
-
-        # Text body
         self._draw_text(painter, view_option, index)
-
-        # Actions
         self._draw_actions(painter, view_option, index)
-
-        # Separator
         self._draw_separator(painter, view_option, index)
 
-        # Selection
         if self.is_selected(view_option) or (
             self.show_hover_selection and self.is_hover(view_option)
         ):
             self._draw_selection(painter, view_option)
 
-        # Badges
         self._draw_icon_badges(painter, view_option, thumbnail_rect, index)
-
-        # Loading decoration
         self._draw_loading(painter, view_option, index)
 
         painter.restore()
@@ -1285,8 +1329,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
-
-        :return: None
         """
 
         painter.save()
@@ -1308,8 +1350,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
         """
 
         rect = self._get_loading_rect(option, index)
@@ -1374,8 +1414,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
         """
 
         if not self.separator_role:
@@ -1427,20 +1465,21 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
         :param option: The option used for rendering the item.
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
-
-        :return: None
         """
 
-        if self.selection_brush:
+        if self.selection_brush == QtCore.Qt.NoBrush:
+            brush = QtCore.Qt.NoBrush
+            pen = QtCore.Qt.NoPen
+        elif self.selection_brush:
             brush = self.selection_brush
-            pen = QtGui.QPen(brush.color())
+            pen = QtGui.QPen(QtCore.Qt.NoPen)
+            pen.setWidth(2)
         else:
             pen = QtGui.QPen(option.palette.highlight().color())
+            pen.setWidth(2)
             fill_color = pen.color()
             fill_color.setAlpha(30)
             brush = QtGui.QBrush(fill_color)
-
-        pen.setWidth(2)
 
         painter.save()
         painter.setPen(pen)
@@ -1460,8 +1499,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
         """
 
         thumbnail = self._get_thumbnail(index)
@@ -1570,8 +1607,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type bounding_rect: :class:`sgtk.platform.qt.QtCore.QRect`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
         """
 
         # Default to the option rect if the giving bounding rect is invalid
@@ -1704,8 +1739,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
         """
 
         rect = self._get_text_rect(option, index)
@@ -1760,7 +1793,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         self._draw_text_tooltip(option, rect, index, elided)
 
-    def _draw_actions(self, painter, option, index):
+    def _draw_actions(self, painter, view_option, index):
         """
         Paint the actions for the view item. Actions are rendered using the option
         widget's QStyle (or defaults to the application QStyle) as passing in QStyleOptionButton
@@ -1768,137 +1801,403 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         :param painter: the object used for painting.
         :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
-        :param option: The option used for rendering the item.
-        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param view_option: The option used for rendering the item.
+        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
         :param index: The index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
         """
 
         # Get the list of available actions for this item, and their corresponding boudning rect.
-        actions_and_rects = self._get_action_and_rects(option, index)
+        actions_and_rects = self._get_action_and_rects(view_option, index)
 
         for action, rect in actions_and_rects:
             if not action or not rect.isValid():
                 continue
 
-            # Get the action data for this specific index.
-            index_data = action.get_data(self.parent(), index)
-
-            # Do not draw the action if it is not visible for this index.
-            if not index_data.get("visible", True):
-                continue
-
-            # Build the button options used to draw the action.
-            button_option = QtGui.QStyleOptionButton()
-            widget = self.get_option_widget(option)
-            if widget:
-                button_option.initFrom(widget)
-
-            button_option.fontMetrics = option.fontMetrics
-            # Set the draw rect for the action
-            button_option.rect = rect
-            # Allow override the default action name
-            button_option.text = index_data.get("name", action.name)
-
-            # Apply any additional features defined by the action.
-            if action.features:
-                button_option.features |= action.features
-
-            # Set the action state. If the action has an icon, the state will also toggle
-            # the icon based on what flags are set.
-            state = index_data.get("state", None)
-            if state is not None:
-                button_option.state = state
-            else:
-                # Default state, if not explicitly defined.
-                button_option.state = (
-                    QtGui.QStyle.State_Active | QtGui.QStyle.State_Enabled
-                )
-
-            # Add the hover state, if the current cursor position intersects the action rect.
-            hover = self._hit_box_test(option, rect)
-            if hover:
-                button_option.state |= QtGui.QStyle.State_MouseOver
-
-            # Set the action icon
-            icon = index_data.get("icon", action.icon)
-            if icon:
-                button_option.icon = icon
-                button_option.iconSize = action.icon_size
-
-            # Set the action palette
-            button_option.palette = option.palette
-
-            if action.palette_brushes:
-                # FIXME find a better way to specifiy the palette color based on hover state.
-                # e.g. is there a way leverage the palette color group and roles?
-                if hover:
-                    brushes = action.palette_brushes["hover"]
-                else:
-                    brushes = action.palette_brushes["active"]
-
-                for (color_group, color_role, brush) in brushes:
-                    button_option.palette.setBrush(color_group, color_role, brush)
-
-            elif button_option.features & QtGui.QStyleOptionButton.Flat:
-                # Invert text color for flat buttons
-                if not hover or action.callback is None:
-                    brush = option.palette.light()
-                else:
-                    brush = option.palette.buttonText()
-                button_option.palette.setBrush(QtGui.QPalette.ButtonText, brush)
-
-            # Get the style object that controls how the action button is rendered.
-            style = widget.style() if widget else QtGui.QApplication.style()
-
-            # Finally draw the action in the style of QPushButton. If more complex functionality
-            # is required in the future, this may need to change to render a QToolButton using
-            # QStyleOptionToolButton options
             painter.save()
-            painter.setFont(option.font)
+            painter.setFont(view_option.font)
 
-            # FIXME ideally style.drawControl would be called to render the whole button:
-            # style.drawControl(QtGui.QStyle.CE_PushButton, button_option, painter)
-            # But there are issues with certain styles, so for now we will reimplement the QCommonStyle
-            # drawControl case for CE_PushButton ourselves:
-            style.proxy().drawControl(
-                QtGui.QStyle.CE_PushButtonBevel, button_option, painter
-            )
-            subopt = QtGui.QStyleOptionButton(button_option)
-            subopt.rect = style.subElementRect(
-                QtGui.QStyle.SE_PushButtonContents, button_option, widget
-            )
-            style.proxy().drawControl(QtGui.QStyle.CE_PushButtonLabel, subopt, painter)
-            if button_option.state & QtGui.QStyle.State_HasFocus:
-                fropt = QtGui.QStyleOptionFocusRect()
-                fropt.backgroundColor = self.get_option_background_brush(option).color()
-                fropt.palette = button_option.palette
-                fropt.state = button_option.state
-                fropt.fontMetrics = button_option.fontMetrics
-                fropt.rect = style.subElementRect(
-                    QtGui.QStyle.SE_PushButtonFocusRect, button_option, widget
+            if (
+                action.type == ViewItemAction.TYPE_PUSH_BUTTON
+                or action.type == ViewItemAction.TYPE_ICON
+            ):
+                self._draw_action_push_button(painter, view_option, index, action, rect)
+
+            elif action.type == ViewItemAction.TYPE_RADIO_BUTTON:
+                self._draw_action_radio_button(
+                    painter, view_option, index, action, rect
                 )
-                style.proxy().drawPrimitive(
-                    QtGui.QStyle.PE_FrameFocusRect, fropt, painter
+
+            elif action.type == ViewItemAction.TYPE_CHECK_BOX:
+                self._draw_action_check_box(painter, view_option, index, action, rect)
+
+            elif action.type == ViewItemAction.TYPE_PROGRESS_BAR:
+                self._draw_action_progress_bar(
+                    painter, view_option, index, action, rect
                 )
 
             painter.restore()
-
-            # Set a timer to draw a tooltip, if the index or action defines one. Tooltip will display if the cursor
-            # has been hovering over the action for at least 500ms.
-            tooltip = index_data.get("tooltip", action.tooltip)
-            if hover and tooltip:
-                QtCore.QTimer.singleShot(
-                    500, lambda o=option, r=rect, t=tooltip: self._draw_tooltip(o, r, t)
-                )
 
             if DEBUG_PAINT:
                 painter.save()
                 painter.setPen(QtGui.QPen(QtCore.Qt.cyan))
                 painter.drawRect(rect)
                 painter.restore()
+
+    def _draw_action_push_button(self, painter, view_option, index, action, rect):
+        """
+        Draw the action as a push button.
+
+        :param painter: the object used for painting.
+        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
+        :param view_option: The option used for rendering the item.
+        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param index: The index of the item to render.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        :param action: The action to draw the push button for
+        :type action: ViewItemAction
+        :param rect: The action's bounding rect
+        :type rect: QRect
+        """
+
+        index_data = action.get_data(self.parent(), index)
+        if not index_data.get("visible", True) or index_data.get("placeholder", False):
+            # Do not draw actions that are not visible or are placeholders
+            return
+
+        widget = self.get_option_widget(view_option)
+        button_option = self._get_action_button_option(
+            view_option, widget, action, rect, index_data
+        )
+
+        self._draw_push_button(painter, button_option, widget)
+
+        if button_option.state & QtGui.QStyle.State_MouseOver:
+            tooltip = index_data.get("tooltip", action.tooltip)
+            if tooltip:
+                QtCore.QTimer.singleShot(
+                    500,
+                    lambda o=view_option, r=rect, t=tooltip: self._draw_tooltip(
+                        o, r, t
+                    ),
+                )
+
+    def _draw_action_radio_button(self, painter, view_option, index, action, rect):
+        """
+        Draw the action as a radio button.
+
+        To draw a "checked" radio button, the state must include the flag QtGui.QStyle.State_On.
+
+        :param painter: the object used for painting.
+        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
+        :param view_option: The option used for rendering the item.
+        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param index: The index of the item to render.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        :param action: The action to draw the push button for
+        :type action: ViewItemAction
+        :param rect: The action's bounding rect
+        :type rect: QRect
+        """
+
+        index_data = action.get_data(self.parent(), index)
+        if not index_data.get("visible", True) or index_data.get("placeholder", False):
+            # Do not draw actions that are not visible or are placeholders
+            return
+
+        widget = self.get_option_widget(view_option)
+        button_option = self._get_action_button_option(
+            view_option, widget, action, rect, index_data
+        )
+        style = widget.style() if widget else QtGui.QApplication.style()
+
+        style.proxy().drawControl(QtGui.QStyle.CE_RadioButton, button_option, painter)
+
+        if button_option.state & QtGui.QStyle.State_MouseOver:
+            tooltip = index_data.get("tooltip", action.tooltip)
+            if tooltip:
+                QtCore.QTimer.singleShot(
+                    500,
+                    lambda o=view_option, r=rect, t=tooltip: self._draw_tooltip(
+                        o, r, t
+                    ),
+                )
+
+    def _draw_action_check_box(self, painter, view_option, index, action, rect):
+        """
+        Draw the action as a check box.
+
+        :param painter: the object used for painting.
+        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
+        :param view_option: The option used for rendering the item.
+        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param index: The index of the item to render.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        :param action: The action to draw the push button for
+        :type action: ViewItemAction
+        :param rect: The action's bounding rect
+        :type rect: QRect
+        """
+
+        index_data = action.get_data(self.parent(), index)
+        if not index_data.get("visible", True) or index_data.get("placeholder", False):
+            # Do not draw actions that are not visible or are placeholders
+            return
+
+        widget = self.get_option_widget(view_option)
+        button_option = self._get_action_button_option(
+            view_option, widget, action, rect, index_data
+        )
+
+        if button_option.icon:
+            # Checkbox is displayed using an icon, draw it as a flat button
+            self._draw_push_button(painter, button_option, widget)
+        else:
+            style = widget.style() if widget else QtGui.QApplication.style()
+            style.proxy().drawControl(QtGui.QStyle.CE_CheckBox, button_option, painter)
+
+        if button_option.state & QtGui.QStyle.State_MouseOver:
+            tooltip = index_data.get("tooltip", action.tooltip)
+            if tooltip:
+                QtCore.QTimer.singleShot(
+                    500,
+                    lambda o=view_option, r=rect, t=tooltip: self._draw_tooltip(
+                        o, r, t
+                    ),
+                )
+
+    def _draw_action_progress_bar(self, painter, view_option, index, action, rect):
+        """
+        Draw the action as a progress bar.
+
+        :param painter: the object used for painting.
+        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`
+        :param view_option: The option used for rendering the item.
+        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param index: The index of the item to render.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+        :param action: The action to draw the push button for
+        :type action: ViewItemAction
+        :param rect: The action's bounding rect
+        :type rect: QRect
+        """
+
+        index_data = action.get_data(self.parent(), index)
+        if not index_data.get("visible", True) or index_data.get("placeholder", False):
+            # Do not draw actions that are not visible or are placeholders
+            return
+
+        widget = self.get_option_widget(view_option)
+        progress_bar_option = self._get_action_progress_bar_option(
+            view_option, widget, action, rect, index_data
+        )
+        style = widget.style() if widget else QtGui.QApplication.style()
+
+        style.proxy().drawControl(
+            QtGui.QStyle.CE_ProgressBar, progress_bar_option, painter
+        )
+
+        if progress_bar_option.state & QtGui.QStyle.State_MouseOver:
+            tooltip = index_data.get("tooltip", action.tooltip)
+            if tooltip:
+                QtCore.QTimer.singleShot(
+                    500,
+                    lambda o=view_option, r=rect, t=tooltip: self._draw_tooltip(
+                        o, r, t
+                    ),
+                )
+
+    def _draw_push_button(self, painter, button_option, widget):
+        """
+        Draw a push button.
+
+        Ideally calling QStyle.drawControl method with QStyle.CE_PushButton could render the push button, but
+        there are issues with certain styles, so the QCommonStyle drawControl method is reimplemented with
+        some special handling.
+        """
+
+        style = widget.style() if widget else QtGui.QApplication.style()
+
+        is_flat = button_option.features & QtGui.QStyleOptionButton.Flat
+        if not is_flat:
+            style.proxy().drawControl(
+                QtGui.QStyle.CE_PushButtonBevel, button_option, painter
+            )
+
+        subopt = QtGui.QStyleOptionButton(button_option)
+        subopt.rect = style.subElementRect(
+            QtGui.QStyle.SE_PushButtonContents, button_option, widget
+        )
+        style.proxy().drawControl(QtGui.QStyle.CE_PushButtonLabel, subopt, painter)
+        if button_option.state & QtGui.QStyle.State_HasFocus:
+            fropt = QtGui.QStyleOptionFocusRect()
+            fropt.backgroundColor = self.get_option_background_brush(
+                button_option
+            ).color()
+            fropt.palette = button_option.palette
+            fropt.state = button_option.state
+            fropt.fontMetrics = button_option.fontMetrics
+            fropt.rect = style.subElementRect(
+                QtGui.QStyle.SE_PushButtonFocusRect, button_option, widget
+            )
+            style.proxy().drawPrimitive(QtGui.QStyle.PE_FrameFocusRect, fropt, painter)
+
+    def _init_style_option(
+        self, style_option, view_option, widget, action, rect, index_data
+    ):
+        """
+        Initialize the style option to render the index action.
+
+        :param style_option: The style option used for rendering the item. This will be specific to the
+            element to be drawn (e.g. QStyleOptionButton, QStyleOptionProgressBar, etc.).
+        :type style_option: :class:`sgtk.platform.qt.QtGui.QStyleOption`
+        :param view_option: The option used for rendering the item.
+        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param widget: Set this widget for the style option to inherit the style from.
+        :type widget: QtGui.QWidget
+        :param action: The action to draw the push button for
+        :type action: ViewItemAction
+        :param rect: The action's bounding rect
+        :type rect: QRect
+        :param index_data: The specifici data for the action and the index being rendered
+        :type index_data: dict
+        """
+
+        if widget:
+            style_option.initFrom(widget)
+
+        style_option.fontMetrics = view_option.fontMetrics
+        style_option.palette = view_option.palette
+        style_option.rect = rect
+        style_option.state = index_data.get(
+            "state", QtGui.QStyle.State_Active | QtGui.QStyle.State_Enabled
+        )
+
+        # Add the hover state, if the current cursor position intersects the action rect.
+        is_hover = self._hit_box_test(view_option, rect)
+        if is_hover:
+            style_option.state |= QtGui.QStyle.State_MouseOver
+
+        # TODO find a better way to specifiy the palette color based on button state.
+        # e.g. is there a way leverage the palette color group and roles?
+        if action.palette_brushes:
+            if is_hover:
+                brushes = action.palette_brushes["hover"]
+            else:
+                brushes = action.palette_brushes["active"]
+
+            for (color_group, color_role, brush) in brushes:
+                style_option.palette.setBrush(color_group, color_role, brush)
+
+    def _get_action_progress_bar_option(
+        self, view_option, widget, action, rect, index_data
+    ):
+        """
+        Initialize the progress bar style option to render the index action.
+
+        :param style_option: The style option used for rendering the item. This will be specific to the
+            element to be drawn (e.g. QStyleOptionButton, QStyleOptionProgressBar, etc.).
+        :type style_option: :class:`sgtk.platform.qt.QtGui.QStyleOption`
+        :param view_option: The option used for rendering the item.
+        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param widget: Set this widget for the style option to inherit the style from.
+        :type widget: QtGui.QWidget
+        :param action: The action to draw the push button for
+        :type action: ViewItemAction
+        :param rect: The action's bounding rect
+        :type rect: QRect
+        :param index_data: The specifici data for the action and the index being rendered
+        :type index_data: dict
+        """
+
+        progress_bar_option = QtGui.QStyleOptionProgressBar()
+        self._init_style_option(
+            progress_bar_option, view_option, widget, action, rect, index_data
+        )
+
+        progress_bar_option.minimum = index_data.get("minimum", 0)
+        progress_bar_option.maximum = index_data.get("maximum", 100)
+        progress_bar_option.progress = index_data.get("progress", -1)
+        progress_bar_option.text = index_data.get("text", "")
+        progress_bar_option.textVisible = index_data.get("text_visible", False)
+        progress_bar_option.textAlignment = index_data.get(
+            "text_alignment", QtCore.Qt.AlignLeft
+        )
+        progress_bar_option.bottomToTop = index_data.get("bottom_to_top", False)
+        progress_bar_option.invertedAppearance = index_data.get(
+            "inverted_appearance", False
+        )
+
+        return progress_bar_option
+
+    def _get_action_button_option(self, view_option, widget, action, rect, index_data):
+        """
+        Initialize the button style option to render the index action.
+
+        :param style_option: The style option used for rendering the item. This will be specific to the
+            element to be drawn (e.g. QStyleOptionButton, QStyleOptionProgressBar, etc.).
+        :type style_option: :class:`sgtk.platform.qt.QtGui.QStyleOption`
+        :param view_option: The option used for rendering the item.
+        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param widget: Set this widget for the style option to inherit the style from.
+        :type widget: QtGui.QWidget
+        :param action: The action to draw the push button for
+        :type action: ViewItemAction
+        :param rect: The action's bounding rect
+        :type rect: QRect
+        :param index_data: The specifici data for the action and the index being rendered
+        :type index_data: dict
+        """
+
+        button_option = QtGui.QStyleOptionButton()
+        self._init_style_option(
+            button_option, view_option, widget, action, rect, index_data
+        )
+
+        button_option.text = index_data.get("name", action.name)
+
+        # Set the action icon
+        icon = index_data.get("icon", action.icon)
+        if icon:
+            icon_size = index_data.get("icon_size") or action.icon_size
+            button_option.icon = icon
+            button_option.iconSize = icon_size
+
+        # Apply any additional features defined by the action.
+        if action.features:
+            button_option.features |= action.features
+
+        # Icons and checkboxes are rendered as flat buttons
+        if action.type in (ViewItemAction.TYPE_ICON, ViewItemAction.TYPE_CHECK_BOX):
+            button_option.features |= QtGui.QStyleOptionButton.Flat
+
+        # Override palette to invert text color for flat buttons it have a higher contrast
+        if button_option.features & QtGui.QStyleOptionButton.Flat:
+            is_hover = button_option.state & QtGui.QStyle.State_MouseOver
+            if not is_hover or action.callback is None:
+                brush = button_option.palette.light()
+            else:
+                brush = button_option.palette.buttonText()
+            button_option.palette.setBrush(QtGui.QPalette.ButtonText, brush)
+            button_option.palette.setBrush(QtGui.QPalette.Window, brush)
+
+        # Override the palette for disabled buttons
+        # This is a work aroudn because the QStyle draw methods do not seem to render the
+        # "disabled" state for the button, even when the palette "Disabled" color group is set
+        if button_option.state & QtGui.QStyle.State_Enabled:
+            # Button enabled - leave the palette as is
+            pass
+        else:
+            # Button disabled - set the button and button text brushes to render a 'greyed out' look
+            disabledButtonText = button_option.palette.buttonText()
+            disabledButtonTextColor = disabledButtonText.color()
+            disabledButtonTextColor.setAlpha(50)
+            disabledButtonText.setColor(disabledButtonTextColor)
+            button_option.palette.setBrush(
+                QtGui.QPalette.ButtonText, disabledButtonText
+            )
+
+        return button_option
 
     def _draw_tooltip(self, option, rect, text):
         """
@@ -1910,8 +2209,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type rect: :class:`sgtk.platform.qt.QtCore.QRect`
         :param text: The tooltip text to display.
         :type text: str
-
-        :return: None
         """
 
         cursor_pos = self.get_cursor_pos(option)
@@ -1936,8 +2233,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param elided: True if the text has already been processed and is elided, else False. If
                        set to None, the text has not been processed.
-
-        :return: None
         """
 
         # Only show tooltips if enabled and the cursor is hovering
@@ -2091,7 +2386,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         title_html = ""
         subtitle_html = ""
 
-        do_elide = option and rect and rect.isValid()
+        do_elide = self.elide_header and option and rect and rect.isValid()
         if do_elide:
             # FIXME for now we've just picked an arbitrary value to account for the HTML table offset
             # to the available width for the text
@@ -2103,7 +2398,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # There is only a title
             if do_elide:
                 # Elide the title when the option and rect are provided, and there is text overflow.
-                _, elided_title = self._elide_text(option, target_width, title)
+                _, elided_title = self._get_elided_text(option, target_width, title)
                 elided = title != elided_title
                 title = six.ensure_str(elided_title)
 
@@ -2113,7 +2408,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             # There is only a subtitle
             if do_elide:
                 # Elide the title when the option and rect are provided, and there is text overflow.
-                _, elided_subtitle = self._elide_text(option, target_width, subtitle)
+                _, elided_subtitle = self._get_elided_text(
+                    option, target_width, subtitle
+                )
                 elided = subtitle != elided_subtitle
                 subtitle = six.ensure_str(elided_subtitle)
 
@@ -2170,8 +2467,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                             int(subtitle_width_pct * 100)
                         )
 
-                    _, elided_title = self._elide_text(option, title_width, title)
-                    _, elided_subtitle = self._elide_text(
+                    _, elided_title = self._get_elided_text(option, title_width, title)
+                    _, elided_subtitle = self._get_elided_text(
                         option, subtitle_width, subtitle
                     )
                     elided = title != elided_title or subtitle != elided_subtitle
@@ -2187,11 +2484,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         # The final formatted text
         formatted_header = (
-            '<table width="100%" border="{border}"><tr>{title_cell}{subtitle_cell}</tr></table>'
+            '<table width="100%" cellpadding="0" cellspacing="0" border="{border}"><tr>{title_cell}{subtitle_cell}</tr></table>'
         ).format(
             title_cell=title_html,
             subtitle_cell=subtitle_html,
-            border="1" if DEBUG_PAINT else "0",
+            border="1" if DEBUG_PAINT else "none",
         )
 
         return (formatted_header, elided) if return_elided else formatted_header
@@ -2290,13 +2587,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         for position, actions in item_action_data.items():
             # The offset will indicate where the next action bounding rect should start.
-            offset = self.button_margin
+            offset = self.action_item_margin
 
             for action in actions:
                 # Get the bounding rect for this action
                 rect = self._get_action_rect(option, index, position, offset, action)
                 # Increment the offset to get the next action boudning rect.
-                offset += rect.width() + self.button_margin
+                offset += rect.width() + self.action_item_margin
                 rects.append((action, rect))
 
         return rects
@@ -2330,7 +2627,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             return QtCore.QRect()
 
         origin = QtCore.QPoint(
-            option.rect.right() - self.button_margin - self.icon_size.width(),
+            option.rect.right() - self.action_item_margin - self.icon_size.width(),
             option.rect.top()
             + (option.rect.height() / 2)
             - (self.icon_size.height() / 2),
@@ -2417,7 +2714,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         loading_rect = self._get_loading_rect(option, index)
         if loading_rect.isValid():
             # Adjust the rect to the left, when displaying the loading indicator.
-            dx2 = max(dx2, loading_rect.width() + self.button_margin)
+            dx2 = max(dx2, loading_rect.width() + self.action_item_margin)
         dx2 += self.text_padding.right
 
         dy = self.text_padding.top
@@ -2449,47 +2746,56 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         index_data = action.get_data(self.parent(), index)
         name = index_data.get("name", action.name)
         icon = index_data.get("icon", action.icon)
+        icon_size = index_data.get("icon_size") or action.icon_size
 
-        # Calculate the width of the action
-        width = action.padding * 2
-        if name:
-            # Add the width of the text, and a little buffer
-            width += option.fontMetrics.width(name) + 5
-            if action.icon:
-                # Add padding between the icon and text
-                width += 14
+        if index_data.get("width", None) == "100%":
+            width = option.rect.width()
+        else:
+            # Calculate the width of the action
+            width = index_data.get(
+                "padding_left", action.get_padding_left()
+            ) + index_data.get("padding_right", action.get_padding_right())
 
-        if icon:
-            # Add the width of the icon
-            width += action.icon_size.width()
+            # Extend the width for the text
+            if name:
+                width += option.fontMetrics.width(name) + 5
 
-        # Set the height to the greater of the text height and the icon height. Add padding
-        # defined by the action
-        height = (
-            max(option.fontMetrics.height(), action.icon_size.height())
-            + action.padding * 2
-        )
+            # Extend the width for the icon
+            if icon:
+                width += icon_size.width()
+
+            # Extend the width for by the width hint
+            width += index_data.get("width", action.width_hint())
+
+        # Set the height to the height of a single text line, plus padding.
+        height = index_data.get(
+            "padding_top", action.get_padding_top()
+        ) + index_data.get("padding_bottom", action.get_padding_bottom())
+        if index_data.get("adjust_height_to_icon", False):
+            height += icon_size.height()
+        else:
+            height += option.fontMetrics.height()
 
         # Calculate the top left (origin) point, based on the position and offset, to draw the action rect
         if position in (self.TOP_LEFT, self.FLOAT_TOP_LEFT):
             origin = QtCore.QPoint(
                 option.rect.left() + offset,
-                option.rect.top() + self.button_margin,
+                option.rect.top() + self.action_item_margin,
             )
         elif position in (self.TOP_RIGHT, self.FLOAT_TOP_RIGHT):
             origin = QtCore.QPoint(
                 option.rect.right() - offset - width,
-                option.rect.top() + self.button_margin,
+                option.rect.top() + self.action_item_margin,
             )
         elif position in (self.BOTTOM_LEFT, self.FLOAT_BOTTOM_LEFT):
             origin = QtCore.QPoint(
                 option.rect.left() + offset,
-                option.rect.bottom() - height - self.button_margin,
+                option.rect.bottom() - height - self.action_item_margin,
             )
         elif position in (self.BOTTOM_RIGHT, self.FLOAT_BOTTOM_RIGHT):
             origin = QtCore.QPoint(
                 option.rect.right() - offset - width,
-                option.rect.bottom() - height - self.button_margin,
+                option.rect.bottom() - height - self.action_item_margin,
             )
         elif position in (self.LEFT, self.FLOAT_LEFT):
             origin = QtCore.QPoint(
@@ -2501,6 +2807,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 option.rect.right() - offset - width,
                 option.rect.top() + (option.rect.height() / 2) - (height / 2),
             )
+        elif position == self.CENTER:
+            origin = QtCore.QPoint(
+                option.rect.left() + (option.rect.width() / 2) - (width / 2),
+                option.rect.top() + (option.rect.height() / 2) - (height / 2),
+            )
+        else:
+            assert False, "Unsupported action position '{}'".format(position)
 
         return QtCore.QRect(origin, QtCore.QSize(width, height))
 
@@ -2521,10 +2834,30 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         width = 0
         actions = self._get_action_and_rects(option, index, positions=[position])
-        for action, action_rect in actions:
-            width += action_rect.width() + self.button_margin
+        for _, action_rect in actions:
+            width += action_rect.width() + self.action_item_margin
 
         return width
+
+    def _get_actions_maximum_height(self, option, index):
+        """
+        Return the maximum height of all actions.
+
+        :param option: The option used for rendering the item.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param index: The index of the item.
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: The maximum height value of all the actions.
+        :rtype: int
+        """
+
+        height = 0
+        actions = self._get_action_and_rects(option, index, return_all=True)
+        for _, action_rect in actions:
+            height = max(height, action_rect.height())
+
+        return height + self.action_item_margin
 
     def _get_actions_left_offset(self, option, index, include_margin=False):
         """
@@ -2596,10 +2929,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         if offset > 0:
             # Add the margin from the option rect to the first action.
-            # offset += self.button_margin
             if include_margin:
                 # Optionally add margin at the end of the actions.
-                offset += self.button_margin
+                offset += self.action_item_margin
 
         return offset
 
@@ -2639,7 +2971,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         actions_and_rects = self._get_action_and_rects(option, index, return_all=True)
-        for action, rect in actions_and_rects:
+
+        # Check for actions in reverse order, since the actions added last will appear in the "front"
+        for action, rect in actions_and_rects[::-1]:
             if rect.contains(pos):
                 return action
 
@@ -2711,8 +3045,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         :param index: The model index of the item.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
-
-        :return: None
         """
 
         if self.expand_role is None:
@@ -2755,6 +3087,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         # in the QStyledItemDelegate `initStyleOption` method, the font is set based on the model
         # index data for the QtCore.Qt.FontRole.
         doc.setDefaultFont(self.font or option.font)
+        doc.setDefaultStyleSheet(self.document_style_sheet)
         doc.setDocumentMargin(self.text_document_margin)
 
         text_option = QtGui.QTextOption(doc.defaultTextOption())
@@ -2935,13 +3268,20 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                     # Exceeded the number of visible lines. Stop formatting.
                     break
 
-                # Because the text is allowed to be HTML formatted, in order to elide an
-                # individual line (if necessary), the text must be rendered using a
-                # QTextDocument which then the document can be used to determine if the
-                # formatted text exceeds the maximum width. A side effect of eliding the
-                # text using a QTextDocument is that the resulting elided text will be
-                # a full HTML doc string.
-                doc, elided_text = self._elide_text(option, rect.width(), text)
+                if self.elide_text:
+                    # Because the text is allowed to be HTML formatted, in order to elide an
+                    # individual line (if necessary), the text must be rendered using a
+                    # QTextDocument which then the document can be used to determine if the
+                    # formatted text exceeds the maximum width. A side effect of eliding the
+                    # text using a QTextDocument is that the resulting elided text will be
+                    # a full HTML doc string.
+                    doc, elided_text = self._get_elided_text(option, rect.width(), text)
+                else:
+                    # Even though the text is not elided, still need to get the text document
+                    # to measure the text height for clipping
+                    doc = self._create_text_document(option)
+                    doc.setHtml(text)
+                    elided_text = None
 
                 if clip:
                     height += doc.size().height() - margin_offset
@@ -2949,7 +3289,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                         # Text height exceeded the maximum. Stop formatting.
                         break
 
-                if text == elided_text:
+                if elided_text is None or text == elided_text:
                     # Text did not change, just add the text and a line break.
                     html_lines.append(text)
                     html_lines.append("<br/>")
@@ -2976,11 +3316,17 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         formatted_str = "".join(html_lines)
         return (formatted_str, elided)
 
-    def _elide_text(self, option, target_width, text, elide_mode=QtCore.Qt.ElideRight):
+    def _get_elided_text(
+        self, option, target_width, text, elide_mode=QtCore.Qt.ElideRight
+    ):
         """
         Elide the text if the width exceeds the given `target_width`. This slightly tweaks
         the implementation from :class:`ElidedLabel` method `_elide_text`.
 
+        :param option: The view option the text is rendered in.
+        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`
+        :param target_width: The desired width for the text
+        :type target_width: int
         :param text: The text to elide
         :type text: str
         :param elide_mode: The elide mode to use
@@ -3065,12 +3411,31 @@ class ViewItemAction(object):
     Class object to handle rendering item actions in the :class:`ViewItemDelegate`.
     """
 
+    # Enum to describe the type of view item action.
+    (
+        TYPE_PUSH_BUTTON,
+        TYPE_RADIO_BUTTON,
+        TYPE_CHECK_BOX,
+        TYPE_PROGRESS_BAR,
+        TYPE_ICON,
+    ) = range(5)
+
+    # Default widths for action types
+    DEFAULT_WIDTHS = {
+        TYPE_RADIO_BUTTON: 6,
+        TYPE_PROGRESS_BAR: 100,
+    }
+
     # The action attributes that will be used to initialize the object.
     _ATTRIBUTES = [
         {
             # The text/label displayed for the action button
             "key": "name",
             "default": "",
+        },
+        {
+            "key": "type",
+            "default": TYPE_PUSH_BUTTON,
         },
         {
             # The action button option style features
@@ -3091,15 +3456,32 @@ class ViewItemAction(object):
             "default": 4,
         },
         {
+            "key": "padding_top",
+            "default": None,
+        },
+        {
+            "key": "padding_right",
+            "default": None,
+        },
+        {
+            "key": "padding_bottom",
+            "default": None,
+        },
+        {
+            "key": "padding_left",
+            "default": None,
+        },
+        {
             # Text to display in a tooltip when the cursor is over the action
             "key": "tooltip",
         },
         {
             # Specific palette brushes to set for the action button. Palette brushes
-            # list items should be in the format of a tuple, e.g.:
+            # dict maps brush type to list of brush items, which should be in the
+            # format of a tuple, e.g.:
             #   (QPalette.ColorGroup, QPalette.ColorRole, QBrush)
             "key": "palette_brushes",
-            "default": [],
+            "default": {},
         },
         {
             # Flag indicating if this action should always been shown, no matter what the state is
@@ -3107,12 +3489,12 @@ class ViewItemAction(object):
             "default": False,
         },
         {
-            # Flag indication to show the action when the action's item is selected
+            # Flag indicating to show the action when the action's item is selected
             "key": "show_on_selected",
-            "default": False,
+            "default": True,
         },
         {
-            # Flag indication to show the action when the action's item is hovered over
+            # Flag indicating to show the action when the action's item is hovered over
             "key": "show_on_hover",
             "default": True,
         },
@@ -3126,6 +3508,24 @@ class ViewItemAction(object):
             # Callback function used to execute some operations when the action is "clicked"
             "key": "callback",
             "default": None,
+        },
+        {
+            # Set a fixed width for the action
+            "key": "width",
+            "default": None,
+        },
+        {
+            # Flag indicating to draw the action or not, but maintains space for the action regardless of
+            # if it is drawn or not (e.g. this action acts as a spacer, which may be desirable to keep
+            # actions lined up in each row of the delegate's view)
+            "key": "placeholder",
+            "default": False,
+        },
+        {
+            # The Qt.ItemDataRole to use set/get the action's check state data. This is usefule if an
+            # item has more than one checkable action
+            "key": "check_state_role",
+            "default": QtCore.Qt.CheckStateRole,
         },
     ]
 
@@ -3152,6 +3552,11 @@ class ViewItemAction(object):
             )
             setattr(self, attr_name, value)
 
+    @classmethod
+    def checkable_types(cls):
+        """Return a tuple icontaining the types that can be checked."""
+        return (cls.TYPE_CHECK_BOX, cls.TYPE_RADIO_BUTTON)
+
     def set_icon(self, icon):
         """
         Set the action icon. If a string is given, create the icon from the string. The icon will be
@@ -3159,8 +3564,6 @@ class ViewItemAction(object):
 
         :param icon: The action icon
         :type icon: str | :class:`sgkt.platform.qt.QtGui.QIcon`
-
-        :return: None
         """
 
         if not icon:
@@ -3191,6 +3594,24 @@ class ViewItemAction(object):
         index_data = self.get_data(parent, index)
         return index_data.get("visible", True)
 
+    def state(self, parent, index):
+        """
+        Convenience method to get the state of the action for the given index.
+
+        :param parent: The parent of delegate who requested the data.
+        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
+        :param index: The model item index
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: The action state.
+        :rtype: QState
+        """
+
+        index_data = self.get_data(parent, index)
+        return index_data.get(
+            "state", QtGui.QStyle.State_Active | QtGui.QStyle.State_Enabled
+        )
+
     def get_name(self, parent, index):
         """
         Convenience method to get the current action name for the given index. The
@@ -3207,3 +3628,71 @@ class ViewItemAction(object):
 
         index_data = self.get_data(parent, index)
         return index_data.get("name", self.name)
+
+    def is_clickable(self, parent, index):
+        """
+        An action is clickable if:
+            1. It is visible and not a placeholder
+            2. It is a checkbox or radio action, or has a callback
+            3. It is in an enabled state
+
+        :param parent: The parent of deleaget who requested the data.
+        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
+        :param index: The model item index
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: True if the action is clickable, else False.
+        :rtype: bool
+        """
+
+        index_data = self.get_data(parent, index)
+        if not index_data.get("visible", True) or index_data.get("placeholder", False):
+            return False
+
+        if self.callback or self.type in self.checkable_types():
+            return self.state(parent, index) & QtGui.QStyle.State_Enabled
+
+        return False
+
+    def width_hint(self):
+        """
+        Get the suggested width to display the action.
+
+        :param parent: The parent of deleaget who requested the data.
+        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
+        :param index: The model item index
+        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
+
+        :return: The width hint for action.
+        :rtype: int
+        """
+
+        return self.DEFAULT_WIDTHS.get(self.type, 0)
+
+    def get_padding_top(self):
+        """
+        Return the padding for above the action.
+        """
+
+        return self.padding_top or self.padding
+
+    def get_padding_right(self):
+        """
+        Return the padding to the right of the action.
+        """
+
+        return self.padding_right or self.padding
+
+    def get_padding_bottom(self):
+        """
+        Return the padding for below the action.
+        """
+
+        return self.padding_bottom or self.padding
+
+    def get_padding_left(self):
+        """
+        Return the padding to the left of the action.
+        """
+
+        return self.padding_left or self.padding

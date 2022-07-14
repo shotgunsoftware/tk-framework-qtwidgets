@@ -92,6 +92,7 @@ class FilterDefinition(object):
 
         self._proxy_model = None
         self._filter_roles = [QtCore.Qt.DisplayRole]
+        self._accept_fields = []
         self._ignore_fields = []
         self._use_fully_qualified_name = True
         self._project_id = None
@@ -111,6 +112,20 @@ class FilterDefinition(object):
     @filter_roles.setter
     def filter_roles(self, value):
         self._filter_roles = value
+
+    @property
+    def accept_fields(self):
+        """
+        Get or set the fields that will are accepted when building the filter definition.
+
+        Set the value of this property None or the empty list if the filter should accept all
+        given fields (e.g. it does not ignore any fields).
+        """
+        return self._accept_fields
+
+    @accept_fields.setter
+    def accept_fields(self, value):
+        self._accept_fields = value
 
     @property
     def ignore_fields(self):
@@ -368,14 +383,19 @@ class FilterDefinition(object):
         :type role: :class:`sgtk.platform.qt.QtCore.ItemDataRole`
         """
 
-        if data is None or field in self.ignore_fields:
+        if data is None:
+            return
+
+        field_id = "{role}.{field}".format(role=role, field=field)
+        if field_id in self.ignore_fields or (
+            self.accept_fields and field_id not in self.accept_fields
+        ):
             return
 
         data_type = FilterItem.get_data_type(data)
         if not data_type:
             return
 
-        field_id = "{role}.{field}".format(role=role, field=field)
         if field is None:
             field_display = "Display"
         else:
@@ -410,7 +430,9 @@ class FilterDefinition(object):
 
         for sg_field, value in sg_data.items():
             field_id = "{type}.{field}".format(type=entity_type, field=sg_field)
-            if field_id in self.ignore_fields:
+            if field_id in self.ignore_fields or (
+                self.accept_fields and field_id not in self.accept_fields
+            ):
                 continue
 
             try:

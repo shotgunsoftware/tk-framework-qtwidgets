@@ -8,21 +8,12 @@
 # agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Autodesk Inc.
 
-from functools import wraps
-import datetime
-import numbers
-
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from tank.util import sgre
-from tank_vendor import six
-
-from .ui import resources_rc
 
 from .filter_definition import FilterMenuFiltersDefinition
 from .filter_item import FilterItem
 from .filter_item_widget import (
-    FilterItemWidget,
     ChoicesFilterItemWidget,
     TextFilterItemWidget,
 )
@@ -230,6 +221,16 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         for field in fields:
             self._field_visibility[field] = True
+
+    def set_accept_fields(self, fields):
+        """
+        Set the fields to ignore when building the filter definition for the menu.
+
+        :param fields: The fields to ignore
+        :type fields: list<str>
+        """
+
+        self._filters_def.accept_fields = fields
 
     def set_ignore_fields(self, fields):
         """
