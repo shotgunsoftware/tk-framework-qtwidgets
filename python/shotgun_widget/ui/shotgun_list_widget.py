@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from tank.platform.qt import QtCore, QtGui
+from sgtk.platform.qt import QtCore, QtGui
 
 class Ui_ShotgunListWidget(object):
     def setupUi(self, ShotgunListWidget):
@@ -29,7 +29,8 @@ class Ui_ShotgunListWidget(object):
         self.thumbnail.setMaximumSize(QtCore.QSize(96, 75))
         self.thumbnail.setText("")
         self.thumbnail.setPixmap(QtGui.QPixmap(":/tk-framework-qtwidgets/shotgun_widget/rect_512x400.png"))
-        self.thumbnail.setScaledContents(True)
+        self.thumbnail.setScaledContents(False)
+        self.thumbnail.setAlignment(QtCore.Qt.AlignCenter)
         self.thumbnail.setObjectName("thumbnail")
         self.horizontalLayout_2.addWidget(self.thumbnail)
         self.data_layout = QtGui.QVBoxLayout()

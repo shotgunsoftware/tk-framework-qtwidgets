@@ -6,12 +6,12 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from tank.platform.qt import QtCore, QtGui
+from sgtk.platform.qt import QtCore, QtGui
 
 class Ui_ShotgunFolderWidget(object):
     def setupUi(self, ShotgunFolderWidget):
         ShotgunFolderWidget.setObjectName("ShotgunFolderWidget")
-        ShotgunFolderWidget.resize(160, 161)
+        ShotgunFolderWidget.resize(564, 512)
         self.verticalLayout = QtGui.QVBoxLayout(ShotgunFolderWidget)
         self.verticalLayout.setObjectName("verticalLayout")
         self.box = QtGui.QFrame(ShotgunFolderWidget)
@@ -24,11 +24,17 @@ class Ui_ShotgunFolderWidget(object):
         self.thumbnail_layout.setContentsMargins(0, 0, 0, 0)
         self.thumbnail_layout.setObjectName("thumbnail_layout")
         self.thumbnail = QtGui.QLabel(self.box)
-        self.thumbnail.setMinimumSize(QtCore.QSize(96, 75))
-        self.thumbnail.setMaximumSize(QtCore.QSize(96, 75))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.thumbnail.sizePolicy().hasHeightForWidth())
+        self.thumbnail.setSizePolicy(sizePolicy)
+        self.thumbnail.setMinimumSize(QtCore.QSize(0, 0))
+        self.thumbnail.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.thumbnail.setText("")
         self.thumbnail.setPixmap(QtGui.QPixmap(":/tk-framework-qtwidgets/shotgun_widget/rect_512x400.png"))
-        self.thumbnail.setScaledContents(True)
+        self.thumbnail.setScaledContents(False)
+        self.thumbnail.setAlignment(QtCore.Qt.AlignCenter)
         self.thumbnail.setObjectName("thumbnail")
         self.thumbnail_layout.addWidget(self.thumbnail)
         self.verticalLayout_2.addLayout(self.thumbnail_layout)
