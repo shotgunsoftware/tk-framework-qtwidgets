@@ -40,7 +40,7 @@ class FilterMenuButton(SGQToolButton):
         super(FilterMenuButton, self).__init__(parent)
 
         if not icon:
-            icon = SGQIcon.Filter()
+            icon = SGQIcon.filter()
 
         self.setCheckable(True)
         self.setPopupMode(QtGui.QToolButton.InstantPopup)

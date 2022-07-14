@@ -97,91 +97,91 @@ class SGQIcon(QtGui.QIcon):
     #
 
     @classmethod
-    def ValidationOk(cls, size=SIZE_20x20):
+    def validation_ok(cls, size=SIZE_20x20):
         icon = cls.resource_path("validation_ok", size)
         return cls(icon)
 
     @classmethod
-    def ValidationWarning(cls, size=SIZE_20x20):
+    def validation_warning(cls, size=SIZE_20x20):
         icon = cls.resource_path("validation_warning", size)
         return cls(icon)
 
     @classmethod
-    def ValidationError(cls, size=SIZE_20x20):
+    def validation_error(cls, size=SIZE_20x20):
         icon = cls.resource_path("validation_error", size)
         return cls(icon)
 
     @classmethod
-    def RedRefresh(cls, size=SIZE_20x20):
+    def red_refresh(cls, size=SIZE_20x20):
         icon = cls.resource_path("refresh_red", size)
         return cls(icon)
 
     @classmethod
-    def RedBullet(cls, size=SIZE_20x20):
+    def red_bullet(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("bullet_inactive", size),
             normal_on=cls.resource_path("bullet_active", size),
         )
 
     @classmethod
-    def Lock(cls, size=SIZE_20x20):
+    def lock(cls, size=SIZE_20x20):
         icon = cls.resource_path("lock", size)
         return cls(icon)
 
     @classmethod
-    def GreenCheckMark(cls, size=SIZE_20x20):
+    def green_check_mark(cls, size=SIZE_20x20):
         icon = cls.resource_path("check_mark_green", size)
         return cls(icon)
 
     @classmethod
-    def RedCheckMark(cls, size=SIZE_20x20):
+    def red_check_mark(cls, size=SIZE_20x20):
         icon = cls.resource_path("check_mark_red", size)
         return cls(icon)
 
     @classmethod
-    def Filter(cls, size=SIZE_20x20):
+    def filter(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("filter_inactive", size),
             normal_on=cls.resource_path("filter_active", size),
         )
 
     @classmethod
-    def Info(cls, size=SIZE_20x20):
+    def info(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("info_inactive", size),
             normal_on=cls.resource_path("info_active", size),
         )
 
     @classmethod
-    def TreeArrow(cls, size=SIZE_20x20):
+    def tree_arrow(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("tree_arrow_expanded", size),
             normal_on=cls.resource_path("tree_arrow_collapsed", size),
         )
 
     @classmethod
-    def ListViewMode(cls, size=SIZE_20x20):
+    def list_view_mode(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("view_list_inactive", size),
             normal_on=cls.resource_path("view_list_active", size),
         )
 
     @classmethod
-    def ThumbnailViewMode(cls, size=SIZE_20x20):
+    def thumbnail_view_mode(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("view_thumbnail_inactive", size),
             normal_on=cls.resource_path("view_thumbnail_active", size),
         )
 
     @classmethod
-    def GridViewMode(cls, size=SIZE_20x20):
+    def grid_view_mode(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("view_grid_inactive", size),
             normal_on=cls.resource_path("view_grid_active", size),
         )
 
     @classmethod
-    def Toggle(cls, size=SIZE_20x20):
+    def toggle(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("toggle_inactive", size),
             normal_on=cls.resource_path("toggle_active", size),
