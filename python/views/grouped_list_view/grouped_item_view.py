@@ -83,6 +83,7 @@ class GroupedItemView(QtGui.QAbstractItemView):
         self._border = QtCore.QSize(6, 6)
         self._group_spacing = 30
         self._item_spacing = QtCore.QSize(4, 4)
+        self._group_items_selectable = False
 
     # @property
     def _get_border(self):
@@ -128,6 +129,18 @@ class GroupedItemView(QtGui.QAbstractItemView):
         self.viewport().update()
 
     item_spacing = property(_get_item_spacing, _set_item_spacing)
+
+    @property
+    def group_items_selectable(self):
+        """
+        Get or set the property to allow group header items to be selectable or not. When set to True, group header
+        items may receive select, focus and hover events.
+        """
+        return self._group_items_selectable
+
+    @group_items_selectable.setter
+    def group_items_selectable(self, selectable):
+        self._group_items_selectable = selectable
 
     def toggle_expand(self, index):
         """
@@ -652,7 +665,15 @@ class GroupedItemView(QtGui.QAbstractItemView):
         y_offset = self._border.height()
         for row, item_info in enumerate(self._item_info):
 
-            # we only allow selection of child items so we can skip testing the group/top level:
+            if self.group_items_selectable:
+                local_selection_rect = selection_rect.translated(0, -y_offset)
+                if item_info.rect.intersects(local_selection_rect):
+                    index = self.model().index(row, 0)
+                    selection.select(index, index)
+                    y_offset += self._item_spacing.height() + self._group_spacing
+                    continue
+
+            # check for selection of child items
             y_offset += item_info.rect.height()
 
             if not item_info.collapsed:
@@ -767,24 +788,24 @@ class GroupedItemView(QtGui.QAbstractItemView):
 
                 if rect.isValid and rect.intersects(viewport_rect):
                     # the group widget is visible
-                    option = QtGui.QStyleOptionViewItem()
-                    option.initFrom(self)
+                    option = self._get_view_options()
                     option.rect = rect
-                    try:
-                        # Try to set the option widget to this view object. This will only work in
-                        # Qt version >=5.12
-                        option.widget = self
-                    except AttributeError:
-                        # This error will occur for Qt versions < 5.12, since the widget property is
-                        # not writable in these older versions. The option widget is stored in the
-                        # option.styleObject internal property on `initFrom(widget)`, so we can just
-                        # ignore this error.
-                        pass
 
-                    # Group items are not selectable, take focus or receive mouse hover events.
-                    option.state &= ~QtGui.QStyle.State_Selected
-                    option.state &= ~QtGui.QStyle.State_HasFocus
-                    option.state &= ~QtGui.QStyle.State_MouseOver
+                    if self.group_items_selectable:
+                        if self.selectionModel().isSelected(index):
+                            option.state |= QtGui.QStyle.State_Selected
+                        if index == self.currentIndex():
+                            option.state |= QtGui.QStyle.State_HasFocus
+                        if index == hover_index:
+                            option.state |= QtGui.QStyle.State_MouseOver
+                        else:
+                            option.state &= ~QtGui.QStyle.State_MouseOver
+                    else:
+                        # Group items are not selectable, take focus or receive mouse hover events.
+                        option.state &= ~QtGui.QStyle.State_Selected
+                        option.state &= ~QtGui.QStyle.State_HasFocus
+                        option.state &= ~QtGui.QStyle.State_MouseOver
+
                     self.itemDelegate().paint(painter, option, index)
 
                 # add the group rectangle height to the y-offset
@@ -811,30 +832,8 @@ class GroupedItemView(QtGui.QAbstractItemView):
                                 continue
 
                             # set up the rendering options:
-                            # option = self.viewOptions())
-                            # (AD) - using self.viewOptions() to get the view style options seems
-                            # to return an invalid item in some versions of PySide/PyQt!  I think
-                            # it's returning a QtGui.QStyleOptionViewItem even though the
-                            # underlying C++ object is a QtGui.QStyleOptionViewItemV2 or higher.
-                            #
-                            # This would result in option.rect being corrupt immediately after it
-                            # was set below!
-                            #
-                            # creating the object directly and then using initFrom seems to work
-                            # though.
-                            option = QtGui.QStyleOptionViewItem()
-                            option.initFrom(self)
+                            option = self._get_view_options()
                             option.rect = child_rect
-                            try:
-                                # Try to set the option widget to this view object. This will only work in
-                                # Qt version >=5.12
-                                option.widget = self
-                            except AttributeError:
-                                # This error will occur for Qt versions < 5.12, since the widget property is
-                                # not writable in these older versions. The option widget is stored in the
-                                # option.styleObject internal property on `initFrom(widget)`, so we can just
-                                # ignore this error.
-                                pass
 
                             # Set the selected state on the option
                             if self.selectionModel().isSelected(child_index):
@@ -980,9 +979,11 @@ class GroupedItemView(QtGui.QAbstractItemView):
         else:
             previous_item_info = None
 
+        view_options = self._get_view_options()
         viewport_width = viewport_sz.width()
-        max_width = viewport_width - self._border.width()
-        base_view_options = self.viewOptions()
+        max_width = viewport_width - self._border.width() * 2
+        item_width = min(max_width, view_options.rect.width())
+        view_options.rect.setWidth(item_width)
 
         # iterate over root items:
         something_updated = False
@@ -1005,11 +1006,11 @@ class GroupedItemView(QtGui.QAbstractItemView):
             index = self.model().index(row, 0)
 
             # get the size of the item:
-            view_options = base_view_options
             item_size = self.itemDelegate().sizeHint(view_options, index)
             if item_size.width() < 0:
                 # No width size hint, expand the item to the full viewport width
                 item_size.setWidth(max_width - self._border.width())
+
             item_info.rect = QtCore.QRect(
                 self._border.width(), 0, item_size.width(), item_size.height()
             )
@@ -1025,13 +1026,11 @@ class GroupedItemView(QtGui.QAbstractItemView):
             for child_row in range(self.model().rowCount(index)):
                 child_index = self.model().index(child_row, 0, index)
 
-                # do we need to modify the view options?
-                view_options = base_view_options
-
                 # get the item size:
                 child_item_size = self.itemDelegate().sizeHint(
                     view_options, child_index
                 )
+
                 if child_item_size.width() < 0:
                     # No width size hint, expand the item to the full viewport width
                     child_item_size.setWidth(max_width - self._border.width())
@@ -1090,3 +1089,41 @@ class GroupedItemView(QtGui.QAbstractItemView):
 
             # update scroll bars for the new dimensions:
             self.updateGeometries()
+
+    def _get_view_options(self):
+        """
+        Get the view options for the view's delegate.
+
+        This helper function just calls the QAbstractItemView's `viewOptions` method and initializes it with itself.
+
+        :return: The view options for this view.
+        :rtype: QStyleOptionViewItem
+        """
+
+        # option = self.viewOptions()
+        # (AD) - using self.viewOptions() to get the view style options seems
+        # to return an invalid item in some versions of PySide/PyQt!  I think
+        # it's returning a QtGui.QStyleOptionViewItem even though the
+        # underlying C++ object is a QtGui.QStyleOptionViewItemV2 or higher.
+        #
+        # This would result in option.rect being corrupt immediately after it
+        # was set below!
+        #
+        # creating the object directly and then using initFrom seems to work
+        # though.
+
+        option = QtGui.QStyleOptionViewItem()
+        option.initFrom(self)
+
+        try:
+            # Try to set the option widget to this view object. This will only work in
+            # Qt version >=5.12
+            option.widget = self
+        except AttributeError:
+            # This error will occur for Qt versions < 5.12, since the widget property is
+            # not writable in these older versions. The option widget is stored in the
+            # option.styleObject internal property on `initFrom(widget)`, so we can just
+            # ignore this error.
+            pass
+
+        return option

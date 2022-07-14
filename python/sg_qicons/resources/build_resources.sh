@@ -25,7 +25,7 @@ function build_qt {
     $1 $2 > $UI_PYTHON_PATH/$3.py
 
     # replace PySide imports with tank.platform.qt and remove line containing Created by date
-    sed -i "" -e "s/from PySide import/from tank.platform.qt import/g" -e "/# Created:/d" $UI_PYTHON_PATH/$3.py
+    sed -i "" -e "s/from PySide import/from sgtk.platform.qt import/g" -e "/# Created:/d" $UI_PYTHON_PATH/$3.py
 }
 
 function build_ui {
@@ -35,11 +35,6 @@ function build_ui {
 function build_res {
     build_qt "${PYTHON_BASE}/bin/pyside-rcc -py3" "$1.qrc" "$1_rc"
 }
-
-
-# build UI's:
-echo "building user interfaces..."
-# build_ui dialog
 
 
 # build resources
