@@ -98,7 +98,7 @@ class ShotgunWidget(QtGui.QWidget):
         else:
             pixmap = thumbnail.pixmap(512)
 
-        self._ui.thumbnail.setPixmap(pixmap)
+        self.set_scaled_thumbanil(pixmap)
         self._ui.thumbnail.setVisible(True)
 
     def set_selected(self, selected):
@@ -132,3 +132,35 @@ class ShotgunWidget(QtGui.QWidget):
         self._actions = actions
         for a in self._actions:
             self._menu.addAction(a)
+
+    def resizeEvent(self, event):
+        """
+        Override the base method.
+
+        Rescale the pixmap when the label resizes.
+
+        :param event: The resize event payload.
+        :type event: QResizeEvent
+        """
+
+        self.set_scaled_thumbanil()
+
+    def set_scaled_thumbanil(self, pixmap=None):
+        """
+        Set the thumbnail label pixmap.
+
+        Scale the pixmap to the label's size and center it within the label. Keep the aspect
+        ratio of the pixmap when scaling.
+
+        :param pixmap: The pixmap to set on the label.
+        :type pixmap: QtGui.QPixmap
+        """
+
+        pixmap = pixmap or self._ui.thumbnail.pixmap()
+        if not pixmap:
+            return
+
+        width = self._ui.thumbnail.width()
+        height = self._ui.thumbnail.height()
+        scaled_pixmap = pixmap.scaled(width, height, QtCore.Qt.KeepAspectRatio)
+        self._ui.thumbnail.setPixmap(scaled_pixmap)
