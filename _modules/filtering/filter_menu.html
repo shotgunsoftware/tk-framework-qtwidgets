@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.10.3 documentation</title>
+  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.10.4 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.4.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -217,21 +217,12 @@
 <span class="c1"># agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Autodesk Inc.</span>
 
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">numbers</span>
-
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
-<span class="kn">from</span> <span class="nn">tank.util</span> <span class="kn">import</span> <span class="n">sgre</span>
-<span class="kn">from</span> <span class="nn">tank_vendor</span> <span class="kn">import</span> <span class="n">six</span>
-
-<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
 
 <span class="kn">from</span> <span class="nn">.filter_definition</span> <span class="kn">import</span> <span class="n">FilterMenuFiltersDefinition</span>
 <span class="kn">from</span> <span class="nn">.filter_item</span> <span class="kn">import</span> <span class="n">FilterItem</span>
 <span class="kn">from</span> <span class="nn">.filter_item_widget</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">FilterItemWidget</span><span class="p">,</span>
     <span class="n">ChoicesFilterItemWidget</span><span class="p">,</span>
     <span class="n">TextFilterItemWidget</span><span class="p">,</span>
 <span class="p">)</span>
@@ -439,6 +430,16 @@
 
         <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_field_visibility</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="FilterMenu.set_accept_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_accept_fields">[docs]</a>    <span class="k">def</span> <span class="nf">set_accept_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the fields to ignore when building the filter definition for the menu.</span>
+
+<span class="sd">        :param fields: The fields to ignore</span>
+<span class="sd">        :type fields: list&lt;str&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">accept_fields</span> <span class="o">=</span> <span class="n">fields</span></div>
 
 <div class="viewcode-block" id="FilterMenu.set_ignore_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_ignore_fields">[docs]</a>    <span class="k">def</span> <span class="nf">set_ignore_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

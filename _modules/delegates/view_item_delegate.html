@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.10.3 documentation</title>
+  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.10.4 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.3.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.4.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -278,9 +278,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">left</span><span class="p">):</span>
-            <span class="c1"># &quot;&quot;&quot;</span>
-            <span class="c1"># Padding constructor.</span>
-            <span class="c1"># &quot;&quot;&quot;</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Create the Padding object.</span>
+
+<span class="sd">            :param top: The top padding value.</span>
+<span class="sd">            :type top: int</span>
+<span class="sd">            :param right: The right padding value.</span>
+<span class="sd">            :type right: int</span>
+<span class="sd">            :param bottom: The bottom padding value.</span>
+<span class="sd">            :type bottom: int</span>
+<span class="sd">            :param left: The left padding value.</span>
+<span class="sd">            :type left: int</span>
+<span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">top</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
@@ -326,6 +335,13 @@
         <span class="c1"># The number of visible lines to show (e.g. text will be cut off to this defined number of lines)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_visible_lines</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
+        <span class="c1"># The default qss to apply to the text document style sheet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_document_style_sheet</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="c1"># Turn on text eliding, if False, text will be wrapped</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elide_header</span> <span class="o">=</span> <span class="kc">True</span>
+
         <span class="c1"># Fix the item&#39;s width and height. These will be ignored if set to None. When set to -1, these will</span>
         <span class="c1"># expand to the full available space.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_item_width</span> <span class="o">=</span> <span class="kc">None</span>
@@ -349,11 +365,10 @@
         <span class="c1"># icon is rendered over a rect, if that rect height is 100 and the `badge_height_pct` is 0.5,</span>
         <span class="c1"># then the badge icon maximum height will be 50). Note that badge icons will only be scaled</span>
         <span class="c1"># down to fit, not scaled up if the icon size is smaller than the max height.</span>
-        <span class="c1"># self._badge_height_pct = None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_badge_height_pct</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span>
 
         <span class="c1"># Button padding and margin values</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_button_margin</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_item_margin</span> <span class="o">=</span> <span class="mi">7</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_button_padding</span> <span class="o">=</span> <span class="mi">4</span>
         <span class="c1"># Text document margin</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_document_margin</span> <span class="o">=</span> <span class="mi">0</span>
@@ -557,6 +572,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_visible_lines</span> <span class="o">=</span> <span class="n">lines</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">document_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the default qss for the text document style sheet. This will affect the text style and layout of the item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_document_style_sheet</span>
+
+    <span class="nd">@document_style_sheet</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">document_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qss</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_document_style_sheet</span> <span class="o">=</span> <span class="n">qss</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the flag indicating if the main text should be elided. If False, text will be wrapped.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span>
+
+    <span class="nd">@elide_text</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span> <span class="o">=</span> <span class="n">on</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">elide_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the flag indicating if the header text should be elided. If False, text will be wrapped.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_header</span>
+
+    <span class="nd">@elide_header</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">elide_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elide_header</span> <span class="o">=</span> <span class="n">on</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">item_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the view item width. Set to None to ignore this property.</span>
@@ -683,15 +731,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_badge_height_pct</span> <span class="o">=</span> <span class="n">pct</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">button_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">action_item_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the margin used for buttons.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_button_margin</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_item_margin</span>
 
-    <span class="nd">@button_margin</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">button_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_button_margin</span> <span class="o">=</span> <span class="n">margin</span>
+    <span class="nd">@action_item_margin</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">action_item_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_item_margin</span> <span class="o">=</span> <span class="n">margin</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">button_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1142,8 +1190,6 @@
 <span class="sd">                       the ViewItemAction constructor to create a ViewItemAction object.</span>
 <span class="sd">        :param position: The position to display the actions.</span>
 <span class="sd">        :type position: POSITION enum, defaults to float on the bottom right of the item rect.</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
@@ -1159,8 +1205,6 @@
 <span class="sd">                       the ViewItemAction constructor to create a ViewItemAction object.</span>
 <span class="sd">        :param position: The position to display the actions.</span>
 <span class="sd">        :type position: POSITION enum, defaults to float on the bottom right of the item rect.</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_actions</span><span class="p">([</span><span class="n">action</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span></div>
@@ -1172,8 +1216,6 @@
 
 <span class="sd">        :param positions: The list of positions to remove actions from.</span>
 <span class="sd">        :type positions: list&lt;POSITION&gt;, where POSITION is one of the POSITIONS enum.</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">positions</span><span class="p">:</span>
@@ -1192,8 +1234,6 @@
 
 <span class="sd">        :param scale_value: The value to scale the thumbnail by.</span>
 <span class="sd">        :type scale_value: float</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_scale_value</span> <span class="o">=</span> <span class="n">scale_value</span></div>
@@ -1229,7 +1269,6 @@
 <span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        :param index: The index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Adjust the option rect to account for padding around the view item content.</span>
@@ -1293,9 +1332,28 @@
             <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftButton</span>
         <span class="p">):</span>
             <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_at</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
-            <span class="k">if</span> <span class="n">action</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">callback</span><span class="p">:</span>
-                <span class="c1"># Left mouse click on an action will trigger the action callback method.</span>
-                <span class="n">action</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">action</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">is_clickable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">callback</span><span class="p">:</span>
+                    <span class="c1"># Trigger the action callback function if the action defines one</span>
+                    <span class="n">action</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
+
+                <span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">ViewItemAction</span><span class="o">.</span><span class="n">checkable_types</span><span class="p">():</span>
+                    <span class="c1"># The default behaviour for checkable actions is to set the index check state role data;</span>
+                    <span class="c1"># however, this only works if there is a single checkable action for the index, or else</span>
+                    <span class="c1"># each checkable action will modify the same data role property. For multiple checkable</span>
+                    <span class="c1"># actions for an index (item), callbacks for each action need to be defined.</span>
+                    <span class="n">check_state_role</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">check_state_role</span>
+                    <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">check_state_role</span><span class="p">)</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span><span class="p">:</span>
+                        <span class="n">new_check_state</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">new_check_state</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
+                    <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">new_check_state</span><span class="p">,</span> <span class="n">check_state_role</span><span class="p">)</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Action is clickable but has no callback to execute&quot;</span>
+
+                <span class="c1"># Return True to incate the event has been handled.</span>
                 <span class="k">return</span> <span class="kc">True</span>
 
         <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QEvent</span><span class="o">.</span><span class="n">MouseMove</span><span class="p">:</span>
@@ -1303,8 +1361,8 @@
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_hover_cursor</span> <span class="ow">and</span> <span class="n">widget</span><span class="p">:</span>
                 <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_at</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span>
-                <span class="k">if</span> <span class="n">action</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">callback</span><span class="p">:</span>
-                    <span class="c1"># Set the cursor to indicate it is over an action item.</span>
+                <span class="k">if</span> <span class="n">action</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">is_clickable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">):</span>
+                    <span class="c1"># Set the cursor to indicate the action is clickable</span>
                     <span class="n">widget</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_hover_cursor</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">widget</span><span class="o">.</span><span class="n">unsetCursor</span><span class="p">()</span>
@@ -1354,14 +1412,13 @@
             <span class="c1"># Set the width to the value defined by the index data.</span>
             <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width_role</span><span class="p">)</span>
 
-        <span class="c1"># Ensure width is not None</span>
         <span class="k">if</span> <span class="n">width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">width</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="c1"># Default to the option rect width if not set</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+
         <span class="c1"># For valid width values, ensure it is the minumum width and add padding.</span>
         <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_width</span><span class="p">)</span>
-            <span class="n">width</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">left</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">right</span>
-            <span class="n">width</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">left</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">right</span>
 
         <span class="c1"># Calculate the height of the item.</span>
         <span class="n">index_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height_role</span><span class="p">)</span>
@@ -1374,14 +1431,15 @@
             <span class="k">if</span> <span class="n">index_height</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">index_height</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># The item height expands to the height of the text. NOTE the view that this delegate is</span>
                 <span class="c1"># set to must not have uniform items set for this to resize properly.</span>
-                <span class="n">text_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">view_option</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span>
-                <span class="n">text_rect</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+
+                <span class="n">text_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_rect</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
                 <span class="n">text_doc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_document</span><span class="p">(</span>
                     <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">text_rect</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">False</span>
                 <span class="p">)</span>
                 <span class="n">text_height</span> <span class="o">=</span> <span class="n">text_doc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
                 <span class="n">height_for_visible_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_visible_lines_height</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
-                <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">text_height</span><span class="p">,</span> <span class="n">height_for_visible_lines</span><span class="p">)</span>
+                <span class="n">height_for_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_actions_maximum_height</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+                <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">text_height</span><span class="p">,</span> <span class="n">height_for_visible_lines</span><span class="p">,</span> <span class="n">height_for_actions</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Set the height the value defined by the index data.</span>
                 <span class="n">height</span> <span class="o">=</span> <span class="n">index_height</span>
@@ -1389,9 +1447,10 @@
             <span class="c1"># The height is fixed for all items.</span>
             <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_height</span>
 
-        <span class="c1"># Ensure height is not None</span>
+        <span class="c1"># Ensure height is not None, set it to -1 to indicate no size hint for height</span>
         <span class="k">if</span> <span class="n">height</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">height</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
         <span class="c1"># For valid height values, ensure it is the minumum height and add padding.</span>
         <span class="k">if</span> <span class="n">height</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_height</span><span class="p">)</span>
@@ -1413,8 +1472,6 @@
 <span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        :param index: The index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
@@ -1443,31 +1500,18 @@
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">TextAntialiasing</span>
         <span class="p">)</span>
 
-        <span class="c1"># Background</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_draw_background</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">)</span>
-
-        <span class="c1"># Thumbnail</span>
         <span class="n">thumbnail_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_draw_thumbnail</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-
-        <span class="c1"># Text body</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_draw_text</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-
-        <span class="c1"># Actions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_draw_actions</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-
-        <span class="c1"># Separator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_draw_separator</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 
-        <span class="c1"># Selection</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_selected</span><span class="p">(</span><span class="n">view_option</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">show_hover_selection</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_hover</span><span class="p">(</span><span class="n">view_option</span><span class="p">)</span>
         <span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_draw_selection</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">)</span>
 
-        <span class="c1"># Badges</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_draw_icon_badges</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">thumbnail_rect</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-
-        <span class="c1"># Loading decoration</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_draw_loading</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 
         <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
@@ -1494,8 +1538,6 @@
 <span class="sd">        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`</span>
 <span class="sd">        :param option: The option used for rendering the item.</span>
 <span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -1517,8 +1559,6 @@
 <span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        :param index: The index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_loading_rect</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
@@ -1583,8 +1623,6 @@
 <span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        :param index: The index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">separator_role</span><span class="p">:</span>
@@ -1636,20 +1674,21 @@
 <span class="sd">        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`</span>
 <span class="sd">        :param option: The option used for rendering the item.</span>
 <span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_brush</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_brush</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoBrush</span><span class="p">:</span>
+            <span class="n">brush</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoBrush</span>
+            <span class="n">pen</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_brush</span><span class="p">:</span>
             <span class="n">brush</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_brush</span>
-            <span class="n">pen</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">brush</span><span class="o">.</span><span class="n">color</span><span class="p">())</span>
+            <span class="n">pen</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">pen</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">highlight</span><span class="p">()</span><span class="o">.</span><span class="n">color</span><span class="p">())</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">fill_color</span> <span class="o">=</span> <span class="n">pen</span><span class="o">.</span><span class="n">color</span><span class="p">()</span>
             <span class="n">fill_color</span><span class="o">.</span><span class="n">setAlpha</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
             <span class="n">brush</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">fill_color</span><span class="p">)</span>
-
-        <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
         <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
@@ -1669,8 +1708,6 @@
 <span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        :param index: The index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">thumbnail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_thumbnail</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
@@ -1779,8 +1816,6 @@
 <span class="sd">        :type bounding_rect: :class:`sgtk.platform.qt.QtCore.QRect`</span>
 <span class="sd">        :param index: The index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Default to the option rect if the giving bounding rect is invalid</span>
@@ -1913,8 +1948,6 @@
 <span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        :param index: The index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_rect</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
@@ -1969,7 +2002,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_draw_text_tooltip</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">elided</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_draw_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Paint the actions for the view item. Actions are rendered using the option</span>
 <span class="sd">        widget&#39;s QStyle (or defaults to the application QStyle) as passing in QStyleOptionButton</span>
@@ -1977,137 +2010,403 @@
 
 <span class="sd">        :param painter: the object used for painting.</span>
 <span class="sd">        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`</span>
-<span class="sd">        :param option: The option used for rendering the item.</span>
-<span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param view_option: The option used for rendering the item.</span>
+<span class="sd">        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
 <span class="sd">        :param index: The index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Get the list of available actions for this item, and their corresponding boudning rect.</span>
-        <span class="n">actions_and_rects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_and_rects</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="n">actions_and_rects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_and_rects</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">actions_and_rects</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">action</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">rect</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
                 <span class="k">continue</span>
 
-            <span class="c1"># Get the action data for this specific index.</span>
-            <span class="n">index_data</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">)</span>
-
-            <span class="c1"># Do not draw the action if it is not visible for this index.</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visible&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># Build the button options used to draw the action.</span>
-            <span class="n">button_option</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionButton</span><span class="p">()</span>
-            <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_option_widget</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">widget</span><span class="p">:</span>
-                <span class="n">button_option</span><span class="o">.</span><span class="n">initFrom</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
-
-            <span class="n">button_option</span><span class="o">.</span><span class="n">fontMetrics</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">fontMetrics</span>
-            <span class="c1"># Set the draw rect for the action</span>
-            <span class="n">button_option</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">rect</span>
-            <span class="c1"># Allow override the default action name</span>
-            <span class="n">button_option</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-
-            <span class="c1"># Apply any additional features defined by the action.</span>
-            <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
-                <span class="n">button_option</span><span class="o">.</span><span class="n">features</span> <span class="o">|=</span> <span class="n">action</span><span class="o">.</span><span class="n">features</span>
-
-            <span class="c1"># Set the action state. If the action has an icon, the state will also toggle</span>
-            <span class="c1"># the icon based on what flags are set.</span>
-            <span class="n">state</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Default state, if not explicitly defined.</span>
-                <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Active</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Enabled</span>
-                <span class="p">)</span>
-
-            <span class="c1"># Add the hover state, if the current cursor position intersects the action rect.</span>
-            <span class="n">hover</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hit_box_test</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">hover</span><span class="p">:</span>
-                <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">|=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_MouseOver</span>
-
-            <span class="c1"># Set the action icon</span>
-            <span class="n">icon</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;icon&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">icon</span><span class="p">:</span>
-                <span class="n">button_option</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">icon</span>
-                <span class="n">button_option</span><span class="o">.</span><span class="n">iconSize</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">icon_size</span>
-
-            <span class="c1"># Set the action palette</span>
-            <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">palette</span>
-
-            <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">palette_brushes</span><span class="p">:</span>
-                <span class="c1"># FIXME find a better way to specifiy the palette color based on hover state.</span>
-                <span class="c1"># e.g. is there a way leverage the palette color group and roles?</span>
-                <span class="k">if</span> <span class="n">hover</span><span class="p">:</span>
-                    <span class="n">brushes</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">palette_brushes</span><span class="p">[</span><span class="s2">&quot;hover&quot;</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">brushes</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">palette_brushes</span><span class="p">[</span><span class="s2">&quot;active&quot;</span><span class="p">]</span>
-
-                <span class="k">for</span> <span class="p">(</span><span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span> <span class="ow">in</span> <span class="n">brushes</span><span class="p">:</span>
-                    <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="n">button_option</span><span class="o">.</span><span class="n">features</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionButton</span><span class="o">.</span><span class="n">Flat</span><span class="p">:</span>
-                <span class="c1"># Invert text color for flat buttons</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">hover</span> <span class="ow">or</span> <span class="n">action</span><span class="o">.</span><span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">brush</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">light</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">brush</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">buttonText</span><span class="p">()</span>
-                <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">ButtonText</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span>
-
-            <span class="c1"># Get the style object that controls how the action button is rendered.</span>
-            <span class="n">style</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">style</span><span class="p">()</span> <span class="k">if</span> <span class="n">widget</span> <span class="k">else</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
-
-            <span class="c1"># Finally draw the action in the style of QPushButton. If more complex functionality</span>
-            <span class="c1"># is required in the future, this may need to change to render a QToolButton using</span>
-            <span class="c1"># QStyleOptionToolButton options</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">font</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">view_option</span><span class="o">.</span><span class="n">font</span><span class="p">)</span>
 
-            <span class="c1"># FIXME ideally style.drawControl would be called to render the whole button:</span>
-            <span class="c1"># style.drawControl(QtGui.QStyle.CE_PushButton, button_option, painter)</span>
-            <span class="c1"># But there are issues with certain styles, so for now we will reimplement the QCommonStyle</span>
-            <span class="c1"># drawControl case for CE_PushButton ourselves:</span>
-            <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawControl</span><span class="p">(</span>
-                <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">CE_PushButtonBevel</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">painter</span>
-            <span class="p">)</span>
-            <span class="n">subopt</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionButton</span><span class="p">(</span><span class="n">button_option</span><span class="p">)</span>
-            <span class="n">subopt</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">subElementRect</span><span class="p">(</span>
-                <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">SE_PushButtonContents</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span>
-            <span class="p">)</span>
-            <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawControl</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">CE_PushButtonLabel</span><span class="p">,</span> <span class="n">subopt</span><span class="p">,</span> <span class="n">painter</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_HasFocus</span><span class="p">:</span>
-                <span class="n">fropt</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionFocusRect</span><span class="p">()</span>
-                <span class="n">fropt</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_option_background_brush</span><span class="p">(</span><span class="n">option</span><span class="p">)</span><span class="o">.</span><span class="n">color</span><span class="p">()</span>
-                <span class="n">fropt</span><span class="o">.</span><span class="n">palette</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span>
-                <span class="n">fropt</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span>
-                <span class="n">fropt</span><span class="o">.</span><span class="n">fontMetrics</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">fontMetrics</span>
-                <span class="n">fropt</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">subElementRect</span><span class="p">(</span>
-                    <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">SE_PushButtonFocusRect</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ViewItemAction</span><span class="o">.</span><span class="n">TYPE_PUSH_BUTTON</span>
+                <span class="ow">or</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ViewItemAction</span><span class="o">.</span><span class="n">TYPE_ICON</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_draw_action_push_button</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ViewItemAction</span><span class="o">.</span><span class="n">TYPE_RADIO_BUTTON</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_draw_action_radio_button</span><span class="p">(</span>
+                    <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span>
                 <span class="p">)</span>
-                <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawPrimitive</span><span class="p">(</span>
-                    <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">PE_FrameFocusRect</span><span class="p">,</span> <span class="n">fropt</span><span class="p">,</span> <span class="n">painter</span>
+
+            <span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ViewItemAction</span><span class="o">.</span><span class="n">TYPE_CHECK_BOX</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_draw_action_check_box</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ViewItemAction</span><span class="o">.</span><span class="n">TYPE_PROGRESS_BAR</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_draw_action_progress_bar</span><span class="p">(</span>
+                    <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span>
                 <span class="p">)</span>
 
             <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
-
-            <span class="c1"># Set a timer to draw a tooltip, if the index or action defines one. Tooltip will display if the cursor</span>
-            <span class="c1"># has been hovering over the action for at least 500ms.</span>
-            <span class="n">tooltip</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tooltip&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">tooltip</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">hover</span> <span class="ow">and</span> <span class="n">tooltip</span><span class="p">:</span>
-                <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span>
-                    <span class="mi">500</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">o</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">rect</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tooltip</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_draw_tooltip</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-                <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">DEBUG_PAINT</span><span class="p">:</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">cyan</span><span class="p">))</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_draw_action_push_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw the action as a push button.</span>
+
+<span class="sd">        :param painter: the object used for painting.</span>
+<span class="sd">        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`</span>
+<span class="sd">        :param view_option: The option used for rendering the item.</span>
+<span class="sd">        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item to render.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+<span class="sd">        :param action: The action to draw the push button for</span>
+<span class="sd">        :type action: ViewItemAction</span>
+<span class="sd">        :param rect: The action&#39;s bounding rect</span>
+<span class="sd">        :type rect: QRect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">index_data</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visible&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="c1"># Do not draw actions that are not visible or are placeholders</span>
+            <span class="k">return</span>
+
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_option_widget</span><span class="p">(</span><span class="n">view_option</span><span class="p">)</span>
+        <span class="n">button_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_button_option</span><span class="p">(</span>
+            <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_draw_push_button</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_MouseOver</span><span class="p">:</span>
+            <span class="n">tooltip</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tooltip&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">tooltip</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tooltip</span><span class="p">:</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span>
+                    <span class="mi">500</span><span class="p">,</span>
+                    <span class="k">lambda</span> <span class="n">o</span><span class="o">=</span><span class="n">view_option</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">rect</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tooltip</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_draw_tooltip</span><span class="p">(</span>
+                        <span class="n">o</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_draw_action_radio_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw the action as a radio button.</span>
+
+<span class="sd">        To draw a &quot;checked&quot; radio button, the state must include the flag QtGui.QStyle.State_On.</span>
+
+<span class="sd">        :param painter: the object used for painting.</span>
+<span class="sd">        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`</span>
+<span class="sd">        :param view_option: The option used for rendering the item.</span>
+<span class="sd">        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item to render.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+<span class="sd">        :param action: The action to draw the push button for</span>
+<span class="sd">        :type action: ViewItemAction</span>
+<span class="sd">        :param rect: The action&#39;s bounding rect</span>
+<span class="sd">        :type rect: QRect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">index_data</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visible&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="c1"># Do not draw actions that are not visible or are placeholders</span>
+            <span class="k">return</span>
+
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_option_widget</span><span class="p">(</span><span class="n">view_option</span><span class="p">)</span>
+        <span class="n">button_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_button_option</span><span class="p">(</span>
+            <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
+        <span class="p">)</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">style</span><span class="p">()</span> <span class="k">if</span> <span class="n">widget</span> <span class="k">else</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
+
+        <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawControl</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">CE_RadioButton</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">painter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_MouseOver</span><span class="p">:</span>
+            <span class="n">tooltip</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tooltip&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">tooltip</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tooltip</span><span class="p">:</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span>
+                    <span class="mi">500</span><span class="p">,</span>
+                    <span class="k">lambda</span> <span class="n">o</span><span class="o">=</span><span class="n">view_option</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">rect</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tooltip</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_draw_tooltip</span><span class="p">(</span>
+                        <span class="n">o</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_draw_action_check_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw the action as a check box.</span>
+
+<span class="sd">        :param painter: the object used for painting.</span>
+<span class="sd">        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`</span>
+<span class="sd">        :param view_option: The option used for rendering the item.</span>
+<span class="sd">        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item to render.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+<span class="sd">        :param action: The action to draw the push button for</span>
+<span class="sd">        :type action: ViewItemAction</span>
+<span class="sd">        :param rect: The action&#39;s bounding rect</span>
+<span class="sd">        :type rect: QRect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">index_data</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visible&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="c1"># Do not draw actions that are not visible or are placeholders</span>
+            <span class="k">return</span>
+
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_option_widget</span><span class="p">(</span><span class="n">view_option</span><span class="p">)</span>
+        <span class="n">button_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_button_option</span><span class="p">(</span>
+            <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">button_option</span><span class="o">.</span><span class="n">icon</span><span class="p">:</span>
+            <span class="c1"># Checkbox is displayed using an icon, draw it as a flat button</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_draw_push_button</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">style</span><span class="p">()</span> <span class="k">if</span> <span class="n">widget</span> <span class="k">else</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
+            <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawControl</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">CE_CheckBox</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">painter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_MouseOver</span><span class="p">:</span>
+            <span class="n">tooltip</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tooltip&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">tooltip</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tooltip</span><span class="p">:</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span>
+                    <span class="mi">500</span><span class="p">,</span>
+                    <span class="k">lambda</span> <span class="n">o</span><span class="o">=</span><span class="n">view_option</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">rect</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tooltip</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_draw_tooltip</span><span class="p">(</span>
+                        <span class="n">o</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_draw_action_progress_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw the action as a progress bar.</span>
+
+<span class="sd">        :param painter: the object used for painting.</span>
+<span class="sd">        :type painter: :class:`sgkt.platform.qt.QtGui.QPainter`</span>
+<span class="sd">        :param view_option: The option used for rendering the item.</span>
+<span class="sd">        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item to render.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+<span class="sd">        :param action: The action to draw the push button for</span>
+<span class="sd">        :type action: ViewItemAction</span>
+<span class="sd">        :param rect: The action&#39;s bounding rect</span>
+<span class="sd">        :type rect: QRect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">index_data</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visible&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="c1"># Do not draw actions that are not visible or are placeholders</span>
+            <span class="k">return</span>
+
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_option_widget</span><span class="p">(</span><span class="n">view_option</span><span class="p">)</span>
+        <span class="n">progress_bar_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_progress_bar_option</span><span class="p">(</span>
+            <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
+        <span class="p">)</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">style</span><span class="p">()</span> <span class="k">if</span> <span class="n">widget</span> <span class="k">else</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
+
+        <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawControl</span><span class="p">(</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">CE_ProgressBar</span><span class="p">,</span> <span class="n">progress_bar_option</span><span class="p">,</span> <span class="n">painter</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_MouseOver</span><span class="p">:</span>
+            <span class="n">tooltip</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tooltip&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">tooltip</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tooltip</span><span class="p">:</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span>
+                    <span class="mi">500</span><span class="p">,</span>
+                    <span class="k">lambda</span> <span class="n">o</span><span class="o">=</span><span class="n">view_option</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">rect</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tooltip</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_draw_tooltip</span><span class="p">(</span>
+                        <span class="n">o</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_draw_push_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw a push button.</span>
+
+<span class="sd">        Ideally calling QStyle.drawControl method with QStyle.CE_PushButton could render the push button, but</span>
+<span class="sd">        there are issues with certain styles, so the QCommonStyle drawControl method is reimplemented with</span>
+<span class="sd">        some special handling.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">style</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">style</span><span class="p">()</span> <span class="k">if</span> <span class="n">widget</span> <span class="k">else</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
+
+        <span class="n">is_flat</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">features</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionButton</span><span class="o">.</span><span class="n">Flat</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_flat</span><span class="p">:</span>
+            <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawControl</span><span class="p">(</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">CE_PushButtonBevel</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">painter</span>
+            <span class="p">)</span>
+
+        <span class="n">subopt</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionButton</span><span class="p">(</span><span class="n">button_option</span><span class="p">)</span>
+        <span class="n">subopt</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">subElementRect</span><span class="p">(</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">SE_PushButtonContents</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span>
+        <span class="p">)</span>
+        <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawControl</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">CE_PushButtonLabel</span><span class="p">,</span> <span class="n">subopt</span><span class="p">,</span> <span class="n">painter</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_HasFocus</span><span class="p">:</span>
+            <span class="n">fropt</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionFocusRect</span><span class="p">()</span>
+            <span class="n">fropt</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_option_background_brush</span><span class="p">(</span>
+                <span class="n">button_option</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">color</span><span class="p">()</span>
+            <span class="n">fropt</span><span class="o">.</span><span class="n">palette</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span>
+            <span class="n">fropt</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span>
+            <span class="n">fropt</span><span class="o">.</span><span class="n">fontMetrics</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">fontMetrics</span>
+            <span class="n">fropt</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">subElementRect</span><span class="p">(</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">SE_PushButtonFocusRect</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span>
+            <span class="p">)</span>
+            <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawPrimitive</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">PE_FrameFocusRect</span><span class="p">,</span> <span class="n">fropt</span><span class="p">,</span> <span class="n">painter</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_style_option</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">style_option</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the style option to render the index action.</span>
+
+<span class="sd">        :param style_option: The style option used for rendering the item. This will be specific to the</span>
+<span class="sd">            element to be drawn (e.g. QStyleOptionButton, QStyleOptionProgressBar, etc.).</span>
+<span class="sd">        :type style_option: :class:`sgtk.platform.qt.QtGui.QStyleOption`</span>
+<span class="sd">        :param view_option: The option used for rendering the item.</span>
+<span class="sd">        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param widget: Set this widget for the style option to inherit the style from.</span>
+<span class="sd">        :type widget: QtGui.QWidget</span>
+<span class="sd">        :param action: The action to draw the push button for</span>
+<span class="sd">        :type action: ViewItemAction</span>
+<span class="sd">        :param rect: The action&#39;s bounding rect</span>
+<span class="sd">        :type rect: QRect</span>
+<span class="sd">        :param index_data: The specifici data for the action and the index being rendered</span>
+<span class="sd">        :type index_data: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">widget</span><span class="p">:</span>
+            <span class="n">style_option</span><span class="o">.</span><span class="n">initFrom</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
+        <span class="n">style_option</span><span class="o">.</span><span class="n">fontMetrics</span> <span class="o">=</span> <span class="n">view_option</span><span class="o">.</span><span class="n">fontMetrics</span>
+        <span class="n">style_option</span><span class="o">.</span><span class="n">palette</span> <span class="o">=</span> <span class="n">view_option</span><span class="o">.</span><span class="n">palette</span>
+        <span class="n">style_option</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">rect</span>
+        <span class="n">style_option</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Active</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Enabled</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Add the hover state, if the current cursor position intersects the action rect.</span>
+        <span class="n">is_hover</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hit_box_test</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_hover</span><span class="p">:</span>
+            <span class="n">style_option</span><span class="o">.</span><span class="n">state</span> <span class="o">|=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_MouseOver</span>
+
+        <span class="c1"># TODO find a better way to specifiy the palette color based on button state.</span>
+        <span class="c1"># e.g. is there a way leverage the palette color group and roles?</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">palette_brushes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_hover</span><span class="p">:</span>
+                <span class="n">brushes</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">palette_brushes</span><span class="p">[</span><span class="s2">&quot;hover&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">brushes</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">palette_brushes</span><span class="p">[</span><span class="s2">&quot;active&quot;</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span> <span class="ow">in</span> <span class="n">brushes</span><span class="p">:</span>
+                <span class="n">style_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_action_progress_bar_option</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the progress bar style option to render the index action.</span>
+
+<span class="sd">        :param style_option: The style option used for rendering the item. This will be specific to the</span>
+<span class="sd">            element to be drawn (e.g. QStyleOptionButton, QStyleOptionProgressBar, etc.).</span>
+<span class="sd">        :type style_option: :class:`sgtk.platform.qt.QtGui.QStyleOption`</span>
+<span class="sd">        :param view_option: The option used for rendering the item.</span>
+<span class="sd">        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param widget: Set this widget for the style option to inherit the style from.</span>
+<span class="sd">        :type widget: QtGui.QWidget</span>
+<span class="sd">        :param action: The action to draw the push button for</span>
+<span class="sd">        :type action: ViewItemAction</span>
+<span class="sd">        :param rect: The action&#39;s bounding rect</span>
+<span class="sd">        :type rect: QRect</span>
+<span class="sd">        :param index_data: The specifici data for the action and the index being rendered</span>
+<span class="sd">        :type index_data: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">progress_bar_option</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionProgressBar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_style_option</span><span class="p">(</span>
+            <span class="n">progress_bar_option</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
+        <span class="p">)</span>
+
+        <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;minimum&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">maximum</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;maximum&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;progress&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">textVisible</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;text_visible&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">textAlignment</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;text_alignment&quot;</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span>
+        <span class="p">)</span>
+        <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">bottomToTop</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bottom_to_top&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">progress_bar_option</span><span class="o">.</span><span class="n">invertedAppearance</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;inverted_appearance&quot;</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">progress_bar_option</span>
+
+    <span class="k">def</span> <span class="nf">_get_action_button_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the button style option to render the index action.</span>
+
+<span class="sd">        :param style_option: The style option used for rendering the item. This will be specific to the</span>
+<span class="sd">            element to be drawn (e.g. QStyleOptionButton, QStyleOptionProgressBar, etc.).</span>
+<span class="sd">        :type style_option: :class:`sgtk.platform.qt.QtGui.QStyleOption`</span>
+<span class="sd">        :param view_option: The option used for rendering the item.</span>
+<span class="sd">        :type view_option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param widget: Set this widget for the style option to inherit the style from.</span>
+<span class="sd">        :type widget: QtGui.QWidget</span>
+<span class="sd">        :param action: The action to draw the push button for</span>
+<span class="sd">        :type action: ViewItemAction</span>
+<span class="sd">        :param rect: The action&#39;s bounding rect</span>
+<span class="sd">        :type rect: QRect</span>
+<span class="sd">        :param index_data: The specifici data for the action and the index being rendered</span>
+<span class="sd">        :type index_data: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">button_option</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_style_option</span><span class="p">(</span>
+            <span class="n">button_option</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
+        <span class="p">)</span>
+
+        <span class="n">button_option</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># Set the action icon</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;icon&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">icon</span><span class="p">:</span>
+            <span class="n">icon_size</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;icon_size&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">action</span><span class="o">.</span><span class="n">icon_size</span>
+            <span class="n">button_option</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">icon</span>
+            <span class="n">button_option</span><span class="o">.</span><span class="n">iconSize</span> <span class="o">=</span> <span class="n">icon_size</span>
+
+        <span class="c1"># Apply any additional features defined by the action.</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
+            <span class="n">button_option</span><span class="o">.</span><span class="n">features</span> <span class="o">|=</span> <span class="n">action</span><span class="o">.</span><span class="n">features</span>
+
+        <span class="c1"># Icons and checkboxes are rendered as flat buttons</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ViewItemAction</span><span class="o">.</span><span class="n">TYPE_ICON</span><span class="p">,</span> <span class="n">ViewItemAction</span><span class="o">.</span><span class="n">TYPE_CHECK_BOX</span><span class="p">):</span>
+            <span class="n">button_option</span><span class="o">.</span><span class="n">features</span> <span class="o">|=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionButton</span><span class="o">.</span><span class="n">Flat</span>
+
+        <span class="c1"># Override palette to invert text color for flat buttons it have a higher contrast</span>
+        <span class="k">if</span> <span class="n">button_option</span><span class="o">.</span><span class="n">features</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyleOptionButton</span><span class="o">.</span><span class="n">Flat</span><span class="p">:</span>
+            <span class="n">is_hover</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_MouseOver</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_hover</span> <span class="ow">or</span> <span class="n">action</span><span class="o">.</span><span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">brush</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">light</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">brush</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">buttonText</span><span class="p">()</span>
+            <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">ButtonText</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span>
+            <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Window</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span>
+
+        <span class="c1"># Override the palette for disabled buttons</span>
+        <span class="c1"># This is a work aroudn because the QStyle draw methods do not seem to render the</span>
+        <span class="c1"># &quot;disabled&quot; state for the button, even when the palette &quot;Disabled&quot; color group is set</span>
+        <span class="k">if</span> <span class="n">button_option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Enabled</span><span class="p">:</span>
+            <span class="c1"># Button enabled - leave the palette as is</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Button disabled - set the button and button text brushes to render a &#39;greyed out&#39; look</span>
+            <span class="n">disabledButtonText</span> <span class="o">=</span> <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">buttonText</span><span class="p">()</span>
+            <span class="n">disabledButtonTextColor</span> <span class="o">=</span> <span class="n">disabledButtonText</span><span class="o">.</span><span class="n">color</span><span class="p">()</span>
+            <span class="n">disabledButtonTextColor</span><span class="o">.</span><span class="n">setAlpha</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+            <span class="n">disabledButtonText</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">disabledButtonTextColor</span><span class="p">)</span>
+            <span class="n">button_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">ButtonText</span><span class="p">,</span> <span class="n">disabledButtonText</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">button_option</span>
 
     <span class="k">def</span> <span class="nf">_draw_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2119,8 +2418,6 @@
 <span class="sd">        :type rect: :class:`sgtk.platform.qt.QtCore.QRect`</span>
 <span class="sd">        :param text: The tooltip text to display.</span>
 <span class="sd">        :type text: str</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">cursor_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_pos</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
@@ -2145,8 +2442,6 @@
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
 <span class="sd">        :param elided: True if the text has already been processed and is elided, else False. If</span>
 <span class="sd">                       set to None, the text has not been processed.</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Only show tooltips if enabled and the cursor is hovering</span>
@@ -2300,7 +2595,7 @@
         <span class="n">title_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="n">subtitle_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-        <span class="n">do_elide</span> <span class="o">=</span> <span class="n">option</span> <span class="ow">and</span> <span class="n">rect</span> <span class="ow">and</span> <span class="n">rect</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
+        <span class="n">do_elide</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elide_header</span> <span class="ow">and</span> <span class="n">option</span> <span class="ow">and</span> <span class="n">rect</span> <span class="ow">and</span> <span class="n">rect</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">do_elide</span><span class="p">:</span>
             <span class="c1"># FIXME for now we&#39;ve just picked an arbitrary value to account for the HTML table offset</span>
             <span class="c1"># to the available width for the text</span>
@@ -2312,7 +2607,7 @@
             <span class="c1"># There is only a title</span>
             <span class="k">if</span> <span class="n">do_elide</span><span class="p">:</span>
                 <span class="c1"># Elide the title when the option and rect are provided, and there is text overflow.</span>
-                <span class="n">_</span><span class="p">,</span> <span class="n">elided_title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">elided_title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_elided_text</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
                 <span class="n">elided</span> <span class="o">=</span> <span class="n">title</span> <span class="o">!=</span> <span class="n">elided_title</span>
                 <span class="n">title</span> <span class="o">=</span> <span class="n">six</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_title</span><span class="p">)</span>
 
@@ -2322,7 +2617,9 @@
             <span class="c1"># There is only a subtitle</span>
             <span class="k">if</span> <span class="n">do_elide</span><span class="p">:</span>
                 <span class="c1"># Elide the title when the option and rect are provided, and there is text overflow.</span>
-                <span class="n">_</span><span class="p">,</span> <span class="n">elided_subtitle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">subtitle</span><span class="p">)</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">elided_subtitle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_elided_text</span><span class="p">(</span>
+                    <span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">subtitle</span>
+                <span class="p">)</span>
                 <span class="n">elided</span> <span class="o">=</span> <span class="n">subtitle</span> <span class="o">!=</span> <span class="n">elided_subtitle</span>
                 <span class="n">subtitle</span> <span class="o">=</span> <span class="n">six</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_subtitle</span><span class="p">)</span>
 
@@ -2379,8 +2676,8 @@
                             <span class="nb">int</span><span class="p">(</span><span class="n">subtitle_width_pct</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
                         <span class="p">)</span>
 
-                    <span class="n">_</span><span class="p">,</span> <span class="n">elided_title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">title_width</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
-                    <span class="n">_</span><span class="p">,</span> <span class="n">elided_subtitle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span><span class="p">(</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">elided_title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_elided_text</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">title_width</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">elided_subtitle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_elided_text</span><span class="p">(</span>
                         <span class="n">option</span><span class="p">,</span> <span class="n">subtitle_width</span><span class="p">,</span> <span class="n">subtitle</span>
                     <span class="p">)</span>
                     <span class="n">elided</span> <span class="o">=</span> <span class="n">title</span> <span class="o">!=</span> <span class="n">elided_title</span> <span class="ow">or</span> <span class="n">subtitle</span> <span class="o">!=</span> <span class="n">elided_subtitle</span>
@@ -2396,11 +2693,11 @@
 
         <span class="c1"># The final formatted text</span>
         <span class="n">formatted_header</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s1">&#39;&lt;table width=&quot;100%&quot; border=&quot;</span><span class="si">{border}</span><span class="s1">&quot;&gt;&lt;tr&gt;</span><span class="si">{title_cell}{subtitle_cell}</span><span class="s1">&lt;/tr&gt;&lt;/table&gt;&#39;</span>
+            <span class="s1">&#39;&lt;table width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;</span><span class="si">{border}</span><span class="s1">&quot;&gt;&lt;tr&gt;</span><span class="si">{title_cell}{subtitle_cell}</span><span class="s1">&lt;/tr&gt;&lt;/table&gt;&#39;</span>
         <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">title_cell</span><span class="o">=</span><span class="n">title_html</span><span class="p">,</span>
             <span class="n">subtitle_cell</span><span class="o">=</span><span class="n">subtitle_html</span><span class="p">,</span>
-            <span class="n">border</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="k">if</span> <span class="n">DEBUG_PAINT</span> <span class="k">else</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+            <span class="n">border</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="k">if</span> <span class="n">DEBUG_PAINT</span> <span class="k">else</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="n">formatted_header</span><span class="p">,</span> <span class="n">elided</span><span class="p">)</span> <span class="k">if</span> <span class="n">return_elided</span> <span class="k">else</span> <span class="n">formatted_header</span>
@@ -2499,13 +2796,13 @@
 
         <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">actions</span> <span class="ow">in</span> <span class="n">item_action_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="c1"># The offset will indicate where the next action bounding rect should start.</span>
-            <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span>
 
             <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
                 <span class="c1"># Get the bounding rect for this action</span>
                 <span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_rect</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
                 <span class="c1"># Increment the offset to get the next action boudning rect.</span>
-                <span class="n">offset</span> <span class="o">+=</span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span>
+                <span class="n">offset</span> <span class="o">+=</span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span>
                 <span class="n">rects</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">rects</span>
@@ -2539,7 +2836,7 @@
             <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
 
         <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-            <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon_size</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
+            <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon_size</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
             <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span>
             <span class="o">+</span> <span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
             <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
@@ -2626,7 +2923,7 @@
         <span class="n">loading_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_loading_rect</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">loading_rect</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
             <span class="c1"># Adjust the rect to the left, when displaying the loading indicator.</span>
-            <span class="n">dx2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dx2</span><span class="p">,</span> <span class="n">loading_rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span><span class="p">)</span>
+            <span class="n">dx2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dx2</span><span class="p">,</span> <span class="n">loading_rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span><span class="p">)</span>
         <span class="n">dx2</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">right</span>
 
         <span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">top</span>
@@ -2658,47 +2955,56 @@
         <span class="n">index_data</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">index</span><span class="p">)</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="n">icon</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;icon&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span>
+        <span class="n">icon_size</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;icon_size&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">action</span><span class="o">.</span><span class="n">icon_size</span>
 
-        <span class="c1"># Calculate the width of the action</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">padding</span> <span class="o">*</span> <span class="mi">2</span>
-        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
-            <span class="c1"># Add the width of the text, and a little buffer</span>
-            <span class="n">width</span> <span class="o">+=</span> <span class="n">option</span><span class="o">.</span><span class="n">fontMetrics</span><span class="o">.</span><span class="n">width</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span>
-            <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">icon</span><span class="p">:</span>
-                <span class="c1"># Add padding between the icon and text</span>
-                <span class="n">width</span> <span class="o">+=</span> <span class="mi">14</span>
+        <span class="k">if</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;100%&quot;</span><span class="p">:</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Calculate the width of the action</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s2">&quot;padding_left&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">get_padding_left</span><span class="p">()</span>
+            <span class="p">)</span> <span class="o">+</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;padding_right&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">get_padding_right</span><span class="p">())</span>
 
-        <span class="k">if</span> <span class="n">icon</span><span class="p">:</span>
-            <span class="c1"># Add the width of the icon</span>
-            <span class="n">width</span> <span class="o">+=</span> <span class="n">action</span><span class="o">.</span><span class="n">icon_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+            <span class="c1"># Extend the width for the text</span>
+            <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">+=</span> <span class="n">option</span><span class="o">.</span><span class="n">fontMetrics</span><span class="o">.</span><span class="n">width</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span>
 
-        <span class="c1"># Set the height to the greater of the text height and the icon height. Add padding</span>
-        <span class="c1"># defined by the action</span>
-        <span class="n">height</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="nb">max</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">fontMetrics</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span> <span class="n">action</span><span class="o">.</span><span class="n">icon_size</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
-            <span class="o">+</span> <span class="n">action</span><span class="o">.</span><span class="n">padding</span> <span class="o">*</span> <span class="mi">2</span>
-        <span class="p">)</span>
+            <span class="c1"># Extend the width for the icon</span>
+            <span class="k">if</span> <span class="n">icon</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">+=</span> <span class="n">icon_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+
+            <span class="c1"># Extend the width for by the width hint</span>
+            <span class="n">width</span> <span class="o">+=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">width_hint</span><span class="p">())</span>
+
+        <span class="c1"># Set the height to the height of a single text line, plus padding.</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;padding_top&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">get_padding_top</span><span class="p">()</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;padding_bottom&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">get_padding_bottom</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;adjust_height_to_icon&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">height</span> <span class="o">+=</span> <span class="n">icon_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">height</span> <span class="o">+=</span> <span class="n">option</span><span class="o">.</span><span class="n">fontMetrics</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
 
         <span class="c1"># Calculate the top left (origin) point, based on the position and offset, to draw the action rect</span>
         <span class="k">if</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP_LEFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_TOP_LEFT</span><span class="p">):</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
                 <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span>
-                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span><span class="p">,</span>
+                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP_RIGHT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_TOP_RIGHT</span><span class="p">):</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
                 <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">-</span> <span class="n">width</span><span class="p">,</span>
-                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span><span class="p">,</span>
+                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM_LEFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_BOTTOM_LEFT</span><span class="p">):</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
                 <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span>
-                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span> <span class="o">-</span> <span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span><span class="p">,</span>
+                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span> <span class="o">-</span> <span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM_RIGHT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_BOTTOM_RIGHT</span><span class="p">):</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
                 <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">-</span> <span class="n">width</span><span class="p">,</span>
-                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span> <span class="o">-</span> <span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span><span class="p">,</span>
+                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span> <span class="o">-</span> <span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_LEFT</span><span class="p">):</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
@@ -2710,6 +3016,13 @@
                 <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">-</span> <span class="n">width</span><span class="p">,</span>
                 <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
             <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">position</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">CENTER</span><span class="p">:</span>
+            <span class="n">origin</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+                <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Unsupported action position &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
 
@@ -2730,10 +3043,30 @@
 
         <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_and_rects</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="p">[</span><span class="n">position</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">action</span><span class="p">,</span> <span class="n">action_rect</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
-            <span class="n">width</span> <span class="o">+=</span> <span class="n">action_rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">action_rect</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
+            <span class="n">width</span> <span class="o">+=</span> <span class="n">action_rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span>
 
         <span class="k">return</span> <span class="n">width</span>
+
+    <span class="k">def</span> <span class="nf">_get_actions_maximum_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the maximum height of all actions.</span>
+
+<span class="sd">        :param option: The option used for rendering the item.</span>
+<span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param index: The index of the item.</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: The maximum height value of all the actions.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_and_rects</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">action_rect</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
+            <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">action_rect</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span>
 
     <span class="k">def</span> <span class="nf">_get_actions_left_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">include_margin</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2805,10 +3138,9 @@
 
         <span class="k">if</span> <span class="n">offset</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># Add the margin from the option rect to the first action.</span>
-            <span class="c1"># offset += self.button_margin</span>
             <span class="k">if</span> <span class="n">include_margin</span><span class="p">:</span>
                 <span class="c1"># Optionally add margin at the end of the actions.</span>
-                <span class="n">offset</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_margin</span>
+                <span class="n">offset</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span>
 
         <span class="k">return</span> <span class="n">offset</span>
 
@@ -2848,7 +3180,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">actions_and_rects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_action_and_rects</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">actions_and_rects</span><span class="p">:</span>
+
+        <span class="c1"># Check for actions in reverse order, since the actions added last will appear in the &quot;front&quot;</span>
+        <span class="k">for</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">actions_and_rects</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">rect</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">action</span>
 
@@ -2920,8 +3254,6 @@
 
 <span class="sd">        :param index: The model index of the item.</span>
 <span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_role</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2964,6 +3296,7 @@
         <span class="c1"># in the QStyledItemDelegate `initStyleOption` method, the font is set based on the model</span>
         <span class="c1"># index data for the QtCore.Qt.FontRole.</span>
         <span class="n">doc</span><span class="o">.</span><span class="n">setDefaultFont</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="ow">or</span> <span class="n">option</span><span class="o">.</span><span class="n">font</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">setDefaultStyleSheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document_style_sheet</span><span class="p">)</span>
         <span class="n">doc</span><span class="o">.</span><span class="n">setDocumentMargin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_document_margin</span><span class="p">)</span>
 
         <span class="n">text_option</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QTextOption</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">defaultTextOption</span><span class="p">())</span>
@@ -3144,13 +3477,20 @@
                     <span class="c1"># Exceeded the number of visible lines. Stop formatting.</span>
                     <span class="k">break</span>
 
-                <span class="c1"># Because the text is allowed to be HTML formatted, in order to elide an</span>
-                <span class="c1"># individual line (if necessary), the text must be rendered using a</span>
-                <span class="c1"># QTextDocument which then the document can be used to determine if the</span>
-                <span class="c1"># formatted text exceeds the maximum width. A side effect of eliding the</span>
-                <span class="c1"># text using a QTextDocument is that the resulting elided text will be</span>
-                <span class="c1"># a full HTML doc string.</span>
-                <span class="n">doc</span><span class="p">,</span> <span class="n">elided_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">text</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">elide_text</span><span class="p">:</span>
+                    <span class="c1"># Because the text is allowed to be HTML formatted, in order to elide an</span>
+                    <span class="c1"># individual line (if necessary), the text must be rendered using a</span>
+                    <span class="c1"># QTextDocument which then the document can be used to determine if the</span>
+                    <span class="c1"># formatted text exceeds the maximum width. A side effect of eliding the</span>
+                    <span class="c1"># text using a QTextDocument is that the resulting elided text will be</span>
+                    <span class="c1"># a full HTML doc string.</span>
+                    <span class="n">doc</span><span class="p">,</span> <span class="n">elided_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_elided_text</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">text</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Even though the text is not elided, still need to get the text document</span>
+                    <span class="c1"># to measure the text height for clipping</span>
+                    <span class="n">doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_text_document</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+                    <span class="n">doc</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                    <span class="n">elided_text</span> <span class="o">=</span> <span class="kc">None</span>
 
                 <span class="k">if</span> <span class="n">clip</span><span class="p">:</span>
                     <span class="n">height</span> <span class="o">+=</span> <span class="n">doc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="n">margin_offset</span>
@@ -3158,7 +3498,7 @@
                         <span class="c1"># Text height exceeded the maximum. Stop formatting.</span>
                         <span class="k">break</span>
 
-                <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="n">elided_text</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">elided_text</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">text</span> <span class="o">==</span> <span class="n">elided_text</span><span class="p">:</span>
                     <span class="c1"># Text did not change, just add the text and a line break.</span>
                     <span class="n">html_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
                     <span class="n">html_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&lt;br/&gt;&quot;</span><span class="p">)</span>
@@ -3185,11 +3525,17 @@
         <span class="n">formatted_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">html_lines</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">formatted_str</span><span class="p">,</span> <span class="n">elided</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">elide_mode</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_elided_text</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">elide_mode</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Elide the text if the width exceeds the given `target_width`. This slightly tweaks</span>
 <span class="sd">        the implementation from :class:`ElidedLabel` method `_elide_text`.</span>
 
+<span class="sd">        :param option: The view option the text is rendered in.</span>
+<span class="sd">        :type option: :class:`sgtk.platform.qt.QtGui.QStyleOptionViewItem`</span>
+<span class="sd">        :param target_width: The desired width for the text</span>
+<span class="sd">        :type target_width: int</span>
 <span class="sd">        :param text: The text to elide</span>
 <span class="sd">        :type text: str</span>
 <span class="sd">        :param elide_mode: The elide mode to use</span>
@@ -3274,12 +3620,31 @@
 <span class="sd">    Class object to handle rendering item actions in the :class:`ViewItemDelegate`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># Enum to describe the type of view item action.</span>
+    <span class="p">(</span>
+        <span class="n">TYPE_PUSH_BUTTON</span><span class="p">,</span>
+        <span class="n">TYPE_RADIO_BUTTON</span><span class="p">,</span>
+        <span class="n">TYPE_CHECK_BOX</span><span class="p">,</span>
+        <span class="n">TYPE_PROGRESS_BAR</span><span class="p">,</span>
+        <span class="n">TYPE_ICON</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># Default widths for action types</span>
+    <span class="n">DEFAULT_WIDTHS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">TYPE_RADIO_BUTTON</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="n">TYPE_PROGRESS_BAR</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">}</span>
+
     <span class="c1"># The action attributes that will be used to initialize the object.</span>
     <span class="n">_ATTRIBUTES</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">{</span>
             <span class="c1"># The text/label displayed for the action button</span>
             <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">TYPE_PUSH_BUTTON</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="c1"># The action button option style features</span>
@@ -3300,15 +3665,32 @@
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;padding_top&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;padding_right&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;padding_bottom&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;padding_left&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
             <span class="c1"># Text to display in a tooltip when the cursor is over the action</span>
             <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;tooltip&quot;</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="c1"># Specific palette brushes to set for the action button. Palette brushes</span>
-            <span class="c1"># list items should be in the format of a tuple, e.g.:</span>
+            <span class="c1"># dict maps brush type to list of brush items, which should be in the</span>
+            <span class="c1"># format of a tuple, e.g.:</span>
             <span class="c1">#   (QPalette.ColorGroup, QPalette.ColorRole, QBrush)</span>
             <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;palette_brushes&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="p">{},</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="c1"># Flag indicating if this action should always been shown, no matter what the state is</span>
@@ -3316,12 +3698,12 @@
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="p">{</span>
-            <span class="c1"># Flag indication to show the action when the action&#39;s item is selected</span>
+            <span class="c1"># Flag indicating to show the action when the action&#39;s item is selected</span>
             <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;show_on_selected&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="p">{</span>
-            <span class="c1"># Flag indication to show the action when the action&#39;s item is hovered over</span>
+            <span class="c1"># Flag indicating to show the action when the action&#39;s item is hovered over</span>
             <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;show_on_hover&quot;</span><span class="p">,</span>
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">},</span>
@@ -3335,6 +3717,24 @@
             <span class="c1"># Callback function used to execute some operations when the action is &quot;clicked&quot;</span>
             <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;callback&quot;</span><span class="p">,</span>
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="c1"># Set a fixed width for the action</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;width&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="c1"># Flag indicating to draw the action or not, but maintains space for the action regardless of</span>
+            <span class="c1"># if it is drawn or not (e.g. this action acts as a spacer, which may be desirable to keep</span>
+            <span class="c1"># actions lined up in each row of the delegate&#39;s view)</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;placeholder&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="c1"># The Qt.ItemDataRole to use set/get the action&#39;s check state data. This is usefule if an</span>
+            <span class="c1"># item has more than one checkable action</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;check_state_role&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">,</span>
         <span class="p">},</span>
     <span class="p">]</span>
 
@@ -3361,6 +3761,11 @@
             <span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">checkable_types</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a tuple icontaining the types that can be checked.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">TYPE_CHECK_BOX</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">TYPE_RADIO_BUTTON</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">set_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icon</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the action icon. If a string is given, create the icon from the string. The icon will be</span>
@@ -3368,8 +3773,6 @@
 
 <span class="sd">        :param icon: The action icon</span>
 <span class="sd">        :type icon: str | :class:`sgkt.platform.qt.QtGui.QIcon`</span>
-
-<span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">icon</span><span class="p">:</span>
@@ -3400,6 +3803,24 @@
         <span class="n">index_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visible&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience method to get the state of the action for the given index.</span>
+
+<span class="sd">        :param parent: The parent of delegate who requested the data.</span>
+<span class="sd">        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`</span>
+<span class="sd">        :param index: The model item index</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: The action state.</span>
+<span class="sd">        :rtype: QState</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">index_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Active</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Enabled</span>
+        <span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get the current action name for the given index. The</span>
@@ -3416,6 +3837,74 @@
 
         <span class="n">index_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">is_clickable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An action is clickable if:</span>
+<span class="sd">            1. It is visible and not a placeholder</span>
+<span class="sd">            2. It is a checkbox or radio action, or has a callback</span>
+<span class="sd">            3. It is in an enabled state</span>
+
+<span class="sd">        :param parent: The parent of deleaget who requested the data.</span>
+<span class="sd">        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`</span>
+<span class="sd">        :param index: The model item index</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: True if the action is clickable, else False.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">index_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visible&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;placeholder&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkable_types</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Enabled</span>
+
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">width_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the suggested width to display the action.</span>
+
+<span class="sd">        :param parent: The parent of deleaget who requested the data.</span>
+<span class="sd">        :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`</span>
+<span class="sd">        :param index: The model item index</span>
+<span class="sd">        :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`</span>
+
+<span class="sd">        :return: The width hint for action.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_WIDTHS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_padding_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the padding for above the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_top</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+
+    <span class="k">def</span> <span class="nf">get_padding_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the padding to the right of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_right</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+
+    <span class="k">def</span> <span class="nf">get_padding_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the padding for below the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_bottom</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+
+    <span class="k">def</span> <span class="nf">get_padding_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the padding to the left of the action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_left</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
 </pre></div>
 
            </div>
