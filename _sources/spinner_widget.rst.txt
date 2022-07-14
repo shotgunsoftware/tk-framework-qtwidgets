@@ -9,6 +9,5 @@ that something is loading.
 
 .. autoclass:: SpinnerWidget
     :show-inheritance:
-    :inherited-members:
     :members:
     :exclude-members: closeEvent, hideEvent, paintEvent, showEvent

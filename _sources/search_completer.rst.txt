@@ -17,7 +17,6 @@ was activated.
 
 .. autoclass:: GlobalSearchCompleter
     :members:
-    :inherited-members:
 
 
 Hierarchical Search Completer
@@ -32,4 +31,3 @@ hierarchy was selected.
 
 .. autoclass:: HierarchicalSearchCompleter
     :members:
-    :inherited-members:
