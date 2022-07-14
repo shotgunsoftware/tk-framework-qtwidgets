@@ -98,7 +98,7 @@ class ShotgunWidget(QtGui.QWidget):
         else:
             pixmap = thumbnail.pixmap(512)
 
-        self.set_scaled_thumbanil(pixmap)
+        self.set_scaled_thumbnail(pixmap)
         self._ui.thumbnail.setVisible(True)
 
     def set_selected(self, selected):
@@ -143,9 +143,9 @@ class ShotgunWidget(QtGui.QWidget):
         :type event: QResizeEvent
         """
 
-        self.set_scaled_thumbanil()
+        self.set_scaled_thumbnail()
 
-    def set_scaled_thumbanil(self, pixmap=None):
+    def set_scaled_thumbnail(self, pixmap=None):
         """
         Set the thumbnail label pixmap.
 
