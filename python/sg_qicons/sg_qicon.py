@@ -186,3 +186,13 @@ class SGQIcon(QtGui.QIcon):
             normal_off=cls.resource_path("toggle_inactive", size),
             normal_on=cls.resource_path("toggle_active", size),
         )
+
+    @classmethod
+    def refresh(cls, size=SIZE_20x20):
+        icon = cls.resource_path("refresh", size)
+        return cls(icon)
+
+    @classmethod
+    def refresh_grey(cls, size=SIZE_20x20):
+        icon = cls.resource_path("refresh_grey", size)
+        return cls(icon)
