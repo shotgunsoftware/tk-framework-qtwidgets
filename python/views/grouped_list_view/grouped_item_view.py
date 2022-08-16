@@ -671,7 +671,6 @@ class GroupedItemView(QtGui.QAbstractItemView):
                     index = self.model().index(row, 0)
                     selection.select(index, index)
                     y_offset += self._item_spacing.height() + self._group_spacing
-                    continue
 
             # check for selection of child items
             y_offset += item_info.rect.height()
