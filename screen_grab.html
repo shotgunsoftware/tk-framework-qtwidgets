@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Screen Capture Widget &mdash; tk-framework-qtwidgets v2.10.4 documentation</title>
+  <title>Screen Capture Widget &mdash; tk-framework-qtwidgets master documentation</title>
   
 
   
@@ -137,7 +137,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.4.<br>
+    <b>tk-framework-qtwidgets</b> master.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -147,6 +147,12 @@
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
+    <style>
+        p.privacy_links { margin: 4px 0px;}
+    </style>
+    <p class="privacy_links"><a data-opt-in-preferences href="javascript:;">Privacy settings</a></p>
+    <p class="privacy_links"><a data-wat-linkname="manage-ccpa-settings-footer-link" href="javascript:;">Do not sell my personal information</a></p>
+    <p class="privacy_links"><a href="https://www.autodesk.com/company/legal-notices-trademarks/privacy-statement">Privacy/Cookies</a></p>
 
 
 
@@ -214,57 +220,6 @@
 Similar to pressing CMD+SHIFT+4/CMD+SHIFT+3 on the mac, this widget implements
 several different ways in which the screen can be captured, either via
 a cross hair style selection or by grabbing the entire screen.</p>
-<dl class="function">
-<dt id="screen_grab.get_desktop_pixmap">
-<code class="descclassname">screen_grab.</code><code class="descname">get_desktop_pixmap</code><span class="sig-paren">(</span><em>rect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#get_desktop_pixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.get_desktop_pixmap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs a screen capture on the specified rectangle.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rect</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtCore/QRect.html#PySide.QtCore.QRect" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QRect</span></code></a>) – Rectangle to capture</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Captured image</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="screen_grab.screen_capture">
-<code class="descclassname">screen_grab.</code><code class="descname">screen_capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#screen_grab.screen_capture" title="Permalink to this definition">¶</a></dt>
-<dd><p>Modally displays the screen capture tool.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Captured screen</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QPixmap.html#PySide.QtGui.QPixmap" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="screen_grab.screen_capture_file">
-<code class="descclassname">screen_grab.</code><code class="descname">screen_capture_file</code><span class="sig-paren">(</span><em>output_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/screen_grab/screen_grab.html#screen_capture_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_grab.screen_capture_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Modally display the screen capture tool, saving to a file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>output_path</strong> – Path to save to. If no path is specified,
-a temp path is generated.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path where screenshot was saved.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 
 
@@ -315,15 +270,14 @@ a temp path is generated.</td>
   
  
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-2114792-1', 'auto');
-  ga('send', 'pageview');
-</script>
-
+  <script type="text/javascript">
+    window.wafCCPAForceShow = true;
+    (function(a,b,c,d){
+      a='https://tags.tiqcdn.com/utag/autodesk/micro-opt/prod/utag.js';
+      b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
+      a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
+    })();
+  </script>
 
 
 </body>

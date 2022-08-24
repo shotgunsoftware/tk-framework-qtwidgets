@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Widgets &mdash; tk-framework-qtwidgets v2.10.4 documentation</title>
+  <title>Shotgun Widgets &mdash; tk-framework-qtwidgets master documentation</title>
   
 
   
@@ -137,7 +137,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.4.<br>
+    <b>tk-framework-qtwidgets</b> master.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -147,6 +147,12 @@
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
     </div>
+    <style>
+        p.privacy_links { margin: 4px 0px;}
+    </style>
+    <p class="privacy_links"><a data-opt-in-preferences href="javascript:;">Privacy settings</a></p>
+    <p class="privacy_links"><a data-wat-linkname="manage-ccpa-settings-footer-link" href="javascript:;">Do not sell my personal information</a></p>
+    <p class="privacy_links"><a href="https://www.autodesk.com/company/legal-notices-trademarks/privacy-statement">Privacy/Cookies</a></p>
 
 
 
@@ -211,256 +217,6 @@
   <div class="section" id="shotgun-widgets">
 <h1>Shotgun Widgets<a class="headerlink" href="#shotgun-widgets" title="Permalink to this headline">¶</a></h1>
 <p>Widgets to display ShotGrid specific data using a Qt view and delegate, in customizable way.</p>
-<dl class="class">
-<dt id="shotgun_widget.ShotgunWidget">
-<em class="property">class </em><code class="descclassname">shotgun_widget.</code><code class="descname">ShotgunWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_widget.html#ShotgunWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QWidget</span></code></p>
-<p>Shotgun widget base class.</p>
-<p>Construction</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> – The parent widget</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="shotgun_widget.ShotgunWidget.set_thumbnail">
-<code class="descname">set_thumbnail</code><span class="sig-paren">(</span><em>thumbnail</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_widget.html#ShotgunWidget.set_thumbnail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunWidget.set_thumbnail" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the widget thumbnail. If the widget has been configured to display a thumbnail but no image has been
-supplied, a default picture will be displayed instead.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thumbnail</strong> – The thumbnail as a QtGui.QIcon</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_widget.ShotgunWidget.set_selected">
-<code class="descname">set_selected</code><span class="sig-paren">(</span><em>selected</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_widget.html#ShotgunWidget.set_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunWidget.set_selected" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adjust the style sheet to indicate selection or not</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>selected</strong> – True if selected, false if not</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_widget.ShotgunWidget.set_actions">
-<code class="descname">set_actions</code><span class="sig-paren">(</span><em>actions</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_widget.html#ShotgunWidget.set_actions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunWidget.set_actions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a list of QActions to the actions menu for this widget.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>actions</strong> – List of QActions to add</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="shotgun_widget.ShotgunListWidget">
-<em class="property">class </em><code class="descclassname">shotgun_widget.</code><code class="descname">ShotgunListWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_list_widget.html#ShotgunListWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunListWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">shotgun_widget.shotgun_widget.ShotgunWidget</span></code></p>
-<p>This Shotgun Widget is typically used in a list view mode.</p>
-<p>Class constructor</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> – The parent widget</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="shotgun_widget.ShotgunListWidget.set_formatting">
-<code class="descname">set_formatting</code><span class="sig-paren">(</span><em>top_left=None</em>, <em>top_right=None</em>, <em>body=None</em>, <em>thumbnail=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_list_widget.html#ShotgunListWidget.set_formatting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunListWidget.set_formatting" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the rendering of the widget items.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>top_left</strong> – Content to display in the top left area of the item</li>
-<li><strong>top_right</strong> – Content to display in the top right area of the item</li>
-<li><strong>body</strong> – Content to display in the main area of the item</li>
-<li><strong>thumbnail</strong> – If True, the widget will display a thumbnail. If False, no thumbnail will be displayed.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_widget.ShotgunListWidget.set_text">
-<code class="descname">set_text</code><span class="sig-paren">(</span><em>sg_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_list_widget.html#ShotgunListWidget.set_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunListWidget.set_text" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fill the widget items by replacing the tokens with the right values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_data</strong> – Dictionary of Shotgun data we want to use to replace the tokens with.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_widget.ShotgunListWidget.replace_extra_key">
-<code class="descname">replace_extra_key</code><span class="sig-paren">(</span><em>key_name</em>, <em>key_value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_list_widget.html#ShotgunListWidget.replace_extra_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunListWidget.replace_extra_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace a non-Shotgun token by its value.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>key_name</strong> – Name of the token to replace. It must be declared using &lt;&gt; character (eg &lt;NODE&gt;)</li>
-<li><strong>key_value</strong> – Replacement value to use</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_widget.ShotgunListWidget.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><em>thumbnail=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_list_widget.html#ShotgunListWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunListWidget.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear the widget values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thumbnail</strong> – If a thumbnail is supplied, it will be used as the “empty” thumbnail view</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="shotgun_widget.ShotgunListWidget.calculate_size">
-<em class="property">static </em><code class="descname">calculate_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_list_widget.html#ShotgunListWidget.calculate_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunListWidget.calculate_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates and returns a suitable size for this widget.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Size of the widget</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="shotgun_widget.ShotgunFolderWidget">
-<em class="property">class </em><code class="descclassname">shotgun_widget.</code><code class="descname">ShotgunFolderWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_folder_widget.html#ShotgunFolderWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunFolderWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">shotgun_widget.shotgun_widget.ShotgunWidget</span></code></p>
-<p>This Shotgun Widget is typically used in an icon view mode.</p>
-<p>Class constructor</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> – The parent widget</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="shotgun_widget.ShotgunFolderWidget.set_formatting">
-<code class="descname">set_formatting</code><span class="sig-paren">(</span><em>header=None</em>, <em>body=None</em>, <em>thumbnail=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_folder_widget.html#ShotgunFolderWidget.set_formatting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunFolderWidget.set_formatting" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the rendering of the widget items.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>header</strong> – Content to display in the header area of the item</li>
-<li><strong>body</strong> – Content to display in the main area of the item</li>
-<li><strong>thumbnail</strong> – If True, the widget will display a thumbnail. If False, no thumbnail will be displayed.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_widget.ShotgunFolderWidget.set_text">
-<code class="descname">set_text</code><span class="sig-paren">(</span><em>sg_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_folder_widget.html#ShotgunFolderWidget.set_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunFolderWidget.set_text" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fill the widget items by replacing the tokens with the right values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_data</strong> – Dictionary of Shotgun data we want to use to replace the tokens with.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_widget.ShotgunFolderWidget.replace_extra_key">
-<code class="descname">replace_extra_key</code><span class="sig-paren">(</span><em>key_name</em>, <em>key_value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_folder_widget.html#ShotgunFolderWidget.replace_extra_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunFolderWidget.replace_extra_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace a non-Shotgun token by its value.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>key_name</strong> – Name of the token to replace. It must be declared using &lt;&gt; character (eg &lt;NODE&gt;)</li>
-<li><strong>key_value</strong> – Replacement value to use</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="shotgun_widget.ShotgunFolderWidget.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><em>thumbnail=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_folder_widget.html#ShotgunFolderWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunFolderWidget.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear the widget values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thumbnail</strong> – If a thumbnail is supplied, it will be used as the “empty” thumbnail view</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="shotgun_widget.ShotgunFolderWidget.calculate_size">
-<em class="property">static </em><code class="descname">calculate_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_folder_widget.html#ShotgunFolderWidget.calculate_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunFolderWidget.calculate_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates and returns a suitable size for this widget.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Size of the widget</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 
 
@@ -511,15 +267,14 @@ supplied, a default picture will be displayed instead.</p>
   
  
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-2114792-1', 'auto');
-  ga('send', 'pageview');
-</script>
-
+  <script type="text/javascript">
+    window.wafCCPAForceShow = true;
+    (function(a,b,c,d){
+      a='https://tags.tiqcdn.com/utag/autodesk/micro-opt/prod/utag.js';
+      b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
+      a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
+    })();
+  </script>
 
 
 </body>
