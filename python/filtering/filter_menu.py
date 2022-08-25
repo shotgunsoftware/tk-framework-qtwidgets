@@ -319,6 +319,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         updated = False
 
         for field_id, filter_items in state.items():
+            if field_id not in self._filter_groups:
+                continue
+
             filter_group = self._filter_groups[field_id]
 
             if not self._field_visibility.get(field_id, False):
