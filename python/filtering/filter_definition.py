@@ -471,7 +471,13 @@ class FilterDefinition(object):
                         )
 
                 if not field_display.startswith(entity_display):
-                    field_display = "{} {}".format(entity_display, field_display)
+                    field_display = "{entity} {field}".format(
+                        entity=entity_display, field=field_display
+                    )
+                else:
+                    field_display = "{entity_and_field} ({field})".format(
+                        entity_and_field=field_display, field=sg_field
+                    )
 
             self._add_filter_definition(
                 field_id, sg_field, field_display, data_type, value, role
