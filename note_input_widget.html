@@ -230,9 +230,148 @@ be included in the TO list in the case of a new note and in the CC list in the
 case of a reply.</p>
 <div class="section" id="noteinputwidget">
 <h2>NoteInputWidget<a class="headerlink" href="#noteinputwidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="note_input_widget.NoteInputWidget">
+<em class="property">class </em><code class="descclassname">note_input_widget.</code><code class="descname">NoteInputWidget</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QWidget</span></code></p>
+<p>Note creation and reply widget with built in screen capture capabilites.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal data_updated:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Emitted when a note has been successfully created or
+replied to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal close_clicked:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Emitted if a user chooses to cancel the note
+creation by clicking the X button.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal entity_created:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Emitted when a Shotgun entity is created, which
+will be either a Note or Reply entity, depending on situation. The
+entity dictionary, as provided by the API, will be sent.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The parent QWidget for this control</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="note_input_widget.NoteInputWidget.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>disconnect and prepare for this object
+to be garbage collected</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="note_input_widget.NoteInputWidget.set_bg_task_manager">
+<code class="descname">set_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.set_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.set_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the background task manager to use to pull
+data in the background. Data calls
+to Shotgun will be dispatched via this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">task_manager.BackgroundTaskManager</span></code>) – Background task manager to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="note_input_widget.NoteInputWidget.add_files_to_attachments">
+<code class="descname">add_files_to_attachments</code><span class="sig-paren">(</span><em>file_paths</em>, <em>cleanup_after_upload=False</em>, <em>apply_attachments=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.add_files_to_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.add_files_to_attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the given list of file paths to the attachments list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_paths</strong> – A list of file paths to attach.</li>
+<li><strong>cleanup_after_upload</strong> – If True, the given files will be
+removed once they are uploaded to
+Shotgun.</li>
+<li><strong>apply_attachments</strong> – If True, files added to the attachments
+list will be applied and ready for upload.
+This is normally handled by the “check”
+button when accepting user-added files, but
+if this method is used to procedurally add
+attachments then this option must be used to
+ensure that the files end up attached to the
+Note when it is created.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="note_input_widget.NoteInputWidget.allow_screenshots">
+<code class="descname">allow_screenshots</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.allow_screenshots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.allow_screenshots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows or disallows screenshots.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Boolean</span></code>) – Allow or disallow screenshots.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="note_input_widget.NoteInputWidget.open_attachments">
+<code class="descname">open_attachments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.open_attachments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.open_attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the attachments editor into its “open mode” which will
+allow the user to attach files to the note.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="note_input_widget.NoteInputWidget.open_editor">
+<code class="descname">open_editor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.open_editor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.open_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the editor into its “open mode”
+where a user can type in stuff</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="note_input_widget.NoteInputWidget.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear any input and state and return the widget to its “closed” mode.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="note_input_widget.NoteInputWidget.set_current_entity">
+<code class="descname">set_current_entity</code><span class="sig-paren">(</span><em>entity_type</em>, <em>entity_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/widget.html#NoteInputWidget.set_current_entity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputWidget.set_current_entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the current entity that this widget is linked against</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entity_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Shotgun entity type</li>
+<li><strong>entity_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Shotgun entity id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="noteinputdialog">
 <h2>NoteInputDialog<a class="headerlink" href="#noteinputdialog" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="note_input_widget.NoteInputDialog">
+<em class="property">class </em><code class="descclassname">note_input_widget.</code><code class="descname">NoteInputDialog</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/note_input_widget/dialog.html#NoteInputDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#note_input_widget.NoteInputDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QDialog</span></code></p>
+<p>A dialog wrapper for the <a class="reference internal" href="#note_input_widget.NoteInputWidget" title="note_input_widget.NoteInputWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoteInputWidget</span></code></a> widget.</p>
+<p>Constructor.</p>
+</dd></dl>
+
 </div>
 </div>
 

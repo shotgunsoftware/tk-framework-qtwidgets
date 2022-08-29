@@ -217,6 +217,833 @@
   <div class="section" id="filtering">
 <h1>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h1>
 <p>Filtering functionality that aims to mimic the ShotGrid Web UI filter menu.</p>
+<dl class="class">
+<dt id="filtering.FilterMenu">
+<em class="property">class </em><code class="descclassname">filtering.</code><code class="descname">FilterMenu</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">filtering.filter_menu.NoCloseOnActionTriggerShotgunMenu</span></code></p>
+<p>A menu that provides filtering functionality.</p>
+<dl class="docutils">
+<dt>How the menu’s filter options are built:</dt>
+<dd>A QSortFilterProxyModel is set for the menu, and the filter menu options reflect the data
+in the model. The menu’s FilterDefinition processes the model data and constructs a dictionary
+of data that contains the filter data for each of the model items. The FilterDefintion is then
+used to populate the menu with the filter QAction/QWidgetAction items.</dd>
+<dt>When the menu is updated/refreshed:</dt>
+<dd>The filter menu is refreshed based on the current model data on showing the menu, to ensure
+the filter options reflect the current model data accurately. The menu is also refreshed
+when the filter options are modified, which changes the model data. The menu may also be
+forced to be refreshed on calling the <cite>refresh</cite> method with param <cite>force</cite> as True.</dd>
+</dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create the menu</span>
+<span class="n">filter_menu</span> <span class="o">=</span> <span class="n">FilterMenu</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+<span class="c1"># Set the proxy model that contains the data to be filtered on. This must be called</span>
+<span class="c1"># before the menu is initialized since the menu requires a model to build the filter</span>
+<span class="c1"># items (if there is no model, there will be no filter options. The proxy model must</span>
+<span class="c1"># inherit from the QSortFilterProxyModel class.</span>
+<span class="c1">#</span>
+<span class="c1"># If &#39;connect_signals&#39; is True, the filter model is also expected to have the method</span>
+<span class="c1"># &#39;set_filter_items&#39;; the FilterItemProxyModel and FilterItemTreeProxyModel classes</span>
+<span class="c1"># implement this method, and are designed to work with this FilterMenu class.</span>
+<span class="c1">#</span>
+<span class="c1"># If `connect_signals` is not True, the caller will need to connect to the signal</span>
+<span class="c1"># `filters_changed` signal, which the menu emits, when filters have been modified and</span>
+<span class="c1"># the proxy model requires updating.</span>
+<span class="n">filter_menu</span><span class="o">.</span><span class="n">set_filter_model</span><span class="p">(</span><span class="n">proxy_model</span><span class="p">,</span> <span class="n">connect_signals</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Initialize the menu. This will clear the menu and set up the static menu actions (e.g.</span>
+<span class="c1"># &quot;Clear Filters&quot;, &quot;More Filters&quot;) and refresh the menu to display available filter</span>
+<span class="c1"># options (if the model has any data loaded).</span>
+<span class="n">filter_menu</span><span class="o">.</span><span class="n">initialize_menu</span><span class="p">()</span>
+
+<span class="c1"># Create a QToolButton and set the filter menu on it. The FilterMenuButton class is not</span>
+<span class="c1"># required, any QToolButton class may be used. The benefit of the FilterMenuButton class</span>
+<span class="c1"># is that it is designed to work with the FilterMenu specfically, for example, the icon</span>
+<span class="c1"># will be updated when the menu has active filtering to visually indicate the data is</span>
+<span class="c1"># filtered.</span>
+<span class="n">filter_button</span> <span class="o">=</span> <span class="n">FilterMenuButton</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+<span class="n">filter_button</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="n">filter_menu</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Optional:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># By default, the filter menu options are built from the menu&#39;s model data, and the</span>
+<span class="c1"># model item data role, QtCore.Qt.DisplayRole, is used to extract the data from the model.</span>
+<span class="c1"># This can be overriden by using `set_filter_roles` and providing a new list of roles</span>
+<span class="c1"># that will be used to extract the model data.</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">_filter_menu</span><span class="o">.</span><span class="n">set_filter_roles</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">,</span>
+        <span class="n">filter_menu</span><span class="o">.</span><span class="n">proxy_model</span><span class="o">.</span><span class="n">SOME_ITEM_DATA_ROLE</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Call `set_ignore_fields` to ignore certain data when building the filters.</span>
+<span class="n">filter_menu</span><span class="o">.</span><span class="n">set_ignore_fields</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;</span><span class="si">{ROLE}</span><span class="s2">.</span><span class="si">{FIELD_NAME}</span><span class="s2">,  # For non SG data, fields are of the format &quot;</span><span class="n">role</span><span class="o">.</span><span class="n">field</span><span class="s2">&quot;, e.g. &quot;</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="o">.</span><span class="n">name</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;</span><span class="si">{SG_ENTITY_TYPE}</span><span class="s2">.</span><span class="si">{FIELD_NAME}</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="c1"># For SG data, fields are of the format &quot;entity_type.field&quot;, e.g. &quot;Task.code&quot;</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtWidget</span></code>) – The parent widget.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="filtering.FilterMenu.active_filter">
+<code class="descname">active_filter</code><a class="headerlink" href="#filtering.FilterMenu.active_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current active filters that are set within the menu.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterMenu.has_filtering">
+<code class="descname">has_filtering</code><a class="headerlink" href="#filtering.FilterMenu.has_filtering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether or not the menu has any active filtering.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="filtering.FilterMenu.set_widget_action_default_widget_value">
+<em class="property">static </em><code class="descname">set_widget_action_default_widget_value</code><span class="sig-paren">(</span><em>widget_action</em>, <em>checked</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_widget_action_default_widget_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.set_widget_action_default_widget_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to set the QWidgetAction’s default widget’s value to the checked value
+of the QWidgetAction.</p>
+<p>This is mainly used by the QWidgetAction’s triggered callback to handle different
+triggered signal signatures between Qt versions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.set_visible_fields">
+<code class="descname">set_visible_fields</code><span class="sig-paren">(</span><em>fields</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_visible_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.set_visible_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the filters that belong to any of the given fields to be visible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fields</strong> (<em>list&lt;str&gt;</em>) – The filters within the given fields will be shown.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.set_accept_fields">
+<code class="descname">set_accept_fields</code><span class="sig-paren">(</span><em>fields</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_accept_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.set_accept_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the fields to ignore when building the filter definition for the menu.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fields</strong> (<em>list&lt;str&gt;</em>) – The fields to ignore</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.set_ignore_fields">
+<code class="descname">set_ignore_fields</code><span class="sig-paren">(</span><em>fields</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_ignore_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.set_ignore_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the fields to ignore when building the filter definition for the menu.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fields</strong> (<em>list&lt;str&gt;</em>) – The fields to ignore</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.set_use_fully_qualifiied_name">
+<code class="descname">set_use_fully_qualifiied_name</code><span class="sig-paren">(</span><em>use</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_use_fully_qualifiied_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.set_use_fully_qualifiied_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the flag to use the fully qualified name for filters. For example, a filter item
+representing SG data will prefix the filter name with the entity type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>use</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – True will show fully qualified names for filters.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.set_filter_roles">
+<code class="descname">set_filter_roles</code><span class="sig-paren">(</span><em>roles</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_filter_roles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.set_filter_roles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the list of model item data roles that are used to extract data from the model, in
+order to build the menu filters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.set_tree_level">
+<code class="descname">set_tree_level</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_tree_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.set_tree_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the model tree index level which the filters will be built from. This is to handle
+tree models that defer loading data, set this to the expected leaf node level.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.save_state">
+<code class="descname">save_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.save_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.save_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary describing the current menu filter state. This can be used to save
+and restore the menu state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.restore_state">
+<code class="descname">restore_state</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.restore_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.restore_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore the menu to the given state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – The menu state to restore.</td>
+</tr>
+</tbody>
+</table>
+<p>e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;field_id_1&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;filter_id_1&quot;</span><span class="p">:</span> <span class="s2">&quot;filter_id_1_value&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filter_id_2&quot;</span><span class="p">:</span> <span class="s2">&quot;filter_id_2_value&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;field_id_2&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;filter_id_3&quot;</span><span class="p">:</span> <span class="s2">&quot;filter_id_3_value&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filter_id_4&quot;</span><span class="p">:</span> <span class="s2">&quot;filter_id_4_value&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.set_filter_model">
+<code class="descname">set_filter_model</code><span class="sig-paren">(</span><em>filter_model</em>, <em>connect_signals=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_filter_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.set_filter_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the source and proxy models that define the filter menu options.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter_model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QSortFilterProxyModel</span></code>) – The model that is used to build the menu filters.</li>
+<li><strong>connect_signals</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Whether or not to connect model signals to
+the appropriate filter menu methods; e.g. model
+layoutChanged will rebuild the menu.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.refresh">
+<code class="descname">refresh</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebuild the FilterDefinition from the current model data and update the menu with the
+new filter definition.</p>
+<p>TODO: bulid the filter definition async - performance starts to degrade at ~400 model items.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.clear_menu">
+<code class="descname">clear_menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.clear_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.clear_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear any active filters that are set in the menu. Clear the internal menu data and
+remove all items from the menu.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.clear_filters">
+<code class="descname">clear_filters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.clear_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.clear_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear any active filtesr that are set in the menu.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.get_current_filters">
+<code class="descname">get_current_filters</code><span class="sig-paren">(</span><em>exclude_fields=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.get_current_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.get_current_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of FilterItem objects that represent the current filtering
+applied from the menu. Filters will be omitted that belong to the excluded
+fields list given.</p>
+<p>The result will be a list of FilterItem Groups that OR the filters within
+each group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>exclude_fields</strong> (<em>list&lt;str&gt;</em>) – The list of fields to exclude when collecting the
+currently active filtering from the menu.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The current filters, excluding the given fields.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;FilterItem&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.initialize_menu">
+<code class="descname">initialize_menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.initialize_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.initialize_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the filter menu.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="filtering.FilterMenuButton">
+<em class="property">class </em><code class="descclassname">filtering.</code><code class="descname">FilterMenuButton</code><span class="sig-paren">(</span><em>parent=None</em>, <em>text=None</em>, <em>icon=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu_button.html#FilterMenuButton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenuButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A QToolButton to be used with the FilterMenu class.</p>
+<p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QWidget</span></code>) – The parent widget.</li>
+<li><strong>text</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The text displayed on the button.</li>
+<li><strong>icon</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtGui.QIcon</span></code>) – The button icon.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="filtering.FilterMenuButton.setMenu">
+<code class="descname">setMenu</code><span class="sig-paren">(</span><em>menu</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu_button.html#FilterMenuButton.setMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenuButton.setMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the QMenu method.</p>
+<p>Enforce the menu to be of type <cite>FilterMenu</cite>. Connect the menu’s filters changed
+signal to update the menu button accordingly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenuButton.update_button_checked">
+<code class="descname">update_button_checked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu_button.html#FilterMenuButton.update_button_checked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenuButton.update_button_checked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback triggered when the menu filters have changed. Update the button’s checked state
+based on the menu’s current filtering.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="filtering.FilterItem">
+<em class="property">class </em><code class="descclassname">filtering.</code><code class="descname">FilterItem</code><span class="sig-paren">(</span><em>filter_id</em>, <em>filter_type</em>, <em>filter_op</em>, <em>filter_value=None</em>, <em>filter_role=None</em>, <em>data_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class object to encapsulate all the necessary data to filter model index data.</p>
+<p>A FilterItem properties:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>filter type:</dt>
+<dd>This determines how the incoming data is processed and filtered, and is most
+likely determined based on the filter value data type. See supported filter types
+in FilterType enum class.</dd>
+<dt>filter_op:</dt>
+<dd>This determines the operation that is applied on filtering the data. See supported
+filter operations in FilterOp enum class.</dd>
+<dt>filter_value:</dt>
+<dd>This is the value that incoming data is compared against, when filtering. For group
+filter items, this will be the list of filter items the group uses for filtering.</dd>
+<dt>filters:</dt>
+<dd>This is a convenience property to access the filter items for a group filter.</dd>
+<dt>filter_role:</dt>
+<dd>The model item data role that will be used to extract the data from incoming indexes
+to be filtered. This is optional, but if not defined, then a <cite>data_func</cite> must be
+defined.</dd>
+<dt>data_func:</dt>
+<dd>This is a function that is used to extract the data from incoming indexes to be
+filterd. This is option, but if not defined, then a <cite>filter_role</cite> must be defined.</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>To filter an index by a FilterItem, call the <cite>accepts</cite> method, e.g.:</dt>
+<dd>filter_item.accepts(index)</dd>
+</dl>
+<p>To filter an index by a group of FilterItems, the <cite>accept</cite> method can be used the same as non-group
+filters, or the classmethod FilterItem.do_filter(index, filters, filter_op) may be used. When filtering
+using groups of FilterItems, the individual results of the FilterItem accept tests are AND’ed or OR’ed
+together based on the group. The filter groups can be nested by including a group filter in the group
+filters list.</p>
+<p>Constructor.</p>
+<p>Validate the data on creating the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter_type</strong> (<a class="reference internal" href="#filtering.FilterItem.FilterType" title="filtering.FilterItem.FilterType"><em>FilterType</em></a>) – The data type for the filter</li>
+<li><strong>filter_op</strong> (<a class="reference internal" href="#filtering.FilterItem.FilterOp" title="filtering.FilterItem.FilterOp"><em>FilterOp</em></a>) – The operation the filter will apply.</li>
+<li><strong>filter_role</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.Qt.ItemDataRole</span></code>) – An item data role to extract the index data to filter based on (optional).</li>
+<li><strong>data_func</strong> – A function that can be called to extract the index data to filter based on (optional).
+NOTE: if a filter_role is defined, this will have no effect.</li>
+<li><strong>filter_value</strong> (<em>The data type for this filter</em>) – The value the item’s data will be filtered by (optional). This value may be set
+later (dynamically), if not known at time of init.</li>
+<li><strong>filters</strong> (<em>list&lt;FilterItem&gt;</em>) – A list of FilterItem objects (optional). This is used for group filters; this list of
+filter items are the group of filters to apply to the data.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="filtering.FilterItem.FilterOp">
+<em class="property">class </em><code class="descname">FilterOp</code><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.FilterOp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.FilterOp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Enum class for filter operations.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="filtering.FilterItem.FilterType">
+<em class="property">class </em><code class="descname">FilterType</code><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.FilterType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.FilterType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Enum class for filter types.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItem.id">
+<code class="descname">id</code><a class="headerlink" href="#filtering.FilterItem.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the id for this FilterItem.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItem.filter_type">
+<code class="descname">filter_type</code><a class="headerlink" href="#filtering.FilterItem.filter_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the filter type.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItem.filter_op">
+<code class="descname">filter_op</code><a class="headerlink" href="#filtering.FilterItem.filter_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the filter operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItem.filter_value">
+<code class="descname">filter_value</code><a class="headerlink" href="#filtering.FilterItem.filter_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the value for the filter that incoming data will be compared against to check
+acceptance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItem.filters">
+<code class="descname">filters</code><a class="headerlink" href="#filtering.FilterItem.filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the list of filter items for this group filter. This is a convenience property for
+group filter items, and hides the internal implementation details of storing the filters in
+the filter items <cite>filter_value</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItem.filter_role">
+<code class="descname">filter_role</code><a class="headerlink" href="#filtering.FilterItem.filter_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the model item data role used to extract data from incoming indexes to be filtered.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItem.data_func">
+<code class="descname">data_func</code><a class="headerlink" href="#filtering.FilterItem.data_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the function used to extract data from incoming indexes to be filtered.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="filtering.FilterItem.create">
+<em class="property">classmethod </em><code class="descname">create</code><span class="sig-paren">(</span><em>filter_id</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience factory classmethod to create a new FilterItem object from the provided data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – The data to create the FilterItem object from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The created FilterItem object</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#filtering.FilterItem" title="filtering.FilterItem">FilterItem</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="filtering.FilterItem.create_group">
+<em class="property">classmethod </em><code class="descname">create_group</code><span class="sig-paren">(</span><em>op</em>, <em>group_filters=None</em>, <em>group_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.create_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.create_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience factory method to create a new FilterItem object that is a group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>op</strong> (<a class="reference internal" href="#filtering.FilterItem.FilterOp" title="filtering.FilterItem.FilterOp"><em>FilterOp</em></a>) – The group operation to set for this filter item.</li>
+<li><strong>group_filters</strong> (<em>list&lt;FilterItem&gt;</em>) – The list of FilterItems for this group filter (optional).</li>
+<li><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The identifier for the group (optional). If none given,
+the filter item will have id “FilterType.FilterOp”.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The created FilterItem object whose type is FilterType.GROUP</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#filtering.FilterItem" title="filtering.FilterItem">FilterItem</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="filtering.FilterItem.get_data_type">
+<em class="property">classmethod </em><code class="descname">get_data_type</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.get_data_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.get_data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the FilterItem type for the given data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>any</em>) – The data to get the type for.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The FilterItem type of the data. None is returned for invalid data.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#filtering.FilterItem.FilterType" title="filtering.FilterItem.FilterType">FilterType</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="filtering.FilterItem.default_op_for_type">
+<em class="property">classmethod </em><code class="descname">default_op_for_type</code><span class="sig-paren">(</span><em>filter_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.default_op_for_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.default_op_for_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the default operation for the given filter data type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – One of the defined FilterItem types; e.g. FilterItem.FilterType.{name}.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The default operation to apply to the given filter type.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)">str</a>, one of the FilterItem operations defined in the class; e.g. FilterItem.FilterOp.{name}.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="filtering.FilterItem.is_group_op">
+<em class="property">classmethod </em><code class="descname">is_group_op</code><span class="sig-paren">(</span><em>op</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.is_group_op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.is_group_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the filter item operation is valid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>op</strong> (<a class="reference internal" href="#filtering.FilterItem.FilterOp" title="filtering.FilterItem.FilterOp"><em>FilterOp</em></a>) – The operation to check.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the op is a group operation, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="filtering.FilterItem.do_filter">
+<em class="property">classmethod </em><code class="descname">do_filter</code><span class="sig-paren">(</span><em>index</em>, <em>filter_items</em>, <em>op='and'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.do_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.do_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the index is accepted by the list of filter items.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index to check acceptance on.</li>
+<li><strong>filter_items</strong> (<em>list&lt;FilterItem&gt;</em>) – The list of filter items used to check acceptance.</li>
+<li><strong>op</strong> (<a class="reference internal" href="#filtering.FilterItem.FilterOp" title="filtering.FilterItem.FilterOp"><em>FilterOp</em></a>) – The filter operation to apply with checking acceptance.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if accepted, else False.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="filtering.FilterItem.get_datetime_bucket">
+<em class="property">static </em><code class="descname">get_datetime_bucket</code><span class="sig-paren">(</span><em>dt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.get_datetime_bucket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.get_datetime_bucket" title="Permalink to this definition">¶</a></dt>
+<dd><p>This attempts to get the datetime bucket for the given datetime passed. Datetime buckets
+follow the same logic as the ShotGrid Web UI.</p>
+<p>NOTE should we move this to shotgun_globals.date_time module?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dt</strong> (<em>str | float | datetime.datetime</em>) – The datetime value to process</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The datetime bucket that this datetime value falls into.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.is_group">
+<code class="descname">is_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.is_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.is_group" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if this filter item is a group, else False.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.get_index_data">
+<code class="descname">get_index_data</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.get_index_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.get_index_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the index’s data based on the filter item. The index data will be first
+attempted to be retrieved from the index’s data method, using the filter role.
+If no role is defined, the data_func will be called to extract the data (if such
+a function is defined).</p>
+<p>A <cite>filter_role</cite> or <cite>data_func</cite> must be defined to reteieve the index data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index to get the data from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The index data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">any</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.accepts">
+<code class="descname">accepts</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.accepts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.accepts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if this filter item accepts the given index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtCore.QModelIndex</span></code>) – The index that holds the data to filter on.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the filter accepts the index, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.is_bool_valid">
+<code class="descname">is_bool_valid</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.is_bool_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.is_bool_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the incoming boolean value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – The value to filter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the filter accepts the value, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.is_str_valid">
+<code class="descname">is_str_valid</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.is_str_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.is_str_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the incoming string value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The value to filter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the filter accepts the value, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.is_number_valid">
+<code class="descname">is_number_valid</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.is_number_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.is_number_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the incoming number value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>int | float | ...</em>) – The value to filter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the filter accepts the value, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.is_datetime_valid">
+<code class="descname">is_datetime_valid</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.is_datetime_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.is_datetime_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the incoming datetime value.</p>
+<p>TODO support operations like greater/less than and between.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>str | datetime.datetime</em>) – The value to filter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the filter accepts the value, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.is_list_valid">
+<code class="descname">is_list_valid</code><span class="sig-paren">(</span><em>values_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.is_list_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.is_list_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the incoming list value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>list</em>) – The values list to filter by.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the filter accepts the values list, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItem.is_dict_valid">
+<code class="descname">is_dict_valid</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.is_dict_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.is_dict_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the incoming dictionary value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>list</em>) – The values list to filter by.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the filter accepts the values list, else False.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="filtering.FilterItemProxyModel">
+<em class="property">class </em><code class="descclassname">filtering.</code><code class="descname">FilterItemProxyModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item_proxy_model.html#FilterItemProxyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItemProxyModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtCore.QSortFilterProxyModel</span></code></p>
+<p>A filter proxy model that filters the source model data using a list of
+FilterItem objects.</p>
+<p>Constructor.</p>
+<dl class="attribute">
+<dt id="filtering.FilterItemProxyModel.filter_group_op">
+<code class="descname">filter_group_op</code><a class="headerlink" href="#filtering.FilterItemProxyModel.filter_group_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the operation applied to the list of filter items in this model upon filtering.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItemProxyModel.filter_items">
+<code class="descname">filter_items</code><a class="headerlink" href="#filtering.FilterItemProxyModel.filter_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the list of FilterItem objects used to filter the model data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItemProxyModel.set_filter_items">
+<code class="descname">set_filter_items</code><span class="sig-paren">(</span><em>items</em>, <em>emit_signal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item_proxy_model.html#FilterItemProxyModel.set_filter_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItemProxyModel.set_filter_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the list of FilterItem objects used to filter the model data. If <cite>emit_signal</cite>, then also
+invalidate the filter to immediately trigger re-filtering the model data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItemProxyModel.filterAcceptsRow">
+<code class="descname">filterAcceptsRow</code><span class="sig-paren">(</span><em>src_row</em>, <em>src_parent_idx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item_proxy_model.html#FilterItemProxyModel.filterAcceptsRow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItemProxyModel.filterAcceptsRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the base QSortFilterProxyModel implementation.</p>
+<p>Return True if the the row is accepted by the filter items. The row is
+accepted if the data is accepted by the list of FilterItems OR’ed or
+AND’ed together, depending on the group operation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src_row</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The row in the source model to filter.</li>
+<li><strong>src_parent_idx</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QModelIndex</span></code>) – The parent index of the source model’s row to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the row is accepted, else False.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="filtering.FilterItemTreeProxyModel">
+<em class="property">class </em><code class="descclassname">filtering.</code><code class="descname">FilterItemTreeProxyModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item_tree_proxy_model.html#FilterItemTreeProxyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItemTreeProxyModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A filter proxy model that filters the source tree model data using a list of
+FilterItem objects. This provides similar functionality as the
+FilterItemFilterProxyModel, except for models that need to inherit from the
+HierarchicalfilteringProxyModel.</p>
+<p>Constructor</p>
+<dl class="attribute">
+<dt id="filtering.FilterItemTreeProxyModel.filter_group_op">
+<code class="descname">filter_group_op</code><a class="headerlink" href="#filtering.FilterItemTreeProxyModel.filter_group_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the operation applied to the list of filter items in this model upon filtering.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterItemTreeProxyModel.filter_items">
+<code class="descname">filter_items</code><a class="headerlink" href="#filtering.FilterItemTreeProxyModel.filter_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the filter items used to filter the model data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterItemTreeProxyModel.set_filter_items">
+<code class="descname">set_filter_items</code><span class="sig-paren">(</span><em>items</em>, <em>emit_signal=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item_tree_proxy_model.html#FilterItemTreeProxyModel.set_filter_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItemTreeProxyModel.set_filter_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the list of FilterItem objects used to filter the model data. If <cite>emit_signal</cite>, then also
+invalidate the filter to immediately trigger re-filtering the model data.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
