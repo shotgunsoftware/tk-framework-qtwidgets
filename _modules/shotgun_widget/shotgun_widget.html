@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_widget.shotgun_widget &mdash; tk-framework-qtwidgets v2.10.4 documentation</title>
+  <title>shotgun_widget.shotgun_widget &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -313,7 +313,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">pixmap</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_scaled_thumbnail</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunWidget.set_selected"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget.set_selected">[docs]</a>    <span class="k">def</span> <span class="nf">set_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">):</span>
@@ -346,7 +346,39 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span> <span class="o">=</span> <span class="n">actions</span>
         <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunWidget.resizeEvent"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget.resizeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the base method.</span>
+
+<span class="sd">        Rescale the pixmap when the label resizes.</span>
+
+<span class="sd">        :param event: The resize event payload.</span>
+<span class="sd">        :type event: QResizeEvent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_scaled_thumbnail</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunWidget.set_scaled_thumbnail"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget.set_scaled_thumbnail">[docs]</a>    <span class="k">def</span> <span class="nf">set_scaled_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the thumbnail label pixmap.</span>
+
+<span class="sd">        Scale the pixmap to the label&#39;s size and center it within the label. Keep the aspect</span>
+<span class="sd">        ratio of the pixmap when scaling.</span>
+
+<span class="sd">        :param pixmap: The pixmap to set on the label.</span>
+<span class="sd">        :type pixmap: QtGui.QPixmap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">pixmap</span> <span class="o">=</span> <span class="n">pixmap</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">pixmap</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pixmap</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="n">scaled_pixmap</span> <span class="o">=</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">KeepAspectRatio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">scaled_pixmap</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
@@ -390,7 +422,7 @@
   <script type="text/javascript">
     window.wafCCPAForceShow = true;
     (function(a,b,c,d){
-      a='https://tags.tiqcdn.com/utag/autodesk/micro-basic/prod/utag.js';
+      a='https://tags.tiqcdn.com/utag/autodesk/micro-opt/prod/utag.js';
       b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
       a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
     })();

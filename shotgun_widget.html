@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Shotgun Widgets &mdash; tk-framework-qtwidgets v2.10.4 documentation</title>
+  <title>Shotgun Widgets &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
   
 
   
@@ -137,7 +137,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -269,6 +269,37 @@ supplied, a default picture will be displayed instead.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>actions</strong> – List of QActions to add</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_widget.ShotgunWidget.resizeEvent">
+<code class="descname">resizeEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_widget.html#ShotgunWidget.resizeEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunWidget.resizeEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the base method.</p>
+<p>Rescale the pixmap when the label resizes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>QResizeEvent</em>) – The resize event payload.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="shotgun_widget.ShotgunWidget.set_scaled_thumbnail">
+<code class="descname">set_scaled_thumbnail</code><span class="sig-paren">(</span><em>pixmap=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_widget/shotgun_widget.html#ShotgunWidget.set_scaled_thumbnail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_widget.ShotgunWidget.set_scaled_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the thumbnail label pixmap.</p>
+<p>Scale the pixmap to the label’s size and center it within the label. Keep the aspect
+ratio of the pixmap when scaling.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pixmap</strong> (<em>QtGui.QPixmap</em>) – The pixmap to set on the label.</td>
 </tr>
 </tbody>
 </table>
@@ -520,7 +551,7 @@ supplied, a default picture will be displayed instead.</p>
   <script type="text/javascript">
     window.wafCCPAForceShow = true;
     (function(a,b,c,d){
-      a='https://tags.tiqcdn.com/utag/autodesk/micro-basic/prod/utag.js';
+      a='https://tags.tiqcdn.com/utag/autodesk/micro-opt/prod/utag.js';
       b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
       a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
     })();

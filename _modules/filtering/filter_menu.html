@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.10.4 documentation</title>
+  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -534,6 +534,9 @@
         <span class="n">updated</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">for</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">filter_items</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">field_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span><span class="p">:</span>
+                <span class="k">continue</span>
+
             <span class="n">filter_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span><span class="p">[</span><span class="n">field_id</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_visibility</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_id</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
@@ -1362,7 +1365,7 @@
   <script type="text/javascript">
     window.wafCCPAForceShow = true;
     (function(a,b,c,d){
-      a='https://tags.tiqcdn.com/utag/autodesk/micro-basic/prod/utag.js';
+      a='https://tags.tiqcdn.com/utag/autodesk/micro-opt/prod/utag.js';
       b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
       a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
     })();
