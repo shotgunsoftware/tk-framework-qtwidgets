@@ -8,6 +8,7 @@
 # agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Autodesk, Inc.
 
+from email import header
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
@@ -28,16 +29,25 @@ class Node(QtGui.QGraphicsItem):
         super(Node, self).__init__(parent)
 
         # QGraphicsItem properties
-        self.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
+        self.setFlags(
+            QtGui.QGraphicsItem.ItemIsMovable | QtGui.QGraphicsItem.ItemIsSelectable
+        )
         self.setFlag(QtGui.QGraphicsItem.ItemSendsGeometryChanges)
         self.setZValue(-1)
+        self.setAcceptHoverEvents(True)
 
         # Node properties
         self.__radius = node_data.get("radius", 6)
-        self.__width = node_data.get("width", 200)
-        self.__height = node_data.get("height", 150)
-        self.__pen_width = node_data.get("pen_width", 2)
+        self.__width = node_data.get("width", 150)
+        self.__height = node_data.get("height", 50)
         self.__pos = node_data.get("pos", QtCore.QPointF(0, 0))
+        self.__pen_width = node_data.get("pen_width", 2)
+        self.__color = node_data.get("color", None)
+        self.__highlight_color = node_data.get("color", None)
+        self.__border_color = node_data.get("color", None)
+        self.__text_padding = node_data.get("text_padding", 7)
+        self.__text_margin = node_data.get("text_padding", 2)
+        self.__text_alignment = node_data.get("text_alignment", QtCore.Qt.AlignCenter)
 
         self.__name = node_data.get("name", "Node")
         self.__description = node_data.get("description", "")
@@ -97,26 +107,124 @@ class Node(QtGui.QGraphicsItem):
     # Abstract methods
 
     # ----------------------------------------------------------------------------------------
+    # Protected methods
+
+    def _is_selected(self, option):
+        """Return True if the node is currently selected."""
+
+        return option.state & QtGui.QStyle.State_Selected
+
+    def _is_hovered(self, option):
+        """Return True if the mouse cursor is currently hovering over the node."""
+
+        return option.state & QtGui.QStyle.State_MouseOver
+
+    def _get_font_metrics(self):
+        """Return the font metrics to use to render the node."""
+
+        font = self.__graph.scene().font()
+        return QtGui.QFontMetrics(font)
+
+    def _get_header_bounding_rect(self, include_padding=True):
+        """Return the bounding rect for the header text."""
+
+        font_metrics = self._get_font_metrics()
+        br = font_metrics.boundingRect(self.__name)
+
+        if include_padding:
+            # Add text padding to the rect
+            br.setWidth(
+                br.width()
+                + 2 * self.__text_padding
+                + 2 * self.__text_margin
+                + 2 * self.pen_width
+            )
+            br.setHeight(
+                br.height()
+                + 2 * self.__text_padding
+                + 2 * self.__text_margin
+                + 2 * self.pen_width
+            )
+
+        return br
+
+    # ----------------------------------------------------------------------------------------
     # QGraphicsItem pure virtual methods
 
     def boundingRect(self):
-        """Override the base QGraphicsItem method"""
+        """
+        Override the base QGraphicsItem method.
 
-        return QtCore.QRectF(self.pos.x(), self.pos.y(), self.width, self.height)
+        The node bounding rect will be calculated based on the text.
+        """
+
+        body_height = 40
+        header_rect = self._get_header_bounding_rect()
+
+        return QtCore.QRectF(
+            self.pos.x(),
+            self.pos.y(),
+            header_rect.width(),
+            header_rect.height() + body_height,
+        )
 
     def paint(self, painter, option, widget=None):
         """Override the base QGraphicsItem method"""
 
-        # TODO use option and widget?
-        # TODO make this configurable
+        # TODO draw selection
+        # TODO draw hover
 
-        # Draw the shape
-        painter.setPen(QtCore.Qt.black)
-        painter.setBrush(QtCore.Qt.darkGray)
+        # Draw the background and border
+        color = self.__color or option.palette.mid().color()
+        border_color = self.__border_color or option.palette.light().color()
+        brush = QtGui.QBrush(color)
+        pen = QtGui.QPen(border_color, self.pen_width)
+        painter.save()
+        painter.setPen(pen)
+        painter.setBrush(brush)
         painter.drawRoundedRect(option.rect, self.radius, self.radius)
+        painter.restore()
 
-        # Draw the text
-        painter.drawText(option.rect, self.name)
+        # Draw the text background
+        header_rect = self._get_header_bounding_rect()
+        text_rect = QtCore.QRectF(
+            option.rect.x() + self.pen_width + self.__text_margin,
+            option.rect.y() + self.pen_width + self.__text_margin,
+            header_rect.width() - 2 * self.pen_width - 2 * self.__text_margin,
+            header_rect.height() - 2 * self.pen_width - 2 * self.__text_margin,
+        )
+        painter.save()
+        color = self.__color or option.palette.midlight().color()
+        text_bg_brush = QtGui.QBrush(color)
+        painter.setBrush(text_bg_brush)
+        painter.setPen(QtCore.Qt.NoPen)
+        painter.drawRoundedRect(text_rect, self.radius, self.radius)
+        painter.restore()
+
+        # Draw the text background
+        painter.save()
+        painter.drawText(text_rect, self.__text_alignment, self.name)
+        painter.restore()
+
+        # Draw selection or hover
+        if self._is_selected(option) or self._is_hovered(option):
+            painter.save()
+            highlight_color = (
+                self.__highlight_color or option.palette.highlight().color()
+            )
+            highlight_color.setAlpha(50)
+            highlight_pen = QtGui.QPen(highlight_color, self.pen_width)
+            painter.setBrush(highlight_color)
+            painter.setPen(highlight_pen)
+            painter.drawRoundedRect(option.rect, self.radius, self.radius)
+            painter.restore()
+
+        # Debugging...
+        #
+        painter.save()
+        painter.setPen(QtCore.Qt.yellow)
+        # painter.drawRect(text_rect)
+        painter.restore()
 
     def itemChange(self, change, value):
         """Override the base QGraphicsItem method."""
