@@ -98,17 +98,22 @@ class Edge(QtGui.QGraphicsItem):
         """Override the base QGraphicsItem method"""
 
         # TODO use option and widget?
+        # TODO make configurable?
 
         if not self.source_node or not self.dest_node:
             return
 
+        # Draw the line
         line = QtCore.QLineF(self.source_point, self.dest_point)
         if QtCore.qFuzzyCompare(line.length(), 0.0):
             return
 
+        color = option.palette.mid().color()
+        pen_width = 2
+
         pen = QtGui.QPen(
-            QtCore.Qt.black,
-            1,
+            color,
+            pen_width,
             QtCore.Qt.SolidLine,
             QtCore.Qt.RoundCap,
             QtCore.Qt.RoundJoin,
@@ -116,7 +121,7 @@ class Edge(QtGui.QGraphicsItem):
         painter.setPen(pen)
         painter.drawLine(line)
 
-        # TODO draw the arrows
+        # TODO draw the arrows or input/output circles
 
     # ----------------------------------------------------------------------------------------
     # Public methods
@@ -127,9 +132,20 @@ class Edge(QtGui.QGraphicsItem):
         if not self.source_node or not self.dest_node:
             return
 
+        # FIXME start / end the line not from the top right of the objects
+        # line = QtCore.QLineF(
+        #     self.mapFromItem(self.source_node, 0, 0),
+        #     self.mapFromItem(self.dest_node, 0, 0),
+        # )
         line = QtCore.QLineF(
-            self.mapFromItem(self.source_node, 0, 0),
-            self.mapFromItem(self.dest_node, 0, 0),
+            self.mapFromItem(
+                self.source_node,
+                self.source_node.sceneBoundingRect().width() / 2,
+                self.source_node.sceneBoundingRect().height(),
+            ),
+            self.mapFromItem(
+                self.dest_node, self.dest_node.sceneBoundingRect().width() / 2, 0
+            ),
         )
         length = line.length()
 

@@ -33,6 +33,8 @@ class GraphWidget(QtGui.QGraphicsView):
         scene = QtGui.QGraphicsScene(parent)
         self.setScene(scene)
 
+        self.setRenderHint(QtGui.QPainter.Antialiasing)
+
         # TODO end node?
         self.__root_node = Node({"name": "Start"}, self)
         self.add_node("root", self.__root_node)
