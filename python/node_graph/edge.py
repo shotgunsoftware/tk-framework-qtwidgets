@@ -103,10 +103,25 @@ class Edge(QtGui.QGraphicsItem):
         if not self.source_node or not self.dest_node:
             return
 
-        # Draw the line
-        line = QtCore.QLineF(self.source_point, self.dest_point)
-        if QtCore.qFuzzyCompare(line.length(), 0.0):
-            return
+        # # Draw the line
+        # line = QtCore.QLineF(self.source_point, self.dest_point)
+
+        # if QtCore.qFuzzyCompare(line.length(), 0.0):
+        #     return
+
+        # Draw bezier curve connecting the source and destination points
+        midpoint = QtCore.QPointF(
+            (self.source_point.x() + self.dest_point.x()) / 2,
+            (self.source_point.y() + self.dest_point.y()) / 2,
+        )
+        control_point1 = QtCore.QPointF(
+            self.source_point.x(), midpoint.y() - (1 - 0.25) / 0.25
+        )
+        control_point2 = QtCore.QPointF(
+            self.dest_point.x(), midpoint.y() - (1 - 0.75) / 0.75
+        )
+        path = QtGui.QPainterPath(self.source_point)
+        path.cubicTo(control_point1, control_point2, self.dest_point)
 
         color = option.palette.mid().color()
         pen_width = 2
@@ -119,9 +134,82 @@ class Edge(QtGui.QGraphicsItem):
             QtCore.Qt.RoundJoin,
         )
         painter.setPen(pen)
-        painter.drawLine(line)
+        # painter.drawLine(line)
+        painter.drawPath(path)
 
-        # TODO draw the arrows or input/output circles
+        # TODO separate out input/output to separate widget
+        # TODO offset for multipl input/outputs so they don't overlap
+        # Draw the input
+        radius = 8
+        input_center = QtCore.QPointF(
+            self.source_point.x(), self.source_point.y() - radius
+        )
+
+        color = option.palette.mid().color()
+        brush = QtGui.QBrush(color)
+        painter.save()
+        painter.setBrush(brush)
+        painter.setPen(QtCore.Qt.NoPen)
+        painter.drawEllipse(input_center, radius, radius)
+        painter.restore()
+
+        color = option.palette.light().color()
+        brush = QtGui.QBrush(color)
+        painter.save()
+        painter.setBrush(brush)
+        painter.setPen(QtCore.Qt.NoPen)
+        painter.drawEllipse(input_center, radius / 2, radius / 2)
+        painter.restore()
+
+        color = option.palette.light().color()
+        pen = QtGui.QPen(
+            color,
+            pen_width,
+            QtCore.Qt.SolidLine,
+            QtCore.Qt.RoundCap,
+            QtCore.Qt.RoundJoin,
+        )
+        painter.save()
+        painter.setBrush(QtCore.Qt.NoBrush)
+        painter.setPen(pen)
+        painter.drawEllipse(input_center, radius, radius)
+        painter.restore()
+
+        # Draw the output
+        radius = 8
+        output_center = QtCore.QPointF(
+            self.dest_point.x(), self.dest_point.y() + radius
+        )
+
+        color = option.palette.light().color()
+        brush = QtGui.QBrush(color)
+        painter.save()
+        painter.setBrush(brush)
+        painter.setPen(QtCore.Qt.NoPen)
+        painter.drawEllipse(output_center, radius, radius)
+        painter.restore()
+
+        color = option.palette.mid().color()
+        brush = QtGui.QBrush(color)
+        painter.save()
+        painter.setBrush(brush)
+        painter.setPen(QtCore.Qt.NoPen)
+        painter.drawEllipse(output_center, radius / 2, radius / 2)
+        painter.restore()
+
+        color = option.palette.mid().color()
+        pen = QtGui.QPen(
+            color,
+            pen_width,
+            QtCore.Qt.SolidLine,
+            QtCore.Qt.RoundCap,
+            QtCore.Qt.RoundJoin,
+        )
+        painter.save()
+        painter.setBrush(QtCore.Qt.NoBrush)
+        painter.setPen(pen)
+        painter.drawEllipse(output_center, radius, radius)
+        painter.restore()
 
     # ----------------------------------------------------------------------------------------
     # Public methods

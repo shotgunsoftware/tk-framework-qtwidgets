@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Autodesk, Inc.
 
 import sgtk
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtCore, QtGui
 
 from .node import Node
 from .edge import Edge
@@ -29,6 +29,8 @@ class GraphWidget(QtGui.QGraphicsView):
         super(GraphWidget, self).__init__(parent)
 
         self.__nodes = {}
+        self.__edges = {}
+        self.__timer_id = None
 
         scene = QtGui.QGraphicsScene(parent)
         self.setScene(scene)
@@ -48,6 +50,17 @@ class GraphWidget(QtGui.QGraphicsView):
         return self.__nodes
 
     # ----------------------------------------------------------------------------------------
+    # Override base QGraphicsView methods
+
+    # def timerEvent(self, eevent):
+    #     """The timer event callback method"""
+
+    #     nodes = []
+    #     for item in self.scene().items():
+    #         if isinstance(item, Node):
+    #             nodes.append(item)
+
+    # ----------------------------------------------------------------------------------------
     # Public methods
 
     def clear(self):
@@ -55,6 +68,7 @@ class GraphWidget(QtGui.QGraphicsView):
 
         # NOTE do we need to delete nodes?
         self.__nodes = {}
+        self.__edges = []
 
         self.scene().clear()
 
@@ -77,6 +91,7 @@ class GraphWidget(QtGui.QGraphicsView):
         """Add an edge to the graph."""
 
         self.scene().addItem(edge)
+        self.__edges.append(edge)
 
     def build(self, data):
         """Build the graph given the data."""
@@ -120,8 +135,71 @@ class GraphWidget(QtGui.QGraphicsView):
             edge = self.__root_node.add_output(node)
             self.add_edge(edge)
 
+    def arrange_tree(self):
+        """Arrange the node graph in a viewable format."""
+
+        # print(self.sceneRect())
+
+        # Set the starting root position to the top middle
+        # pos_x = self.sceneRect().width() / 2 - self.__root_node.sceneBoundingRect().width() / 2
+        # pos_y = self.sceneRect().y()
+        pos_x = 0
+        pos_y = 0
+        pos = QtCore.QPoint(pos_x, pos_y)
+        # pos = self.mapFromScene(pos)
+        self.__root_node.setPos(pos)
+
+        # Then draw its children below in a tree-like structure
+        hspace = 10
+        vspace = 50
+        nodes_to_arrange = [self.__root_node]
+        while nodes_to_arrange:
+            parent = nodes_to_arrange.pop()
+            nodes = parent.outputs
+            # y_offset = parent.scenePos().y() + parent.sceneBoundingRect().height() + vspace
+            y_offset = parent.pos().y() + parent.boundingRect().height() + vspace
+
+            # First we need to calculate the level width to center the level of nows
+            # level_width = sum([node.sceneBoundingRect().width() for node in nodes]) + sum([hspace] * len(nodes)) - hspace
+            level_width = (
+                sum([node.boundingRect().width() for node in nodes])
+                + sum([hspace] * len(nodes))
+                - hspace
+            )
+            # x_offset = (parent.scenePos().x() + parent.sceneBoundingRect().width()/2) - level_width/2
+            x_offset = (
+                parent.pos().x() + parent.boundingRect().width() / 2
+            ) - level_width / 2
+
+            for node in nodes:
+                pos = QtCore.QPoint(x_offset, y_offset)
+                # pos = self.mapFromScene(pos)
+                node.setPos(pos)
+                # x_offset += node.sceneBoundingRect().width() + hspace
+                x_offset += node.boundingRect().width() + hspace
+                nodes_to_arrange.append(node)
+
+        for edge in self.__edges:
+            edge.adjust()
+
+        self.update()
+
+    def item_moved(self):
+        """
+        Called when an item in the graph has changed position.
+
+        This method's job is to simply start the restart the main timer in case it is not
+        running already. the timer is designed to stop when the graph stabilizes, and start
+        once it is unstable again.
+        """
+
+        # if not self.__timer_id:
+        #     self.__timer_id = self.startTimer(1000 / 25)
+
     def execute(self):
         """Traverse the graph starting from the root node and execute each node's function."""
+
+        # TODO nodes wtih multiple inputs need to wait for all of their inputs
 
         nodes = self.__root_node.outputs
         input_data = self.__root_node.execute()
