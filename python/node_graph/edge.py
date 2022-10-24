@@ -15,13 +15,13 @@ from sgtk.platform.qt import QtCore, QtGui
 class Edge(QtGui.QGraphicsItem):
     """A class to represent an edge connecting two nodes in a graph."""
 
-    def __init__(self, source_node, dest_node):
+    def __init__(self, source_node, dest_node, parent=None):
         """
         Initialize the edge.
 
         """
 
-        super(Edge, self).__init__()
+        super(Edge, self).__init__(parent)
 
         # QGraphicsItem properties
         self.setAcceptedMouseButtons(QtCore.Qt.NoButton)
@@ -31,7 +31,8 @@ class Edge(QtGui.QGraphicsItem):
         self.__dest_node = dest_node
         self.__source_point = None
         self.__dest_point = None
-        self.__arrow_size = 10
+        self.__radius = 8
+        self.__pen_width = 2
 
         # Initialize the edge
         self.source_node.add_edge(self)
@@ -78,9 +79,10 @@ class Edge(QtGui.QGraphicsItem):
         if not self.source_node or not self.dest_node:
             return QtCore.QRectF()
 
-        # TODO make configurable
-        pen_width = 1
-        extra = (pen_width + self.__arrow_size) / 2.0
+        connector_width = self.__radius
+        connector_height = 2 * self.__radius
+        extra_x = self.__pen_width + connector_width
+        extra_y = self.__pen_width + connector_height
 
         return (
             QtCore.QRectF(
@@ -91,7 +93,7 @@ class Edge(QtGui.QGraphicsItem):
                 ),
             )
             .normalized()
-            .adjusted(-extra, -extra, extra, extra)
+            .adjusted(-extra_x, -extra_y, extra_x, extra_y)
         )
 
     def paint(self, painter, option, widget=None):
@@ -124,11 +126,10 @@ class Edge(QtGui.QGraphicsItem):
         path.cubicTo(control_point1, control_point2, self.dest_point)
 
         color = option.palette.mid().color()
-        pen_width = 2
 
         pen = QtGui.QPen(
             color,
-            pen_width,
+            self.__pen_width,
             QtCore.Qt.SolidLine,
             QtCore.Qt.RoundCap,
             QtCore.Qt.RoundJoin,
@@ -140,31 +141,34 @@ class Edge(QtGui.QGraphicsItem):
         # TODO separate out input/output to separate widget
         # TODO offset for multipl input/outputs so they don't overlap
         # Draw the input
-        radius = 8
         input_center = QtCore.QPointF(
-            self.source_point.x(), self.source_point.y() - radius
+            self.source_point.x(), self.source_point.y() - self.__radius
         )
 
+        # Negative area between inner and outer
         color = option.palette.mid().color()
         brush = QtGui.QBrush(color)
         painter.save()
         painter.setBrush(brush)
         painter.setPen(QtCore.Qt.NoPen)
-        painter.drawEllipse(input_center, radius, radius)
+        painter.drawEllipse(input_center, self.__radius, self.__radius)
         painter.restore()
 
+        # Inner circle
         color = option.palette.light().color()
+        # color = QtCore.Qt.darkYellow
         brush = QtGui.QBrush(color)
         painter.save()
         painter.setBrush(brush)
         painter.setPen(QtCore.Qt.NoPen)
-        painter.drawEllipse(input_center, radius / 2, radius / 2)
+        painter.drawEllipse(input_center, self.__radius / 2, self.__radius / 2)
         painter.restore()
 
+        # Outer circle
         color = option.palette.light().color()
         pen = QtGui.QPen(
             color,
-            pen_width,
+            self.__pen_width,
             QtCore.Qt.SolidLine,
             QtCore.Qt.RoundCap,
             QtCore.Qt.RoundJoin,
@@ -172,35 +176,38 @@ class Edge(QtGui.QGraphicsItem):
         painter.save()
         painter.setBrush(QtCore.Qt.NoBrush)
         painter.setPen(pen)
-        painter.drawEllipse(input_center, radius, radius)
+        painter.drawEllipse(input_center, self.__radius, self.__radius)
         painter.restore()
 
         # Draw the output
-        radius = 8
         output_center = QtCore.QPointF(
-            self.dest_point.x(), self.dest_point.y() + radius
+            self.dest_point.x(), self.dest_point.y() + self.__radius
         )
 
+        # Negative area between inner and outer circles
         color = option.palette.light().color()
         brush = QtGui.QBrush(color)
         painter.save()
         painter.setBrush(brush)
         painter.setPen(QtCore.Qt.NoPen)
-        painter.drawEllipse(output_center, radius, radius)
+        painter.drawEllipse(output_center, self.__radius, self.__radius)
         painter.restore()
 
+        # Inner circle
         color = option.palette.mid().color()
+        # color = QtCore.Qt.yellow
         brush = QtGui.QBrush(color)
         painter.save()
         painter.setBrush(brush)
         painter.setPen(QtCore.Qt.NoPen)
-        painter.drawEllipse(output_center, radius / 2, radius / 2)
+        painter.drawEllipse(output_center, self.__radius / 2, self.__radius / 2)
         painter.restore()
 
+        # Outer circle
         color = option.palette.mid().color()
         pen = QtGui.QPen(
             color,
-            pen_width,
+            self.__pen_width,
             QtCore.Qt.SolidLine,
             QtCore.Qt.RoundCap,
             QtCore.Qt.RoundJoin,
@@ -208,7 +215,14 @@ class Edge(QtGui.QGraphicsItem):
         painter.save()
         painter.setBrush(QtCore.Qt.NoBrush)
         painter.setPen(pen)
-        painter.drawEllipse(output_center, radius, radius)
+        painter.drawEllipse(output_center, self.__radius, self.__radius)
+        painter.restore()
+
+        # Debugging...
+        #
+        painter.save()
+        painter.setPen(QtCore.Qt.yellow)
+        # painter.drawRect(option.rect)
         painter.restore()
 
     # ----------------------------------------------------------------------------------------
@@ -220,11 +234,6 @@ class Edge(QtGui.QGraphicsItem):
         if not self.source_node or not self.dest_node:
             return
 
-        # FIXME start / end the line not from the top right of the objects
-        # line = QtCore.QLineF(
-        #     self.mapFromItem(self.source_node, 0, 0),
-        #     self.mapFromItem(self.dest_node, 0, 0),
-        # )
         line = QtCore.QLineF(
             self.mapFromItem(
                 self.source_node,

@@ -24,7 +24,7 @@ from .edge import Edge
 class Node(QtGui.QGraphicsItem):
     """The base node class."""
 
-    def __init__(self, node_data, graph_widget, parent=None):
+    def __init__(self, node_id, node_data, graph_widget, parent=None):
         """
         Initialize the node.
 
@@ -53,12 +53,14 @@ class Node(QtGui.QGraphicsItem):
         # This is specifically the header
         self.__text_alignment = node_data.get("text_alignment", QtCore.Qt.AlignCenter)
 
+        self.__id = node_id
         self.__name = node_data.get("name", "Node")
         self.__description = node_data.get("description", "")
         self.__exec_func = node_data.get("exec_func", None)
         self.__settings = node_data.get("settings", {})
 
         self.__edges = []
+        self.__input_nodes = []
         self.__output_nodes = []
         self.__graph = graph_widget
 
@@ -67,6 +69,11 @@ class Node(QtGui.QGraphicsItem):
 
     # ----------------------------------------------------------------------------------------
     # Properties
+
+    @property
+    def id(self):
+        """Return the unique id of the node."""
+        return self.__id
 
     @property
     def name(self):
@@ -87,6 +94,11 @@ class Node(QtGui.QGraphicsItem):
     def edges(self):
         """Get the list of the node's edges."""
         return self.__edges
+
+    @property
+    def inputs(self):
+        """Get the list of input nodes."""
+        return self.__input_nodes
 
     @property
     def outputs(self):
@@ -166,6 +178,11 @@ class Node(QtGui.QGraphicsItem):
                 value_rect = QtCore.QRectF(
                     0.0, 0.0, font_metrics.height(), font_metrics.height()
                 )
+            elif setting_type in (int, float):
+                # FIXME handle numbers
+                value_rect = font_metrics.boundingRect(
+                    str(setting.get("value", setting.get("default")))
+                )
             else:
                 value_rect = QtCore.QRectF()
 
@@ -201,6 +218,8 @@ class Node(QtGui.QGraphicsItem):
             0.0,
             max(header_rect.width(), settings_rect.width()),
             header_rect.height() + body_height,
+            # max(header_rect.width(), settings_rect.width()) + 2*self.pen_width,
+            # header_rect.height() + body_height + self.pen_width,
         )
 
     def paint(self, painter, option, widget=None):
@@ -263,8 +282,12 @@ class Node(QtGui.QGraphicsItem):
             painter.restore()
 
             setting_type = setting["type"]
-            if setting_type is str:
-                value_text = setting.get("value", setting.get("default"))
+
+            # NOTE handle numbers
+            if setting_type in (str, int, float):
+                # if setting_type is str:
+                # value_text = setting.get("value", setting.get("default"))
+                value_text = str(setting.get("value", setting.get("default")))
                 if value_text:
                     value_br = font_metrics.boundingRect(value_text)
                     value_rect = QtCore.QRectF(
@@ -342,12 +365,19 @@ class Node(QtGui.QGraphicsItem):
         # painter.drawRect(settings_rect)
         painter.restore()
 
+        # # FIXME
+        # for edge in self.edges:
+        #     edge.adjust()
+
     def itemChange(self, change, value):
         """Override the base QGraphicsItem method."""
+
+        # FIXME draw issues with edges when moving the node around
 
         if change == QtGui.QGraphicsItem.ItemPositionHasChanged:
             for edge in self.edges:
                 edge.adjust()
+
             # self.__graph.itemMoved()
 
         return super(Node, self).itemChange(change, value)
@@ -362,13 +392,28 @@ class Node(QtGui.QGraphicsItem):
         edge.adjust()
 
     def add_output(self, output_node):
-        """Add an output node to this node by connecting it with an edge."""
+        """Add an output node to this node and connect it with an edge."""
 
         edge = Edge(self, output_node)
         self.add_edge(edge)
 
         self.__output_nodes.append(output_node)
+
+        # Add input to this node to the output?
+        output_node.add_input(self)
+        # Add edge also to the output?
+        output_node.add_edge(edge)
+
         return edge
+
+    def add_input(self, input_node):
+        """Add an input node to this node andd connect it with an edge."""
+
+        # edge = Edge(self, input_node)
+        # self.add_edge(edge)
+
+        self.__input_nodes.append(input_node)
+        # return edge
 
     def execute(self, input_data=None):
         """Execute the node's function, if it has one."""
