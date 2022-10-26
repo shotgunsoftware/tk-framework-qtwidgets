@@ -12,31 +12,28 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
 
-class Edge(QtGui.QGraphicsItem):
+class EdgeItem(QtGui.QGraphicsItem):
     """A class to represent an edge connecting two nodes in a graph."""
 
-    def __init__(self, source_node, dest_node, parent=None):
-        """
-        Initialize the edge.
+    def __init__(self, input_node_item, output_node_item, parent=None):
+        """Initialize the edge."""
 
-        """
-
-        super(Edge, self).__init__(parent)
+        super(EdgeItem, self).__init__(parent)
 
         # QGraphicsItem properties
         self.setAcceptedMouseButtons(QtCore.Qt.NoButton)
 
         # Edge properties
-        self.__source_node = source_node
-        self.__dest_node = dest_node
+        self.__source_node = input_node_item
+        self.__dest_node = output_node_item
         self.__source_point = None
         self.__dest_point = None
         self.__radius = 8
         self.__pen_width = 2
 
-        # Initialize the edge
-        self.source_node.add_edge(self)
-        self.dest_node.add_edge(self)
+        # # Initialize the edge
+        # self.source_node.add_edge(self)
+        # self.dest_node.add_edge(self)
         self.adjust()
 
     # ----------------------------------------------------------------------------------------
