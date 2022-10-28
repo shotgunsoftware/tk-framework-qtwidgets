@@ -21,7 +21,12 @@ class EdgeItem(QtGui.QGraphicsItem):
         super(EdgeItem, self).__init__(parent)
 
         # QGraphicsItem properties
+        # TODO allow edges to move to edit input/output
+        # NOTE we may want to separate out edge and "connector" to different classes to chagne input/outputs
         self.setAcceptedMouseButtons(QtCore.Qt.NoButton)
+        # self.setFlags(
+        #     QtGui.QGraphicsItem.ItemIsMovable
+        # )
 
         # Edge properties
         self.__source_node = input_node_item
@@ -32,8 +37,6 @@ class EdgeItem(QtGui.QGraphicsItem):
         self.__pen_width = 2
 
         # # Initialize the edge
-        # self.source_node.add_edge(self)
-        # self.dest_node.add_edge(self)
         self.adjust()
 
     # ----------------------------------------------------------------------------------------

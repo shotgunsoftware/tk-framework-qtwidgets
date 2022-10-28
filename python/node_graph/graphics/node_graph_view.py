@@ -15,6 +15,8 @@ from sgtk.platform.qt import QtCore, QtGui
 from .items.node_item import NodeItem
 from .items.edge_item import EdgeItem
 
+# sg_qwidgets = sgtk.platform.current_bundle().import_module("sg_qwidgets")
+
 
 class NodeGraphView(QtGui.QGraphicsView):
     """A widget to display a node graph."""
@@ -48,7 +50,9 @@ class NodeGraphView(QtGui.QGraphicsView):
 
         # The node graph containing the graph data objects
         self.__node_graph = node_graph
-        self.__node_graph.notifier.build_finished.connect(self.build)
+        self.__node_graph.notifier.graph_end_reset.connect(self.build)
+        self.__node_graph.notifier.graph_node_added.connect(self.add_node)
+        self.__node_graph.notifier.graph_node_removed.connect(self.remove_node)
 
         # The graphics items
         self.__root_node_item = None
@@ -123,7 +127,7 @@ class NodeGraphView(QtGui.QGraphicsView):
 
     def build(self):
         """
-        Build the visual graph given the graph data.
+        Build the visual graph from the current node graph data.
 
         :param graph: The graph object containing the data to build the graph visually.
         :type graph. NodeGraph
@@ -159,6 +163,31 @@ class NodeGraphView(QtGui.QGraphicsView):
 
         # Format the graph
         self.arrange_tree()
+
+    def add_node(self, node):
+        """Add a node to the current node graph view."""
+
+        # First create the node item
+        self.create_node_item(node)
+
+        # Then, add the edges
+        for edge in node.edges:
+            self.create_edge_item(edge)
+
+    def remove_node(self, node):
+        """Remove the node from the node graph view."""
+
+        node_item = self.node_items.get(node.id)
+        if not node_item:
+            return
+
+        self.scene().removeItem(node_item)
+        # TODO delete the node item - scene does not delete it
+
+        for edge_item in node_item.edge_items:
+            self.scene().removeItem(edge_item)
+            # TODO remove the edge item from the other node
+            # TODO delete the item - scene does not delete it
 
     def arrange_tree(self):
         """Arrange the node graph in a viewable format."""
@@ -366,3 +395,16 @@ class NodeGraphView(QtGui.QGraphicsView):
     #     for item in self.scene().items():
     #         if isinstance(item, Node):
     #             nodes.append(item)
+
+    # def contextMenuEvent(self, event):
+    #     """Override the base class method."""
+
+    #     # TODO contxt menu event on the scene
+
+    #     item = self.itemAt(event.pos())
+    #     if item:
+    #         pos = self.mapToScene(event.pos())
+    #         item.show_context_menu(pos)
+    #     else:
+    #         print("Graphics View Context Menu")
+    #         event.accept()

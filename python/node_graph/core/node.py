@@ -33,6 +33,8 @@ class Node:
         self.__input_nodes = []
         self.__output_nodes = []
 
+        self.__is_executing = False
+
     # ----------------------------------------------------------------------------------------
     # Properties
 
@@ -53,18 +55,23 @@ class Node:
 
     @property
     def inputs(self):
-        """Get the list of input nodes."""
+        """Get the list of input node ids."""
         return self.__input_nodes
 
     @property
     def outputs(self):
-        """Get the list of output nodes."""
+        """Get the list of output node ids."""
         return self.__output_nodes
 
     @property
     def settings(self):
         """Get the current settings values."""
         return self.__settings
+
+    @property
+    def is_executing(self):
+        """Return True if the node is running its execute function."""
+        return self.__is_executing
 
     # ----------------------------------------------------------------------------------------
     # Public methods
@@ -96,9 +103,14 @@ class Node:
     def execute(self, input_data=None):
         """Execute the node's function, if it has one."""
 
-        print("Executing...", self.data.get("name", self.id))
+        self.__is_executing = True
 
-        if not self.__exec_func:
-            return
+        try:
+            print("Executing...", self.data.get("name", self.id))
 
-        return self.__exec_func(input_data, self.settings)
+            if not self.__exec_func:
+                return
+
+            return self.__exec_func(input_data, self.settings)
+        finally:
+            self.__is_executing = False

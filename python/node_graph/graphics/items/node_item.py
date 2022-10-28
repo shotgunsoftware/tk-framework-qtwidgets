@@ -61,9 +61,17 @@ class NodeItem(QtGui.QGraphicsItem):
         self.__edge_items = []
         self.__input_node_items = []
         self.__output_node_items = []
-        self.__graph = graph_view
+        self.__graph_view = graph_view
 
         self.__node = node
+
+        # NOTE temp testing
+        if "pos" in node.data:
+            # pos = node.data["pos"]
+            # If it has a parent then we map to parent?
+            pos = self.__graph_view.mapToScene(node.data["pos"])
+            self.setPos(pos)
+            # self.setPos(self.mapToItem(self, pos))
 
     # ----------------------------------------------------------------------------------------
     # Properties
@@ -141,7 +149,7 @@ class NodeItem(QtGui.QGraphicsItem):
     def _get_font_metrics(self):
         """Return the font metrics to use to render the node."""
 
-        font = self.__graph.scene().font()
+        font = self.__graph_view.scene().font()
         return QtGui.QFontMetrics(font)
 
     def _get_header_bounding_rect(self, include_padding=True):
@@ -422,18 +430,17 @@ class NodeItem(QtGui.QGraphicsItem):
             painter.drawRoundedRect(rect, self.radius, self.radius)
             painter.restore()
 
-        # #
-        # # Draw 'executing' animation (blinking border?)
-        # # FIXME need to do work in separate thread to update GUI while working
-        # #
-        # if self.__is_executing:
-        #     painter.save()
-        #     color = QtCore.Qt.yellow
-        #     pen = QtGui.QPen(color, self.pen_width)
-        #     painter.setBrush(color)
-        #     painter.setPen(pen)
-        #     painter.drawRoundedRect(rect, self.radius, self.radius)
-        #     painter.restore()
+        #
+        # Draw 'executing' animation (blinking border?)
+        #
+        if self.__node.is_executing:
+            painter.save()
+            color = QtCore.Qt.yellow
+            pen = QtGui.QPen(color, self.pen_width)
+            painter.setBrush(color)
+            painter.setPen(pen)
+            painter.drawRoundedRect(rect, self.radius, self.radius)
+            painter.restore()
 
         # Debugging...
         #
@@ -462,6 +469,9 @@ class NodeItem(QtGui.QGraphicsItem):
     def contextMenuEvent(self, event):
         """Override the base QGraphicsItem method."""
 
+        self.show_context_menu(event.screenPos())
+
+    def show_context_menu(self, pos):
         actions = []
 
         edit_action = QtGui.QAction("Edit")
@@ -476,9 +486,10 @@ class NodeItem(QtGui.QGraphicsItem):
         )
         actions.append(collapse_expand_action)
 
-        menu = sg_qwidgets.SGQMenu(self.__graph)
+        menu = sg_qwidgets.SGQMenu(self.__graph_view)
         menu.addActions(actions)
-        menu.exec_(event.screenPos())
+        # menu.exec_(event.screenPos())
+        menu.exec_(pos)
 
     # ----------------------------------------------------------------------------------------
     # Public methods
@@ -490,52 +501,7 @@ class NodeItem(QtGui.QGraphicsItem):
         self.show_settings = not self.show_settings
 
         # Need to re-arrange the view now that this node has changed
-        self.__graph.arrange_tree()
-
-    # def add_edge(self, edge):
-    #     """Add an edge to the node."""
-
-    #     self.__edges.append(edge)
-    #     edge.adjust()
-
-    # def add_output(self, output_node):
-    #     """Add an output node to this node and connect it with an edge."""
-
-    #     edge = EdgeItem(self, output_node)
-    #     self.add_edge(edge)
-
-    #     self.__output_nodes.append(output_node)
-
-    #     # Add input to this node to the output?
-    #     output_node.add_input(self)
-    #     # Add edge also to the output?
-    #     output_node.add_edge(edge)
-
-    #     return edge
-
-    # def add_input(self, input_node):
-    #     """Add an input node to this node andd connect it with an edge."""
-
-    #     # edge = Edge(self, input_node)
-    #     # self.add_edge(edge)
-
-    #     self.__input_nodes.append(input_node)
-    #     # return edge
-
-    # def execute(self, input_data=None):
-    #     """Execute the node's function, if it has one."""
-
-    #     self.__is_executing = True
-
-    #     try:
-    #         print("Executing...", self.name)
-
-    #         if not self.__exec_func:
-    #             return
-
-    #         return self.__exec_func(input_data, self.settings)
-    #     finally:
-    #         self.__is_executing = False
+        self.__graph_view.arrange_tree()
 
     # ----------------------------------------------------------------------------------------
     # Private methods
@@ -544,8 +510,8 @@ class NodeItem(QtGui.QGraphicsItem):
         """Request to show the details for this node."""
 
         # First clear the graph selection
-        self.__graph.scene().clearSelection()
+        self.__graph_view.scene().clearSelection()
         # Ensure the details widget is showing
-        self.__graph.request_show_details.emit(True)
+        self.__graph_view.request_show_details.emit(True)
         # Set the selection to this node only, which will display its details in the widget
         self.setSelected(True)
