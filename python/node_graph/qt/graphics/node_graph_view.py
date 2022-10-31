@@ -15,8 +15,6 @@ from sgtk.platform.qt import QtCore, QtGui
 from .items.node_item import NodeItem
 from .items.edge_item import EdgeItem
 
-# sg_qwidgets = sgtk.platform.current_bundle().import_module("sg_qwidgets")
-
 
 class NodeGraphView(QtGui.QGraphicsView):
     """A widget to display a node graph."""

@@ -8,6 +8,8 @@
 # agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Autodesk, Inc.
 
+import copy
+
 from .edge import Edge
 
 
@@ -25,9 +27,12 @@ class Node:
         self.__id = node_id
         self.__data = node_data
         self.__exec_func = node_data.get("exec_func", None)
+        self.__post_exec_func = node_data.get("post_exec_func", None)
+        self.__pre_output_exec_func = node_data.get("pre_output_exec_func", None)
+        self.__post_output_exec_func = node_data.get("post_output_exec_func", None)
 
         # NOTE we may want to create a class to handle settings objects
-        self.__settings = node_data.get("settings", {})
+        self.__settings = copy.deepcopy(node_data.get("settings", {}))
 
         self.__edges = []
         self.__input_nodes = []
@@ -103,14 +108,42 @@ class Node:
     def execute(self, input_data=None):
         """Execute the node's function, if it has one."""
 
+        # TODO report errors if found / visually
+
         self.__is_executing = True
 
         try:
-            print("Executing...", self.data.get("name", self.id))
-
             if not self.__exec_func:
                 return
 
+            print("Executing...", self.data.get("name", self.id))
             return self.__exec_func(input_data, self.settings)
         finally:
             self.__is_executing = False
+
+    def post_execute(self, input_data=None):
+        """Execute the node's post execute function, if it has one."""
+
+        if not self.__post_exec_func:
+            return
+
+        print("Post executing...", self.data.get("name", self.id))
+        return self.__post_exec_func(input_data, self.settings)
+
+    def pre_output_exec(self, input_data, output_node):
+        """Run the node's prepare function before output node is executed."""
+
+        if not self.__pre_output_exec_func:
+            return
+
+        print(f"\tPre output exec: {output_node.id}")
+        return self.__pre_output_exec_func(input_data, output_node)
+
+    def post_output_exec(self, input_data, output_node):
+        """Run the node's clean up function after the output node has finished executing."""
+
+        if not self.__post_output_exec_func:
+            return
+
+        print(f"\tPost output exec: {output_node.id}")
+        return self.__post_output_exec_func(input_data, output_node)

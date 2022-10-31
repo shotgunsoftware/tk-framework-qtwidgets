@@ -54,7 +54,7 @@ class NodeItem(QtGui.QGraphicsItem):
         self.__description = node.data.get("description", "")
         # self.__exec_func = node.data.get("exec_func", None)
         # NOTE we may want to create a class to handle settings objects
-        self.__settings = node.data.get("settings", {})
+        # self.__settings = node.settings
 
         self.__show_settings = show_settings
 
@@ -119,7 +119,7 @@ class NodeItem(QtGui.QGraphicsItem):
     @property
     def settings(self):
         """Get the current settings values."""
-        return self.__settings
+        return self.__node.settings
 
     @property
     def show_settings(self):
@@ -195,6 +195,7 @@ class NodeItem(QtGui.QGraphicsItem):
             setting_type = setting["type"]
             value = setting.get("value", setting.get("default"))
             if setting_type is str:
+                value = value or ""
                 value_rect = font_metrics.boundingRect(value)
             elif setting_type is bool:
                 value_rect = QtCore.QRectF(
@@ -314,6 +315,8 @@ class NodeItem(QtGui.QGraphicsItem):
                 value = setting.get("value", setting.get("default"))
 
                 if setting_type in (str, int, float):
+                    if value is None:
+                        value = ""
                     if not isinstance(value, six.string_types):
                         value = str(value)
 

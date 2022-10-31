@@ -9,13 +9,9 @@
 # not expressly granted therein are reserved by Autodesk, Inc.
 
 from collections import deque
-import os
-import tempfile
+from enum import Enum, unique, auto
 
 from .node import Node
-
-# TODO remove
-from sgtk.platform.qt import QtCore
 
 
 class NodeGraph:
@@ -30,16 +26,14 @@ class NodeGraph:
     class NodeGraphCycleError(Exception):
         """Custom exception class to throw when a cycle in the graph is detected."""
 
-    # TODO move class out to separate file to remove qt dep
-    class Notifier(QtCore.QObject):
-        """Class to emit signals around node graph operations."""
+    @unique
+    class SearchMethod(Enum):
+        """Enum class for node graph search methods."""
 
-        graph_begin_reset = QtCore.Signal()
-        graph_end_reset = QtCore.Signal()
-        graph_node_added = QtCore.Signal(Node)
-        graph_node_removed = QtCore.Signal(Node)
+        DepthFirstSearch = auto()
+        BreadthFirstSearch = auto()
 
-    def __init__(self, bg_task_manager=None):
+    def __init__(self, notifier=None, bg_task_manager=None):
         """Initialize the node graph object."""
 
         self.__root_node = None
@@ -47,7 +41,8 @@ class NodeGraph:
         self.__nodes = {}
         self.__edges = []
 
-        self.__notifier = self.Notifier()
+        self.__search_method = self.SearchMethod.DepthFirstSearch
+        self.__notifier = notifier
 
         # NOTE exploring async options
         self.__executing_nodes = []
@@ -90,6 +85,15 @@ class NodeGraph:
         """ "Get the notifier object"""
         return self.__notifier
 
+    @property
+    def search_method(self):
+        """Get or set the search method used ito traverse the graph."""
+        return self.__search_method
+
+    @search_method.setter
+    def search_method(self, value):
+        self.__search_method = value
+
     # ----------------------------------------------------------------------------------------
     # Public methods
 
@@ -114,14 +118,17 @@ class NodeGraph:
             self.__nodes[self.__root_node.id] = self.__root_node
 
             # Create the nodes in the graph from the given data
-            for data_id, data_value in data.items():
-                self.add_node(data_id, data_value, add_edges=False)
+            for item_id, item_data in data.items():
+                node_data = item_data["node_data"]
+                self.add_node(item_id, node_data)
 
-            # Add edges from top-level nodes to the root
-            for node_id, node in self.nodes.items():
-                if node_id == self.ROOT_NODE_ID:
+            # Add edges for all nodes after they have all been created
+            for item_id, item_data in data.items():
+                if item_id == self.ROOT_NODE_ID:
                     continue
-                self.add_node_edges(node)
+                node = self.__nodes[item_id]
+                output_node_ids = item_data.get("output_node_ids", [])
+                self.add_node_edges(node, output_node_ids)
 
             # Last pass to add nodes from super root to top-level nodes
             for node_id, node in self.nodes.items():
@@ -134,8 +141,15 @@ class NodeGraph:
         finally:
             self.notifier.graph_end_reset.emit()
 
-    def add_node(self, node_id, node_data, add_edges=True):
+    def add_node(self, node_id, node_data, output_node_ids=None):
         """Add a node to the graph."""
+
+        output_node_ids = output_node_ids or []
+
+        if node_id is None:
+            # Auto generate a unique id for the node
+            # TODO improve this
+            node_id = f"__node_{len(self.nodes)}__"
 
         # Check the node does not use a reserved id
         if node_id == self.ROOT_NODE_ID:
@@ -155,8 +169,8 @@ class NodeGraph:
         node = Node(node_id, node_data)
         self.__nodes[node_id] = node
 
-        if add_edges:
-            self.add_node_edges(node)
+        # if add_edges:
+        self.add_node_edges(node, output_node_ids)
 
         # NOTE we do not check for cycles here -- the execute method may need to handle cycles after all
         # since it might be a lot of maintenance to keep checking on any graph modification
@@ -165,23 +179,14 @@ class NodeGraph:
 
         return node
 
-    def add_node_edges(self, node):
+    def add_node_edges(self, node, output_node_ids):
         """Add the edges for the node."""
 
-        # Add edges between the new node and its outputs
-        output_node_ids = node.data.get("outputs", [])
+        # Add edges between the given node and its outputs
         for output_node_id in output_node_ids:
             output_node = self.nodes.get(output_node_id)
             if output_node:
                 edge = node.add_output(output_node)
-                self.__edges.append(edge)
-
-        # Add edges between the new node and its inputs
-        input_node_ids = node.data.get("inputs", [])
-        for input_node_id in input_node_ids:
-            input_node = self.nodes.get(input_node_id)
-            if input_node:
-                edge = input_node.add_output(node)
                 self.__edges.append(edge)
 
     def remove_node(self, node_id):
@@ -240,21 +245,15 @@ class NodeGraph:
             4. If our last output node is a "write/publish" node then move our temp file to the specified output location
         """
 
-        # # Our super root node does nto have a function other than indicating it is the start
-        # input_nodes = self.__root_node.outputs
-        # if not input_nodes:
-        #     return
+        if self.search_method.value == self.SearchMethod.DepthFirstSearch.value:
+            node_results = {}
+            self.execute_depth_first_search(self.__root_node, node_results)
 
-        # # TODO handle more than one input node?
-        # input_node = input_nodes[0]
+        elif self.search_method.value == self.SearchMethod.DepthFirstSearch.value:
+            self.execute_breadth_first_search()
 
-        # # For each of our outputs we will save a temp file to work on
-        # for output_node in input_node.outputs:
-        #     # TODO load if input file
-        #     tmp_output_file = os.path.join(tempfile.gettempdir(), output_node.id, ".vpb")
-
-        node_results = {}
-        self.execute_depth_first_search(self.__root_node, node_results)
+        else:
+            raise self.NodeGraphError("Unsupported graph search method")
 
     def execute_depth_first_search(self, node, node_results):
         """Execute using Depth First Search."""
@@ -273,20 +272,15 @@ class NodeGraph:
         input_data = {}
         for input_node in node.inputs:
             if not input_node.id in node_results:
-                # inputs_ready = False
-                # break
                 return
 
             node_data = node_results[input_node.id]
-            # Merge the node data into the full input data
-            # FIXME merge lists
-            input_data.update(node_data)
-
-        # Do not execute node if its inputs have not executed yet. Add it back to the list
-        # of nodes to process once all inputs are ready
-        # if not inputs_ready:
-        # nodes_to_process.append(node)
-        # continue
+            # Merge the node data into the full input data. For list values, first merge the values
+            # into node_data, since node_data will overwrite input_data
+            for key, value in node_data.items():
+                if isinstance(value, list):
+                    value.extend(input_data.get(key, []))
+            input_data = {**input_data, **node_data}
 
         # Execute the node with all of its input data
         result = node.execute(input_data)
@@ -294,10 +288,23 @@ class NodeGraph:
         # Store the result
         node_results[node.id] = result or {}
 
-        # Add the node outputs to the list to process
-        # nodes_to_process.extend(node.outputs)
+        # Recursively execute the output nodes
         for output_node in node.outputs:
+
+            # Run the pre-exec output function and update the node results with the data
+            # returned by the prepare function
+            prepare_result = node.pre_output_exec(result, output_node)
+            if prepare_result:
+                node_results[node.id].update(prepare_result)
+
+            # Recursively execute the node outputs
             self.execute_depth_first_search(output_node, node_results)
+
+            # Run the post-exec output function, pass in the prepare result
+            node.post_output_exec(prepare_result, output_node)
+
+        # Pass the result of the node's execute function to its post exec method
+        node.post_execute(result)
 
     def execute_breadth_first_search(self, root_node=None):
         """
