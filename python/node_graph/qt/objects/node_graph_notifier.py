@@ -9,6 +9,8 @@
 # not expressly granted therein are reserved by Autodesk, Inc.
 
 from sgtk.platform.qt import QtCore
+
+from ...core.edge import Edge
 from ...core.node import Node
 
 
@@ -24,3 +26,8 @@ class NodeGraphNotifier(QtCore.QObject):
     graph_node_added = QtCore.Signal(Node)
     # Signal emitted after a node object has been removed from the node graph
     graph_node_removed = QtCore.Signal(Node)
+
+    # Signal emitted after an edge object has been added to the node graph
+    graph_edge_added = QtCore.Signal(Node, Node)
+    # Signal emitted after an edge object has been removed from the node graph
+    graph_edge_removed = QtCore.Signal(Node, Node)

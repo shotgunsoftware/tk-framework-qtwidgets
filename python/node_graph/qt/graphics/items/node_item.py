@@ -14,6 +14,7 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from tank_vendor import six
 
+
 sg_qwidgets = sgtk.platform.current_bundle().import_module("sg_qwidgets")
 
 
@@ -52,18 +53,15 @@ class NodeItem(QtGui.QGraphicsItem):
         self.__id = node.id
         self.__name = node.data.get("name", "Node")
         self.__description = node.data.get("description", "")
-        # self.__exec_func = node.data.get("exec_func", None)
-        # NOTE we may want to create a class to handle settings objects
-        # self.__settings = node.settings
 
         self.__show_settings = show_settings
 
         self.__edge_items = []
-        self.__input_node_items = []
-        self.__output_node_items = []
         self.__graph_view = graph_view
 
         self.__node = node
+        self.__input_node_ids = [n.id for n in self.__node.input_nodes]
+        self.__output_node_ids = [n.id for n in self.__node.output_nodes]
 
         # NOTE temp testing
         if "pos" in node.data:
@@ -107,14 +105,14 @@ class NodeItem(QtGui.QGraphicsItem):
         return self.__edge_items
 
     @property
-    def input_node_items(self):
-        """Get the list of input node graphics items."""
-        return self.__input_node_items
+    def input_node_ids(self):
+        """Get the list of input node ids."""
+        return self.__input_node_ids
 
     @property
-    def output_node_items(self):
-        """Get the list of output node graphics items."""
-        return self.__output_node_items
+    def output_node_ids(self):
+        """Get the list of output node ids."""
+        return self.__output_node_ids
 
     @property
     def settings(self):
@@ -433,6 +431,12 @@ class NodeItem(QtGui.QGraphicsItem):
             painter.drawRoundedRect(rect, self.radius, self.radius)
             painter.restore()
 
+        # TODO draw possible input/output on hover and on mouse press start drawing the connection
+        # #
+        # # Draw possible input/outputs on hover
+        # #
+        # if self._is_hovered(option):
+
         #
         # Draw 'executing' animation (blinking border?)
         #
@@ -460,7 +464,7 @@ class NodeItem(QtGui.QGraphicsItem):
 
         if change == QtGui.QGraphicsItem.ItemPositionHasChanged:
             for edge_item in self.edge_items:
-                edge_item.adjust()
+                edge_item.prepareGeometryChange()
 
         return super(NodeItem, self).itemChange(change, value)
 
@@ -473,6 +477,18 @@ class NodeItem(QtGui.QGraphicsItem):
         """Override the base QGraphicsItem method."""
 
         self.show_context_menu(event.screenPos())
+
+    # ----------------------------------------------------------------------------------------
+    # Public methods
+
+    def toggle_show_settings(self):
+        """Toggle the property to show settings and update the view."""
+
+        self.prepareGeometryChange()
+        self.show_settings = not self.show_settings
+
+        # Need to re-arrange the view now that this node has changed
+        self.__graph_view.arrange_tree()
 
     def show_context_menu(self, pos):
         actions = []
@@ -493,18 +509,6 @@ class NodeItem(QtGui.QGraphicsItem):
         menu.addActions(actions)
         # menu.exec_(event.screenPos())
         menu.exec_(pos)
-
-    # ----------------------------------------------------------------------------------------
-    # Public methods
-
-    def toggle_show_settings(self):
-        """Toggle the property to show settings and update the view."""
-
-        self.prepareGeometryChange()
-        self.show_settings = not self.show_settings
-
-        # Need to re-arrange the view now that this node has changed
-        self.__graph_view.arrange_tree()
 
     # ----------------------------------------------------------------------------------------
     # Private methods

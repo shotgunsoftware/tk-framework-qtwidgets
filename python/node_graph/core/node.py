@@ -10,7 +10,7 @@
 
 import copy
 
-from .edge import Edge
+# from .edge import Edge
 
 
 class Node:
@@ -24,8 +24,12 @@ class Node:
         :type parent: QGraphicsItem
         """
 
-        self.__id = node_id
+        # TODO remove this - data should be processed into properties
         self.__data = node_data
+
+        self.__id = node_id
+        self.__allowed_inputs = node_data.get("allowed_inputs", True)
+        self.__allowed_outputs = node_data.get("allowed_outputs", True)
         self.__exec_func = node_data.get("exec_func", None)
         self.__post_exec_func = node_data.get("post_exec_func", None)
         self.__pre_output_exec_func = node_data.get("pre_output_exec_func", None)
@@ -34,7 +38,7 @@ class Node:
         # NOTE we may want to create a class to handle settings objects
         self.__settings = copy.deepcopy(node_data.get("settings", {}))
 
-        self.__edges = []
+        # NOTE do we need to store inputs/outputs here?
         self.__input_nodes = []
         self.__output_nodes = []
 
@@ -54,11 +58,6 @@ class Node:
         return self.__data
 
     @property
-    def edges(self):
-        """Get the list of the node's edges."""
-        return self.__edges
-
-    @property
     def inputs(self):
         """Get the list of input node ids."""
         return self.__input_nodes
@@ -67,6 +66,38 @@ class Node:
     def outputs(self):
         """Get the list of output node ids."""
         return self.__output_nodes
+
+    @property
+    def input_nodes(self):
+        """Get the list of input nodes."""
+        return self.__input_nodes
+
+    @property
+    def output_nodes(self):
+        """Get the list of output nodes."""
+        return self.__output_nodes
+
+    @property
+    def allowed_inputs(self):
+        """
+        Get the number of allowed inputs, if any.
+
+        If this property is False, then no outputs are allowed.
+        If this property is True, then any number of outputs allowed.
+        If this property is an integer, then that number of outputs allowed.
+        """
+        return self.__allowed_inputs
+
+    @property
+    def allowed_outputs(self):
+        """
+        Get the number of allowed outputs, if any.
+
+        If this property is False, then no outputs are allowed.
+        If this property is True, then any number of outputs allowed.
+        If this property is an integer, then that number of outputs allowed.
+        """
+        return self.__allowed_outputs
 
     @property
     def settings(self):
@@ -84,26 +115,42 @@ class Node:
     def add_output(self, output_node, add_reverse_input=True):
         """Add an output node to this node and connect it with an edge."""
 
-        edge = Edge(self, output_node)
-        self.__edges.append(edge)
+        # First check that a new output can be added
+        if isinstance(self.allowed_outputs, bool):
+            if not self.allowed_outputs:
+                # TODO custom exception
+                raise Exception("Node does not allow any outputs.")
+        elif isinstance(self.allowed_outputs, int):
+            if len(self.output_nodes) + 1 > self.allowed_outputs:
+                raise Exception("Node has maximum outputs already")
+        else:
+            assert False, "Unsupported value tpe for allowed_outputs property"
+
+        # Add the output to the list
         self.__output_nodes.append(output_node)
 
         if add_reverse_input:
             output_node.add_input(self, add_reverse_output=False)
 
-        return edge
-
     def add_input(self, input_node, add_reverse_output=True):
         """Add an input node to this node andd connect it with an edge."""
 
-        edge = Edge(input_node, self)
-        self.__edges.append(edge)
+        # First check that a new input can be added
+        if isinstance(self.allowed_inputs, bool):
+            if not self.allowed_inputs:
+                # TODO custom exception
+                raise Exception("Node does not accept any inputs.")
+        elif isinstance(self.allowed_inputs, int):
+            if len(self.input_nodes) + 1 > self.allowed_inputs:
+                raise Exception("Node already has maximum inputs..")
+        else:
+            assert False, "Unsuuported value tpe for allowed_inputs property"
+
+        # Add the input to the list
         self.__input_nodes.append(input_node)
 
         if add_reverse_output:
             input_node.add_output(self, add_reverse_output=False)
-
-        return edge
 
     def execute(self, input_data=None):
         """Execute the node's function, if it has one."""
