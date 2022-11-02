@@ -97,6 +97,17 @@ class ContextWidget(QtGui.QWidget):
         self.ui = Ui_ContextWidget()
         self.ui.setupUi(self)
 
+        # Todo: read all availabvle 'sg_status_list' fields from shotgrid
+        self._status_dict = {
+            "wtg": "Waiting to Start",
+            "rdy": "Ready to Start",
+            "ip": "In Progress",
+            "hld": "On Hold",
+            "rev": "Ready For Review",
+            "apr": "Approved",
+            "fin": "Final",
+            "na": "N/A"
+        }
         # Loads the style sheet for the widget
         qss_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.qss")
         with open(qss_file, "rt") as f:
@@ -226,7 +237,7 @@ class ContextWidget(QtGui.QWidget):
             task_display_override=task_display_override,
             link_display_override=link_display_override,
         )
-
+        #self._show_status(context)
         # ensure the new context is added to the list of recents.
         if context:
             self._add_to_recents(context)
@@ -250,6 +261,11 @@ class ContextWidget(QtGui.QWidget):
         # setup the search toggle
         self.ui.task_search_btn.toggled.connect(self._on_task_search_toggled)
         self.ui.task_search.hide()
+
+        #self.ui.task_display.textchanged.connect(self._task_display_update)
+
+        # Update task status
+        self.ui.status_display.currentIndexChanged.connect(self._update_task_status)
 
         # setup the search toggle
         self.ui.link_search_btn.toggled.connect(self._on_link_search_toggled)
@@ -295,6 +311,28 @@ class ContextWidget(QtGui.QWidget):
 
         # get recent contexts from user settings
         self._get_recent_contexts()
+        #self._populate_status_display()
+
+    def _populate_status_display(self):
+        self.ui.status_display.blockSignals(True)
+        self.ui.status_display.clear()
+        for value in self._status_dict.values():
+            self.ui.status_display.addItem(value)
+        self.ui.status_display.blockSignals(False)
+        #self.ui.status_display.setCurrentText("N/A")
+
+    def _get_status_name(self, short_code):
+        if not short_code:
+            return "N/A"
+        return self._status_dict[short_code]
+
+    def _get_status_short_code(self, name):
+        if not name:
+            return "na"
+        if name:
+            for key, value in self._status_dict.items():
+                if value == name:
+                    return key
 
     def restrict_entity_types_by_link(self, entity_type, field_name):
         """
@@ -615,13 +653,15 @@ class ContextWidget(QtGui.QWidget):
         """
         Called when a new context is set via the menu or one of the completers.
         """
-
-        logger.debug("Context changed to: %s" % (context,))
-
+        msg = "Context changed to: %s" % (context,)
+        logger.debug(msg)
+        _log(msg)
         # update the widget to display the new context and alert listeners that
         # a new context was selected
         self._show_context(context)
+        self._show_status(context)
         self.context_changed.emit(context)
+
 
     def _on_entity_activated(self, entity_type, entity_id, entity_name):
         """
@@ -665,6 +705,22 @@ class ContextWidget(QtGui.QWidget):
             self.ui.task_display.show()
             self.ui.task_menu_btn.show()
             self.ui.task_search.hide()
+
+    def _update_task_status(self):
+        """
+        Update task status
+        """
+        if self._context and self._context.task:
+            sg = sgtk.platform.current_bundle().shotgun
+            status_name = self.ui.status_display.currentText()
+            status_short_code = self._get_status_short_code(status_name)
+            result = sg.update('Task', self._context.task['id'], {'sg_status_list': status_short_code})
+            _log("Updating task_id: %s with status %s " % (self._context.task['id'], status_short_code))
+            _log("Updating result is: %s " % result)
+            #self._update_task_display(self._context)
+            return result
+        else:
+            _log("There is no task to update its status yet, please select a task")
 
     def _on_link_search_toggled(self, checked):
         """
@@ -828,7 +884,6 @@ class ContextWidget(QtGui.QWidget):
         """
         Show the supplied context in the UI.
         """
-
         if task_display_override:
             task_display = task_display_override
         else:
@@ -841,6 +896,7 @@ class ContextWidget(QtGui.QWidget):
 
         # update the task display/state
         self.ui.task_display.setText(task_display)
+
         self.ui.task_search_btn.setChecked(False)
         self.ui.task_search_btn.setDown(False)
 
@@ -855,6 +911,32 @@ class ContextWidget(QtGui.QWidget):
                 self._query_related_tasks, task_args=[context]
             )
 
+    def _show_status(self, context):
+        """
+        Show task status.
+        """
+        if context and context.task:
+            #self.ui.status_display.setEnabled(True)
+            self._populate_status_display()
+
+        _log("Get task status ...")
+        task_status_short_code = _get_task_status(context)
+        task_status_name = self._get_status_name(task_status_short_code)
+        self.ui.status_display.blockSignals(True)
+        self.ui.status_display.setCurrentText(task_status_name)
+        self.ui.status_display.blockSignals(False)
+
+    def _update_task_display(self, context, task_display_override=None):
+        """
+        Update the task display
+        """
+        if task_display_override:
+            task_display = task_display_override
+        else:
+            task_display = _get_task_display(context)
+
+        # update the task display/state
+        self.ui.task_display.setText(task_display)
 
 def _get_task_display(context, plain_text=False):
     """
@@ -881,6 +963,28 @@ def _get_task_display(context, plain_text=False):
         display_name = "%s&nbsp;%s" % (task_icon, task_name)
 
     return display_name
+
+
+def _get_task_status(context):
+    """
+    Gat task status
+    """
+
+    sg = sgtk.platform.current_bundle().shotgun
+
+    if not context or not context.task:
+        return ""
+    task_id = context.task["id"]
+
+    entity = 'Task'
+    filters = [['id', 'is', task_id]]
+    fields = ['entity', 'sg_status_list']
+    item = sg.find_one(entity, filters, fields)
+    _log("item is: %s" % item)
+    task_status = item['sg_status_list']
+    _log("task_status is: %s" % task_status)
+
+    return task_status
 
 
 def _get_link_display(context, plain_text=False):
@@ -1016,3 +1120,12 @@ def _query_entity_schema(entity_type, field_name):
     return bundle.shotgun.schema_field_read(
         entity_type, field_name=field_name, project_entity=project
     )
+
+
+def _log(msg, error=0):
+    if logger:
+        if error:
+            logger.warn(msg)
+        else:
+            logger.info(msg)
+    print(msg)
