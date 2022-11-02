@@ -114,7 +114,6 @@ class Ui_ContextWidget(object):
         self.status_widgets_layout.setObjectName("status_widgets_layout")
         self.status_display = QtGui.QComboBox(self.edit_widget)
         self.status_display.setToolTip('Display or change current task status.')
-        #self.status_display.setEnabled(False)
         self.status_display.setMinimumSize(QtCore.QSize(0, 0))
         self.status_display.setMaximumSize(QtCore.QSize(16777215, 32))
         self.status_display.setObjectName("status_display")
