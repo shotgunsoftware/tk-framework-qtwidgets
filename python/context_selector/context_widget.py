@@ -341,7 +341,6 @@ class ContextWidget(QtGui.QWidget):
                     permission = False
                 if not permission:
                     self.ui.status_display.model().item(index).setEnabled(False)
-            #self.ui.status_display.setCurrentText("N/A")
         self.ui.status_display.blockSignals(False)
 
     def _simple_populate_status_display(self):
@@ -378,7 +377,7 @@ class ContextWidget(QtGui.QWidget):
                     self._status_permissions[status_short_code] = False
                     pass
             # reset task status
-            result = sg.update('Task', context.task['id'], {'sg_status_list': task_status_short_code})
+            sg.update('Task', context.task['id'], {'sg_status_list': task_status_short_code})
 
     def _get_status_name(self, short_code):
         if not short_code:
