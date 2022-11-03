@@ -97,6 +97,11 @@ class ContextWidget(QtGui.QWidget):
         self.ui = Ui_ContextWidget()
         self.ui.setupUi(self)
 
+
+        self._initialize_task_statuses = True
+        self._status_permissions = {}
+        #self._complex_populate_status_display()
+
         # Todo: read all availabvle 'sg_status_list' fields from shotgrid
         self._status_dict = {
             "wtg": "Waiting to Start",
@@ -106,7 +111,8 @@ class ContextWidget(QtGui.QWidget):
             "rev": "Ready For Review",
             "apr": "Approved",
             "fin": "Final",
-            "na": "N/A"
+            "na": "N/A",
+            "tst": "testing"
         }
         # Loads the style sheet for the widget
         qss_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.qss")
@@ -237,7 +243,7 @@ class ContextWidget(QtGui.QWidget):
             task_display_override=task_display_override,
             link_display_override=link_display_override,
         )
-        #self._show_status(context)
+        self._show_status(context)
         # ensure the new context is added to the list of recents.
         if context:
             self._add_to_recents(context)
@@ -311,15 +317,68 @@ class ContextWidget(QtGui.QWidget):
 
         # get recent contexts from user settings
         self._get_recent_contexts()
-        #self._populate_status_display()
 
-    def _populate_status_display(self):
+
+    def _complex_populate_status_display(self, context):
+        """
+        Populate status display
+        """
         self.ui.status_display.blockSignals(True)
-        self.ui.status_display.clear()
-        for value in self._status_dict.values():
-            self.ui.status_display.addItem(value)
+        if self._initialize_task_statuses:
+            self._check_status_permissions(context)
+            self._initialize_task_statuses = False
+
+            self.ui.status_display.clear()
+            #self.ui.status_display.addItem("testing")
+
+            for status_short_code, status_name in self._status_dict.items():
+                self.ui.status_display.addItem(status_name)
+
+            for index, status_short_code in enumerate(self._status_dict.keys()):
+                if status_short_code in self._status_permissions:
+                    permission = self._status_permissions[status_short_code]
+                else:
+                    permission = False
+                if not permission:
+                    self.ui.status_display.model().item(index).setEnabled(False)
+            #self.ui.status_display.setCurrentText("N/A")
         self.ui.status_display.blockSignals(False)
-        #self.ui.status_display.setCurrentText("N/A")
+
+    def _simple_populate_status_display(self):
+        """
+        Populate status display
+        """
+        self.ui.status_display.blockSignals(True)
+
+        self.ui.status_display.clear()
+        #self.ui.status_display.addItem("testing")
+
+        for status_short_code, status_name in self._status_dict.items():
+            self.ui.status_display.addItem(status_name)
+        self.ui.status_display.setCurrentText("N/A")
+        self.ui.status_display.blockSignals(False)
+
+    def _check_status_permissions(self, context):
+        """
+        Check if current user have permission to change each status
+        Todo: find a better way to do this
+        """
+        sg = sgtk.platform.current_bundle().shotgun
+        if context and context.task:
+            task_status_short_code = _get_task_status(context)
+
+            for status_short_code in self._status_dict.keys():
+                try:
+                    result = sg.update('Task', context.task['id'], {'sg_status_list': status_short_code})
+                    if result['sg_status_list'] == status_short_code:
+                        self._status_permissions[status_short_code] = True
+                    else:
+                        self._status_permissions[status_short_code] = False
+                except:
+                    self._status_permissions[status_short_code] = False
+                    pass
+            # reset task status
+            result = sg.update('Task', context.task['id'], {'sg_status_list': task_status_short_code})
 
     def _get_status_name(self, short_code):
         if not short_code:
@@ -710,6 +769,7 @@ class ContextWidget(QtGui.QWidget):
         """
         Update task status
         """
+
         if self._context and self._context.task:
             sg = sgtk.platform.current_bundle().shotgun
             status_name = self.ui.status_display.currentText()
@@ -915,15 +975,19 @@ class ContextWidget(QtGui.QWidget):
         """
         Show task status.
         """
+
         if context and context.task:
             #self.ui.status_display.setEnabled(True)
-            self._populate_status_display()
+            self._complex_populate_status_display(context)
 
         _log("Get task status ...")
         task_status_short_code = _get_task_status(context)
         task_status_name = self._get_status_name(task_status_short_code)
         self.ui.status_display.blockSignals(True)
-        self.ui.status_display.setCurrentText(task_status_name)
+        try:
+            self.ui.status_display.setCurrentText(task_status_name)
+        except:
+            pass
         self.ui.status_display.blockSignals(False)
 
     def _update_task_display(self, context, task_display_override=None):
