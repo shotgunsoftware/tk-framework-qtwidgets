@@ -13,6 +13,8 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.context_editor_widget import Ui_ContextWidget
 
+from collections import OrderedDict
+
 # framework imports
 shotgun_globals = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_globals"
@@ -114,6 +116,8 @@ class ContextWidget(QtGui.QWidget):
             "na": "N/A",
             "tst": "testing"
         }
+
+        self._tasks = {}
         # Loads the style sheet for the widget
         qss_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.qss")
         with open(qss_file, "rt") as f:
@@ -271,7 +275,7 @@ class ContextWidget(QtGui.QWidget):
         #self.ui.task_display.textchanged.connect(self._task_display_update)
 
         # Update task status
-        self.ui.status_display.currentIndexChanged.connect(self._update_task_status)
+        self.ui.status_display.currentIndexChanged.connect(self._save_task_status)
 
         # setup the search toggle
         self.ui.link_search_btn.toggled.connect(self._on_link_search_toggled)
@@ -325,7 +329,7 @@ class ContextWidget(QtGui.QWidget):
         """
         self.ui.status_display.blockSignals(True)
         if self._initialize_task_statuses:
-            self._check_status_permissions(context)
+            # self._check_status_permissions(context)
             self._initialize_task_statuses = False
 
             self.ui.status_display.clear()
@@ -333,7 +337,7 @@ class ContextWidget(QtGui.QWidget):
 
             for status_short_code, status_name in self._status_dict.items():
                 self.ui.status_display.addItem(status_name)
-
+            """
             for index, status_short_code in enumerate(self._status_dict.keys()):
                 if status_short_code in self._status_permissions:
                     permission = self._status_permissions[status_short_code]
@@ -341,6 +345,7 @@ class ContextWidget(QtGui.QWidget):
                     permission = False
                 if not permission:
                     self.ui.status_display.model().item(index).setEnabled(False)
+            """
         self.ui.status_display.blockSignals(False)
 
     def _simple_populate_status_display(self):
@@ -764,22 +769,52 @@ class ContextWidget(QtGui.QWidget):
             self.ui.task_menu_btn.show()
             self.ui.task_search.hide()
 
-    def _update_task_status(self):
+    def _save_task_status(self):
         """
         Update task status
         """
+        # _log("task is: %s" % self._context.task)
+        task_id = self._context.task["id"]
+        if task_id not in self._tasks:
+            self._tasks[task_id] = {}
+        task_name = self._context.task["name"]
+        original_status_code = _get_task_status(self._context)
+        new_status_name = self.ui.status_display.currentText()
+        new_status_code = self._get_status_short_code(new_status_name)
+        self._tasks[task_id]["task_name"] = task_name
+        self._tasks[task_id]["original_status_code"] = original_status_code
+        self._tasks[task_id]["new_status_name"] = new_status_name
+        self._tasks[task_id]["new_status_code"] = new_status_code
+        # _log("self._context is: %s" % self._context)
+        # _log("self._context.entity is: %s" % self._context.entity["name"])
+        # _log("task name is: %s" % self._context.task["name"])
+        # _log("Task are: %s" % self._tasks)
 
-        if self._context and self._context.task:
+    def update_task_status(self):
+        """
+        Update task status
+        """
+        try:
             sg = sgtk.platform.current_bundle().shotgun
-            status_name = self.ui.status_display.currentText()
-            status_short_code = self._get_status_short_code(status_name)
-            result = sg.update('Task', self._context.task['id'], {'sg_status_list': status_short_code})
-            _log("Updating task_id: %s with status %s " % (self._context.task['id'], status_short_code))
-            _log("Updating result is: %s " % result)
-            #self._update_task_display(self._context)
-            return result
-        else:
-            _log("There is no task to update its status yet, please select a task")
+            for task_id in self._tasks.keys():
+                _log("----------------------------------------")
+                try:
+                    original_status_code = self._tasks[task_id]["original_status_code"]
+                    new_status_code = self._tasks[task_id]["new_status_code"]
+                    if original_status_code != new_status_code:
+                        result = sg.update('Task', task_id, {'sg_status_list': new_status_code})
+
+                        _log("Updating status of task# %s from %s to %s ..." % (task_id, original_status_code, new_status_code))
+                        if result['sg_status_list'] == new_status_code:
+                            _log("Task status updated successfully")
+                        else:
+                            _log("Task status update was not successful")
+                except:
+                    _log("Error when updating status of task# ", task_id)
+                    pass
+        except:
+            _log("Error when updating task statuses ")
+            pass
 
     def _on_link_search_toggled(self, checked):
         """
