@@ -113,8 +113,7 @@ class ContextWidget(QtGui.QWidget):
             "rev": "Ready For Review",
             "apr": "Approved",
             "fin": "Final",
-            "na": "N/A",
-            "tst": "testing"
+            "na": "N/A"
         }
 
         self._tasks = {}
@@ -333,19 +332,13 @@ class ContextWidget(QtGui.QWidget):
             self._initialize_task_statuses = False
 
             self.ui.status_display.clear()
-            #self.ui.status_display.addItem("testing")
 
             for status_short_code, status_name in self._status_dict.items():
                 self.ui.status_display.addItem(status_name)
-            """
+
             for index, status_short_code in enumerate(self._status_dict.keys()):
-                if status_short_code in self._status_permissions:
-                    permission = self._status_permissions[status_short_code]
-                else:
-                    permission = False
-                if not permission:
+                if status_short_code == "na":
                     self.ui.status_display.model().item(index).setEnabled(False)
-            """
         self.ui.status_display.blockSignals(False)
 
     def _simple_populate_status_display(self):
@@ -773,22 +766,26 @@ class ContextWidget(QtGui.QWidget):
         """
         Update task status
         """
-        # _log("task is: %s" % self._context.task)
-        task_id = self._context.task["id"]
-        if task_id not in self._tasks:
-            self._tasks[task_id] = {}
-        task_name = self._context.task["name"]
-        original_status_code = _get_task_status(self._context)
-        new_status_name = self.ui.status_display.currentText()
-        new_status_code = self._get_status_short_code(new_status_name)
-        self._tasks[task_id]["task_name"] = task_name
-        self._tasks[task_id]["original_status_code"] = original_status_code
-        self._tasks[task_id]["new_status_name"] = new_status_name
-        self._tasks[task_id]["new_status_code"] = new_status_code
-        # _log("self._context is: %s" % self._context)
-        # _log("self._context.entity is: %s" % self._context.entity["name"])
-        # _log("task name is: %s" % self._context.task["name"])
-        # _log("Task are: %s" % self._tasks)
+        try:
+            if self._context and self._context.task:
+                task_id = self._context.task["id"]
+                if task_id not in self._tasks:
+                    self._tasks[task_id] = {}
+                task_name = self._context.task["name"]
+                original_status_code = _get_task_status(self._context)
+                new_status_name = self.ui.status_display.currentText()
+                new_status_code = self._get_status_short_code(new_status_name)
+                self._tasks[task_id]["task_name"] = task_name
+                self._tasks[task_id]["original_status_code"] = original_status_code
+                self._tasks[task_id]["new_status_name"] = new_status_name
+                self._tasks[task_id]["new_status_code"] = new_status_code
+                # _log("self._context is: %s" % self._context)
+                # _log("self._context.entity is: %s" % self._context.entity["name"])
+                # _log("task name is: %s" % self._context.task["name"])
+                # _log("Task are: %s" % self._tasks)
+        except:
+            _log("Unable to get task or task status" )
+            pass
 
     def update_task_status(self):
         """
@@ -799,18 +796,19 @@ class ContextWidget(QtGui.QWidget):
             for task_id in self._tasks.keys():
                 _log("----------------------------------------")
                 try:
+                    task_name = self._tasks[task_id]["task_name"]
                     original_status_code = self._tasks[task_id]["original_status_code"]
                     new_status_code = self._tasks[task_id]["new_status_code"]
                     if original_status_code != new_status_code:
                         result = sg.update('Task', task_id, {'sg_status_list': new_status_code})
 
-                        _log("Updating status of task# %s from %s to %s ..." % (task_id, original_status_code, new_status_code))
+                        _log("Updating status of task \'%s\' from %s to %s ..." % (task_name, original_status_code, new_status_code))
                         if result['sg_status_list'] == new_status_code:
                             _log("Task status updated successfully")
                         else:
                             _log("Task status update was not successful")
                 except:
-                    _log("Error when updating status of task# ", task_id)
+                    _log("Error when updating status of task %s", task_name)
                     pass
         except:
             _log("Error when updating task statuses ")
