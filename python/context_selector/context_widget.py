@@ -321,7 +321,6 @@ class ContextWidget(QtGui.QWidget):
         # get recent contexts from user settings
         self._get_recent_contexts()
 
-
     def _complex_populate_status_display(self, context):
         """
         Populate status display
@@ -339,6 +338,17 @@ class ContextWidget(QtGui.QWidget):
             for index, status_short_code in enumerate(self._status_dict.keys()):
                 if status_short_code == "na":
                     self.ui.status_display.model().item(index).setEnabled(False)
+            try:
+                if self._context and self._context.task:
+                    task_id = self._context.task["id"]
+                    if task_id in self._tasks:
+                        status_name = self._tasks[task_id]["new_status_name"]
+                        self.ui.status_display.setCurrentText(status_name)
+                else:
+                    self.ui.status_display.setCurrentText("N/A")
+            except:
+                _log("Unable to set current task status")
+                pass
         self.ui.status_display.blockSignals(False)
 
     def _simple_populate_status_display(self):
@@ -1007,18 +1017,30 @@ class ContextWidget(QtGui.QWidget):
         """
         Show task status.
         """
-
-        if context and context.task:
-            #self.ui.status_display.setEnabled(True)
-            self._complex_populate_status_display(context)
-
-        _log("Get task status ...")
-        task_status_short_code = _get_task_status(context)
-        task_status_name = self._get_status_name(task_status_short_code)
         self.ui.status_display.blockSignals(True)
         try:
-            self.ui.status_display.setCurrentText(task_status_name)
+            if context and context.task:
+                self._complex_populate_status_display(context)
+
+                _log("Get task status ...")
+                task_id = context.task["id"]
+                if task_id in self._tasks.keys():
+                    task_status_name = self._tasks[task_id]["new_status_name"]
+                else:
+                    task_status_short_code = _get_task_status(context)
+                    task_status_name = self._get_status_name(task_status_short_code)
+
+
+                try:
+                    self.ui.status_display.setCurrentText(task_status_name)
+                except:
+                    _log("Unable to update show task status")
+                    pass
+
+            else:
+                self.ui.status_display.setCurrentText("N/A")
         except:
+            _log("Unable to update show task status")
             pass
         self.ui.status_display.blockSignals(False)
 
