@@ -722,6 +722,7 @@ class ContextWidget(QtGui.QWidget):
         msg = "Context changed to: %s" % (context,)
         logger.debug(msg)
         _log(msg)
+        self._context = context
         # update the widget to display the new context and alert listeners that
         # a new context was selected
         self._show_context(context)
@@ -776,6 +777,7 @@ class ContextWidget(QtGui.QWidget):
         """
         Update task status
         """
+        self.ui.status_display.blockSignals(True)
         try:
             if self._context and self._context.task:
                 task_id = self._context.task["id"]
@@ -791,11 +793,12 @@ class ContextWidget(QtGui.QWidget):
                 self._tasks[task_id]["new_status_code"] = new_status_code
                 # _log("self._context is: %s" % self._context)
                 # _log("self._context.entity is: %s" % self._context.entity["name"])
-                # _log("task name is: %s" % self._context.task["name"])
-                # _log("Task are: %s" % self._tasks)
+                _log("task name is: %s" % self._context.task["name"])
+                _log("Task are: %s" % self._tasks)
         except:
             _log("Unable to get task or task status" )
             pass
+        self.ui.status_display.blockSignals(False)
 
     def update_task_status(self):
         """
