@@ -314,12 +314,16 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 ...
             }
 
+        :return: Return the menu state data that failed to be retored.
+        :rtype: dict
         """
 
         updated = False
+        not_restored = {}
 
         for field_id, filter_items in state.items():
             if field_id not in self._filter_groups:
+                not_restored[field_id] = filter_items
                 continue
 
             filter_group = self._filter_groups[field_id]
@@ -337,9 +341,13 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                         updated = True
                     finally:
                         self.blockSignals(False)
+                else:
+                    not_restored.setdefault(field_id, {})[filter_id] = value
 
         if updated:
             self._emit_filters_changed()
+        
+        return not_restored
 
     def set_filter_model(self, filter_model, connect_signals=True):
         """
