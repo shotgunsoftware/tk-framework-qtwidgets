@@ -429,9 +429,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self._filters_def.build()
         self._refresh_menu()
 
-        # Done - unset the refresh flag and emit signal
-        self._is_refreshing = False
+        # Done. First emit signal and then unset the refresh flag (to avoid recursion error)
         self.menu_refreshed.emit()
+        self._is_refreshing = False
 
     def clear_menu(self):
         """
