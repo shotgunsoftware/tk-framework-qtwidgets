@@ -63,11 +63,15 @@ class FilterMenuButton(SGQToolButton):
         )
 
         if self.menu():
+            self.menu().menu_about_to_be_refreshed.disconnect(lambda: self.set_enabled(False))
+            self.menu().menu_refreshed.disconnect(lambda: self.set_enabled(True))
             self.menu().filters_changed.disconnect(self.update_button_checked)
 
         super(FilterMenuButton, self).setMenu(menu)
 
         self.menu().filters_changed.connect(self.update_button_checked)
+        self.menu().menu_about_to_be_refreshed.connect(lambda: self.set_enabled(False))
+        self.menu().menu_refreshed.connect(lambda: self.set_enabled(True))
 
     def update_button_checked(self):
         """
@@ -77,3 +81,13 @@ class FilterMenuButton(SGQToolButton):
 
         # Update the menu button icon to indicate whether or not the menu has any active filtering.
         self.setChecked(self.menu().has_filtering)
+
+    def set_enabled(self, enabled):
+        """
+        Update the button enabled state.
+        
+        :param enabled: True will turn on the button (enable), else False will turn off (disable).
+        :type enabled: bool
+        """
+
+        self.setEnabled(enabled)
