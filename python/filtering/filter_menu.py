@@ -131,12 +131,15 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     # Signal emitted when menu is finished refreshing
     menu_refreshed = QtCore.Signal()
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, refresh_on_show=True):
         """
         Constructor
 
         :param parent: The parent widget.
         :type parent: :class:`sgtk.platform.qt.QtWidget`
+        :param refresh_on_show: True will ensure the menu is up to date on show. This will
+            slow performance on menu open, but ensures the data is the most up to date.
+        :type refresh_on_show: bool
         """
 
         super(FilterMenu, self).__init__(parent)
@@ -172,7 +175,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self._menu_triggered_refresh = False
 
         # Connect signals/slots
-        self.aboutToShow.connect(self._about_to_show)
+        if refresh_on_show:
+            self.aboutToShow.connect(self._about_to_show)
 
         # Initialize the active filter as an AND group filter item, where filter items will be added
         # based on menu selection.
@@ -1068,14 +1072,14 @@ class ShotgunFilterMenu(FilterMenu):
     the ShotgunModel class.
     """
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, refresh_on_show=True):
         """
         Constructor.
 
         Set the filter_roles to the ShotgunModel role pointing to its SG data.
         """
 
-        super(ShotgunFilterMenu, self).__init__(parent)
+        super(ShotgunFilterMenu, self).__init__(parent, refresh_on_show=refresh_on_show)
 
         # Use the SG_DATA_ROLE to extract the data from the ShotgunModel.
         self.set_filter_roles([ShotgunModel.SG_DATA_ROLE])
