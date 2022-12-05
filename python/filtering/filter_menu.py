@@ -346,7 +346,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         if updated:
             self._emit_filters_changed()
-        
+
         return not_restored
 
     def set_filter_model(self, filter_model, connect_signals=True):
