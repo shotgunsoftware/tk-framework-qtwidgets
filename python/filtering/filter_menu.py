@@ -391,6 +391,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             pass
 
         if connect_signals:
+            self._proxy_model.modelAboutToBeReset.connect(
+                lambda: self.menu_about_to_be_refreshed.emit()
+            )
             self._proxy_model.layoutChanged.connect(self.refresh)
 
             # Sanity check for faster debugging. The filter model is expected to have the method 'set_filter_items'
@@ -426,8 +429,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
             self._menu_triggered_refresh = False
 
-        # Emit signal about to refresh and set the flag to avoid recursive refreshing.
-        self.menu_about_to_be_refreshed.emit()
+        # Set the flag to avoid recursive refreshing.
         self._is_refreshing = True
 
         self._filters_def.build()
@@ -548,6 +550,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self.addSeparator()
 
         # Build the FilterDefinition and add the filter items based on the definition.
+        self.menu_about_to_be_refreshed.emit()
         self.refresh()
 
         # If any filters were set during initialization, update the active filter and emit a signal
@@ -975,6 +978,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # the model.
         # TODO connect to model signals rowsInserted/rowsRemoved/dataChanged and update the menu
         # according to the updated indexes
+        self.menu_about_to_be_refreshed.emit()
         self.refresh()
 
     def _update_filter_model_cb(self):
@@ -1118,4 +1122,5 @@ class ShotgunFilterMenu(FilterMenu):
         Slot triggered on SG model `data_refreshed` signal. Force a menu refresh.
         """
 
+        self.menu_about_to_be_refreshed.emit()
         self.refresh(force=True)
