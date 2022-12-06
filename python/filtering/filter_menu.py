@@ -608,7 +608,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # Update existing filter item widget counts
             existing_value_ids = []
             # Copy the filter items since we may be removing some items as we go.
-            # current_filter_items = list(filter_items)
             current_filter_items = list(filter_group.filter_items)
             for item in current_filter_items:
                 action = self._get_filter_group_action(field_id, item.id)
