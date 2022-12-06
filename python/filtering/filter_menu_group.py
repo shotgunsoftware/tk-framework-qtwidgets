@@ -69,8 +69,7 @@ class FilterMenuGroup(object):
             action.setVisible(visible)
             try:
                 widget = action.defaultWidget()
-                if widget.isVisible() != visible:
-                    widget.setVisible(visible)
+                widget.setVisible(visible)
 
                 # Attempt to clear the widget's filter value, if the default widget has the required
                 # methods defined.
