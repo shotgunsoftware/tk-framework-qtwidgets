@@ -44,9 +44,7 @@ class FilterMenuButton(SGQToolButton):
         # Set up the animated refresh icon to display while the filter menu for this filter
         # button is loading. Ensure the animation loops forever.
         refresh_icon_path = SGQIcon.resource_path(
-            "spinning-wheel",
-            SGQIcon.SIZE_16x16,
-            "gif"
+            "spinning-wheel", SGQIcon.SIZE_16x16, "gif"
         )
         self.__refresh_movie_icon = QtGui.QMovie(refresh_icon_path)
         if self.__refresh_movie_icon.loopCount() != -1:
@@ -73,7 +71,9 @@ class FilterMenuButton(SGQToolButton):
         )
 
         if self.menu():
-            self.menu().menu_about_to_be_refreshed.disconnect(lambda: self.set_enabled(False))
+            self.menu().menu_about_to_be_refreshed.disconnect(
+                lambda: self.set_enabled(False)
+            )
             self.menu().menu_refreshed.disconnect(lambda: self.set_enabled(True))
             self.menu().filters_changed.disconnect(self.update_button_checked)
 
@@ -95,7 +95,7 @@ class FilterMenuButton(SGQToolButton):
     def set_enabled(self, enabled):
         """
         Update the button enabled state.
-        
+
         :param enabled: True will turn on the button (enable), else False will turn off (disable).
         :type enabled: bool
         """
@@ -111,9 +111,8 @@ class FilterMenuButton(SGQToolButton):
             self.setIcon(self.__icon)
             self.__refresh_movie_icon.stop()
             self.__refresh_movie_icon.frameChanged.disconnect(self._update_refresh_icon)
-    
+
     def _update_refresh_icon(self, frame):
         """Update the animated refresh icon."""
 
         self.setIcon(QtGui.QIcon(self.__refresh_movie_icon.currentPixmap()))
-
