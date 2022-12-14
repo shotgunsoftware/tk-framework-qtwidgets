@@ -1388,13 +1388,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             painter.drawRect(rect)
             painter.restore()
 
-        # Emit a data changed signal for the index to continue painting the animation until
-        # the item has finished loading.
-        # TODO: leverage the 'roles' parameter to emit only the relevant data roles
-        # to consider, for a more efficient update. Currently there are some issues using
-        # this parameter due to mismatch method signatures between versions.
-        index.model().dataChanged.emit(index, index)
-
     def _draw_separator(self, painter, option, index):
         """
         Draw a line to separate this view item from the next. This default implementation will
