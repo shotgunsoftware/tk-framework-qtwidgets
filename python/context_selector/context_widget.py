@@ -123,6 +123,17 @@ class ContextWidget(QtGui.QWidget):
             # apply to widget (and all its children)
             self.setStyleSheet(f.read())
 
+    def display_publish_name(self):
+        """
+        Display the publish name widget
+        """
+        self.ui.publish_name_label.show()
+        self.ui.publish_name_display.show()
+
+    def set_publish_name(self, publish_name):
+        self.ui.publish_name_display.setText(publish_name)
+        self.ui.publish_name_display.setCursorPosition(0)
+
     def eventFilter(self, widget, event):
         """
         Filter out and handle some key/click events on the search widgets.
@@ -807,8 +818,9 @@ class ContextWidget(QtGui.QWidget):
         try:
             sg = sgtk.platform.current_bundle().shotgun
             for task_id in self._tasks.keys():
-                _log("----------------------------------------")
+
                 try:
+                    # _log("----------------------------------------")
                     task_name = self._tasks[task_id]["task_name"]
                     original_status_code = self._tasks[task_id]["original_status_code"]
                     new_status_code = self._tasks[task_id]["new_status_code"]

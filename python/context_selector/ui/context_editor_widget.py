@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from tank.platform.qt import QtCore, QtGui
+from tank.platform.qt5 import QtWidgets
 
 class Ui_ContextWidget(object):
     def setupUi(self, ContextWidget):
@@ -162,6 +163,35 @@ class Ui_ContextWidget(object):
         self.link_widgets_layout.setStretch(2, 1)
         self.gridLayout.addLayout(self.link_widgets_layout, 2, 1, 1, 1)
 
+        self.publish_name_label = QtGui.QLabel(self.edit_widget)
+        self.publish_name_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.publish_name_label.setOpenExternalLinks(True)
+        self.publish_name_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse | QtCore.Qt.TextSelectableByMouse)
+        self.publish_name_label.setObjectName("publish_name_label")
+        self.gridLayout.addWidget(self.publish_name_label, 3, 0, 1, 1)
+        self.publish_name_widgets_layout = QtGui.QHBoxLayout()
+        self.publish_name_widgets_layout.setSpacing(4)
+        # self.publish_name_widgets_layout.setContentsMargins(-1, 1, -1, -1)
+        self.publish_name_widgets_layout.setContentsMargins(-1, 1, -1, 8)
+        self.publish_name_widgets_layout.setObjectName("publish_name_widgets_layout")
+        self.publish_name_display = QtWidgets.QLineEdit(self.edit_widget)
+        self.publish_name_display.setCursorPosition(0)
+        self.publish_name_display.setToolTip('Display potential publish name override.')
+        self.publish_name_display.setPlaceholderText('Potential publish name override')
+        # self.publish_name_display.setMinimumSize(QtCore.QSize(0, 0))
+        # self.publish_name_display.setMaximumSize(QtCore.QSize(16777215, 32))
+        self.publish_name_display.setObjectName("publish_name_display")
+        self.publish_name_display.setEnabled(False)
+        self.publish_name_widgets_layout.addWidget(self.publish_name_display)
+
+        self.publish_name_label.hide()
+        self.publish_name_display.hide()
+
+        self.publish_name_widgets_layout.setStretch(0, 1)
+        self.publish_name_widgets_layout.setStretch(1, 100)
+        self.publish_name_widgets_layout.setStretch(2, 1)
+        self.gridLayout.addLayout(self.publish_name_widgets_layout, 3, 1, 1, 1)
+
         self.gridLayout.setColumnStretch(0, 1)
         self.gridLayout.setColumnStretch(1, 100)
         self.verticalLayout.addLayout(self.gridLayout)
@@ -183,6 +213,7 @@ class Ui_ContextWidget(object):
         self.link_display.setText(QtGui.QApplication.translate("ContextWidget", "Loading...", None, QtGui.QApplication.UnicodeUTF8))
         self.link_search_btn.setToolTip(QtGui.QApplication.translate("ContextWidget", "<html><head/><body><p>Toggle this button to allow searching for an entity to link to the selected item.</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.link_search_btn.setText(QtGui.QApplication.translate("ContextWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.publish_name_label.setText(QtGui.QApplication.translate("ContextWidget", "Publish name: ", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..qtwidgets import GlobalSearchWidget
 from . import resources_rc
