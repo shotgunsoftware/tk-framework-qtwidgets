@@ -176,8 +176,8 @@ class Ui_ContextWidget(object):
         self.publish_name_widgets_layout.setObjectName("publish_name_widgets_layout")
         self.publish_name_display = QtWidgets.QLineEdit(self.edit_widget)
         self.publish_name_display.setCursorPosition(0)
-        self.publish_name_display.setToolTip('Display potential publish name override.')
-        self.publish_name_display.setPlaceholderText('Potential publish name override')
+        self.publish_name_display.setToolTip('Display potential publish version name.')
+        self.publish_name_display.setPlaceholderText('Potential publish version name')
         # self.publish_name_display.setMinimumSize(QtCore.QSize(0, 0))
         # self.publish_name_display.setMaximumSize(QtCore.QSize(16777215, 32))
         self.publish_name_display.setObjectName("publish_name_display")
@@ -206,8 +206,8 @@ class Ui_ContextWidget(object):
         self.publish_token_widgets_layout.setObjectName("publish_token_widgets_layout")
         self.publish_token_display = QtWidgets.QLineEdit(self.edit_widget)
         self.publish_token_display.setCursorPosition(0)
-        self.publish_token_display.setToolTip('Publish token to be added to publish name.')
-        self.publish_token_display.setPlaceholderText('Publish token')
+        self.publish_token_display.setToolTip('Type version token then press enter')
+        self.publish_token_display.setPlaceholderText('Type version token then press enter')
         # self.publish_token_display.setMinimumSize(QtCore.QSize(0, 0))
         # self.publish_token_display.setMaximumSize(QtCore.QSize(16777215, 32))
         self.publish_token_display.setObjectName("publish_token_display")
@@ -243,8 +243,8 @@ class Ui_ContextWidget(object):
         self.link_display.setText(QtGui.QApplication.translate("ContextWidget", "Loading...", None, QtGui.QApplication.UnicodeUTF8))
         self.link_search_btn.setToolTip(QtGui.QApplication.translate("ContextWidget", "<html><head/><body><p>Toggle this button to allow searching for an entity to link to the selected item.</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.link_search_btn.setText(QtGui.QApplication.translate("ContextWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.publish_name_label.setText(QtGui.QApplication.translate("ContextWidget", "Publish name: ", None, QtGui.QApplication.UnicodeUTF8))
-        self.publish_token_label.setText(QtGui.QApplication.translate("ContextWidget", "Publish token: ", None, QtGui.QApplication.UnicodeUTF8))
+        self.publish_name_label.setText(QtGui.QApplication.translate("ContextWidget", "Version name: ", None, QtGui.QApplication.UnicodeUTF8))
+        self.publish_token_label.setText(QtGui.QApplication.translate("ContextWidget", "Version token: ", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..qtwidgets import GlobalSearchWidget
 from . import resources_rc
