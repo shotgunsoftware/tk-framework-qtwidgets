@@ -129,6 +129,8 @@ class ContextWidget(QtGui.QWidget):
         """
         self.ui.publish_name_label.show()
         self.ui.publish_name_display.show()
+        self.ui.publish_token_label.show()
+        self.ui.publish_token_display.show()
 
     def set_publish_name(self, publish_name):
         self.ui.publish_name_display.setText(publish_name)

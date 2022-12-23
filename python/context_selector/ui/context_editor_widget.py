@@ -192,6 +192,36 @@ class Ui_ContextWidget(object):
         self.publish_name_widgets_layout.setStretch(2, 1)
         self.gridLayout.addLayout(self.publish_name_widgets_layout, 3, 1, 1, 1)
 
+        self.publish_token_label = QtGui.QLabel(self.edit_widget)
+        self.publish_token_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.publish_token_label.setOpenExternalLinks(True)
+        self.publish_token_label.setTextInteractionFlags(
+            QtCore.Qt.LinksAccessibleByMouse | QtCore.Qt.TextSelectableByMouse)
+        self.publish_token_label.setObjectName("publish_token_label")
+        self.gridLayout.addWidget(self.publish_token_label, 4, 0, 1, 1)
+        self.publish_token_widgets_layout = QtGui.QHBoxLayout()
+        self.publish_token_widgets_layout.setSpacing(4)
+        # self.publish_token_widgets_layout.setContentsMargins(-1, 1, -1, -1)
+        self.publish_token_widgets_layout.setContentsMargins(-1, 1, -1, 8)
+        self.publish_token_widgets_layout.setObjectName("publish_token_widgets_layout")
+        self.publish_token_display = QtWidgets.QLineEdit(self.edit_widget)
+        self.publish_token_display.setCursorPosition(0)
+        self.publish_token_display.setToolTip('Publish token to be added to publish name.')
+        self.publish_token_display.setPlaceholderText('Publish token')
+        # self.publish_token_display.setMinimumSize(QtCore.QSize(0, 0))
+        # self.publish_token_display.setMaximumSize(QtCore.QSize(16777215, 32))
+        self.publish_token_display.setObjectName("publish_token_display")
+        self.publish_token_display.setEnabled(True)
+        self.publish_token_widgets_layout.addWidget(self.publish_token_display)
+
+        self.publish_token_label.hide()
+        self.publish_token_display.hide()
+
+        self.publish_token_widgets_layout.setStretch(0, 1)
+        self.publish_token_widgets_layout.setStretch(1, 100)
+        self.publish_token_widgets_layout.setStretch(2, 1)
+        self.gridLayout.addLayout(self.publish_token_widgets_layout, 4, 1, 1, 1)
+
         self.gridLayout.setColumnStretch(0, 1)
         self.gridLayout.setColumnStretch(1, 100)
         self.verticalLayout.addLayout(self.gridLayout)
@@ -214,6 +244,7 @@ class Ui_ContextWidget(object):
         self.link_search_btn.setToolTip(QtGui.QApplication.translate("ContextWidget", "<html><head/><body><p>Toggle this button to allow searching for an entity to link to the selected item.</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.link_search_btn.setText(QtGui.QApplication.translate("ContextWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.publish_name_label.setText(QtGui.QApplication.translate("ContextWidget", "Publish name: ", None, QtGui.QApplication.UnicodeUTF8))
+        self.publish_token_label.setText(QtGui.QApplication.translate("ContextWidget", "Publish token: ", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..qtwidgets import GlobalSearchWidget
 from . import resources_rc
