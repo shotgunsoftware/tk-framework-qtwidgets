@@ -430,33 +430,23 @@ class FilterDefinition(object):
         :type entity_type: str
         """
 
-        entity_display = shotgun_globals.get_type_display_name(
-            entity_type, self.project_id
-        )
-
-        for sg_field, value in sg_data.items():
-            field_id = "{type}.{field}".format(type=entity_type, field=sg_field)
-            if field_id in self.ignore_fields or (
-                self.accept_fields and field_id not in self.accept_fields
-            ):
-                continue
-
+        def __add_filter(field_id, entity_type, sg_field, value, index, role):
             try:
                 data_type = shotgun_globals.get_data_type(
                     entity_type, sg_field, self.project_id
                 )
             except ValueError:
                 # Could not find the schema for entity type and field
-                continue
+                return
 
             # Map the SG data type to a FilterItem type
             data_type = FilterItem.FilterType.MAP_TYPES.get(data_type)
             if not data_type:
-                continue
+                return
 
             if not self._filters_accept_index(index, field_id):
                 # Do not add filters for index data that is not accepted
-                continue
+                return
 
             field_display = shotgun_globals.get_field_display_name(
                 entity_type, sg_field, self.project_id
@@ -488,6 +478,47 @@ class FilterDefinition(object):
             self._add_filter_definition(
                 field_id, sg_field, field_display, data_type, value, role
             )
+
+
+        # Get the entity display name for this data
+        entity_display = shotgun_globals.get_type_display_name(
+            entity_type, self.project_id
+        )
+
+        if self.accept_fields:
+            filter_field_ids = self.accept_fields.difference(self.ignore_fields)
+        else:
+            filter_field_ids = None
+
+        # For better performance, iterate over the smaller data set (only the accepted fields
+        # or all of the SG data).
+        if filter_field_ids and len(filter_field_ids) < len(sg_data):
+            for field_id in filter_field_ids:
+                try:
+                    first_dot_index = field_id.index(".")
+                except ValueError:
+                    continue
+
+                field_entity_type = field_id[:first_dot_index]
+                if field_entity_type != entity_type:
+                    # The field is not for this entity type.
+                    continue
+
+                sg_field = field_id[first_dot_index + 1:]
+                value = sg_data.get(sg_field)
+                if not value:
+                    # No SG data for this field.
+                    continue
+
+                __add_filter(field_id, entity_type, sg_field, value, index, role)
+        else:
+            for sg_field, value in sg_data.items():
+                field_id = "{type}.{field}".format(type=entity_type, field=sg_field)
+                if field_id in self.ignore_fields or (self.accept_fields and field_id not in self.accept_fields):
+                    continue
+
+                __add_filter(field_id, entity_type, sg_field, value, index, role)
+
 
     def _add_filter_definition(
         self, field_id, field, field_display, data_type, value, role
