@@ -92,8 +92,8 @@ class FilterDefinition(object):
 
         self._proxy_model = None
         self._filter_roles = [QtCore.Qt.DisplayRole]
-        self._accept_fields = []
-        self._ignore_fields = []
+        self._accept_fields = set()
+        self._ignore_fields = set()
         self._use_fully_qualified_name = True
         self._project_id = None
         # This is a work around for tree models with deferred loading - filters will be built based
@@ -116,27 +116,33 @@ class FilterDefinition(object):
     @property
     def accept_fields(self):
         """
-        Get or set the fields that will are accepted when building the filter definition.
+        Get or set the set of fields that are accepted when building the filter definition.
 
-        Set the value of this property None or the empty list if the filter should accept all
+        Set the value of this property to the empty set if the filter should accept all
         given fields (e.g. it does not ignore any fields).
         """
         return self._accept_fields
 
     @accept_fields.setter
     def accept_fields(self, value):
-        self._accept_fields = value
+        if isinstance(value, list):
+            self._accept_fields = set(value)
+        else:
+            self._accept_fields = value
 
     @property
     def ignore_fields(self):
         """
-        Get or set the fields that will be ignored when building the filter definition.
+        Get or set the set of fields that will be ignored when building the filter definition.
         """
         return self._ignore_fields
 
     @ignore_fields.setter
     def ignore_fields(self, value):
-        self._ignore_fields = value
+        if isinstance(value, list):
+            self._ignore_fields = set(value)
+        else:
+            self._ignore_fields = value
 
     @property
     def use_fully_qualified_name(self):
