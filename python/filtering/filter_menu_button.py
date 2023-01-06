@@ -110,7 +110,11 @@ class FilterMenuButton(SGQToolButton):
             # Show the main button icon and stop the refresh animation
             self.setIcon(self.__icon)
             self.__refresh_movie_icon.stop()
-            self.__refresh_movie_icon.frameChanged.disconnect(self._update_refresh_icon)
+            try:
+                self.__refresh_movie_icon.frameChanged.disconnect(self._update_refresh_icon)
+            except:
+                # Signal was not connected, continue on.
+                pass
 
     def _update_refresh_icon(self, frame):
         """Update the animated refresh icon."""
