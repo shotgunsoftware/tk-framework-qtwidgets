@@ -19,6 +19,7 @@ from .filter_item_widget import (
 )
 from .filter_menu_group import FilterMenuGroup
 
+decorators = sgtk.platform.current_bundle().import_module("decorators")
 shotgun_menus = sgtk.platform.current_bundle().import_module("shotgun_menus")
 
 shotgun_model = sgtk.platform.import_framework(
@@ -393,6 +394,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # self.source_model.rowsRemoved.connect(self._remove_filters)
             # self.source_model.dataChanged.connect(self._update_filters)
 
+    @sgtk.LogManager.log_timing
+    @decorators.wait_cursor
     def refresh(self, force=False):
         """
         Rebuild the FilterDefinition from the current model data and update the menu with the
