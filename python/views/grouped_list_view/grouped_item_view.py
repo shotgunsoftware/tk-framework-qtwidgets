@@ -785,7 +785,7 @@ class GroupedItemView(QtGui.QAbstractItemView):
                 viewport_pos = self.viewport().mapFromGlobal(global_pos)
                 hover_index = self.indexAt(viewport_pos)
 
-                if rect.isValid and rect.intersects(viewport_rect):
+                if rect.isValid() and rect.intersects(update_rect):
                     # the group widget is visible
                     option = self._get_view_options()
                     option.rect = rect
