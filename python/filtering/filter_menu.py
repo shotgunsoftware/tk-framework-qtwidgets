@@ -372,7 +372,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         if self._proxy_model:
             try:
-                self._proxy_model.layoutChanged.disconnect()
+                self._proxy_model.layoutChanged.disconnect(self.refresh)
                 self.filters_changed.disconnect(self._update_filter_model_cb)
             except RuntimeError:
                 # Signals were never connected
