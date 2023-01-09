@@ -440,7 +440,7 @@ class FilterDefinition(object):
                 return
 
             # Map the SG data type to a FilterItem type
-            data_type = FilterItem.FilterType.MAP_TYPES.get(data_type)
+            data_type = FilterItem.FilterType.MAP_TYPES.get(data_type, data_type)
             if not data_type:
                 return
 
