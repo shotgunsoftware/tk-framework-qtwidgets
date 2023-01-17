@@ -589,6 +589,24 @@ class FilterItem(object):
         # been accepted immediately if any filters accepted it.
         return False
 
+    @classmethod
+    def map_from_sg_data_type(cls, sg_data_type):
+        """
+        Map the SG data type to a valid filter type.
+        
+        :param sg_data_type: The SG data type.
+        :type sg_data_type: str
+        
+        :return: The corresponding filter type for the SG data type.
+        :rtype: str
+        """
+
+        if sg_data_type in cls.FilterType.VALID_TYPES:
+            # No mapping required.
+            return sg_data_type
+        
+        return cls.FilterType.MAP_TYPES.get(sg_data_type)
+
     @staticmethod
     def get_datetime_bucket(dt):
         """
