@@ -528,11 +528,16 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                     filter_item_widget = action.defaultWidget()
                     if action.isChecked() or filter_item_widget.has_value():
                         had_value = True
-
                     # Uncheck the QAction.
                     action.setChecked(False)
                     # Clear the value from the FilterItemWidget.
                     filter_item_widget.clear_value()
+                
+                if filter_group.search_filter_action:
+                    search_filter_widget = filter_group.search_filter_action.defaultWidget()
+                    if search_filter_widget.has_value():
+                        had_value = True
+                    search_filter_widget.clear_value()
         finally:
             # Ensure the signals are unblocked.
             self.blockSignals(restore_state)
@@ -544,48 +549,77 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             if not self._is_refreshing:
                 self._emit_filters_changed()
 
-    def get_current_filters(self, exclude_fields=None):
+    def get_current_filters(self, exclude_choices_from_fields=None):
         """
-        Return the list of FilterItem objects that represent the current filtering
-        applied from the menu. Filters will be omitted that belong to the excluded
-        fields list given.
+        Get the current filters that are active in the menu.
 
-        The result will be a list of FilterItem Groups that OR the filters within
-        each group.
+        The menu filtering is built by:
+            1. Within a filter field:
+                a. All choice filters are grouped with OR, to create a group filter item
+                b. The choices filter item is then grouped with the search filter with AND
+            2. All filter field group items are then combined with AND to get the final filter item
 
-        :param exclude_fields: The list of fields to exclude when collecting the
-                               currently active filtering from the menu.
-        :type exclude_fields: list<str>
+        If the `exclude_choices_from_fields` is provided, this will not add any choice filters
+        from the listed fields. Note that the search filter for these fields will still be
+        included. This is used by the filter definition to get filter choice value counts.
 
-        :return: The current filters, excluding the given fields.
-        :rtype: list<FilterItem>
+        :param exclude_choices_from_fields: The list of fields to exclude when collecting the
+            currently active filtering from the menu.
+        :type exclude_choices_from_fields: List[str]
+
+        :return: A filter item representing the current filtering in the menu.
+        :rtype: List[FilterItem]
         """
 
+        exclude_choices_from_fields = exclude_choices_from_fields or []
         current_filters = []
 
-        # Iterate over the filter items by field group
         for field_id, filter_group in self._filter_groups.items():
-            if exclude_fields is not None and field_id in exclude_fields:
-                continue
+            if field_id in exclude_choices_from_fields:
+                choices_filters = None
+            else:
+                # Get the filter items that are active (e.g. have a value set).
+                choices_filters = [
+                    filter_item
+                    for filter_item in filter_group.filter_items
+                    if self._get_filter_group_action(field_id, filter_item.id)
+                    .defaultWidget()
+                    .has_value()
+                ]
 
-            # Get the filter items that are active (e.g. have a value set).
-            active_filters = [
-                filter_item
-                for filter_item in filter_group.filter_items
-                if self._get_filter_group_action(field_id, filter_item.id)
-                .defaultWidget()
-                .has_value()
-            ]
+            search_filter_item = None
+            if filter_group.search_filter_action and filter_group.search_filter_item:
+                if filter_group.search_filter_action.defaultWidget().has_value():
+                    search_filter_item = filter_group.search_filter_item
 
-            if active_filters:
-                # Add a FilterItem that will OR all of the filter items within the field together.
+            if choices_filters and search_filter_item:
+                # Add a filter OR all choice filtesr together, within the field, and AND it
+                # with the search filter.
+                choices_filter_group = FilterItem.create_group(
+                    FilterItem.FilterOp.OR,
+                    group_filters=choices_filters,
+                    group_id=field_id,
+                )
                 current_filters.append(
                     FilterItem.create_group(
-                        FilterItem.FilterOp.OR,
-                        group_filters=active_filters,
+                        FilterItem.FilterOp.AND,
+                        group_filters=[choices_filter_group, search_filter_item],
                         group_id=field_id,
                     )
                 )
+            elif choices_filters:
+                # Add just the filter OR all choice filtesr together, within the field
+                current_filters.append(
+                    FilterItem.create_group(
+                        FilterItem.FilterOp.OR,
+                        group_filters=choices_filters,
+                        group_id=field_id,
+                    )
+                )
+            elif search_filter_item:
+                # Add just the search filter.
+                current_filters.append(search_filter_item)
+
 
         return current_filters
 
@@ -771,14 +805,19 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
             filter_item_and_actions = []
             if field_data["type"] == FilterItem.FilterType.STR:
-                # Create a text search filter item. TODO allow search bar for any data type
+                # Create a text search filter item.
                 filter_id = self._get_search_filter_item_id(field_id)
-                filter_item_and_actions.append(
-                    self._create_filter_item_and_action(field_id, field_data, filter_id)
+                search_filter_item_and_action = self._create_filter_item_and_action(
+                    field_id, field_data, filter_id
                 )
+            else:
+                search_filter_item_and_action = None
 
             # Create filter items for list of value choices
             filter_values = field_data.get("values", {})
+            # NOTE this could be optimized by only creating the filter choice values that are
+            # shown (the grouping shows only up to a maximum number), and then creating the
+            # items on showing more
             for filter_id, filter_value in filter_values.items():
                 filter_item_and_actions.append(
                     self._create_filter_item_and_action(
@@ -790,7 +829,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # Set the maximum initial number of items shown per group to 5, more item may be shown as user
             # requests to show more.
             filter_group = FilterMenuGroup(field_id, show_limit_increment=5)
-            filter_group.add_to_menu(self, filter_item_and_actions, field_data["name"])
+            filter_group.add_to_menu(self, filter_item_and_actions, field_data["name"], search_filter_item_and_action=search_filter_item_and_action)
 
             # Update "More Filters" to include the newly added filter gorup.
             self._add_action_to_more_filters_menu(filter_group, field_data["name"])
@@ -1047,10 +1086,16 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         :rtype: list<FilterItem>
         """
 
-        if field_id not in self._filter_groups:
+        filter_group = self._filter_groups.get(field_id)
+        if not filter_group:
             return []
 
-        return self._filter_groups[field_id].filter_items
+        filter_items = self._filter_groups[field_id].filter_items
+
+        if filter_group.search_filter_item:
+            filter_items.append(filter_group.search_filter_item)
+        
+        return filter_items
 
     def _get_filter_group_action(self, field_id, filter_id):
         """
@@ -1063,10 +1108,14 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         :rtype: QAction
         """
 
-        if field_id not in self._filter_groups:
+        filter_group = self._filter_groups.get(field_id)
+        if not filter_group:
             return None
 
-        return self._filter_groups[field_id].filter_actions.get(filter_id)
+        if filter_group.search_filter_item and filter_group.search_filter_item.id == filter_id:
+            return filter_group.search_filter_action
+
+        return filter_group.filter_actions.get(filter_id)
 
     def _adjust_position(self):
         """Adjust the menu to ensure all actions are visible."""
@@ -1120,6 +1169,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # Keep track of the field group visibility.
         self._field_visibility[field_id] = checked
         self._filter_groups[field_id].set_visible(checked)
+
+        # Ensure the filter value counts are up to date on show.
+        self.update_filters(filter_group_ids=[field_id])
 
         self._adjust_position()
 

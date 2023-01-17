@@ -41,6 +41,9 @@ class FilterMenuGroup(object):
         # The mapping of FilterItem id to its corresponding QWidgetAction.
         self.filter_actions = {}
 
+        self._search_filter_item = None
+        self._search_filter_action = None
+
         # A reserve list of actions, which are hidden, but ready to be shown on user request.
         # There is a limit to how many items are shown at a given time to avoid having an
         # overwhelming amount of items in a menu). These items will incrementally show when
@@ -123,14 +126,22 @@ class FilterMenuGroup(object):
 
         return 0 if action.isChecked() else 1
 
+    @property
+    def search_filter_item(self):
+        """Get the search text filter item for this group."""
+        return self._search_filter_item
+        
+    @property
+    def search_filter_action(self):
+        """Get the search text filter action for this group."""
+        return self._search_filter_action
+        
     #############################################@##################################################
     # Public methods
     #############################################@##################################################
 
     def get_sorted_actions(self):
-        """
-        Return the filter group actions in sorted order according to the action's display value.
-        """
+        """Return the filter actions in sorted order according to the action display values."""
 
         return sorted(self.filter_actions.values(), key=self.get_sort_value)
 
@@ -196,21 +207,32 @@ class FilterMenuGroup(object):
         :type filter_item: FilterItem
         """
 
-        self.filter_items.remove(filter_item)
-
-        action = self.filter_actions[filter_item.id]
-        del self.filter_actions[filter_item.id]
-
-        if action in self.more_actions:
-            # Make sure to take it out of the reserve list and potentially hide the "Show More..."
-            # action if this was the only action in the reserve list.
-            self.more_actions.remove(action)
-            self._update_show_more_visibility()
+        if self.search_filter_item and filter_item.id == self.search_filter_item.id:
+            self._search_filter_action = None
         else:
-            # Check if there is a new action actions to show in place of the item that was removed.
-            self.show_more(num=1, increase_limit=False)
+            try:
+                self.filter_items.remove(filter_item)
+            except ValueError:
+                # Didn't find the filter item, just continue.
+                return
 
-    def add_to_menu(self, menu, filter_item_and_actions, title=None, separator=True):
+            action = self.filter_actions.get(filter_item.id)
+            if not action:
+                # Didn't find the filter action, exit now.
+                return
+
+            del self.filter_actions[filter_item.id]
+
+            if action in self.more_actions:
+                # Make sure to take it out of the reserve list and potentially hide the "Show More..."
+                # action if this was the only action in the reserve list.
+                self.more_actions.remove(action)
+                self._update_show_more_visibility()
+            else:
+                # Check if there is a new action actions to show in place of the item that was removed.
+                self.show_more(num=1, increase_limit=False)
+
+    def add_to_menu(self, menu, filter_item_and_actions, title=None, separator=True, search_filter_item_and_action=None):
         """
         Adds a group of items to the menu.
 
@@ -222,9 +244,14 @@ class FilterMenuGroup(object):
         :type separator: bool
         """
 
-        sorted_items = sorted(
-            filter_item_and_actions, key=lambda item: self.get_sort_value(item[1])
-        )
+        if search_filter_item_and_action is None:
+            self._search_filter_item = None
+            self._search_filter_action = None
+        else:
+            self._search_filter_item, self._search_filter_action = search_filter_item_and_action
+            # Sanity check
+            assert self._search_filter_item, "Missing required search filter item"
+            assert self._search_filter_action, "Missing required search filter action"
 
         if not menu.isEmpty() and separator:
             menu.addSeparator()
@@ -233,6 +260,14 @@ class FilterMenuGroup(object):
             title_action = menu.add_label(title)
             self.header_action = title_action
 
+        # First add the search filter (if provided), so it appears on top of all other choice filters.
+        if self._search_filter_item and self._search_filter_action:
+            menu.addAction(self._search_filter_action)
+
+        # Now add all choice filters.
+        sorted_items = sorted(
+            filter_item_and_actions, key=lambda item: self.get_sort_value(item[1])
+        )
         for filter_item, action in sorted_items:
             self.add_item(filter_item, action)
 
@@ -336,6 +371,10 @@ class FilterMenuGroup(object):
         # Set the new visibility for the header action
         if self.header_action:
             self.set_action_visible(self.header_action, visible)
+
+        # Set the new visibility for the search action
+        if self.search_filter_action:
+            self.set_action_visible(self.search_filter_action, visible)
 
         if not visible:
             # Reset the show limit

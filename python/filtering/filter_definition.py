@@ -1016,7 +1016,7 @@ class FilterMenuFiltersDefinition(FilterDefinition):
         if field_id in self.__current_menu_filters_by_field:
             filters = self.__current_menu_filters_by_field.get(field_id)
         else:
-            filters = self._filter_menu.get_current_filters(exclude_fields=[field_id])
+            filters = self._filter_menu.get_current_filters(exclude_choices_from_fields=[field_id])
             self.__current_menu_filters_by_field[field_id] = filters
 
         if filters:
