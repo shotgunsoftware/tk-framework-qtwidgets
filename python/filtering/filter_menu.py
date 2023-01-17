@@ -627,13 +627,12 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         """
         Initialize the filter menu.
 
-        This method no longer needs to be called before menu refresh. The menu will take care
-        of re-initializing.
+        This method no longer needs to be called to initialize the menu since refresh will
+        take care of re-initializing. This method now just calls refresh for backward
+        compatibility.
         """
 
-        # First reset and clear the menu.
-        self.clear_menu()
-        self._build_menu_widgets()
+        self.refresh()
     
 
     #############################################@##################################################
