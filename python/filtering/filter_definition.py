@@ -610,20 +610,24 @@ class FilterDefinition(object):
             values_list = [value]
 
         for val in values_list:
-            icon = None
 
             if isinstance(val, dict):
                 # FIXME this is hard coded to use the "name" key - let this be configurable per data type
                 value_id = val.get("name", str(val))
                 filter_value = val
-                icon = QtGui.QIcon(val.get("icon", None))
+                icon_path = val.get("icon", None)
+                icon = QtGui.QIcon(icon_path) if icon_path else None
             elif data_type == FilterItem.FilterType.DATETIME:
                 datetime_bucket = FilterItem.get_datetime_bucket(value)
                 value_id = datetime_bucket
                 filter_value = datetime_bucket
+                icon_path = None
+                icon = None
             else:
                 value_id = val
                 filter_value = val
+                icon_path = None
+                icon = None
 
             # Ensure the value "key" is hashable, since it will be used as a dictionary key
             value_name = str(value_id)
@@ -637,6 +641,7 @@ class FilterDefinition(object):
                 self._definition[field_id]["values"][value_id]["count"] += 1
                 self._definition[field_id]["values"][value_id]["name"] = value_name
                 self._definition[field_id]["values"][value_id]["value"] = filter_value
+                self._definition[field_id]["values"][value_id]["icon_path"] = icon_path
                 self._definition[field_id]["values"][value_id]["icon"] = icon
             else:
                 # Create a new entry for this filter field (group)
@@ -648,6 +653,7 @@ class FilterDefinition(object):
                             "name": value_name,
                             "value": filter_value,
                             "count": 1,
+                            "icon_path": icon_path,
                             "icon": icon,
                         }
                     },
