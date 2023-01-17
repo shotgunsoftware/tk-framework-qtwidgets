@@ -331,17 +331,13 @@ class FilterDefinition(object):
         return None
 
     def clear(self):
-        """
-        Clear the definition.
-        """
+        """Clear the definition."""
 
         self._definition = {}
 
     @sgtk.LogManager.log_timing
-    def build(self):
-        """
-        Return the filters based on the model data.
-        """
+    def build(self, groups_only=False):
+        """Build the filter definition based on the model data."""
 
         # Clear the existing filters definitions before rebuilding it.
         self.clear()
@@ -375,8 +371,8 @@ class FilterDefinition(object):
             index = source_model.index(row, 0, root_index)
 
             if not self._proxy_filter_accepts_row(index):
-                # Early out
-                # No need to add filters for indexes that are not accepted by the proxy model.
+                # Early out. Do not update filters with index data that is not accepted by
+                # the proxy model.
                 continue
 
             # Filters are only added for leaf nodes (for list models, this will be all nodes). In
