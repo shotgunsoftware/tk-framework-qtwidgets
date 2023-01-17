@@ -287,7 +287,8 @@ class TextFilterItemWidget(FilterItemWidget):
         self._name = filter_data.get("display_name", "")
 
         self.line_edit = search_widget.SearchWidget(self)
-        self.line_edit.search_edited.connect(self.value_changed.emit)
+        self.line_edit.setToolTip("Press Enter to apply the text search filter.")
+        self.line_edit.search_changed.connect(self.value_changed.emit)
 
         layout = QtGui.QHBoxLayout()
         layout.setAlignment(QtCore.Qt.AlignLeft)
