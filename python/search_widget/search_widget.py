@@ -135,12 +135,12 @@ class SearchWidget(QtGui.QWidget):
         Slot triggered when return has been pressed
         """
         self._on_search_changed()
-    
+
     def _on_search_changed(self):
         """Emit signal that search text has changed with the current text value."""
 
         self.search_changed.emit(self.search_text)
-    
+
     def _safe_to_string(self, value):
         """
         Safely convert the value to a string - handles
