@@ -130,12 +130,12 @@ class FilterMenuGroup(object):
     def search_filter_item(self):
         """Get the search text filter item for this group."""
         return self._search_filter_item
-        
+
     @property
     def search_filter_action(self):
         """Get the search text filter action for this group."""
         return self._search_filter_action
-        
+
     #############################################@##################################################
     # Public methods
     #############################################@##################################################
@@ -232,7 +232,14 @@ class FilterMenuGroup(object):
                 # Check if there is a new action actions to show in place of the item that was removed.
                 self.show_more(num=1, increase_limit=False)
 
-    def add_to_menu(self, menu, filter_item_and_actions, title=None, separator=True, search_filter_item_and_action=None):
+    def add_to_menu(
+        self,
+        menu,
+        filter_item_and_actions,
+        title=None,
+        separator=True,
+        search_filter_item_and_action=None,
+    ):
         """
         Adds a group of items to the menu.
 
@@ -248,7 +255,10 @@ class FilterMenuGroup(object):
             self._search_filter_item = None
             self._search_filter_action = None
         else:
-            self._search_filter_item, self._search_filter_action = search_filter_item_and_action
+            (
+                self._search_filter_item,
+                self._search_filter_action,
+            ) = search_filter_item_and_action
             # Sanity check
             assert self._search_filter_item, "Missing required search filter item"
             assert self._search_filter_action, "Missing required search filter action"

@@ -308,7 +308,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                     if check_existence:
                         return True
                     result.append(role)
-        
+
         return False if check_existence else result
 
     def save_state(self):
@@ -333,7 +333,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 action = self._get_filter_group_action(field_id, filter_item.id)
                 widget = action.defaultWidget()
                 if widget.has_value():
-                    filter_data = self._filters_def.get_filter_data(field_id, filter_item.id)
+                    filter_data = self._filters_def.get_filter_data(
+                        field_id, filter_item.id
+                    )
                     if filter_data is None:
                         # Search text filter
                         filter_data = widget.value
@@ -429,7 +431,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         This operation will rebuild the underlying filter definition that the filter menu is
         built from. The filter definition is built based on the current filter model data.
-        
+
         The filter menu widgets will be cleared and rebuilt. The current menu state will be
         saved before rebuild, and restored once the refresh operation is complete.
 
@@ -458,7 +460,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             self._restore_state = self._restore_filter_definition(state)
 
             # Now update the individual filters that are known to be visible.
-            field_ids = [field_id for field_id, visible in self._field_visibility.items() if visible]
+            field_ids = [
+                field_id
+                for field_id, visible in self._field_visibility.items()
+                if visible
+            ]
             self._filters_def.update_filters(field_ids)
 
             # Create the filter menu actions and widgets based on the filter definition.
@@ -477,12 +483,16 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         if self._block_signals:
             return
-        
+
         # Refresh the counts of the visible filters.
         if filter_group_ids:
             fields_to_refresh = filter_group_ids
         else:
-            filter_group_ids = [field_id for field_id, visible in self._field_visibility.items() if visible]
+            filter_group_ids = [
+                field_id
+                for field_id, visible in self._field_visibility.items()
+                if visible
+            ]
             fields_to_refresh = None
 
         self._filters_def.update_filters(filter_group_ids)
@@ -532,9 +542,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                     action.setChecked(False)
                     # Clear the value from the FilterItemWidget.
                     filter_item_widget.clear_value()
-                
+
                 if filter_group.search_filter_action:
-                    search_filter_widget = filter_group.search_filter_action.defaultWidget()
+                    search_filter_widget = (
+                        filter_group.search_filter_action.defaultWidget()
+                    )
                     if search_filter_widget.has_value():
                         had_value = True
                     search_filter_widget.clear_value()
@@ -620,7 +632,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 # Add just the search filter.
                 current_filters.append(search_filter_item)
 
-
         return current_filters
 
     def initialize_menu(self):
@@ -633,7 +644,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         """
 
         self.refresh()
-    
 
     #############################################@##################################################
     # Protected methods
@@ -707,7 +717,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
                     existing_value_ids.append(item.id)
                     filter_value = updated_filters_values.get(item.id)
-                    if filter_value is not None and (action.defaultWidget().has_value() or filter_value.get("count", 0) > 0):
+                    if filter_value is not None and (
+                        action.defaultWidget().has_value()
+                        or filter_value.get("count", 0) > 0
+                    ):
                         # Update the widget count label
                         action.defaultWidget().set_value(filter_value)
                     else:
@@ -761,7 +774,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             if field_id not in self._filters_def._definition:
                 not_restored[field_id] = filter_items
                 continue
-            
+
             # Ensure the group the filter is in is visible.
             self._field_visibility[field_id] = True
 
@@ -771,12 +784,18 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                         # Ensure the icon is created, since it was removed on save.
                         if filter_data.get("icon_path") and not filter_data.get("icon"):
                             filter_data["icon"] = QtGui.QIcon(filter_data["icon_path"])
-                        self._filters_def.set_filter_data(field_id, value_id, filter_data)
+                        self._filters_def.set_filter_data(
+                            field_id, value_id, filter_data
+                        )
                     else:
-                        self._filters_def.set_default_value(field_id, value_id, filter_data)
+                        self._filters_def.set_default_value(
+                            field_id, value_id, filter_data
+                        )
                 else:
                     # Search text filter
-                    self._filters_def.set_default_value(field_id, value_id=None, default_value=filter_data)
+                    self._filters_def.set_default_value(
+                        field_id, value_id=None, default_value=filter_data
+                    )
 
         return not_restored
 
@@ -828,7 +847,12 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # Set the maximum initial number of items shown per group to 5, more item may be shown as user
             # requests to show more.
             filter_group = FilterMenuGroup(field_id, show_limit_increment=5)
-            filter_group.add_to_menu(self, filter_item_and_actions, field_data["name"], search_filter_item_and_action=search_filter_item_and_action)
+            filter_group.add_to_menu(
+                self,
+                filter_item_and_actions,
+                field_data["name"],
+                search_filter_item_and_action=search_filter_item_and_action,
+            )
 
             # Update "More Filters" to include the newly added filter gorup.
             self._add_action_to_more_filters_menu(filter_group, field_data["name"])
@@ -1093,7 +1117,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         if filter_group.search_filter_item:
             filter_items.append(filter_group.search_filter_item)
-        
+
         return filter_items
 
     def _get_filter_group_action(self, field_id, filter_id):
@@ -1111,7 +1135,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         if not filter_group:
             return None
 
-        if filter_group.search_filter_item and filter_group.search_filter_item.id == filter_id:
+        if (
+            filter_group.search_filter_item
+            and filter_group.search_filter_item.id == filter_id
+        ):
             return filter_group.search_filter_action
 
         return filter_group.filter_actions.get(filter_id)
@@ -1127,7 +1154,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         if sz.height() > available_height:
             adjust_y = max(0, geom.bottom() - sz.height())
             self.setGeometry(self.x(), adjust_y, sz.width(), sz.height())
-
 
     ################################################################################################
     # Callbacks
@@ -1151,7 +1177,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     def _toggle_filter_group(self, action, state):
         """
         Callback triggered when a filter widget action state has changed.
-        
+
         If the filter widget has been checked, then ensure its filter group is visible.
 
         :param action: The filter widget action.
@@ -1293,7 +1319,7 @@ class ShotgunFilterMenu(FilterMenu):
             if not field_id.startswith(self.__field_id_prefix):
                 field_id = "{}.{}".format(self.__field_id_prefix, field_id)
             formatted_state[field_id] = field_state
-        
+
         super(ShotgunFilterMenu, self).restore_state(formatted_state)
 
     def set_filter_model(self, filter_model, connect_signals=True):

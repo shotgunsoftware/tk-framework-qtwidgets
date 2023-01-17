@@ -111,7 +111,9 @@ class FilterMenuButton(SGQToolButton):
             self.setIcon(self.__icon)
             self.__refresh_movie_icon.stop()
             try:
-                self.__refresh_movie_icon.frameChanged.disconnect(self._update_refresh_icon)
+                self.__refresh_movie_icon.frameChanged.disconnect(
+                    self._update_refresh_icon
+                )
             except:
                 # Signal was not connected, continue on.
                 pass

@@ -422,7 +422,9 @@ class TestFiltersDefinition(TankTestBase):
                 assert len(result_fields) == len(fd.filter_roles) * len(data_set_fields)
 
                 # Iterate through the filter roles to ensure we check all the resulting data.
-                expected_field_data_keys = set(["name", "short_name", "type", "values", "data_func"])
+                expected_field_data_keys = set(
+                    ["name", "short_name", "type", "values", "data_func"]
+                )
                 for role in fd.filter_roles:
                     # Validate the expected field id is in the result fields
                     field_id = "{role}.{field}".format(role=role, field=field)

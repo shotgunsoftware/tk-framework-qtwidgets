@@ -200,7 +200,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
     def name(self):
         """
         Get the name of the choices filter item.
-        
+
         The name of this widget is used for the label text, which is the display name.
         """
         return self.label.text()

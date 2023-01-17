@@ -308,10 +308,10 @@ class FilterDefinition(object):
     def has_filter(self, field_id, value_id):
         """
         Return True if the definition has data for the given filter.
-        
+
         :param field_id: The id of the filter field group.
         :type value_id: The id of the filter value.
-        
+
         :return: True if the filter id is in the definition, else False.
         :rtype:bool
         """
@@ -347,7 +347,7 @@ class FilterDefinition(object):
 
         # Recursively go through each model item to extract the data to built the filters.
         self.__build_filters(QtCore.QModelIndex(), groups_only=groups_only)
-    
+
     @sgtk.LogManager.log_timing
     def update_filters(self, field_ids):
         """
@@ -384,10 +384,11 @@ class FilterDefinition(object):
         for field_id in update_ids:
             self._definition[field_id]["values"] = {
                 value_id: filter_data
-                for value_id, filter_data in self._definition[field_id]["values"].items()
+                for value_id, filter_data in self._definition[field_id][
+                    "values"
+                ].items()
                 if filter_data.get("count", 0) > 0
             }
-
 
     ###############################################################################################
     # Private methods
@@ -396,7 +397,7 @@ class FilterDefinition(object):
     def __get_field_id(self, role, field, sg_entity_type=None):
         """
         Return the id for the filter field defined by the given data.
-        
+
         :param role: The model item data role used to retrieve data for this filter field.
         :type role: QtCore.Qt.ItemDataRole
         :param field: The filter field unique name.
@@ -410,7 +411,9 @@ class FilterDefinition(object):
         """
 
         if sg_entity_type:
-            return "{role}.{sg_entity_type}.{sg_field}".format(role=role, sg_entity_type=sg_entity_type, sg_field=field)
+            return "{role}.{sg_entity_type}.{sg_field}".format(
+                role=role, sg_entity_type=sg_entity_type, sg_field=field
+            )
 
         return "{role}.{field}".format(role=role, field=field)
 
@@ -423,7 +426,7 @@ class FilterDefinition(object):
 
         :param field_id: The filter field id that may contain SG data.
         :type field_id: str
-        
+
         :return: A tuple containing the data for this filter id.
         :rtype: tuple<int, str, str>
         """
@@ -446,7 +449,7 @@ class FilterDefinition(object):
 
         # Check if we have SG data. This could be a SG model or it could be a non-SG model but
         # contains SG data.
-        field = field_id[end_of_role_index + 1:]
+        field = field_id[end_of_role_index + 1 :]
 
         try:
             sg_field_index = field.index(".")
@@ -454,7 +457,7 @@ class FilterDefinition(object):
             return (filter_role, sg_entity_type, sg_field, field)
 
         sg_entity_type = field[:sg_field_index]
-        sg_field = field[sg_field_index + 1:]
+        sg_field = field[sg_field_index + 1 :]
         return (filter_role, sg_entity_type, sg_field, field)
 
     def __is_accepted(self, field_id, index):
@@ -516,13 +519,17 @@ class FilterDefinition(object):
                 # We only care to build filter definition such that we have the groupings. Individual filters
                 # will be updated once they are visible/active.
                 # We can only do this if we know what filters we want though, e.g. accepted filter are defined.
-                if len(self._definition) == len(self.accept_fields.difference(self.ignore_fields)):
+                if len(self._definition) == len(
+                    self.accept_fields.difference(self.ignore_fields)
+                ):
                     # We found them all.
                     return
 
             self.__build_filters(index, level + 1)
-        
-    def __build_filters_by_id(self, field_ids, root_index=QtCore.QModelIndex(), level=0):
+
+    def __build_filters_by_id(
+        self, field_ids, root_index=QtCore.QModelIndex(), level=0
+    ):
         """Recurse through model data to update the filters for the given ids."""
 
         source_model = self.get_source_model()
@@ -570,7 +577,9 @@ class FilterDefinition(object):
 
         if sg_entity_type:
             # SG data
-            self.__add_filters_from_sg_data(sg_entity_type, index_data, sg_project_id, index, role)
+            self.__add_filters_from_sg_data(
+                sg_entity_type, index_data, sg_project_id, index, role
+            )
 
         elif isinstance(index_data, dict):
             for field, data in index_data.items():
@@ -660,16 +669,26 @@ class FilterDefinition(object):
                 role, entity_type, sg_field, _ = self.__process_field_id(field_id)
 
                 # Check that the field id is valid for this sg data.
-                if entity_type is None or sg_field is None or entity_type != sg_data.get("type"):
+                if (
+                    entity_type is None
+                    or sg_field is None
+                    or entity_type != sg_data.get("type")
+                ):
                     continue
 
                 data = sg_data.get(sg_field)
-                self.__add_filter_from_sg_data(entity_type, sg_field, project_id, data, index, role)
+                self.__add_filter_from_sg_data(
+                    entity_type, sg_field, project_id, data, index, role
+                )
         else:
             for sg_field, data in sg_data.items():
-                self.__add_filter_from_sg_data(entity_type, sg_field, project_id, data, index, role)
+                self.__add_filter_from_sg_data(
+                    entity_type, sg_field, project_id, data, index, role
+                )
 
-    def __add_filter_from_sg_data(self, entity_type, sg_field, project_id, value, index, role):
+    def __add_filter_from_sg_data(
+        self, entity_type, sg_field, project_id, value, index, role
+    ):
         """
         Add filter from SG data.
 
@@ -705,9 +724,7 @@ class FilterDefinition(object):
         short_display = field_display
 
         # Get the entity display name for this data
-        entity_display = shotgun_globals.get_type_display_name(
-            entity_type, project_id
-        )
+        entity_display = shotgun_globals.get_type_display_name(entity_type, project_id)
 
         if self.use_fully_qualified_name:
             # Construct display for deeply linked fields - grab every other item
@@ -719,9 +736,7 @@ class FilterDefinition(object):
                     (link.replace("_", " ").title() for link in deep_links)
                 )
                 if not field_display.startswith(formatted_deep_links):
-                    field_display = "{} {}".format(
-                        formatted_deep_links, field_display
-                    )
+                    field_display = "{} {}".format(formatted_deep_links, field_display)
 
             if not field_display.startswith(entity_display):
                 field_display = "{entity} {field}".format(
@@ -733,7 +748,13 @@ class FilterDefinition(object):
                 )
 
         self.__add_filter_definition(
-            field_id, sg_field, field_display, data_type, value, role, short_display=short_display
+            field_id,
+            sg_field,
+            field_display,
+            data_type,
+            value,
+            role,
+            short_display=short_display,
         )
 
     def __add_filter_by_id(self, field_id, index):
@@ -755,24 +776,32 @@ class FilterDefinition(object):
                 # No SG data to update filter with.
                 return
 
-            # Get the project id for this sg data and sanity check the entity type matches. 
+            # Get the project id for this sg data and sanity check the entity type matches.
             project_id, entity_type = self._get_sg_project_and_entity_type(index_data)
             if entity_type != sg_entity_type:
                 return
 
             value = index_data[sg_field]
-            self.__add_filter_from_sg_data(sg_entity_type, sg_field, project_id, value, index, role)
+            self.__add_filter_from_sg_data(
+                sg_entity_type, sg_field, project_id, value, index, role
+            )
         else:
             # Extract the desired filter field data from the index data.
             if isinstance(index_data, dict):
                 data = index_data.get(field)
             elif isinstance(
                 index_data,
-                (bool, datetime.date, datetime.datetime, six.string_types, numbers.Number),
+                (
+                    bool,
+                    datetime.date,
+                    datetime.datetime,
+                    six.string_types,
+                    numbers.Number,
+                ),
             ):
                 data = index_data
             elif isinstance(index_data, list):
-                #TODO Support List data type
+                # TODO Support List data type
                 data = None
             else:
                 # Object data, extract the data from its object properties
@@ -928,6 +957,7 @@ class FilterDefinition(object):
         except AttributeError:
             return (None, None)
 
+
 class FilterMenuFiltersDefinition(FilterDefinition):
     """
     Subclass of the FilterDefinition class that is designed specifically to work with the
@@ -1016,7 +1046,9 @@ class FilterMenuFiltersDefinition(FilterDefinition):
         if field_id in self.__current_menu_filters_by_field:
             filters = self.__current_menu_filters_by_field.get(field_id)
         else:
-            filters = self._filter_menu.get_current_filters(exclude_choices_from_fields=[field_id])
+            filters = self._filter_menu.get_current_filters(
+                exclude_choices_from_fields=[field_id]
+            )
             self.__current_menu_filters_by_field[field_id] = filters
 
         if filters:
