@@ -13,7 +13,6 @@ import numbers
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from tank.util import sgre
 from tank_vendor import six
 
 from .filter_item import FilterItem
