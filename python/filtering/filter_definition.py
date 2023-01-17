@@ -742,6 +742,23 @@ class FilterMenuFiltersDefinition(FilterDefinition):
         # The FilterMenu assoicated with this FilterDefinition.
         self._filter_menu = filter_menu
 
+        # Reset the current menu filters lookup map to ensure the filters reflect the
+        # current state of the filter menu. This mapping is used to optimize the
+        # _filters_accept_index method.
+        self.__current_menu_filters_by_field = {}
+
+    def clear(self):
+        """Override the base method."""
+
+        super(FilterMenuFiltersDefinition, self).clear()
+        self.__current_menu_filters_by_field = {}
+
+    def update_filters(self, field_ids):
+        """Override the base method."""
+
+        self.__current_menu_filters_by_field = {}
+        super(FilterMenuFiltersDefinition, self).update_filters(field_ids)
+
     def _proxy_filter_accepts_row(self, index):
         """
         Return True if the proxy filter model accepts this index row.
@@ -790,7 +807,11 @@ class FilterMenuFiltersDefinition(FilterDefinition):
         :rtype: bool
         """
 
-        filters = self._filter_menu.get_current_filters(exclude_fields=[field_id])
+        if field_id in self.__current_menu_filters_by_field:
+            filters = self.__current_menu_filters_by_field.get(field_id)
+        else:
+            filters = self._filter_menu.get_current_filters(exclude_fields=[field_id])
+            self.__current_menu_filters_by_field[field_id] = filters
 
         if filters:
             if not FilterItem.do_filter(index, filters):
