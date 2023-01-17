@@ -700,6 +700,9 @@ class FilterDefinition(object):
         field_display = shotgun_globals.get_field_display_name(
             entity_type, sg_field, project_id
         )
+        # Save the short field display name, since the field display may be updated to use the
+        # longer fully qualified name (including entity display name)
+        short_display = field_display
 
         # Get the entity display name for this data
         entity_display = shotgun_globals.get_type_display_name(
@@ -730,7 +733,7 @@ class FilterDefinition(object):
                 )
 
         self.__add_filter_definition(
-            field_id, sg_field, field_display, data_type, value, role
+            field_id, sg_field, field_display, data_type, value, role, short_display=short_display
         )
 
     def __add_filter_by_id(self, field_id, index):
@@ -781,7 +784,7 @@ class FilterDefinition(object):
             self.__add_filter_from_data(field, index, role, data)
 
     def __add_filter_definition(
-        self, field_id, field, field_display, data_type, value, role
+        self, field_id, field, field_display, data_type, value, role, short_display=None
     ):
         """
         Based on the provided data, create a new filter definition and add it to the internal
@@ -800,6 +803,8 @@ class FilterDefinition(object):
         :type value: any
         :param role: The model item data role that this filter data was derived from.
         :type role: :class:`sgtk.platform.qt.QtCore.ItemDataRole`
+        :param short_display: Optional value to use as a short display name.
+        :type short_display: str
         """
 
         if isinstance(value, list):
@@ -847,6 +852,7 @@ class FilterDefinition(object):
                 # Create a new entry for this filter field (group)
                 self._definition[field_id] = {
                     "name": field_display,
+                    "short_name": short_display or field_display,
                     "type": data_type,
                     "values": {
                         value_id: {
