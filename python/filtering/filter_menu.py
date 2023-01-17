@@ -827,12 +827,14 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         if filter_value:
             filter_widget_class = ChoicesFilterItemWidget
+            display_name = filter_value.get("name", str(filter_id))
             filter_item_data.update(
                 {
                     "filter_type": field_data["type"],
                     "filter_op": FilterItem.default_op_for_type(field_data["type"]),
                     "filter_value": filter_value.get("value"),
-                    "display_name": filter_value.get("name", str(filter_id)),
+                    "display_name": display_name,
+                    "short_name": filter_value.get("short_name", display_name),
                     "count": filter_value.get("count", 0),
                     "icon_path": filter_value.get("icon_path"),
                     "icon": filter_value.get("icon"),
@@ -843,6 +845,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             filter_widget_class = TextFilterItemWidget
             filter_item_data["filter_type"] = FilterItem.FilterType.STR
             filter_item_data["filter_op"] = FilterItem.FilterOp.IN
+            filter_item_data["display_name"] = field_data.get("name")
+            filter_item_data["short_display_name"] = field_data.get("short_name")
             # The default value is in the field data since it is applicable to the whole
             # filter group.
             filter_item_data["default_value"] = field_data.get("default_value")
