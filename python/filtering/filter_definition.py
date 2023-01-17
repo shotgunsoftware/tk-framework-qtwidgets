@@ -245,7 +245,75 @@ class FilterDefinition(object):
         :rtype: dict
         """
 
-        return self._definition.get(field_id, {})
+        return self._definition.get(field_id)
+
+    def get_filter_data(self, field_id, value_id):
+        """
+        Return the data for the specified filter.
+
+        :param field_id: The filter field group id that the filter is in.
+        :type field_id: str
+        :param value_id: The filter value id to get the data for.
+        :type value_id: str
+
+        :return: The filter data. None is returned if the filter does not exist.
+        :rtype: dict
+        """
+
+        return self._definition.get(field_id, {}).get("values", {}).get(value_id)
+
+    def set_filter_data(self, field_id, value_id, filter_data):
+        """
+        Set the filter data for the filter.
+
+        :param field_id: The filter field group id that the filter is in.
+        :type field_id: str
+        :param value_id: The id of the filter value to set the data for.
+        :type value_id: str
+        :param filter_data: The filter data to set.
+        :type filter_data: dict
+        """
+
+        if field_id not in self._definition:
+            return
+
+        self._definition[field_id].setdefault("values", {})[value_id] = filter_data
+
+    def set_default_value(self, field_id, value_id=None, default_value=None):
+        """
+        Set the default value for the filter.
+
+        :param field_id: The filter field group id that the filter is in.
+        :type field_id: str
+        :param value_id: The id of the filter value to set the data for.
+        :type value_id: str
+        :param default_value: The filter data to set.
+        :type default_value: str | dict
+        """
+
+        if value_id is None:
+            # Set the default value for the filter field group.
+            field_data = self.get_field_data(field_id)
+            if field_data:
+                field_data["default_value"] = default_value
+        else:
+            # Set the default value for the specific filter.
+            filter_data = self.get_filter_data(field_id, value_id)
+            if filter_data:
+                filter_data["default_value"] = default_value
+
+    def has_filter(self, field_id, value_id):
+        """
+        Return True if the definition has data for the given filter.
+        
+        :param field_id: The id of the filter field group.
+        :type value_id: The id of the filter value.
+        
+        :return: True if the filter id is in the definition, else False.
+        :rtype:bool
+        """
+
+        return value_id in self._definition.get(field_id, {}).get("values", {})
 
     def get_source_model(self):
         """
