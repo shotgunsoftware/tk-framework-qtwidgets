@@ -47,9 +47,7 @@ class FilterItemWidget(QtGui.QWidget):
         self.setMouseTracking(True)
 
     def __repr__(self):
-        """
-        Return string representation of the FilterItemWidget.
-        """
+        """Return string representation of the FilterItemWidget."""
 
         params = {
             "id": self.id,
@@ -65,65 +63,40 @@ class FilterItemWidget(QtGui.QWidget):
 
     @property
     def id(self):
-        """
-        Get the unique id for this widget.
-        """
-
+        """Get the unique id for this widget."""
         return self._id
 
     @property
     def group_id(self):
-        """
-        Get the unique id for the group this widget belongs to.
-        """
-
+        """Get the unique id for the group this widget belongs to."""
         return self._group_id
 
     @property
     def name(self):
-        """
-        Return the dispaly text for this widget.
-        """
-
+        """Return the dispaly text for this widget."""
         raise sgtk.TankError("Abstract class method not overriden")
 
     @property
     def value(self):
-        """
-        Return the widget's current value.
-        """
-
+        """Get or set the widget's value."""
         raise sgtk.TankError("Abstract class method not overriden")
 
     @value.setter
     def value(self, value):
-        """
-        Set the widget's value.
-
-        :param value: The value to set the widget's value to.
-        :type value: any
-        """
-
         raise sgtk.TankError("Abstract class method not overriden")
 
     def set_value(self, value):
-        """
-        Convenience method to set the value for callback.
-        """
+        """Convenience method to set the value for callback."""
 
         self.value = value
 
     def has_value(self):
-        """
-        Return True if the widget has a value, else False.
-        """
+        """Return True if the widget has a value, else False."""
 
         raise sgtk.TankError("Abstract class method not overriden")
 
     def clear_value(self):
-        """
-        Clear the widget's current value.
-        """
+        """Clear the widget's current value."""
 
         raise sgtk.TankError("Abstract class method not overriden")
 
@@ -263,17 +236,11 @@ class ChoicesFilterItemWidget(FilterItemWidget):
             ), "Attempting to set ChoicesFilterItemWidget value with invalid data"
 
     def has_value(self):
-        """
-        Return True if the widget's checkbox is checked, else False.
-        """
-
+        """Return True if the widget's checkbox is checked, else False."""
         return self.value
 
     def clear_value(self):
-        """
-        Clear the widget's value by unchecking the widget's checkbox.
-        """
-
+        """Clear the widget's value by unchecking the widget's checkbox."""
         self.value = False
 
     def restore(self, state):
@@ -332,18 +299,12 @@ class TextFilterItemWidget(FilterItemWidget):
 
     @FilterItemWidget.name.getter
     def name(self):
-        """
-        The display name for this widget.
-        """
-
+        """The display name for this widget."""
         return self._name
 
     @FilterItemWidget.value.getter
     def value(self):
-        """
-        Return the search widget's text value.
-        """
-
+        """Return the search widget's text value."""
         return self.line_edit.search_text
 
     @value.setter
@@ -356,23 +317,17 @@ class TextFilterItemWidget(FilterItemWidget):
         """
 
         if not isinstance(value, six.string_types):
-            assert False, "Attempt to set non-string data to QLineEdit"
             return
 
         self.line_edit.search_text = value
         self.value_changed.emit(value)
 
     def has_value(self):
-        """
-        Return True if the search widget has text, else False.
-        """
-
+        """Return True if the search widget has text, else False."""
         return bool(self.value)
 
     def clear_value(self):
-        """
-        Clear the search widget's text.
-        """
+        """Clear the search widget's text."""
 
         self.value = ""
 
