@@ -207,6 +207,11 @@ class FilterDefinition(object):
     # Public methods
     #############################################@##################################################
 
+    def is_empty(self):
+        """Return True if the current filter definition is empty."""
+
+        return not self._definition
+
     def get_fields(self, sort=False, reverse=False):
         """
         Return the fields for this filter definition.
