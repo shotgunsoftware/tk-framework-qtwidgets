@@ -29,9 +29,7 @@ ShotgunModel = shotgun_model.ShotgunModel
 
 
 class NoCloseOnActionTriggerShotgunMenu(shotgun_menus.ShotgunMenu):
-    """
-    ShotgunMenu subclass that prevents the menu from closing when an action is triggered.
-    """
+    """ShotgunMenu subclass that prevents the menu from closing when an action is triggered."""
 
     def mouseReleaseEvent(self, event):
         """
@@ -127,9 +125,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
     # Signal emitted when the filters have changed by modifying the menu options/actions.
     filters_changed = QtCore.Signal()
-    # Signal emitted when menu is about to refresh
+    # Signal emitted when menu is about to do a complete refresh (e.g. call refresh method)
     menu_about_to_be_refreshed = QtCore.Signal()
-    # Signal emitted when menu is finished refreshing
+    # Signal emitted when menu is finished a complete refreshing (e.g. exit refresh method)
     menu_refreshed = QtCore.Signal()
 
     def __init__(self, parent=None, refresh_on_show=True):
@@ -536,6 +534,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     def initialize_menu(self):
         """
         Initialize the filter menu.
+
+        This method no longer needs to be called before menu refresh. The menu will take care
+        of re-initializing.
         """
 
         # First reset and clear the menu.
@@ -884,7 +885,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         filter_widget.set_value(checked)
         filter_group.set_visible(checked)
 
-        # Connect this signal/slot after setting the fitler widget value to avoid triggering it.
+        # Connect this signal/slot after setting the filter widget value to avoid triggering it.
         filter_widget.state_changed.connect(
             lambda state, a=action: self._toggle_filter_group(a, state)
         )
@@ -1120,9 +1121,7 @@ class ShotgunFilterMenu(FilterMenu):
             self._source_model.data_refreshed.connect(self.data_refreshed)
 
     def data_refreshed(self):
-        """
-        Slot triggered on SG model `data_refreshed` signal. Force a menu refresh.
-        """
+        """Slot triggered on SG model `data_refreshed` signal. Force a menu refresh."""
 
         self.menu_about_to_be_refreshed.emit()
         self.refresh(force=True)
