@@ -164,8 +164,10 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         count = filter_data.get("count")
         if count:
             self.count_label = QtGui.QLabel(str(count))
-            layout.addStretch()
-            layout.addWidget(self.count_label)
+        else:
+            self.count_label = QtGui.QLabel()
+        layout.addStretch()
+        layout.addWidget(self.count_label)
 
         self.setLayout(layout)
 
