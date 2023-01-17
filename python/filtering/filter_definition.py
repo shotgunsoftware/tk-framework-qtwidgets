@@ -92,7 +92,10 @@ class FilterDefinition(object):
         self._accept_fields = set()
         self._ignore_fields = set()
         self._use_fully_qualified_name = True
-        self._project_id = None
+
+        # A default SG project to fall back to if the data itself does not specify its project.
+        self.__default_sg_project_id = None
+
         # This is a work around for tree models with deferred loading - filters will be built based
         # on the leaf nodes of tree models, but for deferred loading models, the leaf nodes are not
         # guaranteed to be loaded in the model at time of building the filters.
@@ -343,13 +346,136 @@ class FilterDefinition(object):
         self.clear()
 
         # Recursively go through each model item to extract the data to built the filters.
-        self._build_from_root(QtCore.QModelIndex())
+        self.__build_filters(QtCore.QModelIndex(), groups_only=groups_only)
+    
+    @sgtk.LogManager.log_timing
+    def update_filters(self, field_ids):
+        """
+        Update only the given filters.
 
-    #############################################@##################################################
-    # Protected methods
-    #############################################@##################################################
+        This update operation will traverse the model data to calculate the current data
+        counts for each of the given filters.
 
-    def _build_from_root(self, root_index, level=0):
+        Use this method to update only the required filters, instead of building the whole
+        filter definition which can an expensive operation.
+
+        :param field_ids: The filter group field ids of the filters to update.
+        :type field_ids: List[str]
+        """
+
+        update_ids = []
+
+        for field_id in field_ids:
+            if field_id not in self._definition:
+                continue
+
+            # Add this filter to the list to update.
+            update_ids.append(field_id)
+
+            # Reset filter counts, these will be rebuilt.
+            filter_values = self._definition[field_id].get("values", {})
+            for value_id in filter_values:
+                filter_values[value_id]["count"] = 0
+
+        # Rebuild the specified filters.
+        self.__build_filters_by_id(update_ids)
+
+        # Remove any filters that have become empty.
+        for field_id in update_ids:
+            self._definition[field_id]["values"] = {
+                value_id: filter_data
+                for value_id, filter_data in self._definition[field_id]["values"].items()
+                if filter_data.get("count", 0) > 0
+            }
+
+
+    ###############################################################################################
+    # Private methods
+    ###############################################################################################
+
+    def __get_field_id(self, role, field, sg_entity_type=None):
+        """
+        Return the id for the filter field defined by the given data.
+        
+        :param role: The model item data role used to retrieve data for this filter field.
+        :type role: QtCore.Qt.ItemDataRole
+        :param field: The filter field unique name.
+        :type field: str
+        :param sg_entity_type: (option) If the field represent a ShotGrid data field, then
+            the entity type for the field is passed.
+        :type sg_entity_field: str
+
+        :return: The filter field id.
+        :rtype: str
+        """
+
+        if sg_entity_type:
+            return "{role}.{sg_entity_type}.{sg_field}".format(role=role, sg_entity_type=sg_entity_type, sg_field=field)
+
+        return "{role}.{field}".format(role=role, field=field)
+
+    def __process_field_id(self, field_id):
+        """
+        Process the filter field id and get the SG specific data from it.
+
+        If the `field_id` represents an SG filter, it will have the format:
+            {model_item_data_role}.{sg_entity_type}.{sg_field}
+
+        :param field_id: The filter field id that may contain SG data.
+        :type field_id: str
+        
+        :return: A tuple containing the data for this filter id.
+        :rtype: tuple<int, str, str>
+        """
+
+        filter_role = None
+        sg_entity_type = None
+        sg_field = None
+        field = None
+
+        try:
+            end_of_role_index = field_id.index(".")
+        except ValueError:
+            return (filter_role, sg_entity_type, sg_field, field)
+
+        try:
+            filter_role = int(field_id[:end_of_role_index])
+        except ValueError:
+            # Not a valid filter id. Must be prefixed with Qt.ItemDataRole.
+            return (filter_role, sg_entity_type, sg_field, field)
+
+        # Check if we have SG data. This could be a SG model or it could be a non-SG model but
+        # contains SG data.
+        field = field_id[end_of_role_index + 1:]
+
+        try:
+            sg_field_index = field.index(".")
+        except ValueError:
+            return (filter_role, sg_entity_type, sg_field, field)
+
+        sg_entity_type = field[:sg_field_index]
+        sg_field = field[sg_field_index + 1:]
+        return (filter_role, sg_entity_type, sg_field, field)
+
+    def __is_accepted(self, field_id, index):
+        """
+        Return True if the filter field is accepted for the given index.
+
+        :param field_id: The filter field to check acceptance for.
+        :type field_id: str
+        :param index: The index to get the data to check acceptance with.
+        :type index: QtCore.QModelIndex
+        """
+
+        if field_id in self.ignore_fields:
+            return False
+
+        if self.accept_fields and field_id not in self.accept_fields:
+            return False
+
+        return self._filters_accept_index(index, field_id)
+
+    def __build_filters(self, root_index, level=0, groups_only=False):
         """
         Build the filters definition by starting at the given root index, and recursing through all
         child indexes. For each index traversed, the object's internal `_definition` member will be
@@ -384,11 +510,46 @@ class FilterDefinition(object):
             ):
                 # A filter will be added for each index and for each filter role defined.
                 for role in self.filter_roles:
-                    self._add_filter_from_index(index, role)
+                    self.__add_filter_from_index(index, role)
 
-            self._build_from_root(index, level + 1)
+            if groups_only and self.accept_fields:
+                # We only care to build filter definition such that we have the groupings. Individual filters
+                # will be updated once they are visible/active.
+                # We can only do this if we know what filters we want though, e.g. accepted filter are defined.
+                if len(self._definition) == len(self.accept_fields.difference(self.ignore_fields)):
+                    # We found them all.
+                    return
 
-    def _add_filter_from_index(self, index, role):
+            self.__build_filters(index, level + 1)
+        
+    def __build_filters_by_id(self, field_ids, root_index=QtCore.QModelIndex(), level=0):
+        """Recurse through model data to update the filters for the given ids."""
+
+        source_model = self.get_source_model()
+        if not source_model:
+            return
+
+        for row in range(source_model.rowCount(root_index)):
+            index = source_model.index(row, 0, root_index)
+
+            if not self._proxy_filter_accepts_row(index):
+                # Early out. Do not update filters with index data that is not accepted by
+                # the proxy model.
+                continue
+
+            # Filters are only added for leaf nodes (for list models, this will be all nodes). In
+            # the event that the model defers loading its data, the `tree_level` property can be
+            # defined to indicate which level of the model tree that the leaf nodes are expected
+            # to be on (e.g. ShotgunDeferredEntityModel).
+            if (self.tree_level and level == self.tree_level) or (
+                not self.tree_level and source_model.rowCount(index) <= 0
+            ):
+                for field_id in field_ids:
+                    self.__add_filter_by_id(field_id, index)
+
+            self.__build_filters_by_id(field_ids, index, level + 1)
+
+    def __add_filter_from_index(self, index, role):
         """
         Add a filter for the index and role. Get the data from the index with the given role
         and create a filter definition from the data.
@@ -405,36 +566,37 @@ class FilterDefinition(object):
 
         # Check if we have SG data. This could be a SG model or it could be a non-SG model but
         # contains SG data.
-        sg_entity_type = self._get_sg_entity_type(index_data)
+        sg_project_id, sg_entity_type = self._get_sg_project_and_entity_type(index_data)
 
         if sg_entity_type:
             # SG data
-            self._add_filters_from_sg_data(index_data, sg_entity_type, index, role)
+            self.__add_filters_from_sg_data(sg_entity_type, index_data, sg_project_id, index, role)
 
         elif isinstance(index_data, dict):
-            for key, value in index_data.items():
-                self._add_filter_from_data(key, value, index, role)
+            for field, data in index_data.items():
+                self.__add_filter_from_data(field, index, role, data)
 
         elif isinstance(
             index_data,
             (bool, datetime.date, datetime.datetime, six.string_types, numbers.Number),
         ):
             # Primitive data
-            self._add_filter_from_data(None, index_data, index, role)
+            field = None
+            self.__add_filter_from_data(field, index, role, index_data)
 
         elif isinstance(index_data, list):
             assert False, "List data type not handled yet"
 
         else:
             # Object data, extract the data from its object properties
-            for property_name, value in vars(index_data.__class__).items():
+            for field, value in vars(index_data.__class__).items():
                 if not isinstance(value, property):
                     continue
 
-                property_value = getattr(index_data, property_name)
-                self._add_filter_from_data(property_name, property_value, index, role)
+                data = getattr(index_data, field)
+                self.__add_filter_from_data(field, index, role, data)
 
-    def _add_filter_from_data(self, field, data, index, role):
+    def __add_filter_from_data(self, field, index, role, data):
         """
         Add a filter from the given data.
 
@@ -452,14 +614,12 @@ class FilterDefinition(object):
         if data is None:
             return
 
-        field_id = "{role}.{field}".format(role=role, field=field)
-        if field_id in self.ignore_fields or (
-            self.accept_fields and field_id not in self.accept_fields
-        ):
-            return
-
         data_type = FilterItem.get_data_type(data)
         if not data_type:
+            return
+
+        field_id = self.__get_field_id(role, field)
+        if not self.__is_accepted(field_id, index):
             return
 
         if field is None:
@@ -467,83 +627,26 @@ class FilterDefinition(object):
         else:
             field_display = str(field).title().replace("_", " ")
 
-        if not self._filters_accept_index(index, field_id):
-            # Do not add filters for index data that is not accepted
-            return
-
-        self._add_filter_definition(
+        self.__add_filter_definition(
             field_id, field, field_display, data_type, data, role
         )
 
-    def _add_filters_from_sg_data(self, sg_data, entity_type, index, role):
+    def __add_filters_from_sg_data(self, entity_type, sg_data, project_id, index, role):
         """
         Add filters from the SG data. Iterate through the SG dictionary data, and
         add a filter for each dict entry.
 
+        :param entity_type: The SG entity type for this sg_data
+        :type entity_type: str
         :param sg_data: The SG data to create the filter from.
-        :type value: dict
+        :type sg_data: dict
+        :param project_id: The SG project id for this sg_data
+        :type project_id: int
         :param index: the index which the filter corresponds to.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
         :param role: The role used to extract the data from the index.
         :type role: :class:`sgtk.platform.qt.QtCore.ItemDataRole`
-        :param entity_type: The SG entity type for this sg_data
-        :type entity_type: str
         """
-
-        def __add_filter(field_id, entity_type, sg_field, value, index, role):
-            try:
-                data_type = shotgun_globals.get_data_type(
-                    entity_type, sg_field, self.project_id
-                )
-            except ValueError:
-                # Could not find the schema for entity type and field
-                return
-
-            # Map the SG data type to a FilterItem type
-            data_type = FilterItem.FilterType.MAP_TYPES.get(data_type, data_type)
-            if not data_type:
-                return
-
-            if not self._filters_accept_index(index, field_id):
-                # Do not add filters for index data that is not accepted
-                return
-
-            field_display = shotgun_globals.get_field_display_name(
-                entity_type, sg_field, self.project_id
-            )
-
-            if self.use_fully_qualified_name:
-                # Construct display for deeply linked fields - grab every other item
-                # after splitting on the "dot", these will be the deep linked entity
-                # types, which we want to display.
-                deep_links = sg_field.split(".")[:-1:2]
-                if deep_links:
-                    formatted_deep_links = " ".join(
-                        (link.replace("_", " ").title() for link in deep_links)
-                    )
-                    if not field_display.startswith(formatted_deep_links):
-                        field_display = "{} {}".format(
-                            formatted_deep_links, field_display
-                        )
-
-                if not field_display.startswith(entity_display):
-                    field_display = "{entity} {field}".format(
-                        entity=entity_display, field=field_display
-                    )
-                else:
-                    field_display = "{entity_and_field} ({field})".format(
-                        entity_and_field=field_display, field=sg_field
-                    )
-
-            self._add_filter_definition(
-                field_id, sg_field, field_display, data_type, value, role
-            )
-
-
-        # Get the entity display name for this data
-        entity_display = shotgun_globals.get_type_display_name(
-            entity_type, self.project_id
-        )
 
         if self.accept_fields:
             filter_field_ids = self.accept_fields.difference(self.ignore_fields)
@@ -554,33 +657,130 @@ class FilterDefinition(object):
         # or all of the SG data).
         if filter_field_ids and len(filter_field_ids) < len(sg_data):
             for field_id in filter_field_ids:
-                try:
-                    first_dot_index = field_id.index(".")
-                except ValueError:
+                role, entity_type, sg_field, _ = self.__process_field_id(field_id)
+
+                # Check that the field id is valid for this sg data.
+                if entity_type is None or sg_field is None or entity_type != sg_data.get("type"):
                     continue
 
-                field_entity_type = field_id[:first_dot_index]
-                if field_entity_type != entity_type:
-                    # The field is not for this entity type.
-                    continue
-
-                sg_field = field_id[first_dot_index + 1:]
-                value = sg_data.get(sg_field)
-                if not value:
-                    # No SG data for this field.
-                    continue
-
-                __add_filter(field_id, entity_type, sg_field, value, index, role)
+                data = sg_data.get(sg_field)
+                self.__add_filter_from_sg_data(entity_type, sg_field, project_id, data, index, role)
         else:
-            for sg_field, value in sg_data.items():
-                field_id = "{type}.{field}".format(type=entity_type, field=sg_field)
-                if field_id in self.ignore_fields or (self.accept_fields and field_id not in self.accept_fields):
-                    continue
+            for sg_field, data in sg_data.items():
+                self.__add_filter_from_sg_data(entity_type, sg_field, project_id, data, index, role)
 
-                __add_filter(field_id, entity_type, sg_field, value, index, role)
+    def __add_filter_from_sg_data(self, entity_type, sg_field, project_id, value, index, role):
+        """
+        Add filter from SG data.
 
+        :param project_id: The SG project id for this sg_data
+        :type project_id: int
+        """
 
-    def _add_filter_definition(
+        if value is None:
+            return
+
+        try:
+            sg_data_type = shotgun_globals.get_data_type(
+                entity_type, sg_field, project_id
+            )
+        except ValueError:
+            # Could not find the schema for entity type and field
+            return
+
+        # Map the SG data type to a FilterItem type
+        data_type = FilterItem.map_from_sg_data_type(sg_data_type)
+        if not data_type:
+            return
+
+        field_id = self.__get_field_id(role, sg_field, entity_type)
+        if not self.__is_accepted(field_id, index):
+            return
+
+        field_display = shotgun_globals.get_field_display_name(
+            entity_type, sg_field, project_id
+        )
+
+        # Get the entity display name for this data
+        entity_display = shotgun_globals.get_type_display_name(
+            entity_type, project_id
+        )
+
+        if self.use_fully_qualified_name:
+            # Construct display for deeply linked fields - grab every other item
+            # after splitting on the "dot", these will be the deep linked entity
+            # types, which we want to display.
+            deep_links = sg_field.split(".")[:-1:2]
+            if deep_links:
+                formatted_deep_links = " ".join(
+                    (link.replace("_", " ").title() for link in deep_links)
+                )
+                if not field_display.startswith(formatted_deep_links):
+                    field_display = "{} {}".format(
+                        formatted_deep_links, field_display
+                    )
+
+            if not field_display.startswith(entity_display):
+                field_display = "{entity} {field}".format(
+                    entity=entity_display, field=field_display
+                )
+            else:
+                field_display = "{entity_and_field} ({field})".format(
+                    entity_and_field=field_display, field=sg_field
+                )
+
+        self.__add_filter_definition(
+            field_id, sg_field, field_display, data_type, value, role
+        )
+
+    def __add_filter_by_id(self, field_id, index):
+        """Update the filter from the index data."""
+
+        # Extract the data for the filter from its id.
+        role, sg_entity_type, sg_field, field = self.__process_field_id(field_id)
+        if role is None:
+            return
+
+        index_data = index.data(role)
+        if not index_data:
+            # No data to update filter with.
+            return
+
+        if sg_entity_type:
+            # This index has SG data dict.
+            if sg_field not in index_data:
+                # No SG data to update filter with.
+                return
+
+            # Get the project id for this sg data and sanity check the entity type matches. 
+            project_id, entity_type = self._get_sg_project_and_entity_type(index_data)
+            if entity_type != sg_entity_type:
+                return
+
+            value = index_data[sg_field]
+            self.__add_filter_from_sg_data(sg_entity_type, sg_field, project_id, value, index, role)
+        else:
+            # Extract the desired filter field data from the index data.
+            if isinstance(index_data, dict):
+                data = index_data.get(field)
+            elif isinstance(
+                index_data,
+                (bool, datetime.date, datetime.datetime, six.string_types, numbers.Number),
+            ):
+                data = index_data
+            elif isinstance(index_data, list):
+                #TODO Support List data type
+                data = None
+            else:
+                # Object data, extract the data from its object properties
+                try:
+                    data = getattr(index_data, field)
+                except:
+                    data = None
+
+            self.__add_filter_from_data(field, index, role, data)
+
+    def __add_filter_definition(
         self, field_id, field, field_display, data_type, value, role
     ):
         """
@@ -693,7 +893,7 @@ class FilterDefinition(object):
 
         return True
 
-    def _get_sg_entity_type(self, sg_data):
+    def _get_sg_project_and_entity_type(self, sg_data):
         """
         Return the SG entity type and fields associated with the given data, if the data represents
         SG data.
@@ -705,22 +905,22 @@ class FilterDefinition(object):
         """
 
         if not isinstance(sg_data, dict):
-            return None
+            return (None, None)
 
         entity_type = sg_data.get("type")
+        project_id = sg_data.get("project", {}).get("id") or self.default_sg_project_id
 
         # Sanity check that this is valid SG entity
-        if shotgun_globals.is_valid_entity_type(entity_type, self.project_id):
-            return entity_type
+        if shotgun_globals.is_valid_entity_type(entity_type, project_id):
+            return (project_id, entity_type)
 
         # Last attempt to extract an entity type for the data - our source model may be a SG model which has an
         # instance method to get the entity type for the model data.
         try:
             source_model = self.get_source_model()
-            return source_model.get_entity_type()
+            return (project_id, source_model.get_entity_type())
         except AttributeError:
-            return None
-
+            return (None, None)
 
 class FilterMenuFiltersDefinition(FilterDefinition):
     """
