@@ -214,9 +214,7 @@ class FilterItem(object):
         }
 
     def __repr__(self):
-        """
-        Return a string representation for the FilterItem.
-        """
+        """Return a string representation for the FilterItem."""
 
         params = {
             "id": self._id,
@@ -232,18 +230,12 @@ class FilterItem(object):
 
     @property
     def id(self):
-        """
-        Get the id for this FilterItem.
-        """
-
+        """Get the id for this FilterItem."""
         return self._id
 
     @property
     def filter_type(self):
-        """
-        Get or set the filter type.
-        """
-
+        """Get or set the filter type."""
         return self._filter_type
 
     @filter_type.setter
