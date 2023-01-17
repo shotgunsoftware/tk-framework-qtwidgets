@@ -285,7 +285,7 @@ class TextFilterItemWidget(FilterItemWidget):
         super(TextFilterItemWidget, self).__init__(filter_id, group_id, parent=parent)
 
         self._name = filter_data.get("display_name", "")
-        short_name = filter_data.get("short_display_name", self.name)
+        short_name = filter_data.get("short_name", self.name)
 
         self.line_edit = search_widget.SearchWidget(self)
         if self.name:

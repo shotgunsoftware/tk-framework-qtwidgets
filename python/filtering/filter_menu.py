@@ -885,7 +885,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             filter_item_data["filter_type"] = FilterItem.FilterType.STR
             filter_item_data["filter_op"] = FilterItem.FilterOp.IN
             filter_item_data["display_name"] = field_data.get("name")
-            filter_item_data["short_display_name"] = field_data.get("short_name")
+            filter_item_data["short_name"] = field_data.get("short_name")
             # The default value is in the field data since it is applicable to the whole
             # filter group.
             filter_item_data["default_value"] = field_data.get("default_value")
