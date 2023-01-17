@@ -922,7 +922,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         # There should only be one TextFilterItemWidget per field group, which makes
         # it safe to use the widget class name as part of the id.
-        return "{}.{}".format(field_id, "TextFilterItemWidget")
+        return "{}.{}".format(field_id, str(TextFilterItemWidget))
 
     def _get_filter_group_items(self, field_id):
         """
