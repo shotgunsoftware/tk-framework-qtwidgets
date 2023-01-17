@@ -150,9 +150,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # Set the project id for the filters definition to allow handling SG data.
         bundle = sgtk.platform.current_bundle()
         if bundle.tank.pipeline_configuration.is_site_configuration():
-            self._filters_def.project_id = None
+            self._filters_def.default_sg_project_id = None
         else:
-            self._filters_def.project_id = (
+            self._filters_def.default_sg_project_id = (
                 bundle.tank.pipeline_configuration.get_project_id()
             )
 
