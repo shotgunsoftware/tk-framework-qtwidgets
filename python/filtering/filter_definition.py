@@ -81,9 +81,7 @@ class FilterDefinition(object):
     """
 
     def __init__(self):
-        """
-        Constructor.
-        """
+        """Constructor."""
 
         # The filters definitions that are built based on the current model data, and which are used
         # to build the filter menu UI.
@@ -131,9 +129,7 @@ class FilterDefinition(object):
 
     @property
     def ignore_fields(self):
-        """
-        Get or set the set of fields that will be ignored when building the filter definition.
-        """
+        """Get or set the set of fields that will be ignored when building the filter definition."""
         return self._ignore_fields
 
     @ignore_fields.setter
@@ -156,22 +152,20 @@ class FilterDefinition(object):
         self._use_fully_qualified_name = value
 
     @property
-    def project_id(self):
+    def default_sg_project_id(self):
         """
         Get or set the project id. This will be used to retrive SG specific data, e.g. fields for a given
         entity type.
         """
-        return self._project_id
+        return self.__default_sg_project_id
 
-    @project_id.setter
-    def project_id(self, value):
-        self._project_id = value
+    @default_sg_project_id.setter
+    def default_sg_project_id(self, value):
+        self.__default_sg_project_id = value
 
     @property
     def tree_level(self):
-        """
-        Get or set the data level within the (tree) model, which the filters are built from.
-        """
+        """Get or set the data level within the (tree) model, which the filters are built from."""
         return self._tree_level
 
     @tree_level.setter
@@ -180,9 +174,7 @@ class FilterDefinition(object):
 
     @property
     def proxy_model(self):
-        """
-        Get or set the proxy model that drives the filter definition.
-        """
+        """Get or set the proxy model that drives the filter definition."""
         return self._proxy_model
 
     @proxy_model.setter
@@ -710,12 +702,9 @@ class FilterMenuFiltersDefinition(FilterDefinition):
         """
         Return True if the index associated with the field is accepted.
 
-        This acceptance defers from the `_proxy_filter_accepts_row` by only check the index
-        acceptance based on a list of FilterItem objects, whereas the `_proxy_filter_accepts_row`
-        uses the proxy model directly to check filter acceptance.
-
-        This acceptance check omits any filters from the given field. This is to allow the
-        FilterMenu to show filter groups where values from the filter group are OR'd together.
+        This acceptance is almost the same as `_proxy_filter_accepts_row`, except for it omits
+        any filters from the given field. This is to allow the FilterMenu to show filter groups
+        where values from the filter group are OR'd together.
 
         :param index: The model index to check acceptance on.
         :type index: :class:`sgkt.platform.qt.QtCore.QModelIndex`
