@@ -199,28 +199,23 @@ class ChoicesFilterItemWidget(FilterItemWidget):
     @FilterItemWidget.name.getter
     def name(self):
         """
-        Return the widget's label text, this is the display name for this widget.
+        Get the name of the choices filter item.
+        
+        The name of this widget is used for the label text, which is the display name.
         """
-
         return self.label.text()
 
     @FilterItemWidget.value.getter
     def value(self):
         """
-        Return whether or not the widget's checkbox is checked.
-        """
+        Get or set the value of the choices filter item widget.
 
+        The value of this widget represents whether or not the widget is checked.
+        """
         return self.checkbox.isChecked()
 
     @value.setter
     def value(self, value):
-        """
-        Set the widget's value by checking or unchecking the widget's checkbox based on the value.
-
-        :param value: True to check the widget's checkbox, else False.
-        :type value: bool
-        """
-
         if isinstance(value, bool):
             self.checkbox.setChecked(value)
 
