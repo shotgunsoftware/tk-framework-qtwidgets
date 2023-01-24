@@ -1352,7 +1352,9 @@ class ShotgunFilterMenu(FilterMenu):
         if self._source_model is not None:
             try:
                 self._source_model.data_refreshing.disconnect(self._on_data_refreshing)
-                self._source_model.data_refresh_fail.disconnect(self._on_data_refresh_fail)
+                self._source_model.data_refresh_fail.disconnect(
+                    self._on_data_refresh_fail
+                )
                 self._source_model.data_refreshed.disconnect(self._on_data_refreshed)
                 self._source_model.cache_loaded.disconnect(self._on_cache_loaded)
             except RuntimeError:
@@ -1389,16 +1391,16 @@ class ShotgunFilterMenu(FilterMenu):
     def _on_data_refreshed(self):
         """
         Slot triggered on SG model `data_refreshed` signal.
-        
+
         Force a menu refresh.
         """
 
         self.refresh(force=True)
-        
+
     def _on_cache_loaded(self):
         """
         Slot triggered on SG model `cache_loaded` signal.
-        
+
         Force a menu refresh.
         """
 
