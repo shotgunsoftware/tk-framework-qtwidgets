@@ -1158,13 +1158,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 else:
                     widget.unsetCursor()
 
-            # Emit a data changed signal for the index to paint according to the mouse move
-            # event (e.g. hover selection).
-            # TODO: leverage the 'roles' parameter to emit only the relevant data roles
-            # to consider, for a more efficient update. Currently there are some issues using
-            # this parameter due to mismatch method signatures between versions.
-            model.dataChanged.emit(index, index)
-
             # Fall through to allow the base implementation to perform any other mouse move event handling
 
         return super(ViewItemDelegate, self).editorEvent(
@@ -1394,13 +1387,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             painter.setPen(QtGui.QPen(QtCore.Qt.magenta))
             painter.drawRect(rect)
             painter.restore()
-
-        # Emit a data changed signal for the index to continue painting the animation until
-        # the item has finished loading.
-        # TODO: leverage the 'roles' parameter to emit only the relevant data roles
-        # to consider, for a more efficient update. Currently there are some issues using
-        # this parameter due to mismatch method signatures between versions.
-        index.model().dataChanged.emit(index, index)
 
     def _draw_separator(self, painter, option, index):
         """
