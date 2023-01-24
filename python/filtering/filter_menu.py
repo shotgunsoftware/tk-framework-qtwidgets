@@ -1351,7 +1351,10 @@ class ShotgunFilterMenu(FilterMenu):
 
         if self._source_model is not None:
             try:
-                self._source_model.data_refreshed.disconnect(self.data_refreshed)
+                self._source_model.data_refreshing.disconnect(self._on_data_refreshing)
+                self._source_model.data_refresh_fail.disconnect(self._on_data_refresh_fail)
+                self._source_model.data_refreshed.disconnect(self._on_data_refreshed)
+                self._source_model.cache_loaded.disconnect(self._on_cache_loaded)
             except RuntimeError:
                 # Signals were never connected.
                 pass
@@ -1359,9 +1362,44 @@ class ShotgunFilterMenu(FilterMenu):
         super(ShotgunFilterMenu, self).set_filter_model(filter_model, connect_signals)
 
         if connect_signals and self._source_model is not None:
-            self._source_model.data_refreshed.connect(self.data_refreshed)
+            self._source_model.data_refreshing.connect(self._on_data_refreshing)
+            self._source_model.data_refresh_fail.connect(self._on_data_refresh_fail)
+            self._source_model.data_refreshed.connect(self._on_data_refreshed)
+            self._source_model.cache_loaded.connect(self._on_cache_loaded)
 
-    def data_refreshed(self):
-        """Slot triggered on SG model `data_refreshed` signal. Force a menu refresh."""
+    def _on_data_refreshing(self):
+        """
+        Slot triggered on SG model `data_refreshing` signal.
+
+        Emit the signal that the menu is about to refresh now.
+        """
+
+        self.menu_about_to_be_refreshed.emit()
+
+    def _on_data_refresh_fail(self, msg):
+        """
+        Slot triggered on SG model `data_refresh_fail` signal.
+
+        Refresh failed will not trigger the menu refresh, but we still need to emit the signal
+        menu finished refreshing since the menu_about_to_be_refreshed signal has been emitted.
+        """
+
+        self.menu_refreshed.emit()
+
+    def _on_data_refreshed(self):
+        """
+        Slot triggered on SG model `data_refreshed` signal.
+        
+        Force a menu refresh.
+        """
+
+        self.refresh(force=True)
+        
+    def _on_cache_loaded(self):
+        """
+        Slot triggered on SG model `cache_loaded` signal.
+        
+        Force a menu refresh.
+        """
 
         self.refresh(force=True)
