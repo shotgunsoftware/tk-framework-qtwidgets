@@ -70,6 +70,7 @@ class SearchWidget(QtGui.QWidget):
 
         # hook up the signals:
         self._ui.search_edit.textEdited.connect(self._on_text_edited)
+        self._ui.search_edit.editingFinished.connect(self._on_editing_finished)
         self._ui.search_edit.returnPressed.connect(self._on_return_pressed)
         self._clear_btn.clicked.connect(self._on_clear_clicked)
 
@@ -123,10 +124,21 @@ class SearchWidget(QtGui.QWidget):
         self._clear_btn.setVisible(bool(text))
         self.search_edited.emit(text)
 
+    def _on_editing_finished(self):
+        """
+        Slot triggered when editing has finished.
+        """
+        self._on_search_changed()
+
     def _on_return_pressed(self):
         """
         Slot triggered when return has been pressed
         """
+        self._on_search_changed()
+
+    def _on_search_changed(self):
+        """Emit signal that search text has changed with the current text value."""
+
         self.search_changed.emit(self.search_text)
 
     def _safe_to_string(self, value):
