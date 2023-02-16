@@ -972,11 +972,15 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         widget.value_changed.connect(
             lambda text, f=filter_item: self._filter_widget_value_changed(f, text)
         )
-        widget_action.triggered.connect(
-            lambda checked=None, a=widget_action: self.set_widget_action_default_widget_value(
-                a, checked
+
+        if isinstance(widget, ChoicesFilterItemWidget):
+            # Only connect signal/slot to update value based on check state, if the filter
+            # item is checkable (e.g. do not connect this for TextFilterItemWidgets).
+            widget_action.triggered.connect(
+                lambda checked=None, a=widget_action: self.set_widget_action_default_widget_value(
+                    a, checked
+                )
             )
-        )
 
         return widget_action
 
