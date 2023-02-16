@@ -10,7 +10,6 @@
 
 from functools import wraps
 
-import sgtk
 from sgtk.platform.qt import QtGui, QtCore
 
 
