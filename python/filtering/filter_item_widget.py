@@ -317,8 +317,7 @@ class TextFilterItemWidget(FilterItemWidget):
         :type value: str
         """
 
-        if not isinstance(value, six.string_types):
-            return
+        assert isinstance(value, six.string_types), "Attempting to set non-string data to QLineEdit"
 
         self.line_edit.search_text = value
         self.value_changed.emit(value)
