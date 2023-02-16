@@ -9,6 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from . import utils
+from . import decorators
 from . import sg_qicons
 from . import sg_qwidgets
 from . import playback_label
