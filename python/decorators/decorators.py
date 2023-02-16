@@ -10,13 +10,13 @@
 
 from functools import wraps
 
-import sgtk
 from sgtk.platform.qt import QtGui, QtCore
 
 
 def wait_cursor(func):
     """
-    Decorator function that overrides the Qt cursor to show the waiting cursor while a function executes.
+    Decorator function that overrides the Qt cursor to show the waiting cursor
+    while a function executes.
 
     :param func: The function to execute
     :type func: function
@@ -26,9 +26,8 @@ def wait_cursor(func):
     def wrapper(*args, **kwargs):
         QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         try:
-            response = func(*args, **kwargs)
+            return func(*args, **kwargs)
         finally:
             QtGui.QApplication.restoreOverrideCursor()
-        return response
 
     return wrapper
