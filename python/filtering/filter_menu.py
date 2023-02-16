@@ -737,19 +737,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                         # Filter item no longer has any values, remove it
                         self._remove_filter_action(field_id, item)
 
-                # For string filter data types, a search widget will be added to the top of the list of choices.
-                # The search widget will be removed when the whole group is removed. When the group exists but
-                # has no existing items, this is our hint to add the search widget back.
-                if (
-                    not filter_group.filter_items
-                    and data["type"] == FilterItem.FilterType.STR
-                ):
-                    filter_id = self._get_search_filter_item_id(field_id)
-                    filter_item, filter_action = self._create_filter_item_and_action(
-                        field_id, data, filter_id
-                    )
-                    filter_group.insert_into_menu(self, filter_item, filter_action)
-
                 # Insert any new filter items into an existing group.
                 for value_id, value_data in updated_filters_values.items():
                     if value_id in existing_value_ids:
