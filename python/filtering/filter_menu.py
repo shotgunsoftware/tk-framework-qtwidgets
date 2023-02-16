@@ -1235,8 +1235,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         :type text: str
         """
 
-        filter_item.filter_value = text
-        self._emit_filters_changed()
+        updated = filter_item.set_filter_value(text)
+        if updated:
+            self._emit_filters_changed()
 
 
 class ShotgunFilterMenu(FilterMenu):
