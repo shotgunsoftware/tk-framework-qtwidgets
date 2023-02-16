@@ -869,10 +869,10 @@ class FilterItem(object):
     def set_filter_value(self, value):
         """
         Set the filter item's filter value.
-        
+
         :param value: The value to set.
         :type value: any
-        
+
         :return: True if the filter item's value was updated, else False. If the value is the
             same as the current filter value, False will be returned.
         :rtype: bool
@@ -889,10 +889,10 @@ class FilterItem(object):
     def _sanitize_filter_value(self, value):
         """
         Process the raw value and sanitize it for the filter item to use.
-        
+
         :param value: The raw filter value to sanitize.
         :type value: any
-        
+
         :return: The sanitized filter value for the filter item to use.
         :rtype: any
         """
