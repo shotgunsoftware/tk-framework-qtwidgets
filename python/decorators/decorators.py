@@ -15,7 +15,8 @@ from sgtk.platform.qt import QtGui, QtCore
 
 def wait_cursor(func):
     """
-    Decorator function that overrides the Qt cursor to show the waiting cursor while a function executes.
+    Decorator function that overrides the Qt cursor to show the waiting cursor
+    while a function executes.
 
     :param func: The function to execute
     :type func: function
