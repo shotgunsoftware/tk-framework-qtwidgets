@@ -256,15 +256,12 @@ class FilterItem(object):
 
     @property
     def filter_op(self):
-        """
-        Get or set the filter operation.
-        """
+        """Get or set the filter operation."""
 
         return self._filter_op
 
     @filter_op.setter
     def filter_op(self, value):
-
         if value not in self.FilterOp.VALID_OPS:
             raise TypeError("Invalid filter operation '{}'.".format(value))
 
