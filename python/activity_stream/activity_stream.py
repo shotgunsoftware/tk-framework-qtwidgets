@@ -873,26 +873,31 @@ class ActivityStreamWidget(QtGui.QWidget):
                 widget.interactive = self.version_items_playable
 
             elif data["primary_entity"]["type"] == "Note":
-                # new note
-                widget = NoteWidget(data["primary_entity"]["id"], self)
-                widget.show_note_links = self.show_note_links
-                widget.attachments_filter = self.attachments_filter
+                # Ensure that the user has permission to see script user
+                # (if not, data["primary_entity"]["user"] will be None)
+                if data["primary_entity"]["user"]:
+                    # new note
+                    widget = NoteWidget(data["primary_entity"]["id"], self)
+                    widget.show_note_links = self.show_note_links
+                    widget.attachments_filter = self.attachments_filter
 
-                # If it's been requested that we select this Note entity's widget when it's
-                # constructed, then we do so here. This is the situation where the user has
-                # created a new Note, which upon completion we want to have autoselected.
-                if data["primary_entity"]["id"] == self._select_on_arrival.get("id"):
-                    # First we need to deselect whatever is selected, because we're going
-                    # to be selecting our new widget right after.
-                    for w in self._activity_stream_data_widgets.values():
-                        if isinstance(w, NoteWidget):
-                            if w.selected:
-                                w.set_selected(False)
-                                self._note_selected_changed(False, w.note_id)
+                    # If it's been requested that we select this Note entity's widget when it's
+                    # constructed, then we do so here. This is the situation where the user has
+                    # created a new Note, which upon completion we want to have autoselected.
+                    if data["primary_entity"]["id"] == self._select_on_arrival.get(
+                        "id"
+                    ):
+                        # First we need to deselect whatever is selected, because we're going
+                        # to be selecting our new widget right after.
+                        for w in self._activity_stream_data_widgets.values():
+                            if isinstance(w, NoteWidget):
+                                if w.selected:
+                                    w.set_selected(False)
+                                    self._note_selected_changed(False, w.note_id)
 
-                    widget.set_selected(True)
-                    self._note_selected_changed(True, widget.note_id)
-                    self._select_on_arrival = dict()
+                        widget.set_selected(True)
+                        self._note_selected_changed(True, widget.note_id)
+                        self._select_on_arrival = dict()
 
             else:
                 # minimalistic 'new' widget for all other cases
