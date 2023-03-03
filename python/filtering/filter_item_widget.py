@@ -47,9 +47,7 @@ class FilterItemWidget(QtGui.QWidget):
         self.setMouseTracking(True)
 
     def __repr__(self):
-        """
-        Return string representation of the FilterItemWidget.
-        """
+        """Return string representation of the FilterItemWidget."""
 
         params = {
             "id": self.id,
@@ -65,65 +63,40 @@ class FilterItemWidget(QtGui.QWidget):
 
     @property
     def id(self):
-        """
-        Get the unique id for this widget.
-        """
-
+        """Get the unique id for this widget."""
         return self._id
 
     @property
     def group_id(self):
-        """
-        Get the unique id for the group this widget belongs to.
-        """
-
+        """Get the unique id for the group this widget belongs to."""
         return self._group_id
 
     @property
     def name(self):
-        """
-        Return the dispaly text for this widget.
-        """
-
+        """Return the dispaly text for this widget."""
         raise sgtk.TankError("Abstract class method not overriden")
 
     @property
     def value(self):
-        """
-        Return the widget's current value.
-        """
-
+        """Get or set the widget's value."""
         raise sgtk.TankError("Abstract class method not overriden")
 
     @value.setter
     def value(self, value):
-        """
-        Set the widget's value.
-
-        :param value: The value to set the widget's value to.
-        :type value: any
-        """
-
         raise sgtk.TankError("Abstract class method not overriden")
 
     def set_value(self, value):
-        """
-        Convenience method to set the value for callback.
-        """
+        """Convenience method to set the value for callback."""
 
         self.value = value
 
     def has_value(self):
-        """
-        Return True if the widget has a value, else False.
-        """
+        """Return True if the widget has a value, else False."""
 
         raise sgtk.TankError("Abstract class method not overriden")
 
     def clear_value(self):
-        """
-        Clear the widget's current value.
-        """
+        """Clear the widget's current value."""
 
         raise sgtk.TankError("Abstract class method not overriden")
 
@@ -191,8 +164,10 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         count = filter_data.get("count")
         if count:
             self.count_label = QtGui.QLabel(str(count))
-            layout.addStretch()
-            layout.addWidget(self.count_label)
+        else:
+            self.count_label = QtGui.QLabel()
+        layout.addStretch()
+        layout.addWidget(self.count_label)
 
         self.setLayout(layout)
 
@@ -224,28 +199,23 @@ class ChoicesFilterItemWidget(FilterItemWidget):
     @FilterItemWidget.name.getter
     def name(self):
         """
-        Return the widget's label text, this is the display name for this widget.
-        """
+        Get the name of the choices filter item.
 
+        The name of this widget is used for the label text, which is the display name.
+        """
         return self.label.text()
 
     @FilterItemWidget.value.getter
     def value(self):
         """
-        Return whether or not the widget's checkbox is checked.
-        """
+        Get or set the value of the choices filter item widget.
 
+        The value of this widget represents whether or not the widget is checked.
+        """
         return self.checkbox.isChecked()
 
     @value.setter
     def value(self, value):
-        """
-        Set the widget's value by checking or unchecking the widget's checkbox based on the value.
-
-        :param value: True to check the widget's checkbox, else False.
-        :type value: bool
-        """
-
         if isinstance(value, bool):
             self.checkbox.setChecked(value)
 
@@ -263,17 +233,11 @@ class ChoicesFilterItemWidget(FilterItemWidget):
             ), "Attempting to set ChoicesFilterItemWidget value with invalid data"
 
     def has_value(self):
-        """
-        Return True if the widget's checkbox is checked, else False.
-        """
-
+        """Return True if the widget's checkbox is checked, else False."""
         return self.value
 
     def clear_value(self):
-        """
-        Clear the widget's value by unchecking the widget's checkbox.
-        """
-
+        """Clear the widget's value by unchecking the widget's checkbox."""
         self.value = False
 
     def restore(self, state):
@@ -321,9 +285,13 @@ class TextFilterItemWidget(FilterItemWidget):
         super(TextFilterItemWidget, self).__init__(filter_id, group_id, parent=parent)
 
         self._name = filter_data.get("display_name", "")
+        short_name = filter_data.get("short_name", self.name)
 
         self.line_edit = search_widget.SearchWidget(self)
-        self.line_edit.search_edited.connect(self.value_changed.emit)
+        if self.name:
+            self.line_edit.set_placeholder_text("Enter {}".format(short_name))
+        self.line_edit.setToolTip("Press Enter to search by {}.".format(self.name))
+        self.line_edit.search_changed.connect(self.value_changed.emit)
 
         layout = QtGui.QHBoxLayout()
         layout.setAlignment(QtCore.Qt.AlignLeft)
@@ -332,18 +300,12 @@ class TextFilterItemWidget(FilterItemWidget):
 
     @FilterItemWidget.name.getter
     def name(self):
-        """
-        The display name for this widget.
-        """
-
+        """The display name for this widget."""
         return self._name
 
     @FilterItemWidget.value.getter
     def value(self):
-        """
-        Return the search widget's text value.
-        """
-
+        """Return the search widget's text value."""
         return self.line_edit.search_text
 
     @value.setter
@@ -355,24 +317,19 @@ class TextFilterItemWidget(FilterItemWidget):
         :type value: str
         """
 
-        if not isinstance(value, six.string_types):
-            assert False, "Attempt to set non-string data to QLineEdit"
-            return
+        assert isinstance(
+            value, six.string_types
+        ), "Attempting to set non-string data to QLineEdit"
 
         self.line_edit.search_text = value
         self.value_changed.emit(value)
 
     def has_value(self):
-        """
-        Return True if the search widget has text, else False.
-        """
-
+        """Return True if the search widget has text, else False."""
         return bool(self.value)
 
     def clear_value(self):
-        """
-        Clear the search widget's text.
-        """
+        """Clear the search widget's text."""
 
         self.value = ""
 

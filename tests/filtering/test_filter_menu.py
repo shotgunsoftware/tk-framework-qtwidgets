@@ -326,5 +326,5 @@ class TestFilterMenu(TankTestBase):
         # Trigger the action to set the value for this filter item.
         action.trigger()
 
-        result_filters = fm.get_current_filters(exclude_fields=[field_id])
+        result_filters = fm.get_current_filters(exclude_choices_from_fields=[field_id])
         assert len(result_filters) == 0
