@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_widget.shotgun_widget &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>shotgun_widget.shotgun_widget &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -263,12 +263,12 @@
 
 
 <div class="viewcode-block" id="ShotgunWidget"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget">[docs]</a><span class="k">class</span> <span class="nc">ShotgunWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Shotgun widget base class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construction</span>
 
 <span class="sd">        :param parent: The parent widget</span>
@@ -296,7 +296,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span> <span class="o">=</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="ShotgunWidget.set_thumbnail"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget.set_thumbnail">[docs]</a>    <span class="k">def</span> <span class="nf">set_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thumbnail</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the widget thumbnail. If the widget has been configured to display a thumbnail but no image has been</span>
 <span class="sd">        supplied, a default picture will be displayed instead.</span>
 
@@ -317,14 +317,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunWidget.set_selected"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget.set_selected">[docs]</a>    <span class="k">def</span> <span class="nf">set_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adjust the style sheet to indicate selection or not</span>
 
 <span class="sd">        :param selected: True if selected, false if not</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">selected</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
-                <span class="sd">&quot;&quot;&quot;#box {border-width: 2px;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;#box {border-width: 2px;</span>
 <span class="sd">                                                 border-color: %s;</span>
 <span class="sd">                                                 border-style: solid;</span>
 <span class="sd">                                                 background-color: %s}</span>
@@ -339,7 +339,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunWidget.set_actions"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget.set_actions">[docs]</a>    <span class="k">def</span> <span class="nf">set_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a list of QActions to the actions menu for this widget.</span>
 
 <span class="sd">        :param actions: List of QActions to add</span>
@@ -349,7 +349,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunWidget.resizeEvent"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget.resizeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base method.</span>
 
 <span class="sd">        Rescale the pixmap when the label resizes.</span>
@@ -361,7 +361,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_scaled_thumbnail</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ShotgunWidget.set_scaled_thumbnail"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunWidget.set_scaled_thumbnail">[docs]</a>    <span class="k">def</span> <span class="nf">set_scaled_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the thumbnail label pixmap.</span>
 
 <span class="sd">        Scale the pixmap to the label&#39;s size and center it within the label. Keep the aspect</span>
@@ -391,7 +391,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

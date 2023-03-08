@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>views.edit_selected_widget_delegate &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>views.edit_selected_widget_delegate &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -230,7 +230,7 @@
 
 
 <div class="viewcode-block" id="EditSelectedWidgetDelegate"><a class="viewcode-back" href="../../views.html#views.EditSelectedWidgetDelegate">[docs]</a><span class="k">class</span> <span class="nc">EditSelectedWidgetDelegate</span><span class="p">(</span><span class="n">WidgetDelegate</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Custom delegate that provides a simple mechanism where an actual widget (editor) is</span>
 <span class="sd">    presented for the selected item whilst all other items are simply drawn with a single</span>
 <span class="sd">    widget.</span>
@@ -262,7 +262,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param view: The parent view for this delegate</span>
 <span class="sd">        :type view:  :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -282,7 +282,7 @@
     <span class="c1"># implemented by deriving classes</span>
 
 <div class="viewcode-block" id="EditSelectedWidgetDelegate._on_before_selection"><a class="viewcode-back" href="../../views.html#views.EditSelectedWidgetDelegate._on_before_selection">[docs]</a>    <span class="k">def</span> <span class="nf">_on_before_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method is called just before a cell is selected. This method should</span>
 <span class="sd">        configure values on the widget (such as labels, thumbnails etc) based on the</span>
 <span class="sd">        data contained in the model index parameter which is being passed.</span>
@@ -305,7 +305,7 @@
     <span class="c1"># &#39;private&#39; methods that are not meant to be subclassed or called by a deriving class.</span>
 
 <div class="viewcode-block" id="EditSelectedWidgetDelegate._on_selection_changed"><a class="viewcode-back" href="../../views.html#views.EditSelectedWidgetDelegate._on_selection_changed">[docs]</a>    <span class="k">def</span> <span class="nf">_on_selection_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">deselected</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Signal triggered when someone changes the selection in the view.</span>
 
 <span class="sd">        :param selected:    A list of the indexes in the model that were selected</span>
@@ -329,7 +329,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">openPersistentEditor</span><span class="p">(</span><span class="n">model_index</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_widget</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subclassed implementation from QStyledItemDelegate which is</span>
 <span class="sd">        called when an &quot;editor&quot; is set up - the editor is set up</span>
 <span class="sd">        via the openPersistentEditor call and is created upon selection</span>
@@ -366,7 +366,7 @@
         <span class="k">return</span> <span class="n">editor_widget</span>
 
     <span class="k">def</span> <span class="nf">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Paint method to handle all cells that are not being currently edited.</span>
 
 <span class="sd">        :param painter:         The painter instance to use when painting</span>
@@ -393,7 +393,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

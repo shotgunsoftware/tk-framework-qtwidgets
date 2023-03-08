@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>models.hierarchical_filtering_proxy_model &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>models.hierarchical_filtering_proxy_model &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -232,7 +232,7 @@
 
 
 <div class="viewcode-block" id="HierarchicalFilteringProxyModel"><a class="viewcode-back" href="../../models.html#models.HierarchicalFilteringProxyModel">[docs]</a><span class="k">class</span> <span class="nc">HierarchicalFilteringProxyModel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Inherited from a :class:`~PySide.QtGui.QSortFilterProxyModel`, this class implements filtering across all</span>
 <span class="sd">    levels of a hierarchy in a hierarchical (tree-based) model and provides a simple</span>
 <span class="sd">    interface for derived classes so that all they need to do is filter a single item</span>
@@ -240,7 +240,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">class</span> <span class="nc">_IndexAcceptedCache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cached &#39;accepted&#39; values for indexes.  Uses a dictionary that maps a key to a tuple</span>
 <span class="sd">        containing a QPersistentModelIndex for the index and its accepted value.</span>
 
@@ -256,7 +256,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Construction</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
@@ -276,7 +276,7 @@
 
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">cache_hit_miss_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Useful for debug to see how many cache hits vs misses there are</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">total_cache_queries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_hits</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_misses</span>
@@ -287,13 +287,13 @@
 
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Return the current size of the cache</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">accepted</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Add the specified index to the cache together with it&#39;s accepted state</span>
 
 <span class="sd">            :param index:       The QModelIndex to be added</span>
@@ -311,7 +311,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_index</span><span class="p">,</span> <span class="n">accepted</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Remove the specified index from the cache.</span>
 
 <span class="sd">            :param index:   The QModelIndex to remove from the cache</span>
@@ -324,7 +324,7 @@
                 <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span>
 
         <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Get the accepted state for the specified index in the cache.</span>
 
 <span class="sd">            :param index:   The QModelIndex to get the accepted state for</span>
@@ -350,7 +350,7 @@
                 <span class="k">return</span> <span class="kc">None</span>
 
         <span class="k">def</span> <span class="nf">minimize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Minimize the size of the cache by removing any entries that are no longer valid</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
@@ -361,7 +361,7 @@
             <span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Clear the cache</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
@@ -370,7 +370,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">def</span> <span class="nf">_gen_cache_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Generate the key for the specified index in the cache.</span>
 
 <span class="sd">            :param index:   The QModelIndex to generate a cache key for</span>
@@ -393,7 +393,7 @@
             <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent:    The parent QObject to use for this instance</span>
 <span class="sd">        :type parent:     :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -405,7 +405,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="HierarchicalFilteringProxyModel.enable_caching"><a class="viewcode-back" href="../../models.html#models.HierarchicalFilteringProxyModel.enable_caching">[docs]</a>    <span class="k">def</span> <span class="nf">enable_caching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allow control over enabling/disabling of the accepted cache used to accelerate</span>
 <span class="sd">        filtering.  Can be used for debug purposes to ensure the caching isn&#39;t the cause</span>
 <span class="sd">        of incorrect filtering/sorting or instability!</span>
@@ -419,7 +419,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">enable</span></div>
 
 <div class="viewcode-block" id="HierarchicalFilteringProxyModel._is_row_accepted"><a class="viewcode-back" href="../../models.html#models.HierarchicalFilteringProxyModel._is_row_accepted">[docs]</a>    <span class="k">def</span> <span class="nf">_is_row_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_row</span><span class="p">,</span> <span class="n">src_parent_idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override this method to decide if the specified row should be accepted or not by</span>
 <span class="sd">        the filter.</span>
 
@@ -439,42 +439,42 @@
     <span class="c1"># Overriden base class methods</span>
 
     <span class="k">def</span> <span class="nf">setFilterRegExp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reg_exp</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method to set the filter regular expression</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterRegExp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reg_exp</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setFilterFixedString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method to set the filter fixed string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterFixedString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setFilterCaseSensitivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method to set the filter case sensitivity</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterCaseSensitivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setFilterKeyColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method to set the filter key column</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterKeyColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setFilterRole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method to set the filter role</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">setFilterRole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method used to invalidate sorting and filtering.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
@@ -482,7 +482,7 @@
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">invalidateFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method used to invalidate the current filter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
@@ -490,7 +490,7 @@
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="o">.</span><span class="n">invalidateFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">filterAcceptsRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_row</span><span class="p">,</span> <span class="n">src_parent_idx</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method used to determine if a row is accepted by the</span>
 <span class="sd">        current filter.</span>
 
@@ -546,7 +546,7 @@
             <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">setSourceModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overridden base method that we use to keep track of when rows are inserted into the</span>
 <span class="sd">        source model</span>
 
@@ -579,7 +579,7 @@
     <span class="c1"># Private methods</span>
 
     <span class="k">def</span> <span class="nf">_is_child_accepted_r</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Recursively check children to see if any of them have been accepted.</span>
 
 <span class="sd">        :param idx:             The model index whose children should be checked</span>
@@ -623,14 +623,14 @@
         <span class="k">return</span> <span class="n">child_accepted</span>
 
     <span class="k">def</span> <span class="nf">_dirty_all_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Dirty/clear the accepted caches</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_accepted_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_child_accepted_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_dirty_accepted_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Dirty the specified rows from the accepted caches.  This will remove any entries in</span>
 <span class="sd">        either the accepted or the child accepted cache that match the start/end rows for the</span>
 <span class="sd">        specified parent index.</span>
@@ -655,7 +655,7 @@
             <span class="n">parent_idx</span> <span class="o">=</span> <span class="n">parent_idx</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_on_source_model_data_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot triggered when data for one or more items in the source model changes.</span>
 
 <span class="sd">        Data in the source model changing may mean that the filtering for an item changes.  If this</span>
@@ -682,7 +682,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_accepted_rows</span><span class="p">(</span><span class="n">parent_idx</span><span class="p">,</span> <span class="n">start_idx</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">end_idx</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">_on_source_model_rows_inserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot triggered when rows are inserted into the source model.</span>
 
 <span class="sd">        There appears to be a limitation with the QSortFilterProxyModel that breaks sorting</span>
@@ -710,7 +710,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_accepted_rows</span><span class="p">(</span><span class="n">parent_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_source_model_about_to_be_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when the source model is about to be reset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># QPersistentModelIndex are constantly being tracked by the owning model so that their references</span>
@@ -731,7 +731,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

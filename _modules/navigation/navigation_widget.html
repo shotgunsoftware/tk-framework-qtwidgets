@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>navigation.navigation_widget &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>navigation.navigation_widget &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -229,7 +229,7 @@
 
 
 <div class="viewcode-block" id="NavigationWidget"><a class="viewcode-back" href="../../navigation.html#navigation.NavigationWidget">[docs]</a><span class="k">class</span> <span class="nc">NavigationWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Navigation widget containing previous, home and next buttons: [H][&lt;][&gt;].  The</span>
 <span class="sd">    widget keeps track of the current location within a list and emits signals</span>
 <span class="sd">    whenever the user navigates via one of the buttons.</span>
@@ -247,12 +247,12 @@
     <span class="n">home_clicked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
     <span class="k">class</span> <span class="nc">_DestinationInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Container to keep track of information about a destination</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            :param label:       The label to be used for this destination</span>
 <span class="sd">            :param destination: The destination</span>
 <span class="sd">            &quot;&quot;&quot;</span>
@@ -260,7 +260,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">destination</span> <span class="o">=</span> <span class="n">destination</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent:  The parent QWidget</span>
 <span class="sd">        :type parent:   :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -280,7 +280,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_ui</span><span class="p">()</span>
 
 <div class="viewcode-block" id="NavigationWidget.add_destination"><a class="viewcode-back" href="../../navigation.html#navigation.NavigationWidget.add_destination">[docs]</a>    <span class="k">def</span> <span class="nf">add_destination</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a destination to the widget.  This clears any future destinations</span>
 <span class="sd">        and sets the current destination to be the one passed in.</span>
 
@@ -298,7 +298,7 @@
     <span class="c1"># Protected methods</span>
 
     <span class="k">def</span> <span class="nf">_on_nav_prev_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot triggered when the &#39;previous&#39;/[&lt;] button is clicked.  Sets the current</span>
 <span class="sd">        destination to the previous destination and emits the navigate signal.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -311,7 +311,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_ui</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_on_nav_next_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot triggered when the &#39;next&#39;/[&gt;] button is clicked.  Sets the current</span>
 <span class="sd">        destination to the next destination and emits the navigate signal.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -324,7 +324,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_ui</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_update_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the UI to reflect the current state of the destination queue</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">nav_home_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -344,7 +344,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

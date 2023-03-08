@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Filtering &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>Filtering &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -137,7 +137,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -219,7 +219,7 @@
 <p>Filtering functionality that aims to mimic the ShotGrid Web UI filter menu.</p>
 <dl class="class">
 <dt id="filtering.FilterMenu">
-<em class="property">class </em><code class="descclassname">filtering.</code><code class="descname">FilterMenu</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">filtering.</code><code class="descname">FilterMenu</code><span class="sig-paren">(</span><em>parent=None</em>, <em>refresh_on_show=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">filtering.filter_menu.NoCloseOnActionTriggerShotgunMenu</span></code></p>
 <p>A menu that provides filtering functionality.</p>
 <dl class="docutils">
@@ -293,7 +293,12 @@ forced to be refreshed on calling the <cite>refresh</cite> method with param <ci
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtWidget</span></code>) – The parent widget.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtWidget</span></code>) – The parent widget.</li>
+<li><strong>refresh_on_show</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – True will ensure the menu is up to date on show. This will
+slow performance on menu open, but ensures the data is the most up to date.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -390,16 +395,50 @@ tree models that defer loading data, set this to the expected leaf node level.</
 </dd></dl>
 
 <dl class="method">
+<dt id="filtering.FilterMenu.has_role">
+<code class="descname">has_role</code><span class="sig-paren">(</span><em>roles</em>, <em>check_existence=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.has_role"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.has_role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the filter menu is built using the model item data roles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>check_existence</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – True will return a bool indicating if at least one of the
+roles is in the filter menu’s filter roles, else False. False will return the
+list of roles that are in the filter menu’s filter roles.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">If check_existence, then True is returned if any of the roles given are
+used by the filter menu, else False. If check_existence is False, then from the
+list of the given roles, only the roles that are used in the filter menu will be
+returned.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool | List[<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)">int</a>]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="filtering.FilterMenu.save_state">
 <code class="descname">save_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.save_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.save_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dictionary describing the current menu filter state. This can be used to save
-and restore the menu state.</p>
+<dd><p>Save the current menu filter state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current menu filter state that can be used to restore the menu state at a
+later time.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="filtering.FilterMenu.restore_state">
 <code class="descname">restore_state</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.restore_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.restore_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore the menu to the given state.</p>
+<dd><p>Restore the menu with the given state.</p>
+<p>If the menu has not been built yet, the state will be restored on first build.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -408,20 +447,6 @@ and restore the menu state.</p>
 </tr>
 </tbody>
 </table>
-<p>e.g.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;field_id_1&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;filter_id_1&quot;</span><span class="p">:</span> <span class="s2">&quot;filter_id_1_value&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;filter_id_2&quot;</span><span class="p">:</span> <span class="s2">&quot;filter_id_2_value&quot;</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;field_id_2&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;filter_id_3&quot;</span><span class="p">:</span> <span class="s2">&quot;filter_id_3_value&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;filter_id_4&quot;</span><span class="p">:</span> <span class="s2">&quot;filter_id_4_value&quot;</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="o">...</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="method">
@@ -447,9 +472,18 @@ layoutChanged will rebuild the menu.</li>
 <dl class="method">
 <dt id="filtering.FilterMenu.refresh">
 <code class="descname">refresh</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.refresh" title="Permalink to this definition">¶</a></dt>
-<dd><p>Rebuild the FilterDefinition from the current model data and update the menu with the
-new filter definition.</p>
-<p>TODO: bulid the filter definition async - performance starts to degrade at ~400 model items.</p>
+<dd><p>Refresh the filter menu.</p>
+<p>This operation will rebuild the underlying filter definition that the filter menu is
+built from. The filter definition is built based on the current filter model data.</p>
+<p>The filter menu widgets will be cleared and rebuilt. The current menu state will be
+saved before rebuild, and restored once the refresh operation is complete.</p>
+<p>Emits <cite>menu_refreshed</cite> signal once refresh is done.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenu.update_filters">
+<code class="descname">update_filters</code><span class="sig-paren">(</span><em>filter_group_ids=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.update_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.update_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update only the active/visible filters in the menu.</p>
 </dd></dl>
 
 <dl class="method">
@@ -467,22 +501,37 @@ remove all items from the menu.</p>
 
 <dl class="method">
 <dt id="filtering.FilterMenu.get_current_filters">
-<code class="descname">get_current_filters</code><span class="sig-paren">(</span><em>exclude_fields=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.get_current_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.get_current_filters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the list of FilterItem objects that represent the current filtering
-applied from the menu. Filters will be omitted that belong to the excluded
-fields list given.</p>
-<p>The result will be a list of FilterItem Groups that OR the filters within
-each group.</p>
+<code class="descname">get_current_filters</code><span class="sig-paren">(</span><em>exclude_choices_from_fields=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.get_current_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.get_current_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current filters that are active in the menu.</p>
+<dl class="docutils">
+<dt>The menu filtering is built by:</dt>
+<dd><ol class="first last arabic simple">
+<li><dl class="first docutils">
+<dt>Within a filter field:</dt>
+<dd><ol class="first last loweralpha">
+<li>All choice filters are grouped with OR, to create a group filter item</li>
+<li>The choices filter item is then grouped with the search filter with AND</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li>All filter field group items are then combined with AND to get the final filter item</li>
+</ol>
+</dd>
+</dl>
+<p>If the <cite>exclude_choices_from_fields</cite> is provided, this will not add any choice filters
+from the listed fields. Note that the search filter for these fields will still be
+included. This is used by the filter definition to get filter choice value counts.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>exclude_fields</strong> (<em>list&lt;str&gt;</em>) – The list of fields to exclude when collecting the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>exclude_choices_from_fields</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>]</em>) – The list of fields to exclude when collecting the
 currently active filtering from the menu.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The current filters, excluding the given fields.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A filter item representing the current filtering in the menu.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;FilterItem&gt;</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">List[<a class="reference internal" href="#filtering.FilterItem" title="filtering.FilterItem">FilterItem</a>]</td>
 </tr>
 </tbody>
 </table>
@@ -492,6 +541,9 @@ currently active filtering from the menu.</td>
 <dt id="filtering.FilterMenu.initialize_menu">
 <code class="descname">initialize_menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.initialize_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.initialize_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the filter menu.</p>
+<p>This method no longer needs to be called to initialize the menu since refresh will
+take care of re-initializing. This method now just calls refresh for backward
+compatibility.</p>
 </dd></dl>
 
 </dd></dl>
@@ -518,9 +570,15 @@ currently active filtering from the menu.</td>
 <dl class="method">
 <dt id="filtering.FilterMenuButton.setMenu">
 <code class="descname">setMenu</code><span class="sig-paren">(</span><em>menu</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu_button.html#FilterMenuButton.setMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenuButton.setMenu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override the QMenu method.</p>
+<dd><p>Override the base QToolButton method.</p>
 <p>Enforce the menu to be of type <cite>FilterMenu</cite>. Connect the menu’s filters changed
 signal to update the menu button accordingly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenuButton.setEnabled">
+<code class="descname">setEnabled</code><span class="sig-paren">(</span><em>enabled</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu_button.html#FilterMenuButton.setEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenuButton.setEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the base QToolButton method to ensure the check state is restored.</p>
 </dd></dl>
 
 <dl class="method">
@@ -528,6 +586,20 @@ signal to update the menu button accordingly.</p>
 <code class="descname">update_button_checked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu_button.html#FilterMenuButton.update_button_checked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenuButton.update_button_checked" title="Permalink to this definition">¶</a></dt>
 <dd><p>Callback triggered when the menu filters have changed. Update the button’s checked state
 based on the menu’s current filtering.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="filtering.FilterMenuButton.set_enabled">
+<code class="descname">set_enabled</code><span class="sig-paren">(</span><em>enabled</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu_button.html#FilterMenuButton.set_enabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenuButton.set_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the button enabled state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – True will turn on the button (enable), else False will turn off (disable).</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -626,8 +698,8 @@ filter items are the group of filters to apply to the data.</li>
 <dl class="attribute">
 <dt id="filtering.FilterItem.filter_value">
 <code class="descname">filter_value</code><a class="headerlink" href="#filtering.FilterItem.filter_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get or set the value for the filter that incoming data will be compared against to check
-acceptance.</p>
+<dd><p>Get or set the value for the filter that incoming data will be compared against to
+check acceptance.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -768,6 +840,24 @@ the filter item will have id “FilterType.FilterOp”.</li>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="filtering.FilterItem.map_from_sg_data_type">
+<em class="property">classmethod </em><code class="descname">map_from_sg_data_type</code><span class="sig-paren">(</span><em>sg_data_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.map_from_sg_data_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.map_from_sg_data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map the SG data type to a valid filter type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_data_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The SG data type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding filter type for the SG data type.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)">str</a></td>
 </tr>
 </tbody>
 </table>
@@ -957,6 +1047,25 @@ a function is defined).</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="filtering.FilterItem.set_filter_value">
+<code class="descname">set_filter_value</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.set_filter_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterItem.set_filter_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the filter item’s filter value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>any</em>) – The value to set.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the filter item’s value was updated, else False. If the value is the
+same as the current filter value, False will be returned.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1066,7 +1175,7 @@ invalidate the filter to immediately trigger re-filtering the model data.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

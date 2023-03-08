@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -243,7 +243,7 @@
 
 
 <div class="viewcode-block" id="ReplyListWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget">[docs]</a><span class="k">class</span> <span class="nc">ReplyListWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    QT Widget that displays a note conversation,</span>
 <span class="sd">    including attachments and the ability to reply.</span>
 
@@ -260,7 +260,7 @@
     <span class="n">entity_requested</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent: QT parent object</span>
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -294,7 +294,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_note</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ReplyListWidget.set_bg_task_manager"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the background task manager to use to pull</span>
 <span class="sd">        data in the background. Data calls</span>
 <span class="sd">        to Shotgun will be dispatched via this object.</span>
@@ -306,7 +306,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">task_manager</span></div>
 
 <div class="viewcode-block" id="ReplyListWidget.destroy"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Should be called before the widget is closed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
@@ -316,7 +316,7 @@
     <span class="c1"># public interface</span>
 
 <div class="viewcode-block" id="ReplyListWidget.load_data"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_dict</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load replies for a given entity.</span>
 
 <span class="sd">        :param sg_entity_dict: Shotgun link dictionary with keys type and id.</span>
@@ -343,7 +343,7 @@
     <span class="c1"># internal methods</span>
 
     <span class="k">def</span> <span class="nf">_process_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback that gets executed when note data arrives from</span>
 <span class="sd">        the data manager.</span>
 
@@ -479,7 +479,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear the widget. This will remove all items from the UI</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing UI...&quot;</span><span class="p">)</span>
@@ -500,7 +500,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_group_widgets</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in a stylesheet from disk</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
@@ -513,7 +513,7 @@
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_add_reply_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a reply button to the stream of widgets</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">reply_button</span> <span class="o">=</span> <span class="n">ClickableLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -525,7 +525,7 @@
         <span class="k">return</span> <span class="n">reply_button</span>
 
     <span class="k">def</span> <span class="nf">_add_attachment_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attachments</span><span class="p">,</span> <span class="n">after_note</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add an attachments group to the stream of widgets</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -550,7 +550,7 @@
         <span class="p">]</span> <span class="o">=</span> <span class="n">attachment_group</span>
 
     <span class="k">def</span> <span class="nf">_add_replies_and_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">replies_and_attachments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add replies and attachment widgets to the stream of widgets</span>
 
 <span class="sd">        :param replies_and_attachments: List of Shotgun data dictionary.</span>
@@ -597,7 +597,7 @@
             <span class="n">current_attachments</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span> <span class="nf">_process_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback that gets called when a new thumbnail is available.</span>
 <span class="sd">        Populate the UI with the given thumbnail</span>
 
@@ -636,7 +636,7 @@
                     <span class="n">reply_widget</span><span class="o">.</span><span class="n">set_thumbnail</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_reply_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback when someone clicks reply to note</span>
 
 <span class="sd">        :param note_id: Note id to reply to</span>
@@ -699,7 +699,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

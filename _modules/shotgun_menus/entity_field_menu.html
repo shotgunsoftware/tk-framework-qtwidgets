@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_menus.entity_field_menu &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>shotgun_menus.entity_field_menu &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -275,7 +275,7 @@
 
 
 <div class="viewcode-block" id="EntityFieldMenu"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu">[docs]</a><span class="k">class</span> <span class="nc">EntityFieldMenu</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A menu that automatically displays the fields for a given Shotgun entity.</span>
 
 <span class="sd">    The QActions for the menu will all have their data set to a dictionary in the form:</span>
@@ -287,7 +287,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 
 <span class="sd">        :param sg_entity_type: The entity type to build a menu for</span>
@@ -336,7 +336,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">aboutToShow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_about_to_show</span><span class="p">)</span>
 
 <div class="viewcode-block" id="EntityFieldMenu.set_field_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_field_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_field_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_filter</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the callback used to filter which fields are shown by the menu.</span>
 
 <span class="sd">        :param field_filter: Callback called for each entity field which returns True if the field</span>
@@ -348,7 +348,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_field_filter</span> <span class="o">=</span> <span class="n">field_filter</span></div>
 
 <div class="viewcode-block" id="EntityFieldMenu.set_checked_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_checked_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_checked_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked_filter</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the callback used to set which fields are checked.  By specifying a value other than</span>
 <span class="sd">        None, all the menu items will be checkable.</span>
 
@@ -361,7 +361,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_checked_filter</span> <span class="o">=</span> <span class="n">checked_filter</span></div>
 
 <div class="viewcode-block" id="EntityFieldMenu.set_disabled_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_disabled_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_disabled_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disabled_filter</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the callback used to filter which fields are disabled</span>
 
 <span class="sd">        :param disabled_filter: Callback called for each entity field which returns True if the field</span>
@@ -373,7 +373,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_disabled_filter</span> <span class="o">=</span> <span class="n">disabled_filter</span></div>
 
 <div class="viewcode-block" id="EntityFieldMenu.set_entity_type_filter"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.EntityFieldMenu.set_entity_type_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_entity_type_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type_filter</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the callback used to filter what entity types to display in submenus</span>
 
 <span class="sd">        :param entity_type_filter: Callback called for each entity type which returns True if the</span>
@@ -384,14 +384,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type_filter</span> <span class="o">=</span> <span class="n">entity_type_filter</span></div>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Destructor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owns_task_manager</span><span class="p">:</span>
             <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">unregister_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_about_to_show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lazy load the menu.  This is because it is possible to have cycles when traversing</span>
 <span class="sd">        through the possible bubbled fields, so it is impossible to build the entire nested menu.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -403,7 +403,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_populate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the menu</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">field_infos</span> <span class="o">=</span> <span class="p">[]</span>
@@ -553,7 +553,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">linked_menus</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Linked Fields&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_bubbled_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">bubble_base</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Translate the given field name into a bubbled name.  This will prepend the bubble string</span>
 <span class="sd">        that translates the given field name into a string that can be used to reach the field</span>
 <span class="sd">        from the entity associated with the root menu.</span>
@@ -569,7 +569,7 @@
         <span class="k">return</span> <span class="n">field_name</span>
 
     <span class="k">def</span> <span class="nf">_get_qaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">display_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add an action for the given field to the menu. The data for the action will contain</span>
 <span class="sd">        a dictionary where the selected field is set for the &quot;field&quot; key.</span>
 
@@ -595,7 +595,7 @@
         <span class="k">return</span> <span class="n">action</span>
 
     <span class="k">def</span> <span class="nf">_get_current_project_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the id of the current project.</span>
 
 <span class="sd">        :returns: The project id associated with the current context, or ``None``</span>
@@ -623,7 +623,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

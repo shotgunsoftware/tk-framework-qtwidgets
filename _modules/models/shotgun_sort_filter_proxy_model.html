@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>models.shotgun_sort_filter_proxy_model &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>models.shotgun_sort_filter_proxy_model &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -237,14 +237,14 @@
 
 
 <div class="viewcode-block" id="ShotgunSortFilterProxyModel"><a class="viewcode-back" href="../../models.html#models.ShotgunSortFilterProxyModel">[docs]</a><span class="k">class</span> <span class="nc">ShotgunSortFilterProxyModel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A sort/filter proxy model that handles sorting and filtering</span>
 <span class="sd">    data in a ShotgunModel by given Shotgun fields on the entities</span>
 <span class="sd">    stored therein.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes a new ShotgunSortFilterProxyModel.</span>
 
 <span class="sd">        :param parent: The Qt parent of the proxy model.</span>
@@ -259,7 +259,7 @@
     <span class="c1"># properties</span>
 
     <span class="k">def</span> <span class="nf">_get_filter_by_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A list of string Shotgun field names to filter on.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_by_fields</span>
@@ -270,7 +270,7 @@
     <span class="n">filter_by_fields</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_filter_by_fields</span><span class="p">,</span> <span class="n">_set_filter_by_fields</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_sort_by_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A list of string Shotgun field names to sort by.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_by_fields</span>
@@ -281,7 +281,7 @@
     <span class="n">sort_by_fields</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_sort_by_fields</span><span class="p">,</span> <span class="n">_set_sort_by_fields</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_primary_sort_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A string Shotgun field name that acts as the primary field to sort on.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_primary_sort_field</span>
@@ -295,7 +295,7 @@
     <span class="c1"># methods</span>
 
 <div class="viewcode-block" id="ShotgunSortFilterProxyModel.lessThan"><a class="viewcode-back" href="../../models.html#models.ShotgunSortFilterProxyModel.lessThan">[docs]</a>    <span class="k">def</span> <span class="nf">lessThan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if &quot;left&quot; is less than &quot;right&quot;, otherwise</span>
 <span class="sd">        False. This sort is handled based on the data pulled from</span>
 <span class="sd">        Shotgun for the current sort_by_field registered with this</span>
@@ -367,7 +367,7 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="ShotgunSortFilterProxyModel.filterAcceptsRow"><a class="viewcode-back" href="../../models.html#models.ShotgunSortFilterProxyModel.filterAcceptsRow">[docs]</a>    <span class="k">def</span> <span class="nf">filterAcceptsRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">source_parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the model index should be shown, and False</span>
 <span class="sd">        if it should not. This is determined based on whether the</span>
 <span class="sd">        proxy model&#39;s filter is found in the Shotgun data for</span>
@@ -416,7 +416,7 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
     <span class="k">def</span> <span class="nf">_get_processable_field_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For a given entity dictionary and field name, returns sortable</span>
 <span class="sd">        and/or searchable data.</span>
 
@@ -490,7 +490,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

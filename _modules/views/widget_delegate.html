@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>views.widget_delegate &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>views.widget_delegate &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -232,7 +232,7 @@
 
 
 <div class="viewcode-block" id="WidgetDelegate"><a class="viewcode-back" href="../../views.html#views.WidgetDelegate">[docs]</a><span class="k">class</span> <span class="nc">WidgetDelegate</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyledItemDelegate</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convenience wrapper that makes it straight forward to use widgets inside of delegates.</span>
 
 <span class="sd">    This class is basically an adapter which lets you connect a view (:class:`~PySide.QtGui.QAbstractItemView`)</span>
@@ -260,7 +260,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param view: The parent view for this delegate</span>
 <span class="sd">        :type view:  :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -277,7 +277,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the parent view of this delegate.  This is just a wrapper</span>
 <span class="sd">        for returning ``self.parent()`` but makes calling code easier to read!</span>
 
@@ -290,7 +290,7 @@
     <span class="c1"># implemented by deriving classes</span>
 
 <div class="viewcode-block" id="WidgetDelegate._get_painter_widget"><a class="viewcode-back" href="../../views.html#views.WidgetDelegate._get_painter_widget">[docs]</a>    <span class="k">def</span> <span class="nf">_get_painter_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a widget that can be used to paint the specified model index.  If this</span>
 <span class="sd">        is implemented in derived classes then the derived class is responsible for</span>
 <span class="sd">        the lifetime of the widget.</span>
@@ -318,7 +318,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__paint_widget</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="WidgetDelegate._create_editor_widget"><a class="viewcode-back" href="../../views.html#views.WidgetDelegate._create_editor_widget">[docs]</a>    <span class="k">def</span> <span class="nf">_create_editor_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a new editor widget for the specified model index.  The base class is</span>
 <span class="sd">        responsible for the lifetime of the widget meaning that the derived class should</span>
 <span class="sd">        release all handles to it.</span>
@@ -345,7 +345,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_widget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="WidgetDelegate._on_before_paint"><a class="viewcode-back" href="../../views.html#views.WidgetDelegate._on_before_paint">[docs]</a>    <span class="k">def</span> <span class="nf">_on_before_paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This needs to be implemented by any deriving classes.</span>
 
 <span class="sd">        This is called just before a cell is painted. This method should configure values</span>
@@ -367,7 +367,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="WidgetDelegate._create_widget"><a class="viewcode-back" href="../../views.html#views.WidgetDelegate._create_widget">[docs]</a>    <span class="k">def</span> <span class="nf">_create_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This needs to be implemented by any deriving classes unless the separate</span>
 <span class="sd">        methods :meth:`_get_painter_widget()` and :meth:`_create_editor_widget()`</span>
 <span class="sd">        are implemented instead.</span>
@@ -384,7 +384,7 @@
     <span class="c1"># &#39;private&#39; methods that are not meant to be subclassed or called by a deriving class.</span>
 
     <span class="k">def</span> <span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_widget</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subclassed implementation from QStyledItemDelegate which is</span>
 <span class="sd">        called when an &quot;editor&quot; is set up - the editor is set up</span>
 <span class="sd">        via the openPersistentEditor call and is created upon selection</span>
@@ -420,7 +420,7 @@
         <span class="k">return</span> <span class="n">editor_widget</span>
 
     <span class="k">def</span> <span class="nf">updateEditorGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor_widget</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subclassed implementation which is typically called  whenever an editor</span>
 <span class="sd">        widget is set up and needs resizing.  This happens immediately after</span>
 <span class="sd">        creation and also for example if the grid element size is changing.</span>
@@ -433,7 +433,7 @@
         <span class="n">editor_widget</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">style_options</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Paint method to handle all cells that are not being currently edited.</span>
 
 <span class="sd">        :param painter:         The painter instance to use when painting</span>
@@ -494,7 +494,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

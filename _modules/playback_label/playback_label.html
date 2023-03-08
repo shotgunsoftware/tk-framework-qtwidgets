@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>playback_label.playback_label &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>playback_label.playback_label &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -229,7 +229,7 @@
 
 
 <div class="viewcode-block" id="ShotgunPlaybackLabel"><a class="viewcode-back" href="../../playback_label.html#playback_label.ShotgunPlaybackLabel">[docs]</a><span class="k">class</span> <span class="nc">ShotgunPlaybackLabel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subclassed ``QLabel`` that displays a playback icon</span>
 <span class="sd">    centered above its content.</span>
 
@@ -253,7 +253,7 @@
     <span class="n">playback_clicked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 
 <span class="sd">        :param parent: QT parent object</span>
@@ -271,7 +271,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_interactive</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="ShotgunPlaybackLabel.set_shotgun_data"><a class="viewcode-back" href="../../playback_label.html#playback_label.ShotgunPlaybackLabel.set_shotgun_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_shotgun_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets shotgun data associated with this label.</span>
 <span class="sd">        This data will be used to drive the logic which is</span>
 <span class="sd">        used to determine if the label should exhibit the playback icon or not.</span>
@@ -298,13 +298,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">playable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the label is playable given its current Shotgun data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_playable</span>
 
     <span class="k">def</span> <span class="nf">_get_interactive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether a playable label is interactive. If it is not, then the play</span>
 <span class="sd">        icon will not be overlayed on the thumbnail image, and the playback</span>
 <span class="sd">        signal will not be emitted on click event.</span>
@@ -322,7 +322,7 @@
     <span class="n">interactive</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Property</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">_get_interactive</span><span class="p">,</span> <span class="n">_set_interactive</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">enterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fires when the mouse enters the widget space</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">enterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
@@ -331,7 +331,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">leaveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fires when the mouse leaves the widget space</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">leaveEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
@@ -340,7 +340,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fires when the mouse is pressed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
@@ -348,7 +348,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">playback_clicked</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_data</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Render the UI.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># first render the label</span>
@@ -387,7 +387,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

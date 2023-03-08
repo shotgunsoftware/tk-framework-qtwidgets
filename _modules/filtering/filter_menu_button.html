@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>filtering.filter_menu_button &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>filtering.filter_menu_button &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -236,12 +236,12 @@
 
 
 <div class="viewcode-block" id="FilterMenuButton"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenuButton">[docs]</a><span class="k">class</span> <span class="nc">FilterMenuButton</span><span class="p">(</span><span class="n">SGQToolButton</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A QToolButton to be used with the FilterMenu class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor.</span>
 
 <span class="sd">        :param parent: The parent widget.</span>
@@ -254,18 +254,27 @@
 
         <span class="nb">super</span><span class="p">(</span><span class="n">FilterMenuButton</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">icon</span><span class="p">:</span>
-            <span class="n">icon</span> <span class="o">=</span> <span class="n">SGQIcon</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__icon</span> <span class="o">=</span> <span class="n">icon</span> <span class="k">if</span> <span class="n">icon</span> <span class="k">else</span> <span class="n">SGQIcon</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__checked</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Set up the animated refresh icon to display while the filter menu for this filter</span>
+        <span class="c1"># button is loading. Ensure the animation loops forever.</span>
+        <span class="n">refresh_icon_path</span> <span class="o">=</span> <span class="n">SGQIcon</span><span class="o">.</span><span class="n">resource_path</span><span class="p">(</span>
+            <span class="s2">&quot;spinning-wheel&quot;</span><span class="p">,</span> <span class="n">SGQIcon</span><span class="o">.</span><span class="n">SIZE_16x16</span><span class="p">,</span> <span class="s2">&quot;gif&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMovie</span><span class="p">(</span><span class="n">refresh_icon_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span><span class="o">.</span><span class="n">loopCount</span><span class="p">()</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setPopupMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QToolButton</span><span class="o">.</span><span class="n">InstantPopup</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setToolButtonStyle</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolButtonTextBesideIcon</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__icon</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span> <span class="ow">or</span> <span class="s2">&quot;Filter&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FilterMenuButton.setMenu"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenuButton.setMenu">[docs]</a>    <span class="k">def</span> <span class="nf">setMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menu</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Override the QMenu method.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the base QToolButton method.</span>
 
 <span class="sd">        Enforce the menu to be of type `FilterMenu`. Connect the menu&#39;s filters changed</span>
 <span class="sd">        signal to update the menu button accordingly.</span>
@@ -278,20 +287,77 @@
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">menu_about_to_be_refreshed</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
+                <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_enabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">menu_refreshed</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_enabled</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">filters_changed</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_button_checked</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">FilterMenuButton</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_button_checked</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">filters_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_button_checked</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">filters_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_button_checked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">menu_about_to_be_refreshed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_enabled</span><span class="p">(</span><span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">menu_refreshed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_enabled</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="FilterMenuButton.setEnabled"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenuButton.setEnabled">[docs]</a>    <span class="k">def</span> <span class="nf">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override the base QToolButton method to ensure the check state is restored.&quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">FilterMenuButton</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">enabled</span><span class="p">:</span>
+            <span class="c1"># Uncheck the button while disabled so stylistically it looks disabled.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Restore the check state on enabling it again.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__checked</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterMenuButton.update_button_checked"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenuButton.update_button_checked">[docs]</a>    <span class="k">def</span> <span class="nf">update_button_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback triggered when the menu filters have changed. Update the button&#39;s checked state</span>
 <span class="sd">        based on the menu&#39;s current filtering.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Update the menu button icon to indicate whether or not the menu has any active filtering.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">has_filtering</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__checked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span><span class="o">.</span><span class="n">has_filtering</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isEnabled</span><span class="p">():</span>
+            <span class="c1"># Update the menu button icon to indicate whether or not the menu has any active</span>
+            <span class="c1"># filtering. Do not update the check state while not enabled, since this may</span>
+            <span class="c1"># override the disabled icon. Restore the check state once button is enabled.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__checked</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FilterMenuButton.set_enabled"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenuButton.set_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">set_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the button enabled state.</span>
+
+<span class="sd">        :param enabled: True will turn on the button (enable), else False will turn off (disable).</span>
+<span class="sd">        :type enabled: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">enabled</span><span class="p">:</span>
+            <span class="c1"># Show the animated refresh icon. Connect the animation signal/slot.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span><span class="o">.</span><span class="n">frameChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_refresh_icon</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Show the main button icon and stop the refresh animation</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__icon</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+            <span class="c1"># Disconnect the animation signal/slot</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span><span class="o">.</span><span class="n">frameChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_refresh_icon</span>
+                <span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="c1"># Signal was not connected, continue on.</span>
+                <span class="k">pass</span></div>
+
+    <span class="k">def</span> <span class="nf">_update_refresh_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the animated refresh icon.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__refresh_movie_icon</span><span class="o">.</span><span class="n">currentPixmap</span><span class="p">()))</span></div>
 </pre></div>
 
            </div>
@@ -304,7 +370,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

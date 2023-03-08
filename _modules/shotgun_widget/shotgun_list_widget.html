@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_widget.shotgun_list_widget &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>shotgun_widget.shotgun_list_widget &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -234,12 +234,12 @@
 
 
 <div class="viewcode-block" id="ShotgunListWidget"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunListWidget">[docs]</a><span class="k">class</span> <span class="nc">ShotgunListWidget</span><span class="p">(</span><span class="n">ShotgunWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This Shotgun Widget is typically used in a list view mode.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class constructor</span>
 
 <span class="sd">        :param parent: The parent widget</span>
@@ -260,7 +260,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ShotgunListWidget.set_formatting"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunListWidget.set_formatting">[docs]</a>    <span class="k">def</span> <span class="nf">set_formatting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">top_right</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">thumbnail</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the rendering of the widget items.</span>
 
 <span class="sd">        :param top_left:  Content to display in the top left area of the item</span>
@@ -278,7 +278,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunListWidget.set_text"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunListWidget.set_text">[docs]</a>    <span class="k">def</span> <span class="nf">set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fill the widget items by replacing the tokens with the right values.</span>
 
 <span class="sd">        :param sg_data: Dictionary of Shotgun data we want to use to replace the tokens with.</span>
@@ -293,7 +293,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">convert_token_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_body</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ShotgunListWidget.replace_extra_key"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunListWidget.replace_extra_key">[docs]</a>    <span class="k">def</span> <span class="nf">replace_extra_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_name</span><span class="p">,</span> <span class="n">key_value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Replace a non-Shotgun token by its value.</span>
 
 <span class="sd">        :param key_name:  Name of the token to replace. It must be declared using &lt;&gt; character (eg &lt;NODE&gt;)</span>
@@ -316,7 +316,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_replace_text</span><span class="p">(</span><span class="n">key_name</span><span class="p">,</span> <span class="n">key_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span></div>
 
 <div class="viewcode-block" id="ShotgunListWidget.clear"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunListWidget.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thumbnail</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear the widget values.</span>
 
 <span class="sd">        :param thumbnail: If a thumbnail is supplied, it will be used as the &quot;empty&quot; thumbnail view</span>
@@ -334,7 +334,7 @@
 
 <div class="viewcode-block" id="ShotgunListWidget.calculate_size"><a class="viewcode-back" href="../../shotgun_widget.html#shotgun_widget.ShotgunListWidget.calculate_size">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">calculate_size</span><span class="p">():</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates and returns a suitable size for this widget.</span>
 
 <span class="sd">        :returns: Size of the widget</span>
@@ -352,7 +352,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

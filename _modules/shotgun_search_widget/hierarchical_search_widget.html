@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_search_widget.hierarchical_search_widget &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>shotgun_search_widget.hierarchical_search_widget &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -232,7 +232,7 @@
 
 
 <div class="viewcode-block" id="HierarchicalSearchWidget"><a class="viewcode-back" href="../../shotgun_search_widget.html#shotgun_search_widget.HierarchicalSearchWidget">[docs]</a><span class="k">class</span> <span class="nc">HierarchicalSearchWidget</span><span class="p">(</span><span class="n">ShotgunSearchWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates</span>
 <span class="sd">    a hierarchical search input box with auto completion.</span>
 
@@ -248,7 +248,7 @@
     <span class="n">node_activated</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uses the :class:`~search_completer.HierarchicalSearchCompleter` as the completer for searching</span>
 <span class="sd">        SG entities.</span>
 
@@ -273,7 +273,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">search_root</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
 
     <span class="k">def</span> <span class="nf">_get_search_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The entity under which the search will be done. If ``None``, the search will be done</span>
 <span class="sd">        for the whole site.</span>
 
@@ -283,7 +283,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">search_root</span>
 
     <span class="k">def</span> <span class="nf">_set_search_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        See getter documentation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">search_root</span> <span class="o">=</span> <span class="n">entity</span>
@@ -291,7 +291,7 @@
     <span class="n">search_root</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_search_root</span><span class="p">,</span> <span class="n">_set_search_root</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_show_entities_only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Indicates if only entities will be shown in the search results.</span>
 
 <span class="sd">        If set to ``True``, only entities will be shown.</span>
@@ -299,7 +299,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">show_entities_only</span>
 
     <span class="k">def</span> <span class="nf">_set_show_entities_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_set</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        See getter documentation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">show_entities_only</span> <span class="o">=</span> <span class="n">is_set</span>
@@ -307,7 +307,7 @@
     <span class="n">show_entities_only</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_show_entities_only</span><span class="p">,</span> <span class="n">_set_show_entities_only</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_seed_entity_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The seed entity to use when searching for entity.</span>
 
 <span class="sd">        Can be ``PublishedFile.entity`` or ``Version.entity``.</span>
@@ -315,7 +315,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">seed_entity_field</span>
 
     <span class="k">def</span> <span class="nf">_set_seed_entity_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed_entity_field</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        See setter documentation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">completer</span><span class="p">()</span><span class="o">.</span><span class="n">seed_entity_field</span> <span class="o">=</span> <span class="n">seed_entity_field</span>
@@ -333,7 +333,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

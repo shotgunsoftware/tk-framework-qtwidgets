@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.bubble_widget &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>shotgun_fields.bubble_widget &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -229,7 +229,7 @@
 
 
 <div class="viewcode-block" id="BubbleWidget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget">[docs]</a><span class="k">class</span> <span class="nc">BubbleWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class represents a drawable &quot;bubble&quot; to display in a :class:`.BubbleEditWidget`</span>
 
 <span class="sd">    This widget will stores data for the object it represents. The data can be set</span>
@@ -245,7 +245,7 @@
     <span class="n">remove_clicked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the widget.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the widget.</span>
 
 <span class="sd">        :param parent: This widget&#39;s parent widget</span>
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
@@ -261,7 +261,7 @@
         <span class="c1"># style the look of the bubble</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;bubble&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            #bubble {</span>
 <span class="sd">                border: 1px solid black;</span>
 <span class="sd">                border-radius: 5px;</span>
@@ -307,7 +307,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_clicked</span><span class="o">.</span><span class="n">emit</span><span class="p">())</span>
 
 <div class="viewcode-block" id="BubbleWidget.set_text"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.set_text">[docs]</a>    <span class="k">def</span> <span class="nf">set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_text</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the bubble&#39;s display text.</span>
 
 <span class="sd">        :param str label_text: The display text</span>
@@ -315,7 +315,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">text_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">label_text</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BubbleWidget.set_image"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.set_image">[docs]</a>    <span class="k">def</span> <span class="nf">set_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the bubble&#39;s display image.</span>
 
 <span class="sd">        :param str url:  The image url to display in the bubble.</span>
@@ -323,7 +323,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">image_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&lt;img src=&#39;</span><span class="si">%s</span><span class="s2">&#39;/&gt;&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BubbleWidget.set_removable"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.set_removable">[docs]</a>    <span class="k">def</span> <span class="nf">set_removable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">removable</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set whether or not the bubble is removable.</span>
 
 <span class="sd">        Shows or hides the ``x`` button depending on the value of the</span>
@@ -336,7 +336,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="BubbleWidget.get_data"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the underlying data object this widget represents.</span>
 
 <span class="sd">        The return type is intentionally unspecified since, in theory, the</span>
@@ -345,7 +345,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span></div>
 
 <div class="viewcode-block" id="BubbleWidget.set_data"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleWidget.set_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the underlying data object that this widget represents.</span>
 
 <span class="sd">        The type of ``data`` is intentionally unspecified since, in theory, the</span>
@@ -355,7 +355,7 @@
 
 
 <div class="viewcode-block" id="BubbleEditWidget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget">[docs]</a><span class="k">class</span> <span class="nc">BubbleEditWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTextEdit</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is a base class for &quot;bubble&quot; entry widgets.</span>
 
 <span class="sd">    Each object is represented by a &quot;bubble&quot; similar to email address entry</span>
@@ -367,7 +367,7 @@
     <span class="n">_OBJECT_REPLACEMENT_CHAR</span> <span class="o">=</span> <span class="n">unichr</span><span class="p">(</span><span class="mh">0xFFFC</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the widget.</span>
 
 <span class="sd">        :param parent: This widget&#39;s parent widget</span>
@@ -388,7 +388,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BubbleEditWidget.add_bubble"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.add_bubble">[docs]</a>    <span class="k">def</span> <span class="nf">add_bubble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bubble</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add the supplied :class:`.BubbleWidget` instance to the editor.</span>
 
 <span class="sd">        :param bubble: The bubble widget instance.</span>
@@ -421,7 +421,7 @@
         <span class="k">return</span> <span class="n">bubble_id</span></div>
 
 <div class="viewcode-block" id="BubbleEditWidget.clear"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clears all bubbles from the editor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">char_format</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_char_formats</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -430,7 +430,7 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">BubbleEditWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="BubbleEditWidget.clear_typed_text"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.clear_typed_text">[docs]</a>    <span class="k">def</span> <span class="nf">clear_typed_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clears only typed text (not bubbles) from the editor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -453,7 +453,7 @@
         <span class="n">cursor</span><span class="o">.</span><span class="n">endEditBlock</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attempts to identify clicks on one of the editor&#39;s bubble widget&#39;s</span>
 <span class="sd">        remove button.</span>
 
@@ -501,7 +501,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="BubbleEditWidget.get_bubble"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.get_bubble">[docs]</a>    <span class="k">def</span> <span class="nf">get_bubble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bubble_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a bubble widget based on the supplied id.</span>
 
 <span class="sd">        The ``bubble_id`` should correspond to the unique ID returned by the</span>
@@ -536,7 +536,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="BubbleEditWidget.get_bubbles"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.get_bubbles">[docs]</a>    <span class="k">def</span> <span class="nf">get_bubbles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Similar to ``get_bubble``, but returns all bubble widgets.</span>
 
 <span class="sd">        :return: List of :class:`.BubbleWidget` classes</span>
@@ -570,7 +570,7 @@
         <span class="k">return</span> <span class="n">bubbles</span></div>
 
 <div class="viewcode-block" id="BubbleEditWidget.get_typed_text"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.get_typed_text">[docs]</a>    <span class="k">def</span> <span class="nf">get_typed_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a :obj:`str` representing the text typed in the editor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -580,7 +580,7 @@
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">char_list</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BubbleEditWidget.remove_bubble"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.bubble_widget.BubbleEditWidget.remove_bubble">[docs]</a>    <span class="k">def</span> <span class="nf">remove_bubble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bubble_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove a bubble matching the supplied id.</span>
 
 <span class="sd">        :param int bubble_id: The unique id of the bubble to reomve.</span>
@@ -621,7 +621,7 @@
 
 
 <span class="k">class</span> <span class="nc">_BubbleTextObject</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPyTextObject</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles the display of bubble widgets within text documents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -630,7 +630,7 @@
     <span class="n">USING_PYQT</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s2">&quot;QVariant&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the object.</span>
 
 <span class="sd">        :param parent: This widget&#39;s parent object</span>
@@ -646,7 +646,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_next_id</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span> <span class="nf">add_bubble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bubble_widget</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Make the object aware of this bubble widget.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Make the object aware of this bubble widget.</span>
 
 <span class="sd">        :param bubble_widget: The bubble widget to add.</span>
 <span class="sd">        :type bubble_widget: :class:`.BubbleWidget`</span>
@@ -663,11 +663,11 @@
         <span class="k">return</span> <span class="n">bubble_id</span>
 
     <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Forget about all the known widgets.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forget about all the known widgets.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bubbles</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">drawObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">pos_in_document</span><span class="p">,</span> <span class="n">char_format</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Draw the appropriate widget based on the supplied char format.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw the appropriate widget based on the supplied char format.&quot;&quot;&quot;</span>
 
         <span class="c1"># determine the bubble to draw</span>
         <span class="n">bubble_id</span> <span class="o">=</span> <span class="n">char_format</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BUBBLE_DATA_PROPERTY</span><span class="p">)</span>
@@ -698,7 +698,7 @@
             <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">get_bubble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bubble_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieve a bubble widget for the supplied id.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve a bubble widget for the supplied id.&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">bubble_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubbles</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubbles</span><span class="p">[</span><span class="n">bubble_id</span><span class="p">]</span>
@@ -706,7 +706,7 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">intrinsicSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">pos_in_document</span><span class="p">,</span> <span class="n">char_format</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the ``sizeHint`` for the bubble widget for the supplied char format.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the ``sizeHint`` for the bubble widget for the supplied char format.&quot;&quot;&quot;</span>
         <span class="n">bubble_id</span> <span class="o">=</span> <span class="n">char_format</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BUBBLE_DATA_PROPERTY</span><span class="p">)</span>
         <span class="n">bubble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bubble</span><span class="p">(</span><span class="n">bubble_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">bubble</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
@@ -722,7 +722,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

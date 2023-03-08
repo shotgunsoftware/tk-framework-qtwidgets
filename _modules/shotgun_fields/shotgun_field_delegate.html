@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -238,7 +238,7 @@
 
 
 <span class="k">class</span> <span class="nc">ShotgunFieldDelegateGeneric</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A generic, model-agnostic, shotgun field widget delegate.</span>
 
 <span class="sd">    This class is designed to be used with any model that represents data that</span>
@@ -260,7 +260,7 @@
         <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">field_data_role</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 
 <span class="sd">        :param sg_entity_type: Shotgun entity type</span>
@@ -298,14 +298,14 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">field_data_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The item role used to get and set data associated with the fields being</span>
 <span class="sd">        represented by this delegate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_data_role</span>
 
     <span class="k">def</span> <span class="nf">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Paint method to handle all cells that are not being currently edited.</span>
 
 <span class="sd">        :param painter: The painter instance to use when painting</span>
@@ -324,7 +324,7 @@
         <span class="n">widget</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_create_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a widget to use for the delegate.</span>
 
 <span class="sd">        :param parent: QWidget to parent the widget to</span>
@@ -350,7 +350,7 @@
         <span class="k">return</span> <span class="n">widget</span>
 
     <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the size needed by the delegate to display the item specified by</span>
 <span class="sd">        ``model_index``, taking into account the style information provided by</span>
 <span class="sd">        ``style_options``.</span>
@@ -377,7 +377,7 @@
         <span class="k">return</span> <span class="n">size_hint</span>
 
     <span class="k">def</span> <span class="nf">_create_editor_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an editor widget for the supplied model index.</span>
 
 <span class="sd">        :param model_index: The index of the item in the model to return a</span>
@@ -424,7 +424,7 @@
         <span class="k">return</span> <span class="n">widget</span>
 
     <span class="k">def</span> <span class="nf">_on_before_paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the display widget with the value stored in the supplied model</span>
 <span class="sd">        index. The value is retrieved for the role supplied to the</span>
 <span class="sd">        ``field_data_role`` argument supplied to the constructor.</span>
@@ -445,7 +445,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_widget_value</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setEditorData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the data to be displayed and edited by the editor from the data</span>
 <span class="sd">        model item specified by the model index.</span>
 
@@ -459,7 +459,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_widget_value</span><span class="p">(</span><span class="n">editor</span><span class="p">,</span> <span class="n">model_index</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets data from the editor widget and stores it in the specified model at</span>
 <span class="sd">        the item index.</span>
 
@@ -495,7 +495,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">editorEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles mouse events on the editor.</span>
 
 <span class="sd">        :param event: The event that occurred.</span>
@@ -536,7 +536,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_forward_mouse_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mouse_event</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Forward the mouse event to the display widget to simulate</span>
 <span class="sd">        interacting with the widget. This is necessary since the delegate only</span>
 <span class="sd">        paints the widget in the view rather than being an actual widget</span>
@@ -578,7 +578,7 @@
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">sendEvent</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">forward_event</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_set_widget_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the supplied widget with data from the supplied model index.</span>
 
 <span class="sd">        :param widget: The widget to set the value for</span>
@@ -596,7 +596,7 @@
 
 
 <div class="viewcode-block" id="ShotgunFieldDelegate"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate">[docs]</a><span class="k">class</span> <span class="nc">ShotgunFieldDelegate</span><span class="p">(</span><span class="n">ShotgunFieldDelegateGeneric</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A delegate for a given type of Shotgun field. This delegate is designed to</span>
 <span class="sd">    work with indexes from a ``ShotgunModel`` where the value of the field is</span>
 <span class="sd">    stored in the ``SG_ASSOCIATED_FIELD_ROLE`` role.</span>
@@ -611,7 +611,7 @@
         <span class="n">view</span><span class="p">,</span>
         <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 
 <span class="sd">        :param sg_entity_type: Shotgun entity type</span>
@@ -647,7 +647,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ShotgunFieldDelegate.setModelData"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_delegate.ShotgunFieldDelegate.setModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets data from the editor widget and stores it in the specified model at</span>
 <span class="sd">        the item index.</span>
 
@@ -699,7 +699,7 @@
             <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_set_widget_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the supplied widget with data from the supplied model index.</span>
 
 <span class="sd">        :param widget: The widget to set the value for</span>
@@ -728,7 +728,7 @@
 
 
 <span class="k">def</span> <span class="nf">_map_to_source</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Map the specified index to it&#39;s source model.  This can be done recursively</span>
 <span class="sd">    to map back through a chain of proxy models to the source model at the</span>
 <span class="sd">    beginning of the chain</span>
@@ -760,7 +760,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

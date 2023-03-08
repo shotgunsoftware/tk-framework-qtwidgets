@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>search_completer.global_search_completer &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>search_completer.global_search_completer &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -234,7 +234,7 @@
 
 
 <div class="viewcode-block" id="GlobalSearchCompleter"><a class="viewcode-back" href="../../search_completer.html#search_completer.GlobalSearchCompleter">[docs]</a><span class="k">class</span> <span class="nc">GlobalSearchCompleter</span><span class="p">(</span><span class="n">SearchCompleter</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A standalone :class:`PySide.QtGui.QCompleter` class for matching SG entities to typed text.</span>
 
 <span class="sd">    :signal: ``entity_selected(str, int)`` - Provided for backward compatibility.</span>
@@ -260,7 +260,7 @@
     <span class="n">entity_activated</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent: Parent widget</span>
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -281,7 +281,7 @@
         <span class="p">}</span>
 
 <div class="viewcode-block" id="GlobalSearchCompleter.get_result"><a class="viewcode-back" href="../../search_completer.html#search_completer.GlobalSearchCompleter.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the entity data for the supplied model index or None if there is</span>
 <span class="sd">        no data for the supplied index.</span>
 
@@ -320,7 +320,7 @@
             <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="GlobalSearchCompleter.set_searchable_entity_types"><a class="viewcode-back" href="../../search_completer.html#search_completer.GlobalSearchCompleter.set_searchable_entity_types">[docs]</a>    <span class="k">def</span> <span class="nf">set_searchable_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">types_dict</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify a dictionary of entity types with optional search filters to</span>
 <span class="sd">        limit the breadth of the widget&#39;s search.</span>
 
@@ -345,7 +345,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_entity_search_criteria</span> <span class="o">=</span> <span class="n">types_dict</span></div>
 
     <span class="k">def</span> <span class="nf">_set_item_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">popup</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets an item delegate for the completer&#39;s popup.</span>
 
 <span class="sd">        :param popup: Popup instance from the completer.</span>
@@ -360,7 +360,7 @@
         <span class="n">popup</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_launch_sg_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Launches a search on the Shotgun server.</span>
 
 <span class="sd">        :param str text: Text to search for.</span>
@@ -385,7 +385,7 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fires when an item in the completer is selected. This will emit an entity_selected signal</span>
 <span class="sd">        for the global search widget</span>
 
@@ -397,7 +397,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">entity_activated</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_handle_search_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Populates the model associated with the completer with the data coming back from Shotgun.</span>
 
 <span class="sd">        :param dict data: Data received back from the job sent to the</span>
@@ -438,7 +438,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

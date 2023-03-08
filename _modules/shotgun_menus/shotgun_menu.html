@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_menus.shotgun_menu &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>shotgun_menus.shotgun_menu &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -231,7 +231,7 @@
 
 
 <div class="viewcode-block" id="ShotgunMenu"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu">[docs]</a><span class="k">class</span> <span class="nc">ShotgunMenu</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A base class with support for easily adding labels and groups of actions</span>
 <span class="sd">    with a consistent styling.</span>
 
@@ -255,7 +255,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the menu.</span>
 
 <span class="sd">        :param parent: The menu&#39;s parent.</span>
@@ -276,7 +276,7 @@
 
         <span class="c1"># styling to resemble SG web menus</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            QMenu {</span>
 <span class="sd">                /*</span>
 <span class="sd">                 * Ensure the menu only takes up one column and scrolls rather</span>
@@ -319,7 +319,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ShotgunMenu.add_group"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a group of items to the menu.</span>
 
 <span class="sd">        The list of items can include :class:`~PySide.QtGui.QAction` or</span>
@@ -368,7 +368,7 @@
         <span class="k">return</span> <span class="n">added_actions</span></div>
 
 <div class="viewcode-block" id="ShotgunMenu.add_label"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_label">[docs]</a>    <span class="k">def</span> <span class="nf">add_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a label with the given title to the menu</span>
 
 <span class="sd">        :param str title: The title of the sectional label</span>
@@ -387,7 +387,7 @@
         <span class="k">return</span> <span class="n">action</span></div>
 
 <div class="viewcode-block" id="ShotgunMenu.keyReleaseEvent"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.keyReleaseEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Allow users to type menu item names to highlight/select them.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Allow users to type menu item names to highlight/select them.&quot;&quot;&quot;</span>
 
         <span class="c1"># stop the timer that clears the typed text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
@@ -436,7 +436,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_on_type_timer_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Timeout triggered after typing has ceased for a given interval.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Timeout triggered after typing has ceased for a given interval.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
 </pre></div>
 
@@ -450,7 +450,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>overlay_widget.shotgun_model_overlay_widget &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>overlay_widget.shotgun_model_overlay_widget &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -230,7 +230,7 @@
 
 
 <div class="viewcode-block" id="ShotgunModelOverlayWidget"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunModelOverlayWidget">[docs]</a><span class="k">class</span> <span class="nc">ShotgunModelOverlayWidget</span><span class="p">(</span><span class="n">ShotgunOverlayWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A convenience class specifically designed to work with a</span>
 <span class="sd">    :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`.</span>
 
@@ -239,7 +239,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param sg_model: Shotgun model that this widget should connect to</span>
 <span class="sd">        :type sg_model:  :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`</span>
 <span class="sd">        :param parent:   Widget to attach the overlay to</span>
@@ -252,7 +252,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_connect_to_model</span><span class="p">(</span><span class="n">sg_model</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ShotgunModelOverlayWidget.set_model"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunModelOverlayWidget.set_model">[docs]</a>    <span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the model this widget should be connected to</span>
 
 <span class="sd">        :param sg_model:    Shotgun model that this widget should connect to</span>
@@ -262,7 +262,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_connect_to_model</span><span class="p">(</span><span class="n">sg_model</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_connect_to_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Connect to the signals emitted by the specified model</span>
 
 <span class="sd">        :param sg_model:    Shotgun model that this widget should connect to</span>
@@ -290,20 +290,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">data_refresh_fail</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_refresh_failed</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_model_query_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot signaled when the query changes on the connected Shotgun model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="n">hide_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_model_refreshing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot signaled when the connected Shotgun model starts refreshing</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">is_data_cached</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">start_spin</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_model_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_changed</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot signaled when the data from the connected Shotgun model has</span>
 <span class="sd">        been refreshed</span>
 
@@ -312,7 +312,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="n">hide_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_model_refresh_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot signaled when the connected Shotgun model refresh fails</span>
 
 <span class="sd">        :param msg:    The reason the refresh failed</span>
@@ -330,7 +330,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

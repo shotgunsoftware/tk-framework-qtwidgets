@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>version_details.version_details &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -261,7 +261,7 @@
 
 
 <div class="viewcode-block" id="VersionDetailsWidget"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget">[docs]</a><span class="k">class</span> <span class="nc">VersionDetailsWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    QT Widget that displays details and Note thread data for a given Version</span>
 <span class="sd">    entity.</span>
 
@@ -307,7 +307,7 @@
     <span class="n">note_attachment_arrived</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a new :class:`~VersionDetailsWidget` object.</span>
 
 <span class="sd">        :param parent:          The widget&#39;s parent.</span>
@@ -483,21 +483,21 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">current_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The current Shotgun entity that is OR will become active in the widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_pinned</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the panel is pinned and not processing entity</span>
 <span class="sd">        updates, and False if it is not pinned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinned</span>
 
     <span class="k">def</span> <span class="nf">_get_note_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The list of Note entity field names that are queried and provided</span>
 <span class="sd">        when note_arrived is emitted.</span>
 
@@ -512,7 +512,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">note_threads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The currently loaded Note threads keyed by Note entity id and</span>
 <span class="sd">        containing a list of Shotgun entity dictionaries.</span>
 
@@ -535,7 +535,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">note_threads</span>
 
     <span class="k">def</span> <span class="nf">_get_attachments_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If set to a compiled regular expression, attachment file names that match</span>
 <span class="sd">        will be filtered OUT and NOT shown.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -548,7 +548,7 @@
     <span class="n">attachments_filter</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_attachments_filter</span><span class="p">,</span> <span class="n">_set_attachments_filter</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If True, note entity widgets in the activity stream will be selectable</span>
 <span class="sd">        by the user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -562,7 +562,7 @@
     <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The pre-submit callback function, if one is registered. If so, this</span>
 <span class="sd">        Python callable will be run prior to Note or Reply submission, and</span>
 <span class="sd">        will be given the calling :class:`NoteInputWidget` as its first and</span>
@@ -579,7 +579,7 @@
     <span class="c1"># public methods</span>
 
 <div class="viewcode-block" id="VersionDetailsWidget.add_note_attachments"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.add_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">add_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">,</span> <span class="n">note_entity</span><span class="p">,</span> <span class="n">cleanup_after_upload</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a given list of files to the note widget as file attachments.</span>
 
 <span class="sd">        :param file_paths:              A list of file paths to attach to the</span>
@@ -602,7 +602,7 @@
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.add_query_fields"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.add_query_fields">[docs]</a>    <span class="k">def</span> <span class="nf">add_query_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the given list of Shotgun field names to the list of fields</span>
 <span class="sd">        that are queried by the version details widget&#39;s internal data</span>
 <span class="sd">        model. Adding fields this way does not change the display of</span>
@@ -614,7 +614,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">if</span> <span class="n">f</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.add_version_context_menu_action"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.add_version_context_menu_action">[docs]</a>    <span class="k">def</span> <span class="nf">add_version_context_menu_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_definition</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds an action to the version tab&#39;s context menu.</span>
 
 <span class="sd">        Action definitions passed in must take the following form::</span>
@@ -644,7 +644,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_context_menu_actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action_definition</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.clear"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clears all data from all widgets and views in the details panel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_more_info_toggled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -657,14 +657,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_entity</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.select_note"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.select_note">[docs]</a>    <span class="k">def</span> <span class="nf">select_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select the note identified by the id. This will trigger a note_selected</span>
 <span class="sd">        signal to be emitted</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">select_note</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.deselect_note"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.deselect_note">[docs]</a>    <span class="k">def</span> <span class="nf">deselect_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If a note is currently selected, it will be deselected. This will NOT</span>
 <span class="sd">        trigger a note_deselected signal to be emitted, as that is only emitted</span>
 <span class="sd">        when the user triggers the deselection and not via procedural means.</span>
@@ -672,7 +672,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">deselect_note</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.download_note_attachments"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.download_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">download_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Triggers the attachments linked to the given Note entity to</span>
 <span class="sd">        be downloaded.</span>
 
@@ -692,7 +692,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_query_uids</span><span class="p">[</span><span class="n">attachment</span><span class="p">]</span> <span class="o">=</span> <span class="n">note_id</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.get_note_attachments"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.get_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">get_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the Attachment entities associated with the given Note</span>
 <span class="sd">        entity.</span>
 
@@ -701,7 +701,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">get_note_attachments</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.load_data"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads the given Shotgun entity into the details panel,</span>
 <span class="sd">        triggering the notes and versions streams to be updated</span>
 <span class="sd">        relative to the given entity.</span>
@@ -745,7 +745,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">entity_loaded</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.save_preferences"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.save_preferences">[docs]</a>    <span class="k">def</span> <span class="nf">save_preferences</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves user preferences to disk.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings_manager</span><span class="o">.</span><span class="n">store</span><span class="p">(</span>
@@ -767,7 +767,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.set_note_metadata"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.set_note_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">set_note_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets a Note entity&#39;s metadata in Shotgun.</span>
 
 <span class="sd">        :param int note_id: The Note entity id.</span>
@@ -780,7 +780,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.set_note_screenshot"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.set_note_screenshot">[docs]</a>    <span class="k">def</span> <span class="nf">set_note_screenshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_path</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes the given file path to an image and sets the new note</span>
 <span class="sd">        widget&#39;s thumbnail image.</span>
 
@@ -791,7 +791,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.set_pinned"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.set_pinned">[docs]</a>    <span class="k">def</span> <span class="nf">set_pinned</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the &quot;pinned&quot; state of the details panel. When the panel is</span>
 <span class="sd">        pinned it will not accept updates. It will, however, record the</span>
 <span class="sd">        most recent entity passed to load_data that was not accepted. If</span>
@@ -815,7 +815,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_requested_entity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.show_new_note_dialog"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows a dialog that allows the user to input a new note.</span>
 
 <span class="sd">        :param bool modal: Whether the dialog should be shown modally or not.</span>
@@ -823,7 +823,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">show_new_note_dialog</span><span class="p">(</span><span class="n">modal</span><span class="o">=</span><span class="n">modal</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.show_title_bar_buttons"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.show_title_bar_buttons">[docs]</a>    <span class="k">def</span> <span class="nf">show_title_bar_buttons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the visibility of the undock and close buttons in the</span>
 <span class="sd">        widget&#39;s title bar.</span>
 
@@ -833,7 +833,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">close_button</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.set_version_thumbnail"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.set_version_thumbnail">[docs]</a>    <span class="k">def</span> <span class="nf">set_version_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thumbnail_path</span><span class="p">,</span> <span class="n">version_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets a Version entity&#39;s thumbnail image in Shotgun. If no Version</span>
 <span class="sd">        id is provided, the current Version entity will be updated.</span>
 
@@ -852,7 +852,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="VersionDetailsWidget.use_styled_title_bar"><a class="viewcode-back" href="../../version_details.html#version_details.VersionDetailsWidget.use_styled_title_bar">[docs]</a>    <span class="k">def</span> <span class="nf">use_styled_title_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dock_widget</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If the use of the included, custom styled title bar is desired, the</span>
 <span class="sd">        parent QDockWidget can be provided here and the styled title bar will</span>
 <span class="sd">        be displayed.</span>
@@ -867,7 +867,7 @@
     <span class="c1"># internal utilities</span>
 
     <span class="k">def</span> <span class="nf">_process_note_arrival</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When a new Note entity arrives from Shotgun in the version details</span>
 <span class="sd">        widget, Dynamite is notified and provided the Note entity&#39;s metadata.</span>
 
@@ -884,7 +884,7 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_task_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Signaled whenever the worker completes something. This method will</span>
 <span class="sd">        dispatch the work to different methods depending on what async task</span>
 <span class="sd">        has completed.</span>
@@ -894,7 +894,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__on_worker_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">request_type</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Signaled whenever the worker completes something. This method will</span>
 <span class="sd">        dispatch the work to different methods depending on what async task</span>
 <span class="sd">        has completed.</span>
@@ -920,7 +920,7 @@
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_query_uids</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__on_worker_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Asynchronous callback - the worker thread errored.</span>
 
 <span class="sd">        :param int uid: Unique id for request that failed.</span>
@@ -929,7 +929,7 @@
         <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in the widget&#39;s master stylesheet from disk.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
@@ -945,7 +945,7 @@
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_download_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attachments</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Downloads the contents of the given list of Attachment entities</span>
 <span class="sd">        associated to a specific note entity.</span>
 
@@ -957,7 +957,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_attachment_uids</span><span class="p">[</span><span class="n">attachment_uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">note_id</span>
 
     <span class="k">def</span> <span class="nf">_entity_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Emits the entity_created signal.</span>
 
 <span class="sd">        :param dict entity: The Shotgun entity dict that was created.</span>
@@ -965,7 +965,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_field_menu_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds or removes a field when it checked or unchecked</span>
 <span class="sd">        via the EntityFieldMenu.</span>
 
@@ -1001,7 +1001,7 @@
                 <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_version_entity_data_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes the currently-requested entity and sets various widgets</span>
 <span class="sd">        to display it.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1044,7 +1044,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_setup_version_sort_by_menu</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_ensure_entity_project_schema_cached</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ensures that the schema is cached before enabling the Fields buttons.</span>
 
 <span class="sd">        This prevents errors when trying to display the field menu before the</span>
@@ -1077,7 +1077,7 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_schema_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback that enables the field buttons once the schema is cached.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1089,7 +1089,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Select fields to display&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_version_list_field_menu_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds or removes a field when it checked or unchecked</span>
 <span class="sd">        via the EntityFieldMenu.</span>
 
@@ -1169,7 +1169,7 @@
                 <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_more_info_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Toggled more/less info functionality for the info widget in the</span>
 <span class="sd">        Notes tab.</span>
 
@@ -1197,7 +1197,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setUpdatesEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_selected_version_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of Version entities that are currently selected.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">selection_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">entity_version_view</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span>
@@ -1218,7 +1218,7 @@
         <span class="k">return</span> <span class="n">entities</span>
 
     <span class="k">def</span> <span class="nf">_set_version_list_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_text</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the Version list proxy model&#39;s filter pattern and forces</span>
 <span class="sd">        a reselection of any items in the list.</span>
 
@@ -1231,7 +1231,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">version_delegate</span><span class="o">.</span><span class="n">force_reselection</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_setup_fields_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the EntityFieldMenu and attaches it as the &quot;More fields&quot;</span>
 <span class="sd">        button&#39;s menu.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1247,7 +1247,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">more_fields_button</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_setup_version_list_fields_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the EntityFieldMenu and attaches it as the &quot;More fields&quot;</span>
 <span class="sd">        button&#39;s menu.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1265,7 +1265,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_fields_button</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_setup_version_sort_by_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the sort-by menu in the Versions tab.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu</span> <span class="o">=</span> <span class="n">ShotgunMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -1307,7 +1307,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">version_sort_button</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_version_sort_menu</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_show_version_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows the version list context menu containing all available</span>
 <span class="sd">        actions. Which actions are enabled is determined by how many</span>
 <span class="sd">        items in the list are selected.</span>
@@ -1327,7 +1327,7 @@
         <span class="n">menu</span><span class="o">.</span><span class="n">execute_callback</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uploads any generic file attachments to Shotgun, parenting</span>
 <span class="sd">        them to the given entity.</span>
 
@@ -1349,7 +1349,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_stream_widget</span><span class="o">.</span><span class="n">rescan</span><span class="p">(</span><span class="n">force_activity_stream_update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__upload_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uploads an image file as a thumbnail for the given entity. This</span>
 <span class="sd">        is intended to be used with the execute_method call from a Shotgun</span>
 <span class="sd">        data retriever object.</span>
@@ -1374,7 +1374,7 @@
     <span class="c1"># docking</span>
 
     <span class="k">def</span> <span class="nf">_dock_location_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles the dock being redocked in some location. This will</span>
 <span class="sd">        trigger removing the default title bar.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1382,14 +1382,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">setTitleBarWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_hide_dock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hides the parent dock widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_toggle_floating</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Toggles the parent dock widget&#39;s floating status.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dock_widget</span><span class="p">:</span>
@@ -1404,7 +1404,7 @@
     <span class="c1"># version list actions</span>
 
     <span class="k">def</span> <span class="nf">_toggle_sort_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Toggles ascending/descending sort ordering in the version list view.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sort_versions_ascending</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_versions_ascending</span>
@@ -1423,7 +1423,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">version_delegate</span><span class="o">.</span><span class="n">force_reselection</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_sort_version_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sorts the version list by the field chosen in the sort-by</span>
 <span class="sd">        menu. This also triggers a reselection in the view in</span>
 <span class="sd">        order to ensure proper sorting and drawing of items in the</span>
@@ -1457,7 +1457,7 @@
     <span class="c1"># fields menu filters</span>
 
     <span class="k">def</span> <span class="nf">_checked_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checked filter method for the EntityFieldMenu. Determines whether the</span>
 <span class="sd">        given field should be checked in the field menu.</span>
 
@@ -1466,7 +1466,7 @@
         <span class="k">return</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_fields</span>
 
     <span class="k">def</span> <span class="nf">_version_list_checked_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checked filter method for the EntityFieldMenu. Determines whether the</span>
 <span class="sd">        given field should be checked in the field menu.</span>
 
@@ -1475,7 +1475,7 @@
         <span class="k">return</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">version_delegate</span><span class="o">.</span><span class="n">fields</span>
 
     <span class="k">def</span> <span class="nf">_disabled_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disabled filter method for the EntityFieldMenu. Determines whether the</span>
 <span class="sd">        given field should be active or disabled in the field menu.</span>
 
@@ -1484,7 +1484,7 @@
         <span class="k">return</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_persistent_fields</span>
 
     <span class="k">def</span> <span class="nf">_version_list_disabled_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disabled filter method for the EntityFieldMenu. Determines whether the</span>
 <span class="sd">        given field should be active or disabled in the field menu.</span>
 
@@ -1493,7 +1493,7 @@
         <span class="k">return</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version_list_persistent_fields</span>
 
     <span class="k">def</span> <span class="nf">_field_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Field filter method for the EntityFieldMenu. Determines whether the</span>
 <span class="sd">        given field should be included in the field menu.</span>
 
@@ -1539,7 +1539,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

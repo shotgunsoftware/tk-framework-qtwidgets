@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>help_screen.dialog &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>help_screen.dialog &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -231,7 +231,7 @@
 
 
 <div class="viewcode-block" id="show_help_screen"><a class="viewcode-back" href="../../help_screen.html#help_screen.show_help_screen">[docs]</a><span class="k">def</span> <span class="nf">show_help_screen</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">bundle</span><span class="p">,</span> <span class="n">pixmaps</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Show help screen window.</span>
 
 <span class="sd">    :param parent: Parent window. The help screen will be centered on top of this window.</span>
@@ -261,7 +261,7 @@
 
 
 <span class="k">class</span> <span class="nc">Dialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Help screen dialog.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -269,7 +269,7 @@
     <span class="n">NEXT_PAGE</span><span class="p">,</span> <span class="n">PREVIOUS_PAGE</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">bundle</span><span class="p">,</span> <span class="n">pixmaps</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor.</span>
 
 <span class="sd">        :param parent: Parent window. The help screen will be centered on top of this window.</span>
@@ -338,19 +338,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_num_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pixmaps</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_left_arrow_click</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        User clicks the left arrow</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__turn_page</span><span class="p">(</span><span class="n">Dialog</span><span class="o">.</span><span class="n">PREVIOUS_PAGE</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_right_arrow_click</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        User clicks the right arrow</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__turn_page</span><span class="p">(</span><span class="n">Dialog</span><span class="o">.</span><span class="n">NEXT_PAGE</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__turn_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">NEXT_PAGE</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turn the page in the direction specified</span>
 
 <span class="sd">        :param direction:    The direction to turn the page</span>
@@ -432,7 +432,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_on_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Launch doc url.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span>
@@ -451,7 +451,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

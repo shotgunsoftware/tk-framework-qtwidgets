@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_fields.shotgun_field_meta &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>shotgun_fields.shotgun_field_meta &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -234,7 +234,7 @@
 
 
 <span class="k">def</span> <span class="nf">take_over</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Decorator to accumulate the names of members to take over in derived classes.</span>
 
 <span class="sd">    :param func: A function or method to takeover in the derived class.</span>
@@ -255,7 +255,7 @@
 <span class="c1"># use type to pull the metaclass for QWidget since Shiboken is not always directly available</span>
 <span class="c1"># and it abstracts out any difference between PySide and PyQt</span>
 <div class="viewcode-block" id="ShotgunFieldMeta"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.shotgun_field_meta.ShotgunFieldMeta">[docs]</a><span class="k">class</span> <span class="nc">ShotgunFieldMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">)):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The primary purpose of this class is to register widget classes with the</span>
 <span class="sd">    :class:`shotgun_fields.ShotgunFieldManager`. Classes that specify this class</span>
 <span class="sd">    as their ``metaclass``, and follow the protocols below, will be registered</span>
@@ -432,7 +432,7 @@
         <span class="n">delegate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an instance of the given class.</span>
 
 <span class="sd">        :param parent: Parent widget</span>
@@ -477,7 +477,7 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">take_over_if_not_defined</span><span class="p">(</span><span class="n">mcl</span><span class="p">,</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">,</span> <span class="n">parents</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Method used during __new__ to add the given method to the class being</span>
 <span class="sd">        created only if it hasn&#39;t been defined in the class or any of its parents.</span>
 
@@ -509,7 +509,7 @@
     <span class="nd">@staticmethod</span>
     <span class="nd">@take_over</span>
     <span class="k">def</span> <span class="nf">setup_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Default method called to setup the widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
@@ -517,7 +517,7 @@
     <span class="nd">@staticmethod</span>
     <span class="nd">@take_over</span>
     <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the value displayed by the widget.</span>
 
 <span class="sd">        Calling this method will result in ``value_changed`` signal being emitted.</span>
@@ -534,7 +534,7 @@
     <span class="nd">@staticmethod</span>
     <span class="nd">@take_over</span>
     <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The internal value being displayed by the widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
@@ -542,7 +542,7 @@
     <span class="nd">@staticmethod</span>
     <span class="nd">@take_over</span>
     <span class="k">def</span> <span class="nf">get_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The entity associated with the field widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span>
@@ -550,7 +550,7 @@
     <span class="nd">@staticmethod</span>
     <span class="nd">@take_over</span>
     <span class="k">def</span> <span class="nf">get_entity_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The entity type associated with the field widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span>
@@ -558,7 +558,7 @@
     <span class="nd">@staticmethod</span>
     <span class="nd">@take_over</span>
     <span class="k">def</span> <span class="nf">get_field_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The field name associated with the field widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span>
@@ -566,7 +566,7 @@
     <span class="nd">@staticmethod</span>
     <span class="nd">@take_over</span>
     <span class="k">def</span> <span class="nf">_get_safe_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a safe string representation of the supplied value.</span>
 
 <span class="sd">        Handles unicode and QString values (PyQt).</span>
@@ -606,7 +606,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

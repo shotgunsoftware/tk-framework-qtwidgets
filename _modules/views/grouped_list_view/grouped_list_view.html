@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>views.grouped_list_view.grouped_list_view &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>views.grouped_list_view.grouped_list_view &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -229,7 +229,7 @@
 
 
 <div class="viewcode-block" id="GroupedListView"><a class="viewcode-back" href="../../../views.html#views.GroupedListView">[docs]</a><span class="k">class</span> <span class="nc">GroupedListView</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Custom Qt View that displays items as a grouped list.  The view works with any tree</span>
 <span class="sd">    based model with the first level of the hierarchy defining the groups and the second</span>
 <span class="sd">    level defining the items for that group.  Subsequent levels of the hierarchy are ignored.</span>
@@ -264,13 +264,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">class</span> <span class="nc">_ItemInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        class representing the information that needs to be tracked for each item (row)</span>
 <span class="sd">        in the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Construction</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>  <span class="c1"># relative item rect for group header</span>
@@ -288,7 +288,7 @@
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_area_rect</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent: The parent QWidget</span>
 <span class="sd">        :type parent:  :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -318,7 +318,7 @@
 
     <span class="c1"># @property</span>
     <span class="k">def</span> <span class="nf">_get_border</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The external border to use for all items in the view</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_border</span>
@@ -333,7 +333,7 @@
 
     <span class="c1"># @property</span>
     <span class="k">def</span> <span class="nf">_get_group_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The spacing to use between groups when they are collapsed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_spacing</span>
@@ -348,7 +348,7 @@
 
     <span class="c1"># @property</span>
     <span class="k">def</span> <span class="nf">_get_item_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The spacing to use between items in the view</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_spacing</span>
@@ -362,7 +362,7 @@
     <span class="n">item_spacing</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_item_spacing</span><span class="p">,</span> <span class="n">_set_item_spacing</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GroupedListView.expand"><a class="viewcode-back" href="../../../views.html#views.GroupedListView.expand">[docs]</a>    <span class="k">def</span> <span class="nf">expand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Expand the specified index</span>
 
 <span class="sd">        :param index:   The model index to be expanded</span>
@@ -371,7 +371,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_expanded</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GroupedListView.collapse"><a class="viewcode-back" href="../../../views.html#views.GroupedListView.collapse">[docs]</a>    <span class="k">def</span> <span class="nf">collapse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Collapse the specified index</span>
 
 <span class="sd">        :param index:   The model index to be collapsed</span>
@@ -380,7 +380,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_expanded</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GroupedListView.is_expanded"><a class="viewcode-back" href="../../../views.html#views.GroupedListView.is_expanded">[docs]</a>    <span class="k">def</span> <span class="nf">is_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Query if the specified index is expanded or not</span>
 
 <span class="sd">        :param index:   The model index to check</span>
@@ -400,7 +400,7 @@
     <span class="c1"># Overriden public methods</span>
 
     <span class="k">def</span> <span class="nf">itemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that returns the item delegate to be used for items in this</span>
 <span class="sd">        view.  This will return the default item delegate if a delegate deriving from</span>
 <span class="sd">        GroupedListViewItemDelegate hasn&#39;t been set for the view.</span>
@@ -414,7 +414,7 @@
         <span class="k">return</span> <span class="n">delegate</span>
 
     <span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the edit method on the base class to dissalow editing</span>
 <span class="sd">        of group items</span>
 
@@ -431,7 +431,7 @@
         <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides the base method to make sure the item info gets updated when the model</span>
 <span class="sd">        is changed.</span>
 
@@ -444,7 +444,7 @@
     <span class="c1"># Internal class methods</span>
 
     <span class="k">def</span> <span class="nf">_set_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">expand</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Toggle the expanded state of the specified index</span>
 
 <span class="sd">        :param index:   The model index to expand/collapse</span>
@@ -462,7 +462,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">dataChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_left</span><span class="p">,</span> <span class="n">bottom_right</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base class method that gets called when some data in the model attached</span>
 <span class="sd">        to this view has been changed.</span>
 
@@ -492,7 +492,7 @@
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">dataChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_left</span><span class="p">,</span> <span class="n">bottom_right</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">rowsInserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that gets called when new rows have been inserted into</span>
 <span class="sd">        the model attached to this view.</span>
 
@@ -527,7 +527,7 @@
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">rowsInserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">rowsAboutToBeRemoved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that gets called just before rows are removed from</span>
 <span class="sd">        the model attached to this view.</span>
 
@@ -565,7 +565,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">visualRect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that should return the rectangle occupied by the given</span>
 <span class="sd">        index in the viewport</span>
 
@@ -584,7 +584,7 @@
         <span class="k">return</span> <span class="n">rect</span>
 
     <span class="k">def</span> <span class="nf">isIndexHidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that returns True if the specified index is hidden (e.g. a</span>
 <span class="sd">        collapsed child in a tree view)</span>
 
@@ -613,7 +613,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">scrollTo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">scroll_hint</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">EnsureVisible</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method used to scroll to the specified index in the viewport</span>
 <span class="sd">        (TODO - implement behaviour specific to the scroll hint)</span>
 
@@ -653,7 +653,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">indexAt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that returns the model index under the specified point in</span>
 <span class="sd">        the viewport</span>
 
@@ -709,7 +709,7 @@
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">moveCursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor_action</span><span class="p">,</span> <span class="n">keyboard_modifiers</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that returns the index for the item that the specified</span>
 <span class="sd">        cursor action will move to.</span>
 
@@ -852,7 +852,7 @@
         <span class="k">return</span> <span class="n">index</span>
 
     <span class="k">def</span> <span class="nf">horizontalOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that returns the X offset of the viewport within the ideal</span>
 <span class="sd">        sized widget</span>
 
@@ -861,7 +861,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizontalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">verticalOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that returns the Y offset of the viewport within the ideal</span>
 <span class="sd">        sized widget</span>
 
@@ -870,7 +870,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">scrollContentsBy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method used to scroll the viewport by the specified deltas</span>
 
 <span class="sd">        :param dx:  The horizontal delta to scroll by</span>
@@ -881,7 +881,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">setSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection_rect</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method used to set the selection given the selection rectangle and flags</span>
 
 <span class="sd">        :param selection_rect:  The selection rectangle that should be used to select any</span>
@@ -946,7 +946,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">selectionModel</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">visualRegionForSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that returns the region in the viewport encompasing all the</span>
 <span class="sd">        selected items</span>
 
@@ -965,7 +965,7 @@
         <span class="k">return</span> <span class="n">region</span>
 
     <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method that gets called whenever the view needs repainting.</span>
 
 <span class="sd">        :param event:    The QPaintEvent containing information about the event</span>
@@ -1130,7 +1130,7 @@
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_group_expanded_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expanded</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot that gets signalled whenever a group widget is expanded/collapsed.</span>
 
 <span class="sd">        :param expanded:    True if the group widget was expanded, False if it was</span>
@@ -1151,7 +1151,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">updateGeometries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method responsible for updating the horizontal and vertical scroll</span>
 <span class="sd">        bars so that they will correctly scroll the view&#39;s viewport.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1175,7 +1175,7 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_item_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cached item rectangle for the specified model index.</span>
 
 <span class="sd">        :param index:   The model index to find the item rectangle for</span>
@@ -1223,7 +1223,7 @@
         <span class="k">return</span> <span class="n">rect</span>
 
     <span class="k">def</span> <span class="nf">_update_item_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the cached item info when needed.  This updates the item layout for any items that have</span>
 <span class="sd">        been &#39;dirtied&#39; or if the widget size has changed, etc.</span>
 
@@ -1372,7 +1372,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

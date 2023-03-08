@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -245,7 +245,7 @@
 
 
 <div class="viewcode-block" id="NoteInputWidget"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget">[docs]</a><span class="k">class</span> <span class="nc">NoteInputWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Note creation and reply widget with built in screen capture capabilites.</span>
 
 <span class="sd">    :signal data_updated: Emitted when a note has been successfully created or</span>
@@ -273,7 +273,7 @@
     <span class="n">entity_created</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent:              The parent QWidget for this control</span>
 <span class="sd">        :type parent:               :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -325,7 +325,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
 <div class="viewcode-block" id="NoteInputWidget.destroy"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        disconnect and prepare for this object</span>
 <span class="sd">        to be garbage collected</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -337,7 +337,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__sg_data_retriever</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="NoteInputWidget.set_bg_task_manager"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the background task manager to use to pull</span>
 <span class="sd">        data in the background. Data calls</span>
 <span class="sd">        to Shotgun will be dispatched via this object.</span>
@@ -363,13 +363,13 @@
     <span class="c1"># internal methods</span>
 
     <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        User clicks the preview part of the widget</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_editor</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_add_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allows the user to browse for files to attach to the Note</span>
 <span class="sd">        entity.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -378,7 +378,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_files_to_attachments</span><span class="p">(</span><span class="n">file_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_remove_selected_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes the selected attachments.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">attachment_list_tree</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">():</span>
@@ -387,7 +387,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_apply_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the list of file attachments for the Note based</span>
 <span class="sd">        on the list of items provided by the user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -401,20 +401,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">open_editor</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_cancel_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cancel file attachment and revert to note editing.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">attachment_list_tree</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_editor</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cancel editing, no questions asked</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_screenshot_or_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Screenshot button is clicked. This either means that</span>
 <span class="sd">        a screenshot should be taken or that it should be cleared.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -447,7 +447,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Take Screenshot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_set_screenshot_pixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Takes the given QPixmap and sets it to be the thumbnail</span>
 <span class="sd">        image of the note input widget.</span>
 
@@ -463,7 +463,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Remove Screenshot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_submit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates items in Shotgun and clears the widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -502,7 +502,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_async_submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Actual payload for creating things in shotgun.</span>
 <span class="sd">        Note: This runs in a different thread and cannot access</span>
 <span class="sd">        any QT UI components.</span>
@@ -519,7 +519,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_submit_note</span><span class="p">(</span><span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_async_submit_reply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides functionality for creating a new Reply entity</span>
 <span class="sd">        asynchronously by providing a signature that is friendly</span>
 <span class="sd">        for use with :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`.</span>
@@ -553,7 +553,7 @@
         <span class="k">return</span> <span class="n">sg_reply_data</span>
 
     <span class="k">def</span> <span class="nf">_async_submit_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Provides functionality for creating a new Note entity</span>
 <span class="sd">        asynchronously by providing a signature that is friendly</span>
 <span class="sd">        for use with :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever`.</span>
@@ -765,7 +765,7 @@
         <span class="k">return</span> <span class="n">sg_note_data</span>
 
     <span class="k">def</span> <span class="nf">__upload_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_entity</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uploads any generic file attachments to Shotgun, parenting</span>
 <span class="sd">        them to the Note entity.</span>
 
@@ -783,7 +783,7 @@
                 <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">parent_entity</span><span class="p">,</span> <span class="n">sg</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uploads any generic file attachments to Shotgun, parenting</span>
 <span class="sd">        them to the Note entity.</span>
 
@@ -821,7 +821,7 @@
                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">png_path</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__on_worker_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Asynchronous callback - the worker thread errored.</span>
 
 <span class="sd">        :param uid: Unique id for request that failed</span>
@@ -836,7 +836,7 @@
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;ShotGrid Error&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__on_worker_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">request_type</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Signaled whenever the worker completes something.</span>
 <span class="sd">        This method will dispatch the work to different methods</span>
 <span class="sd">        depending on what async task has completed.</span>
@@ -857,7 +857,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;return_value&quot;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">__format_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap_obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a screengrab, create a thumbnail object, scaled to 96x75 px</span>
 <span class="sd">        and with a subtle rounded frame.</span>
 
@@ -903,7 +903,7 @@
         <span class="k">return</span> <span class="n">base_image</span>
 
     <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in a stylesheet from disk</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">qss_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;style.qss&quot;</span><span class="p">)</span>
@@ -921,7 +921,7 @@
 <div class="viewcode-block" id="NoteInputWidget.add_files_to_attachments"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.add_files_to_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">add_files_to_attachments</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">,</span> <span class="n">cleanup_after_upload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">apply_attachments</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the given list of file paths to the attachments list.</span>
 
 <span class="sd">        :param file_paths:              A list of file paths to attach.</span>
@@ -949,7 +949,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_attachments</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_paths</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="NoteInputWidget.allow_screenshots"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.allow_screenshots">[docs]</a>    <span class="k">def</span> <span class="nf">allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allows or disallows screenshots.</span>
 
 <span class="sd">        :param state: Allow or disallow screenshots.</span>
@@ -958,7 +958,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="NoteInputWidget.open_attachments"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.open_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">open_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the attachments editor into its &quot;open mode&quot; which will</span>
 <span class="sd">        allow the user to attach files to the note.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -974,7 +974,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_attachments</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="NoteInputWidget.open_editor"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.open_editor">[docs]</a>    <span class="k">def</span> <span class="nf">open_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the editor into its &quot;open mode&quot;</span>
 <span class="sd">        where a user can type in stuff</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -984,14 +984,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_adjust_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        adjust the UI to be optimal size depending on view</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_NEW_NOTE_WIDGET_INDEX</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">16777215</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
-                <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                #stacked_widget {</span>
 <span class="sd">                    border: 1px solid rgba(200, 200, 200, 25%);</span>
 <span class="sd">                    border-radius: 3px;</span>
@@ -1013,7 +1013,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;cannot adjust unknown ui mode.&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="NoteInputWidget.clear"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear any input and state and return the widget to its &quot;closed&quot; mode.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -1038,7 +1038,7 @@
         <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="NoteInputWidget.set_current_entity"><a class="viewcode-back" href="../../note_input_widget.html#note_input_widget.NoteInputWidget.set_current_entity">[docs]</a>    <span class="k">def</span> <span class="nf">set_current_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the current entity that this widget is linked against</span>
 
 <span class="sd">        :param str entity_type: Shotgun entity type</span>
@@ -1058,7 +1058,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 

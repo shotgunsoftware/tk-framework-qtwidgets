@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>delegates.thumbnail_view_item_delegate &mdash; tk-framework-qtwidgets v2.10.5 documentation</title>
+  <title>delegates.thumbnail_view_item_delegate &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -232,13 +232,13 @@
 
 
 <div class="viewcode-block" id="ThumbnailViewItemDelegate"><a class="viewcode-back" href="../../delegates.html#delegates.ThumbnailViewItemDelegate">[docs]</a><span class="k">class</span> <span class="nc">ThumbnailViewItemDelegate</span><span class="p">(</span><span class="n">ViewItemDelegate</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A subclass of the ViewItemDelegate, where the thumbnail is the focus of the display, and</span>
 <span class="sd">    is more compact (ideal for items with less text).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 
 <span class="sd">        Call the base constructor and set up properties specific to this delegate class.</span>
@@ -253,7 +253,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP</span><span class="p">,)</span>
 
 <div class="viewcode-block" id="ThumbnailViewItemDelegate.sizeHint"><a class="viewcode-back" href="../../delegates.html#delegates.ThumbnailViewItemDelegate.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base ViewItemDelegate method.</span>
 
 <span class="sd">        The size hint is based on the thumbnail size. The width is set to the thumbnail</span>
@@ -299,7 +299,7 @@
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_get_loading_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base ViewItemDelegate method.</span>
 
 <span class="sd">        Return the bounding rect for the item&#39;s loading icon. An invalid rect will be</span>
@@ -331,7 +331,7 @@
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon_size</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rect</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base ViewItemDelegate method.</span>
 
 <span class="sd">        Return the text data to display. The text data will be the data retrieved from the</span>
@@ -353,7 +353,7 @@
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ThumbnailViewItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_get_text</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_thumbnail_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">thumbnail</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base ViewItemDelegate method.</span>
 
 <span class="sd">        Return the bounding rect for the item&#39;s thumbnail. The bounding rect will be</span>
@@ -393,7 +393,7 @@
         <span class="k">return</span> <span class="n">rect</span>
 
     <span class="k">def</span> <span class="nf">_get_text_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base ViewItemDelegate method.</span>
 
 <span class="sd">        Return the bounding rect for the item&#39;s text. The bounding rect will be</span>
@@ -439,7 +439,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022, Autodesk
+        &copy; Copyright 2023, Autodesk
 
     </p>
   </div> 
