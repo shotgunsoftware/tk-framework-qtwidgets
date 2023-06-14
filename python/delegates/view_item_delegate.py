@@ -1603,116 +1603,116 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if not badge_data:
             return
 
-        if isinstance(badge_data, QtGui.QPixmap):
-            # Default to bottom right if only a pixmap given.
+        if not isinstance(badge_data, dict):
+            # Default to bottom right if only a pixmap given for badge data.
             badge_data = {"bottom-right": badge_data}
 
-        if isinstance(badge_data, dict):
-            for position, pixmap_data in badge_data.items():
-                if not pixmap_data:
-                    continue
+        for position, pixmap_data in badge_data.items():
+            if not pixmap_data:
+                continue
 
-                # The pixmap to display for the icon badge
-                pixmap = None
-                # Inset will display the badge inside the bounding rect, otherwise the badge
-                # will be display centered over the corner corresponding to the badge position.
-                inset = True
-                if isinstance(pixmap_data, dict):
-                    pixmap = pixmap_data.get("pixmap", None)
-                    inset = pixmap_data.get("inset", True)
+            # The pixmap to display for the icon badge
+            pixmap = None
+            # Inset will display the badge inside the bounding rect, otherwise the badge
+            # will be display centered over the corner corresponding to the badge position.
+            inset = True
+            if isinstance(pixmap_data, dict):
+                pixmap = pixmap_data.get("pixmap", None)
+                inset = pixmap_data.get("inset", True)
+            else:
+                pixmap = pixmap_data
+
+            if hasattr(pixmap, "pixmap"):
+                pixmap = self._convert_icon_to_pixmap(pixmap)
+            elif isinstance(pixmap, six.string_types):
+                pixmap = QtGui.QPixmap(pixmap)
+
+            # if not pixmap or not isinstance(pixmap, QtGui.QPixmap):
+            if not pixmap:
+                # Skip, invalid pixmap data.
+                continue
+
+            if (
+                self.badge_height_pct
+                and pixmap.height() > option.rect.height() * self.badge_height_pct
+            ):
+                # Scale the pixmap to fit neatly into a corner
+                pixmap = pixmap.scaledToHeight(
+                    option.rect.height() * self.badge_height_pct
+                )
+
+            pixmap_size = pixmap.size()
+
+            if position in (
+                self.POSITIONS[self.TOP_LEFT],
+                self.POSITIONS[self.FLOAT_TOP_LEFT],
+            ):
+                if inset:
+                    point = QtCore.QPoint(
+                        bounding_rect.left() + self.button_padding,
+                        bounding_rect.top() + self.button_padding,
+                    )
                 else:
-                    pixmap = pixmap_data
-
-                if isinstance(pixmap, QtGui.QIcon):
-                    pixmap = self._convert_icon_to_pixmap(pixmap)
-                elif isinstance(pixmap, six.string_types):
-                    pixmap = QtGui.QPixmap(pixmap)
-
-                if not pixmap or not isinstance(pixmap, QtGui.QPixmap):
-                    # Skip, invalid pixmap data.
-                    continue
-
-                if (
-                    self.badge_height_pct
-                    and pixmap.height() > option.rect.height() * self.badge_height_pct
-                ):
-                    # Scale the pixmap to fit neatly into a corner
-                    pixmap = pixmap.scaledToHeight(
-                        option.rect.height() * self.badge_height_pct
+                    point = bounding_rect.topLeft()
+                    point += QtCore.QPoint(
+                        -pixmap_size.width() / 2.0,
+                        -pixmap_size.height() / 2.0,
                     )
 
-                pixmap_size = pixmap.size()
-
-                if position in (
-                    self.POSITIONS[self.TOP_LEFT],
-                    self.POSITIONS[self.FLOAT_TOP_LEFT],
-                ):
-                    if inset:
-                        point = QtCore.QPoint(
-                            bounding_rect.left() + self.button_padding,
-                            bounding_rect.top() + self.button_padding,
-                        )
-                    else:
-                        point = bounding_rect.topLeft()
-                        point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0,
-                            -pixmap_size.height() / 2.0,
-                        )
-
-                elif position in (
-                    self.POSITIONS[self.TOP_RIGHT],
-                    self.POSITIONS[self.FLOAT_TOP_RIGHT],
-                ):
-                    if inset:
-                        point = QtCore.QPoint(
-                            bounding_rect.right()
-                            - self.button_padding
-                            - pixmap_size.width(),
-                            bounding_rect.top() + self.button_padding,
-                        )
-                    else:
-                        point = bounding_rect.topRight()
-                        point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0,
-                            -pixmap_size.height() / 2.0,
-                        )
-                elif position in (
-                    self.POSITIONS[self.BOTTOM_LEFT],
-                    self.POSITIONS[self.FLOAT_BOTTOM_LEFT],
-                ):
-                    if inset:
-                        point = QtCore.QPoint(
-                            bounding_rect.left() + self.button_padding,
-                            bounding_rect.bottom()
-                            - self.button_padding
-                            - pixmap_size.height(),
-                        )
-                    else:
-                        point = bounding_rect.bottomLeft()
-                        point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0,
-                            -pixmap_size.height() / 2.0,
-                        )
+            elif position in (
+                self.POSITIONS[self.TOP_RIGHT],
+                self.POSITIONS[self.FLOAT_TOP_RIGHT],
+            ):
+                if inset:
+                    point = QtCore.QPoint(
+                        bounding_rect.right()
+                        - self.button_padding
+                        - pixmap_size.width(),
+                        bounding_rect.top() + self.button_padding,
+                    )
                 else:
-                    # Default to bottom right corner.
-                    if inset:
-                        point = QtCore.QPoint(
-                            bounding_rect.right()
-                            - self.button_padding
-                            - pixmap_size.height(),
-                            bounding_rect.bottom()
-                            - self.button_padding
-                            - pixmap_size.height(),
-                        )
-                    else:
-                        point = bounding_rect.bottomRight()
-                        point += QtCore.QPoint(
-                            -pixmap_size.width() / 2.0,
-                            -pixmap_size.height() / 2.0,
-                        )
+                    point = bounding_rect.topRight()
+                    point += QtCore.QPoint(
+                        -pixmap_size.width() / 2.0,
+                        -pixmap_size.height() / 2.0,
+                    )
+            elif position in (
+                self.POSITIONS[self.BOTTOM_LEFT],
+                self.POSITIONS[self.FLOAT_BOTTOM_LEFT],
+            ):
+                if inset:
+                    point = QtCore.QPoint(
+                        bounding_rect.left() + self.button_padding,
+                        bounding_rect.bottom()
+                        - self.button_padding
+                        - pixmap_size.height(),
+                    )
+                else:
+                    point = bounding_rect.bottomLeft()
+                    point += QtCore.QPoint(
+                        -pixmap_size.width() / 2.0,
+                        -pixmap_size.height() / 2.0,
+                    )
+            else:
+                # Default to bottom right corner.
+                if inset:
+                    point = QtCore.QPoint(
+                        bounding_rect.right()
+                        - self.button_padding
+                        - pixmap_size.height(),
+                        bounding_rect.bottom()
+                        - self.button_padding
+                        - pixmap_size.height(),
+                    )
+                else:
+                    point = bounding_rect.bottomRight()
+                    point += QtCore.QPoint(
+                        -pixmap_size.width() / 2.0,
+                        -pixmap_size.height() / 2.0,
+                    )
 
-                badge_rect = QtCore.QRect(point, pixmap.size())
-                painter.drawPixmap(badge_rect, pixmap)
+            badge_rect = QtCore.QRect(point, pixmap.size())
+            painter.drawPixmap(badge_rect, pixmap)
 
     def _draw_text(self, painter, option, index):
         """
@@ -2296,11 +2296,8 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 ":/tk-framework-qtwidgets/shotgun_widget/rect_512x400.png"
             )
 
-        if isinstance(thumbnail, QtGui.QIcon):
+        if hasattr(thumbnail, "pixmap"):
             thumbnail = self._convert_icon_to_pixmap(thumbnail)
-
-        if not thumbnail or not isinstance(thumbnail, QtGui.QPixmap):
-            return None
 
         return thumbnail
 
@@ -3554,15 +3551,10 @@ class ViewItemAction(object):
 
         if not icon:
             self.icon = None
-
-        elif isinstance(icon, QtGui.QIcon):
-            self.icon = icon
-
         elif isinstance(icon, six.string_types):
             self.icon = QtGui.QIcon(icon)
-
         else:
-            self.icon = None
+            self.icon = icon
 
     def is_visible(self, parent, index):
         """
