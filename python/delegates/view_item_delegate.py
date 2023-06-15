@@ -1627,7 +1627,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             elif isinstance(pixmap, six.string_types):
                 pixmap = QtGui.QPixmap(pixmap)
 
-            # if not pixmap or not isinstance(pixmap, QtGui.QPixmap):
             if not pixmap:
                 # Skip, invalid pixmap data.
                 continue
