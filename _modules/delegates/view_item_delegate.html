@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.10.6 documentation</title>
+  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.10.7 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.7.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -1818,116 +1818,115 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">badge_data</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">badge_data</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">):</span>
-            <span class="c1"># Default to bottom right if only a pixmap given.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">badge_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="c1"># Default to bottom right if only a pixmap given for badge data.</span>
             <span class="n">badge_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;bottom-right&quot;</span><span class="p">:</span> <span class="n">badge_data</span><span class="p">}</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">badge_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">pixmap_data</span> <span class="ow">in</span> <span class="n">badge_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">pixmap_data</span><span class="p">:</span>
-                    <span class="k">continue</span>
+        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">pixmap_data</span> <span class="ow">in</span> <span class="n">badge_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">pixmap_data</span><span class="p">:</span>
+                <span class="k">continue</span>
 
-                <span class="c1"># The pixmap to display for the icon badge</span>
-                <span class="n">pixmap</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="c1"># Inset will display the badge inside the bounding rect, otherwise the badge</span>
-                <span class="c1"># will be display centered over the corner corresponding to the badge position.</span>
-                <span class="n">inset</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixmap_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-                    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">pixmap_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pixmap&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-                    <span class="n">inset</span> <span class="o">=</span> <span class="n">pixmap_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inset&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># The pixmap to display for the icon badge</span>
+            <span class="n">pixmap</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># Inset will display the badge inside the bounding rect, otherwise the badge</span>
+            <span class="c1"># will be display centered over the corner corresponding to the badge position.</span>
+            <span class="n">inset</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixmap_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">pixmap</span> <span class="o">=</span> <span class="n">pixmap_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pixmap&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">inset</span> <span class="o">=</span> <span class="n">pixmap_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inset&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pixmap</span> <span class="o">=</span> <span class="n">pixmap_data</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="s2">&quot;pixmap&quot;</span><span class="p">):</span>
+                <span class="n">pixmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_icon_to_pixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+                <span class="n">pixmap</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">pixmap</span><span class="p">:</span>
+                <span class="c1"># Skip, invalid pixmap data.</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">badge_height_pct</span>
+                <span class="ow">and</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">badge_height_pct</span>
+            <span class="p">):</span>
+                <span class="c1"># Scale the pixmap to fit neatly into a corner</span>
+                <span class="n">pixmap</span> <span class="o">=</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">scaledToHeight</span><span class="p">(</span>
+                    <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">badge_height_pct</span>
+                <span class="p">)</span>
+
+            <span class="n">pixmap_size</span> <span class="o">=</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP_LEFT</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_TOP_LEFT</span><span class="p">],</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="n">inset</span><span class="p">:</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                        <span class="n">bounding_rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span><span class="p">,</span>
+                        <span class="n">bounding_rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span><span class="p">,</span>
+                    <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">pixmap_data</span>
-
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">):</span>
-                    <span class="n">pixmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_icon_to_pixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
-                    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">pixmap</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">):</span>
-                    <span class="c1"># Skip, invalid pixmap data.</span>
-                    <span class="k">continue</span>
-
-                <span class="k">if</span> <span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">badge_height_pct</span>
-                    <span class="ow">and</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">badge_height_pct</span>
-                <span class="p">):</span>
-                    <span class="c1"># Scale the pixmap to fit neatly into a corner</span>
-                    <span class="n">pixmap</span> <span class="o">=</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">scaledToHeight</span><span class="p">(</span>
-                        <span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">badge_height_pct</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">()</span>
+                    <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                        <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                        <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
                     <span class="p">)</span>
 
-                <span class="n">pixmap_size</span> <span class="o">=</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-
-                <span class="k">if</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP_LEFT</span><span class="p">],</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_TOP_LEFT</span><span class="p">],</span>
-                <span class="p">):</span>
-                    <span class="k">if</span> <span class="n">inset</span><span class="p">:</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="n">bounding_rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span><span class="p">,</span>
-                            <span class="n">bounding_rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span><span class="p">,</span>
-                        <span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">()</span>
-                        <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                        <span class="p">)</span>
-
-                <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP_RIGHT</span><span class="p">],</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_TOP_RIGHT</span><span class="p">],</span>
-                <span class="p">):</span>
-                    <span class="k">if</span> <span class="n">inset</span><span class="p">:</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="n">bounding_rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span>
-                            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span>
-                            <span class="o">-</span> <span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
-                            <span class="n">bounding_rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span><span class="p">,</span>
-                        <span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">topRight</span><span class="p">()</span>
-                        <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                        <span class="p">)</span>
-                <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM_LEFT</span><span class="p">],</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_BOTTOM_LEFT</span><span class="p">],</span>
-                <span class="p">):</span>
-                    <span class="k">if</span> <span class="n">inset</span><span class="p">:</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="n">bounding_rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span><span class="p">,</span>
-                            <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
-                            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span>
-                            <span class="o">-</span> <span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
-                        <span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottomLeft</span><span class="p">()</span>
-                        <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                        <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP_RIGHT</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_TOP_RIGHT</span><span class="p">],</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="n">inset</span><span class="p">:</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                        <span class="n">bounding_rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span>
+                        <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span>
+                        <span class="o">-</span> <span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
+                        <span class="n">bounding_rect</span><span class="o">.</span><span class="n">top</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span><span class="p">,</span>
+                    <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># Default to bottom right corner.</span>
-                    <span class="k">if</span> <span class="n">inset</span><span class="p">:</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="n">bounding_rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span>
-                            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span>
-                            <span class="o">-</span> <span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
-                            <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
-                            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span>
-                            <span class="o">-</span> <span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
-                        <span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottomRight</span><span class="p">()</span>
-                        <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                            <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
-                        <span class="p">)</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">topRight</span><span class="p">()</span>
+                    <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                        <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                        <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                    <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">position</span> <span class="ow">in</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM_LEFT</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">POSITIONS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FLOAT_BOTTOM_LEFT</span><span class="p">],</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="n">inset</span><span class="p">:</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                        <span class="n">bounding_rect</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span><span class="p">,</span>
+                        <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
+                        <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span>
+                        <span class="o">-</span> <span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottomLeft</span><span class="p">()</span>
+                    <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                        <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                        <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Default to bottom right corner.</span>
+                <span class="k">if</span> <span class="n">inset</span><span class="p">:</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                        <span class="n">bounding_rect</span><span class="o">.</span><span class="n">right</span><span class="p">()</span>
+                        <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span>
+                        <span class="o">-</span> <span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
+                        <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
+                        <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_padding</span>
+                        <span class="o">-</span> <span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">bounding_rect</span><span class="o">.</span><span class="n">bottomRight</span><span class="p">()</span>
+                    <span class="n">point</span> <span class="o">+=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span>
+                        <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                        <span class="o">-</span><span class="n">pixmap_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+                    <span class="p">)</span>
 
-                <span class="n">badge_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">drawPixmap</span><span class="p">(</span><span class="n">badge_rect</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">)</span>
+            <span class="n">badge_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawPixmap</span><span class="p">(</span><span class="n">badge_rect</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_draw_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -2511,11 +2510,8 @@
                 <span class="s2">&quot;:/tk-framework-qtwidgets/shotgun_widget/rect_512x400.png&quot;</span>
             <span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">,</span> <span class="s2">&quot;pixmap&quot;</span><span class="p">):</span>
             <span class="n">thumbnail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_icon_to_pixmap</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">thumbnail</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">None</span>
 
         <span class="k">return</span> <span class="n">thumbnail</span>
 
@@ -3769,15 +3765,10 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">icon</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">icon</span>
-
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
-
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">icon</span>
 
     <span class="k">def</span> <span class="nf">is_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
