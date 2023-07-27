@@ -186,14 +186,10 @@ class FilterMenuGroup(object):
                 # The action being added is not initially visible.
                 hide_action = filter_action
 
-            # Do not hide items that have a value currnetly set (e.g. a user probably does not
-            # want their active filter to disappear).
-            if not self.filter_action_widget_has_value(hide_action):
-                if hide_action not in self.more_actions:
-                    self.more_actions.append(hide_action)
-
-                # Make sure the action is hidden and its filter value is cleared.
-                self.set_action_visible(hide_action, False)
+            # Make sure the action is hidden and its filter value is cleared.
+            if hide_action not in self.more_actions:
+                self.more_actions.append(hide_action)
+            self.set_action_visible(hide_action, False)
 
         # The "Show More..." action will need to be shown if adding an action has
         # caused exceeding the show limit.
@@ -274,10 +270,18 @@ class FilterMenuGroup(object):
         if self._search_filter_item and self._search_filter_action:
             menu.addAction(self._search_filter_action)
 
-        # Now add all choice filters.
+        # Before adding the items to the menu, check if the show limit needs to be increased
+        # in order to.
         sorted_items = sorted(
             filter_item_and_actions, key=lambda item: self.get_sort_value(item[1])
         )
+        increase_limit = 0
+        for index, (filter_item, action) in enumerate(sorted_items[self._show_limit:]):
+            if self.filter_action_widget_has_value(action):
+                increase_limit = index + 1
+        self._show_limit += increase_limit
+
+        # Now add all choice filters.
         for filter_item, action in sorted_items:
             self.add_item(filter_item, action)
 
@@ -305,6 +309,21 @@ class FilterMenuGroup(object):
 
         insert_before = self._get_insert_before_action(action)
         menu.insertAction(insert_before, action)
+
+        # Lastly, check if the item inserted has a value but is hidden. In that case, we need
+        # to extend the show limit and set all action visible that are within the new limit.
+        if self.filter_action_widget_has_value(action) and not action.isVisible():
+            sorted_actions = self.get_sorted_actions()
+            action_index = sorted_actions.index(action)
+            new_limit = action_index + 1
+            for i in range(self._show_limit, new_limit):
+                filter_action = sorted_actions[i]
+                if filter_action in self.more_actions:
+                    self.more_actions.remove(filter_action)
+                self.set_action_visible(filter_action, True)
+
+            # Update the new show limit 
+            self._show_limit = new_limit
 
     def show_more(self, num=None, increase_limit=True):
         """

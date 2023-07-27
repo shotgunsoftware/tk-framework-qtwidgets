@@ -364,6 +364,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             for field_id, filter_items in self._restore_state.items():
                 if field_id not in state:
                     state[field_id] = filter_items
+                else:
+                    for item_id, item_data in filter_items.items():
+                        state[field_id][item_id] = item_data
 
         return state
 
@@ -774,8 +777,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
             # Ensure the group the filter is in is visible.
             self._field_visibility[field_id] = True
-
+            items_not_restored = {}
             for value_id, filter_data in filter_items.items():
+                # Check if the current filter definition set has the choice filter available.
+                # Note, this will always return false for saerch text filters
                 if self._filters_def.has_filter(field_id, value_id):
                     if isinstance(filter_data, dict):
                         # Ensure the icon is created, since it was removed on save.
@@ -789,10 +794,18 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                             field_id, value_id, filter_data
                         )
                 else:
-                    # Search text filter
-                    self._filters_def.set_default_value(
-                        field_id, value_id=None, default_value=filter_data
-                    )
+                    if isinstance(filter_data, dict):
+                        # Choices filter that cannot be restored with the available filters,
+                        # save it to be restored at a later time.
+                        items_not_restored[value_id] = filter_data
+                    else:
+                        # Restore the search text filter
+                        self._filters_def.set_default_value(
+                            field_id, value_id=None, default_value=filter_data
+                        )
+
+            if items_not_restored:    
+                not_restored[field_id] = items_not_restored
 
         return not_restored
 
