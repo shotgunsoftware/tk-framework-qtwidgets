@@ -17,7 +17,7 @@ class FilterMenuGroup(object):
     Class object to manage a filter grouping within a QMenu.
     """
 
-    def __init__(self, group_id, show_limit_increment=5):
+    def __init__(self, group_id, show_limit=5, show_limit_increment=None):
         """
         Constructor. Initialize the filter group's instance members.
         """
@@ -25,12 +25,12 @@ class FilterMenuGroup(object):
         # The unique identifier for this filter group.
         self.group_id = group_id
 
+        # The limit to how many items are shown in the group.
+        self._show_limit = show_limit
         # The incremental amount to the limited number of items shown in the group; e.g.
         # the group may have a limit to show only 5 items, if the user requets to increase
         # the number of items shown, this is the amount that the limit will increase by.
-        self._show_limit_increment = show_limit_increment
-        # The limit to how many items are shown in the group.
-        self._show_limit = self._show_limit_increment
+        self._show_limit_increment = show_limit_increment or show_limit
 
         # The header QWidgetAction for this group.
         self.header_action = None
