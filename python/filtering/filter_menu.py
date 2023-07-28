@@ -19,16 +19,6 @@ from .filter_item_widget import (
 )
 from .filter_menu_group import FilterMenuGroup
 
-try:
-    # Cannot use the bundle method to import the decorators module (as done for the
-    # shotgun_menus module) since this breaks with Sphinx autodoc. Attempt to get the
-    # decorators package using a relative import, if this fails, it is likely because this
-    # module's package path is in the sys.path, which then will break the relative import.
-    # In that case, catch the exception and attempt to directly import it.
-    from ..decorators import wait_cursor
-except ValueError as e:
-    from decorators import wait_cursor
-
 shotgun_menus = sgtk.platform.current_bundle().import_module("shotgun_menus")
 ShotgunMenu = shotgun_menus.ShotgunMenu
 
@@ -437,7 +427,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             self._proxy_model.layoutChanged.connect(self.update_filters)
 
     @sgtk.LogManager.log_timing
-    @wait_cursor
     def refresh(self, force=False):
         """
         Refresh the filter menu.
@@ -490,7 +479,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             self._is_refreshing = False
             self.menu_refreshed.emit()
 
-    @wait_cursor
     def update_filters(self, filter_group_ids=None):
         """Update only the active/visible filters in the menu."""
 
