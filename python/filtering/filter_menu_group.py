@@ -276,7 +276,7 @@ class FilterMenuGroup(object):
             filter_item_and_actions, key=lambda item: self.get_sort_value(item[1])
         )
         increase_limit = 0
-        for index, (filter_item, action) in enumerate(sorted_items[self._show_limit:]):
+        for index, (filter_item, action) in enumerate(sorted_items[self._show_limit :]):
             if self.filter_action_widget_has_value(action):
                 increase_limit = index + 1
         self._show_limit += increase_limit
@@ -322,7 +322,7 @@ class FilterMenuGroup(object):
                     self.more_actions.remove(filter_action)
                 self.set_action_visible(filter_action, True)
 
-            # Update the new show limit 
+            # Update the new show limit
             self._show_limit = new_limit
 
     def show_more(self, num=None, increase_limit=True):

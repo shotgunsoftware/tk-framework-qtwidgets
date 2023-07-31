@@ -792,7 +792,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                             field_id, value_id=None, default_value=filter_data
                         )
 
-            if items_not_restored:    
+            if items_not_restored:
                 not_restored[field_id] = items_not_restored
 
         return not_restored
