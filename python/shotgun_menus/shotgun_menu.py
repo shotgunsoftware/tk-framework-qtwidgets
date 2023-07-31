@@ -103,6 +103,16 @@ class ShotgunMenu(QtGui.QMenu):
             """
         )
 
+    @staticmethod
+    def get_label(title):
+        """Create the label widget to add to the menu."""
+
+        label = QtGui.QLabel()
+        label.setStyleSheet("margin: 0.4em; color: gray;")
+        font_style = "text-transform: uppercase;"
+        label.setText("<font style='%s'>%s</font>" % (font_style, title))
+        return label
+
     def add_group(self, items, title=None, separator=True, exclusive=False):
         """
         Adds a group of items to the menu.
@@ -158,13 +168,9 @@ class ShotgunMenu(QtGui.QMenu):
 
         :param str title: The title of the sectional label
         """
-        # build the label widget
-        label = QtGui.QLabel(self)
-        label.setStyleSheet("margin: 0.4em; color: gray;")
-        font_style = "text-transform: uppercase;"
-        label.setText("<font style='%s'>%s</font>" % (font_style, title))
 
-        # turn it into an action
+        label = self.get_label(title)
+
         action = QtGui.QWidgetAction(self)
         action.setDefaultWidget(label)
 
