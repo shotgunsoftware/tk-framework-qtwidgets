@@ -280,15 +280,15 @@ class FilterMenuGroup(object):
                 lambda checked=False, m=menu: self.reset_filters(m)
             )
             remove_action = QtGui.QAction("Remove")
-            remove_action.triggered.connect(
-                lambda checked=False: self.remove_filters()
-            )
+            remove_action.triggered.connect(lambda checked=False: self.remove_filters())
             # Create action menu for filter group
             filter_group_action_menu = ShotgunMenu(menu)
             filter_group_action_menu.setTitle(title)
             filter_group_action_menu.add_group([reset_action, remove_action])
             # Create the action button that will display menu on click
-            filter_group_action_menu_button = SGQToolButton(menu, icon=SGQIcon.gear(size=SGQIcon.SIZE_16x16))
+            filter_group_action_menu_button = SGQToolButton(
+                menu, icon=SGQIcon.gear(size=SGQIcon.SIZE_16x16)
+            )
             filter_group_action_menu_button.setStyleSheet("padding: 2px 4px 2px 4px")
             filter_group_action_menu_button.setCheckable(False)
             filter_group_action_menu_button.setPopupMode(QtGui.QToolButton.InstantPopup)
@@ -296,7 +296,9 @@ class FilterMenuGroup(object):
             # Get the formatted label from the ShotgunMenu class
             label = filter_group_action_menu.get_label(title)
             # Create the widget to hold the title and action button
-            header_action_widget = SGQWidget(menu, child_widgets=[label, None, filter_group_action_menu_button])
+            header_action_widget = SGQWidget(
+                menu, child_widgets=[label, None, filter_group_action_menu_button]
+            )
 
             # Create the widget action to display the filter group title and filter group actions
             self.header_action = QtGui.QWidgetAction(menu)
