@@ -671,7 +671,6 @@ class GroupedItemView(QtGui.QAbstractItemView):
                     index = self.model().index(row, 0)
                     selection.select(index, index)
                     y_offset += self._item_spacing.height() + self._group_spacing
-                    continue
 
             # check for selection of child items
             y_offset += item_info.rect.height()
@@ -786,7 +785,7 @@ class GroupedItemView(QtGui.QAbstractItemView):
                 viewport_pos = self.viewport().mapFromGlobal(global_pos)
                 hover_index = self.indexAt(viewport_pos)
 
-                if rect.isValid and rect.intersects(viewport_rect):
+                if rect.isValid() and rect.intersects(update_rect):
                     # the group widget is visible
                     option = self._get_view_options()
                     option.rect = rect

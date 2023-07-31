@@ -214,9 +214,7 @@ class FilterItem(object):
         }
 
     def __repr__(self):
-        """
-        Return a string representation for the FilterItem.
-        """
+        """Return a string representation for the FilterItem."""
 
         params = {
             "id": self._id,
@@ -232,18 +230,12 @@ class FilterItem(object):
 
     @property
     def id(self):
-        """
-        Get the id for this FilterItem.
-        """
-
+        """Get the id for this FilterItem."""
         return self._id
 
     @property
     def filter_type(self):
-        """
-        Get or set the filter type.
-        """
-
+        """Get or set the filter type."""
         return self._filter_type
 
     @filter_type.setter
@@ -264,15 +256,12 @@ class FilterItem(object):
 
     @property
     def filter_op(self):
-        """
-        Get or set the filter operation.
-        """
+        """Get or set the filter operation."""
 
         return self._filter_op
 
     @filter_op.setter
     def filter_op(self, value):
-
         if value not in self.FilterOp.VALID_OPS:
             raise TypeError("Invalid filter operation '{}'.".format(value))
 
@@ -281,123 +270,14 @@ class FilterItem(object):
     @property
     def filter_value(self):
         """
-        Get or set the value for the filter that incoming data will be compared against to check
-        acceptance.
+        Get or set the value for the filter that incoming data will be compared against to
+        check acceptance.
         """
-
         return self._filter_value
 
     @filter_value.setter
     def filter_value(self, value):
-        """
-        Validate the data to be set as the filter's value.
-        """
-
-        if isinstance(value, dict) and self.filter_type not in (
-            self.FilterType.DICT,
-            self.FilterType.LIST,
-        ):
-            # Try to extract the value from the dictionary object, for filter types that
-            # are not expected a dictionary value.
-            value = value.get("value")
-
-        if value is None:
-            # Just leave it as is
-            pass
-
-        elif self.filter_type == self.FilterType.GROUP:
-            if value is None:
-                value = []
-
-            if not isinstance(value, list):
-                raise TypeError(
-                    "Attempting to set invalid value '{value}' for '{type}' filter type".format(
-                        value=value, type=self.filter_type
-                    )
-                )
-
-            for filter_item in value:
-                if not isinstance(filter_item, FilterItem):
-                    raise TypeError(
-                        "Attempting to set invalid value group filter '{item}'. Must be a FilterItem".format(
-                            item=filter_item
-                        )
-                    )
-
-        elif self.filter_type == self.FilterType.BOOL:
-            # Allow 0 and 1 to be coerced to False and True. Do not allow any other non-bool data
-            # types to go through, this could cause misleading filtering.
-            if value == 0:
-                value = False
-            elif value == 1:
-                value = True
-
-            if not isinstance(value, bool):
-                raise TypeError(
-                    "Attempting to set invalid value '{value}' for '{type}' filter type".format(
-                        value=value, type=self.filter_type
-                    )
-                )
-
-        elif self.filter_type == self.FilterType.STR:
-            if not isinstance(value, six.string_types):
-                # Just coerce it to string type.
-                value = str(value)
-
-        elif self.filter_type == self.FilterType.NUMBER:
-            if isinstance(value, six.string_types):
-                # For string values, first try to coerce to an int.
-                try:
-                    value = int(value)
-                except ValueError:
-                    pass
-
-            if isinstance(value, six.string_types):
-                # Still a string value, next try to coerce to a float.
-                try:
-                    value = float(value)
-                except ValueError:
-                    pass
-
-            if not isinstance(value, numbers.Number):
-                raise TypeError(
-                    "Attempting to set invalid value '{value}' for '{type}' filter type".format(
-                        value=value, type=self.filter_type
-                    )
-                )
-
-        elif self.filter_type == self.FilterType.DICT:
-            if not isinstance(value, (dict, six.string_types)):
-                raise TypeError(
-                    "Attempting to set invalid value '{value}' for '{type}' filter type".format(
-                        value=value, type=self.filter_type
-                    )
-                )
-
-        elif self.filter_type == self.FilterType.DATETIME:
-            # Allow string values that are a valid "datetime" bucket or datetime objects
-            valid = False
-            if isinstance(value, six.string_types):
-                valid = value in self.DATETIME_BUCKETS
-
-            if not valid:
-                if isinstance(value, six.string_types):
-                    value = datetime.strptime(value, "%Y-%m-%d")
-                    value.replace(tzinfo=sg_timezone.LocalTimezone())
-
-                if isinstance(value, float):
-                    value = datetime.fromtimestamp(
-                        value, tz=sg_timezone.LocalTimezone()
-                    )
-
-                if not isinstance(value, datetime):
-                    raise TypeError(
-                        "Attempting to set invalid value '{value}' for '{type}' filter type".format(
-                            value=value, type=self.filter_type
-                        )
-                    )
-
-        self._filter_value = value
+        self._filter_value = self._sanitize_filter_value(value)
 
     @property
     def filters(self):
@@ -596,6 +476,24 @@ class FilterItem(object):
         # Do not accept if the operation is OR (or invalid) since the value would have
         # been accepted immediately if any filters accepted it.
         return False
+
+    @classmethod
+    def map_from_sg_data_type(cls, sg_data_type):
+        """
+        Map the SG data type to a valid filter type.
+
+        :param sg_data_type: The SG data type.
+        :type sg_data_type: str
+
+        :return: The corresponding filter type for the SG data type.
+        :rtype: str
+        """
+
+        if sg_data_type in cls.FilterType.VALID_TYPES:
+            # No mapping required.
+            return sg_data_type
+
+        return cls.FilterType.MAP_TYPES.get(sg_data_type)
 
     @staticmethod
     def get_datetime_bucket(dt):
@@ -967,3 +865,140 @@ class FilterItem(object):
             type=self.filter_type
         )
         return False
+
+    def set_filter_value(self, value):
+        """
+        Set the filter item's filter value.
+
+        :param value: The value to set.
+        :type value: any
+
+        :return: True if the filter item's value was updated, else False. If the value is the
+            same as the current filter value, False will be returned.
+        :rtype: bool
+        """
+
+        new_value = self._sanitize_filter_value(value)
+        if new_value == self._filter_value:
+            # Nothing has changed, return False.
+            return False
+
+        self._filter_value = value
+        return True
+
+    def _sanitize_filter_value(self, value):
+        """
+        Process the raw value and sanitize it for the filter item to use.
+
+        :param value: The raw filter value to sanitize.
+        :type value: any
+
+        :return: The sanitized filter value for the filter item to use.
+        :rtype: any
+        """
+
+        if isinstance(value, dict) and self.filter_type not in (
+            self.FilterType.DICT,
+            self.FilterType.LIST,
+        ):
+            # Try to extract the value from the dictionary object, for filter types that
+            # are not expected a dictionary value.
+            value = value.get("value")
+
+        if value is None:
+            # Just leave it as is
+            pass
+
+        elif self.filter_type == self.FilterType.GROUP:
+            if value is None:
+                value = []
+
+            if not isinstance(value, list):
+                raise TypeError(
+                    "Attempting to set invalid value '{value}' for '{type}' filter type".format(
+                        value=value, type=self.filter_type
+                    )
+                )
+
+            for filter_item in value:
+                if not isinstance(filter_item, FilterItem):
+                    raise TypeError(
+                        "Attempting to set invalid value group filter '{item}'. Must be a FilterItem".format(
+                            item=filter_item
+                        )
+                    )
+
+        elif self.filter_type == self.FilterType.BOOL:
+            # Allow 0 and 1 to be coerced to False and True. Do not allow any other non-bool data
+            # types to go through, this could cause misleading filtering.
+            if value == 0:
+                value = False
+            elif value == 1:
+                value = True
+
+            if not isinstance(value, bool):
+                raise TypeError(
+                    "Attempting to set invalid value '{value}' for '{type}' filter type".format(
+                        value=value, type=self.filter_type
+                    )
+                )
+
+        elif self.filter_type == self.FilterType.STR:
+            if not isinstance(value, six.string_types):
+                # Just coerce it to string type.
+                value = str(value)
+
+        elif self.filter_type == self.FilterType.NUMBER:
+            if isinstance(value, six.string_types):
+                # For string values, first try to coerce to an int.
+                try:
+                    value = int(value)
+                except ValueError:
+                    pass
+
+            if isinstance(value, six.string_types):
+                # Still a string value, next try to coerce to a float.
+                try:
+                    value = float(value)
+                except ValueError:
+                    pass
+
+            if not isinstance(value, numbers.Number):
+                raise TypeError(
+                    "Attempting to set invalid value '{value}' for '{type}' filter type".format(
+                        value=value, type=self.filter_type
+                    )
+                )
+
+        elif self.filter_type == self.FilterType.DICT:
+            if not isinstance(value, (dict, six.string_types)):
+                raise TypeError(
+                    "Attempting to set invalid value '{value}' for '{type}' filter type".format(
+                        value=value, type=self.filter_type
+                    )
+                )
+
+        elif self.filter_type == self.FilterType.DATETIME:
+            # Allow string values that are a valid "datetime" bucket or datetime objects
+            valid = False
+            if isinstance(value, six.string_types):
+                valid = value in self.DATETIME_BUCKETS
+
+            if not valid:
+                if isinstance(value, six.string_types):
+                    value = datetime.strptime(value, "%Y-%m-%d")
+                    value.replace(tzinfo=sg_timezone.LocalTimezone())
+
+                if isinstance(value, float):
+                    value = datetime.fromtimestamp(
+                        value, tz=sg_timezone.LocalTimezone()
+                    )
+
+                if not isinstance(value, datetime):
+                    raise TypeError(
+                        "Attempting to set invalid value '{value}' for '{type}' filter type".format(
+                            value=value, type=self.filter_type
+                        )
+                    )
+
+        return value

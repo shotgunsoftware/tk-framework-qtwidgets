@@ -22,13 +22,13 @@ class SGQIcon(QtGui.QIcon):
     purpose is to define factory classmethods to create an icon, which provides a convenience to the caller
     sine they no longer need to know the exact path to the icon resource.
 
-    TODO add all icons used throughout Toolkit here.
-    TODO support all modes for a QIcon (Active, Disabled, Selected)
+    TODO add all icons used throughout Toolkit here, and provide all pixmap for all modes/state
+    TODO rename icon files to reflect exactly which mode (normal, disabled, active, selected) and state (on, off)
     """
 
     # Enum for icon sizes
     # The pixel dimensions are suggested but not enforced for each size.
-    # NOTE that not all icons will be available in all sizes.
+    # TODO ensure all icons have all sizes available
     (
         SIZE_16x16,
         SIZE_20x20,
@@ -44,7 +44,17 @@ class SGQIcon(QtGui.QIcon):
         SIZE_40x40: "40x40",
     }
 
-    def __init__(self, normal_off=None, normal_on=None):
+    def __init__(
+        self,
+        normal_off,
+        normal_on=None,
+        disabled_off=None,
+        disabled_on=None,
+        active_off=None,
+        active_on=None,
+        selected_off=None,
+        selected_on=None,
+    ):
         """
         Create a ShotGrid Qt icon object.
 
@@ -52,21 +62,89 @@ class SGQIcon(QtGui.QIcon):
         :type normal_off: str
         :param normal_on: The icon resource path for normal mode and on state.
         :type normal_on: str
+        :param disabled_off: The icon resource path for disabled mode and off state.
+        :type disabled_off: str
+        :param disabled_on: The icon resource path for disabled mode and on state.
+        :type disabled_on: str
+        :param active_off: The icon resource path for active mode and off state.
+        :type active_off: str
+        :param active_on: The icon resource path for active mode and on state.
+        :type active_on: str
+        :param selected_off: The icon resource path for selected mode and off state.
+        :type selected_off: str
+        :param selected_on: The icon resource path for selected mode and on state.
+        :type selected_on: str
         """
 
         super(SGQIcon, self).__init__()
 
-        if normal_off:
-            self.addPixmap(
-                QtGui.QPixmap(normal_off),
-                QtGui.QIcon.Normal,
-                QtGui.QIcon.Off,
-            )
+        # The pixmap for the mode Normal and state On is the default
+        self.addPixmap(
+            QtGui.QPixmap(normal_off),
+            QtGui.QIcon.Normal,
+            QtGui.QIcon.Off,
+        )
 
+        # Set the following pixmaps for the specified modes and state. If no pixmap is
+        # specified, the default pixmap shown for the mode/state will be determined based on
+        # which other mode/state pixmaps have been set.
+
+        # If not explicitly set, defaults to Active/On (if set), else Normal/Off
         if normal_on:
             self.addPixmap(
                 QtGui.QPixmap(normal_on),
                 QtGui.QIcon.Normal,
+                QtGui.QIcon.On,
+            )
+
+        # If not explicitly set, defaults to Normal/Off
+        if disabled_off:
+            self.addPixmap(
+                QtGui.QPixmap(disabled_off),
+                QtGui.QIcon.Disabled,
+                QtGui.QIcon.Off,
+            )
+
+        # If not explicitly set, defaults to
+        # Normal/On (if set), else Disabled/Off (if set), else Normal/Off
+        if disabled_on:
+            self.addPixmap(
+                QtGui.QPixmap(disabled_on),
+                QtGui.QIcon.Disabled,
+                QtGui.QIcon.On,
+            )
+
+        # If not explicitly set, defaults to Normal/Off
+        if active_off:
+            self.addPixmap(
+                QtGui.QPixmap(active_off),
+                QtGui.QIcon.Active,
+                QtGui.QIcon.On,
+            )
+
+        # If not explicitly set, defaults to
+        # Normal/On (if set), else Active/Off (if set), else Normal/Off
+        if active_on:
+            self.addPixmap(
+                QtGui.QPixmap(active_on),
+                QtGui.QIcon.Active,
+                QtGui.QIcon.On,
+            )
+
+        # If not explicitly set, defaults to Normal/Off
+        if selected_off:
+            self.addPixmap(
+                QtGui.QPixmap(selected_off),
+                QtGui.QIcon.Selected,
+                QtGui.QIcon.On,
+            )
+
+        # If not explicitly set, defaults to
+        # Normal/On (if set), else Selected/Off (if set), else Normal/Off
+        if selected_on:
+            self.addPixmap(
+                QtGui.QPixmap(selected_on),
+                QtGui.QIcon.Selected,
                 QtGui.QIcon.On,
             )
 
@@ -117,6 +195,25 @@ class SGQIcon(QtGui.QIcon):
         return cls(icon)
 
     @classmethod
+    def grey_refresh(cls, size=SIZE_20x20):
+        icon = cls.resource_path("refresh_grey", size)
+        return cls(icon)
+
+    @classmethod
+    def transparent_refresh(cls, size=SIZE_20x20):
+        icon = cls.resource_path("refresh", size)
+        return cls(icon)
+
+    @classmethod
+    def refresh(cls, size=SIZE_20x20):
+        return cls(
+            normal_off=cls.resource_path("refresh-inactive", size),
+            normal_on=cls.resource_path("refresh-active", size),
+            disabled_off=cls.resource_path("refresh-inactive-disabled", size),
+            disabled_on=cls.resource_path("refresh-active-disabled", size),
+        )
+
+    @classmethod
     def red_bullet(cls, size=SIZE_20x20):
         return cls(
             normal_off=cls.resource_path("bullet_inactive", size),
@@ -141,8 +238,10 @@ class SGQIcon(QtGui.QIcon):
     @classmethod
     def filter(cls, size=SIZE_20x20):
         return cls(
-            normal_off=cls.resource_path("filter_inactive", size),
-            normal_on=cls.resource_path("filter_active", size),
+            normal_off=cls.resource_path("filter-inactive", size),
+            normal_on=cls.resource_path("filter-active", size),
+            disabled_off=cls.resource_path("filter-inactive-disabled", size),
+            disabled_on=cls.resource_path("filter-active-disabled", size),
         )
 
     @classmethod

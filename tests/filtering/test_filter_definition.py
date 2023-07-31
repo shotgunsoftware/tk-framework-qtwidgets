@@ -213,9 +213,10 @@ class TestFiltersDefinition(TankTestBase):
         assert fd.proxy_model is None
         assert fd.get_source_model() is None
         assert fd.filter_roles == [QtCore.Qt.DisplayRole]
-        assert fd.ignore_fields == []
+        assert fd.accept_fields == set()
+        assert fd.ignore_fields == set()
         assert fd.use_fully_qualified_name is True
-        assert fd.project_id is None
+        assert fd.default_sg_project_id is None
         assert fd.tree_level is None
 
     def test_property_filter_roles(self):
@@ -242,9 +243,9 @@ class TestFiltersDefinition(TankTestBase):
         """
 
         fd = self.FilterDefinition()
-        assert fd.ignore_fields == []
+        assert fd.ignore_fields == set()
 
-        fields = [1, 2, 3]
+        fields = set([1, 2, 3])
         fd.ignore_fields = fields
         assert fd.ignore_fields == fields
 
@@ -266,11 +267,11 @@ class TestFiltersDefinition(TankTestBase):
         """
 
         fd = self.FilterDefinition()
-        assert fd.project_id is None
+        assert fd.default_sg_project_id is None
 
         project_id = self.project["id"]
-        fd.use_fully_qualified_name = project_id
-        assert fd.use_fully_qualified_name == project_id
+        fd.default_sg_project_id = project_id
+        assert fd.default_sg_project_id == project_id
 
     def test_property_tree_level(self):
         """
@@ -338,7 +339,7 @@ class TestFiltersDefinition(TankTestBase):
         """
 
         fd = self.FilterDefinition()
-        assert fd.get_field_data("bad_field_id") == {}
+        assert fd.get_field_data("bad_field_id") is None
 
         for data_set, data_set_fields in self.data_sets:
             # FIXME ignore sg data for now
@@ -358,7 +359,7 @@ class TestFiltersDefinition(TankTestBase):
                     assert fd.get_field_data(field_id) != {}
 
                     # Still should not have the bad field id
-                    assert fd.get_field_data("bad_field_id") == {}
+                    assert fd.get_field_data("bad_field_id") is None
 
     def test_method_clear(self):
         """
@@ -421,7 +422,9 @@ class TestFiltersDefinition(TankTestBase):
                 assert len(result_fields) == len(fd.filter_roles) * len(data_set_fields)
 
                 # Iterate through the filter roles to ensure we check all the resulting data.
-                expected_field_data_keys = set(["name", "type", "values", "data_func"])
+                expected_field_data_keys = set(
+                    ["name", "short_name", "type", "values", "data_func"]
+                )
                 for role in fd.filter_roles:
                     # Validate the expected field id is in the result fields
                     field_id = "{role}.{field}".format(role=role, field=field)
@@ -455,6 +458,7 @@ class TestFiltersDefinition(TankTestBase):
                     "value",
                     "count",
                     "icon",
+                    "icon_path",
                 ]
             )
             for row in range(model.rowCount()):
@@ -467,8 +471,8 @@ class TestFiltersDefinition(TankTestBase):
                         for field, value in index_data.items():
                             if index_data.get("type"):
                                 # sg data
-                                field_id = "{type}.{field}".format(
-                                    type=index_data["type"], field=field
+                                field_id = "{role}.{type}.{field}".format(
+                                    role=role, type=index_data["type"], field=field
                                 )
                             else:
                                 field_id = "{role}.{field}".format(
@@ -511,7 +515,6 @@ class TestFiltersDefinition(TankTestBase):
                         field_id = "{role}.{field}".format(role=role, field=None)
                         data_values = fd.get_field_data(field_id)["values"]
 
-                        # value_id = str(index_data)
                         value_id = "{}.{}".format(field_id, str(index_data))
                         assert value_id in data_values.keys()
 
@@ -546,8 +549,8 @@ class TestFiltersDefinition(TankTestBase):
                         for field, value in index_data.items():
                             if index_data.get("type"):
                                 # sg data
-                                field_id = "{type}.{field}".format(
-                                    type=index_data["type"], field=field
+                                field_id = "{role}.{type}.{field}".format(
+                                    role=role, type=index_data["type"], field=field
                                 )
                             else:
                                 field_id = "{role}.{field}".format(
