@@ -226,6 +226,11 @@ class SGQIcon(QtGui.QIcon):
         return cls(icon)
 
     @classmethod
+    def gear(cls, size=SIZE_20x20):
+        icon = cls.resource_path("gear", size)
+        return cls(icon)
+
+    @classmethod
     def green_check_mark(cls, size=SIZE_20x20):
         icon = cls.resource_path("check_mark_green", size)
         return cls(icon)
