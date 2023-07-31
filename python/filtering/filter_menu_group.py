@@ -9,18 +9,25 @@
 # not expressly granted therein are reserved by Autodesk Inc.
 
 import sgtk
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtCore, QtGui
+
+
+shotgun_menus = sgtk.platform.current_bundle().import_module("shotgun_menus")
+ShotgunMenu = shotgun_menus.ShotgunMenu
+
+sg_qicons = sgtk.platform.current_bundle().import_module("sg_qicons")
+SGQIcon = sg_qicons.SGQIcon
+
+sg_qwidgets = sgtk.platform.current_bundle().import_module("sg_qwidgets")
+SGQWidget = sg_qwidgets.SGQWidget
+SGQToolButton = sg_qwidgets.SGQToolButton
 
 
 class FilterMenuGroup(object):
-    """
-    Class object to manage a filter grouping within a QMenu.
-    """
+    """Class object to manage a filter grouping within a QMenu."""
 
     def __init__(self, group_id, show_limit_increment=5):
-        """
-        Constructor. Initialize the filter group's instance members.
-        """
+        """Constructor. Initialize the filter group's instance members."""
 
         # The unique identifier for this filter group.
         self.group_id = group_id
@@ -267,8 +274,34 @@ class FilterMenuGroup(object):
             menu.addSeparator()
 
         if title:
-            title_action = menu.add_label(title)
-            self.header_action = title_action
+            # Add the filter group title menu entry (with actions)
+            reset_action = QtGui.QAction("Reset")
+            reset_action.triggered.connect(
+                lambda checked=False, m=menu: self.reset_filters(m)
+            )
+            remove_action = QtGui.QAction("Remove")
+            remove_action.triggered.connect(
+                lambda checked=False: self.remove_filters()
+            )
+            # Create action menu for filter group
+            filter_group_action_menu = ShotgunMenu(menu)
+            filter_group_action_menu.setTitle(title)
+            filter_group_action_menu.add_group([reset_action, remove_action])
+            # Create the action button that will display menu on click
+            filter_group_action_menu_button = SGQToolButton(menu, icon=SGQIcon.gear(size=SGQIcon.SIZE_16x16))
+            filter_group_action_menu_button.setStyleSheet("padding: 2px 4px 2px 4px")
+            filter_group_action_menu_button.setCheckable(False)
+            filter_group_action_menu_button.setPopupMode(QtGui.QToolButton.InstantPopup)
+            filter_group_action_menu_button.setMenu(filter_group_action_menu)
+            # Get the formatted label from the ShotgunMenu class
+            label = filter_group_action_menu.get_label(title)
+            # Create the widget to hold the title and action button
+            header_action_widget = SGQWidget(menu, child_widgets=[label, None, filter_group_action_menu_button])
+
+            # Create the widget action to display the filter group title and filter group actions
+            self.header_action = QtGui.QWidgetAction(menu)
+            self.header_action.setDefaultWidget(header_action_widget)
+            menu.addAction(self.header_action)
 
         # First add the search filter (if provided), so it appears on top of all other choice filters.
         if self._search_filter_item and self._search_filter_action:
@@ -393,6 +426,27 @@ class FilterMenuGroup(object):
             self.set_action_visible(self.show_more_action, False)
         else:
             self._update_show_more_visibility()
+
+    def reset_filters(self, menu):
+        """
+        Reset the filter group by clearing all filters within the group.
+
+        :param menu: The parent menu this filter group belongs to.
+        :type menu: :class:`FilterMenu`
+        """
+
+        menu.clear_filters([self.group_id])
+
+    def remove_filters(self):
+        """
+        Remove the filter group from the menu.
+
+        This will clear any filters that are set in the group before removing the widgets.
+        """
+
+        # Get and trigger the menu action that removes the filter group
+        w = self.show_hide_action.defaultWidget()
+        w.clear_value()
 
     #############################################@##################################################
     # Protected methods
