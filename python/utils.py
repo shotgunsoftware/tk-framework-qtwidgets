@@ -234,12 +234,12 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
 
     Entity Dictionary directives:
         - showtype: Show the type for links, e.g. return "Shot ABC123" instead
-        of just "ABC123"
-
+          of just "ABC123"
         - nolink: don't return a <a href> style hyperlink for links, instead just
-        return a string.
-
+          return a string.
         - typeonly: Show only the type for hte links
+        - icon: Prefix the str with the icon for the entity type
+        - icon_suffix: Append the icon for the entity type to the str
 
     Timestamp directives ('created_at', 'updated_at'):
         - short_timestamp: Display a shorter timestamp, e.g. 1h, 1d, 1w, etc.
@@ -253,6 +253,10 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
         - zeropadded: Pad the version number with up to three zeros
         - A format string that contains a single argument specifier to substitute the
           version number integer value; e.g. '%03d' will achieve the same as 'zeropadded'.
+
+    Default field directives (used if failed to convert field to str):
+        - icon: Prefix the str with the icon for the Shotgun data type (sg_type)
+        - icon_suffix: Append the icon for the Shotgun data type (sg_type)
 
     :param sg_type: Shotgun data type
     :param sg_field: Shotgun field name
@@ -279,29 +283,40 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
 
     if isinstance(value, dict) and set(["type", "id", "name"]) == set(value.keys()):
         # entity link
-        if "showtype" in directives:
-            # links are displayed as "Shot ABC123"
-
-            # get the nice name from our schema
-            # this is so that it says "Level" instead of "CustomEntity013"
-            entity_type_display_name = shotgun_globals.get_type_display_name(
-                value["type"]
-            )
-            link_name = "%s %s" % (entity_type_display_name, value["name"])
-        else:
-            # links are just "ABC123"
-            link_name = value["name"]
-
-        if "nolink" in directives:
-            str_val = link_name
-        else:
-            str_val = get_hyperlink_html(
-                url="sgtk:%s:%s" % (value["type"], value["id"]),
-                name=link_name,
-            )
+        entity_type = value["type"]
 
         if "typeonly" in directives:
-            str_val = shotgun_globals.get_type_display_name(value["type"])
+            str_val = shotgun_globals.get_type_display_name(entity_type)
+        else:
+            if "showtype" in directives:
+                # links are displayed as "Shot ABC123"
+
+                # get the nice name from our schema
+                # this is so that it says "Level" instead of "CustomEntity013"
+                entity_type_display_name = shotgun_globals.get_type_display_name(entity_type)
+                link_name = "%s %s" % (entity_type_display_name, value["name"])
+            else:
+                # links are just "ABC123"
+                link_name = value["name"]
+
+            if "nolink" in directives:
+                str_val = link_name
+            else:
+                str_val = get_hyperlink_html(
+                    url="sgtk:%s:%s" % (entity_type, value["id"]),
+                    name=link_name,
+                )
+
+        if "icon" in directives:
+            # Show the entity icon
+            icon_url = shotgun_globals.get_entity_type_icon_url(entity_type)
+            icon_str = f"<img src='{icon_url}' />"
+            str_val = " ".join([icon_str, str_val])
+        elif "icon_suffix" in directives:
+            # Show icon as suffix
+            icon_url = shotgun_globals.get_entity_type_icon_url(entity_type)
+            icon_str = f"<img src='{icon_url}' />"
+            str_val = " ".join([str_val, icon_str])
 
     elif isinstance(value, list):
         # list of items
@@ -348,7 +363,6 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
 
             str_val = str_format % value
 
-    # elif sg_field == "type":
     elif "type" in sg_field_names:
         if "showtype" in directives:
             str_val = shotgun_globals.get_type_display_name(value)
@@ -357,6 +371,16 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
         str_val = str(value)
         # make sure it gets formatted correctly in html
         str_val = str_val.replace("\n", "<br>")
+        if "icon" in directives:
+            # Show the entity icon
+            icon_url = shotgun_globals.get_entity_type_icon_url(sg_type)
+            icon_str = f"<img src='{icon_url}' />"
+            str_val = " ".join([icon_str, str_val])
+        elif "icon_suffix" in directives:
+            # Show icon as suffix
+            icon_url = shotgun_globals.get_entity_type_icon_url(sg_type)
+            icon_str = f"<img src='{icon_url}' />"
+            str_val = " ".join([str_val, icon_str])
 
     return str_val
 
