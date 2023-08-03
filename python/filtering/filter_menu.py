@@ -768,7 +768,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             items_not_restored = {}
             for value_id, filter_data in filter_items.items():
                 # Check if the current filter definition set has the choice filter available.
-                # Note, this will always return false for saerch text filters
+                # Note, this will always return false for search text filters
                 if self._filters_def.has_filter(field_id, value_id):
                     if isinstance(filter_data, dict):
                         # Ensure the icon is created, since it was removed on save.
