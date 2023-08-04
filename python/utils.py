@@ -293,7 +293,9 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
 
                 # get the nice name from our schema
                 # this is so that it says "Level" instead of "CustomEntity013"
-                entity_type_display_name = shotgun_globals.get_type_display_name(entity_type)
+                entity_type_display_name = shotgun_globals.get_type_display_name(
+                    entity_type
+                )
                 link_name = "%s %s" % (entity_type_display_name, value["name"])
             else:
                 # links are just "ABC123"

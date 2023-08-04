@@ -1254,7 +1254,11 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         # Get the height of the item thumbnail
         if self.thumbnail_height > 0 and self._get_thumbnail(index) is not None:
-            thumbnail_height = self.thumbnail_height + self.thumbnail_padding.top + self.thumbnail_padding.bottom
+            thumbnail_height = (
+                self.thumbnail_height
+                + self.thumbnail_padding.top
+                + self.thumbnail_padding.bottom
+            )
         else:
             thumbnail_height = -1
 
@@ -1579,9 +1583,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
         # Adjust the rect to be centered
         top_left = thumbnail_rect.topLeft()
-        thumbnail_rect.moveTo(
-            top_left.x() + dx, top_left.y() + dy
-        )
+        thumbnail_rect.moveTo(top_left.x() + dx, top_left.y() + dy)
 
         # Adjust the thumbnail to be centered within the rect
         if x or y:
