@@ -277,11 +277,11 @@ class FilterMenuGroup(object):
 
         if title:
             # Add the filter group title menu entry (with actions)
-            reset_action = QtGui.QAction("Reset")
+            reset_action = QtGui.QAction("Reset Filter")
             reset_action.triggered.connect(
                 lambda checked=False, m=menu: self.reset_filters(m)
             )
-            remove_action = QtGui.QAction("Remove")
+            remove_action = QtGui.QAction("Remove Filter")
             remove_action.triggered.connect(lambda checked=False: self.remove_filters())
             # Create action menu for filter group
             filter_group_action_menu = ShotgunMenu(menu)
