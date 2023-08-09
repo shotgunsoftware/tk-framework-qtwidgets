@@ -27,7 +27,9 @@ class FilterMenuGroup(object):
     """Class object to manage a filter grouping within a QMenu."""
 
     def __init__(self, group_id, show_limit_increment=5):
-        """Constructor. Initialize the filter group's instance members."""
+        """
+        Constructor. Initialize the filter group's instance members.
+        """
 
         # The unique identifier for this filter group.
         self.group_id = group_id
