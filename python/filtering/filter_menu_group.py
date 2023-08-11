@@ -190,7 +190,9 @@ class FilterMenuGroup(object):
 
             if self.filter_action_widget_has_value(hide_action):
                 # Do not hide actions that have a value set. Instead increase the show limit.
-                self._increase_show_limit(action_index=hide_action_index, sorted_actions=sorted_actions)
+                self._increase_show_limit(
+                    action_index=hide_action_index, sorted_actions=sorted_actions
+                )
             else:
                 # Make sure the action is hidden and its filter value is cleared.
                 if hide_action not in self.more_actions:
@@ -460,14 +462,14 @@ class FilterMenuGroup(object):
         :type sorted_actions: List[QWidgetAction]
         """
 
-        assert(action or action_index)
+        assert action or action_index
 
         if sorted_actions is None:
             sorted_actions = self.get_sorted_actions()
-        
+
         if action_index is None:
             action_index = sorted_actions.index(action)
-        
+
         new_limit = action_index + 1
 
         for i in range(self._show_limit, new_limit):
