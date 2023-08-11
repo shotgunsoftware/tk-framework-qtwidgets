@@ -136,8 +136,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         :param parent: The parent widget.
         :type parent: :class:`sgtk.platform.qt.QtWidget`
-        :param refresh_on_show: True will ensure the menu is up to date on show. This will
-            slow performance on menu open, but ensures the data is the most up to date.
+        :param refresh_on_show: True will ensure the menu is up to date on show by always
+            refreshing the filters before showing. This will slow performance on menu open,
+            but ensures the data is the most up to date. To only refresh the menu on show
+            on demand, set the `refresh_on_show` property instead of this parm on init.
         :type refresh_on_show: bool
         """
 
@@ -181,10 +183,13 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # state to restore until the menu is ready to do so.
         self._restore_state = {}
 
-        # Flag indicating if the menu should refresh right before it is shown. This will
-        # ensure the menu is the most up to date with the current data; however it will take
-        # longer for the menu to pop open.
-        self._refresh_on_show = refresh_on_show
+        # Flag indicating if the menu should ALWAYS refresh right before it is shown. This
+        # will ensure the menu is the most up to date with the current data; however it will
+        # take longer for the menu to pop open.
+        self.__always_refresh_on_show = refresh_on_show
+        # Flag indicating if the menu should refresh on NEXT time it is shown. This flag will
+        # be toggled off after the next time it is shown.
+        self.__refresh_on_show = False
 
         # Connect signals/slots
         self.aboutToShow.connect(self._about_to_show)
@@ -206,6 +211,15 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         Get whether or not the menu has any active filtering.
         """
         return bool(self._active_filter and self._active_filter.filters)
+
+    @property
+    def refresh_on_show(self):
+        """Get or set the property to refresh menu before showing."""
+        return self.__refresh_on_show
+
+    @refresh_on_show.setter
+    def refresh_on_show(self, refresh):
+        self.__refresh_on_show = refresh
 
     @staticmethod
     def set_widget_action_default_widget_value(widget_action, checked):
@@ -1165,8 +1179,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         """Callback triggered when the menu is about to show."""
 
         # Ensure the menu is up to date on show.
-        if self._refresh_on_show:
+        if self.__always_refresh_on_show or self.refresh_on_show:
             self.refresh()
+            self.refresh_on_show = False
 
     def _update_model_filters(self):
         """Update the filter model to reflect the current filtering set based on the menu."""
