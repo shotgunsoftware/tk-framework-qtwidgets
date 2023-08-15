@@ -530,7 +530,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self.clear()
         self._more_filters_menu = None
 
-    def clear_filters(self):
+    def clear_filters(self, filter_group_ids=None):
         """Clear any active filtesr that are set in the menu."""
 
         if not self._filter_groups:
@@ -547,8 +547,22 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # Only emit a change if the menu actually had active filters.
         had_value = False
 
+        # Get the filter groups to clear
+        if filter_group_ids:
+            filter_groups = []
+            num_groups = len(filter_group_ids)
+            for group_id, filter_group in self._filter_groups.items():
+                if group_id in filter_group_ids:
+                    filter_groups.append(filter_group)
+                if len(filter_groups) == num_groups:
+                    # Found all groups, exit early
+                    break
+        else:
+            # Not specified, clear all.
+            filter_groups = self._filter_groups.values()
+
         try:
-            for filter_group in self._filter_groups.values():
+            for filter_group in filter_groups:
                 for action in filter_group.filter_actions.values():
                     filter_item_widget = action.defaultWidget()
                     if action.isChecked() or filter_item_widget.has_value():
