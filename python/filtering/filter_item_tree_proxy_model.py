@@ -9,11 +9,9 @@
 # not expressly granted therein are reserved by Autodesk Inc.
 
 import sgtk
-from sgtk.platform.qt import QtCore, QtGui
 
 from .filter_item import FilterItem
 
-# from ..models import HierarchicalFilteringProxyModel
 models = sgtk.platform.current_bundle().import_module("models")
 
 
