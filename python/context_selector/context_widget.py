@@ -626,9 +626,18 @@ class ContextWidget(QtGui.QWidget):
     def _on_entity_activated(self, entity_type, entity_id, entity_name):
         """
         Slot called when an entity is selected via one of the search completers.
+
+        Since ``context_from_entity`` doesn't guarantee "name" field to be populated,
+        fallback to use ``entity_name`` if it's missing.
         """
         bundle = sgtk.platform.current_bundle()
         context = bundle.sgtk.context_from_entity(entity_type, entity_id)
+        if entity_type == "Project":
+            context.project.setdefault("name", entity_name)
+        elif entity_type == "Task":
+            context.task.setdefault("name", entity_name)
+        else:
+            context.entity.setdefault("name", entity_name)
         self._on_context_activated(context)
 
     def _on_task_search_toggled(self, checked):
