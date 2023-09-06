@@ -866,6 +866,20 @@ class FilterItem(object):
         )
         return False
 
+    def validate_search(self, search):
+        """
+        Check if the filter item matches the search value.
+
+        :param search: The search value.
+        :type search: any
+
+        :return: True if the filter item's value matches the search value, else False.
+        """
+        search = self._sanitize_filter_value(search)
+        if search == self._filter_value:
+            return True
+        return False
+
     def set_filter_value(self, value):
         """
         Set the filter item's filter value.

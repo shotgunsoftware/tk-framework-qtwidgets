@@ -13,7 +13,7 @@ from .filter_definition import FilterDefinition, FilterMenuFiltersDefinition
 from .filter_item import FilterItem
 from .filter_item_widget import (
     FilterItemWidget,
-    TextFilterItemWidget,
+    SearchFilterItemWidget,
     ChoicesFilterItemWidget,
 )
 

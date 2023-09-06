@@ -13,6 +13,7 @@ from sgtk.platform.qt import QtCore, QtGui
 from tank_vendor import six
 
 search_widget = sgtk.platform.current_bundle().import_module("search_widget")
+shotgun_search_widget = sgtk.platform.current_bundle().import_module("shotgun_search_widget")
 
 
 class FilterItemWidget(QtGui.QWidget):
@@ -260,17 +261,19 @@ class ChoicesFilterItemWidget(FilterItemWidget):
             ), "Cannot restore ChoicesFilterItemWidget state from '{}'".format(state)
 
 
-class TextFilterItemWidget(FilterItemWidget):
+class SearchFilterItemWidget(FilterItemWidget):
     """
     A filter widget for searching text values. Reuses the SearchWidget class.
     """
 
-    def __init__(self, filter_id, group_id, filter_data, parent=None):
+    def __init__(self, filter_id, group_id, filter_data, parent=None, bg_task_manager=None):
         """
         Constructor.
 
         Initialize the widget UI:
-          - Add a SearchWidget
+          - Add a search widget according to the field type.
+          If we are dealing with an SG entity/multi-entity field, add a GlobalSearchWidget
+          otherwise, add a SearchWidget.
 
         :param filter_id: The unique identifier for this widget.
         :type filter_id: str
@@ -280,18 +283,44 @@ class TextFilterItemWidget(FilterItemWidget):
         :type filter_data: dict
         :param parent: The widget's parent
         :type parent: :class:`sgtk.platform.qt.QWidget`
+        :param bg_task_manager: An instance of a Background Task Manager used by the search widget.
+        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
 
-        super(TextFilterItemWidget, self).__init__(filter_id, group_id, parent=parent)
+        super(SearchFilterItemWidget, self).__init__(filter_id, group_id, parent=parent)
+
+        self._value = ""
 
         self._name = filter_data.get("display_name", "")
         short_name = filter_data.get("short_name", self.name)
+        sg_data = filter_data.get("sg_data", {})
 
-        self.line_edit = search_widget.SearchWidget(self)
+        # in case we are dealing with an SG entity/multi-entity field and the widget has been initialized
+        # using a BackgroundTaskManager, use a GlobalSearchWidget to help the user find the right entity to pick
+        if sg_data.get("data_type") in ["entity", "multi_entity"] and bg_task_manager:
+            self.line_edit = shotgun_search_widget.GlobalSearchWidget(self)
+            self.line_edit.set_bg_task_manager(bg_task_manager)
+            searchable_entities = {}
+            for entity_type in sg_data.get("valid_types"):
+                searchable_entities[entity_type] = []
+            self.line_edit.set_searchable_entity_types(searchable_entities)
+            self.line_edit.entity_activated.connect(
+                lambda entity_type, entity_id, entity_name: self.set_value(
+                    {
+                        "type": entity_type,
+                        "name": entity_name,
+                        "id": entity_id
+                    }
+                )
+            )
+
+        else:
+            self.line_edit = search_widget.SearchWidget(self)
+            self.line_edit.search_changed.connect(self.set_value)
+
         if self.name:
             self.line_edit.set_placeholder_text("Enter {}".format(short_name))
         self.line_edit.setToolTip("Press Enter to search by {}.".format(self.name))
-        self.line_edit.search_changed.connect(self.value_changed.emit)
 
         layout = QtGui.QHBoxLayout()
         layout.setAlignment(QtCore.Qt.AlignLeft)
@@ -305,49 +334,24 @@ class TextFilterItemWidget(FilterItemWidget):
 
     @FilterItemWidget.value.getter
     def value(self):
-        """Return the search widget's text value."""
-        return self.line_edit.search_text
+        """Return the search widget's value."""
+        return self._value
 
     @value.setter
     def value(self, value):
         """
-        Set the search widget's text value.
+        Set the search widget's value.
 
-        :param value: The text value to set.
-        :type value: str
+        :param value: The value to set.
+        :type value: any
         """
-
-        assert isinstance(
-            value, six.string_types
-        ), "Attempting to set non-string data to QLineEdit"
-
-        self.line_edit.search_text = value
+        self._value = value
         self.value_changed.emit(value)
 
     def has_value(self):
-        """Return True if the search widget has text, else False."""
+        """Return True if the search widget has a value, else False."""
         return bool(self.value)
 
     def clear_value(self):
-        """Clear the search widget's text."""
-
+        """Clear the search widget's value."""
         self.value = ""
-
-    def restore(self, state):
-        """
-        Restore the search widget's text value.
-
-        :param state: The state to restore the widget from.
-        :type state: str | TextFilterItemWidget
-        """
-
-        if isinstance(state, TextFilterItemWidget):
-            self.value = state.line_edit.search_text
-
-        elif isinstance(state, six.string_types):
-            self.value = state
-
-        else:
-            assert False, "Cannot restore TextFilterItemWidget state from '{}'".format(
-                state
-            )

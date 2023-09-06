@@ -707,6 +707,11 @@ class FilterDefinition(object):
             # Could not find the schema for entity type and field
             return
 
+        # When dealing with an entity or a multi-entity field, get all the valid types the field
+        # could refer to
+        valid_types = shotgun_globals.get_valid_types(entity_type, sg_field, project_id) \
+            if sg_data_type in ["entity", "multi-entity"] else None
+
         # Map the SG data type to a FilterItem type
         data_type = FilterItem.map_from_sg_data_type(sg_data_type)
         if not data_type:
@@ -755,6 +760,7 @@ class FilterDefinition(object):
             value,
             role,
             short_display=short_display,
+            sg_data={"entity_type": entity_type, "data_type": sg_data_type, "valid_types": valid_types},
         )
 
     def __add_filter_by_id(self, field_id, index):
@@ -813,7 +819,7 @@ class FilterDefinition(object):
             self.__add_filter_from_data(field, index, role, data)
 
     def __add_filter_definition(
-        self, field_id, field, field_display, data_type, value, role, short_display=None
+        self, field_id, field, field_display, data_type, value, role, short_display=None, sg_data=None,
     ):
         """
         Based on the provided data, create a new filter definition and add it to the internal
@@ -834,6 +840,9 @@ class FilterDefinition(object):
         :type role: :class:`sgtk.platform.qt.QtCore.ItemDataRole`
         :param short_display: Optional value to use as a short display name.
         :type short_display: str
+        :param sg_data: Optional ShotGrid data in relation with the field the filter belongs to
+                        if the field refers to an entity/multi-entity.
+        :type sg_data: dict
         """
 
         if isinstance(value, list):
@@ -846,26 +855,34 @@ class FilterDefinition(object):
         for val in values_list:
 
             if isinstance(val, dict):
-                # FIXME this is hard coded to use the "name" key - let this be configurable per data type
-                value_id = val.get("name", str(val))
+                # in case we are dealing with an SG entity, the value_id should be a combination
+                # of the entity type and its id
+                # we can't use the entity name as many entities could have the same name
+                if "id" in val.keys() and sg_data:
+                    value_id = "{}.{}".format(val["id"], sg_data["entity_type"])
+                else:
+                    value_id = val.get("name", str(val))
+                value_name = val.get("name", str(val))
                 filter_value = val
                 icon_path = val.get("icon", None)
                 icon = QtGui.QIcon(icon_path) if icon_path else None
             elif data_type == FilterItem.FilterType.DATETIME:
                 datetime_bucket = FilterItem.get_datetime_bucket(value)
                 value_id = datetime_bucket
+                value_name = str(value_id)
                 filter_value = datetime_bucket
                 icon_path = None
                 icon = None
             else:
                 value_id = val
+                value_name = str(value_id)
                 filter_value = val
                 icon_path = None
                 icon = None
 
             # Ensure the value "key" is hashable, since it will be used as a dictionary key
-            value_name = str(value_id)
-            value_id = "{}.{}".format(field_id, value_name)
+            # value_name = str(value_id)
+            value_id = "{}.{}".format(field_id, value_id)
 
             if field_id in self._definition:
                 # The filter field (group) already exists, add this filter to the values list.
@@ -895,6 +912,7 @@ class FilterDefinition(object):
                     "data_func": lambda i, r=role, f=field: self.get_index_data(
                         i, r, f
                     ),
+                    "sg_data": sg_data
                 }
 
     def _proxy_filter_accepts_row(self, index):
