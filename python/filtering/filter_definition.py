@@ -709,8 +709,11 @@ class FilterDefinition(object):
 
         # When dealing with an entity or a multi-entity field, get all the valid types the field
         # could refer to
-        valid_types = shotgun_globals.get_valid_types(entity_type, sg_field, project_id) \
-            if sg_data_type in ["entity", "multi-entity"] else None
+        valid_types = (
+            shotgun_globals.get_valid_types(entity_type, sg_field, project_id)
+            if sg_data_type in ["entity", "multi-entity"]
+            else None
+        )
 
         # Map the SG data type to a FilterItem type
         data_type = FilterItem.map_from_sg_data_type(sg_data_type)
@@ -760,7 +763,11 @@ class FilterDefinition(object):
             value,
             role,
             short_display=short_display,
-            sg_data={"entity_type": entity_type, "data_type": sg_data_type, "valid_types": valid_types},
+            sg_data={
+                "entity_type": entity_type,
+                "data_type": sg_data_type,
+                "valid_types": valid_types,
+            },
         )
 
     def __add_filter_by_id(self, field_id, index):
@@ -819,7 +826,15 @@ class FilterDefinition(object):
             self.__add_filter_from_data(field, index, role, data)
 
     def __add_filter_definition(
-        self, field_id, field, field_display, data_type, value, role, short_display=None, sg_data=None,
+        self,
+        field_id,
+        field,
+        field_display,
+        data_type,
+        value,
+        role,
+        short_display=None,
+        sg_data=None,
     ):
         """
         Based on the provided data, create a new filter definition and add it to the internal
@@ -912,7 +927,7 @@ class FilterDefinition(object):
                     "data_func": lambda i, r=role, f=field: self.get_index_data(
                         i, r, f
                     ),
-                    "sg_data": sg_data
+                    "sg_data": sg_data,
                 }
 
     def _proxy_filter_accepts_row(self, index):

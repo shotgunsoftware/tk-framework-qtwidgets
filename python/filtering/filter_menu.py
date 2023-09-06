@@ -831,8 +831,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # We want to create a search filter item in case we are dealing with a string field
             # or an SG entity/multi-entity field
             sg_data_type = field_data.get("sg_data", {}).get("data_type")
-            if (field_data["type"] == FilterItem.FilterType.STR
-                    or (sg_data_type in ["entity", "multi-entity"]) and self._task_manager):
+            if (
+                field_data["type"] == FilterItem.FilterType.STR
+                or (sg_data_type in ["entity", "multi-entity"])
+                and self._task_manager
+            ):
                 # Create a search filter item.
                 filter_id = self._get_search_filter_item_id(field_id)
                 search_filter_item_and_action = self._create_filter_item_and_action(
@@ -964,7 +967,12 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         widget_action.setCheckable(True)
 
         if widget_class == SearchFilterItemWidget:
-            widget = widget_class(filter_item.id, field_id, filter_data, bg_task_manager=self._task_manager)
+            widget = widget_class(
+                filter_item.id,
+                field_id,
+                filter_data,
+                bg_task_manager=self._task_manager,
+            )
         else:
             widget = widget_class(filter_item.id, field_id, filter_data)
         widget_action.setDefaultWidget(widget)

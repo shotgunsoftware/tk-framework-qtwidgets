@@ -13,7 +13,9 @@ from sgtk.platform.qt import QtCore, QtGui
 from tank_vendor import six
 
 search_widget = sgtk.platform.current_bundle().import_module("search_widget")
-shotgun_search_widget = sgtk.platform.current_bundle().import_module("shotgun_search_widget")
+shotgun_search_widget = sgtk.platform.current_bundle().import_module(
+    "shotgun_search_widget"
+)
 
 
 class FilterItemWidget(QtGui.QWidget):
@@ -266,7 +268,9 @@ class SearchFilterItemWidget(FilterItemWidget):
     A filter widget for searching text values. Reuses the SearchWidget class.
     """
 
-    def __init__(self, filter_id, group_id, filter_data, parent=None, bg_task_manager=None):
+    def __init__(
+        self, filter_id, group_id, filter_data, parent=None, bg_task_manager=None
+    ):
         """
         Constructor.
 
@@ -306,11 +310,7 @@ class SearchFilterItemWidget(FilterItemWidget):
             self.line_edit.set_searchable_entity_types(searchable_entities)
             self.line_edit.entity_activated.connect(
                 lambda entity_type, entity_id, entity_name: self.set_value(
-                    {
-                        "type": entity_type,
-                        "name": entity_name,
-                        "id": entity_id
-                    }
+                    {"type": entity_type, "name": entity_name, "id": entity_id}
                 )
             )
 
