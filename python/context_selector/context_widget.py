@@ -629,6 +629,13 @@ class ContextWidget(QtGui.QWidget):
         """
         bundle = sgtk.platform.current_bundle()
         context = bundle.sgtk.context_from_entity(entity_type, entity_id)
+
+        # Ensure the entity name is set within in the context. In some cases, e.g. for custom
+        # entities, the context retrieved does not have the entity name. We have the entity
+        # name here, so just set it.
+        if "name" not in context.entity and entity_name:
+            context.entity["name"] = entity_name
+
         self._on_context_activated(context)
 
     def _on_task_search_toggled(self, checked):
