@@ -301,7 +301,11 @@ class SearchFilterItemWidget(FilterItemWidget):
 
         # in case we are dealing with an SG entity/multi-entity field and the widget has been initialized
         # using a BackgroundTaskManager, use a GlobalSearchWidget to help the user find the right entity to pick
-        if sg_data.get("data_type") in ["entity", "multi_entity"] and bg_task_manager:
+        if (
+            sg_data
+            and sg_data.get("data_type") in ["entity", "multi_entity"]
+            and bg_task_manager
+        ):
             self.line_edit = shotgun_search_widget.GlobalSearchWidget(self)
             self.line_edit.set_bg_task_manager(bg_task_manager)
             searchable_entities = {}

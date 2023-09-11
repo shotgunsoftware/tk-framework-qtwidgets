@@ -830,7 +830,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
             # We want to create a search filter item in case we are dealing with a string field
             # or an SG entity/multi-entity field
-            sg_data_type = field_data.get("sg_data", {}).get("data_type")
+            sg_data_type = None
+            if isinstance(field_data.get("sg_data"), dict):
+                sg_data_type = field_data["sg_data"].get("data_type")
             if (
                 field_data["type"] == FilterItem.FilterType.STR
                 or (sg_data_type in ["entity", "multi-entity"])
@@ -918,8 +920,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             )
         else:
             filter_widget_class = SearchFilterItemWidget
-            sg_data_type = field_data.get("sg_data", {}).get("data_type")
-            if sg_data_type in ["entity", "multi-entity"]:
+            sg_data = field_data.get("sg_data", {})
+            if sg_data and sg_data.get("data_type") in ["entity", "multi-entity"]:
                 filter_item_data["filter_type"] = FilterItem.FilterType.DICT
                 filter_item_data["filter_op"] = FilterItem.FilterOp.EQUAL
             else:

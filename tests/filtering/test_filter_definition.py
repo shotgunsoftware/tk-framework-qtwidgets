@@ -423,7 +423,7 @@ class TestFiltersDefinition(TankTestBase):
 
                 # Iterate through the filter roles to ensure we check all the resulting data.
                 expected_field_data_keys = set(
-                    ["name", "short_name", "type", "values", "data_func"]
+                    ["name", "short_name", "type", "values", "data_func", "sg_data"]
                 )
                 for role in fd.filter_roles:
                     # Validate the expected field id is in the result fields
