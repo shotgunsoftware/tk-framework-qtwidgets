@@ -1240,7 +1240,13 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 )
                 doc_height = text_doc.size().height()
                 height_for_visible_lines = self._get_visible_lines_height(option)
-                text_height = max(doc_height, height_for_visible_lines)
+                if index_height is None:
+                    # Height should be max of the calculated text height, or the delegate fixed item height
+                    item_height = self.item_height or -1
+                    text_height = max(doc_height, height_for_visible_lines, item_height)
+                else:
+                    # Do not allow delegate item height to override text height for index, when set.
+                    text_height = max(doc_height, height_for_visible_lines)
             elif index_height is not None:
                 # Set the height the value defined by the index data.
                 text_height = index_height
