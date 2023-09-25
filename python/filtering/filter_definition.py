@@ -707,14 +707,6 @@ class FilterDefinition(object):
             # Could not find the schema for entity type and field
             return
 
-        # When dealing with an entity or a multi-entity field, get all the valid types the field
-        # could refer to
-        valid_types = (
-            shotgun_globals.get_valid_types(entity_type, sg_field, project_id)
-            if sg_data_type in ["entity", "multi-entity"]
-            else None
-        )
-
         # Map the SG data type to a FilterItem type
         data_type = FilterItem.map_from_sg_data_type(sg_data_type)
         if not data_type:
@@ -723,6 +715,14 @@ class FilterDefinition(object):
         field_id = self.__get_field_id(role, sg_field, entity_type)
         if not self.__is_accepted(field_id, index):
             return
+
+        # When dealing with an entity or a multi-entity field, get all the valid types the field
+        # could refer to
+        valid_types = (
+            shotgun_globals.get_valid_types(entity_type, sg_field, project_id)
+            if sg_data_type in ["entity", "multi-entity"]
+            else None
+        )
 
         field_display = shotgun_globals.get_field_display_name(
             entity_type, sg_field, project_id
