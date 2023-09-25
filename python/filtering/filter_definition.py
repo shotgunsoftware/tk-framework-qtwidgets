@@ -873,7 +873,7 @@ class FilterDefinition(object):
                 # in case we are dealing with an SG entity, the value_id should be a combination
                 # of the entity type and its id
                 # we can't use the entity name as many entities could have the same name
-                if "id" in val.keys() and sg_data:
+                if "id" in val and sg_data:
                     value_id = "{}.{}".format(val["id"], sg_data["entity_type"])
                 else:
                     value_id = val.get("name", str(val))
