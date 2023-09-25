@@ -628,6 +628,12 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                     if self._get_filter_group_action(field_id, filter_item.id)
                     .defaultWidget()
                     .has_value()
+                    and isinstance(
+                        self._get_filter_group_action(
+                            field_id, filter_item.id
+                        ).defaultWidget(),
+                        ChoicesFilterItemWidget,
+                    )
                 ]
 
             if choices_filters:
