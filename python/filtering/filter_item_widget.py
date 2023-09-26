@@ -29,7 +29,7 @@ class FilterItemWidget(QtGui.QWidget):
     # Signal emitted when the filter widget's value changed.
     value_changed = QtCore.Signal(object)
 
-    def __init__(self, filter_id, group_id, parent=None):
+    def __init__(self, filter_id, group_id, parent=None, bg_task_manager=None):
         """
         Constructor. Set up the widget.
 
@@ -39,14 +39,17 @@ class FilterItemWidget(QtGui.QWidget):
         :type group_id: str
         :param parent: The widget's parent
         :type parent: :class:`sgtk.platform.qt.QWidget`
+        :param bg_task_manager: An instance of a Background Task Manager used by the search widget.
+        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
 
         super(FilterItemWidget, self).__init__(parent)
 
         self._id = filter_id
         self._group_id = group_id
+        self._bg_task_manager = bg_task_manager
 
-        # Enabel mouse tracking for hover events.
+        # Enable mouse tracking for hover events.
         self.setMouseTracking(True)
 
     def __repr__(self):
@@ -119,7 +122,9 @@ class ChoicesFilterItemWidget(FilterItemWidget):
     A widget to represent a filter item that belongs to group of choices.
     """
 
-    def __init__(self, filter_id, group_id, filter_data, parent=None):
+    def __init__(
+        self, filter_id, group_id, filter_data, parent=None, bg_task_manager=None
+    ):
         """
         Constructor.
 
@@ -137,9 +142,13 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         :type filter_data: dict
         :param parent: The widget's parent
         :type parent: :class:`sgtk.platform.qt.QWidget`
+        :param bg_task_manager: An instance of a Background Task Manager used by the search widget.
+        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
 
-        super(ChoicesFilterItemWidget, self).__init__(filter_id, group_id, parent)
+        super(ChoicesFilterItemWidget, self).__init__(
+            filter_id, group_id, parent=parent, bg_task_manager=bg_task_manager
+        )
 
         layout = QtGui.QHBoxLayout()
         layout.setAlignment(QtCore.Qt.AlignLeft)
@@ -291,7 +300,9 @@ class SearchFilterItemWidget(FilterItemWidget):
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
 
-        super(SearchFilterItemWidget, self).__init__(filter_id, group_id, parent=parent)
+        super(SearchFilterItemWidget, self).__init__(
+            filter_id, group_id, parent=parent, bg_task_manager=bg_task_manager
+        )
 
         self._value = ""
 
@@ -304,10 +315,10 @@ class SearchFilterItemWidget(FilterItemWidget):
         if (
             sg_data
             and sg_data.get("data_type") in ["entity", "multi_entity"]
-            and bg_task_manager
+            and self._bg_task_manager
         ):
             self.line_edit = shotgun_search_widget.GlobalSearchWidget(self)
-            self.line_edit.set_bg_task_manager(bg_task_manager)
+            self.line_edit.set_bg_task_manager(self._bg_task_manager)
             searchable_entities = {}
             for entity_type in sg_data.get("valid_types"):
                 searchable_entities[entity_type] = []

@@ -974,15 +974,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         widget_action = QtGui.QWidgetAction(None)
         widget_action.setCheckable(True)
 
-        if widget_class == SearchFilterItemWidget:
-            widget = widget_class(
-                filter_item.id,
-                field_id,
-                filter_data,
-                bg_task_manager=self._task_manager,
-            )
-        else:
-            widget = widget_class(filter_item.id, field_id, filter_data)
+        widget = widget_class(
+            filter_item.id, field_id, filter_data, bg_task_manager=self._task_manager
+        )
         widget_action.setDefaultWidget(widget)
         if filter_data.get("default_value") is not None:
             widget.value = filter_data["default_value"]
