@@ -965,8 +965,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                              the new widget.
         :type widget_class: FilterItemWidget class or subclass
 
-        :return: The QWidgetAaction object that has the FilterItemWidget set as
-        :return: The QWidgetAaction object that has the FilterItemWidget set as
+        :return: The QWidgetAction object that has the FilterItemWidget set as
+        :return: The QWidgetAction object that has the FilterItemWidget set as
                  its default widget.
         :rtype: :class:`sgtk.platform.qt.QWidgetAction`
         """
