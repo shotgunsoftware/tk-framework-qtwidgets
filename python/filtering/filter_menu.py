@@ -131,7 +131,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     # Signal emitted when menu is finished a complete refreshing (e.g. exit refresh method)
     menu_refreshed = QtCore.Signal()
 
-    def __init__(self, parent=None, refresh_on_show=True):
+    def __init__(self, parent=None, refresh_on_show=True, bg_task_manager=None):
         """
         Constructor
 
@@ -142,6 +142,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             but ensures the data is the most up to date. To only refresh the menu on show
             on demand, set the `refresh_on_show` property instead of this parm on init.
         :type refresh_on_show: bool
+        :param bg_task_manager: An instance of a Background Task Manager that could be used to perform
+            background task processing.
+        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
 
         super(FilterMenu, self).__init__(parent)
@@ -160,7 +163,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             )
 
         # The Background Task Manager shared instance, useful when dealing with ShotGrid Filter Menu
-        self._task_manager = None
+        self._task_manager = bg_task_manager
 
         # A mapping of field id (group) to list of FilterMenuGroup objects.
         self._filter_groups = {}
@@ -1310,11 +1313,9 @@ class ShotgunFilterMenu(FilterMenu):
         Set the filter_roles to the ShotgunModel role pointing to its SG data.
         """
 
-        super(ShotgunFilterMenu, self).__init__(parent, refresh_on_show=refresh_on_show)
-
-        # Store the shared instance of the Background Task Manager
-        # It will be used by the Global Search Widget when within the SearchFilterItemWidget
-        self._task_manager = bg_task_manager
+        super(ShotgunFilterMenu, self).__init__(
+            parent, refresh_on_show=refresh_on_show, bg_task_manager=bg_task_manager
+        )
 
         # Use the SG_DATA_ROLE to extract the data from the ShotgunModel. This class fixes the
         # filte roles to the ShotgunModel.SG_DATA_ROLE since it is designed to work with this
