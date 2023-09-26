@@ -874,6 +874,9 @@ class FilterDefinition(object):
                 # of the entity type and its id
                 # we can't use the entity name as many entities could have the same name
                 if "id" in val and sg_data:
+                    assert (
+                        "entity_type" in sg_data
+                    ), "Missing 'entity_type' key in SG data dictionary"
                     value_id = "{}.{}".format(val["id"], sg_data["entity_type"])
                 else:
                     value_id = val.get("name", str(val))
