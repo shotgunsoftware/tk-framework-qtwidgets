@@ -899,7 +899,6 @@ class FilterDefinition(object):
                 icon = None
 
             # Ensure the value "key" is hashable, since it will be used as a dictionary key
-            # value_name = str(value_id)
             value_id = "{}.{}".format(field_id, value_id)
 
             if field_id in self._definition:
