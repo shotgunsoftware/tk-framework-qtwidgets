@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>shotgun_menus.shotgun_menu &mdash; tk-framework-qtwidgets v2.10.7 documentation</title>
+  <title>shotgun_menus.shotgun_menu &mdash; tk-framework-qtwidgets v2.10.8 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.7.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.8.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -318,6 +318,16 @@
 <span class="sd">            &quot;&quot;&quot;</span>
         <span class="p">)</span>
 
+<div class="viewcode-block" id="ShotgunMenu.get_label"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.get_label">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the label widget to add to the menu.&quot;&quot;&quot;</span>
+
+        <span class="n">label</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;margin: 0.4em; color: gray;&quot;</span><span class="p">)</span>
+        <span class="n">font_style</span> <span class="o">=</span> <span class="s2">&quot;text-transform: uppercase;&quot;</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&lt;font style=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">font_style</span><span class="p">,</span> <span class="n">title</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">label</span></div>
+
 <div class="viewcode-block" id="ShotgunMenu.add_group"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a group of items to the menu.</span>
@@ -373,13 +383,9 @@
 
 <span class="sd">        :param str title: The title of the sectional label</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># build the label widget</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">label</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;margin: 0.4em; color: gray;&quot;</span><span class="p">)</span>
-        <span class="n">font_style</span> <span class="o">=</span> <span class="s2">&quot;text-transform: uppercase;&quot;</span>
-        <span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&lt;font style=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">font_style</span><span class="p">,</span> <span class="n">title</span><span class="p">))</span>
 
-        <span class="c1"># turn it into an action</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_label</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
         <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidgetAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">action</span><span class="o">.</span><span class="n">setDefaultWidget</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
 

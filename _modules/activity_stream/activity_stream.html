@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.10.7 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.10.8 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.7.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.8.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -1088,26 +1088,31 @@
                 <span class="n">widget</span><span class="o">.</span><span class="n">interactive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">version_items_playable</span>
 
             <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Note&quot;</span><span class="p">:</span>
-                <span class="c1"># new note</span>
-                <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="p">)</span>
-                <span class="n">widget</span><span class="o">.</span><span class="n">show_note_links</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_note_links</span>
-                <span class="n">widget</span><span class="o">.</span><span class="n">attachments_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attachments_filter</span>
+                <span class="c1"># Ensure that the user has permission to see script user</span>
+                <span class="c1"># (if not, data[&quot;primary_entity&quot;][&quot;user&quot;] will be None)</span>
+                <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;user&quot;</span><span class="p">]:</span>
+                    <span class="c1"># new note</span>
+                    <span class="n">widget</span> <span class="o">=</span> <span class="n">NoteWidget</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="p">)</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">show_note_links</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_note_links</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">attachments_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attachments_filter</span>
 
-                <span class="c1"># If it&#39;s been requested that we select this Note entity&#39;s widget when it&#39;s</span>
-                <span class="c1"># constructed, then we do so here. This is the situation where the user has</span>
-                <span class="c1"># created a new Note, which upon completion we want to have autoselected.</span>
-                <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">):</span>
-                    <span class="c1"># First we need to deselect whatever is selected, because we&#39;re going</span>
-                    <span class="c1"># to be selecting our new widget right after.</span>
-                    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
-                            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
-                                <span class="n">w</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
+                    <span class="c1"># If it&#39;s been requested that we select this Note entity&#39;s widget when it&#39;s</span>
+                    <span class="c1"># constructed, then we do so here. This is the situation where the user has</span>
+                    <span class="c1"># created a new Note, which upon completion we want to have autoselected.</span>
+                    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;primary_entity&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="s2">&quot;id&quot;</span>
+                    <span class="p">):</span>
+                        <span class="c1"># First we need to deselect whatever is selected, because we&#39;re going</span>
+                        <span class="c1"># to be selecting our new widget right after.</span>
+                        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
+                                <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
+                                    <span class="n">w</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
 
-                    <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                        <span class="n">widget</span><span class="o">.</span><span class="n">set_selected</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_note_selected_changed</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_select_on_arrival</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># minimalistic &#39;new&#39; widget for all other cases</span>

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Filtering &mdash; tk-framework-qtwidgets v2.10.7 documentation</title>
+  <title>Filtering &mdash; tk-framework-qtwidgets v2.10.8 documentation</title>
   
 
   
@@ -137,7 +137,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.7.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.8.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -295,8 +295,10 @@ forced to be refreshed on calling the <cite>refresh</cite> method with param <ci
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>parent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sgtk.platform.qt.QtWidget</span></code>) – The parent widget.</li>
-<li><strong>refresh_on_show</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – True will ensure the menu is up to date on show. This will
-slow performance on menu open, but ensures the data is the most up to date.</li>
+<li><strong>refresh_on_show</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – True will ensure the menu is up to date on show by always
+refreshing the filters before showing. This will slow performance on menu open,
+but ensures the data is the most up to date. To only refresh the menu on show
+on demand, set the <cite>refresh_on_show</cite> property instead of this parm on init.</li>
 </ul>
 </td>
 </tr>
@@ -312,6 +314,12 @@ slow performance on menu open, but ensures the data is the most up to date.</li>
 <dt id="filtering.FilterMenu.has_filtering">
 <code class="descname">has_filtering</code><a class="headerlink" href="#filtering.FilterMenu.has_filtering" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get whether or not the menu has any active filtering.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="filtering.FilterMenu.refresh_on_show">
+<code class="descname">refresh_on_show</code><a class="headerlink" href="#filtering.FilterMenu.refresh_on_show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the property to refresh menu before showing.</p>
 </dd></dl>
 
 <dl class="staticmethod">
@@ -495,7 +503,7 @@ remove all items from the menu.</p>
 
 <dl class="method">
 <dt id="filtering.FilterMenu.clear_filters">
-<code class="descname">clear_filters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.clear_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.clear_filters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear_filters</code><span class="sig-paren">(</span><em>filter_group_ids=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.clear_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#filtering.FilterMenu.clear_filters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear any active filtesr that are set in the menu.</p>
 </dd></dl>
 

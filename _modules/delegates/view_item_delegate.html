@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.10.7 documentation</title>
+  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.10.8 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.7.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.8.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -360,6 +360,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_size</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">()</span>
         <span class="c1"># Set this value to scale the thumbnail size as the item height changes.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_scale_value</span> <span class="o">=</span> <span class="mf">1.5</span>
+        <span class="c1"># Set to True to scale thumbnails to fill the entire thumbnail rect available. This</span>
+        <span class="c1"># will result in thumbnails drawn in uniform manner</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_uniform</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="c1"># Positioning of the thumbnail withint the available thumbnail rect. Empty tuple will default</span>
         <span class="c1"># to center the the thumbnail.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span> <span class="o">=</span> <span class="p">()</span>
@@ -661,6 +664,20 @@
     <span class="nd">@min_height</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">min_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_min_height</span> <span class="o">=</span> <span class="n">height</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">thumbnail_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the property that affects how thumbnails are rendered.</span>
+
+<span class="sd">        True will draw all thumbnails in a uniform manner. Thumbnails will fill the avialable</span>
+<span class="sd">        space, but may be cropped.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_uniform</span>
+
+    <span class="nd">@thumbnail_uniform</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">thumbnail_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uniform</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_uniform</span> <span class="o">=</span> <span class="n">uniform</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">thumbnail_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1026,7 +1043,7 @@
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">data</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">role</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
             <span class="c1"># If the data itself is a function, execute the function to get the data value.</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">()</span>
 
@@ -1419,7 +1436,9 @@
         <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_width</span><span class="p">)</span>
 
-        <span class="c1"># Calculate the height of the item.</span>
+        <span class="c1"># Calculate the height of the item. First, get the height of the text. Check if the</span>
+        <span class="c1"># height should expand to fit the text or not.</span>
+        <span class="n">text_height</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">index_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height_role</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">item_height</span> <span class="ow">is</span> <span class="kc">None</span>
@@ -1430,31 +1449,47 @@
             <span class="k">if</span> <span class="n">index_height</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">index_height</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># The item height expands to the height of the text. NOTE the view that this delegate is</span>
                 <span class="c1"># set to must not have uniform items set for this to resize properly.</span>
-
                 <span class="n">text_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_rect</span><span class="p">(</span><span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
                 <span class="n">text_doc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_document</span><span class="p">(</span>
                     <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">text_rect</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">False</span>
                 <span class="p">)</span>
-                <span class="n">text_height</span> <span class="o">=</span> <span class="n">text_doc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+                <span class="n">doc_height</span> <span class="o">=</span> <span class="n">text_doc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
                 <span class="n">height_for_visible_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_visible_lines_height</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
-                <span class="n">height_for_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_actions_maximum_height</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-                <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">text_height</span><span class="p">,</span> <span class="n">height_for_visible_lines</span><span class="p">,</span> <span class="n">height_for_actions</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">index_height</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># Height should be max of the calculated text height, or the delegate fixed item height</span>
+                    <span class="n">item_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_height</span> <span class="ow">or</span> <span class="o">-</span><span class="mi">1</span>
+                    <span class="n">text_height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">doc_height</span><span class="p">,</span> <span class="n">height_for_visible_lines</span><span class="p">,</span> <span class="n">item_height</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Do not allow delegate item height to override text height for index, when set.</span>
+                    <span class="n">text_height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">doc_height</span><span class="p">,</span> <span class="n">height_for_visible_lines</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">index_height</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># Set the height the value defined by the index data.</span>
-                <span class="n">height</span> <span class="o">=</span> <span class="n">index_height</span>
+                <span class="n">text_height</span> <span class="o">=</span> <span class="n">index_height</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_height</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Fix the text height</span>
+            <span class="n">text_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_height</span>
+
+        <span class="c1"># Add padding to the text height, if there is text</span>
+        <span class="k">if</span> <span class="n">text_height</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">text_height</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">top</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">bottom</span>
+
+        <span class="c1"># Get the height of the item thumbnail</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_height</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_thumbnail</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">thumbnail_height</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_height</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">top</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_padding</span><span class="o">.</span><span class="n">bottom</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># The height is fixed for all items.</span>
-            <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_height</span>
+            <span class="n">thumbnail_height</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-        <span class="c1"># Ensure height is not None, set it to -1 to indicate no size hint for height</span>
-        <span class="k">if</span> <span class="n">height</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">height</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="c1"># Get the height of the item actions</span>
+        <span class="n">actions_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_actions_maximum_height</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 
-        <span class="c1"># For valid height values, ensure it is the minumum height and add padding.</span>
-        <span class="k">if</span> <span class="n">height</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_height</span><span class="p">)</span>
+        <span class="c1"># The height is determined by the maximum height required for any of the item components</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">text_height</span><span class="p">,</span> <span class="n">thumbnail_height</span><span class="p">,</span> <span class="n">actions_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_height</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">height</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">height</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">top</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">bottom</span>
-            <span class="n">height</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">top</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_padding</span><span class="o">.</span><span class="n">bottom</span>
 
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span></div>
 
@@ -1703,58 +1738,102 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">thumbnail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_thumbnail</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">thumbnail</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">thumbnail</span><span class="p">:</span>
-            <span class="n">available_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_thumbnail_rect</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">thumbnail</span><span class="p">)</span>
-            <span class="n">available_size</span> <span class="o">=</span> <span class="n">available_rect</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="c1"># Get the available rect to draw the thumbnail</span>
+        <span class="n">available_rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_thumbnail_rect</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">thumbnail</span><span class="p">)</span>
+        <span class="n">available_size</span> <span class="o">=</span> <span class="n">available_rect</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="n">thumbnail_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">available_rect</span><span class="p">)</span>
 
-            <span class="c1"># Scale the thumbnail to the available space</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_uniform</span><span class="p">:</span>
+            <span class="c1"># Scale the thumbnail to fill the available space. The thumbnail size may be</span>
+            <span class="c1"># bigger than the available space. If it is, the thumbnail will be cropped</span>
+            <span class="c1"># later to center the thumbnail within the available rect.</span>
+            <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span>
+                <span class="n">available_size</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
+                <span class="n">available_size</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">KeepAspectRatioByExpanding</span><span class="p">,</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SmoothTransformation</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Scale the thumbnail to fit the available space.</span>
             <span class="k">if</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">available_size</span><span class="o">.</span><span class="n">height</span><span class="p">():</span>
                 <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">scaledToHeight</span><span class="p">(</span><span class="n">available_size</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
-
             <span class="k">if</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">available_size</span><span class="o">.</span><span class="n">width</span><span class="p">():</span>
                 <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">scaledToWidth</span><span class="p">(</span><span class="n">available_size</span><span class="o">.</span><span class="n">width</span><span class="p">())</span>
+            <span class="c1"># Set the thumbnail rect to the size of the thumbnail after scaling</span>
+            <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
 
-            <span class="c1"># Adjust the available rect to the size of the thumbnail and center it</span>
-            <span class="k">if</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="n">available_size</span><span class="p">:</span>
-                <span class="n">thumbnail_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">available_rect</span><span class="p">)</span>
-                <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="c1"># Adjust the thumbnail and the rect used to draw the thumbnail such that the thumbnail</span>
+        <span class="c1"># fits and is centered within the draw rect</span>
+        <span class="n">thumbnail_width</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="n">thumbnail_height</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="n">available_width</span> <span class="o">=</span> <span class="n">available_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="n">available_height</span> <span class="o">=</span> <span class="n">available_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="mi">0</span>
 
-                <span class="c1"># Calculate horizontal offset</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">LEFT</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span><span class="p">:</span>
-                    <span class="n">dx</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">RIGHT</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span><span class="p">:</span>
-                    <span class="n">dx</span> <span class="o">=</span> <span class="n">available_rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># Default to center horizontally</span>
-                    <span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">available_rect</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">width</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span>
-
-                <span class="c1"># Calculate vertical offset</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOP</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span><span class="p">:</span>
-                    <span class="n">dy</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span><span class="p">:</span>
-                    <span class="n">dy</span> <span class="o">=</span> <span class="n">available_rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># Default to center vertically</span>
-                    <span class="n">dy</span> <span class="o">=</span> <span class="p">(</span><span class="n">available_rect</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span>
-
-                <span class="n">thumbnail_top_left</span> <span class="o">=</span> <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">()</span>
-                <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span>
-                    <span class="n">thumbnail_top_left</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">thumbnail_top_left</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="n">dy</span>
-                <span class="p">)</span>
-
+        <span class="k">if</span> <span class="n">thumbnail_width</span> <span class="o">&lt;</span> <span class="n">available_width</span><span class="p">:</span>
+            <span class="c1"># Calculate horizontal offset to move the thumbnail rect</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">LEFT</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span><span class="p">:</span>
+                <span class="n">dx</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">RIGHT</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span><span class="p">:</span>
+                <span class="n">dx</span> <span class="o">=</span> <span class="n">available_width</span> <span class="o">-</span> <span class="n">thumbnail_width</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">thumbnail_rect</span> <span class="o">=</span> <span class="n">available_rect</span>
+                <span class="c1"># Default to center horizontally</span>
+                <span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">available_width</span> <span class="o">-</span> <span class="n">thumbnail_width</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">thumbnail_width</span> <span class="o">&gt;</span> <span class="n">available_width</span><span class="p">:</span>
+            <span class="c1"># Calculate the horizontal offset to crop the thumbnail</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">thumbnail_width</span> <span class="o">-</span> <span class="n">available_width</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 
-            <span class="c1"># Create a brush with the thumbnail as a texture, so that the painter can draw the pixmap</span>
-            <span class="c1"># as a rounded rect.</span>
-            <span class="n">pixmap</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">thumbnail_height</span> <span class="o">&lt;</span> <span class="n">available_height</span><span class="p">:</span>
+            <span class="c1"># Calculate vertical offset to move the thumbnail rect</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOP</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span><span class="p">:</span>
+                <span class="n">dy</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_position</span><span class="p">:</span>
+                <span class="n">dy</span> <span class="o">=</span> <span class="n">available_height</span> <span class="o">-</span> <span class="n">thumbnail_height</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Default to center vertically</span>
+                <span class="n">dy</span> <span class="o">=</span> <span class="p">(</span><span class="n">available_height</span> <span class="o">-</span> <span class="n">thumbnail_height</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">thumbnail_height</span> <span class="o">&gt;</span> <span class="n">available_height</span><span class="p">:</span>
+            <span class="c1"># Calculate the vertical offset to crop the thumbnail</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">thumbnail_height</span> <span class="o">-</span> <span class="n">available_height</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 
-            <span class="c1"># Draw the pixmap</span>
+        <span class="c1"># Adjust the rect to be centered</span>
+        <span class="n">top_left</span> <span class="o">=</span> <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">()</span>
+        <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">top_left</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">top_left</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">+</span> <span class="n">dy</span><span class="p">)</span>
+
+        <span class="c1"># Adjust the thumbnail to be centered within the rect</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">or</span> <span class="n">y</span><span class="p">:</span>
+            <span class="n">crop_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">available_width</span><span class="p">,</span> <span class="n">available_height</span><span class="p">)</span>
+            <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">crop_rect</span><span class="p">)</span>
+
+        <span class="c1"># Create a brush with the thumbnail as a texture, so that the painter can draw the pixmap</span>
+        <span class="c1"># as a rounded rect.</span>
+        <span class="n">pixmap</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">)</span>
+
+        <span class="c1"># Draw the pixmap</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_pen</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">())</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundedRect</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
+            <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_x_radius</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_y_radius</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">DEBUG_PAINT</span><span class="p">:</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_pen</span><span class="p">)</span>
-            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">())</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">yellow</span><span class="p">))</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundedRect</span><span class="p">(</span>
                 <span class="mi">0</span><span class="p">,</span>
                 <span class="mi">0</span><span class="p">,</span>
@@ -1764,23 +1843,6 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_y_radius</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
-
-            <span class="k">if</span> <span class="n">DEBUG_PAINT</span><span class="p">:</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">topLeft</span><span class="p">())</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">yellow</span><span class="p">))</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundedRect</span><span class="p">(</span>
-                    <span class="mi">0</span><span class="p">,</span>
-                    <span class="mi">0</span><span class="p">,</span>
-                    <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
-                    <span class="n">thumbnail_rect</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_x_radius</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_y_radius</span><span class="p">,</span>
-                <span class="p">)</span>
-                <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">available_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
-            <span class="n">thumbnail_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">thumbnail_rect</span>
 

@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.10.7 documentation</title>
+  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.10.8 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.7.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.8.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -844,6 +844,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
         <span class="n">context</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">context_from_entity</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">)</span>
+
+        <span class="c1"># Ensure the entity name is set within in the context. In some cases, e.g. for custom</span>
+        <span class="c1"># entities, the context retrieved does not have the entity name. We have the entity</span>
+        <span class="c1"># name here, so just set it.</span>
+        <span class="k">if</span> <span class="s2">&quot;name&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">entity</span> <span class="ow">and</span> <span class="n">entity_name</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">entity</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entity_name</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_context_activated</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_task_search_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
