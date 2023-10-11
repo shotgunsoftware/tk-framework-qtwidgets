@@ -1,3 +1,4 @@
+[![Python 3.7 3.9 3.10](https://img.shields.io/badge/python-3.7%20%7C%203.9%20%7C%203.10-blue.svg)](https://www.python.org/)
 [![Reference Documentation](http://img.shields.io/badge/doc-reference-blue.svg)](http://developer.shotgridsoftware.com/tk-framework-qtwidgets)
 [![Build Status](https://dev.azure.com/shotgun-ecosystem/Toolkit/_apis/build/status/Frameworks/tk-framework-qtwidgets?branchName=master)](https://dev.azure.com/shotgun-ecosystem/Toolkit/_build/latest?definitionId=45&branchName=master)
 [![codecov](https://codecov.io/gh/shotgunsoftware/tk-framework-qtwidgets/branch/master/graph/badge.svg)](https://codecov.io/gh/shotgunsoftware/tk-framework-qtwidgets)
