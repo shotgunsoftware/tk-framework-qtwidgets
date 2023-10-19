@@ -730,10 +730,17 @@ class FilterDefinition(object):
             # Construct display for deeply linked fields - grab every other item
             # after splitting on the "dot", these will be the deep linked entity
             # types, which we want to display.
-            deep_links = sg_field.split(".")[:-1:2]
+            # deep_links = sg_field.split(".")[:-1:2]
+            deep_links = sg_field.split(".")[1:-1:2]
             if deep_links:
+                # formatted_deep_links = " ".join(
+                #     (link.replace("_", " ").title() for link in deep_links)
+                # )
                 formatted_deep_links = " ".join(
-                    (link.replace("_", " ").title() for link in deep_links)
+                    (
+                        shotgun_globals.get_type_display_name(link, project_id)
+                        for link in deep_links
+                    )
                 )
                 if not field_display.startswith(formatted_deep_links):
                     field_display = "{} {}".format(formatted_deep_links, field_display)
