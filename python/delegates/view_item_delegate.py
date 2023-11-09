@@ -145,6 +145,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         self._thumbnail_size = QtCore.QSize()
         # Set this value to scale the thumbnail size as the item height changes.
         self._thumbnail_scale_value = 1.5
+        # Set to True to scale thumbnails to fill the entire thumbnail rect available. This
+        # will result in thumbnails drawn in uniform manner
+        self._thumbnail_uniform = False
         # Positioning of the thumbnail withint the available thumbnail rect. Empty tuple will default
         # to center the the thumbnail.
         self.thumbnail_position = ()
@@ -446,6 +449,20 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
     @min_height.setter
     def min_height(self, height):
         self._min_height = height
+
+    @property
+    def thumbnail_uniform(self):
+        """
+        Get or set the property that affects how thumbnails are rendered.
+
+        True will draw all thumbnails in a uniform manner. Thumbnails will fill the avialable
+        space, but may be cropped.
+        """
+        return self._thumbnail_uniform
+
+    @thumbnail_uniform.setter
+    def thumbnail_uniform(self, uniform):
+        self._thumbnail_uniform = uniform
 
     @property
     def thumbnail_size(self):
@@ -1204,7 +1221,9 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         if width >= 0:
             width = max(width, self.thumbnail_width, self.min_width)
 
-        # Calculate the height of the item.
+        # Calculate the height of the item. First, get the height of the text. Check if the
+        # height should expand to fit the text or not.
+        text_height = -1
         index_height = self.get_value(index, self.height_role)
         if (
             self.item_height is None
@@ -1215,31 +1234,47 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             if index_height is None or index_height < 0:
                 # The item height expands to the height of the text. NOTE the view that this delegate is
                 # set to must not have uniform items set for this to resize properly.
-
                 text_rect = self._get_text_rect(view_option, index)
                 text_doc, _ = self._get_text_document(
                     view_option, index, text_rect, clip=False
                 )
-                text_height = text_doc.size().height()
+                doc_height = text_doc.size().height()
                 height_for_visible_lines = self._get_visible_lines_height(option)
-                height_for_actions = self._get_actions_maximum_height(option, index)
-                height = max(text_height, height_for_visible_lines, height_for_actions)
-            else:
+                if index_height is None:
+                    # Height should be max of the calculated text height, or the delegate fixed item height
+                    item_height = self.item_height or -1
+                    text_height = max(doc_height, height_for_visible_lines, item_height)
+                else:
+                    # Do not allow delegate item height to override text height for index, when set.
+                    text_height = max(doc_height, height_for_visible_lines)
+            elif index_height is not None:
                 # Set the height the value defined by the index data.
-                height = index_height
+                text_height = index_height
+        elif self.item_height is not None:
+            # Fix the text height
+            text_height = self.item_height
+
+        # Add padding to the text height, if there is text
+        if text_height > 0:
+            text_height += self.text_padding.top + self.text_padding.bottom
+
+        # Get the height of the item thumbnail
+        if self.thumbnail_height > 0 and self._get_thumbnail(index) is not None:
+            thumbnail_height = (
+                self.thumbnail_height
+                + self.thumbnail_padding.top
+                + self.thumbnail_padding.bottom
+            )
         else:
-            # The height is fixed for all items.
-            height = self.item_height
+            thumbnail_height = -1
 
-        # Ensure height is not None, set it to -1 to indicate no size hint for height
-        if height is None:
-            height = -1
+        # Get the height of the item actions
+        actions_height = self._get_actions_maximum_height(option, index)
 
-        # For valid height values, ensure it is the minumum height and add padding.
-        if height >= 0:
-            height = max(height, self.min_height)
+        # The height is determined by the maximum height required for any of the item components
+        height = max(text_height, thumbnail_height, actions_height, self.min_height)
+        if height > 0:
             height += self.item_padding.top + self.item_padding.bottom
-            height += self.text_padding.top + self.text_padding.bottom
 
         return QtCore.QSize(width, height)
 
@@ -1488,58 +1523,102 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         """
 
         thumbnail = self._get_thumbnail(index)
+        if not thumbnail:
+            return QtCore.QRect()
 
-        if thumbnail:
-            available_rect = self._get_thumbnail_rect(option, index, thumbnail)
-            available_size = available_rect.size()
+        # Get the available rect to draw the thumbnail
+        available_rect = self._get_thumbnail_rect(option, index, thumbnail)
+        available_size = available_rect.size()
+        thumbnail_rect = QtCore.QRect(available_rect)
 
-            # Scale the thumbnail to the available space
+        if self.thumbnail_uniform:
+            # Scale the thumbnail to fill the available space. The thumbnail size may be
+            # bigger than the available space. If it is, the thumbnail will be cropped
+            # later to center the thumbnail within the available rect.
+            thumbnail = thumbnail.scaled(
+                available_size.width(),
+                available_size.height(),
+                QtCore.Qt.KeepAspectRatioByExpanding,
+                QtCore.Qt.SmoothTransformation,
+            )
+        else:
+            # Scale the thumbnail to fit the available space.
             if thumbnail.height() > available_size.height():
                 thumbnail = thumbnail.scaledToHeight(available_size.height())
-
             if thumbnail.width() > available_size.width():
                 thumbnail = thumbnail.scaledToWidth(available_size.width())
+            # Set the thumbnail rect to the size of the thumbnail after scaling
+            thumbnail_rect.setSize(thumbnail.size())
 
-            # Adjust the available rect to the size of the thumbnail and center it
-            if thumbnail.size() != available_size:
-                thumbnail_rect = QtCore.QRect(available_rect)
-                thumbnail_rect.setSize(thumbnail.size())
+        # Adjust the thumbnail and the rect used to draw the thumbnail such that the thumbnail
+        # fits and is centered within the draw rect
+        thumbnail_width = thumbnail.size().width()
+        thumbnail_height = thumbnail.size().height()
+        available_width = available_size.width()
+        available_height = available_size.height()
+        x = 0
+        y = 0
+        dx = 0
+        dy = 0
 
-                # Calculate horizontal offset
-                if self.LEFT in self.thumbnail_position:
-                    dx = 0
-                elif self.RIGHT in self.thumbnail_position:
-                    dx = available_rect.width() - thumbnail.size().width()
-                else:
-                    # Default to center horizontally
-                    dx = (available_rect.width() - thumbnail.size().width()) / 2
-
-                # Calculate vertical offset
-                if self.TOP in self.thumbnail_position:
-                    dy = 0
-                elif self.BOTTOM in self.thumbnail_position:
-                    dy = available_rect.height() - thumbnail.size().height()
-                else:
-                    # Default to center vertically
-                    dy = (available_rect.height() - thumbnail.size().height()) / 2
-
-                thumbnail_top_left = thumbnail_rect.topLeft()
-                thumbnail_rect.moveTo(
-                    thumbnail_top_left.x() + dx, thumbnail_top_left.y() + dy
-                )
-
+        if thumbnail_width < available_width:
+            # Calculate horizontal offset to move the thumbnail rect
+            if self.LEFT in self.thumbnail_position:
+                dx = 0
+            elif self.RIGHT in self.thumbnail_position:
+                dx = available_width - thumbnail_width
             else:
-                thumbnail_rect = available_rect
+                # Default to center horizontally
+                dx = (available_width - thumbnail_width) / 2
+        elif thumbnail_width > available_width:
+            # Calculate the horizontal offset to crop the thumbnail
+            x = (thumbnail_width - available_width) / 2
 
-            # Create a brush with the thumbnail as a texture, so that the painter can draw the pixmap
-            # as a rounded rect.
-            pixmap = QtGui.QBrush(thumbnail)
+        if thumbnail_height < available_height:
+            # Calculate vertical offset to move the thumbnail rect
+            if self.TOP in self.thumbnail_position:
+                dy = 0
+            elif self.BOTTOM in self.thumbnail_position:
+                dy = available_height - thumbnail_height
+            else:
+                # Default to center vertically
+                dy = (available_height - thumbnail_height) / 2
+        elif thumbnail_height > available_height:
+            # Calculate the vertical offset to crop the thumbnail
+            y = (thumbnail_height - available_height) / 2
 
-            # Draw the pixmap
+        # Adjust the rect to be centered
+        top_left = thumbnail_rect.topLeft()
+        thumbnail_rect.moveTo(top_left.x() + dx, top_left.y() + dy)
+
+        # Adjust the thumbnail to be centered within the rect
+        if x or y:
+            crop_rect = QtCore.QRect(x, y, available_width, available_height)
+            thumbnail = thumbnail.copy(crop_rect)
+
+        # Create a brush with the thumbnail as a texture, so that the painter can draw the pixmap
+        # as a rounded rect.
+        pixmap = QtGui.QBrush(thumbnail)
+
+        # Draw the pixmap
+        painter.save()
+        painter.setPen(self._thumbnail_pen)
+        painter.setBrush(pixmap)
+        painter.translate(thumbnail_rect.topLeft())
+        painter.drawRoundedRect(
+            0,
+            0,
+            thumbnail_rect.width(),
+            thumbnail_rect.height(),
+            self._thumbnail_x_radius,
+            self._thumbnail_y_radius,
+        )
+        painter.restore()
+
+        if DEBUG_PAINT:
             painter.save()
-            painter.setPen(self._thumbnail_pen)
-            painter.setBrush(pixmap)
             painter.translate(thumbnail_rect.topLeft())
+            painter.setPen(QtGui.QPen(QtCore.Qt.yellow))
             painter.drawRoundedRect(
                 0,
                 0,
@@ -1549,23 +1628,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 self._thumbnail_y_radius,
             )
             painter.restore()
-
-            if DEBUG_PAINT:
-                painter.save()
-                painter.translate(thumbnail_rect.topLeft())
-                painter.setPen(QtGui.QPen(QtCore.Qt.yellow))
-                painter.drawRoundedRect(
-                    0,
-                    0,
-                    thumbnail_rect.width(),
-                    thumbnail_rect.height(),
-                    self._thumbnail_x_radius,
-                    self._thumbnail_y_radius,
-                )
-                painter.restore()
-        else:
-            available_rect = QtCore.QRect()
-            thumbnail_rect = QtCore.QRect()
 
         return thumbnail_rect
 
