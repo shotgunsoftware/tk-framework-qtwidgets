@@ -436,6 +436,7 @@ class FilterDefinition(object):
         sg_field = None
         field = None
 
+        # FIXME this does not allow roles to have more than one '.' which means QtCore.Qt.DisplauRole and such will not work
         try:
             end_of_role_index = field_id.index(".")
         except ValueError:
