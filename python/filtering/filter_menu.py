@@ -471,17 +471,12 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # filters that are hidden.
             self._filters_def.build(groups_only=True)
 
-            # Restore the menu state before the refresh started. This will show any filters
-            # that need to be restored.
-            self._restore_state = self._restore_filter_definition(state)
+            # Now update the necessary individual filters
+            self._filters_def.update_filters(state.keys())
 
-            # Now update the individual filters that are known to be visible.
-            field_ids = [
-                field_id
-                for field_id, visible in self._field_visibility.items()
-                if visible
-            ]
-            self._filters_def.update_filters(field_ids)
+            # The menu widgets are built from the filter definition and state, so restore the
+            # menu state before rebuilding the widgets
+            self._restore_state = self._restore_filter_definition(state)
 
             # Create the filter menu actions and widgets based on the filter definition.
             self._build_menu_widgets()
