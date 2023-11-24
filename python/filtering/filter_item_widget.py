@@ -43,7 +43,7 @@ class FilterItemWidget(QtGui.QWidget):
         self._id = filter_id
         self._group_id = group_id
 
-        # Enabel mouse tracking for hover events.
+        # Enable mouse tracking for hover events.
         self.setMouseTracking(True)
 
     def __repr__(self):
