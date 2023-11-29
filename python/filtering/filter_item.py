@@ -652,7 +652,7 @@ class FilterItem(object):
         if filter_func is None:
             return False  # Invalid filter type
 
-        return filter_func(data)
+        return filter_func(self._sanitize_filter_value(data))
 
     def is_bool_valid(self, value):
         """
@@ -866,6 +866,20 @@ class FilterItem(object):
         )
         return False
 
+    def validate_search(self, search):
+        """
+        Check if the filter item matches the search value.
+
+        :param search: The search value.
+        :type search: any
+
+        :return: True if the filter item's value matches the search value, else False.
+        """
+        search = self._sanitize_filter_value(search)
+        if search == self._filter_value:
+            return True
+        return False
+
     def set_filter_value(self, value):
         """
         Set the filter item's filter value.
@@ -947,6 +961,8 @@ class FilterItem(object):
             if not isinstance(value, six.string_types):
                 # Just coerce it to string type.
                 value = str(value)
+            # make sure to lower the string to make it case insensitive
+            value = value.lower()
 
         elif self.filter_type == self.FilterType.NUMBER:
             if isinstance(value, six.string_types):

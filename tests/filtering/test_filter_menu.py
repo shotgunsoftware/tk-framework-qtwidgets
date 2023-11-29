@@ -26,6 +26,7 @@ except:
     importer = QtImporter()
     sgtk.platform.qt.QtCore = importer.QtCore
     sgtk.platform.qt.QtGui = importer.QtGui
+    from sgtk.platform.qt import QtCore, QtGui
 
 from tank_test.tank_test_base import TankTestBase
 from tank_test.tank_test_base import setUpModule  # noqa
@@ -54,6 +55,7 @@ class TestFilterMenu(TankTestBase):
 
         # Get a few modules that will be useful later on when instantiating widgets.
         filtering = qt_fw.import_module("filtering")
+        search_widget = qt_fw.import_module("search_widget")
 
         # Define the filtering modules as class members for test methods to access
         self.FilterDefinition = filtering.FilterDefinition
@@ -61,7 +63,8 @@ class TestFilterMenu(TankTestBase):
         self.FilterItemProxyModel = filtering.FilterItemProxyModel
         self.FilterMenu = filtering.FilterMenu
         self.ChoicesFilterItemWidget = filtering.ChoicesFilterItemWidget
-        self.TextFilterItemWidget = filtering.TextFilterItemWidget
+        self.SearchFilterItemWidget = filtering.SearchFilterItemWidget
+        self.SearchWidget = search_widget.SearchWidget
 
         model_data = [
             [
@@ -261,7 +264,9 @@ class TestFilterMenu(TankTestBase):
                     assert filter_action.isChecked()
                     assert widget.has_value()
 
-                elif isinstance(widget, self.TextFilterItemWidget):
+                elif isinstance(widget, self.SearchFilterItemWidget) and isinstance(
+                    widget.line_edit, self.SearchWidget
+                ):
                     widget.line_edit._set_search_text("dummy value")
                     assert widget.has_value()
 
