@@ -97,6 +97,21 @@ class FilterItemWidget(QtGui.QWidget):
     def value(self, value):
         raise sgtk.TankError("Abstract class method not overriden")
 
+    @property
+    def sort_value(self):
+        """Get the widget's value that is sortable."""
+        # First try to extract the sort value from the raw value.
+        value = self._raw_value
+        if isinstance(value, dict):
+            value = value.get("name")
+        # Default to the display name if the raw value is not sortable.
+        if value is None:
+            value = self.name
+        # Sanitize the value as needed based on value type
+        if isinstance(value, six.string_types):
+            return value.lower()
+        return value
+
     def set_value(self, value):
         """Convenience method to set the value for callback."""
         self.value = value

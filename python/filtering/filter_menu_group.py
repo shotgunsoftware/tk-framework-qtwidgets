@@ -114,20 +114,14 @@ class FilterMenuGroup(object):
 
     @staticmethod
     def get_sort_value(action):
-        """
-        Return the value used to sort the filter group actions.
-        """
+        """Return the value used to sort the filter group actions."""
 
         try:
-            # For QWidgetAction objects, try to extract the name of its default widget.
-            # NOTE the default widget is a plain QWidget, so the default widget must
-            # subclass QWidget and define a `name` method (see FilterItemWidget).
-            sort_value = action.defaultWidget().name
+            # Try to extract the sort value from the default widget, assuming it is a
+            # FilterItemWidget object. If not, default to the action's display value.
+            return action.defaultWidget().sort_value
         except AttributeError:
-            # Default to sorting by the QAction's display value.
-            sort_value = action.text()
-
-        return sort_value.lower()
+            return action.text().lower()
 
     @staticmethod
     def get_primary_sort(action):
