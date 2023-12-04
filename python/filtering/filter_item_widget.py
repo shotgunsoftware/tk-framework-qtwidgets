@@ -29,7 +29,7 @@ class FilterItemWidget(QtGui.QWidget):
     # Signal emitted when the filter widget's value changed.
     value_changed = QtCore.Signal(object)
 
-    def __init__(self, filter_id, group_id, parent=None, bg_task_manager=None):
+    def __init__(self, filter_id, group_id, parent=None, bg_task_manager=None, filter_data=None):
         """
         Constructor. Set up the widget.
 
@@ -41,6 +41,8 @@ class FilterItemWidget(QtGui.QWidget):
         :type parent: :class:`sgtk.platform.qt.QWidget`
         :param bg_task_manager: An instance of a Background Task Manager used by the search widget.
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
+        :param filter_data: Optional filter data to create the filter item with.
+        :type filter_data: dict
         """
 
         super(FilterItemWidget, self).__init__(parent)
@@ -48,6 +50,10 @@ class FilterItemWidget(QtGui.QWidget):
         self._id = filter_id
         self._group_id = group_id
         self._bg_task_manager = bg_task_manager
+
+        filter_data = filter_data or {}
+        self._display_name = filter_data.get("display_name", "")
+        self._raw_value = filter_data.get("filter_value")
 
         # Enable mouse tracking for hover events.
         self.setMouseTracking(True)
@@ -80,7 +86,7 @@ class FilterItemWidget(QtGui.QWidget):
     @property
     def name(self):
         """Return the dispaly text for this widget."""
-        raise sgtk.TankError("Abstract class method not overriden")
+        return self._display_name
 
     @property
     def value(self):
@@ -93,17 +99,14 @@ class FilterItemWidget(QtGui.QWidget):
 
     def set_value(self, value):
         """Convenience method to set the value for callback."""
-
         self.value = value
 
     def has_value(self):
         """Return True if the widget has a value, else False."""
-
         raise sgtk.TankError("Abstract class method not overriden")
 
     def clear_value(self):
         """Clear the widget's current value."""
-
         raise sgtk.TankError("Abstract class method not overriden")
 
     def restore(self, state):
@@ -113,7 +116,6 @@ class FilterItemWidget(QtGui.QWidget):
         :param state: The state to restore the widget from.
         :type state: any
         """
-
         raise sgtk.TankError("Abstract class method not overriden")
 
 
@@ -147,7 +149,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         """
 
         super(ChoicesFilterItemWidget, self).__init__(
-            filter_id, group_id, parent=parent, bg_task_manager=bg_task_manager
+            filter_id, group_id, parent=parent, bg_task_manager=bg_task_manager, filter_data=filter_data
         )
 
         layout = QtGui.QHBoxLayout()
@@ -166,9 +168,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
             layout.addWidget(icon_label)
 
         # Left-aligned filter value display text
-        name = six.ensure_str(
-            filter_data.get("display_name", filter_data.get("filter_value"))
-        )
+        name = six.ensure_str(self._display_name, self._raw_value)
         self.label = QtGui.QLabel(name)
         layout.addWidget(self.label)
 
@@ -301,12 +301,11 @@ class SearchFilterItemWidget(FilterItemWidget):
         """
 
         super(SearchFilterItemWidget, self).__init__(
-            filter_id, group_id, parent=parent, bg_task_manager=bg_task_manager
+            filter_id, group_id, parent=parent, bg_task_manager=bg_task_manager, filter_data=filter_data,
         )
 
         self._value = ""
 
-        self._name = filter_data.get("display_name", "")
         short_name = filter_data.get("short_name", self.name)
         sg_data = filter_data.get("sg_data", {})
 
@@ -341,11 +340,6 @@ class SearchFilterItemWidget(FilterItemWidget):
         layout.setAlignment(QtCore.Qt.AlignLeft)
         layout.addWidget(self.line_edit)
         self.setLayout(layout)
-
-    @FilterItemWidget.name.getter
-    def name(self):
-        """The display name for this widget."""
-        return self._name
 
     @FilterItemWidget.value.getter
     def value(self):
