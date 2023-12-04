@@ -29,7 +29,9 @@ class FilterItemWidget(QtGui.QWidget):
     # Signal emitted when the filter widget's value changed.
     value_changed = QtCore.Signal(object)
 
-    def __init__(self, filter_id, group_id, parent=None, bg_task_manager=None, filter_data=None):
+    def __init__(
+        self, filter_id, group_id, parent=None, bg_task_manager=None, filter_data=None
+    ):
         """
         Constructor. Set up the widget.
 
@@ -164,7 +166,11 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         """
 
         super(ChoicesFilterItemWidget, self).__init__(
-            filter_id, group_id, parent=parent, bg_task_manager=bg_task_manager, filter_data=filter_data
+            filter_id,
+            group_id,
+            parent=parent,
+            bg_task_manager=bg_task_manager,
+            filter_data=filter_data,
         )
 
         layout = QtGui.QHBoxLayout()
@@ -316,7 +322,11 @@ class SearchFilterItemWidget(FilterItemWidget):
         """
 
         super(SearchFilterItemWidget, self).__init__(
-            filter_id, group_id, parent=parent, bg_task_manager=bg_task_manager, filter_data=filter_data,
+            filter_id,
+            group_id,
+            parent=parent,
+            bg_task_manager=bg_task_manager,
+            filter_data=filter_data,
         )
 
         self._value = ""
