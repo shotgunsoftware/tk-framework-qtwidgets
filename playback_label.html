@@ -1,57 +1,37 @@
 
 
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>ShotGrid Playback Label Widget &mdash; tk-framework-qtwidgets v2.10.8 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShotGrid Playback Label Widget &mdash; tk-framework-qtwidgets v2.10.9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Screen Capture Widget" href="screen_grab.html" />
     <link rel="prev" title="Text Overlay Widget" href="overlay_widget.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-    <a href='http://developer.shotgridsoftware.com'>
+    <a href='http://developers.shotgridsoftware.com'>
     
         <img style='width: 191px;
                 height: 60px;
@@ -64,35 +44,20 @@
     
 
           
-            <a href="index.html" class="icon icon-home"> tk-framework-qtwidgets
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            tk-framework-qtwidgets
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
 
-          
-
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
-            
-            
-              
-            
-            
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
@@ -106,7 +71,14 @@
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ShotGrid Playback Label Widget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#playback_label.ShotgunPlaybackLabel"><code class="docutils literal notranslate"><span class="pre">ShotgunPlaybackLabel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#playback_label.ShotgunPlaybackLabel.set_shotgun_data"><code class="docutils literal notranslate"><span class="pre">ShotgunPlaybackLabel.set_shotgun_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#playback_label.ShotgunPlaybackLabel.playable"><code class="docutils literal notranslate"><span class="pre">ShotgunPlaybackLabel.playable</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
@@ -116,8 +88,6 @@
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
-            
-          
 
     <a href='genindex.html'>Alphabetic Index</a>
 
@@ -137,12 +107,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.8.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.9.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
+    <a class=custom_post_menu href='https://developers.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -160,62 +130,27 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">tk-framework-qtwidgets</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>ShotGrid Playback Label Widget</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ShotGrid Playback Label Widget</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="shotgrid-playback-label-widget">
-<h1>ShotGrid Playback Label Widget<a class="headerlink" href="#shotgrid-playback-label-widget" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="shotgrid-playback-label-widget">
+<h1>ShotGrid Playback Label Widget<a class="headerlink" href="#shotgrid-playback-label-widget" title="Permalink to this heading"></a></h1>
 <p>The ShotGrid Playback Label is a simple <code class="docutils literal notranslate"><span class="pre">QLabel</span></code> override which
 makes it easy to indicate that a thumbnail can be played back:</p>
 <img alt="_images/playback_label.png" src="_images/playback_label.png" />
@@ -224,8 +159,8 @@ case the ShotGrid data contains playable media, the playback icon will
 automatically appear. Clicking the playback icon will launch a
 playback action, currently launching ShotGrid screening room in a web browser.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In order to use this widget in QT designer, you need to wrap
+<p class="admonition-title">Note</p>
+<p>In order to use this widget in QT designer, you need to wrap
 the import in a module. For more information on how to do this, see <a class="reference internal" href="index.html#widgets-in-designer"><span class="std std-ref">Using widgets with QT Designer</span></a>.</p>
 </div>
 <p>Use the label like this:</p>
@@ -249,10 +184,10 @@ the import in a module. For more information on how to do this, see <a class="re
 <span class="n">label</span><span class="o">.</span><span class="n">playback_clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">some_callback</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
-<dt id="playback_label.ShotgunPlaybackLabel">
-<em class="property">class </em><code class="descclassname">playback_label.</code><code class="descname">ShotgunPlaybackLabel</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/playback_label/playback_label.html#ShotgunPlaybackLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QLabel</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="playback_label.ShotgunPlaybackLabel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">playback_label.</span></span><span class="sig-name descname"><span class="pre">ShotgunPlaybackLabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/playback_label/playback_label.html#ShotgunPlaybackLabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QLabel</span></code></p>
 <p>Subclassed <code class="docutils literal notranslate"><span class="pre">QLabel</span></code> that displays a playback icon
 centered above its content.</p>
 <p>While it is technically possible to use
@@ -263,101 +198,71 @@ via the <a class="reference internal" href="#playback_label.ShotgunPlaybackLabel
 will look at the data and determine whether a playback
 icon should be displayed or not. In the case an icon is
 displayed, a playback_clicked signal may be emitted.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Signal playback_clicked(dict):</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">The playback icon was clicked.
+<dl class="field-list simple">
+<dt class="field-odd">Signal playback_clicked(dict)<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The playback icon was clicked.
 This signal passes the shotgun version data specified in
 via the <a class="reference internal" href="#playback_label.ShotgunPlaybackLabel.set_shotgun_data" title="playback_label.ShotgunPlaybackLabel.set_shotgun_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_shotgun_data()</span></code></a> method back
-to the caller.</td>
-</tr>
-</tbody>
-</table>
+to the caller.</p>
+</dd>
+</dl>
 <p>Constructor</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> – QT parent object</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="playback_label.ShotgunPlaybackLabel.set_shotgun_data">
-<code class="descname">set_shotgun_data</code><span class="sig-paren">(</span><em>sg_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/playback_label/playback_label.html#ShotgunPlaybackLabel.set_shotgun_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel.set_shotgun_data" title="Permalink to this definition">¶</a></dt>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> – QT parent object</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="playback_label.ShotgunPlaybackLabel.set_shotgun_data">
+<span class="sig-name descname"><span class="pre">set_shotgun_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sg_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/playback_label/playback_label.html#ShotgunPlaybackLabel.set_shotgun_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel.set_shotgun_data" title="Permalink to this definition"></a></dt>
 <dd><p>Sets shotgun data associated with this label.
 This data will be used to drive the logic which is
 used to determine if the label should exhibit the playback icon or not.</p>
 <p>If you for example are passing a Shotgun data dictionary reprensenting
 a version, make sure to include the various quicktime and frame fields.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sg_data</strong> – Shotgun data dictionary</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sg_data</strong> – Shotgun data dictionary</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="playback_label.ShotgunPlaybackLabel.playable">
-<code class="descname">playable</code><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel.playable" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="playback_label.ShotgunPlaybackLabel.playable">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">playable</span></span><a class="headerlink" href="#playback_label.ShotgunPlaybackLabel.playable" title="Permalink to this definition"></a></dt>
 <dd><p>Returns True if the label is playable given its current Shotgun data.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="screen_grab.html" class="btn btn-neutral float-right" title="Screen Capture Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="overlay_widget.html" class="btn btn-neutral float-left" title="Text Overlay Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overlay_widget.html" class="btn btn-neutral float-left" title="Text Overlay Widget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="screen_grab.html" class="btn btn-neutral float-right" title="Screen Capture Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2023, Autodesk
+    <p>&#169; Copyright 2023, Autodesk.</p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-
-  
-  
-    
-  
  
 
   <script type="text/javascript">

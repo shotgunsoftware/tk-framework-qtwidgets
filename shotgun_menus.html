@@ -1,57 +1,37 @@
 
 
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>ShotGrid Menus &mdash; tk-framework-qtwidgets v2.10.8 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShotGrid Menus &mdash; tk-framework-qtwidgets v2.10.9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Shotgun Widgets" href="shotgun_widget.html" />
     <link rel="prev" title="ShotGrid Field Widgets" href="shotgun_fields.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-    <a href='http://developer.shotgridsoftware.com'>
+    <a href='http://developers.shotgridsoftware.com'>
     
         <img style='width: 191px;
                 height: 60px;
@@ -64,35 +44,20 @@
     
 
           
-            <a href="index.html" class="icon icon-home"> tk-framework-qtwidgets
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            tk-framework-qtwidgets
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
 
-          
-
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
-            
-            
-              
-            
-            
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
@@ -111,8 +76,14 @@
 <li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">ShotGrid Menus</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#shotgrid-menu">ShotGrid Menu</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#entity-field-menu">Entity Field Menu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shotgrid-menu">ShotGrid Menu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#shotgun_menus.ShotgunMenu"><code class="docutils literal notranslate"><span class="pre">ShotgunMenu</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#entity-field-menu">Entity Field Menu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#shotgun_menus.EntityFieldMenu"><code class="docutils literal notranslate"><span class="pre">EntityFieldMenu</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -123,8 +94,6 @@
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
-            
-          
 
     <a href='genindex.html'>Alphabetic Index</a>
 
@@ -144,12 +113,12 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.8.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.9.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
     For more information, please visit
-    <a class=custom_post_menu href='https://developer.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
+    <a class=custom_post_menu href='https://developers.shotgridsoftware.com'>The ShotGrid developer portal.</a>.
     The code associated with this documentation can be found
     <a class=custom_post_menu href='https://github.com/shotgunsoftware/tk-framework-qtwidgets'>here</a>.
 
@@ -167,74 +136,39 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">tk-framework-qtwidgets</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>ShotGrid Menus</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ShotGrid Menus</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="shotgrid-menus">
-<h1>ShotGrid Menus<a class="headerlink" href="#shotgrid-menus" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="shotgrid-menus">
+<h1>ShotGrid Menus<a class="headerlink" href="#shotgrid-menus" title="Permalink to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
 <p>The ShotGrid Menus class provide a standardized interface, look and feel for
 building menus that interact with ShotGrid.</p>
 <img alt="_images/shotgun_menus.png" src="_images/shotgun_menus.png" />
 <hr class="docutils" />
-<div class="section" id="shotgrid-menu">
-<h3>ShotGrid Menu<a class="headerlink" href="#shotgrid-menu" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt id="shotgun_menus.ShotgunMenu">
-<em class="property">class </em><code class="descclassname">shotgun_menus.</code><code class="descname">ShotgunMenu</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QMenu</span></code></p>
+<section id="shotgrid-menu">
+<h3>ShotGrid Menu<a class="headerlink" href="#shotgrid-menu" title="Permalink to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="shotgun_menus.ShotgunMenu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shotgun_menus.</span></span><span class="sig-name descname"><span class="pre">ShotgunMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMenu</span></code></p>
 <p>A base class with support for easily adding labels and groups of actions
 with a consistent styling.</p>
 <p>Usage Example:</p>
@@ -254,23 +188,20 @@ with a consistent styling.</p>
 <img alt="_images/shotgun_menus_example.png" src="_images/shotgun_menus_example.png" />
 <p>Image shows the results of the <code class="docutils literal notranslate"><span class="pre">ShotgunMenu</span></code> created in the example.</p>
 <p>Initialize the menu.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The menu’s parent.</td>
-</tr>
-</tbody>
-</table>
-<dl class="staticmethod">
-<dt id="shotgun_menus.ShotgunMenu.get_label">
-<em class="property">static </em><code class="descname">get_label</code><span class="sig-paren">(</span><em>title</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.get_label" title="Permalink to this definition">¶</a></dt>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – The menu’s parent.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="shotgun_menus.ShotgunMenu.get_label">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.get_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.get_label" title="Permalink to this definition"></a></dt>
 <dd><p>Create the label widget to add to the menu.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="shotgun_menus.ShotgunMenu.add_group">
-<code class="descname">add_group</code><span class="sig-paren">(</span><em>items</em>, <em>title=None</em>, <em>separator=True</em>, <em>exclusive=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.add_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.add_group" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="shotgun_menus.ShotgunMenu.add_group">
+<span class="sig-name descname"><span class="pre">add_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.add_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.add_group" title="Permalink to this definition"></a></dt>
 <dd><p>Adds a group of items to the menu.</p>
 <p>The list of items can include <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QAction.html#PySide.QtGui.QAction" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QAction</span></code></a> or
 <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QMenu.html#PySide.QtGui.QMenu" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QMenu</span></code></a> instances. If a <code class="docutils literal notranslate"><span class="pre">title</span></code> is supplied,
@@ -281,205 +212,162 @@ argument. A separator will not be included if the group is added to an
 empty menu.</p>
 <p>A list of all actions, including separator, label, and menu actions,
 in the order added, will be returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>items</strong> (<em>list</em>) – A list of actions and/or menus to add to this menu.</li>
-<li><strong>title</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Optional text to use in a label at the top of the
-group.</li>
-<li><strong>separator</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Add a separator if <code class="docutils literal notranslate"><span class="pre">True</span></code> (default), don’t add
-if <code class="docutils literal notranslate"><span class="pre">False</span></code>.</li>
-<li><strong>exclusive</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – If exclusive is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the added items
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>items</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – A list of actions and/or menus to add to this menu.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Optional text to use in a label at the top of the
+group.</p></li>
+<li><p><strong>separator</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Add a separator if <code class="docutils literal notranslate"><span class="pre">True</span></code> (default), don’t add
+if <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>exclusive</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If exclusive is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the added items
 will be an exclusive group. If the items are checkable, only one
-will be checkable at any given time. The default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</li>
+will be checkable at any given time. The default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of added <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QAction.html#PySide.QtGui.QAction" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QAction</span></code></a> objects</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of added <a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QAction.html#PySide.QtGui.QAction" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QAction</span></code></a> objects</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="shotgun_menus.ShotgunMenu.add_label">
-<code class="descname">add_label</code><span class="sig-paren">(</span><em>title</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.add_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.add_label" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="shotgun_menus.ShotgunMenu.add_label">
+<span class="sig-name descname"><span class="pre">add_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.add_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.add_label" title="Permalink to this definition"></a></dt>
 <dd><p>Add a label with the given title to the menu</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>title</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – The title of the sectional label</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The title of the sectional label</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="shotgun_menus.ShotgunMenu.keyReleaseEvent">
-<code class="descname">keyReleaseEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.keyReleaseEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="shotgun_menus.ShotgunMenu.keyReleaseEvent">
+<span class="sig-name descname"><span class="pre">keyReleaseEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/shotgun_menu.html#ShotgunMenu.keyReleaseEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.ShotgunMenu.keyReleaseEvent" title="Permalink to this definition"></a></dt>
 <dd><p>Allow users to type menu item names to highlight/select them.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="entity-field-menu">
-<h3>Entity Field Menu<a class="headerlink" href="#entity-field-menu" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt id="shotgun_menus.EntityFieldMenu">
-<em class="property">class </em><code class="descclassname">shotgun_menus.</code><code class="descname">EntityFieldMenu</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>parent=None</em>, <em>bg_task_manager=None</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">shotgun_menus.shotgun_menu.ShotgunMenu</span></code></p>
+<section id="entity-field-menu">
+<h3>Entity Field Menu<a class="headerlink" href="#entity-field-menu" title="Permalink to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="shotgun_menus.EntityFieldMenu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shotgun_menus.</span></span><span class="sig-name descname"><span class="pre">EntityFieldMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sg_entity_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_task_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#shotgun_menus.ShotgunMenu" title="shotgun_menus.shotgun_menu.ShotgunMenu"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShotgunMenu</span></code></a></p>
 <p>A menu that automatically displays the fields for a given Shotgun entity.</p>
-<dl class="docutils">
-<dt>The QActions for the menu will all have their data set to a dictionary in the form:</dt>
-<dd>{“field”: selected_field}</dd>
+<dl class="simple">
+<dt>The QActions for the menu will all have their data set to a dictionary in the form:</dt><dd><p>{“field”: selected_field}</p>
+</dd>
 </dl>
 <p>Constructor</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sg_entity_type</strong> (<em>String</em>) – The entity type to build a menu for</li>
-<li><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – Parent widget</li>
-<li><strong>bg_task_manager</strong> (<a class="reference external" href="http://developer.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – The task manager the menu will use if it needs to run a task</li>
-<li><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The project Entity id. If None, the current
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sg_entity_type</strong> (<em>String</em>) – The entity type to build a menu for</p></li>
+<li><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – Parent widget</p></li>
+<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="http://developers.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.8.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – The task manager the menu will use if it needs to run a task</p></li>
+<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The project Entity id. If None, the current
 context’s project will be used, or the “site”
 cache location will be returned if the current
-context does not have an associated project.</li>
+context does not have an associated project.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="shotgun_menus.EntityFieldMenu.set_field_filter">
-<code class="descname">set_field_filter</code><span class="sig-paren">(</span><em>field_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_field_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_field_filter" title="Permalink to this definition">¶</a></dt>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="shotgun_menus.EntityFieldMenu.set_field_filter">
+<span class="sig-name descname"><span class="pre">set_field_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_filter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_field_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_field_filter" title="Permalink to this definition"></a></dt>
 <dd><p>Set the callback used to filter which fields are shown by the menu.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>field_filter</strong> (<em>A method that takes a single field string as its only argument and
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>field_filter</strong> (<em>A method that takes a single field string as its only argument and
 returns a boolean</em>) – Callback called for each entity field which returns True if the field
 should be shown and False if it should not.  The fields will be in “bubbled” notation,
-for example “sg_sequence.Sequence.code”</td>
-</tr>
-</tbody>
-</table>
+for example “sg_sequence.Sequence.code”</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="shotgun_menus.EntityFieldMenu.set_checked_filter">
-<code class="descname">set_checked_filter</code><span class="sig-paren">(</span><em>checked_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_checked_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_checked_filter" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="shotgun_menus.EntityFieldMenu.set_checked_filter">
+<span class="sig-name descname"><span class="pre">set_checked_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checked_filter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_checked_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_checked_filter" title="Permalink to this definition"></a></dt>
 <dd><p>Set the callback used to set which fields are checked.  By specifying a value other than
 None, all the menu items will be checkable.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checked_filter</strong> (<em>A method that takes a single field string as its only argument and
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>checked_filter</strong> (<em>A method that takes a single field string as its only argument and
 returns a boolean</em>) – Callback called for each entity field which returns True if the field
 should be checked and False if it should not.  The fields will be in “bubbled” notation,
-for example “sg_sequence.Sequence.code”</td>
-</tr>
-</tbody>
-</table>
+for example “sg_sequence.Sequence.code”</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="shotgun_menus.EntityFieldMenu.set_disabled_filter">
-<code class="descname">set_disabled_filter</code><span class="sig-paren">(</span><em>disabled_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_disabled_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_disabled_filter" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="shotgun_menus.EntityFieldMenu.set_disabled_filter">
+<span class="sig-name descname"><span class="pre">set_disabled_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disabled_filter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_disabled_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_disabled_filter" title="Permalink to this definition"></a></dt>
 <dd><p>Set the callback used to filter which fields are disabled</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>disabled_filter</strong> (<em>A method that takes a single field string as its only argument and
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>disabled_filter</strong> (<em>A method that takes a single field string as its only argument and
 returns a boolean</em>) – Callback called for each entity field which returns True if the field
 should be disabled and False if it should not.  The fields will be in “bubbled” notation,
-for example “sg_sequence.Sequence.code”</td>
-</tr>
-</tbody>
-</table>
+for example “sg_sequence.Sequence.code”</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="shotgun_menus.EntityFieldMenu.set_entity_type_filter">
-<code class="descname">set_entity_type_filter</code><span class="sig-paren">(</span><em>entity_type_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_entity_type_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_entity_type_filter" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="shotgun_menus.EntityFieldMenu.set_entity_type_filter">
+<span class="sig-name descname"><span class="pre">set_entity_type_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity_type_filter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/shotgun_menus/entity_field_menu.html#EntityFieldMenu.set_entity_type_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shotgun_menus.EntityFieldMenu.set_entity_type_filter" title="Permalink to this definition"></a></dt>
 <dd><p>Set the callback used to filter what entity types to display in submenus</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entity_type_filter</strong> (<em>A method that takes a single entity types string as its only argument
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entity_type_filter</strong> (<em>A method that takes a single entity types string as its only argument
 and returns a boolean</em>) – Callback called for each entity type which returns True if the
-given entity type should be displayed</td>
-</tr>
-</tbody>
-</table>
+given entity type should be displayed</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="shotgun_widget.html" class="btn btn-neutral float-right" title="Shotgun Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="shotgun_fields.html" class="btn btn-neutral float-left" title="ShotGrid Field Widgets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="shotgun_fields.html" class="btn btn-neutral float-left" title="ShotGrid Field Widgets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="shotgun_widget.html" class="btn btn-neutral float-right" title="Shotgun Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2023, Autodesk
+    <p>&#169; Copyright 2023, Autodesk.</p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-
-  
-  
-    
-  
  
 
   <script type="text/javascript">
