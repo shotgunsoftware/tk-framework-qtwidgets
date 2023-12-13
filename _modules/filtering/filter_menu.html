@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.10.9 documentation</title>
+  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.10.10 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.9.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.10.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -621,17 +621,12 @@
             <span class="c1"># filters that are hidden.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">groups_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-            <span class="c1"># Restore the menu state before the refresh started. This will show any filters</span>
-            <span class="c1"># that need to be restored.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_restore_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_restore_filter_definition</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+            <span class="c1"># Now update the necessary individual filters</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">update_filters</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-            <span class="c1"># Now update the individual filters that are known to be visible.</span>
-            <span class="n">field_ids</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">field_id</span>
-                <span class="k">for</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">visible</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_field_visibility</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">visible</span>
-            <span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">update_filters</span><span class="p">(</span><span class="n">field_ids</span><span class="p">)</span>
+            <span class="c1"># The menu widgets are built from the filter definition and state, so restore the</span>
+            <span class="c1"># menu state before rebuilding the widgets</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_restore_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_restore_filter_definition</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
             <span class="c1"># Create the filter menu actions and widgets based on the filter definition.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_build_menu_widgets</span><span class="p">()</span>
@@ -1289,7 +1284,7 @@
 <span class="sd">        :return: The field id that the search filter item widget refers to.</span>
 <span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;.</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">SearchFilterItemWidget</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">SearchFilterItemWidget</span><span class="p">)),</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_filter_group_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

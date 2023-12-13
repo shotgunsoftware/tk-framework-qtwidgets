@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>View Related Classes &mdash; tk-framework-qtwidgets v2.10.9 documentation</title>
+  <title>View Related Classes &mdash; tk-framework-qtwidgets v2.10.10 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -127,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.9.<br>
+    <b>tk-framework-qtwidgets</b> v2.10.10.<br>
     
         This documentation is part of the ShotGrid Pipeline Toolkit.
     
@@ -432,22 +432,22 @@ existed at the time of the delegate’s initialization.</p>
 </dl>
 <p>You use this class by subclassing it and implementing the methods:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://developers.shotgridsoftware.com/tk-framework-qtwidgets/views.html#views.EditSelectedWidgetDelegate._get_painter_widget" title="(in tk-framework-qtwidgets vv2.10.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_painter_widget()</span></code></a>     - return the widget to be used to paint an index</p></li>
-<li><p><a class="reference external" href="http://developers.shotgridsoftware.com/tk-framework-qtwidgets/views.html#views.EditSelectedWidgetDelegate._on_before_paint" title="(in tk-framework-qtwidgets vv2.10.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_on_before_paint()</span></code></a>        - set up the widget with the specific data ready to be painted</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_painter_widget()</span></code>     - return the widget to be used to paint an index</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">_on_before_paint()</span></code>        - set up the widget with the specific data ready to be painted</p></li>
 <li><p><a class="reference internal" href="#views.EditSelectedWidgetDelegate.sizeHint" title="views.EditSelectedWidgetDelegate.sizeHint"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sizeHint()</span></code></a>                - return the size of the widget to be used in the view</p></li>
 </ul>
 <p>If you want to have an interactive widget (editor) for the selected item
 then you will also need to implement:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://developers.shotgridsoftware.com/tk-framework-qtwidgets/views.html#views.EditSelectedWidgetDelegate._create_editor_widget" title="(in tk-framework-qtwidgets vv2.10.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_editor_widget()</span></code></a>   - return a unique editor instance to be used for editing</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_editor_widget()</span></code>   - return a unique editor instance to be used for editing</p></li>
 <li><p><a class="reference internal" href="#views.EditSelectedWidgetDelegate._on_before_selection" title="views.EditSelectedWidgetDelegate._on_before_selection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_on_before_selection()</span></code></a>    - set up the widget with the specific data ready for
 interaction</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you are using the same widget for all items then you can just implement
-the <a class="reference external" href="http://developers.shotgridsoftware.com/tk-framework-qtwidgets/views.html#views.EditSelectedWidgetDelegate._create_widget" title="(in tk-framework-qtwidgets vv2.10.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_widget()</span></code></a> method instead of the separate <a class="reference external" href="http://developers.shotgridsoftware.com/tk-framework-qtwidgets/views.html#views.EditSelectedWidgetDelegate._get_painter_widget" title="(in tk-framework-qtwidgets vv2.10.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_painter_widget()</span></code></a>
-and <a class="reference external" href="http://developers.shotgridsoftware.com/tk-framework-qtwidgets/views.html#views.EditSelectedWidgetDelegate._create_editor_widget" title="(in tk-framework-qtwidgets vv2.10.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_editor_widget()</span></code></a> methods.</p>
+the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_widget()</span></code> method instead of the separate <code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_painter_widget()</span></code>
+and <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_editor_widget()</span></code> methods.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
