@@ -1348,6 +1348,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     def _about_to_show(self):
         """Callback triggered when the menu is about to show."""
 
+        # Undock the menu if it is docked.
+        self.undock_filters()
+
         # Ensure the menu is up to date on show.
         if self.__always_refresh_on_show or self.refresh_on_show:
             self.refresh()
