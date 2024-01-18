@@ -815,8 +815,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         sorted_field_ids = self._filters_def.get_fields(sort=True)
         self._add_filter_groups(sorted_field_ids)
 
-        # FIXME
-        if self.dock_widget:
+        if self.docked:
             spacer = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
             self.dock_widget.layout().addItem(spacer)
 
