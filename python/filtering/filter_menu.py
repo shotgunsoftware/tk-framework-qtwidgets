@@ -733,10 +733,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         spacer = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.__dock_widget.layout().addItem(spacer)
 
-        # Add an action to the menu to move the filters back to the menu
-        undock_action = self.addAction("Show Filters in Menu")
-        undock_action.triggered.connect(self.undock_filters)
-
     def get_current_filters(self, exclude_choices_from_fields=None):
         """
         Get the current filters that are active in the menu.
@@ -1464,10 +1460,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             self.__more_filters_menu_button.setMenu(self.__more_filters_menu)
             layout.addWidget(self.__more_filters_menu_button)
             self.removeAction(self.__more_filters_menu_action)
-
-            # Add an action to the menu to move the filters back to the menu
-            undock_action = self.addAction("Show Filters in Menu")
-            undock_action.triggered.connect(self.undock_filters)
         else:
             # Add the static menu actions
             if self.__dock_widget:
