@@ -333,3 +333,28 @@ class TestFilterMenu(TankTestBase):
 
         result_filters = fm.get_current_filters(exclude_choices_from_fields=[field_id])
         assert len(result_filters) == 0
+
+    def test_get_search_filter_item_and_field_id(self):
+        """Test the '_get_search_filter_item_id' and '_get_search_filter_field_id' methods."""
+
+        fm = self.FilterMenu()
+
+        # Parametrize the filter group id (cannot use pytest.mark.parametrize inside TankTestBase)
+        filter_group_ids = [
+            "123.filter_group_name",
+            "999.primary_entity.LinkedEntityType.entity_field",
+        ]
+        for filter_group_id in filter_group_ids:
+            # Generate the id for the search filter widget
+            search_filter_widget_id = fm._get_search_filter_item_id(filter_group_id)
+
+            # Create the search filter widget
+            sw = self.SearchFilterItemWidget(
+                search_filter_widget_id,
+                filter_group_id,
+                {},
+            )
+
+            # Now test that we can get the filter group id back from the search widget
+            search_filter_field_id = fm._get_search_filter_field_id(sw.id)
+            assert search_filter_field_id == filter_group_id
