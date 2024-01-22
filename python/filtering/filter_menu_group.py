@@ -23,7 +23,7 @@ SGQToolButton = sg_qwidgets.SGQToolButton
 SGQPushButton = sg_qwidgets.SGQPushButton
 
 
-class FilterMenuGroup():
+class FilterMenuGroup:
     """Class object to manage a filter grouping within a QMenu."""
 
     def __init__(
@@ -45,16 +45,20 @@ class FilterMenuGroup():
 
         # Widget container to hold filter menu group. This is used when moving filters from the
         # menu to a dock widget
-        # self.__filter_group_widget = None
-        self.__filter_group_widget = SGQWidget(
-            self.menu.dock_widget,
-            layout_direction=QtGui.QBoxLayout.TopToBottom,
-        )
-        self.__filter_group_widget.layout().setSpacing(0)
-        self.__filter_group_widget.layout().setContentsMargins(0, 0, 0, 0)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Maximum)
-        sizePolicy.setRetainSizeWhenHidden(False)
-        self.__filter_group_widget.setSizePolicy(sizePolicy)
+        if self.menu.dock_widget:
+            self.__filter_group_widget = SGQWidget(
+                self.menu.dock_widget,
+                layout_direction=QtGui.QBoxLayout.TopToBottom,
+            )
+            self.__filter_group_widget.layout().setSpacing(0)
+            self.__filter_group_widget.layout().setContentsMargins(0, 0, 0, 0)
+            sizePolicy = QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Maximum
+            )
+            sizePolicy.setRetainSizeWhenHidden(False)
+            self.__filter_group_widget.setSizePolicy(sizePolicy)
+        else:
+            self.__filter_group_widget = None
 
         # The limit to how many items are shown in the group.
         self._show_limit = show_limit
@@ -85,7 +89,7 @@ class FilterMenuGroup():
         # be shown as the last item in the group.
         self.show_more_button = SGQPushButton("Show More...", self.menu)
         self.show_more_button.clicked.connect(self.show_more)
-        self.show_more_action = QtGui.QWidgetAction(menu)
+        self.show_more_action = QtGui.QWidgetAction(self.menu)
         self.show_more_action.setDefaultWidget(self.show_more_button)
 
     # ----------------------------------------------------------------------------------------
@@ -284,7 +288,7 @@ class FilterMenuGroup():
             else:
                 # Check if there is a new action actions to show in place of the item that was removed.
                 self.show_more(num=1, increase_limit=False)
-            
+
             if self.menu.docked:
                 self.__remove_filter_widget(action)
                 self.menu.dock_widget.removeAction(action)
@@ -321,15 +325,20 @@ class FilterMenuGroup():
             assert self._search_filter_action, "Missing required search filter action"
 
         if self.menu.docked:
-            self.__populate_widget(filter_item_and_actions)
+            parent = self.__filter_group_widget
+            show_action_func = self.__show_action_in_widget
+            add_actions_func = self.__add_actions_to_widget
+            if separator:
+                self.__filter_group_widget.add_widget(self.__get_horizontal_line())
+
         else:
-            self.__populate_menu(filter_item_and_actions, separator)
-    
-    def __populate_menu(self, filter_item_and_actions, separator):
+            parent = self.menu
+            show_action_func = self.__show_action_in_menu
+            add_actions_func = self.__add_actions_to_menu
+            if not self.menu.isEmpty() and separator:
+                self.menu.addSeparator()
 
-        if not self.menu.isEmpty() and separator:
-            self.menu.addSeparator()
-
+        # Add the filter group title menu entry (with actions), if title is provided.
         if self.display_name:
             # Add the filter group title menu entry (with actions)
             reset_action = QtGui.QAction("Reset Filter")
@@ -344,7 +353,7 @@ class FilterMenuGroup():
             filter_group_action_menu.add_group([reset_action, remove_action])
             # Create the action button that will display menu on click
             filter_group_action_menu_button = SGQToolButton(
-                self.menu, icon=SGQIcon.gear(size=SGQIcon.SIZE_16x16)
+                parent, icon=SGQIcon.gear(size=SGQIcon.SIZE_16x16)
             )
             filter_group_action_menu_button.setStyleSheet("padding: 2px 4px 2px 4px")
             filter_group_action_menu_button.setCheckable(False)
@@ -354,101 +363,30 @@ class FilterMenuGroup():
             label = filter_group_action_menu.get_label(self.display_name)
             # Create the widget to hold the title and action button
             header_action_widget = SGQWidget(
-                self.menu, child_widgets=[label, None, filter_group_action_menu_button]
+                parent, child_widgets=[label, None, filter_group_action_menu_button]
             )
-
-            # Create the widget action to display the filter group title and filter group actions
+            # Create the widget action to display the filter group title and group actions
             self.header_action = QtGui.QWidgetAction(self.menu)
             self.header_action.setDefaultWidget(header_action_widget)
-            self.menu.addAction(self.header_action)
+            show_action_func(self.header_action)
 
-        # First add the search filter (if provided), so it appears on top of all other choice filters.
+        # Add the search filter, if provided, so it appears on top of all other filters.
         if self._search_filter_item and self._search_filter_action:
-            self.menu.addAction(self._search_filter_action)
+            show_action_func(self._search_filter_action)
 
-        # Before adding the items to the menu, check if the show limit needs to be increased
-        # in order to.
+        # Before adding the items to the menu, sort the filters and check if the show limit
+        # needs to be increased in order to.
         sorted_items = sorted(
             filter_item_and_actions, key=lambda item: self.get_sort_value(item[1])
         )
         increase_limit = 0
-        for index, (filter_item, action) in enumerate(sorted_items[self._show_limit :]):
+        for index, (_, action) in enumerate(sorted_items[self._show_limit :]):
             if self.filter_action_widget_has_value(action):
                 increase_limit = index + 1
         self._show_limit += increase_limit
 
-        # Now add all choice filters.
-        for filter_item, action in sorted_items:
-            self.add_item(filter_item, action)
-
-            if isinstance(action, QtGui.QMenu):
-                self.menu.addMenu(action)
-            else:
-                self.menu.addAction(action)
-
-        # Always add the "Show More..." action to the ned of the group, it will also help
-        # keep track of the last action in the filter group.
-        self.menu.addAction(self.show_more_action)
-
-    def __populate_widget(self, filter_item_and_actions):
-
-        if self.display_name:
-            # Add the filter group title menu entry (with actions)
-            reset_action = QtGui.QAction("Reset Filter")
-            reset_action.triggered.connect(
-                lambda checked=False, m=self.menu: self.reset_filters(m)
-            )
-            remove_action = QtGui.QAction("Remove Filter")
-            remove_action.triggered.connect(lambda checked=False: self.remove_filters())
-            # Create action menu for filter group
-            filter_group_action_menu = ShotgunMenu(self.menu)
-            filter_group_action_menu.setTitle(self.display_name)
-            filter_group_action_menu.add_group([reset_action, remove_action])
-            # Create the action button that will display menu on click
-            filter_group_action_menu_button = SGQToolButton(
-                self.__filter_group_widget, icon=SGQIcon.gear(size=SGQIcon.SIZE_16x16)
-            )
-            filter_group_action_menu_button.setStyleSheet("padding: 2px 4px 2px 4px")
-            filter_group_action_menu_button.setCheckable(False)
-            filter_group_action_menu_button.setPopupMode(QtGui.QToolButton.InstantPopup)
-            filter_group_action_menu_button.setMenu(filter_group_action_menu)
-            # Get the formatted label from the ShotgunMenu class
-            label = filter_group_action_menu.get_label(self.display_name)
-            # Create the widget to hold the title and action button
-            header_action_widget = SGQWidget(
-                self.__filter_group_widget, child_widgets=[label, None, filter_group_action_menu_button]
-            )
-
-            # Create the widget action to display the filter group title and filter group actions
-            self.header_action = QtGui.QWidgetAction(self.menu)
-            self.header_action.setDefaultWidget(header_action_widget)
-            self.__show_action_in_widget(self.header_action)
-
-        # First add the search filter (if provided), so it appears on top of all other choice filters.
-        if self._search_filter_item and self._search_filter_action:
-            self.__show_action_in_widget(self._search_filter_action)
-
-        # Before adding the items to the menu, check if the show limit needs to be increased
-        # in order to.
-        sorted_items = sorted(
-            filter_item_and_actions, key=lambda item: self.get_sort_value(item[1])
-        )
-        increase_limit = 0
-        for index, (filter_item, action) in enumerate(sorted_items[self._show_limit :]):
-            if self.filter_action_widget_has_value(action):
-                increase_limit = index + 1
-        self._show_limit += increase_limit
-
-        # Now add all choice filters.
-        for filter_item, action in sorted_items:
-            self.add_item(filter_item, action)
-            self.__show_action_in_widget(action)
-
-        # Always add the "Show More..." action to the ned of the group, it will also help
-        # keep track of the last action in the filter group.
-        self.__show_action_in_widget(self.show_more_action)
-
-        self.menu.dock_widget.layout().addWidget(self.__filter_group_widget)
+        # Finally add all the filters as actions to the menu or widget.
+        add_actions_func(sorted_items)
 
     def show_in_menu(self):
         """Show the filter menu group in the menu."""
@@ -465,9 +403,6 @@ class FilterMenuGroup():
 
         self.__show_action_in_menu(self.show_more_action)
 
-        # Clear the dock widget
-        self.menu.clear_dock_widget()
-
     def show_in_widget(self):
         """
         Show the filter menu group in the menu's dock widget.
@@ -477,6 +412,9 @@ class FilterMenuGroup():
         :param separator: Add a separator if True (default), don't add if False.
         :type separator: bool
         """
+
+        if not self.menu.dock_widget or not self.__filter_group_widget:
+            return
 
         if self.display_name:
             self.__show_action_in_widget(self.header_action)
@@ -516,7 +454,7 @@ class FilterMenuGroup():
         filters_container.insertAction(insert_before_action, action)
 
         if self.menu.docked:
-            assert(self.__filter_group_widget)
+            assert self.__filter_group_widget
             layout = self.__filter_group_widget.layout()
 
             # NOTE assumes action is a QWidgetAction wtih default widget set
@@ -544,7 +482,7 @@ class FilterMenuGroup():
             # The item inserted has a value but is hidden. In that case, we need to extend the
             # show limit and set all action visible that are within the new limit.
             self._increase_show_limit(action=action)
-        
+
     def show_more(self, num=None, increase_limit=True):
         """
         Show `num` more gorup item actions. If `increase_limit` is True, the group will
@@ -599,6 +537,9 @@ class FilterMenuGroup():
         :param visible: True will show the group widgets, else hides them.
         :type visible: bool
         """
+
+        if self.__filter_group_widget:
+            self.__filter_group_widget.setVisible(visible)
 
         # Iterate over the actions in sorted order to hide the correct actions if there
         # are more actions than the limit.
@@ -726,14 +667,58 @@ class FilterMenuGroup():
     # ----------------------------------------------------------------------------------------
     # Private methods
 
+    def __add_actions_to_widget(self, filter_item_and_actions):
+        """
+        Add the given filter items as actions to the menu dock widget.
+
+        :param filter_item_and_actions: A list of tuples of filter items and their corresponding actions.
+        :type filter_item_and_actions: list
+        """
+
+        if not self.menu.dock_widget or not self.__filter_group_widget:
+            return
+
+        for filter_item, action in filter_item_and_actions:
+            self.add_item(filter_item, action)
+            self.__show_action_in_widget(action)
+
+        # Always add the "Show More..." action to the ned of the group, it will also help
+        # keep track of the last action in the filter group.
+        self.__show_action_in_widget(self.show_more_action)
+
+        self.menu.dock_widget.layout().addWidget(self.__filter_group_widget)
+
+    def __add_actions_to_menu(self, filter_item_and_actions):
+        """
+        Add the given filter items as actions to the menu.
+
+        :param filter_item_and_actions: A list of tuples of filter items and their corresponding actions.
+        :type filter_item_and_actions: list
+        """
+
+        for filter_item, action in filter_item_and_actions:
+            self.add_item(filter_item, action)
+            if isinstance(action, QtGui.QMenu):
+                self.menu.addMenu(action)
+            else:
+                self.menu.addAction(action)
+
+        # Always add the "Show/def po More..." action to the ned of the group, it will also help
+        # keep track of the last action in the filter group.
+        self.menu.addAction(self.show_more_action)
+
     def __show_action_in_menu(self, action):
         """Show the given action in the menu."""
 
-        self.menu.dock_widget.removeAction(action)
+        if self.menu.dock_widget:
+            self.menu.dock_widget.removeAction(action)
         self.menu.addAction(action)
-    
+
     def __show_action_in_widget(self, action):
         """Show the given action in the menu dock widget."""
+
+        if not self.menu.dock_widget or not self.__filter_group_widget:
+            return
 
         visible = action.isVisible()
         widget = action.defaultWidget()
@@ -743,13 +728,14 @@ class FilterMenuGroup():
             widget.setParent(self.menu.dock_widget)
             widget.show()
 
-        # return widget
         self.__filter_group_widget.add_widget(widget)
 
     def __remove_filter_widget(self, action):
         """Remove the filter widget corresponding to the given filter action."""
 
-        if not self.menu.docked or not self.__filter_group_widget:
+        assert self.__filter_group_widget
+
+        if not self.menu.docked:
             return
 
         layout = self.__filter_group_widget.layout()
@@ -766,4 +752,11 @@ class FilterMenuGroup():
         del layout_item
 
         widget.hide()
-                
+
+    def __get_horizontal_line(self):
+        """Return a QFrame object that appear as a horizontal line."""
+
+        hline = sg_qwidgets.SGQFrame()
+        hline.setObjectName("filter_menu_group_hline")
+        hline.setFrameStyle(QtGui.QFrame.HLine)
+        return hline

@@ -31,8 +31,13 @@ ShotgunModel = shotgun_model.ShotgunModel
 decorators = sgtk.platform.current_bundle().import_module("decorators")
 wait_cursor = decorators.wait_cursor
 
+sg_qicons = sgtk.platform.current_bundle().import_module("sg_qicons")
+SGQIcon = sg_qicons.SGQIcon
+
 sg_qwidgets = sgtk.platform.current_bundle().import_module("sg_qwidgets")
 SGQPushButton = sg_qwidgets.SGQPushButton
+SGQToolButton = sg_qwidgets.SGQToolButton
+
 
 class NoCloseOnActionTriggerShotgunMenu(ShotgunMenu):
     """ShotgunMenu subclass that prevents the menu from closing when an action is triggered."""
@@ -136,7 +141,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     # Signal emitted when menu is finished a complete refreshing (e.g. exit refresh method)
     menu_refreshed = QtCore.Signal()
 
-    def __init__(self, parent=None, refresh_on_show=True, bg_task_manager=None, dock_widget=None):
+    def __init__(
+        self, parent=None, refresh_on_show=True, bg_task_manager=None, dock_widget=None
+    ):
         """
         Constructor
 
@@ -189,12 +196,46 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # Menu static actions
         self.__clear_action = None
         self.__dock_action = None
-        self.__more_filters_menu_action = None
         self.__more_filters_menu = None
-        # Dock widgets
-        self.__undock_widget = None
-        self.__clear_widget = None
-        self.__more_filters_menu_button = None
+        # Dock action widgets
+        if self.dock_widget:
+            # Undock button for dock widget
+            self.__undock_widget = SGQToolButton(self.dock_widget)
+            self.__undock_widget.setObjectName("filter_menu_dock_widget_undock_button")
+            self.__undock_widget.setChecked(False)
+            self.__undock_widget.setCheckable(False)
+            self.__undock_widget.setIcon(SGQIcon.red_bullet())
+            self.__undock_widget.clicked.connect(self.undock_filters)
+            # Clear All Filtesr button for dock widget
+            self.__clear_widget = SGQToolButton(self.dock_widget)
+            self.__clear_widget.setObjectName(
+                "filter_menu_dock_widget_clear_all_filters_button"
+            )
+            self.__clear_widget.setChecked(False)
+            self.__clear_widget.setCheckable(False)
+            self.__clear_widget.setText("Clear All Filters")
+            sizePolicy = QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum
+            )
+            self.__clear_widget.setSizePolicy(sizePolicy)
+            self.__clear_widget.clicked.connect(self.clear_filters)
+            # More Filtesr button for dock widget
+            self.__more_filters_menu_button = SGQToolButton(self.dock_widget)
+            self.__more_filters_menu_button.setText("More Filters")
+            self.__more_filters_menu_button.setObjectName(
+                "filter_menu_dock_widget_more_filters_button"
+            )
+            self.__more_filters_menu_button.setChecked(False)
+            self.__more_filters_menu_button.setCheckable(False)
+            sizePolicy = QtGui.QSizePolicy(
+                QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum
+            )
+            self.__more_filters_menu_button.setSizePolicy(sizePolicy)
+            self.__more_filters_menu_button.setPopupMode(QtGui.QToolButton.InstantPopup)
+        else:
+            self.__undock_widget = None
+            self.__clear_widget = None
+            self.__more_filters_menu_button = None
 
         # The filter model and its source model, that the filters in this menu are built bsaed on.
         self._proxy_model = None
@@ -238,7 +279,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
     @property
     def has_filtering(self):
-        """ Get whether or not the menu has any active filtering."""
+        """Get whether or not the menu has any active filtering."""
         return bool(self._active_filter and self._active_filter.filters)
 
     @property
@@ -258,7 +299,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         This will always return False if the menu does not have a dock widget. When True, the
         filters are shown in the dock widget, instead of the menu itself.
         """
-        return self.__docked if self.__dock_widget else False
+        return self.__docked if self.dock_widget else False
 
     @property
     def dock_widget(self):
@@ -280,39 +321,21 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         widget_action.defaultWidget().set_value(widget_action.isChecked())
 
+    @staticmethod
+    def _get_search_filter_field_id(filter_id):
+        """
+        Convenience method to get the field id from the filter id.
+
+        :param filter_id: The id for the search filter item widget.
+        :type: str
+
+        :return: The field id that the search filter item widget refers to.
+        :rtype: str
+        """
+        return re.sub(rf".{str(SearchFilterItemWidget)}$", "", filter_id)
+
     # ----------------------------------------------------------------------------------------
     # Public methods
-
-    def clear_dock_widget(self, delete_widgets=False):
-        """Clear the dock widget items."""
-
-        def __clear_recursive(layout):
-            if not layout:
-                return
-            while layout.count() > 0:
-                item = layout.takeAt(0)
-                widget = item.widget()
-                if widget:
-                    if widget.layout():
-                        __clear_recursive(widget.layout())
-                    if delete_widgets:
-                        # del widget
-                        widget.deleteLater()
-                del item
-
-        if self.dock_widget:
-            layout = self.dock_widget.layout()
-            # __clear_recursive(layout)
-            while layout.count() > 0:
-                item = layout.takeAt(0)
-                widget = item.widget()
-                if widget:
-                    # if widget.layout():
-                    #     __clear_recursive(widget.layout())
-                    if delete_widgets:
-                        # del widget
-                        widget.deleteLater()
-                del item
 
     def get_filters_container(self):
         """
@@ -601,11 +624,13 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         remove all items from the menu.
         """
 
-        # First clear any filter values set in the menu.
+        # Clear any filter values set by the menu.
         self.clear_filters()
-        # Clear the widgets from the dock panel
-        self.clear_dock_widget(delete_widgets=True)
-        # Clear the menu actions
+        # Clear the widgets from the dock. Delete the widgets else widgets will not be cleaned
+        # up properly after refresh.
+        self.__clear_dock_widget(delete_widgets=True)
+
+        # Call the base QMenu clear method
         self.clear()
 
         # Reset the internal menu data members
@@ -675,63 +700,43 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 self._emit_filters_changed()
 
     @wait_cursor
-    def undock_filters(self):
+    def undock_filters(self, force=False):
         """Show filters in the menu."""
 
-        if not self.docked:
+        if not force and not self.docked:
             return
 
         # Set the dock state and hide dock widgets
         self.__set_docked(False)
-
         # Clear the menu before adding back the filters from the dock widget
         self.clear()
-
-        # Add static menu actions at the top
+        # Add static menu actions and filter actions back to the menu
         self.__add_static_actions()
-
-        # Add filter actions
         for filter_group in self._filter_groups.values():
             filter_group.show_in_menu()
+            self.addSeparator()
 
     @wait_cursor
-    def dock_filters(self):
+    def dock_filters(self, force=False):
         """Show filters in the dock widget."""
 
-        if self.docked:
+        if not force and self.docked:
             return
 
         # Set the dock state and show the dock widgets
         self.__set_docked(True)
-
-        # Add the static dock widgets
-        layout = self.__dock_widget.layout()
-        if not self.__undock_widget:
-            self.__undock_widget = SGQPushButton("Close Filter Panel", self.__dock_widget)
-            self.__undock_widget.clicked.connect(self.undock_filters)
-        layout.addWidget(self.__undock_widget)
-        self.removeAction(self.__dock_action)
-
-        if not self.__clear_widget:
-            self.__clear_widget = SGQPushButton("Clear All Filters", self.__dock_widget)
-            self.__clear_widget.clicked.connect(self.clear_filters)
-        layout.addWidget(self.__clear_widget)
-        self.removeAction(self.__clear_action)
-
-        if self.__more_filters_menu:
-            if not self.__more_filters_menu_button:
-                self.__more_filters_menu_button = SGQPushButton("More Filters...", self.__dock_widget)
-            self.__more_filters_menu_button.setMenu(self.__more_filters_menu)
-            layout.addWidget(self.__more_filters_menu_button)
-            self.removeAction(self.__more_filters_menu_action)
-
-        # Add the filter widgets
+        # Clear the dock widget before adding back the filters from the menu
+        self.__clear_dock_widget()
+        # Add static action and filter widgets back to the dock widget
+        self.__add_static_actions()
         for filter_group in self._filter_groups.values():
             filter_group.show_in_widget()
 
         # Add a spacer to push filters to align at the top
-        spacer = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.__dock_widget.layout().addItem(spacer)
+        spacer = QtGui.QSpacerItem(
+            40, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding
+        )
+        self.dock_widget.layout().addItem(spacer)
 
     def get_current_filters(self, exclude_choices_from_fields=None):
         """
@@ -812,9 +817,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self._add_filter_groups(sorted_field_ids)
 
         if self.docked:
-            spacer = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+            spacer = QtGui.QSpacerItem(
+                40, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding
+            )
             self.dock_widget.layout().addItem(spacer)
-
 
     @sgtk.LogManager.log_timing
     def _refresh_menu_widgets(self, field_ids=None):
@@ -1111,7 +1117,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         widget_action = QtGui.QWidgetAction(self)
         widget_action.setCheckable(True)
         widget = widget_class(
-            filter_item.id, field_id, filter_data, bg_task_manager=self._task_manager, parent=self
+            filter_item.id,
+            field_id,
+            filter_data,
+            bg_task_manager=self._task_manager,
+            parent=self,
         )
         widget_action.setDefaultWidget(widget)
         if filter_data.get("default_value") is not None:
@@ -1208,7 +1218,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             {
                 "display_name": field_name,
             },
-            parent=self.__more_filters_menu
+            parent=self.__more_filters_menu,
         )
 
         action = QtGui.QWidgetAction(self.__more_filters_menu)
@@ -1267,19 +1277,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # There should only be one SearchFilterItemWidget per field group, which makes
         # it safe to use the widget class name as part of the id.
         return "{}.{}".format(field_id, str(SearchFilterItemWidget))
-
-    @staticmethod
-    def _get_search_filter_field_id(filter_id):
-        """
-        Convenience method to get the field id from the filter id.
-
-        :param filter_id: The id for the search filter item widget.
-        :type: str
-
-        :return: The field id that the search filter item widget refers to.
-        :rtype: str
-        """
-        return re.sub(rf".{str(SearchFilterItemWidget)}$", "", filter_id)
 
     def _get_filter_group_items(self, field_id):
         """
@@ -1436,57 +1433,75 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     # ----------------------------------------------------------------------------------------
     # Private methods
 
-    def __add_static_actions(self):
-        """Add the static actions to the menu."""
-
-        if not self.__more_filters_menu:
-            self.__more_filters_menu = NoCloseOnActionTriggerShotgunMenu(self)
-            self.__more_filters_menu.setTitle("More Filters")
-
-        if self.docked:
-            layout = self.__dock_widget.layout()
-
-            self.__undock_widget = SGQPushButton("Close Filter Panel", self.__dock_widget)
-            self.__undock_widget.clicked.connect(self.undock_filters)
-            layout.addWidget(self.__undock_widget)
-            self.removeAction(self.__dock_action)
-
-            self.__clear_widget = SGQPushButton("Clear All Filters", self.__dock_widget)
-            self.__clear_widget.clicked.connect(self.clear_filters)
-            layout.addWidget(self.__clear_widget)
-            self.removeAction(self.__clear_action)
-
-            self.__more_filters_menu_button = SGQPushButton("More Filters...", self.__dock_widget)
-            self.__more_filters_menu_button.setMenu(self.__more_filters_menu)
-            layout.addWidget(self.__more_filters_menu_button)
-            self.removeAction(self.__more_filters_menu_action)
-        else:
-            # Add the static menu actions
-            if self.__dock_widget:
-                self.__dock_action = self.addAction("Show Filters in Panel")
-                self.__dock_action.triggered.connect(self.dock_filters)
-                self.addSeparator()
-            
-            self.__clear_action = self.addAction("Clear All Filters")
-            self.__clear_action.triggered.connect(self.clear_filters)
-
-            # Build and add the configuration menu as a submenu to the main filter menu.
-            self.__more_filters_menu_action = self.addMenu(self.__more_filters_menu)
-
-            self.addSeparator()
-
     def __set_docked(self, docked):
-        """Set the docked state and show/hide the dock widget accordingly."""
+        """
+        Set the docked state and show/hide the dock widget accordingly.
+
+        :param docked: True will set the filter menu to be docked, False will set it to be undocked.
+        :type docked: bool
+        """
 
         self.__docked = docked
 
-        if self.__dock_widget:
-            self.__dock_widget.setVisible(docked)
+        if self.dock_widget:
+            self.dock_widget.setVisible(docked)
         if self.__dock_widget_parent:
             self.__dock_widget_parent.setVisible(docked)
 
         if docked:
             self.hide()
+
+    def __clear_dock_widget(self, delete_widgets=False):
+        """
+        Clear all the items in the dock widget layout.
+
+        :param delete_widgets: True will delete widgets in the layout, else False will only
+            remove the widgets from the layout.
+        :type delete_widgets: bool
+        """
+
+        if not self.dock_widget:
+            return
+
+        layout = self.dock_widget.layout()
+        while layout.count() > 0:
+            item = layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                if delete_widgets:
+                    widget.deleteLater()
+            del item
+
+    def __add_static_actions(self):
+        """Add the static actions to the menu. These actions appear at the top of hte menu."""
+
+        # Create the actions each time since they may have been deleted when the menu was cleared.
+        if self.dock_widget:
+            self.__dock_action = self.addAction("Dock Filters in Panel")
+            self.__dock_action.triggered.connect(self.dock_filters)
+            self.addSeparator()
+        self.__clear_action = self.addAction("Clear All Filters")
+        self.__clear_action.triggered.connect(self.clear_filters)
+        if not self.__more_filters_menu:
+            self.__more_filters_menu = NoCloseOnActionTriggerShotgunMenu(self)
+            self.__more_filters_menu.setTitle("More Filters")
+            if self.__more_filters_menu_button:
+                self.__more_filters_menu_button.setMenu(self.__more_filters_menu)
+        self.addMenu(self.__more_filters_menu)
+
+        if self.docked:
+            # The menu is docked, add the static actions to the dock widget.
+            actions_layout = QtGui.QHBoxLayout()
+            actions_layout.addWidget(self.__clear_widget)
+            actions_layout.addWidget(self.__more_filters_menu_button)
+            actions_layout.addStretch()
+            actions_layout.addWidget(self.__undock_widget)
+            layout = self.dock_widget.layout()
+            layout.addLayout(actions_layout)
+        else:
+            # Separate static actions from the filter actions
+            self.addSeparator()
+
 
 class ShotgunFilterMenu(FilterMenu):
     """
@@ -1495,7 +1510,9 @@ class ShotgunFilterMenu(FilterMenu):
     the ShotgunModel class.
     """
 
-    def __init__(self, parent=None, refresh_on_show=True, bg_task_manager=None, dock_widget=None):
+    def __init__(
+        self, parent=None, refresh_on_show=True, bg_task_manager=None, dock_widget=None
+    ):
         """
         Constructor.
 
@@ -1503,7 +1520,10 @@ class ShotgunFilterMenu(FilterMenu):
         """
 
         super(ShotgunFilterMenu, self).__init__(
-            parent, refresh_on_show=refresh_on_show, bg_task_manager=bg_task_manager, dock_widget=dock_widget
+            parent,
+            refresh_on_show=refresh_on_show,
+            bg_task_manager=bg_task_manager,
+            dock_widget=dock_widget,
         )
 
         # Use the SG_DATA_ROLE to extract the data from the ShotgunModel. This class fixes the
