@@ -342,6 +342,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     # ----------------------------------------------------------------------------------------
     # Public methods
 
+    def is_empty(self):
+        """Return True if the menu has any filters to show."""
+        return self._filters_def.is_empty()
+
     def get_filters_container(self):
         """
         Get the current parent widget for the filters.
