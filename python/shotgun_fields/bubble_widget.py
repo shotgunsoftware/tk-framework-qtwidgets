@@ -412,7 +412,7 @@ class _BubbleTextObject(QtGui.QPyTextObject):
 
     BUBBLE_DATA_PROPERTY = 1
     OBJECT_TYPE = QtGui.QTextFormat.UserFormat + 1
-    USING_PYQT = hasattr(QtCore, "QVariant")
+    USING_PYQT = not hasattr(QtCore, "ClassInfo")  # Only PySide has ClassInfo
 
     def __init__(self, parent=None):
         """
