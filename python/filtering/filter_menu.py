@@ -194,8 +194,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self.__set_docked(False)
 
         # Menu static actions
-        self.__clear_action = None
-        self.__dock_action = None
         self.__more_filters_menu = None
         # Dock action widgets
         if self.dock_widget:
@@ -1503,12 +1501,12 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # Create the actions each time since they may have been deleted when the menu was cleared.
             # Only add the dock action if the dock widget is available.
             if self.dock_widget:
-                self.__dock_action = self.addAction("Dock Filters in Panel")
-                self.__dock_action.triggered.connect(self.dock_filters)
+                dock_action = self.addAction("Dock Filters in Panel")
+                dock_action.triggered.connect(self.dock_filters)
                 self.addSeparator()
             # Clear all filters action
-            self.__clear_action = self.addAction("Clear All Filters")
-            self.__clear_action.triggered.connect(self.clear_filters)
+            clear_action = self.addAction("Clear All Filters")
+            clear_action.triggered.connect(self.clear_filters)
             # More Filters menu
             self.addMenu(self.__more_filters_menu)
             # Separate static actions from the filter actions
