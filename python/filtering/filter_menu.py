@@ -283,6 +283,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         return bool(self._active_filter and self._active_filter.filters)
 
     @property
+    def more_filters_menu(self):
+        """Get the 'More Filters' submenu in the filter menu."""
+        return self.__more_filters_menu
+
+    @property
     def refresh_on_show(self):
         """Get or set the property to refresh menu before showing."""
         return self.__refresh_on_show
