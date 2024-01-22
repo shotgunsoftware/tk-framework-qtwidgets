@@ -706,7 +706,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             if not self._is_refreshing:
                 self._emit_filters_changed()
 
-    @wait_cursor
     def undock_filters(self, force=False):
         """Show filters in the menu."""
 
@@ -723,7 +722,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             filter_group.show_in_menu()
             self.addSeparator()
 
-    @wait_cursor
     def dock_filters(self, force=False):
         """Show filters in the dock widget."""
 
