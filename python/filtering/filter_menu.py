@@ -1484,19 +1484,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     def __add_static_actions(self):
         """Add the static actions to the menu. These actions appear at the top of hte menu."""
 
-        # Create the actions each time since they may have been deleted when the menu was cleared.
-        if self.dock_widget:
-            self.__dock_action = self.addAction("Dock Filters in Panel")
-            self.__dock_action.triggered.connect(self.dock_filters)
-            self.addSeparator()
-        self.__clear_action = self.addAction("Clear All Filters")
-        self.__clear_action.triggered.connect(self.clear_filters)
         if not self.__more_filters_menu:
             self.__more_filters_menu = NoCloseOnActionTriggerShotgunMenu(self)
             self.__more_filters_menu.setTitle("More Filters")
             if self.__more_filters_menu_button:
                 self.__more_filters_menu_button.setMenu(self.__more_filters_menu)
-        self.addMenu(self.__more_filters_menu)
 
         if self.docked:
             # The menu is docked, add the static actions to the dock widget.
@@ -1508,6 +1500,17 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             layout = self.dock_widget.layout()
             layout.addLayout(actions_layout)
         else:
+            # Create the actions each time since they may have been deleted when the menu was cleared.
+            # Only add the dock action if the dock widget is available.
+            if self.dock_widget:
+                self.__dock_action = self.addAction("Dock Filters in Panel")
+                self.__dock_action.triggered.connect(self.dock_filters)
+                self.addSeparator()
+            # Clear all filters action
+            self.__clear_action = self.addAction("Clear All Filters")
+            self.__clear_action.triggered.connect(self.clear_filters)
+            # More Filters menu
+            self.addMenu(self.__more_filters_menu)
             # Separate static actions from the filter actions
             self.addSeparator()
 
