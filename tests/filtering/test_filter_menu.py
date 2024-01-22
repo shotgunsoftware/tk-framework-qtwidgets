@@ -144,7 +144,7 @@ class TestFilterMenu(TankTestBase):
 
         assert len(fm.actions()) >= 2
         assert fm.actions()[0].text() == "Clear All Filters"
-        # assert isinstance(fm.more_filters_menu, QtGui.QMenu)
+        assert isinstance(fm.more_filters_menu, QtGui.QMenu)
 
         for field_id in fm._filters_def.get_fields():
             assert field_id in fm._filter_groups
