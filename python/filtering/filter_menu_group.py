@@ -57,6 +57,7 @@ class FilterMenuGroup:
             )
             sizePolicy.setRetainSizeWhenHidden(False)
             self.__filter_group_widget.setSizePolicy(sizePolicy)
+            self.__filter_group_widget.add_widget(self.__get_horizontal_line())
         else:
             self.__filter_group_widget = None
 
@@ -322,9 +323,6 @@ class FilterMenuGroup:
             parent = self.__filter_group_widget
             show_action_func = self.__show_action_in_widget
             add_actions_func = self.__add_actions_to_widget
-            if separator:
-                self.__filter_group_widget.add_widget(self.__get_horizontal_line())
-
         else:
             parent = self.menu
             show_action_func = self.__show_action_in_menu
