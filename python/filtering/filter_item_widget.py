@@ -188,7 +188,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
             icon_label.setPixmap(icon.pixmap(14))
             layout.addWidget(icon_label)
 
-        # Left-aligned filter value display text.
+        # Left-aligned filter value display text
         name = six.ensure_str(self._display_name)
         self.label = QtGui.QLabel(name)
         layout.addWidget(self.label)
