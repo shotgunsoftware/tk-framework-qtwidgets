@@ -312,12 +312,12 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
         if "icon" in directives:
             # Show the entity icon
             icon_url = shotgun_globals.get_entity_type_icon_url(entity_type)
-            icon_str = f"<img src='{icon_url}' />"
+            icon_str = "<img src='{}' />".format(icon_url)
             str_val = " ".join([icon_str, str_val])
         elif "icon_suffix" in directives:
             # Show icon as suffix
             icon_url = shotgun_globals.get_entity_type_icon_url(entity_type)
-            icon_str = f"<img src='{icon_url}' />"
+            icon_str = "<img src='{}' />".format(icon_url)
             str_val = " ".join([str_val, icon_str])
 
     elif isinstance(value, list):
@@ -376,12 +376,12 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
         if "icon" in directives:
             # Show the entity icon
             icon_url = shotgun_globals.get_entity_type_icon_url(sg_type)
-            icon_str = f"<img src='{icon_url}' />"
+            icon_str = "<img src='{}' />".format(icon_url)
             str_val = " ".join([icon_str, str_val])
         elif "icon_suffix" in directives:
             # Show icon as suffix
             icon_url = shotgun_globals.get_entity_type_icon_url(sg_type)
-            icon_str = f"<img src='{icon_url}' />"
+            icon_str = "<img src='{}' />".format(icon_url)
             str_val = " ".join([str_val, icon_str])
 
     return str_val

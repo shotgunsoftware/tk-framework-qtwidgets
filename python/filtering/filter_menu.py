@@ -332,7 +332,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         :return: The field id that the search filter item widget refers to.
         :rtype: str
         """
-        return re.sub(rf".{str(SearchFilterItemWidget)}$", "", filter_id)
+        return re.sub(r"{}$".format(str(SearchFilterItemWidget)), "", filter_id)
 
     # ----------------------------------------------------------------------------------------
     # Public methods
