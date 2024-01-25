@@ -1,7 +1,7 @@
 Filtering
 ######################################
 
-Filtering functionality that aims to mimic the ShotGrid Web UI filter menu.
+Filtering functionality that aims to mimic the Flow Production Tracking Web UI filter menu.
 
 .. currentmodule:: filtering
 

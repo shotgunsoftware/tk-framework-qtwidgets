@@ -1,4 +1,4 @@
-Shotgun Note Input Widget
+Flow Production Tracking Note Input Widget
 #############################################
 
 The note editor widget makes it easy to add notes in Toolkit.
