@@ -28,9 +28,6 @@ shotgun_model = sgtk.platform.import_framework(
 )
 ShotgunModel = shotgun_model.ShotgunModel
 
-decorators = sgtk.platform.current_bundle().import_module("decorators")
-wait_cursor = decorators.wait_cursor
-
 sg_qicons = sgtk.platform.current_bundle().import_module("sg_qicons")
 SGQIcon = sg_qicons.SGQIcon
 
