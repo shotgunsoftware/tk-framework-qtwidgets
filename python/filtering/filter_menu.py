@@ -1361,7 +1361,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
     def _toggle_filter_group(self, action, state):
         """
-        Callback triggered when a fiter widget action state has changed.
+        Callback triggered when a filter widget action state has changed.
 
         If the filter widget has been checked, then ensure its filter group is visible.
 
