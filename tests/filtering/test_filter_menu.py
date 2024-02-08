@@ -237,7 +237,6 @@ class TestFilterMenu(TankTestBase):
         assert isinstance(widget, self.ChoicesFilterItemWidget)
 
         action.trigger()
-        print(">>> test_clear_filters", action, type(action))
         assert action.isChecked()
         assert widget.has_value()
 
@@ -261,7 +260,6 @@ class TestFilterMenu(TankTestBase):
                 if isinstance(widget, self.ChoicesFilterItemWidget):
                     filter_action.trigger()
 
-                    print(">>> test_clear_all_filters", filter_action, type(filter_action))
                     assert filter_action.isChecked()
                     assert widget.has_value()
 
