@@ -136,7 +136,7 @@ class ShotgunSpinningWidget(QtGui.QWidget):
 
     def _draw_opened_circle(self, painter, start_angle, span_angle):
         """
-        Draws an arc around the SG logo.
+        Draws an arc around the PTR logo.
 
         :param painter: Painter object we will draw with.
         :param start_angle: Angle at which we will start drawing the arc.

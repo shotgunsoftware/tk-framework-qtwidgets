@@ -143,7 +143,7 @@ class TestFramework(TankTestBase):
                     spec = getargspec(attr.__init__)
                 except TypeError as error:
                     if six.PY2 and module_name == "sg_qwidgets":
-                        # Skip SG wrapper classes for Qt widgets in python2 - the __init__
+                        # Skip PTR wrapper classes for Qt widgets in python2 - the __init__
                         # method cannot be found in python2 using the getargspec even though
                         # there is no issue instantiating these widgets
                         continue

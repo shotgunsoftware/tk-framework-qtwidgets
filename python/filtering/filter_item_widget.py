@@ -306,7 +306,7 @@ class SearchFilterItemWidget(FilterItemWidget):
 
         Initialize the widget UI:
           - Add a search widget according to the field type.
-          If we are dealing with an SG entity/multi-entity field, add a GlobalSearchWidget
+          If we are dealing with an PTR entity/multi-entity field, add a GlobalSearchWidget
           otherwise, add a SearchWidget.
 
         :param filter_id: The unique identifier for this widget.
@@ -334,7 +334,7 @@ class SearchFilterItemWidget(FilterItemWidget):
         short_name = filter_data.get("short_name", self.name)
         sg_data = filter_data.get("sg_data", {})
 
-        # in case we are dealing with an SG entity/multi-entity field and the widget has been initialized
+        # in case we are dealing with an PTR entity/multi-entity field and the widget has been initialized
         # using a BackgroundTaskManager, use a GlobalSearchWidget to help the user find the right entity to pick
         if (
             sg_data

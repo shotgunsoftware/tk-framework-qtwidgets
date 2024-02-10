@@ -68,7 +68,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
             _EDITOR_TYPE = "float"
             # ...
 
-    The widgets shown above will be used by any SG field for the specified type.
+    The widgets shown above will be used by any PTR field for the specified type.
     It is also possible to register widgets that are used only for specific
     fields on specific entities. To achieve this, use the ``_ENTITY_FIELDS``
     class member to define a list of tuples that explicitly defined the entity

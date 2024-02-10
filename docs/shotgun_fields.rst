@@ -583,4 +583,4 @@ TODOs & Known Issues
 - ``ElidedLabel`` causes draw lagging when used in editable widget in Grid/Form layout
 - The note input widget should be updated to use the global completer
 - The status list widget editor should also use colors for visual hint like display widget
-- Flow Production Tracking model to auto update SG on changes still to come
+- Flow Production Tracking model to auto update PTR on changes still to come

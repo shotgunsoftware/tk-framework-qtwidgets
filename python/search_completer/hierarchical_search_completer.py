@@ -20,7 +20,7 @@ shotgun_model = sgtk.platform.import_framework(
 
 class HierarchicalSearchCompleter(SearchCompleter):
     """
-    A standalone :class:`PySide.QtGui.QCompleter` class for matching SG entities to typed text.
+    A standalone :class:`PySide.QtGui.QCompleter` class for matching PTR entities to typed text.
 
     If defaults to searching inside the current context's project and to only show entities.
 

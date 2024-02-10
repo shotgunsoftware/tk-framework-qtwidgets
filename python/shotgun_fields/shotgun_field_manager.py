@@ -228,7 +228,7 @@ class ShotgunFieldManager(QtCore.QObject):
         Returns a delegate that can be used in the given view to show data from
         the given field from the given entity type.  Unlike ``create_delegate``,
         this method returns a delegate that can be used with any model
-        representing SG field data. The additional ``field_data_role`` parameter
+        representing PTR field data. The additional ``field_data_role`` parameter
         is supplied to tell the delegate wich role in the model will store the
         field data to edit/display.
         to be used by items
@@ -240,7 +240,7 @@ class ShotgunFieldManager(QtCore.QObject):
         :param view: The parent view for this delegate
         :type view:  :class:`~PySide.QtGui.QWidget`
 
-        :param int field_data_role: The data role that stores SG field data in
+        :param int field_data_role: The data role that stores PTR field data in
             the model where this delegate is to be used. The default value is
             ``QtCore.Qt.EditRole``.
 

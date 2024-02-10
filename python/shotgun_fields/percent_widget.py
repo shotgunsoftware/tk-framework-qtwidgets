@@ -69,7 +69,7 @@ class PercentEditorWidget(QtGui.QSpinBox):
 
         Called by the metaclass during initialization.
         """
-        # SG min/max values for percentages
+        # PTR min/max values for percentages
         self.setMaximum(999)
         self.setMinimum(-999)
         self.setSuffix("%")
