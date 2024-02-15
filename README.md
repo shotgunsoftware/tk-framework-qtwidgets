@@ -1,5 +1,5 @@
-[![Python 3.7 3.9 3.10](https://img.shields.io/badge/python-3.7%20%7C%203.9%20%7C%203.10-blue.svg)](https://www.python.org/)
-[![Reference Documentation](http://img.shields.io/badge/doc-reference-blue.svg)](http://developer.shotgridsoftware.com/tk-framework-qtwidgets)
+[![VFX Platform](https://img.shields.io/badge/vfxplatform-2024%20%7C%202023%20%7C%202022%20%7C%202021-blue.svg)](http://www.vfxplatform.com/)
+[![Python](https://img.shields.io/badge/python-3.11%20%7C%203.10%20%7C%203.9%20%7C%203.7-blue.svg)](https://www.python.org/)
 [![Build Status](https://dev.azure.com/shotgun-ecosystem/Toolkit/_apis/build/status/Frameworks/tk-framework-qtwidgets?branchName=master)](https://dev.azure.com/shotgun-ecosystem/Toolkit/_build/latest?definitionId=45&branchName=master)
 [![codecov](https://codecov.io/gh/shotgunsoftware/tk-framework-qtwidgets/branch/master/graph/badge.svg)](https://codecov.io/gh/shotgunsoftware/tk-framework-qtwidgets)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
