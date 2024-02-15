@@ -237,6 +237,7 @@ class TestFilterMenu(TankTestBase):
         assert isinstance(widget, self.ChoicesFilterItemWidget)
 
         action.trigger()
+
         assert action.isChecked()
         assert widget.has_value()
 
