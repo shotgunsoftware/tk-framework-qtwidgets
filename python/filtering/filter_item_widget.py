@@ -25,7 +25,7 @@ class FilterItemWidget(QtGui.QWidget):
     """
 
     # Signal emitted when the filter widget's checkbox state changed.
-    state_changed = QtCore.Signal(int)
+    state_changed = QtCore.Signal(QtCore.Qt.CheckState)
     # Signal emitted when the filter widget's value changed.
     value_changed = QtCore.Signal(object)
 
@@ -178,7 +178,13 @@ class ChoicesFilterItemWidget(FilterItemWidget):
 
         # Left-aligned checkbox
         self.checkbox = QtGui.QCheckBox()
-        self.checkbox.stateChanged.connect(self.state_changed)
+
+        def __on_state_changed(state):
+            if isinstance(state, int):
+                state = QtCore.Qt.CheckState(state)
+            self.state_changed.emit(state)
+
+        self.checkbox.stateChanged.connect(__on_state_changed)
         layout.addWidget(self.checkbox)
 
         # Left-aligned (optional) icon
