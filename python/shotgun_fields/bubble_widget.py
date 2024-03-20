@@ -227,7 +227,6 @@ class BubbleEditWidget(QtGui.QTextEdit):
         # iterate over all characters in the editor. remove any that aren't the
         # special replacement character. iterate backwards so that indices don't change
         for i in reversed(range(0, len(text))):
-
             if text[i] == self._OBJECT_REPLACEMENT_CHAR:
                 continue
 

@@ -173,7 +173,6 @@ class ShotgunSpinningWidget(QtGui.QWidget):
 
             # now draw different things depending on mode
             if self._mode == self.MODE_SPIN:
-
                 self._draw_opened_circle(painter, self._spin_angle * 4, 340)
 
             elif self._mode == self.MODE_PROGRESS:

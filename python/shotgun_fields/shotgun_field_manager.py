@@ -386,7 +386,6 @@ class ShotgunFieldManager(QtCore.QObject):
 
         # go through each of the supplied field names to see if widgets are defined for them
         for field_name in field_names:
-
             # handle bubbled field syntax
             if "." in field_name:
                 (resolved_entity_type, resolved_field_name) = field_name.split(".")[-2:]
@@ -410,7 +409,6 @@ class ShotgunFieldManager(QtCore.QObject):
             # the default editable widget combining a display & editor. see if
             # those exist for this entity+field
             if widget_type == self.EDITABLE:
-
                 display_cls = self.get_class(
                     resolved_entity_type, resolved_field_name, widget_type=self.DISPLAY
                 )

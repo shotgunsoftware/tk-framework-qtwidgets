@@ -180,7 +180,6 @@ class HierarchicalSearchCompleter(SearchCompleter):
 
         # insert new data into model
         for data in data_matches:
-
             item = QtGui.QStandardItem(data["label"])
             item.setData(self.MODE_RESULT, self.MODE_ROLE)
 

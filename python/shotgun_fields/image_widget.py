@@ -129,7 +129,6 @@ class ImageWidget(QtGui.QLabel):
         :type event: :class:`~PySide.QtGui.QResizeEvent`
         """
         if self._pixmap:
-
             # the pixmap stored internally is the full size pixmap. calling this
             # method resizes it based on the size hint of the widget and
             # preserving it's aspect ratio. the returned, scaled pixmap is then

@@ -590,9 +590,7 @@ class NoteInputWidget(QtGui.QWidget):
                 self._bundle.log_warning("Unable to remove file: %s" % file_path)
 
     def __upload_thumbnail(self, parent_entity, sg, data):
-
         if data["pixmap"]:
-
             # save it out to a temp file so we can upload it
             png_path = tempfile.NamedTemporaryFile(
                 suffix=".png", prefix="screencapture_", delete=False

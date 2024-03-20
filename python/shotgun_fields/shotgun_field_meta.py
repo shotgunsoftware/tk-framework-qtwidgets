@@ -191,13 +191,12 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
             registration_types.append((field_type, widget_type))
 
         # register all the types for this widget class
-        for (field_type, widget_type) in registration_types:
-
+        for field_type, widget_type in registration_types:
             if "_ENTITY_FIELDS" in class_dict:
                 # this is an override widget, meaning it is to be used for specific
                 # entity+field combinations. Loop through those combinations and
                 # register this class for each.
-                for (entity_type, field_name) in class_dict["_ENTITY_FIELDS"]:
+                for entity_type, field_name in class_dict["_ENTITY_FIELDS"]:
                     ShotgunFieldManager.register_entity_field_class(
                         entity_type, field_name, field_class, widget_type
                     )

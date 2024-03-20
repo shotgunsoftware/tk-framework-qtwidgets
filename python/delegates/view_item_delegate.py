@@ -1141,7 +1141,6 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         ):
             action = self._action_at(view_option, index, event.pos())
             if action and action.is_clickable(self.parent(), index):
-
                 if action.callback:
                     # Trigger the action callback function if the action defines one
                     action.callback(self.parent(), index, event.pos())
@@ -2133,7 +2132,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             else:
                 brushes = action.palette_brushes["active"]
 
-            for (color_group, color_role, brush) in brushes:
+            for color_group, color_role, brush in brushes:
                 style_option.palette.setBrush(color_group, color_role, brush)
 
     def _get_action_progress_bar_option(
