@@ -915,18 +915,21 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
         if self._processing_id == uid:
             self._bundle.log_warning(
-                "Could not retrieve activity stream " "data from ShotGrid: %s" % msg
+                "Could not retrieve activity stream "
+                "data from Flow Production Tracking: %s" % msg
             )
 
         if uid in self._note_map:
             self._bundle.log_warning(
-                "Could not retrieve note " "data from ShotGrid: %s" % msg
+                "Could not retrieve note "
+                "data from Flow Production Tracking: %s" % msg
             )
 
         if uid in self._thumb_map:
             # one of the jobs we are tracking
             self._bundle.log_warning(
-                "Could not retrieve thumbnail " "data from ShotGrid: %s" % msg
+                "Could not retrieve thumbnail "
+                "data from Flow Production Tracking: %s" % msg
             )
 
     def __convert_timestamp_r(self, data):

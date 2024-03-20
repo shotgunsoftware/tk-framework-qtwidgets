@@ -59,7 +59,7 @@ class ShotgunMenu(QtGui.QMenu):
         self._type_timer.setInterval(1000)
         self._type_timer.timeout.connect(self._on_type_timer_timeout)
 
-        # styling to resemble SG web menus
+        # styling to resemble PTR web menus
         self.setStyleSheet(
             """
             QMenu {

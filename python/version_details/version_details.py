@@ -847,10 +847,10 @@ class VersionDetailsWidget(QtGui.QWidget):
         #      just in case someone tries to click before the cache is loaded
 
         self.ui.more_fields_button.setEnabled(False)
-        self.ui.more_fields_button.setToolTip("Caching SG fields. Please hold...")
+        self.ui.more_fields_button.setToolTip("Caching PTR fields. Please hold...")
 
         self.ui.version_fields_button.setEnabled(False)
-        self.ui.version_fields_button.setToolTip("Caching SG fields. Please hold...")
+        self.ui.version_fields_button.setToolTip("Caching PTR fields. Please hold...")
 
         # use the current entity to retrieve the project id to ensure is cached
         entity = self._current_entity or {}

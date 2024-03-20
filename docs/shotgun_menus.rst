@@ -1,18 +1,18 @@
-ShotGrid Menus
-##############
+Flow Production Tracking Menus
+##############################
 
 Introduction
 ============
 
-The ShotGrid Menus class provide a standardized interface, look and feel for
-building menus that interact with ShotGrid.
+The Flow Production Tracking Menus class provide a standardized interface, look and feel for
+building menus that interact with Flow Production Tracking.
 
 .. image:: images/shotgun_menus.png
 
 ----
 
-ShotGrid Menu
--------------
+Flow Production Tracking Menu
+-----------------------------
 
 .. currentmodule:: shotgun_menus
 

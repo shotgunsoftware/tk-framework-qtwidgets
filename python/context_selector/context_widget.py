@@ -26,7 +26,7 @@ shotgun_menus = sgtk.platform.current_bundle().import_module("shotgun_menus")
 logger = sgtk.platform.get_logger(__name__)
 
 # fields required to create a context from a task entity without falling back to
-# a SG query
+# a PTR query
 TASK_QUERY_FIELDS = ["type", "id", "content", "project", "entity", "step"]
 
 
@@ -974,7 +974,7 @@ def _get_context_icon_path(context):
 
 def _query_my_tasks():
     """
-    Called via bg task to query SG for tasks assigned to the current user.
+    Called via bg task to query PTR for tasks assigned to the current user.
     """
 
     bundle = sgtk.platform.current_bundle()
@@ -1009,7 +1009,7 @@ def _query_my_tasks():
 
 def _query_entity_schema(entity_type, field_name):
     """
-    Called as bg task to query SG for the field schema
+    Called as bg task to query PTR for the field schema
     for the given type and field.
 
     :param str entity_type: Entity type to query schema for

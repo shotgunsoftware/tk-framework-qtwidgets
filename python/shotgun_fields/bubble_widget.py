@@ -68,7 +68,7 @@ class BubbleWidget(QtGui.QFrame):
         # placeholder for the bubble's image
         self.image_label = QtGui.QLabel(self)
 
-        # color the text to use the SG highlight color
+        # color the text to use the PTR highlight color
         text_color = QtGui.QColor(
             sgtk.platform.current_bundle().style_constants["SG_HIGHLIGHT_COLOR"]
         )

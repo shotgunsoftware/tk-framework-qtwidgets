@@ -11,7 +11,7 @@
 
 def check_project_search_supported(sg_connection):
     """
-    A compatibility check to see if the current version of SG has the fix
+    A compatibility check to see if the current version of PTR has the fix
     that allows text_search to be run for projects.
 
     :returns: ``True`` if project search is possible, ``False`` otherwise.
@@ -25,7 +25,7 @@ def check_project_search_supported(sg_connection):
 
     server_caps = sg_connection.server_caps
 
-    # make sure we're greater than or equal to SG v7.0.2
+    # make sure we're greater than or equal to PTR v7.0.2
     return (
         hasattr(sg_connection, "server_caps")
         and server_caps.version

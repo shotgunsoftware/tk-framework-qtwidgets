@@ -117,8 +117,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # Call `set_ignore_fields` to ignore certain data when building the filters.
         filter_menu.set_ignore_fields(
             [
-                "{ROLE}.{FIELD_NAME},  # For non SG data, fields are of the format "role.field", e.g. "QtCore.Qt.DisplayRole.name"
-                "{SG_ENTITY_TYPE}.{FIELD_NAME}",  # For SG data, fields are of the format "entity_type.field", e.g. "Task.code"
+                "{ROLE}.{FIELD_NAME},  # For non PTR data, fields are of the format "role.field", e.g. "QtCore.Qt.DisplayRole.name"
+                "{SG_ENTITY_TYPE}.{FIELD_NAME}",  # For PTR data, fields are of the format "entity_type.field", e.g. "Task.code"
             ]
         )
 
@@ -153,7 +153,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # to build the filter menu UI.
         self._filters_def = FilterMenuFiltersDefinition(self)
 
-        # Set the project id for the filters definition to allow handling SG data.
+        # Set the project id for the filters definition to allow handling PTR data.
         bundle = sgtk.platform.current_bundle()
         if bundle.tank.pipeline_configuration.is_site_configuration():
             self._filters_def.default_sg_project_id = None
@@ -281,7 +281,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     def set_use_fully_qualifiied_name(self, use):
         """
         Set the flag to use the fully qualified name for filters. For example, a filter item
-        representing SG data will prefix the filter name with the entity type.
+        representing PTR data will prefix the filter name with the entity type.
 
         :param use: True will show fully qualified names for filters.
         :type use: bool
@@ -833,7 +833,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             filter_item_and_actions = []
 
             # We want to create a search filter item in case we are dealing with a string field
-            # or an SG entity/multi-entity field
+            # or an PTR entity/multi-entity field
             sg_data_type = None
             if isinstance(field_data.get("sg_data"), dict):
                 sg_data_type = field_data["sg_data"].get("data_type")
@@ -1305,7 +1305,7 @@ class ShotgunFilterMenu(FilterMenu):
         """
         Constructor.
 
-        Set the filter_roles to the ShotgunModel role pointing to its SG data.
+        Set the filter_roles to the ShotgunModel role pointing to its PTR data.
         """
 
         super(ShotgunFilterMenu, self).__init__(
@@ -1428,7 +1428,7 @@ class ShotgunFilterMenu(FilterMenu):
 
     def _on_data_refreshing(self):
         """
-        Slot triggered on SG model `data_refreshing` signal.
+        Slot triggered on PTR model `data_refreshing` signal.
 
         Emit the signal that the menu is about to refresh now.
         """
@@ -1437,7 +1437,7 @@ class ShotgunFilterMenu(FilterMenu):
 
     def _on_data_refresh_fail(self, msg):
         """
-        Slot triggered on SG model `data_refresh_fail` signal.
+        Slot triggered on PTR model `data_refresh_fail` signal.
 
         Refresh failed will not trigger the menu refresh, but we still need to emit the signal
         menu finished refreshing since the menu_about_to_be_refreshed signal has been emitted.
@@ -1447,7 +1447,7 @@ class ShotgunFilterMenu(FilterMenu):
 
     def _on_data_refreshed(self):
         """
-        Slot triggered on SG model `data_refreshed` signal.
+        Slot triggered on PTR model `data_refreshed` signal.
 
         Force a menu refresh.
         """
@@ -1456,7 +1456,7 @@ class ShotgunFilterMenu(FilterMenu):
 
     def _on_cache_loaded(self):
         """
-        Slot triggered on SG model `cache_loaded` signal.
+        Slot triggered on PTR model `cache_loaded` signal.
 
         Force a menu refresh.
         """

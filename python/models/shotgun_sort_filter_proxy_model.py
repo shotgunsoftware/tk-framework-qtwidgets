@@ -222,7 +222,7 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
         # Certain field data types will need to be treated specially
         # in order to properly search them. Those are handled here,
         # though it's possible additional types will need to be
-        # specifically handled. Of the data types listed in the SG
+        # specifically handled. Of the data types listed in the PTR
         # Python API at the time of this writing, the below represents
         # those that will not stringify well for this purpose.
         if data_type == "entity":

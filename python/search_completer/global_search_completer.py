@@ -20,7 +20,7 @@ from .search_completer import SearchCompleter
 
 class GlobalSearchCompleter(SearchCompleter):
     """
-    A standalone :class:`PySide.QtGui.QCompleter` class for matching SG entities to typed text.
+    A standalone :class:`PySide.QtGui.QCompleter` class for matching PTR entities to typed text.
 
     :signal: ``entity_selected(str, int)`` - Provided for backward compatibility.
       ``entity_activated`` is emitted at the same time with an additional ``name``

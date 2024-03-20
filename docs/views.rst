@@ -9,7 +9,7 @@ QT Widget Delegate System
 ==============================================
 
 The widget delegates module makes it easy to create custom UI experiences that are
-using data from the ShotGrid Model.
+using data from the Flow Production Tracking Model.
 
 If you feel that the visuals that you get back from a standard
 :class:`~PySide.QtGui.QTreeView` or :class:`~PySide.QtGui.QListView` are not sufficient for your needs,
@@ -26,7 +26,7 @@ you get in the QT MVC compared to an approach where large widget hierarchies are
 QT allows for customization of cell contents inside of its standard view classes through the use of so called
 *delegate* classes (see http://qt-project.org/doc/qt-4.8/model-view-programming.html#delegate-classes),
 however this can be cumbersome and difficult to get right. In an attempt to simplify the process of
-view customization, the ShotGrid Qt Widgets framework contains classes for making it easy to plugin in standard QT widgets
+view customization, the Flow Production Tracking Qt Widgets framework contains classes for making it easy to plugin in standard QT widgets
 and use these as "brushes" when QT is drawing its views. You can then quickly produce UI in for example the QT designer,
 hook up the data exchange between your model class and the widget in a delegate and quickly have some nice custom
 looking user interfaces!
@@ -36,10 +36,10 @@ looking user interfaces!
 The principle is that you derive a custom delegate class from the ``WidgetDelegate`` that is contained in the framework.
 This class contains for simple methods that you need to implement. As part of this you can also control the flow of
 data from the model into the widget each time it is being drawn, allowing for complex data to be easily passed from
-ShotGrid via the model into your widget.
+Flow Production Tracking via the model into your widget.
 
 
-The following example shows some of the basic around using this delegate class with the ShotGrid Model::
+The following example shows some of the basic around using this delegate class with the Flow Production Tracking Model::
 
     # import the shotgun_model and view modules from the corresponding frameworks
     shotgun_model = tank.platform.import_framework("tk-framework-shotgunutils", "shotgun_model")
@@ -75,7 +75,7 @@ The following example shows some of the basic around using this delegate class w
             # across multiple cells in order to avoid creating lots of
             # widget objects.
 
-            # get the ShotGrid query data for this model item
+            # get the Flow Production Tracking query data for this model item
             sg_item = shotgun_model.get_sg_data(model_index)
 
             # get the description

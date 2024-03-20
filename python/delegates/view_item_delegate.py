@@ -872,7 +872,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
                 and isinstance(data[0], six.string_types)
                 and isinstance(data[1], dict)
             ):
-                # Special SG string formatting data
+                # Special PTR string formatting data
                 values_list = [utils.convert_token_string(data[0], data[1])]
             else:
                 values_list = list(data)
