@@ -1,5 +1,5 @@
 Flow Production Tracking Playback Label Widget
-#############################################
+##############################################
 
 The Flow Production Tracking Playback Label is a simple ``QLabel`` override which
 makes it easy to indicate that a thumbnail can be played back:
