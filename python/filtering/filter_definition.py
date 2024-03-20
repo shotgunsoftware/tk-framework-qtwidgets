@@ -868,6 +868,7 @@ class FilterDefinition(object):
             values_list = [value]
 
         for val in values_list:
+
             if isinstance(val, dict):
                 # in case we are dealing with an PTR entity, the value_id should be a combination
                 # of the entity type and its id

@@ -337,6 +337,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             return
 
         if self._entity_type == "Note":
+
             # refresh note
             data = {"note_id": self._entity_id}
             note_uid = self._sg_data_retriever.execute_method(
@@ -454,6 +455,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         entity = activity_data["primary_entity"]
 
         if entity and entity["type"] == "Note":
+
             # special logic for notes - for these, the created by thumbnail
             # is who created the *note* rather than who created the activity
             # entry. This ie because when someone replies to a note, the
@@ -548,6 +550,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
         c = connection.cursor()
         try:
+
             # get a list of tables in the current database
             ret = c.execute("SELECT name FROM main.sqlite_master WHERE type='table';")
             table_names = [x[0] for x in ret.fetchall()]
@@ -787,6 +790,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             "linking it to event %s" % (note_id, update_id)
         )
         try:
+
             # first pickle the note data
             payload = sgtk.util.pickle.dumps(data)
             blob = sqlite3.Binary(six.ensure_binary(payload))
@@ -801,6 +805,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             cursor.execute(sql, (note_id, blob))
 
             if update_id is not None:
+
                 # and finally update the event record to point at this note
                 sql = """UPDATE activity
                          SET note_id = ?
@@ -943,7 +948,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
         elif isinstance(data, dict):
             new_val = {}
-            for k, v in data.items():
+            for (k, v) in data.items():
                 new_val[k] = self.__convert_timestamp_r(v)
             return new_val
 
@@ -979,6 +984,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
         data = self.__convert_timestamp_r(data)
 
         if self._processing_id == uid:
+
             # main activity stream data has arrived
             updates = data["return_value"]["updates"]
 
@@ -994,6 +1000,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             # now post process the data to fetch all full conversations
             # for note replies that have happened
             for update in updates:
+
                 activity_id = update["id"]
 
                 # add to our local in-memory cache
@@ -1007,6 +1014,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                     update["update_type"] == "create"
                     and update["primary_entity"]["type"] == "Note"
                 ) or update["update_type"] == "create_reply":
+
                     note_id = update["primary_entity"]["id"]
                     self._bundle.log_debug(
                         "Requesting note thread download " "for note %s" % note_id
@@ -1039,6 +1047,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             self.update_arrived.emit(new_ids)
 
         if uid in self._note_map:
+
             # we got a note id back!
             update_id = self._note_map[uid]["update_id"]
             note_id = self._note_map[uid]["note_id"]

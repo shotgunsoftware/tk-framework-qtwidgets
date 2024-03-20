@@ -112,13 +112,16 @@ class ContextWidget(QtGui.QWidget):
         click_event = QtCore.QEvent.MouseButtonRelease
 
         if widget == self.ui.task_display:
+
             if event.type() == click_event:
                 # user clicked on the task display, show the search widget
                 self._manual_task_search_toggle(True)
                 return True
 
         elif widget == self.ui.task_search:
+
             if event.type() == key_event:
+
                 if event.key() == QtCore.Qt.Key_Escape:
                     # user escaped in the task search, show the display
                     self._manual_task_search_toggle(False)
@@ -140,13 +143,16 @@ class ContextWidget(QtGui.QWidget):
                         )
 
         elif widget == self.ui.link_display:
+
             if event.type() == click_event:
                 # user clicked on the link display, show the search widget
                 self._manual_link_search_toggle(True)
                 return True
 
         elif widget == self.ui.link_search:
+
             if event.type() == key_event:
+
                 if event.key() == QtCore.Qt.Key_Escape:
                     # user escaped in the task search, show the display
                     self._manual_link_search_toggle(False)
@@ -555,6 +561,7 @@ class ContextWidget(QtGui.QWidget):
         my_tasks_actions = self._menu_actions["My Tasks"]
 
         if my_tasks_actions:
+
             status_groups = {}
 
             # organize the tasks by status
@@ -643,6 +650,7 @@ class ContextWidget(QtGui.QWidget):
         """
 
         if checked:
+
             # hide the display, show the search
             self.ui.task_display.hide()
             self.ui.task_menu_btn.hide()
@@ -931,6 +939,7 @@ def _get_context_display(context, plain_text=False):
 
     # include task if there is one
     if task_display:
+
         if plain_text:
             display_name = "%s > %s" % (display_name, task_display)
         else:

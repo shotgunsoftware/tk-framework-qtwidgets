@@ -82,6 +82,7 @@ class GlobalSearchCompleter(SearchCompleter):
         # items, just ignore it.
         mode = shotgun_model.get_sanitized_data(model_index, self.MODE_ROLE)
         if mode == self.MODE_RESULT:
+
             # get the payload
             data = shotgun_model.get_sanitized_data(model_index, self.SG_DATA_ROLE)
 
