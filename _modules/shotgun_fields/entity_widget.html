@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_fields.entity_widget &mdash; tk-framework-qtwidgets v2.10.12 documentation</title>
+  <title>shotgun_fields.entity_widget &mdash; tk-framework-qtwidgets v2.11.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -56,25 +56,25 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">ShotGrid Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Flow Production Tracking Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">ShotGrid Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">ShotGrid Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">Flow Production Tracking Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">Flow Production Tracking Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../delegates.html">Delegates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Flow Production Tracking Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Flow Production Tracking Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">ShotGrid Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">ShotGrid Menus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Shotgun Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Flow Production Tracking Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Flow Production Tracking Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Flow Production Tracking Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">ShotGrid Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">Flow Production Tracking Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.12.<br>
+    <b>tk-framework-qtwidgets</b> v2.11.0.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -242,7 +242,7 @@
         <span class="k">for</span> <span class="n">entity_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_types</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">entity_type</span> <span class="o">==</span> <span class="s2">&quot;Project&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_project_search_supported</span><span class="p">:</span>
                 <span class="c1"># there is an issue querying Project entities via text_search</span>
-                <span class="c1"># with older versions of SG. for now, don&#39;t restrict the editor</span>
+                <span class="c1"># with older versions of PTR. for now, don&#39;t restrict the editor</span>
                 <span class="k">continue</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">valid_types</span><span class="p">[</span><span class="n">entity_type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>

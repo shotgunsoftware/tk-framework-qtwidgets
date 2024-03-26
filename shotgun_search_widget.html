@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShotGrid Search Widget &mdash; tk-framework-qtwidgets v2.10.12 documentation</title>
+  <title>Flow Production Tracking Search Widget &mdash; tk-framework-qtwidgets v2.11.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -23,7 +23,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Context Selector Widget" href="context_widget.html" />
-    <link rel="prev" title="ShotGrid Search Completers" href="search_completer.html" /> 
+    <link rel="prev" title="Flow Production Tracking Search Completers" href="search_completer.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,10 +59,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Flow Production Tracking Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search_completer.html">ShotGrid Search Completers</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ShotGrid Search Widget</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Flow Production Tracking Search Completers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Flow Production Tracking Search Widget</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#shotgun_search_widget.GlobalSearchWidget"><code class="docutils literal notranslate"><span class="pre">GlobalSearchWidget</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#shotgun_search_widget.GlobalSearchWidget.set_searchable_entity_types"><code class="docutils literal notranslate"><span class="pre">GlobalSearchWidget.set_searchable_entity_types()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#shotgun_search_widget.GlobalSearchWidget.acceptDrops"><code class="docutils literal notranslate"><span class="pre">GlobalSearchWidget.acceptDrops()</span></code></a></li>
@@ -839,15 +839,15 @@
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Flow Production Tracking Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="playback_label.html">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Flow Production Tracking Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_widget.html">Shotgun Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Flow Production Tracking Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Flow Production Tracking Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_widget.html">Flow Production Tracking Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_details.html">Flow Production Tracking Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -870,7 +870,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.12.<br>
+    <b>tk-framework-qtwidgets</b> v2.11.0.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -903,7 +903,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">ShotGrid Search Widget</li>
+      <li class="breadcrumb-item active">Flow Production Tracking Search Widget</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -912,10 +912,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="shotgrid-search-widget">
-<h1>ShotGrid Search Widget<a class="headerlink" href="#shotgrid-search-widget" title="Permalink to this heading"></a></h1>
-<p>The ShotGrid search widgets are similar to the global search and hierarchical
-search found in ShotGrid. They return a number of matches based on text
+  <section id="flow-production-tracking-search-widget">
+<h1>Flow Production Tracking Search Widget<a class="headerlink" href="#flow-production-tracking-search-widget" title="Permalink to this heading"></a></h1>
+<p>The Flow Production Tracking search widgets are similar to the global search and hierarchical
+search found in Flow Production Tracking. They return a number of matches based on text
 that is being typed in by the user.</p>
 <img alt="_images/global_search.png" src="_images/global_search.png" />
 <p>Once a user selects an object, a signal fires to indicate the request.</p>
@@ -936,7 +936,7 @@ the addition of the <code class="docutils literal notranslate"><span class="pre"
 </dd>
 </dl>
 <p>Uses the <a class="reference internal" href="search_completer.html#search_completer.GlobalSearchCompleter" title="search_completer.GlobalSearchCompleter"><code class="xref py py-class docutils literal notranslate"><span class="pre">GlobalSearchCompleter</span></code></a> as the completer for searching
-SG entities.</p>
+PTR entities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – Qt parent object</p>
@@ -2969,7 +2969,7 @@ node inside the search results. The parameters are <code class="docutils literal
 </dd>
 </dl>
 <p>Uses the <a class="reference internal" href="search_completer.html#search_completer.HierarchicalSearchCompleter" title="search_completer.HierarchicalSearchCompleter"><code class="xref py py-class docutils literal notranslate"><span class="pre">HierarchicalSearchCompleter</span></code></a> as the completer for searching
-SG entities.</p>
+PTR entities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>parent</strong> (<a class="reference external" href="http://pyside.github.io/docs/pyside/PySide/QtGui/QWidget.html#PySide.QtGui.QWidget" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></a>) – Qt parent object</p>
@@ -5002,7 +5002,7 @@ to Shotgun will be dispatched via this object.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="search_completer.html" class="btn btn-neutral float-left" title="ShotGrid Search Completers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="search_completer.html" class="btn btn-neutral float-left" title="Flow Production Tracking Search Completers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="context_widget.html" class="btn btn-neutral float-right" title="Context Selector Widget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

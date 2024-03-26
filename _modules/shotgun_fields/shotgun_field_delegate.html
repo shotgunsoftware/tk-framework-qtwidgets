@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.10.12 documentation</title>
+  <title>shotgun_fields.shotgun_field_delegate &mdash; tk-framework-qtwidgets v2.11.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -56,25 +56,25 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">ShotGrid Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Flow Production Tracking Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">ShotGrid Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">ShotGrid Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">Flow Production Tracking Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">Flow Production Tracking Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../delegates.html">Delegates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Flow Production Tracking Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Flow Production Tracking Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">ShotGrid Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">ShotGrid Menus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Shotgun Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Flow Production Tracking Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Flow Production Tracking Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Flow Production Tracking Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">ShotGrid Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">Flow Production Tracking Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.12.<br>
+    <b>tk-framework-qtwidgets</b> v2.11.0.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -210,7 +210,7 @@
 <span class="sd">            one will be created when the delegate widget is created.</span>
 <span class="sd">        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
 
-<span class="sd">        :param int field_data_role: The data role that stores SG field data in</span>
+<span class="sd">        :param int field_data_role: The data role that stores PTR field data in</span>
 <span class="sd">            the model where this delegate is to be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">views</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
@@ -393,7 +393,7 @@
 
 <span class="sd">        :param editor: The editor widget.</span>
 <span class="sd">        :type editor: :class:`~PySide.QtGui.QWidget`</span>
-<span class="sd">        :param model: The SG model where the data lives.</span>
+<span class="sd">        :param model: The PTR model where the data lives.</span>
 <span class="sd">        :type model: :class:`~PySide.QtCore.QAbstractItemModel`</span>
 <span class="sd">        :param index: The index of the model to be edited.</span>
 <span class="sd">        :type index: :class:`~PySide.QtCore.QModelIndex`</span>
@@ -429,7 +429,7 @@
 <span class="sd">        :param event: The event that occurred.</span>
 <span class="sd">        :type event: :class:`~PySide.QtCore.QEvent`</span>
 
-<span class="sd">        :param model: The SG model where the data lives.</span>
+<span class="sd">        :param model: The PTR model where the data lives.</span>
 <span class="sd">        :type model: :class:`~PySide.QtCore.QAbstractItemModel`</span>
 
 <span class="sd">        :param option: Options for rendering the item.</span>
@@ -581,7 +581,7 @@
 
 <span class="sd">        :param editor: The editor widget.</span>
 <span class="sd">        :type editor: :class:`~PySide.QtGui.QWidget`</span>
-<span class="sd">        :param model: The SG model where the data lives.</span>
+<span class="sd">        :param model: The PTR model where the data lives.</span>
 <span class="sd">        :type model: :class:`~PySide.QtCore.QAbstractItemModel`</span>
 <span class="sd">        :param index: The index of the model to be edited.</span>
 <span class="sd">        :type index: :class:`~PySide.QtCore.QModelIndex`</span>
@@ -600,7 +600,7 @@
 
         <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
 
-        <span class="c1"># special case for image fields in the ShotgunModel. The SG model stores</span>
+        <span class="c1"># special case for image fields in the ShotgunModel. The PTR model stores</span>
         <span class="c1"># the image field in the first column. If the value has changed, set the</span>
         <span class="c1"># icon value there.</span>
         <span class="k">if</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_field_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span><span class="p">:</span>
@@ -640,9 +640,9 @@
             <span class="c1"># invalid index, do nothing</span>
             <span class="k">return</span>
 
-        <span class="c1"># special case for image fields in the ShotgunModel. The SG model has</span>
+        <span class="c1"># special case for image fields in the ShotgunModel. The PTR model has</span>
         <span class="c1"># the ability to pre-query thumbnails for entities for efficiency. If</span>
-        <span class="c1"># this is the image field for an entity in the SG model, we can make use</span>
+        <span class="c1"># this is the image field for an entity in the PTR model, we can make use</span>
         <span class="c1"># of the potentially pre-queried image available in the first column.</span>
         <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">get_field_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span><span class="p">:</span>
             <span class="n">primary_item</span> <span class="o">=</span> <span class="n">src_index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">src_index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>

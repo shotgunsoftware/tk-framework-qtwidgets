@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.10.12 documentation</title>
+  <title>shotgun_fields.file_link_widget &mdash; tk-framework-qtwidgets v2.11.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -56,25 +56,25 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">ShotGrid Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Flow Production Tracking Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">ShotGrid Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">ShotGrid Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">Flow Production Tracking Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">Flow Production Tracking Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../delegates.html">Delegates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Flow Production Tracking Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Flow Production Tracking Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">ShotGrid Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">ShotGrid Menus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Shotgun Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Flow Production Tracking Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Flow Production Tracking Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Flow Production Tracking Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">ShotGrid Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">Flow Production Tracking Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.12.<br>
+    <b>tk-framework-qtwidgets</b> v2.11.0.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -386,7 +386,7 @@
                 <span class="k">return</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_field_name</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
 
-            <span class="c1"># SG returns an encoded url already. make sure it doesn&#39;t get</span>
+            <span class="c1"># PTR returns an encoded url already. make sure it doesn&#39;t get</span>
             <span class="c1"># a second encoding pass (the default translation from python str</span>
             <span class="c1"># to QUrl seems to assume the str is not encoded).</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="o">.</span><span class="n">fromEncoded</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
@@ -461,7 +461,7 @@
             <span class="n">local_path</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;local_path&quot;</span><span class="p">]</span>
             <span class="c1"># for file on OS that differs from the current OS, this will</span>
             <span class="c1"># result in the display of the full path rather than just the</span>
-            <span class="c1"># file basename.ext (the SG behavior).</span>
+            <span class="c1"># file basename.ext (the PTR behavior).</span>
             <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">local_path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">img_src</span> <span class="o">=</span> <span class="s2">&quot;:/qtwidgets-shotgun-fields/link_</span><span class="si">%s</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;link_type&quot;</span><span class="p">],)</span>
             <span class="n">hyperlink</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_hyperlink_html</span><span class="p">(</span><span class="n">local_path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
@@ -562,7 +562,7 @@
         <span class="n">btn_palette</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span>
         <span class="n">btn_palette</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Button</span><span class="p">,</span> <span class="n">btn_color</span><span class="p">)</span>
 
-        <span class="c1"># color the button to match the SG version.</span>
+        <span class="c1"># color the button to match the PTR version.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Add Link&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_link_btn</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">btn_palette</span><span class="p">)</span>

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.10.12 documentation</title>
+  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.11.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -56,25 +56,25 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">ShotGrid Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../activity_stream.html">Flow Production Tracking Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">ShotGrid Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">ShotGrid Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search_completer.html">Flow Production Tracking Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_search_widget.html">Flow Production Tracking Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../delegates.html">Delegates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../note_input_widget.html">Flow Production Tracking Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../playback_label.html">Flow Production Tracking Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">ShotGrid Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">ShotGrid Menus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Shotgun Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_fields.html">Flow Production Tracking Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_menus.html">Flow Production Tracking Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shotgun_widget.html">Flow Production Tracking Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">ShotGrid Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_details.html">Flow Production Tracking Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">View Related Classes</a></li>
 </ul>
 
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.12.<br>
+    <b>tk-framework-qtwidgets</b> v2.11.0.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -260,8 +260,8 @@
 <span class="sd">        # Call `set_ignore_fields` to ignore certain data when building the filters.</span>
 <span class="sd">        filter_menu.set_ignore_fields(</span>
 <span class="sd">            [</span>
-<span class="sd">                &quot;{ROLE}.{FIELD_NAME},  # For non SG data, fields are of the format &quot;role.field&quot;, e.g. &quot;QtCore.Qt.DisplayRole.name&quot;</span>
-<span class="sd">                &quot;{SG_ENTITY_TYPE}.{FIELD_NAME}&quot;,  # For SG data, fields are of the format &quot;entity_type.field&quot;, e.g. &quot;Task.code&quot;</span>
+<span class="sd">                &quot;{ROLE}.{FIELD_NAME},  # For non PTR data, fields are of the format &quot;role.field&quot;, e.g. &quot;QtCore.Qt.DisplayRole.name&quot;</span>
+<span class="sd">                &quot;{SG_ENTITY_TYPE}.{FIELD_NAME}&quot;,  # For PTR data, fields are of the format &quot;entity_type.field&quot;, e.g. &quot;Task.code&quot;</span>
 <span class="sd">            ]</span>
 <span class="sd">        )</span>
 
@@ -296,7 +296,7 @@
         <span class="c1"># to build the filter menu UI.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span> <span class="o">=</span> <span class="n">FilterMenuFiltersDefinition</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="c1"># Set the project id for the filters definition to allow handling SG data.</span>
+        <span class="c1"># Set the project id for the filters definition to allow handling PTR data.</span>
         <span class="n">bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">bundle</span><span class="o">.</span><span class="n">tank</span><span class="o">.</span><span class="n">pipeline_configuration</span><span class="o">.</span><span class="n">is_site_configuration</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">default_sg_project_id</span> <span class="o">=</span> <span class="kc">None</span>
@@ -424,7 +424,7 @@
 <div class="viewcode-block" id="FilterMenu.set_use_fully_qualifiied_name"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_use_fully_qualifiied_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_use_fully_qualifiied_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the flag to use the fully qualified name for filters. For example, a filter item</span>
-<span class="sd">        representing SG data will prefix the filter name with the entity type.</span>
+<span class="sd">        representing PTR data will prefix the filter name with the entity type.</span>
 
 <span class="sd">        :param use: True will show fully qualified names for filters.</span>
 <span class="sd">        :type use: bool</span>
@@ -976,7 +976,7 @@
             <span class="n">filter_item_and_actions</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="c1"># We want to create a search filter item in case we are dealing with a string field</span>
-            <span class="c1"># or an SG entity/multi-entity field</span>
+            <span class="c1"># or an PTR entity/multi-entity field</span>
             <span class="n">sg_data_type</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sg_data&quot;</span><span class="p">),</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="n">sg_data_type</span> <span class="o">=</span> <span class="n">field_data</span><span class="p">[</span><span class="s2">&quot;sg_data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_type&quot;</span><span class="p">)</span>
@@ -1448,7 +1448,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor.</span>
 
-<span class="sd">        Set the filter_roles to the ShotgunModel role pointing to its SG data.</span>
+<span class="sd">        Set the filter_roles to the ShotgunModel role pointing to its PTR data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFilterMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -1571,7 +1571,7 @@
 
     <span class="k">def</span> <span class="nf">_on_data_refreshing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Slot triggered on SG model `data_refreshing` signal.</span>
+<span class="sd">        Slot triggered on PTR model `data_refreshing` signal.</span>
 
 <span class="sd">        Emit the signal that the menu is about to refresh now.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1580,7 +1580,7 @@
 
     <span class="k">def</span> <span class="nf">_on_data_refresh_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Slot triggered on SG model `data_refresh_fail` signal.</span>
+<span class="sd">        Slot triggered on PTR model `data_refresh_fail` signal.</span>
 
 <span class="sd">        Refresh failed will not trigger the menu refresh, but we still need to emit the signal</span>
 <span class="sd">        menu finished refreshing since the menu_about_to_be_refreshed signal has been emitted.</span>
@@ -1590,7 +1590,7 @@
 
     <span class="k">def</span> <span class="nf">_on_data_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Slot triggered on SG model `data_refreshed` signal.</span>
+<span class="sd">        Slot triggered on PTR model `data_refreshed` signal.</span>
 
 <span class="sd">        Force a menu refresh.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1599,7 +1599,7 @@
 
     <span class="k">def</span> <span class="nf">_on_cache_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Slot triggered on SG model `cache_loaded` signal.</span>
+<span class="sd">        Slot triggered on PTR model `cache_loaded` signal.</span>
 
 <span class="sd">        Force a menu refresh.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

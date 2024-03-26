@@ -1,15 +1,15 @@
-ShotGrid Playback Label Widget
-#############################################
+Flow Production Tracking Playback Label Widget
+##############################################
 
-The ShotGrid Playback Label is a simple ``QLabel`` override which
+The Flow Production Tracking Playback Label is a simple ``QLabel`` override which
 makes it easy to indicate that a thumbnail can be played back:
 
 .. image:: images/playback_label.png
 
-The widget takes care of analyzing provided ShotGrid data, and in
-case the ShotGrid data contains playable media, the playback icon will
+The widget takes care of analyzing provided Flow Production Tracking data, and in
+case the Flow Production Tracking data contains playable media, the playback icon will
 automatically appear. Clicking the playback icon will launch a
-playback action, currently launching ShotGrid screening room in a web browser.
+playback action, currently launching Flow Production Tracking screening room in a web browser.
 
 .. note:: In order to use this widget in QT designer, you need to wrap
     the import in a module. For more information on how to do this, see :ref:`widgets-in-designer`.
@@ -24,7 +24,7 @@ Use the label like this::
     # always use label with a pixmap
     label.setPixmap(some_pixmap_object)
 
-    # pass a ShotGrid data dictionary to tell the label what data we are
+    # pass a Flow Production Tracking data dictionary to tell the label what data we are
     # operating on. Make sure to include relevant fields - for example,
     # if you are passing version data, make sure to include media fields
     label.set_shotgun_data(sg_data)

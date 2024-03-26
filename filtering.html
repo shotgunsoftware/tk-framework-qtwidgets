@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Filtering &mdash; tk-framework-qtwidgets v2.10.12 documentation</title>
+  <title>Filtering &mdash; tk-framework-qtwidgets v2.11.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -59,10 +59,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
     
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">ShotGrid Activity Stream Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activity_stream.html">Flow Production Tracking Activity Stream Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elided_label.html">Auto-Elide label</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search_completer.html">ShotGrid Search Completers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">ShotGrid Search Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search_completer.html">Flow Production Tracking Search Completers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_search_widget.html">Flow Production Tracking Search Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context_widget.html">Context Selector Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="delegates.html">Delegates</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Filtering</a><ul>
@@ -145,15 +145,15 @@
 <li class="toctree-l1"><a class="reference internal" href="help_screen.html">Help Screen Popup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Related Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Navigation Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Shotgun Note Input Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="note_input_widget.html">Flow Production Tracking Note Input Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overlay_widget.html">Text Overlay Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="playback_label.html">ShotGrid Playback Label Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playback_label.html">Flow Production Tracking Playback Label Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="screen_grab.html">Screen Capture Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">ShotGrid Field Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">ShotGrid Menus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shotgun_widget.html">Shotgun Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_fields.html">Flow Production Tracking Field Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_menus.html">Flow Production Tracking Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_widget.html">Flow Production Tracking Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinner_widget.html">Spinner Widget</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_details.html">ShotGrid Version Details Widget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_details.html">Flow Production Tracking Version Details Widget</a></li>
 <li class="toctree-l1"><a class="reference internal" href="views.html">View Related Classes</a></li>
 </ul>
 
@@ -176,7 +176,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.10.12.<br>
+    <b>tk-framework-qtwidgets</b> v2.11.0.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -220,7 +220,7 @@
              
   <section id="filtering">
 <h1>Filtering<a class="headerlink" href="#filtering" title="Permalink to this heading"></a></h1>
-<p>Filtering functionality that aims to mimic the ShotGrid Web UI filter menu.</p>
+<p>Filtering functionality that aims to mimic the Flow Production Tracking Web UI filter menu.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="filtering.FilterMenu">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filtering.</span></span><span class="sig-name descname"><span class="pre">FilterMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_on_show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_task_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu" title="Permalink to this definition"></a></dt>
@@ -286,8 +286,8 @@ forced to be refreshed on calling the <cite>refresh</cite> method with param <ci
 <span class="c1"># Call `set_ignore_fields` to ignore certain data when building the filters.</span>
 <span class="n">filter_menu</span><span class="o">.</span><span class="n">set_ignore_fields</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="s2">&quot;</span><span class="si">{ROLE}</span><span class="s2">.</span><span class="si">{FIELD_NAME}</span><span class="s2">,  # For non SG data, fields are of the format &quot;</span><span class="n">role</span><span class="o">.</span><span class="n">field</span><span class="s2">&quot;, e.g. &quot;</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="o">.</span><span class="n">name</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;</span><span class="si">{SG_ENTITY_TYPE}</span><span class="s2">.</span><span class="si">{FIELD_NAME}</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="c1"># For SG data, fields are of the format &quot;entity_type.field&quot;, e.g. &quot;Task.code&quot;</span>
+        <span class="s2">&quot;</span><span class="si">{ROLE}</span><span class="s2">.</span><span class="si">{FIELD_NAME}</span><span class="s2">,  # For non PTR data, fields are of the format &quot;</span><span class="n">role</span><span class="o">.</span><span class="n">field</span><span class="s2">&quot;, e.g. &quot;</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="o">.</span><span class="n">name</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;</span><span class="si">{SG_ENTITY_TYPE}</span><span class="s2">.</span><span class="si">{FIELD_NAME}</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="c1"># For PTR data, fields are of the format &quot;entity_type.field&quot;, e.g. &quot;Task.code&quot;</span>
     <span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
@@ -370,7 +370,7 @@ triggered signal signatures between Qt versions.</p>
 <dt class="sig sig-object py" id="filtering.FilterMenu.set_use_fully_qualifiied_name">
 <span class="sig-name descname"><span class="pre">set_use_fully_qualifiied_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_use_fully_qualifiied_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.set_use_fully_qualifiied_name" title="Permalink to this definition"></a></dt>
 <dd><p>Set the flag to use the fully qualified name for filters. For example, a filter item
-representing SG data will prefix the filter name with the entity type.</p>
+representing PTR data will prefix the filter name with the entity type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>use</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – True will show fully qualified names for filters.</p>
@@ -803,13 +803,13 @@ the filter item will have id “FilterType.FilterOp”.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="filtering.FilterItem.map_from_sg_data_type">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">map_from_sg_data_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sg_data_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_item.html#FilterItem.map_from_sg_data_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterItem.map_from_sg_data_type" title="Permalink to this definition"></a></dt>
-<dd><p>Map the SG data type to a valid filter type.</p>
+<dd><p>Map the PTR data type to a valid filter type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sg_data_type</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The SG data type.</p>
+<dd class="field-odd"><p><strong>sg_data_type</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The PTR data type.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The corresponding filter type for the SG data type.</p>
+<dd class="field-even"><p>The corresponding filter type for the PTR data type.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>

@@ -1,8 +1,8 @@
 
-Shotgun Widgets
+Flow Production Tracking Widgets
 ######################################
 
-Widgets to display ShotGrid specific data using a Qt view and delegate, in customizable way.
+Widgets to display Flow Production Tracking specific data using a Qt view and delegate, in customizable way.
 
 .. currentmodule:: shotgun_widget
 
