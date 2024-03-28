@@ -344,7 +344,9 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 prev_source_model.rowsInserted.disconnect(
                     self._on_source_model_rows_inserted
                 )
-                prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
+                prev_source_model.dataChanged.disconnect(
+                    self._on_source_model_data_changed
+                )
                 prev_source_model.modelAboutToBeReset.disconnect(
                     self._on_source_model_about_to_be_reset
                 )
