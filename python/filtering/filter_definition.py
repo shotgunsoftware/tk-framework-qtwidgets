@@ -419,16 +419,32 @@ class FilterDefinition(object):
 
     def __process_field_id(self, field_id):
         """
-        Process the filter field id and get the SG specific data from it.
+        Process the filter field id to retrieve key information about the filter.
 
-        If the `field_id` represents an SG filter, it will have the format:
+        The `field_id` can represent a SG or non-SG filter. If it is an SG filter,
+        it will have the format:
             {model_item_data_role}.{sg_entity_type}.{sg_field}
+        This means that deeply linked SG filter fields are not supported currently.
 
-        :param field_id: The filter field id that may contain SG data.
+        If the `field_id` is a non-SG filter, it will have the format:
+            {model_item_data_role}.{field}
+        
+        Currently filters do not support using Qt roles (e.g. QtCore.Qt.DisplayRole).
+
+        The return value will be a tuple containing the following data:
+            (1) The model item data role for the filter - this is used to get the data
+                from the model for the filter.
+            (2) The SG entity type for the filter. This will be None if the filter is not
+                a SG filter.
+            (3) The SG field for the filter. This will be None if the filter is not a SG filter.
+            (4) The field name for the filter. This is for non-SG filters, and can be ignored
+                for SG filters.
+
+        :param field_id: The filter field id to process.
         :type field_id: str
 
         :return: A tuple containing the data for this filter id.
-        :rtype: tuple<int, str, str>
+        :rtype: tuple<int, str, str, str>
         """
 
         filter_role = None
@@ -436,7 +452,6 @@ class FilterDefinition(object):
         sg_field = None
         field = None
 
-        # FIXME this does not allow roles to have more than one '.' which means QtCore.Qt.DisplauRole and such will not work
         try:
             end_of_role_index = field_id.index(".")
         except ValueError:
@@ -445,7 +460,6 @@ class FilterDefinition(object):
         try:
             filter_role = int(field_id[:end_of_role_index])
         except ValueError:
-            # Not a valid filter id. Must be prefixed with Qt.ItemDataRole.
             return (filter_role, sg_entity_type, sg_field, field)
 
         # Check if we have SG data. This could be a SG model or it could be a non-SG model but
