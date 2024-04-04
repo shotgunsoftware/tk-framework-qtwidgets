@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>models.hierarchical_filtering_proxy_model &mdash; tk-framework-qtwidgets v2.11.1 documentation</title>
+  <title>models.hierarchical_filtering_proxy_model &mdash; tk-framework-qtwidgets v2.11.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.11.1.<br>
+    <b>tk-framework-qtwidgets</b> v2.11.2.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -483,13 +483,19 @@
         <span class="c1"># if needed, disconnect from the previous source model:</span>
         <span class="n">prev_source_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceModel</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">prev_source_model</span><span class="p">:</span>
-            <span class="n">prev_source_model</span><span class="o">.</span><span class="n">rowsInserted</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_rows_inserted</span>
-            <span class="p">)</span>
-            <span class="n">prev_source_model</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_data_changed</span><span class="p">)</span>
-            <span class="n">prev_source_model</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_about_to_be_reset</span>
-            <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">prev_source_model</span><span class="o">.</span><span class="n">rowsInserted</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_rows_inserted</span>
+                <span class="p">)</span>
+                <span class="n">prev_source_model</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_data_changed</span>
+                <span class="p">)</span>
+                <span class="n">prev_source_model</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_on_source_model_about_to_be_reset</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+                <span class="n">app</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Error running closeEvent()&quot;</span><span class="p">)</span>
 
         <span class="c1"># clear out the various caches:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dirty_all_accepted</span><span class="p">()</span>
