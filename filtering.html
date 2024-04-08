@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Filtering &mdash; tk-framework-qtwidgets v2.11.2 documentation</title>
+  <title>Filtering &mdash; tk-framework-qtwidgets v2.12.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -69,8 +69,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#filtering.FilterMenu"><code class="docutils literal notranslate"><span class="pre">FilterMenu</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.active_filter"><code class="docutils literal notranslate"><span class="pre">FilterMenu.active_filter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.has_filtering"><code class="docutils literal notranslate"><span class="pre">FilterMenu.has_filtering</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.more_filters_menu"><code class="docutils literal notranslate"><span class="pre">FilterMenu.more_filters_menu</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.refresh_on_show"><code class="docutils literal notranslate"><span class="pre">FilterMenu.refresh_on_show</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.docked"><code class="docutils literal notranslate"><span class="pre">FilterMenu.docked</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.dock_widget"><code class="docutils literal notranslate"><span class="pre">FilterMenu.dock_widget</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_widget_action_default_widget_value"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_widget_action_default_widget_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.is_empty"><code class="docutils literal notranslate"><span class="pre">FilterMenu.is_empty()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.get_filters_container"><code class="docutils literal notranslate"><span class="pre">FilterMenu.get_filters_container()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_visible_fields"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_visible_fields()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_accept_fields"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_accept_fields()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_ignore_fields"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_ignore_fields()</span></code></a></li>
@@ -85,6 +90,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.update_filters"><code class="docutils literal notranslate"><span class="pre">FilterMenu.update_filters()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.clear_menu"><code class="docutils literal notranslate"><span class="pre">FilterMenu.clear_menu()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.clear_filters"><code class="docutils literal notranslate"><span class="pre">FilterMenu.clear_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.undock_filters"><code class="docutils literal notranslate"><span class="pre">FilterMenu.undock_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.dock_filters"><code class="docutils literal notranslate"><span class="pre">FilterMenu.dock_filters()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.get_current_filters"><code class="docutils literal notranslate"><span class="pre">FilterMenu.get_current_filters()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.initialize_menu"><code class="docutils literal notranslate"><span class="pre">FilterMenu.initialize_menu()</span></code></a></li>
 </ul>
@@ -176,7 +183,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.11.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.0.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -223,7 +230,7 @@
 <p>Filtering functionality that aims to mimic the Flow Production Tracking Web UI filter menu.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="filtering.FilterMenu">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filtering.</span></span><span class="sig-name descname"><span class="pre">FilterMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_on_show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_task_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filtering.</span></span><span class="sig-name descname"><span class="pre">FilterMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_on_show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_task_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dock_widget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NoCloseOnActionTriggerShotgunMenu</span></code></p>
 <p>A menu that provides filtering functionality.</p>
 <dl class="simple">
@@ -303,6 +310,7 @@ but ensures the data is the most up to date. To only refresh the menu on show
 on demand, set the <cite>refresh_on_show</cite> property instead of this parm on init.</p></li>
 <li><p><strong>bg_task_manager</strong> (<a class="reference external" href="https://developers.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.9.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – An instance of a Background Task Manager that could be used to perform
 background task processing.</p></li>
+<li><p><strong>dock_widget</strong> (<em>QtGui.QWidget</em><em> | </em><em>QtGui.QScrollArea</em>) – Optional widget that the filters can be shown in.</p></li>
 </ul>
 </dd>
 </dl>
@@ -319,9 +327,29 @@ background task processing.</p></li>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="filtering.FilterMenu.more_filters_menu">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">more_filters_menu</span></span><a class="headerlink" href="#filtering.FilterMenu.more_filters_menu" title="Permalink to this definition"></a></dt>
+<dd><p>Get the ‘More Filters’ submenu in the filter menu.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="filtering.FilterMenu.refresh_on_show">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">refresh_on_show</span></span><a class="headerlink" href="#filtering.FilterMenu.refresh_on_show" title="Permalink to this definition"></a></dt>
 <dd><p>Get or set the property to refresh menu before showing.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filtering.FilterMenu.docked">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">docked</span></span><a class="headerlink" href="#filtering.FilterMenu.docked" title="Permalink to this definition"></a></dt>
+<dd><p>Get or set the docked state of the Filter Menu.</p>
+<p>This will always return False if the menu does not have a dock widget. When True, the
+filters are shown in the dock widget, instead of the menu itself.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filtering.FilterMenu.dock_widget">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dock_widget</span></span><a class="headerlink" href="#filtering.FilterMenu.dock_widget" title="Permalink to this definition"></a></dt>
+<dd><p>Get the dock widget for the Filter Menu.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -331,6 +359,20 @@ background task processing.</p></li>
 of the QWidgetAction.</p>
 <p>This is mainly used by the QWidgetAction’s triggered callback to handle different
 triggered signal signatures between Qt versions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="filtering.FilterMenu.is_empty">
+<span class="sig-name descname"><span class="pre">is_empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.is_empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.is_empty" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the menu has any filters to show.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="filtering.FilterMenu.get_filters_container">
+<span class="sig-name descname"><span class="pre">get_filters_container</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.get_filters_container"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.get_filters_container" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current parent widget for the filters.</p>
+<p>The filters may move between the menu itself and the dock widget, thus the parent
+widget will change depending on the dock state.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -485,6 +527,18 @@ remove all items from the menu.</p>
 <dt class="sig sig-object py" id="filtering.FilterMenu.clear_filters">
 <span class="sig-name descname"><span class="pre">clear_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.clear_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.clear_filters" title="Permalink to this definition"></a></dt>
 <dd><p>Clear any active filtesr that are set in the menu.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="filtering.FilterMenu.undock_filters">
+<span class="sig-name descname"><span class="pre">undock_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.undock_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.undock_filters" title="Permalink to this definition"></a></dt>
+<dd><p>Show filters in the menu.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="filtering.FilterMenu.dock_filters">
+<span class="sig-name descname"><span class="pre">dock_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.dock_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.dock_filters" title="Permalink to this definition"></a></dt>
+<dd><p>Show filters in the dock widget.</p>
 </dd></dl>
 
 <dl class="py method">

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.11.2 documentation</title>
+  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.12.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.11.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.0.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -170,6 +170,13 @@
     <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_model&quot;</span>
 <span class="p">)</span>
 <span class="n">ShotgunModel</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">ShotgunModel</span>
+
+<span class="n">sg_qicons</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;sg_qicons&quot;</span><span class="p">)</span>
+<span class="n">SGQIcon</span> <span class="o">=</span> <span class="n">sg_qicons</span><span class="o">.</span><span class="n">SGQIcon</span>
+
+<span class="n">sg_qwidgets</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;sg_qwidgets&quot;</span><span class="p">)</span>
+<span class="n">SGQPushButton</span> <span class="o">=</span> <span class="n">sg_qwidgets</span><span class="o">.</span><span class="n">SGQPushButton</span>
+<span class="n">SGQToolButton</span> <span class="o">=</span> <span class="n">sg_qwidgets</span><span class="o">.</span><span class="n">SGQToolButton</span>
 
 
 <span class="k">class</span> <span class="nc">NoCloseOnActionTriggerShotgunMenu</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">):</span>
@@ -274,7 +281,9 @@
     <span class="c1"># Signal emitted when menu is finished a complete refreshing (e.g. exit refresh method)</span>
     <span class="n">menu_refreshed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh_on_show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh_on_show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dock_widget</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 
@@ -288,6 +297,8 @@
 <span class="sd">        :param bg_task_manager: An instance of a Background Task Manager that could be used to perform</span>
 <span class="sd">            background task processing.</span>
 <span class="sd">        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
+<span class="sd">        :param dock_widget: Optional widget that the filters can be shown in.</span>
+<span class="sd">        :type dock_widget: QtGui.QWidget | QtGui.QScrollArea</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">FilterMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -313,8 +324,56 @@
         <span class="c1"># A mapping of field id to whether or not that group of filters is visible.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_field_visibility</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="c1"># A submenu to show/hide filter field groups.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Set up the dock widget for the filters. Start in undocked state.</span>
+        <span class="k">if</span> <span class="n">dock_widget</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dock_widget</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QScrollArea</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dock_widget_parent</span> <span class="o">=</span> <span class="n">dock_widget</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dock_widget</span> <span class="o">=</span> <span class="n">dock_widget</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dock_widget_parent</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dock_widget</span> <span class="o">=</span> <span class="n">dock_widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__set_docked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Menu static actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Dock action widgets</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">:</span>
+            <span class="c1"># Undock button for dock widget</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span> <span class="o">=</span> <span class="n">SGQToolButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;filter_menu_dock_widget_undock_button&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">SGQIcon</span><span class="o">.</span><span class="n">red_bullet</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">undock_filters</span><span class="p">)</span>
+            <span class="c1"># Clear All Filtesr button for dock widget</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span> <span class="o">=</span> <span class="n">SGQToolButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span>
+                <span class="s2">&quot;filter_menu_dock_widget_clear_all_filters_button&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Clear All Filters&quot;</span><span class="p">)</span>
+            <span class="n">sizePolicy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="p">(</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">sizePolicy</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">)</span>
+            <span class="c1"># More Filtesr button for dock widget</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span> <span class="o">=</span> <span class="n">SGQToolButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;More Filters&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span>
+                <span class="s2">&quot;filter_menu_dock_widget_more_filters_button&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">sizePolicy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="p">(</span>
+                <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">sizePolicy</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setPopupMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QToolButton</span><span class="o">.</span><span class="n">InstantPopup</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># The filter model and its source model, that the filters in this menu are built bsaed on.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_model</span> <span class="o">=</span> <span class="kc">None</span>
@@ -348,19 +407,23 @@
         <span class="c1"># based on menu selection.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span> <span class="o">=</span> <span class="n">FilterItem</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">FilterItem</span><span class="o">.</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">AND</span><span class="p">)</span>
 
+    <span class="c1"># ----------------------------------------------------------------------------------------</span>
+    <span class="c1"># Properties</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">active_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the current active filters that are set within the menu.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current active filters that are set within the menu.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">has_filtering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get whether or not the menu has any active filtering.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get whether or not the menu has any active filtering.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">more_filters_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the &#39;More Filters&#39; submenu in the filter menu.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">refresh_on_show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -370,6 +433,24 @@
     <span class="nd">@refresh_on_show</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">refresh_on_show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">refresh</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_on_show</span> <span class="o">=</span> <span class="n">refresh</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">docked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the docked state of the Filter Menu.</span>
+
+<span class="sd">        This will always return False if the menu does not have a dock widget. When True, the</span>
+<span class="sd">        filters are shown in the dock widget, instead of the menu itself.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__docked</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span> <span class="k">else</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dock_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the dock widget for the Filter Menu.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dock_widget</span>
+
+    <span class="c1"># ----------------------------------------------------------------------------------------</span>
+    <span class="c1"># Static methods</span>
 
 <div class="viewcode-block" id="FilterMenu.set_widget_action_default_widget_value"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_widget_action_default_widget_value">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">set_widget_action_default_widget_value</span><span class="p">(</span><span class="n">widget_action</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
@@ -383,9 +464,35 @@
 
         <span class="n">widget_action</span><span class="o">.</span><span class="n">defaultWidget</span><span class="p">()</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">widget_action</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span></div>
 
-    <span class="c1">#############################################@##################################################</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_search_filter_field_id</span><span class="p">(</span><span class="n">filter_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience method to get the field id from the filter id.</span>
+
+<span class="sd">        :param filter_id: The id for the search filter item widget.</span>
+<span class="sd">        :type: str</span>
+
+<span class="sd">        :return: The field id that the search filter item widget refers to.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;.</span><span class="si">{}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">SearchFilterItemWidget</span><span class="p">)),</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------------------------</span>
     <span class="c1"># Public methods</span>
-    <span class="c1">#############################################@##################################################</span>
+
+<div class="viewcode-block" id="FilterMenu.is_empty"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.is_empty">[docs]</a>    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return True if the menu has any filters to show.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FilterMenu.get_filters_container"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_filters_container">[docs]</a>    <span class="k">def</span> <span class="nf">get_filters_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the current parent widget for the filters.</span>
+
+<span class="sd">        The filters may move between the menu itself and the dock widget, thus the parent</span>
+<span class="sd">        widget will change depending on the dock state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span> <span class="k">else</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="FilterMenu.set_visible_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_visible_fields">[docs]</a>    <span class="k">def</span> <span class="nf">set_visible_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -664,16 +771,20 @@
 <span class="sd">        remove all items from the menu.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># First clear any filter values set in the menu.</span>
+        <span class="c1"># Clear any filter values set by the menu.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">()</span>
+        <span class="c1"># Clear the widgets from the dock. Delete the widgets else widgets will not be cleaned</span>
+        <span class="c1"># up properly after refresh.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__clear_dock_widget</span><span class="p">(</span><span class="n">delete_widgets</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Call the base QMenu clear method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
         <span class="c1"># Reset the internal menu data members</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-
-        <span class="c1"># Clear the menu widgets</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="FilterMenu.clear_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.clear_filters">[docs]</a>    <span class="k">def</span> <span class="nf">clear_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear any active filtesr that are set in the menu.&quot;&quot;&quot;</span>
@@ -734,6 +845,43 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_refreshing</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_emit_filters_changed</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FilterMenu.undock_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.undock_filters">[docs]</a>    <span class="k">def</span> <span class="nf">undock_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show filters in the menu.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Set the dock state and hide dock widgets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__set_docked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># Clear the menu before adding back the filters from the dock widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="c1"># Add static menu actions and filter actions back to the menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__add_static_actions</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">filter_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">filter_group</span><span class="o">.</span><span class="n">show_in_menu</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FilterMenu.dock_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.dock_filters">[docs]</a>    <span class="k">def</span> <span class="nf">dock_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show filters in the dock widget.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Set the dock state and show the dock widgets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__set_docked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Clear the dock widget before adding back the filters from the menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__clear_dock_widget</span><span class="p">()</span>
+        <span class="c1"># Add static action and filter widgets back to the dock widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__add_static_actions</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">filter_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">filter_group</span><span class="o">.</span><span class="n">show_in_widget</span><span class="p">()</span>
+
+        <span class="c1"># Add a spacer to push filters to align at the top</span>
+        <span class="n">spacer</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span>
+            <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacer</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterMenu.get_current_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_current_filters">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclude_choices_from_fields</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -800,28 +948,24 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
 
-    <span class="c1">#############################################@##################################################</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------</span>
     <span class="c1"># Protected methods</span>
-    <span class="c1">#############################################@##################################################</span>
 
     <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
     <span class="k">def</span> <span class="nf">_build_menu_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the menu by building the menu action and widgets.&quot;&quot;&quot;</span>
 
-        <span class="c1"># Add the static menu actions</span>
-        <span class="n">clear_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Clear All Filters&quot;</span><span class="p">)</span>
-        <span class="n">clear_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">)</span>
-
-        <span class="c1"># Build and add the configuration menu as a submenu to the main filter menu.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span> <span class="o">=</span> <span class="n">NoCloseOnActionTriggerShotgunMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;More Filters&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__add_static_actions</span><span class="p">()</span>
 
         <span class="c1"># Build the filter menu actions and their widgets from the filter definition.</span>
         <span class="n">sorted_field_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">get_fields</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_filter_groups</span><span class="p">(</span><span class="n">sorted_field_ids</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span><span class="p">:</span>
+            <span class="n">spacer</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSpacerItem</span><span class="p">(</span>
+                <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacer</span><span class="p">)</span>
 
     <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
     <span class="k">def</span> <span class="nf">_refresh_menu_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -890,7 +1034,7 @@
                     <span class="n">filter_item</span><span class="p">,</span> <span class="n">filter_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_filter_item_and_action</span><span class="p">(</span>
                         <span class="n">field_id</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">value_id</span><span class="p">,</span> <span class="n">value_data</span>
                     <span class="p">)</span>
-                    <span class="n">filter_group</span><span class="o">.</span><span class="n">insert_into_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_item</span><span class="p">,</span> <span class="n">filter_action</span><span class="p">)</span>
+                    <span class="n">filter_group</span><span class="o">.</span><span class="n">insert_item</span><span class="p">(</span><span class="n">filter_item</span><span class="p">,</span> <span class="n">filter_action</span><span class="p">)</span>
 
             <span class="c1"># The menu layout may have changd, ensure it is positioned nicely.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_position</span><span class="p">()</span>
@@ -1008,11 +1152,14 @@
             <span class="c1"># Create the filter group object to manage this grouping, and add the filter item and actions.</span>
             <span class="c1"># Set the maximum initial number of items shown per group to 5, more item may be shown as user</span>
             <span class="c1"># requests to show more.</span>
-            <span class="n">filter_group</span> <span class="o">=</span> <span class="n">FilterMenuGroup</span><span class="p">(</span><span class="n">field_id</span><span class="p">,</span> <span class="n">show_limit_increment</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-            <span class="n">filter_group</span><span class="o">.</span><span class="n">add_to_menu</span><span class="p">(</span>
-                <span class="bp">self</span><span class="p">,</span>
+            <span class="n">filter_group</span> <span class="o">=</span> <span class="n">FilterMenuGroup</span><span class="p">(</span>
+                <span class="n">field_id</span><span class="p">,</span>
+                <span class="n">menu</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">show_limit_increment</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">display_name</span><span class="o">=</span><span class="n">field_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">filter_group</span><span class="o">.</span><span class="n">populate_menu</span><span class="p">(</span>
                 <span class="n">filter_item_and_actions</span><span class="p">,</span>
-                <span class="n">field_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
                 <span class="n">search_filter_item_and_action</span><span class="o">=</span><span class="n">search_filter_item_and_action</span><span class="p">,</span>
             <span class="p">)</span>
 
@@ -1112,11 +1259,14 @@
 <span class="sd">        :rtype: :class:`sgtk.platform.qt.QWidgetAction`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">widget_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidgetAction</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">widget_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidgetAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">widget_action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-
         <span class="n">widget</span> <span class="o">=</span> <span class="n">widget_class</span><span class="p">(</span>
-            <span class="n">filter_item</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">filter_data</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span>
+            <span class="n">filter_item</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">field_id</span><span class="p">,</span>
+            <span class="n">filter_data</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">widget_action</span><span class="o">.</span><span class="n">setDefaultWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">filter_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;default_value&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1189,7 +1339,6 @@
                 <span class="k">return</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span><span class="p">[</span><span class="n">field_id</span><span class="p">]</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">filter_item</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">removeAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_add_action_to_more_filters_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1202,8 +1351,8 @@
 <span class="sd">        :param field_name: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="p">,</span> <span class="s2">&quot;&#39;More Filters&#39; menu not initialized&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">,</span> <span class="s2">&quot;&#39;More Filters&#39; menu not initialized&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">:</span>
             <span class="k">return</span>
 
         <span class="n">field_id</span> <span class="o">=</span> <span class="n">filter_group</span><span class="o">.</span><span class="n">group_id</span>
@@ -1214,9 +1363,10 @@
             <span class="p">{</span>
                 <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">field_name</span><span class="p">,</span>
             <span class="p">},</span>
+            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidgetAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="p">)</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidgetAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">)</span>
         <span class="n">action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">action</span><span class="o">.</span><span class="n">setDefaultWidget</span><span class="p">(</span><span class="n">filter_widget</span><span class="p">)</span>
 
@@ -1238,15 +1388,15 @@
         <span class="p">)</span>
 
         <span class="c1"># Add the new action and then move it into alphabetical order.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="n">more_filters_actions</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="o">.</span><span class="n">actions</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="o">.</span><span class="n">actions</span><span class="p">(),</span>
             <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">defaultWidget</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">action_index</span> <span class="o">=</span> <span class="n">more_filters_actions</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">action_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">more_filters_actions</span><span class="p">):</span>
             <span class="n">insert_before_action</span> <span class="o">=</span> <span class="n">more_filters_actions</span><span class="p">[</span><span class="n">action_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_more_filters_menu</span><span class="o">.</span><span class="n">insertAction</span><span class="p">(</span><span class="n">insert_before_action</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="o">.</span><span class="n">insertAction</span><span class="p">(</span><span class="n">insert_before_action</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_emit_filters_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the active filter and emit a signal that the filters have changed.&quot;&quot;&quot;</span>
@@ -1272,19 +1422,6 @@
         <span class="c1"># There should only be one SearchFilterItemWidget per field group, which makes</span>
         <span class="c1"># it safe to use the widget class name as part of the id.</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">SearchFilterItemWidget</span><span class="p">))</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_search_filter_field_id</span><span class="p">(</span><span class="n">filter_id</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Convenience method to get the field id from the filter id.</span>
-
-<span class="sd">        :param filter_id: The id for the search filter item widget.</span>
-<span class="sd">        :type: str</span>
-
-<span class="sd">        :return: The field id that the search filter item widget refers to.</span>
-<span class="sd">        :rtype: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;.</span><span class="si">{}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">SearchFilterItemWidget</span><span class="p">)),</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_filter_group_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1343,12 +1480,14 @@
             <span class="n">adjust_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">geom</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span> <span class="o">-</span> <span class="n">sz</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">adjust_y</span><span class="p">,</span> <span class="n">sz</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">sz</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
 
-    <span class="c1">################################################################################################</span>
+    <span class="c1"># ----------------------------------------------------------------------------------------</span>
     <span class="c1"># Callbacks</span>
-    <span class="c1">################################################################################################</span>
 
     <span class="k">def</span> <span class="nf">_about_to_show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback triggered when the menu is about to show.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Undock the menu if it is docked.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">undock_filters</span><span class="p">()</span>
 
         <span class="c1"># Ensure the menu is up to date on show.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__always_refresh_on_show</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_on_show</span><span class="p">:</span>
@@ -1434,7 +1573,82 @@
         <span class="c1"># finally, reset the search filter value</span>
         <span class="n">filter_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filter_group_action</span><span class="p">(</span><span class="n">field_id</span><span class="p">,</span> <span class="n">filter_item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">filter_widget</span> <span class="o">=</span> <span class="n">filter_action</span><span class="o">.</span><span class="n">defaultWidget</span><span class="p">()</span>
-        <span class="n">filter_widget</span><span class="o">.</span><span class="n">clear_value</span><span class="p">()</span></div>
+        <span class="n">filter_widget</span><span class="o">.</span><span class="n">clear_value</span><span class="p">()</span>
+
+    <span class="c1"># ----------------------------------------------------------------------------------------</span>
+    <span class="c1"># Private methods</span>
+
+    <span class="k">def</span> <span class="nf">__set_docked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">docked</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the docked state and show/hide the dock widget accordingly.</span>
+
+<span class="sd">        :param docked: True will set the filter menu to be docked, False will set it to be undocked.</span>
+<span class="sd">        :type docked: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__docked</span> <span class="o">=</span> <span class="n">docked</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">docked</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dock_widget_parent</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dock_widget_parent</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">docked</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">docked</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__clear_dock_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delete_widgets</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear all the items in the dock widget layout.</span>
+
+<span class="sd">        :param delete_widgets: True will delete widgets in the layout, else False will only</span>
+<span class="sd">            remove the widgets from the layout.</span>
+<span class="sd">        :type delete_widgets: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">layout</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">takeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">widget</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">delete_widgets</span><span class="p">:</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
+            <span class="k">del</span> <span class="n">item</span>
+
+    <span class="k">def</span> <span class="nf">__add_static_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add the static actions to the menu. These actions appear at the top of hte menu.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span> <span class="o">=</span> <span class="n">NoCloseOnActionTriggerShotgunMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;More Filters&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span><span class="p">:</span>
+            <span class="c1"># The menu is docked, add the static actions to the dock widget.</span>
+            <span class="n">actions_layout</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+            <span class="n">actions_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="p">)</span>
+            <span class="n">actions_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="p">)</span>
+            <span class="n">actions_layout</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>
+            <span class="n">actions_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="p">)</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">actions_layout</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Create the actions each time since they may have been deleted when the menu was cleared.</span>
+            <span class="c1"># Only add the dock action if the dock widget is available.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">:</span>
+                <span class="n">dock_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Dock Filters in Panel&quot;</span><span class="p">)</span>
+                <span class="n">dock_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dock_filters</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+            <span class="c1"># Clear all filters action</span>
+            <span class="n">clear_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Clear All Filters&quot;</span><span class="p">)</span>
+            <span class="n">clear_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">)</span>
+            <span class="c1"># More Filters menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">)</span>
+            <span class="c1"># Separate static actions from the filter actions</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span></div>
 
 
 <span class="k">class</span> <span class="nc">ShotgunFilterMenu</span><span class="p">(</span><span class="n">FilterMenu</span><span class="p">):</span>
@@ -1444,7 +1658,9 @@
 <span class="sd">    the ShotgunModel class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh_on_show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh_on_show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dock_widget</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor.</span>
 
@@ -1452,7 +1668,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFilterMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">parent</span><span class="p">,</span> <span class="n">refresh_on_show</span><span class="o">=</span><span class="n">refresh_on_show</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">bg_task_manager</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">refresh_on_show</span><span class="o">=</span><span class="n">refresh_on_show</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">dock_widget</span><span class="o">=</span><span class="n">dock_widget</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># Use the SG_DATA_ROLE to extract the data from the ShotgunModel. This class fixes the</span>
