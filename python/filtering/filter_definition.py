@@ -428,7 +428,7 @@ class FilterDefinition(object):
 
         If the `field_id` is a non-PTR filter, it will have the format:
             {model_item_data_role}.{field}
-        
+
         Currently filters do not support using Qt roles (e.g. QtCore.Qt.DisplayRole).
 
         The return value will be a tuple containing the following data:
