@@ -116,7 +116,7 @@ class TestFilterMenu(TankTestBase):
         assert isinstance(fm._filters_def, self.FilterDefinition)
         assert fm._filter_groups == {}
         assert fm._proxy_model is None
-        assert fm._more_filters_menu is None
+        assert fm.more_filters_menu is None
         assert isinstance(fm.active_filter, self.FilterItem)
         assert fm.active_filter.filter_type == self.FilterItem.FilterType.GROUP
         assert fm.active_filter.filters == []
@@ -131,7 +131,7 @@ class TestFilterMenu(TankTestBase):
 
         assert len(fm.actions()) >= 2
         assert fm.actions()[0].text() == "Clear All Filters"
-        assert isinstance(fm._more_filters_menu, QtGui.QMenu)
+        assert isinstance(fm.more_filters_menu, QtGui.QMenu)
 
     def test_build_menu_basic(self):
         """
@@ -144,7 +144,7 @@ class TestFilterMenu(TankTestBase):
 
         assert len(fm.actions()) >= 2
         assert fm.actions()[0].text() == "Clear All Filters"
-        assert isinstance(fm._more_filters_menu, QtGui.QMenu)
+        assert isinstance(fm.more_filters_menu, QtGui.QMenu)
 
         for field_id in fm._filters_def.get_fields():
             assert field_id in fm._filter_groups
@@ -182,13 +182,13 @@ class TestFilterMenu(TankTestBase):
         assert len(fm.actions()) > 0
         assert fm._filter_groups != {}
         assert fm._filters_def._definition != {}
-        assert fm._more_filters_menu is not None
+        assert fm.more_filters_menu is not None
 
         fm.clear_menu()
         assert fm.actions() == []
         assert fm._filter_groups == {}
         assert fm._filters_def._definition == {}
-        assert fm._more_filters_menu is None
+        assert fm.more_filters_menu.isEmpty()
 
     def test_action_triggered(self):
         """

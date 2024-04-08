@@ -419,16 +419,32 @@ class FilterDefinition(object):
 
     def __process_field_id(self, field_id):
         """
-        Process the filter field id and get the PTR specific data from it.
+        Process the filter field id to retrieve key information about the filter.
 
-        If the `field_id` represents an PTR filter, it will have the format:
+        The `field_id` can represent a PTR or non-PTR filter. If it is an PTR filter,
+        it will have the format:
             {model_item_data_role}.{sg_entity_type}.{sg_field}
+        This means that deeply linked PTR filter fields are not supported currently.
 
-        :param field_id: The filter field id that may contain PTR data.
+        If the `field_id` is a non-PTR filter, it will have the format:
+            {model_item_data_role}.{field}
+
+        Currently filters do not support using Qt roles (e.g. QtCore.Qt.DisplayRole).
+
+        The return value will be a tuple containing the following data:
+            (1) The model item data role for the filter - this is used to get the data
+                from the model for the filter.
+            (2) The PTR entity type for the filter. This will be None if the filter is not
+                a PTR filter.
+            (3) The PTR field for the filter. This will be None if the filter is not a PTR filter.
+            (4) The field name for the filter. This is for non-PTR filters, and can be ignored
+                for PTR filters.
+
+        :param field_id: The filter field id to process.
         :type field_id: str
 
         :return: A tuple containing the data for this filter id.
-        :rtype: tuple<int, str, str>
+        :rtype: tuple<int, str, str, str>
         """
 
         filter_role = None
@@ -444,7 +460,6 @@ class FilterDefinition(object):
         try:
             filter_role = int(field_id[:end_of_role_index])
         except ValueError:
-            # Not a valid filter id. Must be prefixed with Qt.ItemDataRole.
             return (filter_role, sg_entity_type, sg_field, field)
 
         # Check if we have PTR data. This could be a PTR model or it could be a non-PTR model but

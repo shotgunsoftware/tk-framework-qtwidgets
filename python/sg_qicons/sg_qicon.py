@@ -164,7 +164,7 @@ class SGQIcon(QtGui.QIcon):
 
         return ":/tk-framework-qtwidgets/icons/{icon_name}_{sz}.{ext}".format(
             icon_name=name,
-            sz=cls.SIZES.get(size, cls.SIZE_20x20),
+            sz=cls.SIZES.get(size) or cls.SIZES[cls.SIZE_20x20],
             ext=ext,
         )
 
