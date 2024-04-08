@@ -36,7 +36,7 @@ class GlobalSearchWidget(ShotgunSearchWidget):
     def __init__(self, parent):
         """
         Uses the :class:`~search_completer.GlobalSearchCompleter` as the completer for searching
-        SG entities.
+        PTR entities.
 
         :param parent: Qt parent object
         :type parent: :class:`~PySide.QtGui.QWidget`

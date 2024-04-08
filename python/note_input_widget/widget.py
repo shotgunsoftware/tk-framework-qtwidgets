@@ -554,7 +554,7 @@ class NoteInputWidget(QtGui.QWidget):
         Uploads any generic file attachments to Shotgun, parenting
         them to the Note entity.
 
-        :param parent_entity:   The Note entity to attach the files to in SG.
+        :param parent_entity:   The Note entity to attach the files to in PTR.
         :param sg:              A Shotgun API handle.
         :param data:            The data dict containing an "attachments" key
                                 housing a list of file paths to attach.
@@ -572,8 +572,8 @@ class NoteInputWidget(QtGui.QWidget):
         Uploads any generic file attachments to Shotgun, parenting
         them to the Note entity.
 
-        :param file_path:       The path to the file to upload to SG.
-        :param parent_entity:   The Note entity to attach the files to in SG.
+        :param file_path:       The path to the file to upload to PTR.
+        :param parent_entity:   The Note entity to attach the files to in PTR.
         :param sg:              A Shotgun API handle.
         """
         self._bundle.log_debug(

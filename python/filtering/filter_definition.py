@@ -41,8 +41,8 @@ class FilterDefinition(object):
             these filter items will be the "role.field", where the 'field' is one of the object
             property names. The filter id for these filter items will be the "field_id.value", where
             the 'value' is the string representation of the filter value.
-        SG data:
-            A filter item is added for each of the SG field-value pairs. The field id for these filter
+        PTR data:
+            A filter item is added for each of the PTR field-value pairs. The field id for these filter
             items will be the "sg_entity_type.field", where the 'sg_entity_type' is the entity type for
             the sg data and the'field' is one of the sg data dictionary keys. The filter id for these
             filter items will be the "field_id.value", where the 'value' is the string representation
@@ -93,7 +93,7 @@ class FilterDefinition(object):
         self._ignore_fields = set()
         self._use_fully_qualified_name = True
 
-        # A default SG project to fall back to if the data itself does not specify its project.
+        # A default PTR project to fall back to if the data itself does not specify its project.
         self.__default_sg_project_id = None
 
         # This is a work around for tree models with deferred loading - filters will be built based
@@ -146,7 +146,7 @@ class FilterDefinition(object):
     def use_fully_qualified_name(self):
         """
         Get or set whether or not the fully qualified name will be displayed for filter items. This applies to
-        SG data, the entity type will be displayed with the entity field name; e.g. Task Id.
+        PTR data, the entity type will be displayed with the entity field name; e.g. Task Id.
         """
         return self._use_fully_qualified_name
 
@@ -157,7 +157,7 @@ class FilterDefinition(object):
     @property
     def default_sg_project_id(self):
         """
-        Get or set the project id. This will be used to retrive SG specific data, e.g. fields for a given
+        Get or set the project id. This will be used to retrive PTR specific data, e.g. fields for a given
         entity type.
         """
         return self.__default_sg_project_id
@@ -421,12 +421,12 @@ class FilterDefinition(object):
         """
         Process the filter field id to retrieve key information about the filter.
 
-        The `field_id` can represent a SG or non-SG filter. If it is an SG filter,
+        The `field_id` can represent a PTR or non-PTR filter. If it is an PTR filter,
         it will have the format:
             {model_item_data_role}.{sg_entity_type}.{sg_field}
-        This means that deeply linked SG filter fields are not supported currently.
+        This means that deeply linked PTR filter fields are not supported currently.
 
-        If the `field_id` is a non-SG filter, it will have the format:
+        If the `field_id` is a non-PTR filter, it will have the format:
             {model_item_data_role}.{field}
         
         Currently filters do not support using Qt roles (e.g. QtCore.Qt.DisplayRole).
@@ -434,11 +434,11 @@ class FilterDefinition(object):
         The return value will be a tuple containing the following data:
             (1) The model item data role for the filter - this is used to get the data
                 from the model for the filter.
-            (2) The SG entity type for the filter. This will be None if the filter is not
-                a SG filter.
-            (3) The SG field for the filter. This will be None if the filter is not a SG filter.
-            (4) The field name for the filter. This is for non-SG filters, and can be ignored
-                for SG filters.
+            (2) The PTR entity type for the filter. This will be None if the filter is not
+                a PTR filter.
+            (3) The PTR field for the filter. This will be None if the filter is not a PTR filter.
+            (4) The field name for the filter. This is for non-PTR filters, and can be ignored
+                for PTR filters.
 
         :param field_id: The filter field id to process.
         :type field_id: str
@@ -462,8 +462,8 @@ class FilterDefinition(object):
         except ValueError:
             return (filter_role, sg_entity_type, sg_field, field)
 
-        # Check if we have SG data. This could be a SG model or it could be a non-SG model but
-        # contains SG data.
+        # Check if we have PTR data. This could be a PTR model or it could be a non-PTR model but
+        # contains PTR data.
         field = field_id[end_of_role_index + 1 :]
 
         try:
@@ -586,12 +586,12 @@ class FilterDefinition(object):
         if not index_data:
             return
 
-        # Check if we have SG data. This could be a SG model or it could be a non-SG model but
-        # contains SG data.
+        # Check if we have PTR data. This could be a PTR model or it could be a non-PTR model but
+        # contains PTR data.
         sg_project_id, sg_entity_type = self._get_sg_project_and_entity_type(index_data)
 
         if sg_entity_type:
-            # SG data
+            # PTR data
             self.__add_filters_from_sg_data(
                 sg_entity_type, index_data, sg_project_id, index, role
             )
@@ -657,14 +657,14 @@ class FilterDefinition(object):
 
     def __add_filters_from_sg_data(self, entity_type, sg_data, project_id, index, role):
         """
-        Add filters from the SG data. Iterate through the SG dictionary data, and
+        Add filters from the PTR data. Iterate through the PTR dictionary data, and
         add a filter for each dict entry.
 
-        :param entity_type: The SG entity type for this sg_data
+        :param entity_type: The PTR entity type for this sg_data
         :type entity_type: str
-        :param sg_data: The SG data to create the filter from.
+        :param sg_data: The PTR data to create the filter from.
         :type sg_data: dict
-        :param project_id: The SG project id for this sg_data
+        :param project_id: The PTR project id for this sg_data
         :type project_id: int
         :param index: the index which the filter corresponds to.
         :type index: :class:`sgtk.platform.qt.QtCore.QModelIndex`
@@ -678,7 +678,7 @@ class FilterDefinition(object):
             filter_field_ids = None
 
         # For better performance, iterate over the smaller data set (only the accepted fields
-        # or all of the SG data).
+        # or all of the PTR data).
         if filter_field_ids and len(filter_field_ids) < len(sg_data):
             for field_id in filter_field_ids:
                 role, entity_type, sg_field, _ = self.__process_field_id(field_id)
@@ -705,9 +705,9 @@ class FilterDefinition(object):
         self, entity_type, sg_field, project_id, value, index, role
     ):
         """
-        Add filter from SG data.
+        Add filter from PTR data.
 
-        :param project_id: The SG project id for this sg_data
+        :param project_id: The PTR project id for this sg_data
         :type project_id: int
         """
 
@@ -722,7 +722,7 @@ class FilterDefinition(object):
             # Could not find the schema for entity type and field
             return
 
-        # Map the SG data type to a FilterItem type
+        # Map the PTR data type to a FilterItem type
         data_type = FilterItem.map_from_sg_data_type(sg_data_type)
         if not data_type:
             return
@@ -799,9 +799,9 @@ class FilterDefinition(object):
             return
 
         if sg_entity_type:
-            # This index has SG data dict.
+            # This index has PTR data dict.
             if sg_field not in index_data:
-                # No SG data to update filter with.
+                # No PTR data to update filter with.
                 return
 
             # Get the project id for this sg data and sanity check the entity type matches.
@@ -885,13 +885,13 @@ class FilterDefinition(object):
         for val in values_list:
 
             if isinstance(val, dict):
-                # in case we are dealing with an SG entity, the value_id should be a combination
+                # in case we are dealing with an PTR entity, the value_id should be a combination
                 # of the entity type and its id
                 # we can't use the entity name as many entities could have the same name
                 if "id" in val and sg_data:
                     assert (
                         "entity_type" in sg_data
-                    ), "Missing 'entity_type' key in SG data dictionary"
+                    ), "Missing 'entity_type' key in PTR data dictionary"
                     value_id = "{}.{}".format(val["id"], sg_data["entity_type"])
                 else:
                     value_id = val.get("name", str(val))
@@ -980,12 +980,12 @@ class FilterDefinition(object):
 
     def _get_sg_project_and_entity_type(self, sg_data):
         """
-        Return the SG entity type and fields associated with the given data, if the data represents
-        SG data.
+        Return the PTR entity type and fields associated with the given data, if the data represents
+        PTR data.
 
         :param sg_data: The dat to get the entity type from.
         :type sg_data: dict
-        :return: The SG entity type, or None if the data is not valid SG data.
+        :return: The PTR entity type, or None if the data is not valid PTR data.
         :rtype: str
         """
 
@@ -995,11 +995,11 @@ class FilterDefinition(object):
         entity_type = sg_data.get("type")
         project_id = sg_data.get("project", {}).get("id") or self.default_sg_project_id
 
-        # Sanity check that this is valid SG entity
+        # Sanity check that this is valid PTR entity
         if shotgun_globals.is_valid_entity_type(entity_type, project_id):
             return (project_id, entity_type)
 
-        # Last attempt to extract an entity type for the data - our source model may be a SG model which has an
+        # Last attempt to extract an entity type for the data - our source model may be a PTR model which has an
         # instance method to get the entity type for the model data.
         try:
             source_model = self.get_source_model()

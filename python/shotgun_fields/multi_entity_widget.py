@@ -198,7 +198,7 @@ class MultiEntityEditorWidget(BubbleEditWidget):
         ):
             if entity_type == "Project" and not self._project_search_supported:
                 # there is an issue querying Project entities via text_search
-                # with older versions of SG. for now, don't restrict the editor
+                # with older versions of PTR. for now, don't restrict the editor
                 continue
             else:
                 valid_types[entity_type] = []

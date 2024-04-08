@@ -340,13 +340,19 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
         # if needed, disconnect from the previous source model:
         prev_source_model = self.sourceModel()
         if prev_source_model:
-            prev_source_model.rowsInserted.disconnect(
-                self._on_source_model_rows_inserted
-            )
-            prev_source_model.dataChanged.disconnect(self._on_source_model_data_changed)
-            prev_source_model.modelAboutToBeReset.disconnect(
-                self._on_source_model_about_to_be_reset
-            )
+            try:
+                prev_source_model.rowsInserted.disconnect(
+                    self._on_source_model_rows_inserted
+                )
+                prev_source_model.dataChanged.disconnect(
+                    self._on_source_model_data_changed
+                )
+                prev_source_model.modelAboutToBeReset.disconnect(
+                    self._on_source_model_about_to_be_reset
+                )
+            except RuntimeError:
+                app = sgtk.platform.current_bundle()
+                app.log_debug("Error running closeEvent()")
 
         # clear out the various caches:
         self._dirty_all_accepted()

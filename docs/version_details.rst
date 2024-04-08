@@ -1,5 +1,5 @@
-ShotGrid Version Details Widget
-#############################################
+Flow Production Tracking Version Details Widget
+###############################################
 
 Introduction
 ======================================
@@ -15,7 +15,7 @@ is provided, with the ability for a user to customize what fields they see.
 
 Caching policy
 -----------------------------------
-As with the ShotGrid Activity Stream Widget, all the content in the Notes tab is cached,
+As with the Flow Production Tracking Activity Stream Widget, all the content in the Notes tab is cached,
 and the widget requests only the changes since the last update.
 
 VersionDetailsWidget

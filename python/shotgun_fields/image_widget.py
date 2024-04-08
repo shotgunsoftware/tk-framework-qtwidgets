@@ -310,7 +310,7 @@ class ImageWidget(QtGui.QLabel):
             self.setPixmap(value)
         elif os.path.exists(value):
             # a local path has been set as the value.
-            # TODO: consider when to upload to SG in non-delegate mode
+            # TODO: consider when to upload to PTR in non-delegate mode
             self._image_path = value
             self._value = value
             self.setPixmap(QtGui.QPixmap(value))

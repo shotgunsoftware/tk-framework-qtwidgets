@@ -1,12 +1,12 @@
-ShotGrid Field Widgets
-######################
+Flow Production Tracking Field Widgets
+######################################
 
 Introduction
 ============
 
 The ``shotgun_fields`` module provides access to Qt widgets that correspond
-to the field types available on ShotGrid entities. The purpose of these widgets
-is to make it easier to build apps that interact with ShotGrid in a standardized
+to the field types available on Flow Production Tracking entities. The purpose of these widgets
+is to make it easier to build apps that interact with Flow Production Tracking in a standardized
 way.
 
 .. image:: images/shotgun_fields.png
@@ -19,7 +19,7 @@ Field Widget Manager
 Access to individual field widgets is provided by the :class:`.ShotgunFieldManager`
 factory class via the ``create_widget()`` method. Additional convenience methods
 are avaialble on the class for creating delegates and labels corresponding to the
-supplied ShotGrid entity type and field.
+supplied Flow Production Tracking entity type and field.
 
 .. currentmodule:: shotgun_fields
 
@@ -57,7 +57,7 @@ Checkbox
 --------
 
 The ``CheckBoxWidget`` class serves as both editor and display for ``checkbox``
-field types in ShotGrid. When requested as a ``DISPLAY`` type from a field manager
+field types in Flow Production Tracking. When requested as a ``DISPLAY`` type from a field manager
 instance, the returned widget will simply be disabled.
 
 .. image:: images/field_checkbox.png
@@ -485,7 +485,7 @@ Example Code
 
 .. code-block:: python
     :linenos:
-    :caption: Populate a QTableWidget with the results of a ShotGrid query
+    :caption: Populate a QTableWidget with the results of a Flow Production Tracking query
     :emphasize-lines: 9-11,39-40
 
     class ExampleTableWidget(QtGui.QWidget):
@@ -507,7 +507,7 @@ Example Code
             # grab all of the fields on the entity type
             fields = sorted(self._app.shotgun.schema_field_read(entity_type).keys())
 
-            # query ShotGrid for the entities to display
+            # query Flow Production Tracking for the entities to display
             entities = self._app.shotgun.find(entity_type, entity_query, fields=fields)
 
             # set the headers for each field
@@ -583,4 +583,4 @@ TODOs & Known Issues
 - ``ElidedLabel`` causes draw lagging when used in editable widget in Grid/Form layout
 - The note input widget should be updated to use the global completer
 - The status list widget editor should also use colors for visual hint like display widget
-- ShotGrid model to auto update SG on changes still to come
+- Flow Production Tracking model to auto update PTR on changes still to come

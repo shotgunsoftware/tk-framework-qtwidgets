@@ -25,7 +25,7 @@ class FilterItemWidget(QtGui.QWidget):
     """
 
     # Signal emitted when the filter widget's checkbox state changed.
-    state_changed = QtCore.Signal(int)
+    state_changed = QtCore.Signal(QtCore.Qt.CheckState)
     # Signal emitted when the filter widget's value changed.
     value_changed = QtCore.Signal(object)
 
@@ -178,7 +178,13 @@ class ChoicesFilterItemWidget(FilterItemWidget):
 
         # Left-aligned checkbox
         self.checkbox = QtGui.QCheckBox()
-        self.checkbox.stateChanged.connect(self.state_changed)
+
+        def __on_state_changed(state):
+            if isinstance(state, int):
+                state = QtCore.Qt.CheckState(state)
+            self.state_changed.emit(state)
+
+        self.checkbox.stateChanged.connect(__on_state_changed)
         layout.addWidget(self.checkbox)
 
         # Left-aligned (optional) icon
@@ -306,7 +312,7 @@ class SearchFilterItemWidget(FilterItemWidget):
 
         Initialize the widget UI:
           - Add a search widget according to the field type.
-          If we are dealing with an SG entity/multi-entity field, add a GlobalSearchWidget
+          If we are dealing with an PTR entity/multi-entity field, add a GlobalSearchWidget
           otherwise, add a SearchWidget.
 
         :param filter_id: The unique identifier for this widget.
@@ -334,7 +340,7 @@ class SearchFilterItemWidget(FilterItemWidget):
         short_name = filter_data.get("short_name", self.name)
         sg_data = filter_data.get("sg_data", {})
 
-        # in case we are dealing with an SG entity/multi-entity field and the widget has been initialized
+        # in case we are dealing with an PTR entity/multi-entity field and the widget has been initialized
         # using a BackgroundTaskManager, use a GlobalSearchWidget to help the user find the right entity to pick
         if (
             sg_data

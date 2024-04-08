@@ -69,7 +69,7 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         # because the editor widget currently applies its changed value to the
         # display widget, this should handle a value change from either widget.
         # if this widget is modified to wait on applying the new value until
-        # after SG has been update, this logic will need to change.
+        # after PTR has been update, this logic will need to change.
         self._display.display_widget.value_changed.connect(self.value_changed.emit)
 
     def destroy(self):
