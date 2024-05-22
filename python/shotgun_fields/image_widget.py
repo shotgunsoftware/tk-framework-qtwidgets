@@ -12,6 +12,7 @@ import os
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
+from sgtk.platform.util import is_qt_instance
 from tank_vendor import six
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -305,7 +306,8 @@ class ImageWidget(QtGui.QLabel):
             In delegate mode, this value can also be an existing ``QPixmap``
             object.
         """
-        if type(value).__name__ == "QPixmap":
+        # if isinstance(value, QtGui.QPixmap) or type(value).__name__ == "QPixmap":
+        if is_qt_instance(value, QtGui.QPixmap):
             self.setPixmap(value)
         elif os.path.exists(value):
             # a local path has been set as the value.
@@ -401,7 +403,6 @@ class ImageWidget(QtGui.QLabel):
 
         Display the image in a transient, modeless QDialog.
         """
-
         # don't continue unless there's somethign to show
         if not self._pixmap:
             return
