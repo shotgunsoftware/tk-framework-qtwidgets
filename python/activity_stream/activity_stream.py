@@ -716,16 +716,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         Clear the widget. This will remove all items the UI
         """
-        is_qt4 = QtCore.__version__.startswith("4.")
-
         self._bundle.log_debug("Clearing UI...")
-        # before we begin widget operations, turn off visibility
-        # of the whole widget in order to avoid recomputes
-        #
-        # NOTE: For some reason this causes a crash when in a PySide2
-        # environment. We'll only do it if we're in Qt4 as a result.
-        if is_qt4:
-            self.setVisible(False)
 
         # scroll to top
         self.ui.activity_stream_scroll_area.verticalScrollBar().setValue(0)
@@ -755,11 +746,6 @@ class ActivityStreamWidget(QtGui.QWidget):
 
         finally:
             # make the window visible again and trigger a redraw
-            #
-            # NOTE: For some reason this causes a crash when in a PySide2
-            # environment. We'll only do it if we're in Qt4 as a result.
-            if is_qt4:
-                self.setVisible(True)
 
             # Since we have no entity loaded, we don't need to show
             # the note widget.
