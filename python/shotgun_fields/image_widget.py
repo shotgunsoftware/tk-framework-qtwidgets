@@ -12,7 +12,6 @@ import os
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from sgtk.platform.util import is_qt_instance
 from tank_vendor import six
 from .shotgun_field_meta import ShotgunFieldMeta
 
