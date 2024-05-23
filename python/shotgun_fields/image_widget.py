@@ -306,7 +306,7 @@ class ImageWidget(QtGui.QLabel):
             In delegate mode, this value can also be an existing ``QPixmap``
             object.
         """
-        if is_qt_instance(value, QtGui.QPixmap):
+        if isinstance(value, QtGui.QPixmap):
             self.setPixmap(value)
         elif os.path.exists(value):
             # a local path has been set as the value.
