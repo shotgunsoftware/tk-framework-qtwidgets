@@ -305,6 +305,7 @@ class ImageWidget(QtGui.QLabel):
             In delegate mode, this value can also be an existing ``QPixmap``
             object.
         """
+
         if isinstance(value, QtGui.QPixmap):
             self.setPixmap(value)
         elif os.path.exists(value):
@@ -401,6 +402,7 @@ class ImageWidget(QtGui.QLabel):
 
         Display the image in a transient, modeless QDialog.
         """
+
         # don't continue unless there's somethign to show
         if not self._pixmap:
             return
