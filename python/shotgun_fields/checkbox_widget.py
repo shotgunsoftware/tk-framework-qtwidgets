@@ -66,6 +66,8 @@ class CheckBoxWidget(QtGui.QCheckBox):
 
         :param int state: Qt enum for check/unchecked
         """
+        if not isinstance(state, QtCore.Qt.CheckState):
+            state = QtCore.Qt.CheckState(state)
 
         new_value = state == QtCore.Qt.Checked
         if self._value != new_value:
