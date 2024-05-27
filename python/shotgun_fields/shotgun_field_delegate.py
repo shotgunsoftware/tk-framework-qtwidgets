@@ -505,9 +505,7 @@ class ShotgunFieldDelegate(ShotgunFieldDelegateGeneric):
             primary_item = src_index.model().item(src_index.row(), 0)
             icon = primary_item.icon()
             if icon:
-                # Construct a pixmap object using the available QPixmap class
-                # When running in PySide6, the QPixmap class will be the already patched
-                widget.set_value(QtGui.QPixmap(icon.pixmap(QtCore.QSize(256, 256))))
+                widget.set_value(icon.pixmap(QtCore.QSize(256, 256)))
             return
 
         value = src_index.data(self.field_data_role)
