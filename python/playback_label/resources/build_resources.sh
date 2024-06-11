@@ -15,7 +15,6 @@ UI_PYTHON_PATH=../ui
 
 # Helper functions to build UI files
 function build_qt {
-    echo "$1 $2 > $UI_PYTHON_PATH/$3.py"
     # compile ui to python
     $1 $2 > $UI_PYTHON_PATH/$3.py
     # replace PySide2 imports with tank.platform.qt and then added code to set
@@ -28,33 +27,25 @@ function build_qt {
 }
 
 function build_ui {
-    build_qt "$1 -g python --from-imports" "$2.ui" "$2"
+    build_qt "$1/pyside2-uic -g python --from-imports" "$2.ui" "$2"
 }
 
 function build_res {
-    build_qt "$1 -g python" "$2.qrc" "$2_rc"
+    build_qt "$1/pyside2-rcc -g python" "$2.qrc" "$2_rc"
 }
 
-while getopts u:r: flag
-do
-    case "${flag}" in
-        u) uic=${OPTARG};;
-        r) rcc=${OPTARG};;
-    esac
-done
+getopts p: flag
+if [ "$flag" = "p" ]; then
+    pypath=${OPTARG}
+fi
 
-if [ -z "$uic" ]; then
-    echo "the PySide uic compiler must be specified with the -u parameter"
+if [ -z "$pypath" ]; then
+    echo "the python path must be specified with the -p parameter"
     exit 1
 fi
 
-if [ -z "$rcc" ]; then
-    echo "the PySide rcc compiler must be specified with the -r parameter"
-    exit 1
-fi
-
-uicversion=$(${uic} --version)
-rccversion=$(${rcc} --version)
+uicversion=$(${pypath}/pyside2-uic --version)
+rccversion=$(${pypath}/pyside2-rcc --version)
 
 
 if [ -z "$uicversion" ]; then
@@ -75,4 +66,4 @@ echo "building user interfaces..."
 
 # build resources
 echo "building resources..."
-build_res $rcc resources
+build_res $pypath resources
