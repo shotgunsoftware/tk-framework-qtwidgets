@@ -188,7 +188,6 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
         field_widget.hide()
         self.ui.field_grid_layout.removeWidget(field_widget)
         field_widget.setParent(None)
-        utils.safe_delete_later(field_widget)
 
         # If there's a label, then also remove that.
         field_label = self._fields[field_name]["label"]
@@ -197,7 +196,6 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
             field_label.hide()
             self.ui.field_grid_layout.removeWidget(field_label)
             field_label.setParent(None)
-            utils.safe_delete_later(field_label)
 
         self.ui.field_grid_layout.setRowMinimumHeight(
             self._fields[field_name]["row"], 0

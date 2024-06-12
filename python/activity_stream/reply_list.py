@@ -278,7 +278,6 @@ class ReplyListWidget(QtGui.QWidget):
             self.ui.reply_layout.removeWidget(x)
             # set it's parent to None so that it is removed from the widget hierarchy
             x.setParent(None)
-            utils.safe_delete_later(x)
 
         self._general_widgets = []
         self._reply_widgets = []

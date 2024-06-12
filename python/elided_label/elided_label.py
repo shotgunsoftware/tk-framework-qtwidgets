@@ -57,8 +57,6 @@ class ElidedLabel(QtGui.QLabel):
                 width = doc.idealWidth()
             except Exception:
                 width = self.width()
-            finally:
-                utils.safe_delete_later(doc)
 
             self._ideal_width = width
 
@@ -210,8 +208,8 @@ class ElidedLabel(QtGui.QLabel):
 
             self._line_width = line_width
             return doc.toHtml()
-        finally:
-            utils.safe_delete_later(doc)
+        except Exception:
+            pass
 
     @property
     def line_width(self):

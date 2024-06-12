@@ -28,7 +28,6 @@ note_input_widget = sgtk.platform.current_bundle().import_module("note_input_wid
 shotgun_globals = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_globals"
 )
-utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
 
 
 class ActivityStreamWidget(QtGui.QWidget):
@@ -731,7 +730,6 @@ class ActivityStreamWidget(QtGui.QWidget):
                 self.ui.activity_stream_layout.removeWidget(x)
                 # set it's parent to None so that it is removed from the widget hierarchy
                 x.setParent(None)
-                utils.safe_delete_later(x)
 
             self._bundle.log_debug("Clearing python data structures")
             self._activity_stream_data_widgets = {}
@@ -740,7 +738,6 @@ class ActivityStreamWidget(QtGui.QWidget):
             for w in self._activity_stream_static_widgets:
                 self.ui.activity_stream_layout.removeWidget(w)
                 w.setParent(None)
-                utils.safe_delete_later(w)
 
             self._activity_stream_static_widgets = []
 
@@ -761,7 +758,6 @@ class ActivityStreamWidget(QtGui.QWidget):
             self._bundle.log_debug("Clearing the loading widget")
             self.ui.activity_stream_layout.removeWidget(self._loading_widget)
             self._loading_widget.setParent(None)
-            utils.safe_delete_later(self._loading_widget)
             self._loading_widget = None
             self._bundle.log_debug("...done")
 
