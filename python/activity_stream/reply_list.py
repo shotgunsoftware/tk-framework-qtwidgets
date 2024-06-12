@@ -24,8 +24,6 @@ from .widget_attachment_group import AttachmentGroupWidget
 from .widget_reply import ReplyWidget
 from .overlaywidget import SmallOverlayWidget
 
-utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
-
 
 class ReplyListWidget(QtGui.QWidget):
     """

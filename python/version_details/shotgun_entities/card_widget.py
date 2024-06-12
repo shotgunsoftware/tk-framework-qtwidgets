@@ -16,8 +16,6 @@ from .ui.card_widget import Ui_ShotgunEntityCardWidget
 
 import threading
 
-utils = sgtk.platform.import_framework("tk-framework-shotgunutils", "utils")
-
 
 class ShotgunEntityCardWidget(QtGui.QWidget):
     """
