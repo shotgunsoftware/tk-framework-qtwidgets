@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2013 Shotgun Software Inc.
+# Copyright (c) 2024 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -15,7 +15,7 @@ UI_PYTHON_PATH=../ui
 
 # Helper functions to build UI files
 function build_qt {
-    echo "$1 $2 > $UI_PYTHON_PATH/$3.py"
+    echo " > Building " $2
     # compile ui to python
     $1 $2 > $UI_PYTHON_PATH/$3.py
     # replace PySide2 imports with sgtk.platform.qt and then added code to set
@@ -35,15 +35,32 @@ function build_res {
     build_qt "$1 -g python" "$2.qrc" "$2_rc"
 }
 
-while getopts u:r: flag
+while getopts u:r:p: flag
 do
     case "${flag}" in
         u) uic=${OPTARG};;
         r) rcc=${OPTARG};;
+        p) pyenv=${OPTARG};;
     esac
 done
 
-if [ -z "$uic" ]; then
+if [ -z "${pyenv}" ] && [[ -n "${uic}" && -n "${rcc}" ]]; then
+    pyenv=""
+fi
+
+if [ -z "${pyenv}" ] && [[ -z "${uic}" && -z "${rcc}" ]]; then
+    pyenv="Applications/Shotgun.app/Contents/Resources/Python"
+fi
+
+if [ -z "${uic}" ] && [ -n "${pyenv}" ]; then
+    uic="${pyenv}/pyside2-uic"
+fi
+
+if [ -z "${rcc}" ] && [ -n "${pyenv}" ]; then
+    rcc="${pyenv}/pyside2-rcc"
+fi
+
+if [ -z "$uic" ];  then
     echo "the PySide uic compiler must be specified with the -u parameter"
     exit 1
 fi
@@ -56,7 +73,6 @@ fi
 uicversion=$(${uic} --version)
 rccversion=$(${rcc} --version)
 
-
 if [ -z "$uicversion" ]; then
     echo "the PySide uic compiler version cannot be determined"
     exit 1
@@ -67,10 +83,12 @@ if [ -z "$rccversion" ]; then
     exit 1
 fi
 
+echo "Using PySide uic compiler version: ${uicversion}"
+echo "Using PySide rcc compiler version: ${rccversion}"
+
 # build UI's:
 echo "building user interfaces..."
 build_ui $uic version_details_widget
-# add any additional .ui files you want converted here!
 
 # build resources
 echo "building resources..."

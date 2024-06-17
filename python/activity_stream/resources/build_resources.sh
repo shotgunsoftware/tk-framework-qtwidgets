@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2015 Shotgun Software Inc.
+# Copyright (c) 2024 Shotgun Software Inc.
 #
 # CONFIDENTIAL AND PROPRIETARY
 #
@@ -12,44 +12,93 @@
 
 # The path to output all built .py files to:
 UI_PYTHON_PATH=../ui
-PYTHON_BASE="/Applications/Shotgun.app/Contents/Resources/Python"
-
-# Remove any problematic profiles from pngs.
-for f in *.png; do mogrify $f; done
 
 # Helper functions to build UI files
 function build_qt {
     echo " > Building " $2
-
     # compile ui to python
     $1 $2 > $UI_PYTHON_PATH/$3.py
-
-    # replace PySide imports with tank.platform.qt and remove line containing Created by date
-    sed -i $UI_PYTHON_PATH/$3.py -e "s/from PySide import/from tank.platform.qt import/g" -e "/# Created:/d"
+    # replace PySide2 imports with sgtk.platform.qt and then added code to set
+    # global variables for each new import.
+    sed -i"" -E \
+        -e "/^from PySide2.QtWidgets(\s.*)?$/d; /^\s*$/d" \
+        -e "s/^(from PySide.\.)(\w*)(.*)$/from tank.platform.qt import \2\nfor name, cls in \2.__dict__.items():\n    if isinstance(cls, type): globals()[name] = cls\n/g" \
+        -e "s/from PySide2 import/from tank.platform.qt import/g" \
+        $UI_PYTHON_PATH/$3.py
 }
 
 function build_ui {
-    build_qt "${PYTHON_BASE}/bin/python ${PYTHON_BASE}/bin/pyside-uic --from-imports" "$1.ui" "$1"
+    build_qt "$1 -g python --from-imports" "$2.ui" "$2"
 }
 
 function build_res {
-    build_qt "${PYTHON_BASE}/bin/pyside-rcc -py3" "$1.qrc" "$1_rc"
+    build_qt "$1 -g python" "$2.qrc" "$2_rc"
 }
 
+while getopts u:r:p: flag
+do
+    case "${flag}" in
+        u) uic=${OPTARG};;
+        r) rcc=${OPTARG};;
+        p) pyenv=${OPTARG};;
+    esac
+done
+
+if [ -z "${pyenv}" ] && [[ -n "${uic}" && -n "${rcc}" ]]; then
+    pyenv=""
+fi
+
+if [ -z "${pyenv}" ] && [[ -z "${uic}" && -z "${rcc}" ]]; then
+    pyenv="Applications/Shotgun.app/Contents/Resources/Python"
+fi
+
+if [ -z "${uic}" ] && [ -n "${pyenv}" ]; then
+    uic="${pyenv}/pyside2-uic"
+fi
+
+if [ -z "${rcc}" ] && [ -n "${pyenv}" ]; then
+    rcc="${pyenv}/pyside2-rcc"
+fi
+
+if [ -z "$uic" ];  then
+    echo "the PySide uic compiler must be specified with the -u parameter"
+    exit 1
+fi
+
+if [ -z "$rcc" ]; then
+    echo "the PySide rcc compiler must be specified with the -r parameter"
+    exit 1
+fi
+
+uicversion=$(${uic} --version)
+rccversion=$(${rcc} --version)
+
+if [ -z "$uicversion" ]; then
+    echo "the PySide uic compiler version cannot be determined"
+    exit 1
+fi
+
+if [ -z "$rccversion" ]; then
+    echo "the PySide rcc compiler version cannot be determined"
+    exit 1
+fi
+
+echo "Using PySide uic compiler version: ${uicversion}"
+echo "Using PySide rcc compiler version: ${rccversion}"
 
 # build UI's:
 echo "building user interfaces..."
-build_ui activity_stream_widget
-build_ui value_update_widget
-build_ui note_widget
-build_ui new_item_widget
-build_ui reply_widget
-build_ui collapse_widget
-build_ui attachment_group_widget
-build_ui simple_new_item_widget
-build_ui reply_dialog
-build_ui reply_list_widget
+build_ui $uic activity_stream_widget
+build_ui $uic value_update_widget
+build_ui $uic note_widget
+build_ui $uic new_item_widget
+build_ui $uic reply_widget
+build_ui $uic collapse_widget
+build_ui $uic attachment_group_widget
+build_ui $uic simple_new_item_widget
+build_ui $uic reply_dialog
+build_ui $uic reply_list_widget
 
 # build resources
 echo "building resources..."
-build_res resources
+build_res $rcc resources
