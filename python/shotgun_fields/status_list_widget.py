@@ -78,7 +78,7 @@ class StatusListEditorWidget(QtGui.QComboBox):
 
         self.activated.connect(lambda i: self.value_changed.emit())
 
-        self.setSizeAdjustPolicy(self.AdjustToContents)
+        self.setSizeAdjustPolicy(QtGui.QComboBox.AdjustToContents)
 
     def _begin_edit(self):
         """
