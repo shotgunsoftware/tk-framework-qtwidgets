@@ -164,57 +164,52 @@ class Dialog(QtGui.QDialog):
             self.ui.right_arrow.setVisible(True)
             self.ui.left_arrow.setVisible(dst_index > 0)
 
-        if not hasattr(QtCore, "QAbstractAnimation"):
-            # this version of Qt (probably PyQt4) doesn't contain
-            # Q*Animation classes so just change the page:
-            self.ui.stackedWidget.setCurrentIndex(dst_index)
-        else:
-            anim_duration = 600  # milliseconds
+        anim_duration = 600  # milliseconds
 
-            if (
-                self.__page_anim_grp
-                and self.__page_anim_grp.state() == QtCore.QAbstractAnimation.Running
-            ):
-                # the previous animation hasn't finished yet so jump to the end!
-                self.__page_anim_grp.setCurrentTime(anim_duration)
+        if (
+            self.__page_anim_grp
+            and self.__page_anim_grp.state() == QtCore.QAbstractAnimation.Running
+        ):
+            # the previous animation hasn't finished yet so jump to the end!
+            self.__page_anim_grp.setCurrentTime(anim_duration)
 
-            # animate the transition from one page to the next:
-            current_page = self._pages[current_index]
-            dst_page = self._pages[dst_index]
+        # animate the transition from one page to the next:
+        current_page = self._pages[current_index]
+        dst_page = self._pages[dst_index]
 
-            # reset positions
-            dst_page.move(dst_page.x() + page_offset, dst_page.y())
-            self.ui.stackedWidget.setCurrentIndex(dst_index)
-            # still need to show the current page whilst it transitions
-            current_page.show()
-            current_page.raise_()
+        # reset positions
+        dst_page.move(dst_page.x() + page_offset, dst_page.y())
+        self.ui.stackedWidget.setCurrentIndex(dst_index)
+        # still need to show the current page whilst it transitions
+        current_page.show()
+        current_page.raise_()
 
-            # animate the current page away
-            self.__anim = QtCore.QPropertyAnimation(current_page, b"pos")
-            self.__anim.setDuration(anim_duration)
-            self.__anim.setStartValue(QtCore.QPoint(current_page.x(), current_page.y()))
-            self.__anim.setEndValue(
-                QtCore.QPoint(current_page.x() - page_offset, current_page.y())
-            )
-            self.__anim.setEasingCurve(QtCore.QEasingCurve.OutCubic)
+        # animate the current page away
+        self.__anim = QtCore.QPropertyAnimation(current_page, b"pos")
+        self.__anim.setDuration(anim_duration)
+        self.__anim.setStartValue(QtCore.QPoint(current_page.x(), current_page.y()))
+        self.__anim.setEndValue(
+            QtCore.QPoint(current_page.x() - page_offset, current_page.y())
+        )
+        self.__anim.setEasingCurve(QtCore.QEasingCurve.OutCubic)
 
-            # animate the new page in:
-            self.__anim2 = QtCore.QPropertyAnimation(dst_page, b"pos")
-            self.__anim2.setDuration(anim_duration)
-            self.__anim2.setStartValue(
-                QtCore.QPoint(dst_page.x() + page_offset, dst_page.y())
-            )
-            self.__anim2.setEndValue(QtCore.QPoint(dst_page.x(), dst_page.y()))
-            self.__anim2.setEasingCurve(QtCore.QEasingCurve.OutCubic)
+        # animate the new page in:
+        self.__anim2 = QtCore.QPropertyAnimation(dst_page, b"pos")
+        self.__anim2.setDuration(anim_duration)
+        self.__anim2.setStartValue(
+            QtCore.QPoint(dst_page.x() + page_offset, dst_page.y())
+        )
+        self.__anim2.setEndValue(QtCore.QPoint(dst_page.x(), dst_page.y()))
+        self.__anim2.setEasingCurve(QtCore.QEasingCurve.OutCubic)
 
-            # create a parallel animation group so that both pages animate at
-            # the same time:
-            self.__page_anim_grp = QtCore.QParallelAnimationGroup()
-            self.__page_anim_grp.addAnimation(self.__anim)
-            self.__page_anim_grp.addAnimation(self.__anim2)
+        # create a parallel animation group so that both pages animate at
+        # the same time:
+        self.__page_anim_grp = QtCore.QParallelAnimationGroup()
+        self.__page_anim_grp.addAnimation(self.__anim)
+        self.__page_anim_grp.addAnimation(self.__anim2)
 
-            # run the animation/transition
-            self.__page_anim_grp.start()
+        # run the animation/transition
+        self.__page_anim_grp.start()
 
     def _on_doc(self):
         """
