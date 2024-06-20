@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_fields.checkbox_widget &mdash; tk-framework-qtwidgets v2.12.0 documentation</title>
+  <title>shotgun_fields.checkbox_widget &mdash; tk-framework-qtwidgets v2.12.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.2.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -209,6 +209,12 @@
 
 <span class="sd">        :param int state: Qt enum for check/unchecked</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckState</span><span class="p">):</span>
+            <span class="c1"># Pyside6 docs says `state` is still an int.</span>
+            <span class="c1"># https://doc.qt.io/qtforpython-6.5/PySide6/QtWidgets/QCheckBox.html</span>
+            <span class="c1"># However, it seems they&#39;re migrating to use Enums everywhere.</span>
+            <span class="c1"># Let&#39;s convert use the value to create a QtCore.Qt.CheckState enum.</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckState</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
         <span class="n">new_value</span> <span class="o">=</span> <span class="n">state</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">!=</span> <span class="n">new_value</span><span class="p">:</span>

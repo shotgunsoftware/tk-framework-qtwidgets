@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.12.0 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.12.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.2.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -171,7 +171,6 @@
 <span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
     <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span>
 <span class="p">)</span>
-<span class="n">utils</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;utils&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ActivityStreamWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget">[docs]</a><span class="k">class</span> <span class="nc">ActivityStreamWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
@@ -859,16 +858,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear the widget. This will remove all items the UI</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">is_qt4</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;4.&quot;</span><span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing UI...&quot;</span><span class="p">)</span>
-        <span class="c1"># before we begin widget operations, turn off visibility</span>
-        <span class="c1"># of the whole widget in order to avoid recomputes</span>
-        <span class="c1">#</span>
-        <span class="c1"># NOTE: For some reason this causes a crash when in a PySide2</span>
-        <span class="c1"># environment. We&#39;ll only do it if we&#39;re in Qt4 as a result.</span>
-        <span class="k">if</span> <span class="n">is_qt4</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># scroll to top</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">verticalScrollBar</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -883,7 +873,6 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
                 <span class="c1"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
                 <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-                <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing python data structures&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span> <span class="o">=</span> <span class="p">{}</span>
@@ -892,17 +881,11 @@
             <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
                 <span class="n">w</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-                <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_static_widgets</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">finally</span><span class="p">:</span>
             <span class="c1"># make the window visible again and trigger a redraw</span>
-            <span class="c1">#</span>
-            <span class="c1"># NOTE: For some reason this causes a crash when in a PySide2</span>
-            <span class="c1"># environment. We&#39;ll only do it if we&#39;re in Qt4 as a result.</span>
-            <span class="k">if</span> <span class="n">is_qt4</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
             <span class="c1"># Since we have no entity loaded, we don&#39;t need to show</span>
             <span class="c1"># the note widget.</span>
@@ -918,7 +901,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Clearing the loading widget&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-            <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
 

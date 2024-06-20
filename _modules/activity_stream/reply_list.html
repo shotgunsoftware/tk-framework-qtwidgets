@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.12.0 documentation</title>
+  <title>activity_stream.reply_list &mdash; tk-framework-qtwidgets v2.12.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.2.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -166,8 +166,6 @@
 <span class="kn">from</span> <span class="nn">.widget_attachment_group</span> <span class="kn">import</span> <span class="n">AttachmentGroupWidget</span>
 <span class="kn">from</span> <span class="nn">.widget_reply</span> <span class="kn">import</span> <span class="n">ReplyWidget</span>
 <span class="kn">from</span> <span class="nn">.overlaywidget</span> <span class="kn">import</span> <span class="n">SmallOverlayWidget</span>
-
-<span class="n">utils</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;utils&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ReplyListWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ReplyListWidget">[docs]</a><span class="k">class</span> <span class="nc">ReplyListWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
@@ -421,7 +419,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">reply_layout</span><span class="o">.</span><span class="n">removeWidget</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="c1"># set it&#39;s parent to None so that it is removed from the widget hierarchy</span>
             <span class="n">x</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-            <span class="n">utils</span><span class="o">.</span><span class="n">safe_delete_later</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_general_widgets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reply_widgets</span> <span class="o">=</span> <span class="p">[]</span>

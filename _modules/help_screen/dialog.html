@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>help_screen.dialog &mdash; tk-framework-qtwidgets v2.12.0 documentation</title>
+  <title>help_screen.dialog &mdash; tk-framework-qtwidgets v2.12.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.0.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.2.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -307,57 +307,52 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">right_arrow</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">left_arrow</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">dst_index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s2">&quot;QAbstractAnimation&quot;</span><span class="p">):</span>
-            <span class="c1"># this version of Qt (probably PyQt4) doesn&#39;t contain</span>
-            <span class="c1"># Q*Animation classes so just change the page:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">dst_index</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">anim_duration</span> <span class="o">=</span> <span class="mi">600</span>  <span class="c1"># milliseconds</span>
+        <span class="n">anim_duration</span> <span class="o">=</span> <span class="mi">600</span>  <span class="c1"># milliseconds</span>
 
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span>
-                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">state</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QAbstractAnimation</span><span class="o">.</span><span class="n">Running</span>
-            <span class="p">):</span>
-                <span class="c1"># the previous animation hasn&#39;t finished yet so jump to the end!</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">setCurrentTime</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">state</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QAbstractAnimation</span><span class="o">.</span><span class="n">Running</span>
+        <span class="p">):</span>
+            <span class="c1"># the previous animation hasn&#39;t finished yet so jump to the end!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">setCurrentTime</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
 
-            <span class="c1"># animate the transition from one page to the next:</span>
-            <span class="n">current_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">current_index</span><span class="p">]</span>
-            <span class="n">dst_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">dst_index</span><span class="p">]</span>
+        <span class="c1"># animate the transition from one page to the next:</span>
+        <span class="n">current_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">current_index</span><span class="p">]</span>
+        <span class="n">dst_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">dst_index</span><span class="p">]</span>
 
-            <span class="c1"># reset positions</span>
-            <span class="n">dst_page</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="n">page_offset</span><span class="p">,</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">dst_index</span><span class="p">)</span>
-            <span class="c1"># still need to show the current page whilst it transitions</span>
-            <span class="n">current_page</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-            <span class="n">current_page</span><span class="o">.</span><span class="n">raise_</span><span class="p">()</span>
+        <span class="c1"># reset positions</span>
+        <span class="n">dst_page</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="n">page_offset</span><span class="p">,</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stackedWidget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">dst_index</span><span class="p">)</span>
+        <span class="c1"># still need to show the current page whilst it transitions</span>
+        <span class="n">current_page</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">current_page</span><span class="o">.</span><span class="n">raise_</span><span class="p">()</span>
 
-            <span class="c1"># animate the current page away</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">current_page</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;pos&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">current_page</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">current_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setEndValue</span><span class="p">(</span>
-                <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">current_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">-</span> <span class="n">page_offset</span><span class="p">,</span> <span class="n">current_page</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setEasingCurve</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">OutCubic</span><span class="p">)</span>
+        <span class="c1"># animate the current page away</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">current_page</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;pos&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">current_page</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">current_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setEndValue</span><span class="p">(</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">current_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">-</span> <span class="n">page_offset</span><span class="p">,</span> <span class="n">current_page</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="o">.</span><span class="n">setEasingCurve</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">OutCubic</span><span class="p">)</span>
 
-            <span class="c1"># animate the new page in:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">dst_page</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;pos&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span>
-                <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="n">page_offset</span><span class="p">,</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setEndValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setEasingCurve</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">OutCubic</span><span class="p">)</span>
+        <span class="c1"># animate the new page in:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QPropertyAnimation</span><span class="p">(</span><span class="n">dst_page</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;pos&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setDuration</span><span class="p">(</span><span class="n">anim_duration</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setStartValue</span><span class="p">(</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">+</span> <span class="n">page_offset</span><span class="p">,</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setEndValue</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="n">dst_page</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">dst_page</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="o">.</span><span class="n">setEasingCurve</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">OutCubic</span><span class="p">)</span>
 
-            <span class="c1"># create a parallel animation group so that both pages animate at</span>
-            <span class="c1"># the same time:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QParallelAnimationGroup</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">addAnimation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">addAnimation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="p">)</span>
+        <span class="c1"># create a parallel animation group so that both pages animate at</span>
+        <span class="c1"># the same time:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QParallelAnimationGroup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">addAnimation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__anim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">addAnimation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__anim2</span><span class="p">)</span>
 
-            <span class="c1"># run the animation/transition</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="c1"># run the animation/transition</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__page_anim_grp</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_on_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
