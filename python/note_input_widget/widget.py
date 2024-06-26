@@ -541,6 +541,7 @@ class NoteInputWidget(QtGui.QWidget):
                 "addressings_to": addressings_to,
                 "note_links": note_links,
                 "tasks": note_tasks,
+                "user": current_user,
             },
         )
 
