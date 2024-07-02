@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
-from tank_vendor import six
+from tank_vendor import sgutils
 
 # import the shotgun_model and view modules from the shotgun utils framework
 shotgun_model = sgtk.platform.import_framework(
@@ -39,7 +39,7 @@ class SearchResultDelegate(views.WidgetDelegate):
         super(SearchResultDelegate, self).__init__(view)
 
         self._pixmaps = CompleterPixmaps()
-        self._text = six.ensure_str(text)
+        self._text = sgutils.ensure_str(text)
 
         self.selection_model = view.selectionModel()
 
