@@ -162,6 +162,11 @@ class SGQIcon(QtGui.QIcon):
         :type ext: str
         """
 
+        if size == cls.SIZE_16x16:
+            size = cls.SIZE_32x32
+        elif size == cls.SIZE_20x20:
+            size = cls.SIZE_40x40
+
         return ":/tk-framework-qtwidgets/icons/{icon_name}_{sz}.{ext}".format(
             icon_name=name,
             sz=cls.SIZES.get(size) or cls.SIZES[cls.SIZE_20x20],
