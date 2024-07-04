@@ -263,7 +263,6 @@ class NoteInputWidget(QtGui.QWidget):
             self.pre_submit_callback(self)
 
         # hide hint label for better ux.
-        self.ui.hint_label.hide()
         self.__overlay.start_spin()
 
         # get all publish details from the UI
@@ -764,7 +763,6 @@ class NoteInputWidget(QtGui.QWidget):
         where a user can type in stuff
         """
         self.ui.stacked_widget.setCurrentIndex(self._EDITOR_WIDGET_INDEX)
-        self.ui.hint_label.show()
         self._adjust_ui()
         self.ui.text_entry.setFocus()
 
@@ -816,7 +814,6 @@ class NoteInputWidget(QtGui.QWidget):
 
         # make sure the screenshot button shows the camera icon
         self.ui.thumbnail.hide()
-        self.ui.hint_label.hide()
         self.ui.screenshot.setIcon(self._camera_icon)
         self.ui.screenshot.setToolTip("Take Screenshot")
 
