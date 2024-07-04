@@ -12,6 +12,7 @@ import sgtk
 from sgtk.platform.qt import QtGui
 
 from .ui import resources_rc
+import os
 
 
 class SGQIcon(QtGui.QIcon):
@@ -55,6 +56,13 @@ class SGQIcon(QtGui.QIcon):
         selected_off=None,
         selected_on=None,
     ):
+        if "GLOBAL_DEBUG" in os.environ:
+            print(f"SGQIcon")
+            print(f"   {normal_off=}")
+            print(f"   {normal_on=}")
+            print(f"   {disabled_off=}")
+            print(f"   {disabled_on=}")
+
         """
         Create a ShotGrid Qt icon object.
 
@@ -162,16 +170,25 @@ class SGQIcon(QtGui.QIcon):
         :type ext: str
         """
 
+        if "GLOBAL_DEBUG" in os.environ:
+            print(f"SGQIcon::resource_path {size=}")
         if size == cls.SIZE_16x16:
             size = cls.SIZE_32x32
+            if "GLOBAL_DEBUG" in os.environ:
+                print(f"  override {size=}")
         elif size == cls.SIZE_20x20:
             size = cls.SIZE_40x40
+            if "GLOBAL_DEBUG" in os.environ:
+                print(f"  override {size=}")
 
-        return ":/tk-framework-qtwidgets/icons/{icon_name}_{sz}.{ext}".format(
+        r = ":/tk-framework-qtwidgets/icons/{icon_name}_{sz}.{ext}".format(
             icon_name=name,
             sz=cls.SIZES.get(size) or cls.SIZES[cls.SIZE_20x20],
             ext=ext,
         )
+        if "GLOBAL_DEBUG" in os.environ:
+            print(f"  res: {r=}")
+        return r
 
     ##########################################################################################################
     # Factory class methods to create specific Toolkit icons
