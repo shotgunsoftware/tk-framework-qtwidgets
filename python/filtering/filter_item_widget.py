@@ -10,6 +10,7 @@
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
+
 try:
     from tank_vendor import sgutils
 except ImportError:

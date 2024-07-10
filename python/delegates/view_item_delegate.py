@@ -13,6 +13,7 @@ from time import time
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from tank.util import sgre as re
+
 try:
     from tank_vendor import sgutils
 except ImportError:
@@ -2134,7 +2135,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             else:
                 brushes = action.palette_brushes["active"]
 
-            for (color_group, color_role, brush) in brushes:
+            for color_group, color_role, brush in brushes:
                 style_option.palette.setBrush(color_group, color_role, brush)
 
     def _get_action_progress_bar_option(
