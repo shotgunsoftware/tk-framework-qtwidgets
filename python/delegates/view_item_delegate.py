@@ -13,7 +13,10 @@ from time import time
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from tank.util import sgre as re
-from tank_vendor import sgutils
+try:
+    from tank_vendor import sgutils
+except ImportError:
+    from tank_vendor import six as sgutils
 
 utils = sgtk.platform.current_bundle().import_module("utils")
 

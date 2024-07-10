@@ -9,7 +9,11 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import sgtk
-from tank_vendor import sgutils
+
+try:
+    from tank_vendor import sgutils
+except ImportError:
+    from tank_vendor import six as sgutils
 
 # import the shotgun_model and view modules from the shotgun utils framework
 shotgun_model = sgtk.platform.import_framework(

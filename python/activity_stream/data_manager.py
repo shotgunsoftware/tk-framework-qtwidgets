@@ -10,15 +10,19 @@
 
 from sgtk.platform.qt import QtCore, QtGui
 
-import sgtk
 import copy
-import time
-import os
-import sys
-from tank_vendor import sgutils
 import datetime
-import sqlite3
 import hashlib
+import sgtk
+import sqlite3
+import sys
+import os
+import time
+
+try:
+    from tank_vendor import sgutils
+except ImportError:
+    from tank_vendor import six as sgutils
 
 shotgun_model = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_model"
