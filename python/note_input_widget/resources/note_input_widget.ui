@@ -59,6 +59,9 @@
        </property>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>7</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
@@ -82,6 +85,43 @@
              <property name="bottomMargin">
               <number>3</number>
              </property>
+             <item>
+              <widget class="QToolButton" name="screenshot">
+               <property name="toolTip">
+                <string>Take a screenshot</string>
+               </property>
+               <property name="text">
+                <string>Attach Screenshot</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/tk_framework_qtwidgets.note_input_widget/camera_hl.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/camera_hl.png</iconset>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonIconOnly</enum>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="attach">
+               <property name="toolTip">
+                <string>Attach Files</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/tk_framework_qtwidgets.note_input_widget/paper_clip.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/paper_clip.png</iconset>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
              <item>
               <spacer name="horizontalSpacer_2">
                <property name="orientation">
@@ -107,7 +147,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>Cancel</string>
+                <string>Discard</string>
                </property>
               </widget>
              </item>
@@ -130,6 +170,9 @@
                  <width>20</width>
                  <height>20</height>
                 </size>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -167,69 +210,9 @@
             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
            </property>
            <property name="margin">
-            <number>3</number>
+            <number>0</number>
            </property>
           </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="button_layout_right">
-           <property name="spacing">
-            <number>3</number>
-           </property>
-           <property name="leftMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="QToolButton" name="attach">
-             <property name="toolTip">
-              <string>Attach Files</string>
-             </property>
-             <property name="text">
-              <string>...</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/tk_framework_qtwidgets.note_input_widget/paper_clip.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/paper_clip.png</iconset>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="screenshot">
-             <property name="toolTip">
-              <string>Take a screenshot</string>
-             </property>
-             <property name="text">
-              <string>Attach Screenshot</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/tk_framework_qtwidgets.note_input_widget/camera_hl.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/camera_hl.png</iconset>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonIconOnly</enum>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
          </item>
         </layout>
        </item>
