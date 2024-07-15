@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'C:\Users\qa\sg_envs\dev\tk\tk-framework-qtwidgets\python\note_input_widget\resources\note_input_widget.ui'
 #
-# Created: Fri Jul 12 16:12:14 2024
+# Created: Mon Jul 15 13:42:22 2024
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -40,7 +40,7 @@ class Ui_NoteInputWidget(object):
         self.text_entry.setObjectName("text_entry")
         self.verticalLayout.addWidget(self.text_entry)
         self.horizontalLayout_5 = QtGui.QHBoxLayout()
-        self.horizontalLayout_5.setSpacing(3)
+        self.horizontalLayout_5.setSpacing(7)
         self.horizontalLayout_5.setContentsMargins(-1, 3, -1, 3)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.screenshot = QtGui.QToolButton(self.note_editor_page)
@@ -60,21 +60,23 @@ class Ui_NoteInputWidget(object):
         self.horizontalLayout_5.addWidget(self.attach)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem)
-        self.close = QtGui.QPushButton(self.note_editor_page)
+        self.close = SGCancelPushButton(self.note_editor_page)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.close.sizePolicy().hasHeightForWidth())
         self.close.setSizePolicy(sizePolicy)
         self.close.setToolTip("")
+        self.close.setText("")
         self.close.setObjectName("close")
         self.horizontalLayout_5.addWidget(self.close)
-        self.submit = QtGui.QPushButton(self.note_editor_page)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Fixed)
+        self.submit = SGSubmitPushButton(self.note_editor_page)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.submit.sizePolicy().hasHeightForWidth())
         self.submit.setSizePolicy(sizePolicy)
+        self.submit.setText("")
         self.submit.setIconSize(QtCore.QSize(20, 20))
         self.submit.setFlat(False)
         self.submit.setObjectName("submit")
@@ -131,7 +133,7 @@ class Ui_NoteInputWidget(object):
         self.attachment_list.setSizePolicy(sizePolicy)
         self.attachment_list.setObjectName("attachment_list")
         self.attachments_list_layout = QtGui.QVBoxLayout(self.attachment_list)
-        self.attachments_list_layout.setSpacing(0)
+        self.attachments_list_layout.setSpacing(7)
         self.attachments_list_layout.setContentsMargins(0, 0, 0, 0)
         self.attachments_list_layout.setObjectName("attachments_list_layout")
         self.attachment_list_tree = QtGui.QTreeWidget(self.attachment_list)
@@ -144,7 +146,7 @@ class Ui_NoteInputWidget(object):
         self.attachment_list_tree.headerItem().setText(0, "1")
         self.attachments_list_layout.addWidget(self.attachment_list_tree)
         self.horizontalLayout_4 = QtGui.QHBoxLayout()
-        self.horizontalLayout_4.setSpacing(3)
+        self.horizontalLayout_4.setSpacing(7)
         self.horizontalLayout_4.setContentsMargins(-1, 3, -1, 3)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.add_button = QtGui.QToolButton(self.attachment_list)
@@ -163,10 +165,11 @@ class Ui_NoteInputWidget(object):
         self.horizontalLayout_4.addWidget(self.remove_button)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem1)
-        self.close_attachments = QtGui.QPushButton(self.attachment_list)
+        self.close_attachments = SGCancelPushButton(self.attachment_list)
+        self.close_attachments.setText("")
         self.close_attachments.setObjectName("close_attachments")
         self.horizontalLayout_4.addWidget(self.close_attachments)
-        self.add_attachments = QtGui.QPushButton(self.attachment_list)
+        self.add_attachments = SGSubmitPushButton(self.attachment_list)
         self.add_attachments.setObjectName("add_attachments")
         self.horizontalLayout_4.addWidget(self.add_attachments)
         self.attachments_list_layout.addLayout(self.horizontalLayout_4)
@@ -176,7 +179,7 @@ class Ui_NoteInputWidget(object):
         self.verticalLayout_5.addWidget(self.stacked_widget)
 
         self.retranslateUi(NoteInputWidget)
-        self.stacked_widget.setCurrentIndex(0)
+        self.stacked_widget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(NoteInputWidget)
 
     def retranslateUi(self, NoteInputWidget):
@@ -186,9 +189,7 @@ class Ui_NoteInputWidget(object):
         self.screenshot.setText(QtGui.QApplication.translate("NoteInputWidget", "Attach Screenshot", None, QtGui.QApplication.UnicodeUTF8))
         self.attach.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Attach Files", None, QtGui.QApplication.UnicodeUTF8))
         self.attach.setText(QtGui.QApplication.translate("NoteInputWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.close.setText(QtGui.QApplication.translate("NoteInputWidget", "Discard", None, QtGui.QApplication.UnicodeUTF8))
         self.submit.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Create a new note", None, QtGui.QApplication.UnicodeUTF8))
-        self.submit.setText(QtGui.QApplication.translate("NoteInputWidget", "Submit", None, QtGui.QApplication.UnicodeUTF8))
         self.new_note_placeholder.setText(QtGui.QApplication.translate("NoteInputWidget", "Click to create a new note...", None, QtGui.QApplication.UnicodeUTF8))
         self.add_button.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Add another attachment to the list. Click \"Attach\" to add the attachments to the note.", None, QtGui.QApplication.UnicodeUTF8))
         self.add_button.setAccessibleName(QtGui.QApplication.translate("NoteInputWidget", "add_button", None, QtGui.QApplication.UnicodeUTF8))
@@ -197,9 +198,9 @@ class Ui_NoteInputWidget(object):
         self.remove_button.setAccessibleName(QtGui.QApplication.translate("NoteInputWidget", "remove_button", None, QtGui.QApplication.UnicodeUTF8))
         self.remove_button.setText(QtGui.QApplication.translate("NoteInputWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.close_attachments.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Cancel adding the attachments to the note", None, QtGui.QApplication.UnicodeUTF8))
-        self.close_attachments.setText(QtGui.QApplication.translate("NoteInputWidget", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
         self.add_attachments.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Attach files to the note. Attachments will be created when the note is submitted.", None, QtGui.QApplication.UnicodeUTF8))
         self.add_attachments.setText(QtGui.QApplication.translate("NoteInputWidget", "Attach All", None, QtGui.QApplication.UnicodeUTF8))
 
+from ..sg_qwidgets import SGCancelPushButton, SGSubmitPushButton
 from ..note_editor import NoteEditor
 from . import resources_rc

@@ -38,7 +38,7 @@
    <item>
     <widget class="QStackedWidget" name="stacked_widget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="note_editor_page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -77,7 +77,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <property name="spacing">
-              <number>3</number>
+              <number>7</number>
              </property>
              <property name="topMargin">
               <number>3</number>
@@ -136,7 +136,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="close">
+              <widget class="SGCancelPushButton" name="close">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -147,14 +147,14 @@
                 <string/>
                </property>
                <property name="text">
-                <string>Discard</string>
+                <string/>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="submit">
+              <widget class="SGSubmitPushButton" name="submit">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -163,7 +163,7 @@
                 <string>Create a new note</string>
                </property>
                <property name="text">
-                <string>Submit</string>
+                <string/>
                </property>
                <property name="iconSize">
                 <size>
@@ -303,7 +303,7 @@
            </property>
            <layout class="QVBoxLayout" name="attachments_list_layout">
             <property name="spacing">
-             <number>0</number>
+             <number>7</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -344,7 +344,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <property name="spacing">
-               <number>3</number>
+               <number>7</number>
               </property>
               <property name="topMargin">
                <number>3</number>
@@ -406,17 +406,17 @@
                </spacer>
               </item>
               <item>
-               <widget class="QPushButton" name="close_attachments">
+               <widget class="SGCancelPushButton" name="close_attachments">
                 <property name="toolTip">
                  <string>Cancel adding the attachments to the note</string>
                 </property>
                 <property name="text">
-                 <string>Cancel</string>
+                 <string/>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="add_attachments">
+               <widget class="SGSubmitPushButton" name="add_attachments">
                 <property name="toolTip">
                  <string>Attach files to the note. Attachments will be created when the note is submitted.</string>
                 </property>
@@ -443,6 +443,16 @@
    <class>NoteEditor</class>
    <extends>QTextEdit</extends>
    <header>..note_editor</header>
+  </customwidget>
+  <customwidget>
+   <class>SGSubmitPushButton</class>
+   <extends>QPushButton</extends>
+   <header>..sg_qwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>SGCancelPushButton</class>
+   <extends>QPushButton</extends>
+   <header>..sg_qwidgets</header>
   </customwidget>
  </customwidgets>
  <resources>
