@@ -313,9 +313,9 @@ class SGQPushButton(QtGui.QPushButton):
     def enterEvent(self, event):
         """Override method to add hover effect when mouse enters the button."""
 
-        hover_effect = self.__get_hover_effect() 
-        self.setGraphicsEffect(hover_effect) 
-    
+        hover_effect = self.__get_hover_effect()
+        self.setGraphicsEffect(hover_effect)
+
     def leaveEvent(self, event):
         """Override method to remove hover effect when mouse leaves the button."""
 
@@ -330,6 +330,7 @@ class SGQPushButton(QtGui.QPushButton):
         hover_effect.setOffset(0, 0)
         hover_effect.setColor(QtGui.QColor(204, 204, 204, 250))
         return hover_effect
+
 
 class SGSubmitPushButton(SGQPushButton):
     """Custom class for 'Submit' buttons styled for SG."""
@@ -360,6 +361,7 @@ class SGSubmitPushButton(SGQPushButton):
         if text:
             super().setText(text)
 
+
 class SGCancelPushButton(SGQPushButton):
     """Custom class for 'Cancel' buttons styled for SG."""
 
@@ -384,11 +386,12 @@ class SGCancelPushButton(SGQPushButton):
         # Default text to "Cancel" if no text is provided
         if not self.text():
             self.setText("Cancel")
-    
+
     def setText(self, text):
         """Override method to disallow empty button text."""
         if text:
             super().setText(text)
+
 
 class SGQRadioButton(QtGui.QRadioButton):
     """
