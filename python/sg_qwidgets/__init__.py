@@ -27,6 +27,8 @@ from .sg_qwidgets import (
     SGQMenu,
     SGQProgressBar,
     SGQPushButton,
+    SGSubmitPushButton,
+    SGCancelPushButton,
     SGQRadioButton,
     SGQScrollArea,
     SGQScrollBar,

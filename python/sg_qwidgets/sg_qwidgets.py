@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Autodesk, Inc.
 
 import sgtk
-from sgtk.platform.qt import QtGui
+from sgtk.platform.qt import QtGui, QtCore
 
 sg_qicons = sgtk.platform.current_bundle().import_module("sg_qicons")
 SGQIcon = sg_qicons.SGQIcon
@@ -297,12 +297,98 @@ class SGQProgressBar(QtGui.QProgressBar):
 
 
 class SGQPushButton(QtGui.QPushButton):
-    """
-    ShotGrid wrapper class for QSGQPushButtonwidget.
+    """ShotGrid wrapper class for QSGQPushButtonwidget."""
 
-    No additional functionality for this wrapper class, other than declaring it as a subclass.
-    """
+    def __init__(self, *args, **kwargs):
+        """Initialize the button with the default style for push buttons."""
 
+        super().__init__(*args, **kwargs)
+
+        # Set default style for SGQPushButton.
+        self.setStyleSheet("")
+
+        # Set cursor to pointing hand when hovering over any SGQPushButton
+        self.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+
+    def enterEvent(self, event):
+        """Override method to add hover effect when mouse enters the button."""
+
+        hover_effect = self.__get_hover_effect() 
+        self.setGraphicsEffect(hover_effect) 
+    
+    def leaveEvent(self, event):
+        """Override method to remove hover effect when mouse leaves the button."""
+
+        self.setGraphicsEffect(None)
+
+    def __get_hover_effect(self):
+        """Get the hover effect for the button."""
+
+        # Create a glow effect for the button
+        hover_effect = QtGui.QGraphicsDropShadowEffect(self)
+        hover_effect.setBlurRadius(3)
+        hover_effect.setOffset(0, 0)
+        hover_effect.setColor(QtGui.QColor(204, 204, 204, 250))
+        return hover_effect
+
+class SGSubmitPushButton(SGQPushButton):
+    """Custom class for 'Submit' buttons styled for SG."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the button with the default style for 'Submit'."""
+
+        super().__init__(*args, **kwargs)
+
+        qss = self.styleSheet()
+        qss += """
+            SGSubmitPushButton {
+                color: rgb(255, 255, 255);
+                background-color: rgb(24, 167, 227);
+                border: none;
+                border-radius: 4px;
+                padding: 4px 12px 4px 12px;
+            }
+        """
+        self.setStyleSheet(qss)
+
+        # Default text to "Submit" if no text is provided
+        if not self.text():
+            self.setText("Submit")
+
+    def setText(self, text):
+        """Override method to disallow empty button text."""
+        if text:
+            super().setText(text)
+
+class SGCancelPushButton(SGQPushButton):
+    """Custom class for 'Cancel' buttons styled for SG."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the button with the default style for 'Cancel'."""
+
+        super().__init__(*args, **kwargs)
+
+        qss = self.styleSheet()
+        qss += """
+            SGCancelPushButton {
+                color: palette(windowText);
+                background-color: palette(window);
+                border: 1px solid rgba(204, 204, 204, 50);
+                border-radius: 4px;
+                padding: 4px 12px 4px 12px;
+            }
+
+        """
+        self.setStyleSheet(qss)
+
+        # Default text to "Cancel" if no text is provided
+        if not self.text():
+            self.setText("Cancel")
+    
+    def setText(self, text):
+        """Override method to disallow empty button text."""
+        if text:
+            super().setText(text)
 
 class SGQRadioButton(QtGui.QRadioButton):
     """
