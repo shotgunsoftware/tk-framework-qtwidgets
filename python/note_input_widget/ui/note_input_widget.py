@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\qa\sg_envs\dev\tk\tk-framework-qtwidgets\python\note_input_widget\resources\note_input_widget.ui'
+# Form implementation generated from reading ui file 'note_input_widget.ui'
 #
-# Created: Mon Jul 15 13:42:22 2024
+# Created: Thu Jul 18 16:07:06 2024
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
