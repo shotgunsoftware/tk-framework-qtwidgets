@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'note_input_widget.ui'
 #
-# Created: Thu Jul 18 16:07:06 2024
+# Created: Thu Jul 18 17:28:38 2024
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -157,6 +157,7 @@ class Ui_NoteInputWidget(object):
         self.add_button.setObjectName("add_button")
         self.horizontalLayout_4.addWidget(self.add_button)
         self.remove_button = QtGui.QToolButton(self.attachment_list)
+        self.remove_button.setToolTip("")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets.note_input_widget/minus.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.remove_button.setIcon(icon3)
@@ -191,10 +192,9 @@ class Ui_NoteInputWidget(object):
         self.attach.setText(QtGui.QApplication.translate("NoteInputWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.submit.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Create a new note", None, QtGui.QApplication.UnicodeUTF8))
         self.new_note_placeholder.setText(QtGui.QApplication.translate("NoteInputWidget", "Click to create a new note...", None, QtGui.QApplication.UnicodeUTF8))
-        self.add_button.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Add another attachment to the list. Click \"Attach\" to add the attachments to the note.", None, QtGui.QApplication.UnicodeUTF8))
+        self.add_button.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Add attachment to the list. Click \"Attach All\" to add all attachments to the note.", None, QtGui.QApplication.UnicodeUTF8))
         self.add_button.setAccessibleName(QtGui.QApplication.translate("NoteInputWidget", "add_button", None, QtGui.QApplication.UnicodeUTF8))
         self.add_button.setText(QtGui.QApplication.translate("NoteInputWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.remove_button.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Remove the selected attachment from the list.", None, QtGui.QApplication.UnicodeUTF8))
         self.remove_button.setAccessibleName(QtGui.QApplication.translate("NoteInputWidget", "remove_button", None, QtGui.QApplication.UnicodeUTF8))
         self.remove_button.setText(QtGui.QApplication.translate("NoteInputWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.close_attachments.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Cancel adding the attachments to the note", None, QtGui.QApplication.UnicodeUTF8))

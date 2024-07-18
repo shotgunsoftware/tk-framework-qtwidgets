@@ -88,6 +88,9 @@ class NoteInputWidget(QtGui.QWidget):
         self._attachments = []
         self._cleanup_after_upload = []
 
+        # initialize remove attachments button
+        self._on_attachment_selection_changed()
+
         # set up an overlay that spins when note is submitted
         self.__overlay = SmallOverlayWidget(self)
 
@@ -104,6 +107,7 @@ class NoteInputWidget(QtGui.QWidget):
         self.ui.close_attachments.clicked.connect(self._cancel_attachments)
         self.ui.add_button.clicked.connect(self._add_attachments)
         self.ui.remove_button.clicked.connect(self._remove_selected_attachments)
+        self.ui.attachment_list_tree.itemSelectionChanged.connect(self._on_attachment_selection_changed)
 
         # reset state of the UI
         self.pre_submit_callback = None
@@ -547,6 +551,17 @@ class NoteInputWidget(QtGui.QWidget):
         self.__upload_attachments(sg_note_data, sg, data)
 
         return sg_note_data
+
+    def _on_attachment_selection_changed(self):
+        """Slot triggered when the attachment list selection changes."""
+
+        selected_items = self.ui.attachment_list_tree.selectedItems()
+        has_selection = len(selected_items) > 0
+        self.ui.remove_button.setEnabled(has_selection)
+        if has_selection:
+            self.ui.remove_button.setToolTip("Remove selected attachments")
+        else:
+            self.ui.remove_button.setToolTip("Select an attachment from the list to enable this button")
 
     def __upload_attachments(self, parent_entity, sg, data):
         """
