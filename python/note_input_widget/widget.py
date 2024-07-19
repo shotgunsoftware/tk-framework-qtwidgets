@@ -107,7 +107,9 @@ class NoteInputWidget(QtGui.QWidget):
         self.ui.close_attachments.clicked.connect(self._cancel_attachments)
         self.ui.add_button.clicked.connect(self._add_attachments)
         self.ui.remove_button.clicked.connect(self._remove_selected_attachments)
-        self.ui.attachment_list_tree.itemSelectionChanged.connect(self._on_attachment_selection_changed)
+        self.ui.attachment_list_tree.itemSelectionChanged.connect(
+            self._on_attachment_selection_changed
+        )
 
         # reset state of the UI
         self.pre_submit_callback = None
@@ -561,7 +563,9 @@ class NoteInputWidget(QtGui.QWidget):
         if has_selection:
             self.ui.remove_button.setToolTip("Remove selected attachments")
         else:
-            self.ui.remove_button.setToolTip("Select an attachment from the list to enable this button")
+            self.ui.remove_button.setToolTip(
+                "Select an attachment from the list to enable this button"
+            )
 
     def __upload_attachments(self, parent_entity, sg, data):
         """
