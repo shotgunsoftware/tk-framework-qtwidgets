@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'navigation_widget.ui'
 ##
@@ -6,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from tank.platform.qt import QtCore
 for name, cls in QtCore.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
@@ -14,7 +16,9 @@ from tank.platform.qt import QtGui
 for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
 
+
 from  . import resources_rc
+
 class Ui_NavigationWidget(object):
     def setupUi(self, NavigationWidget):
         if not NavigationWidget.objectName():
@@ -25,7 +29,9 @@ class Ui_NavigationWidget(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalSpacer_2 = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
         self.horizontalLayout.addItem(self.horizontalSpacer_2)
+
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setSpacing(2)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -59,7 +65,9 @@ class Ui_NavigationWidget(object):
 "background-image: url(:/tk-multi-workfiles2/home_pressed.png);\n"
 "}\n"
 "")
+
         self.horizontalLayout_2.addWidget(self.nav_home_btn)
+
         self.nav_prev_btn = QToolButton(NavigationWidget)
         self.nav_prev_btn.setObjectName(u"nav_prev_btn")
         sizePolicy.setHeightForWidth(self.nav_prev_btn.sizePolicy().hasHeightForWidth())
@@ -87,7 +95,9 @@ class Ui_NavigationWidget(object):
 "background-image: url(:/tk-multi-workfiles2/left_arrow_pressed.png);\n"
 "}\n"
 "")
+
         self.horizontalLayout_2.addWidget(self.nav_prev_btn)
+
         self.nav_next_btn = QToolButton(NavigationWidget)
         self.nav_next_btn.setObjectName(u"nav_next_btn")
         sizePolicy.setHeightForWidth(self.nav_next_btn.sizePolicy().hasHeightForWidth())
@@ -115,15 +125,23 @@ class Ui_NavigationWidget(object):
 "background-image: url(:/tk-multi-workfiles2/right_arrow_pressed.png);\n"
 "}\n"
 "")
+
         self.horizontalLayout_2.addWidget(self.nav_next_btn)
+
         self.horizontalLayout.addLayout(self.horizontalLayout_2)
+
         self.horizontalSpacer = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
         self.horizontalLayout.addItem(self.horizontalSpacer)
+
         self.horizontalLayout.setStretch(0, 1)
         self.horizontalLayout.setStretch(2, 1)
+
         self.retranslateUi(NavigationWidget)
+
         QMetaObject.connectSlotsByName(NavigationWidget)
     # setupUi
+
     def retranslateUi(self, NavigationWidget):
         NavigationWidget.setWindowTitle(QCoreApplication.translate("NavigationWidget", u"Form", None))
 #if QT_CONFIG(accessibility)

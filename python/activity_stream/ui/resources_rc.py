@@ -2,7 +2,9 @@
 # Created by: object code
 # Created by: The Resource Compiler for Qt version 5.15.2
 # WARNING! All changes made in this file will be lost!
+
 from tank.platform.qt import QtCore
+
 qt_resource_data = b"\
 \x00\x00\x13\xd5\
 \x89\
@@ -6202,6 +6204,7 @@ fy\x002019-10-30T18\
 :46:06+00:00\x8a\xa9\xc1\x95\
 \x00\x00\x00\x00IEND\xaeB`\x82\
 "
+
 qt_resource_name = b"\
 \x00&\
 \x0e_)\x9d\
@@ -6232,6 +6235,7 @@ qt_resource_name = b"\
 \x00d\
 \x00e\x00f\x00a\x00u\x00l\x00t\x00_\x00u\x00s\x00e\x00r\x00.\x00p\x00n\x00g\
 "
+
 qt_resource_struct = b"\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x01\
 \x00\x00\x00\x00\x00\x00\x00\x00\
@@ -6248,8 +6252,11 @@ qt_resource_struct = b"\
 \x00\x00\x01\x0c\x00\x00\x00\x00\x00\x01\x00\x00\xe9V\
 \x00\x00\x01\x8f0\xbc\xb1\x8e\
 "
+
 def qInitResources():
     QtCore.qRegisterResourceData(0x03, qt_resource_struct, qt_resource_name, qt_resource_data)
+
 def qCleanupResources():
     QtCore.qUnregisterResourceData(0x03, qt_resource_struct, qt_resource_name, qt_resource_data)
+
 qInitResources()

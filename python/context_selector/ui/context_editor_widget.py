@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'context_editor_widget.ui'
 ##
@@ -6,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from tank.platform.qt import QtCore
 for name, cls in QtCore.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
@@ -14,8 +16,11 @@ from tank.platform.qt import QtGui
 for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
 
+
 from ..qtwidgets import GlobalSearchWidget
+
 from  . import resources_rc
+
 class Ui_ContextWidget(object):
     def setupUi(self, ContextWidget):
         if not ContextWidget.objectName():
@@ -35,7 +40,9 @@ class Ui_ContextWidget(object):
         self.label.setObjectName(u"label")
         self.label.setWordWrap(True)
         self.label.setOpenExternalLinks(True)
+
         self.verticalLayout_2.addWidget(self.label)
+
         self.edit_widget = QWidget(ContextWidget)
         self.edit_widget.setObjectName(u"edit_widget")
         self.verticalLayout = QVBoxLayout(self.edit_widget)
@@ -52,7 +59,9 @@ class Ui_ContextWidget(object):
         self.task_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
         self.task_label.setOpenExternalLinks(True)
         self.task_label.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+
         self.gridLayout.addWidget(self.task_label, 0, 0, 1, 1)
+
         self.task_widgets_layout = QHBoxLayout()
         self.task_widgets_layout.setSpacing(4)
         self.task_widgets_layout.setObjectName(u"task_widgets_layout")
@@ -64,7 +73,9 @@ class Ui_ContextWidget(object):
         self.task_display.setMargin(4)
         self.task_display.setOpenExternalLinks(True)
         self.task_display.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+
         self.task_widgets_layout.addWidget(self.task_display)
+
         self.task_search_layout = QHBoxLayout()
         self.task_search_layout.setSpacing(0)
         self.task_search_layout.setObjectName(u"task_search_layout")
@@ -72,7 +83,9 @@ class Ui_ContextWidget(object):
         self.task_search.setObjectName(u"task_search")
         self.task_search.setMinimumSize(QSize(0, 32))
         self.task_search.setMaximumSize(QSize(16777215, 32))
+
         self.task_search_layout.addWidget(self.task_search)
+
         self.task_menu_btn = QToolButton(self.edit_widget)
         self.task_menu_btn.setObjectName(u"task_menu_btn")
         self.task_menu_btn.setMinimumSize(QSize(32, 32))
@@ -85,10 +98,14 @@ class Ui_ContextWidget(object):
         self.task_menu_btn.setIconSize(QSize(32, 32))
         self.task_menu_btn.setCheckable(False)
         self.task_menu_btn.setPopupMode(QToolButton.InstantPopup)
+
         self.task_search_layout.addWidget(self.task_menu_btn)
+
         self.task_search_layout.setStretch(0, 100)
         self.task_search_layout.setStretch(1, 1)
+
         self.task_widgets_layout.addLayout(self.task_search_layout)
+
         self.task_search_btn = QToolButton(self.edit_widget)
         self.task_search_btn.setObjectName(u"task_search_btn")
         self.task_search_btn.setMinimumSize(QSize(32, 32))
@@ -99,17 +116,23 @@ class Ui_ContextWidget(object):
         self.task_search_btn.setIcon(icon1)
         self.task_search_btn.setIconSize(QSize(32, 32))
         self.task_search_btn.setCheckable(True)
+
         self.task_widgets_layout.addWidget(self.task_search_btn)
+
         self.task_widgets_layout.setStretch(0, 1)
         self.task_widgets_layout.setStretch(1, 100)
         self.task_widgets_layout.setStretch(2, 1)
+
         self.gridLayout.addLayout(self.task_widgets_layout, 0, 1, 1, 1)
+
         self.link_label = QLabel(self.edit_widget)
         self.link_label.setObjectName(u"link_label")
         self.link_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
         self.link_label.setOpenExternalLinks(True)
         self.link_label.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+
         self.gridLayout.addWidget(self.link_label, 1, 0, 1, 1)
+
         self.link_widgets_layout = QHBoxLayout()
         self.link_widgets_layout.setSpacing(4)
         self.link_widgets_layout.setObjectName(u"link_widgets_layout")
@@ -121,12 +144,16 @@ class Ui_ContextWidget(object):
         self.link_display.setMargin(4)
         self.link_display.setOpenExternalLinks(True)
         self.link_display.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+
         self.link_widgets_layout.addWidget(self.link_display)
+
         self.link_search = GlobalSearchWidget(self.edit_widget)
         self.link_search.setObjectName(u"link_search")
         self.link_search.setMinimumSize(QSize(0, 32))
         self.link_search.setMaximumSize(QSize(16777215, 32))
+
         self.link_widgets_layout.addWidget(self.link_search)
+
         self.link_search_btn = QToolButton(self.edit_widget)
         self.link_search_btn.setObjectName(u"link_search_btn")
         self.link_search_btn.setMinimumSize(QSize(32, 32))
@@ -135,18 +162,27 @@ class Ui_ContextWidget(object):
         self.link_search_btn.setIcon(icon1)
         self.link_search_btn.setIconSize(QSize(32, 32))
         self.link_search_btn.setCheckable(True)
+
         self.link_widgets_layout.addWidget(self.link_search_btn)
+
         self.link_widgets_layout.setStretch(0, 1)
         self.link_widgets_layout.setStretch(1, 100)
         self.link_widgets_layout.setStretch(2, 1)
+
         self.gridLayout.addLayout(self.link_widgets_layout, 1, 1, 1, 1)
+
         self.gridLayout.setColumnStretch(0, 1)
         self.gridLayout.setColumnStretch(1, 100)
+
         self.verticalLayout.addLayout(self.gridLayout)
+
         self.verticalLayout_2.addWidget(self.edit_widget)
+
         self.retranslateUi(ContextWidget)
+
         QMetaObject.connectSlotsByName(ContextWidget)
     # setupUi
+
     def retranslateUi(self, ContextWidget):
         ContextWidget.setWindowTitle(QCoreApplication.translate("ContextWidget", u"Form", None))
         self.label.setText(QCoreApplication.translate("ContextWidget", u"Task and Entity Link to apply to the selected item:", None))

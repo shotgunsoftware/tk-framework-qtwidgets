@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'card_widget.ui'
 ##
@@ -6,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from tank.platform.qt import QtCore
 for name, cls in QtCore.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
@@ -13,6 +15,7 @@ for name, cls in QtCore.__dict__.items():
 from tank.platform.qt import QtGui
 for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
+
 
 class Ui_ShotgunEntityCardWidget(object):
     def setupUi(self, ShotgunEntityCardWidget):
@@ -43,7 +46,9 @@ class Ui_ShotgunEntityCardWidget(object):
         self.box_layout.setContentsMargins(0, -1, -1, -1)
         self.left_layout = QVBoxLayout()
         self.left_layout.setObjectName(u"left_layout")
+
         self.box_layout.addLayout(self.left_layout)
+
         self.right_layout = QVBoxLayout()
         self.right_layout.setSpacing(0)
         self.right_layout.setObjectName(u"right_layout")
@@ -53,13 +58,20 @@ class Ui_ShotgunEntityCardWidget(object):
         self.field_grid_layout.setHorizontalSpacing(5)
         self.field_grid_layout.setVerticalSpacing(2)
         self.field_grid_layout.setContentsMargins(-1, 4, -1, 4)
+
         self.right_layout.addLayout(self.field_grid_layout)
+
         self.box_layout.addLayout(self.right_layout)
+
         self.horizontalLayout_2.addLayout(self.box_layout)
+
         self.horizontalLayout_3.addWidget(self.box)
+
         self.retranslateUi(ShotgunEntityCardWidget)
+
         QMetaObject.connectSlotsByName(ShotgunEntityCardWidget)
     # setupUi
+
     def retranslateUi(self, ShotgunEntityCardWidget):
         ShotgunEntityCardWidget.setWindowTitle(QCoreApplication.translate("ShotgunEntityCardWidget", u"Form", None))
     # retranslateUi

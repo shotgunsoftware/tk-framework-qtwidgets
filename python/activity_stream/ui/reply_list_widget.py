@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'reply_list_widget.ui'
 ##
@@ -6,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from tank.platform.qt import QtCore
 for name, cls in QtCore.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
@@ -14,7 +16,9 @@ from tank.platform.qt import QtGui
 for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
 
+
 from  . import resources_rc
+
 class Ui_ReplyListWidget(object):
     def setupUi(self, ReplyListWidget):
         if not ReplyListWidget.objectName():
@@ -33,10 +37,14 @@ class Ui_ReplyListWidget(object):
         self.reply_layout = QVBoxLayout(self.reply_widget)
         self.reply_layout.setObjectName(u"reply_layout")
         self.reply_scroll_area.setWidget(self.reply_widget)
+
         self.verticalLayout.addWidget(self.reply_scroll_area)
+
         self.retranslateUi(ReplyListWidget)
+
         QMetaObject.connectSlotsByName(ReplyListWidget)
     # setupUi
+
     def retranslateUi(self, ReplyListWidget):
         ReplyListWidget.setWindowTitle(QCoreApplication.translate("ReplyListWidget", u"Form", None))
     # retranslateUi

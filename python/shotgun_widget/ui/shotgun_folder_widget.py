@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'shotgun_folder_widget.ui'
 ##
@@ -6,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from sgtk.platform.qt import QtCore
 for name, cls in QtCore.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
@@ -14,7 +16,9 @@ from sgtk.platform.qt import QtGui
 for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
 
+
 from  . import resources_rc
+
 class Ui_ShotgunFolderWidget(object):
     def setupUi(self, ShotgunFolderWidget):
         if not ShotgunFolderWidget.objectName():
@@ -43,25 +47,38 @@ class Ui_ShotgunFolderWidget(object):
         self.thumbnail.setPixmap(QPixmap(u":/tk-framework-qtwidgets/shotgun_widget/rect_512x400.png"))
         self.thumbnail.setScaledContents(False)
         self.thumbnail.setAlignment(Qt.AlignCenter)
+
         self.thumbnail_layout.addWidget(self.thumbnail)
+
         self.verticalLayout_2.addLayout(self.thumbnail_layout)
+
         self.header_layout = QHBoxLayout()
         self.header_layout.setObjectName(u"header_layout")
         self.header_layout.setContentsMargins(-1, 0, -1, -1)
         self.header = QLabel(self.box)
         self.header.setObjectName(u"header")
+
         self.header_layout.addWidget(self.header)
+
         self.button = QToolButton(self.box)
         self.button.setObjectName(u"button")
+
         self.header_layout.addWidget(self.button)
+
         self.verticalLayout_2.addLayout(self.header_layout)
+
         self.body = QLabel(self.box)
         self.body.setObjectName(u"body")
+
         self.verticalLayout_2.addWidget(self.body)
+
         self.verticalLayout.addWidget(self.box)
+
         self.retranslateUi(ShotgunFolderWidget)
+
         QMetaObject.connectSlotsByName(ShotgunFolderWidget)
     # setupUi
+
     def retranslateUi(self, ShotgunFolderWidget):
         ShotgunFolderWidget.setWindowTitle(QCoreApplication.translate("ShotgunFolderWidget", u"Form", None))
         self.thumbnail.setText("")

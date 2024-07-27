@@ -2,7 +2,9 @@
 # Created by: object code
 # Created by: The Resource Compiler for Qt version 5.15.2
 # WARNING! All changes made in this file will be lost!
+
 from sgtk.platform.qt import QtCore
+
 qt_resource_data = b"\
 \x00\x00\x01\x0e\
 \x89\
@@ -6652,6 +6654,7 @@ C\x14\xea\xa3\x90\x91A\x1a\x22\x1ai\xe8tX\xa4\xc9\
 ?\xec\xcd%T\xa4[\x00\x00\x00\x00IEND\xae\
 B`\x82\
 "
+
 qt_resource_name = b"\
 \x00\x16\
 \x06\xc3\xce\xb3\
@@ -7123,6 +7126,7 @@ qt_resource_name = b"\
 \x00g\
 \x00e\x00a\x00r\x00_\x002\x000\x00x\x002\x000\x00.\x00p\x00n\x00g\
 "
+
 qt_resource_struct = b"\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x01\
 \x00\x00\x00\x00\x00\x00\x00\x00\
@@ -7313,8 +7317,11 @@ qt_resource_struct = b"\
 \x00\x00\x03x\x00\x00\x00\x00\x00\x01\x00\x00\x5c\xae\
 \x00\x00\x01\x8f0\xbc\xb2\xa7\
 "
+
 def qInitResources():
     QtCore.qRegisterResourceData(0x03, qt_resource_struct, qt_resource_name, qt_resource_data)
+
 def qCleanupResources():
     QtCore.qUnregisterResourceData(0x03, qt_resource_struct, qt_resource_name, qt_resource_data)
+
 qInitResources()

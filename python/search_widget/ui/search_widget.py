@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'search_widget.ui'
 ##
@@ -6,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from tank.platform.qt import QtCore
 for name, cls in QtCore.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
@@ -14,7 +16,9 @@ from tank.platform.qt import QtGui
 for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
 
+
 from  . import resources_rc
+
 class Ui_SearchWidget(object):
     def setupUi(self, SearchWidget):
         if not SearchWidget.objectName():
@@ -35,11 +39,16 @@ class Ui_SearchWidget(object):
 "padding-left:20px;\n"
 "padding-right:20px;\n"
 "}")
+
         self.horizontalLayout.addWidget(self.search_edit)
+
         self.horizontalLayout.setStretch(0, 1)
+
         self.retranslateUi(SearchWidget)
+
         QMetaObject.connectSlotsByName(SearchWidget)
     # setupUi
+
     def retranslateUi(self, SearchWidget):
         SearchWidget.setWindowTitle(QCoreApplication.translate("SearchWidget", u"Form", None))
     # retranslateUi

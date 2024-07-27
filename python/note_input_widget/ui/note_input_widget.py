@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'note_input_widget.ui'
 ##
@@ -6,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from tank.platform.qt import QtCore
 for name, cls in QtCore.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
@@ -14,8 +16,11 @@ from tank.platform.qt import QtGui
 for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
 
+
 from ..note_editor import NoteEditor
+
 from  . import resources_rc
+
 class Ui_NoteInputWidget(object):
     def setupUi(self, NoteInputWidget):
         if not NoteInputWidget.objectName():
@@ -43,7 +48,9 @@ class Ui_NoteInputWidget(object):
         self.text_entry = NoteEditor(self.note_editor_page)
         self.text_entry.setObjectName(u"text_entry")
         self.text_entry.setFocusPolicy(Qt.ClickFocus)
+
         self.horizontalLayout.addWidget(self.text_entry)
+
         self.thumbnail = QLabel(self.note_editor_page)
         self.thumbnail.setObjectName(u"thumbnail")
         self.thumbnail.setEnabled(True)
@@ -52,7 +59,9 @@ class Ui_NoteInputWidget(object):
         self.thumbnail.setPixmap(QPixmap(u":/tk_framework_qtwidgets/rect_512x400.png"))
         self.thumbnail.setScaledContents(True)
         self.thumbnail.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+
         self.horizontalLayout.addWidget(self.thumbnail)
+
         self.button_layout_right = QVBoxLayout()
         self.button_layout_right.setSpacing(3)
         self.button_layout_right.setObjectName(u"button_layout_right")
@@ -64,16 +73,22 @@ class Ui_NoteInputWidget(object):
         self.close.setIcon(icon)
         self.close.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.close.setAutoRaise(True)
+
         self.button_layout_right.addWidget(self.close)
+
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
         self.button_layout_right.addItem(self.verticalSpacer)
+
         self.attach = QToolButton(self.note_editor_page)
         self.attach.setObjectName(u"attach")
         icon1 = QIcon()
         icon1.addFile(u":/tk_framework_qtwidgets.note_input_widget/paper_clip.png", QSize(), QIcon.Normal, QIcon.Off)
         self.attach.setIcon(icon1)
         self.attach.setAutoRaise(True)
+
         self.button_layout_right.addWidget(self.attach)
+
         self.screenshot = QToolButton(self.note_editor_page)
         self.screenshot.setObjectName(u"screenshot")
         icon2 = QIcon()
@@ -81,7 +96,9 @@ class Ui_NoteInputWidget(object):
         self.screenshot.setIcon(icon2)
         self.screenshot.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.screenshot.setAutoRaise(True)
+
         self.button_layout_right.addWidget(self.screenshot)
+
         self.submit = QToolButton(self.note_editor_page)
         self.submit.setObjectName(u"submit")
         sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -94,12 +111,18 @@ class Ui_NoteInputWidget(object):
         self.submit.setIcon(icon3)
         self.submit.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.submit.setAutoRaise(True)
+
         self.button_layout_right.addWidget(self.submit)
+
         self.horizontalLayout.addLayout(self.button_layout_right)
+
         self.verticalLayout_2.addLayout(self.horizontalLayout)
+
         self.hint_label = QLabel(self.note_editor_page)
         self.hint_label.setObjectName(u"hint_label")
+
         self.verticalLayout_2.addWidget(self.hint_label)
+
         self.stacked_widget.addWidget(self.note_editor_page)
         self.preview_page = QWidget()
         self.preview_page.setObjectName(u"preview_page")
@@ -117,8 +140,11 @@ class Ui_NoteInputWidget(object):
         self.new_note_placeholder = QLabel(self.new_note_frame)
         self.new_note_placeholder.setObjectName(u"new_note_placeholder")
         self.new_note_placeholder.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+
         self.verticalLayout_4.addWidget(self.new_note_placeholder)
+
         self.verticalLayout_3.addWidget(self.new_note_frame)
+
         self.stacked_widget.addWidget(self.preview_page)
         self.attachments_page = QWidget()
         self.attachments_page.setObjectName(u"attachments_page")
@@ -151,7 +177,9 @@ class Ui_NoteInputWidget(object):
         self.attachment_list_tree.setItemsExpandable(False)
         self.attachment_list_tree.setHeaderHidden(True)
         self.attachment_list_tree.setExpandsOnDoubleClick(False)
+
         self.attachments_list_layout.addWidget(self.attachment_list_tree)
+
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setSpacing(3)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -161,18 +189,26 @@ class Ui_NoteInputWidget(object):
         icon4.addFile(u":/tk_framework_qtwidgets.note_input_widget/plus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.add_button.setIcon(icon4)
         self.add_button.setAutoRaise(True)
+
         self.horizontalLayout_4.addWidget(self.add_button)
+
         self.remove_button = QToolButton(self.attachment_list)
         self.remove_button.setObjectName(u"remove_button")
         icon5 = QIcon()
         icon5.addFile(u":/tk_framework_qtwidgets.note_input_widget/minus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.remove_button.setIcon(icon5)
         self.remove_button.setAutoRaise(True)
+
         self.horizontalLayout_4.addWidget(self.remove_button)
+
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
         self.horizontalLayout_4.addItem(self.horizontalSpacer)
+
         self.attachments_list_layout.addLayout(self.horizontalLayout_4)
+
         self.horizontalLayout_3.addWidget(self.attachment_list)
+
         self.attachment_buttons = QVBoxLayout()
         self.attachment_buttons.setSpacing(3)
         self.attachment_buttons.setObjectName(u"attachment_buttons")
@@ -182,9 +218,13 @@ class Ui_NoteInputWidget(object):
         self.close_attachments.setIcon(icon)
         self.close_attachments.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.close_attachments.setAutoRaise(True)
+
         self.attachment_buttons.addWidget(self.close_attachments)
+
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
         self.attachment_buttons.addItem(self.verticalSpacer_2)
+
         self.add_attachments = QToolButton(self.attachments_page)
         self.add_attachments.setObjectName(u"add_attachments")
         sizePolicy1.setHeightForWidth(self.add_attachments.sizePolicy().hasHeightForWidth())
@@ -192,15 +232,24 @@ class Ui_NoteInputWidget(object):
         self.add_attachments.setIcon(icon3)
         self.add_attachments.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.add_attachments.setAutoRaise(True)
+
         self.attachment_buttons.addWidget(self.add_attachments)
+
         self.horizontalLayout_3.addLayout(self.attachment_buttons)
+
         self.horizontalLayout_2.addLayout(self.horizontalLayout_3)
+
         self.stacked_widget.addWidget(self.attachments_page)
+
         self.verticalLayout_5.addWidget(self.stacked_widget)
+
         self.retranslateUi(NoteInputWidget)
+
         self.stacked_widget.setCurrentIndex(1)
+
         QMetaObject.connectSlotsByName(NoteInputWidget)
     # setupUi
+
     def retranslateUi(self, NoteInputWidget):
         NoteInputWidget.setWindowTitle(QCoreApplication.translate("NoteInputWidget", u"Form", None))
         self.thumbnail.setText("")

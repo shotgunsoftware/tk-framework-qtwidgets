@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 ################################################################################
 ## Form generated from reading UI file 'activity_stream_widget.ui'
 ##
@@ -6,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from tank.platform.qt import QtCore
 for name, cls in QtCore.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
@@ -14,8 +16,11 @@ from tank.platform.qt import QtGui
 for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type): globals()[name] = cls
 
+
 from ..qtwidgets import NoteInputWidget
+
 from  . import resources_rc
+
 class Ui_ActivityStreamWidget(object):
     def setupUi(self, ActivityStreamWidget):
         if not ActivityStreamWidget.objectName():
@@ -40,17 +45,26 @@ class Ui_ActivityStreamWidget(object):
         self.note_widget = NoteInputWidget(self.activity_stream_widget)
         self.note_widget.setObjectName(u"note_widget")
         self.note_widget.setMinimumSize(QSize(0, 40))
+
         self.activity_stream_layout_3.addWidget(self.note_widget)
+
         self.verticalLayout_17.addLayout(self.activity_stream_layout_3)
+
         self.activity_stream_layout = QVBoxLayout()
         self.activity_stream_layout.setObjectName(u"activity_stream_layout")
         self.activity_stream_layout.setContentsMargins(0, 12, 12, 12)
+
         self.verticalLayout_17.addLayout(self.activity_stream_layout)
+
         self.activity_stream_scroll_area.setWidget(self.activity_stream_widget)
+
         self.verticalLayout.addWidget(self.activity_stream_scroll_area)
+
         self.retranslateUi(ActivityStreamWidget)
+
         QMetaObject.connectSlotsByName(ActivityStreamWidget)
     # setupUi
+
     def retranslateUi(self, ActivityStreamWidget):
         ActivityStreamWidget.setWindowTitle(QCoreApplication.translate("ActivityStreamWidget", u"Form", None))
     # retranslateUi
