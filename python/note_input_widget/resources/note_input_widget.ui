@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
-    <height>203</height>
+    <width>848</width>
+    <height>502</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,30 +23,162 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
     <widget class="QStackedWidget" name="stacked_widget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="note_editor_page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>7</number>
+         </property>
          <item>
-          <widget class="NoteEditor" name="text_entry">
-           <property name="focusPolicy">
-            <enum>Qt::ClickFocus</enum>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="NoteEditor" name="text_entry">
+             <property name="focusPolicy">
+              <enum>Qt::ClickFocus</enum>
+             </property>
+             <property name="placeholderText">
+              <string>You can add people by referring to them by @name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <property name="spacing">
+              <number>7</number>
+             </property>
+             <property name="topMargin">
+              <number>3</number>
+             </property>
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="screenshot">
+               <property name="toolTip">
+                <string>Take a screenshot</string>
+               </property>
+               <property name="text">
+                <string>Attach Screenshot</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/tk_framework_qtwidgets.note_input_widget/camera_hl.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/camera_hl.png</iconset>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonIconOnly</enum>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="attach">
+               <property name="toolTip">
+                <string>Attach Files</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/tk_framework_qtwidgets.note_input_widget/paper_clip.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/paper_clip.png</iconset>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="SGCancelPushButton" name="close">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string/>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="SGSubmitPushButton" name="submit">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Create a new note</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QLabel" name="thumbnail">
@@ -77,122 +209,12 @@
            <property name="alignment">
             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
            </property>
+           <property name="margin">
+            <number>0</number>
+           </property>
           </widget>
          </item>
-         <item>
-          <layout class="QVBoxLayout" name="button_layout_right">
-           <property name="spacing">
-            <number>3</number>
-           </property>
-           <property name="leftMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="QToolButton" name="close">
-             <property name="toolTip">
-              <string>Cancel</string>
-             </property>
-             <property name="text">
-              <string>Attach Screenshot</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/tk_framework_qtwidgets.note_input_widget/close.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/close.png</iconset>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonIconOnly</enum>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QToolButton" name="attach">
-             <property name="toolTip">
-              <string>Attach Files</string>
-             </property>
-             <property name="text">
-              <string>...</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/tk_framework_qtwidgets.note_input_widget/paper_clip.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/paper_clip.png</iconset>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="screenshot">
-             <property name="toolTip">
-              <string>Take a screenshot</string>
-             </property>
-             <property name="text">
-              <string>Attach Screenshot</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/tk_framework_qtwidgets.note_input_widget/camera_hl.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/camera_hl.png</iconset>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonIconOnly</enum>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="submit">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Create Note</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/tk_framework_qtwidgets.note_input_widget/tick.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/tick.png</iconset>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonIconOnly</enum>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="hint_label">
-         <property name="text">
-          <string>&lt;small&gt;You can add people by referring to them by @name.&lt;/small&gt;</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -201,7 +223,16 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -236,7 +267,16 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -245,6 +285,12 @@
           <number>3</number>
          </property>
          <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
@@ -257,9 +303,18 @@
            </property>
            <layout class="QVBoxLayout" name="attachments_list_layout">
             <property name="spacing">
+             <number>7</number>
+            </property>
+            <property name="leftMargin">
              <number>0</number>
             </property>
-            <property name="margin">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
@@ -289,10 +344,19 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <property name="spacing">
+               <number>7</number>
+              </property>
+              <property name="topMargin">
+               <number>3</number>
+              </property>
+              <property name="bottomMargin">
                <number>3</number>
               </property>
               <item>
                <widget class="QToolButton" name="add_button">
+                <property name="toolTip">
+                 <string>Add attachment to the list. Click &quot;Attach All&quot; to add all attachments to the note.</string>
+                </property>
                 <property name="accessibleName">
                  <string>add_button</string>
                 </property>
@@ -310,6 +374,9 @@
               </item>
               <item>
                <widget class="QToolButton" name="remove_button">
+                <property name="toolTip">
+                 <string/>
+                </property>
                 <property name="accessibleName">
                  <string>remove_button</string>
                 </property>
@@ -338,79 +405,30 @@
                 </property>
                </spacer>
               </item>
+              <item>
+               <widget class="SGCancelPushButton" name="close_attachments">
+                <property name="toolTip">
+                 <string>Cancel adding the attachments to the note</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="SGSubmitPushButton" name="add_attachments">
+                <property name="toolTip">
+                 <string>Attach files to the note. Attachments will be created when the note is submitted.</string>
+                </property>
+                <property name="text">
+                 <string>Attach All</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
            </layout>
           </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="attachment_buttons">
-           <property name="spacing">
-            <number>3</number>
-           </property>
-           <property name="leftMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="QToolButton" name="close_attachments">
-             <property name="toolTip">
-              <string>Cancel</string>
-             </property>
-             <property name="text">
-              <string>Attach Screenshot</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/tk_framework_qtwidgets.note_input_widget/close.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/close.png</iconset>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonIconOnly</enum>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QToolButton" name="add_attachments">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Create Note</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/tk_framework_qtwidgets.note_input_widget/tick.png</normaloff>:/tk_framework_qtwidgets.note_input_widget/tick.png</iconset>
-             </property>
-             <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonIconOnly</enum>
-             </property>
-             <property name="autoRaise">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </item>
         </layout>
        </item>
@@ -425,6 +443,16 @@
    <class>NoteEditor</class>
    <extends>QTextEdit</extends>
    <header>..note_editor</header>
+  </customwidget>
+  <customwidget>
+   <class>SGSubmitPushButton</class>
+   <extends>QPushButton</extends>
+   <header>..sg_qwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>SGCancelPushButton</class>
+   <extends>QPushButton</extends>
+   <header>..sg_qwidgets</header>
   </customwidget>
  </customwidgets>
  <resources>
