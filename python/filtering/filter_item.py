@@ -12,7 +12,6 @@ import numbers
 
 import sgtk
 from sgtk.platform.qt import QtCore
-from tank_vendor import six
 from tank_vendor.shotgun_api3 import sg_timezone
 
 
@@ -385,7 +384,7 @@ class FilterItem(object):
         if isinstance(data, bool):
             return cls.FilterType.BOOL
 
-        if isinstance(data, six.string_types):
+        if isinstance(data, str):
             return cls.FilterType.STR
 
         if isinstance(data, numbers.Number):
@@ -513,7 +512,7 @@ class FilterItem(object):
         if dt is None:
             return "No Date"
 
-        if isinstance(dt, six.string_types):
+        if isinstance(dt, str):
             if dt in FilterItem.DATETIME_BUCKETS:
                 return dt
 
@@ -771,7 +770,7 @@ class FilterItem(object):
         :rtype: bool
         """
 
-        if isinstance(self.filter_value, six.string_types):
+        if isinstance(self.filter_value, str):
             value = self.get_datetime_bucket(value)
 
         if self.filter_op == self.FilterOp.EQUAL:
@@ -958,21 +957,21 @@ class FilterItem(object):
                 )
 
         elif self.filter_type == self.FilterType.STR:
-            if not isinstance(value, six.string_types):
+            if not isinstance(value, str):
                 # Just coerce it to string type.
                 value = str(value)
             # make sure to lower the string to make it case insensitive
             value = value.lower()
 
         elif self.filter_type == self.FilterType.NUMBER:
-            if isinstance(value, six.string_types):
+            if isinstance(value, str):
                 # For string values, first try to coerce to an int.
                 try:
                     value = int(value)
                 except ValueError:
                     pass
 
-            if isinstance(value, six.string_types):
+            if isinstance(value, str):
                 # Still a string value, next try to coerce to a float.
                 try:
                     value = float(value)
@@ -987,7 +986,7 @@ class FilterItem(object):
                 )
 
         elif self.filter_type == self.FilterType.DICT:
-            if not isinstance(value, (dict, six.string_types)):
+            if not isinstance(value, (dict, str)):
                 raise TypeError(
                     "Attempting to set invalid value '{value}' for '{type}' filter type".format(
                         value=value, type=self.filter_type
@@ -997,11 +996,11 @@ class FilterItem(object):
         elif self.filter_type == self.FilterType.DATETIME:
             # Allow string values that are a valid "datetime" bucket or datetime objects
             valid = False
-            if isinstance(value, six.string_types):
+            if isinstance(value, str):
                 valid = value in self.DATETIME_BUCKETS
 
             if not valid:
-                if isinstance(value, six.string_types):
+                if isinstance(value, str):
                     value = datetime.strptime(value, "%Y-%m-%d")
                     value.replace(tzinfo=sg_timezone.LocalTimezone())
 

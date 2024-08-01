@@ -13,7 +13,6 @@ import datetime
 import sgtk
 from sgtk import TankError
 from tank.util import sgre as re
-from tank_vendor import six
 from tank_vendor.shotgun_api3 import sg_timezone
 
 shotgun_globals = sgtk.platform.import_framework(
@@ -272,7 +271,7 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
 
     # Allow multiple directives
     directives = directive or []
-    if isinstance(directives, six.string_types):
+    if isinstance(directives, str):
         directives = [directives]
 
     # Get the relative field from deep links; e.g. published_file_type.PublishedFileType.sg_status_list
