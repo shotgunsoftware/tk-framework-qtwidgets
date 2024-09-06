@@ -13,7 +13,6 @@ import numbers
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor import six
 
 from .filter_item import FilterItem
 
@@ -195,7 +194,7 @@ class FilterDefinition(object):
         if not index_data:
             return index_data
 
-        if isinstance(field, six.string_types):
+        if isinstance(field, str):
             # First check if the field corresponds to a property on the index data object
             if hasattr(index_data, field):
                 return getattr(index_data, field)
@@ -602,7 +601,7 @@ class FilterDefinition(object):
 
         elif isinstance(
             index_data,
-            (bool, datetime.date, datetime.datetime, six.string_types, numbers.Number),
+            (bool, datetime.date, datetime.datetime, str, numbers.Number),
         ):
             # Primitive data
             field = None
@@ -823,7 +822,7 @@ class FilterDefinition(object):
                     bool,
                     datetime.date,
                     datetime.datetime,
-                    six.string_types,
+                    str,
                     numbers.Number,
                 ),
             ):
