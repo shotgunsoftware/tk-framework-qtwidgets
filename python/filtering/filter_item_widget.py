@@ -10,7 +10,11 @@
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor import six
+
+try:
+    from tank_vendor import sgutils
+except ImportError:
+    from tank_vendor import six as sgutils
 
 search_widget = sgtk.platform.current_bundle().import_module("search_widget")
 shotgun_search_widget = sgtk.platform.current_bundle().import_module(
@@ -110,7 +114,7 @@ class FilterItemWidget(QtGui.QWidget):
         if value is None:
             value = self.name
         # Sanitize the value as needed based on value type
-        if isinstance(value, six.string_types):
+        if isinstance(value, str):
             return value.lower()
         return value
 

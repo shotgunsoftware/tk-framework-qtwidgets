@@ -13,7 +13,6 @@ Proxy model that provides efficient hierarhcical filtering of a tree-based sourc
 """
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor import six
 
 
 class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
@@ -142,7 +141,7 @@ class HierarchicalFilteringProxyModel(QtGui.QSortFilterProxyModel):
                 return
 
             self._cache = dict(
-                [(k, v) for k, v in six.iteritems(self._cache) if v[0].isValid()]
+                [(k, v) for k, v in self._cache.items() if v[0].isValid()]
             )
 
         def clear(self):

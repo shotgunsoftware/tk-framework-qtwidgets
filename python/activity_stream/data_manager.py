@@ -10,15 +10,19 @@
 
 from sgtk.platform.qt import QtCore, QtGui
 
-import sgtk
 import copy
-import time
-import os
-import sys
-from tank_vendor import six
 import datetime
-import sqlite3
 import hashlib
+import sgtk
+import sqlite3
+import sys
+import os
+import time
+
+try:
+    from tank_vendor import sgutils
+except ImportError:
+    from tank_vendor import six as sgutils
 
 shotgun_model = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_model"
@@ -718,7 +722,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
             for event in events:
                 activity_id = event["id"]
                 payload = sgtk.util.pickle.dumps(event)
-                blob = sqlite3.Binary(six.ensure_binary(payload))
+                blob = sqlite3.Binary(sgutils.ensure_binary(payload))
 
                 # first insert event
                 if self._force_activity_stream_update:
@@ -793,7 +797,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
 
             # first pickle the note data
             payload = sgtk.util.pickle.dumps(data)
-            blob = sqlite3.Binary(six.ensure_binary(payload))
+            blob = sqlite3.Binary(sgutils.ensure_binary(payload))
 
             # first delete any existing record
             cursor.execute("DELETE FROM note where note_id = ?", (note_id,))
