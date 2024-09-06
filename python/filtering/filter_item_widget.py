@@ -199,7 +199,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
             layout.addWidget(icon_label)
 
         # Left-aligned filter value display text
-        name = sgutils.ensure_str(self._display_name)
+        name = str(self._display_name)
         self.label = QtGui.QLabel(name)
         layout.addWidget(self.label)
 
