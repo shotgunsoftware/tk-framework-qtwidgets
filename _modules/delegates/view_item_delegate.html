@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.12.2 documentation</title>
+  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.12.4 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.4.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -156,7 +156,11 @@
 <span class="kn">import</span> <span class="nn">sgtk</span>
 <span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 <span class="kn">from</span> <span class="nn">tank.util</span> <span class="kn">import</span> <span class="n">sgre</span> <span class="k">as</span> <span class="n">re</span>
-<span class="kn">from</span> <span class="nn">tank_vendor</span> <span class="kn">import</span> <span class="n">six</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">tank_vendor</span> <span class="kn">import</span> <span class="n">sgutils</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">tank_vendor</span> <span class="kn">import</span> <span class="n">six</span> <span class="k">as</span> <span class="n">sgutils</span>
 
 <span class="n">utils</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;utils&quot;</span><span class="p">)</span>
 
@@ -1006,13 +1010,13 @@
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">values_list</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">values_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">]</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
                 <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">dict</span><span class="p">)</span>
             <span class="p">):</span>
                 <span class="c1"># Special PTR string formatting data</span>
@@ -1023,9 +1027,7 @@
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">values_list</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
-                    <span class="n">value</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span>
-                <span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                     <span class="n">values_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&lt;b&gt;</span><span class="si">%s</span><span class="s2">&lt;/b&gt;:  </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">values_list</span>
 
@@ -1829,7 +1831,7 @@
 
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="s2">&quot;pixmap&quot;</span><span class="p">):</span>
                 <span class="n">pixmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_icon_to_pixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="n">pixmap</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">pixmap</span><span class="p">:</span>
@@ -2276,7 +2278,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">brushes</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">palette_brushes</span><span class="p">[</span><span class="s2">&quot;active&quot;</span><span class="p">]</span>
 
-            <span class="k">for</span> <span class="p">(</span><span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span> <span class="ow">in</span> <span class="n">brushes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span> <span class="ow">in</span> <span class="n">brushes</span><span class="p">:</span>
                 <span class="n">style_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_action_progress_bar_option</span><span class="p">(</span>
@@ -2587,7 +2589,7 @@
                 <span class="c1"># Elide the title when the option and rect are provided, and there is text overflow.</span>
                 <span class="n">_</span><span class="p">,</span> <span class="n">elided_title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_elided_text</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
                 <span class="n">elided</span> <span class="o">=</span> <span class="n">title</span> <span class="o">!=</span> <span class="n">elided_title</span>
-                <span class="n">title</span> <span class="o">=</span> <span class="n">six</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_title</span><span class="p">)</span>
+                <span class="n">title</span> <span class="o">=</span> <span class="n">sgutils</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_title</span><span class="p">)</span>
 
             <span class="n">title_html</span> <span class="o">=</span> <span class="s1">&#39;&lt;td align=&quot;left width=&quot;100%&quot;&quot;&gt;</span><span class="si">{text}</span><span class="s1">&lt;/td&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
 
@@ -2599,7 +2601,7 @@
                     <span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">subtitle</span>
                 <span class="p">)</span>
                 <span class="n">elided</span> <span class="o">=</span> <span class="n">subtitle</span> <span class="o">!=</span> <span class="n">elided_subtitle</span>
-                <span class="n">subtitle</span> <span class="o">=</span> <span class="n">six</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_subtitle</span><span class="p">)</span>
+                <span class="n">subtitle</span> <span class="o">=</span> <span class="n">sgutils</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_subtitle</span><span class="p">)</span>
 
             <span class="n">subtitle_html</span> <span class="o">=</span> <span class="s1">&#39;&lt;td align=&quot;right&quot; width=&quot;100%&quot;&gt;</span><span class="si">{text}</span><span class="s1">&lt;/td&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">text</span><span class="o">=</span><span class="n">subtitle</span>
@@ -2659,8 +2661,8 @@
                         <span class="n">option</span><span class="p">,</span> <span class="n">subtitle_width</span><span class="p">,</span> <span class="n">subtitle</span>
                     <span class="p">)</span>
                     <span class="n">elided</span> <span class="o">=</span> <span class="n">title</span> <span class="o">!=</span> <span class="n">elided_title</span> <span class="ow">or</span> <span class="n">subtitle</span> <span class="o">!=</span> <span class="n">elided_subtitle</span>
-                    <span class="n">title</span> <span class="o">=</span> <span class="n">six</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_title</span><span class="p">)</span>
-                    <span class="n">subtitle</span> <span class="o">=</span> <span class="n">six</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_subtitle</span><span class="p">)</span>
+                    <span class="n">title</span> <span class="o">=</span> <span class="n">sgutils</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_title</span><span class="p">)</span>
+                    <span class="n">subtitle</span> <span class="o">=</span> <span class="n">sgutils</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">elided_subtitle</span><span class="p">)</span>
 
             <span class="n">title_html</span> <span class="o">=</span> <span class="s1">&#39;&lt;td align=&quot;left&quot; </span><span class="si">{width}</span><span class="s1">&gt;</span><span class="si">{text}</span><span class="s1">&lt;/td&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">width</span><span class="o">=</span><span class="n">title_width_str</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">title</span>
@@ -3360,7 +3362,7 @@
             <span class="n">line</span> <span class="o">=</span> <span class="n">text_lines</span><span class="p">[</span><span class="n">line_num</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="n">line_num</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="k">continue</span>
 
             <span class="c1"># Split the line if there are any HTML line breaks in the text.</span>
@@ -3435,7 +3437,7 @@
             <span class="n">line</span> <span class="o">=</span> <span class="n">text_lines</span><span class="p">[</span><span class="n">line_num</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="n">line_num</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="k">continue</span>
 
             <span class="c1"># If an individual line has line breaks, split out those lines and process</span>
@@ -3499,7 +3501,7 @@
             <span class="n">html_lines</span> <span class="o">=</span> <span class="n">html_lines</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="c1"># Return a single string, lines are separated by HTML line break tags.</span>
-        <span class="n">html_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">six</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html_lines</span><span class="p">]</span>
+        <span class="n">html_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">sgutils</span><span class="o">.</span><span class="n">ensure_str</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">html_lines</span><span class="p">]</span>
         <span class="n">formatted_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">html_lines</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">formatted_str</span><span class="p">,</span> <span class="n">elided</span><span class="p">)</span>
 
@@ -3755,7 +3757,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">icon</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">icon</span>

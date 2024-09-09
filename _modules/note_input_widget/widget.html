@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.12.2 documentation</title>
+  <title>note_input_widget.widget &mdash; tk-framework-qtwidgets v2.12.4 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.2.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.4.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -231,6 +231,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup_after_upload</span> <span class="o">=</span> <span class="p">[]</span>
 
+        <span class="c1"># initialize remove attachments button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_attachment_selection_changed</span><span class="p">()</span>
+
         <span class="c1"># set up an overlay that spins when note is submitted</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span> <span class="o">=</span> <span class="n">SmallOverlayWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
@@ -247,6 +250,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">close_attachments</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cancel_attachments</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">add_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_attachments</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_remove_selected_attachments</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">attachment_list_tree</span><span class="o">.</span><span class="n">itemSelectionChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_attachment_selection_changed</span>
+        <span class="p">)</span>
 
         <span class="c1"># reset state of the UI</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="kc">None</span>
@@ -406,7 +412,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="c1"># hide hint label for better ux.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">hint_label</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span><span class="o">.</span><span class="n">start_spin</span><span class="p">()</span>
 
         <span class="c1"># get all publish details from the UI</span>
@@ -692,6 +697,19 @@
 
         <span class="k">return</span> <span class="n">sg_note_data</span>
 
+    <span class="k">def</span> <span class="nf">_on_attachment_selection_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Slot triggered when the attachment list selection changes.&quot;&quot;&quot;</span>
+
+        <span class="n">selected_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">attachment_list_tree</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()</span>
+        <span class="n">has_selection</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">selected_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">has_selection</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">has_selection</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Remove selected attachments&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">remove_button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span>
+                <span class="s2">&quot;Select an attachment from the list to enable this button&quot;</span>
+            <span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__upload_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_entity</span><span class="p">,</span> <span class="n">sg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uploads any generic file attachments to Shotgun, parenting</span>
@@ -907,7 +925,6 @@
 <span class="sd">        where a user can type in stuff</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">stacked_widget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EDITOR_WIDGET_INDEX</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">hint_label</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_ui</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text_entry</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span></div>
 
@@ -959,7 +976,6 @@
 
         <span class="c1"># make sure the screenshot button shows the camera icon</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">thumbnail</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">hint_label</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_camera_icon</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screenshot</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Take Screenshot&quot;</span><span class="p">)</span>
 
