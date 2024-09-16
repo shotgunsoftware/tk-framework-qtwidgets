@@ -1,206 +1,279 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'note_input_widget.ui'
-#
-# Created: Thu Jul 18 17:28:38 2024
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'note_input_widget.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-from sgtk.platform.qt import QtCore, QtGui
+from tank.platform.qt import QtCore
+for name, cls in QtCore.__dict__.items():
+    if isinstance(cls, type): globals()[name] = cls
+
+from tank.platform.qt import QtGui
+for name, cls in QtGui.__dict__.items():
+    if isinstance(cls, type): globals()[name] = cls
+
+
+from ..note_editor import NoteEditor
+from ..sg_qwidgets import SGSubmitPushButton
+from ..sg_qwidgets import SGCancelPushButton
+
+from  . import resources_rc
 
 class Ui_NoteInputWidget(object):
     def setupUi(self, NoteInputWidget):
-        NoteInputWidget.setObjectName("NoteInputWidget")
+        if not NoteInputWidget.objectName():
+            NoteInputWidget.setObjectName(u"NoteInputWidget")
         NoteInputWidget.resize(848, 502)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Maximum)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(NoteInputWidget.sizePolicy().hasHeightForWidth())
         NoteInputWidget.setSizePolicy(sizePolicy)
-        self.verticalLayout_5 = QtGui.QVBoxLayout(NoteInputWidget)
+        self.verticalLayout_5 = QVBoxLayout(NoteInputWidget)
         self.verticalLayout_5.setSpacing(0)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.stacked_widget = QtGui.QStackedWidget(NoteInputWidget)
-        self.stacked_widget.setObjectName("stacked_widget")
-        self.note_editor_page = QtGui.QWidget()
-        self.note_editor_page.setObjectName("note_editor_page")
-        self.verticalLayout_2 = QtGui.QVBoxLayout(self.note_editor_page)
+        self.stacked_widget = QStackedWidget(NoteInputWidget)
+        self.stacked_widget.setObjectName(u"stacked_widget")
+        self.note_editor_page = QWidget()
+        self.note_editor_page.setObjectName(u"note_editor_page")
+        self.verticalLayout_2 = QVBoxLayout(self.note_editor_page)
         self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setSpacing(7)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.verticalLayout = QtGui.QVBoxLayout()
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.text_entry = NoteEditor(self.note_editor_page)
-        self.text_entry.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.text_entry.setObjectName("text_entry")
+        self.text_entry.setObjectName(u"text_entry")
+        self.text_entry.setFocusPolicy(Qt.ClickFocus)
+
         self.verticalLayout.addWidget(self.text_entry)
-        self.horizontalLayout_5 = QtGui.QHBoxLayout()
+
+        self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setSpacing(7)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(-1, 3, -1, 3)
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.screenshot = QtGui.QToolButton(self.note_editor_page)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets.note_input_widget/camera_hl.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.screenshot = QToolButton(self.note_editor_page)
+        self.screenshot.setObjectName(u"screenshot")
+        icon = QIcon()
+        icon.addFile(u":/tk_framework_qtwidgets.note_input_widget/camera_hl.png", QSize(), QIcon.Normal, QIcon.Off)
         self.screenshot.setIcon(icon)
-        self.screenshot.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+        self.screenshot.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.screenshot.setAutoRaise(True)
-        self.screenshot.setObjectName("screenshot")
+
         self.horizontalLayout_5.addWidget(self.screenshot)
-        self.attach = QtGui.QToolButton(self.note_editor_page)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets.note_input_widget/paper_clip.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+
+        self.attach = QToolButton(self.note_editor_page)
+        self.attach.setObjectName(u"attach")
+        icon1 = QIcon()
+        icon1.addFile(u":/tk_framework_qtwidgets.note_input_widget/paper_clip.png", QSize(), QIcon.Normal, QIcon.Off)
         self.attach.setIcon(icon1)
         self.attach.setAutoRaise(True)
-        self.attach.setObjectName("attach")
+
         self.horizontalLayout_5.addWidget(self.attach)
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_2)
+
         self.close = SGCancelPushButton(self.note_editor_page)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.close.sizePolicy().hasHeightForWidth())
-        self.close.setSizePolicy(sizePolicy)
-        self.close.setToolTip("")
-        self.close.setText("")
-        self.close.setObjectName("close")
+        self.close.setObjectName(u"close")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.close.sizePolicy().hasHeightForWidth())
+        self.close.setSizePolicy(sizePolicy1)
+
         self.horizontalLayout_5.addWidget(self.close)
+
         self.submit = SGSubmitPushButton(self.note_editor_page)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.submit.sizePolicy().hasHeightForWidth())
-        self.submit.setSizePolicy(sizePolicy)
-        self.submit.setText("")
-        self.submit.setIconSize(QtCore.QSize(20, 20))
+        self.submit.setObjectName(u"submit")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.submit.sizePolicy().hasHeightForWidth())
+        self.submit.setSizePolicy(sizePolicy2)
+        self.submit.setIconSize(QSize(20, 20))
         self.submit.setFlat(False)
-        self.submit.setObjectName("submit")
+
         self.horizontalLayout_5.addWidget(self.submit)
+
         self.verticalLayout.addLayout(self.horizontalLayout_5)
+
         self.horizontalLayout.addLayout(self.verticalLayout)
-        self.thumbnail = QtGui.QLabel(self.note_editor_page)
+
+        self.thumbnail = QLabel(self.note_editor_page)
+        self.thumbnail.setObjectName(u"thumbnail")
         self.thumbnail.setEnabled(True)
-        self.thumbnail.setMinimumSize(QtCore.QSize(96, 75))
-        self.thumbnail.setMaximumSize(QtCore.QSize(96, 75))
-        self.thumbnail.setText("")
-        self.thumbnail.setPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets/rect_512x400.png"))
+        self.thumbnail.setMinimumSize(QSize(96, 75))
+        self.thumbnail.setMaximumSize(QSize(96, 75))
+        self.thumbnail.setPixmap(QPixmap(u":/tk_framework_qtwidgets/rect_512x400.png"))
         self.thumbnail.setScaledContents(True)
-        self.thumbnail.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.thumbnail.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
         self.thumbnail.setMargin(0)
-        self.thumbnail.setObjectName("thumbnail")
+
         self.horizontalLayout.addWidget(self.thumbnail)
+
         self.verticalLayout_2.addLayout(self.horizontalLayout)
+
         self.stacked_widget.addWidget(self.note_editor_page)
-        self.preview_page = QtGui.QWidget()
-        self.preview_page.setObjectName("preview_page")
-        self.verticalLayout_3 = QtGui.QVBoxLayout(self.preview_page)
+        self.preview_page = QWidget()
+        self.preview_page.setObjectName(u"preview_page")
+        self.verticalLayout_3 = QVBoxLayout(self.preview_page)
         self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.new_note_frame = QtGui.QFrame(self.preview_page)
-        self.new_note_frame.setStyleSheet("")
-        self.new_note_frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.new_note_frame.setFrameShadow(QtGui.QFrame.Raised)
-        self.new_note_frame.setObjectName("new_note_frame")
-        self.verticalLayout_4 = QtGui.QVBoxLayout(self.new_note_frame)
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.new_note_placeholder = QtGui.QLabel(self.new_note_frame)
-        self.new_note_placeholder.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.new_note_placeholder.setObjectName("new_note_placeholder")
+        self.new_note_frame = QFrame(self.preview_page)
+        self.new_note_frame.setObjectName(u"new_note_frame")
+        self.new_note_frame.setStyleSheet(u"")
+        self.new_note_frame.setFrameShape(QFrame.StyledPanel)
+        self.new_note_frame.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_4 = QVBoxLayout(self.new_note_frame)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.new_note_placeholder = QLabel(self.new_note_frame)
+        self.new_note_placeholder.setObjectName(u"new_note_placeholder")
+        self.new_note_placeholder.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+
         self.verticalLayout_4.addWidget(self.new_note_placeholder)
+
         self.verticalLayout_3.addWidget(self.new_note_frame)
+
         self.stacked_widget.addWidget(self.preview_page)
-        self.attachments_page = QtGui.QWidget()
-        self.attachments_page.setObjectName("attachments_page")
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.attachments_page)
+        self.attachments_page = QWidget()
+        self.attachments_page.setObjectName(u"attachments_page")
+        self.horizontalLayout_2 = QHBoxLayout(self.attachments_page)
         self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.horizontalLayout_3 = QtGui.QHBoxLayout()
+        self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setSpacing(3)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, -1, 0)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.attachment_list = QtGui.QWidget(self.attachments_page)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.attachment_list.sizePolicy().hasHeightForWidth())
-        self.attachment_list.setSizePolicy(sizePolicy)
-        self.attachment_list.setObjectName("attachment_list")
-        self.attachments_list_layout = QtGui.QVBoxLayout(self.attachment_list)
+        self.attachment_list = QWidget(self.attachments_page)
+        self.attachment_list.setObjectName(u"attachment_list")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(1)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.attachment_list.sizePolicy().hasHeightForWidth())
+        self.attachment_list.setSizePolicy(sizePolicy3)
+        self.attachments_list_layout = QVBoxLayout(self.attachment_list)
         self.attachments_list_layout.setSpacing(7)
+        self.attachments_list_layout.setObjectName(u"attachments_list_layout")
         self.attachments_list_layout.setContentsMargins(0, 0, 0, 0)
-        self.attachments_list_layout.setObjectName("attachments_list_layout")
-        self.attachment_list_tree = QtGui.QTreeWidget(self.attachment_list)
-        self.attachment_list_tree.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
+        self.attachment_list_tree = QTreeWidget(self.attachment_list)
+        __qtreewidgetitem = QTreeWidgetItem()
+        __qtreewidgetitem.setText(0, u"1");
+        self.attachment_list_tree.setHeaderItem(__qtreewidgetitem)
+        self.attachment_list_tree.setObjectName(u"attachment_list_tree")
+        self.attachment_list_tree.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.attachment_list_tree.setRootIsDecorated(False)
         self.attachment_list_tree.setItemsExpandable(False)
         self.attachment_list_tree.setHeaderHidden(True)
         self.attachment_list_tree.setExpandsOnDoubleClick(False)
-        self.attachment_list_tree.setObjectName("attachment_list_tree")
-        self.attachment_list_tree.headerItem().setText(0, "1")
+
         self.attachments_list_layout.addWidget(self.attachment_list_tree)
-        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+
+        self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setSpacing(7)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(-1, 3, -1, 3)
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.add_button = QtGui.QToolButton(self.attachment_list)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets.note_input_widget/plus.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.add_button = QToolButton(self.attachment_list)
+        self.add_button.setObjectName(u"add_button")
+        icon2 = QIcon()
+        icon2.addFile(u":/tk_framework_qtwidgets.note_input_widget/plus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.add_button.setIcon(icon2)
         self.add_button.setAutoRaise(True)
-        self.add_button.setObjectName("add_button")
+
         self.horizontalLayout_4.addWidget(self.add_button)
-        self.remove_button = QtGui.QToolButton(self.attachment_list)
-        self.remove_button.setToolTip("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/tk_framework_qtwidgets.note_input_widget/minus.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+
+        self.remove_button = QToolButton(self.attachment_list)
+        self.remove_button.setObjectName(u"remove_button")
+        icon3 = QIcon()
+        icon3.addFile(u":/tk_framework_qtwidgets.note_input_widget/minus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.remove_button.setIcon(icon3)
         self.remove_button.setAutoRaise(True)
-        self.remove_button.setObjectName("remove_button")
+
         self.horizontalLayout_4.addWidget(self.remove_button)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_4.addItem(spacerItem1)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer)
+
         self.close_attachments = SGCancelPushButton(self.attachment_list)
-        self.close_attachments.setText("")
-        self.close_attachments.setObjectName("close_attachments")
+        self.close_attachments.setObjectName(u"close_attachments")
+
         self.horizontalLayout_4.addWidget(self.close_attachments)
+
         self.add_attachments = SGSubmitPushButton(self.attachment_list)
-        self.add_attachments.setObjectName("add_attachments")
+        self.add_attachments.setObjectName(u"add_attachments")
+
         self.horizontalLayout_4.addWidget(self.add_attachments)
+
         self.attachments_list_layout.addLayout(self.horizontalLayout_4)
+
         self.horizontalLayout_3.addWidget(self.attachment_list)
+
         self.horizontalLayout_2.addLayout(self.horizontalLayout_3)
+
         self.stacked_widget.addWidget(self.attachments_page)
+
         self.verticalLayout_5.addWidget(self.stacked_widget)
 
         self.retranslateUi(NoteInputWidget)
+
         self.stacked_widget.setCurrentIndex(2)
-        QtCore.QMetaObject.connectSlotsByName(NoteInputWidget)
+
+        QMetaObject.connectSlotsByName(NoteInputWidget)
+    # setupUi
 
     def retranslateUi(self, NoteInputWidget):
-        NoteInputWidget.setWindowTitle(QtGui.QApplication.translate("NoteInputWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.text_entry.setPlaceholderText(QtGui.QApplication.translate("NoteInputWidget", "You can add people by referring to them by @name", None, QtGui.QApplication.UnicodeUTF8))
-        self.screenshot.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Take a screenshot", None, QtGui.QApplication.UnicodeUTF8))
-        self.screenshot.setText(QtGui.QApplication.translate("NoteInputWidget", "Attach Screenshot", None, QtGui.QApplication.UnicodeUTF8))
-        self.attach.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Attach Files", None, QtGui.QApplication.UnicodeUTF8))
-        self.attach.setText(QtGui.QApplication.translate("NoteInputWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.submit.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Create a new note", None, QtGui.QApplication.UnicodeUTF8))
-        self.new_note_placeholder.setText(QtGui.QApplication.translate("NoteInputWidget", "Click to create a new note...", None, QtGui.QApplication.UnicodeUTF8))
-        self.add_button.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Add attachment to the list. Click \"Attach All\" to add all attachments to the note.", None, QtGui.QApplication.UnicodeUTF8))
-        self.add_button.setAccessibleName(QtGui.QApplication.translate("NoteInputWidget", "add_button", None, QtGui.QApplication.UnicodeUTF8))
-        self.add_button.setText(QtGui.QApplication.translate("NoteInputWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.remove_button.setAccessibleName(QtGui.QApplication.translate("NoteInputWidget", "remove_button", None, QtGui.QApplication.UnicodeUTF8))
-        self.remove_button.setText(QtGui.QApplication.translate("NoteInputWidget", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.close_attachments.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Cancel adding the attachments to the note", None, QtGui.QApplication.UnicodeUTF8))
-        self.add_attachments.setToolTip(QtGui.QApplication.translate("NoteInputWidget", "Attach files to the note. Attachments will be created when the note is submitted.", None, QtGui.QApplication.UnicodeUTF8))
-        self.add_attachments.setText(QtGui.QApplication.translate("NoteInputWidget", "Attach All", None, QtGui.QApplication.UnicodeUTF8))
-
-from ..sg_qwidgets import SGCancelPushButton, SGSubmitPushButton
-from ..note_editor import NoteEditor
-from . import resources_rc
+        NoteInputWidget.setWindowTitle(QCoreApplication.translate("NoteInputWidget", u"Form", None))
+        self.text_entry.setPlaceholderText(QCoreApplication.translate("NoteInputWidget", u"You can add people by referring to them by @name", None))
+#if QT_CONFIG(tooltip)
+        self.screenshot.setToolTip(QCoreApplication.translate("NoteInputWidget", u"Take a screenshot", None))
+#endif // QT_CONFIG(tooltip)
+        self.screenshot.setText(QCoreApplication.translate("NoteInputWidget", u"Attach Screenshot", None))
+#if QT_CONFIG(tooltip)
+        self.attach.setToolTip(QCoreApplication.translate("NoteInputWidget", u"Attach Files", None))
+#endif // QT_CONFIG(tooltip)
+        self.attach.setText(QCoreApplication.translate("NoteInputWidget", u"...", None))
+#if QT_CONFIG(tooltip)
+        self.close.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.close.setText("")
+#if QT_CONFIG(tooltip)
+        self.submit.setToolTip(QCoreApplication.translate("NoteInputWidget", u"Create a new note", None))
+#endif // QT_CONFIG(tooltip)
+        self.submit.setText("")
+        self.thumbnail.setText("")
+        self.new_note_placeholder.setText(QCoreApplication.translate("NoteInputWidget", u"Click to create a new note...", None))
+#if QT_CONFIG(tooltip)
+        self.add_button.setToolTip(QCoreApplication.translate("NoteInputWidget", u"Add attachment to the list. Click \"Attach All\" to add all attachments to the note.", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        self.add_button.setAccessibleName(QCoreApplication.translate("NoteInputWidget", u"add_button", None))
+#endif // QT_CONFIG(accessibility)
+        self.add_button.setText(QCoreApplication.translate("NoteInputWidget", u"...", None))
+#if QT_CONFIG(tooltip)
+        self.remove_button.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(accessibility)
+        self.remove_button.setAccessibleName(QCoreApplication.translate("NoteInputWidget", u"remove_button", None))
+#endif // QT_CONFIG(accessibility)
+        self.remove_button.setText(QCoreApplication.translate("NoteInputWidget", u"...", None))
+#if QT_CONFIG(tooltip)
+        self.close_attachments.setToolTip(QCoreApplication.translate("NoteInputWidget", u"Cancel adding the attachments to the note", None))
+#endif // QT_CONFIG(tooltip)
+        self.close_attachments.setText("")
+#if QT_CONFIG(tooltip)
+        self.add_attachments.setToolTip(QCoreApplication.translate("NoteInputWidget", u"Attach files to the note. Attachments will be created when the note is submitted.", None))
+#endif // QT_CONFIG(tooltip)
+        self.add_attachments.setText(QCoreApplication.translate("NoteInputWidget", u"Attach All", None))
+    # retranslateUi
