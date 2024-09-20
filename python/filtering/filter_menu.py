@@ -1493,8 +1493,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             del item
 
     def __add_preset_filters(self):
+        if not self._preset_filters or len(self._preset_filters) == 0:
+            return
         # Add a section header for the preset filters
-        label_action = QtGui.QAction("Presets", self)
+        label_action = QtGui.QAction("PRESETS", self)
         label_action.setCheckable(False)
         label_action.setEnabled(False)
         self.addAction(label_action)
