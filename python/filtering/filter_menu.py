@@ -134,7 +134,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     # Signal emitted when the filters have changed by modifying the menu options/actions.
     filters_changed = QtCore.Signal()
 
-    filter_changed = QtCore.Signal(object, bool)
+    preset_filter_changed = QtCore.Signal()
     # Signal emitted when menu is about to do a complete refresh (e.g. call refresh method)
     menu_about_to_be_refreshed = QtCore.Signal()
     # Signal emitted when menu is finished a complete refreshing (e.g. exit refresh method)
@@ -162,7 +162,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         super(FilterMenu, self).__init__(parent)
 
-        self._named_filters = {}
+        self._preset_filters = {}
 
         # The filters definitions that are built based on the current model data, and which are used
         # to build the filter menu UI.
@@ -212,13 +212,14 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             )
             self.__clear_widget.setChecked(False)
             self.__clear_widget.setCheckable(False)
-            self.__clear_widget.setText("Clear All Filters")
+            self.__clear_widget.setText("Clear Filters")
             sizePolicy = QtGui.QSizePolicy(
                 QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum
             )
             self.__clear_widget.setSizePolicy(sizePolicy)
+            # TODO should it be clearing preset filters here?
             self.__clear_widget.clicked.connect(self.clear_filters)
-            # More Filtesr button for dock widget
+            # More Filters button for dock widget
             self.__more_filters_menu_button = SGQToolButton(self.dock_widget)
             self.__more_filters_menu_button.setText("More Filters")
             self.__more_filters_menu_button.setObjectName(
@@ -268,7 +269,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # based on menu selection.
         self._active_filter = FilterItem.create_group(FilterItem.FilterOp.AND)
 
-        self._active_named_filter_name = None
+        self._active_preset_filter_name = None
 
     # ----------------------------------------------------------------------------------------
     # Properties
@@ -357,12 +358,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         return self.dock_widget if self.docked else self
 
-    def set_named_filters(self, named_filters):
-        self._named_filters = named_filters
+    def set_preset_filters(self, preset_filters):
+        self._preset_filters = preset_filters
 
-    def get_active_named_filter(self):
-
-        return self._named_filters.get(self._active_named_filter_name)
+    def get_active_preset_filter(self):
+        return self._preset_filters.get(self._active_preset_filter_name)
 
     def set_visible_fields(self, fields):
         """
@@ -656,8 +656,11 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         if self.__more_filters_menu:
             self.__more_filters_menu.clear()
 
-    def clear_filters(self, filter_group_ids=None):
-        """Clear any active filtesr that are set in the menu."""
+    def clear_filters(self, filter_group_ids=None, clear_preset_filter=False):
+        """Clear any active filters that are set in the menu."""
+        if clear_preset_filter and self._active_preset_filter_name:
+            self._active_preset_filter_name = None
+            self.preset_filter_changed.emit()
 
         if not self._filter_groups:
             # No filters to clear.
@@ -666,7 +669,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # Do not trigger any signals while clearing the filters.
         restore_state = self.blockSignals(True)
         # Set our manual block signals flag since the Qt method to block does not work when
-        # we mnaully trigger signals (e.g. call setChecked on a checkbox)
+        # we manually trigger signals (e.g. call setChecked on a checkbox)
         restore_block_signals_state = self._block_signals
         self._block_signals = True
 
@@ -827,7 +830,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         self.__add_static_actions()
 
-        self.__add_named_filters()
+        self.__add_preset_filters()
 
         # Build the filter menu actions and their widgets from the filter definition.
         sorted_field_ids = self._filters_def.get_fields(sort=True)
@@ -1489,19 +1492,24 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                     widget.deleteLater()
             del item
 
-    def __add_named_filters(self):
+    def __add_preset_filters(self):
+        # Add a section header for the preset filters
+        label_action = QtGui.QAction("Presets", self)
+        label_action.setCheckable(False)
+        label_action.setEnabled(False)
+        self.addAction(label_action)
+
         action_group = QtGui.QActionGroup(self)
         action_group.setExclusive(True)
 
-        for filter_name, named_filter in self._named_filters.items():
+        for filter_name, preset_filter in self._preset_filters.items():
             action = QtGui.QAction(filter_name, self)
             action.setCheckable(True)
-            if filter_name == self._active_named_filter_name:
+            if filter_name == self._active_preset_filter_name:
                 action.setChecked(True)
 
-            # TODO: check if this is PyQt5 compatible
             action.triggered.connect(
-                lambda a=action, f=named_filter, n=filter_name: self.__named_filter_triggered(
+                lambda a=action, f=preset_filter, n=filter_name: self.__preset_filter_triggered(
                     a, f,n
                 )
             )
@@ -1510,12 +1518,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             self.addAction(action)
         self.addSeparator()
 
-    def __named_filter_triggered(self, action, named_filter, filter_name):
-        """Callback triggered when a named filter is selected."""
-        self._active_named_filter_name = filter_name if self._active_named_filter_name != filter_name else None
-        checked = action.isChecked()
-        print('checked', checked, named_filter)
-        self.filter_changed.emit(named_filter, checked)
+    def __preset_filter_triggered(self, action, preset_filter, filter_name):
+        """Callback triggered when a preset filter is selected."""
+        self._active_preset_filter_name = filter_name if self._active_preset_filter_name != filter_name else None
+        self.preset_filter_changed.emit()
 
     def __add_static_actions(self):
         """Add the static actions to the menu. These actions appear at the top of hte menu."""
@@ -1544,7 +1550,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 self.addSeparator()
             # Clear all filters action
             clear_action = self.addAction("Clear All Filters")
-            clear_action.triggered.connect(self.clear_filters)
+            clear_action.triggered.connect(
+                lambda: self.clear_filters(clear_preset_filter=True)
+            )
+
             # More Filters menu
             self.addMenu(self.__more_filters_menu)
             # Separate static actions from the filter actions
