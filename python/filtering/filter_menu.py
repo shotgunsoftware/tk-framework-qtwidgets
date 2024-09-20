@@ -133,7 +133,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
     # Signal emitted when the filters have changed by modifying the menu options/actions.
     filters_changed = QtCore.Signal()
-
+    # Signal emitted when a preset filter has been toggled on/off.
     preset_filter_changed = QtCore.Signal()
     # Signal emitted when menu is about to do a complete refresh (e.g. call refresh method)
     menu_about_to_be_refreshed = QtCore.Signal()
@@ -162,8 +162,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         super(FilterMenu, self).__init__(parent)
 
-        self._preset_filters = {}
-
         # The filters definitions that are built based on the current model data, and which are used
         # to build the filter menu UI.
         self._filters_def = FilterMenuFiltersDefinition(self)
@@ -184,6 +182,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self._filter_groups = {}
         # A mapping of field id to whether or not that group of filters is visible.
         self._field_visibility = {}
+        # A mapping of preset filter names to their filters. The filters should be stored in an SG API filter format.
+        self._preset_filters = {}
 
         # Set up the dock widget for the filters. Start in undocked state.
         if dock_widget and isinstance(dock_widget, QtGui.QScrollArea):
@@ -241,7 +241,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self._proxy_model = None
         self._source_model = None
 
-        # Flag indicating the the menu is currently being refreshed
+        # Flag indicating the menu is currently being refreshed
         self._is_refreshing = False
 
         # Flag indicating that the menu is restoring its filter state. This is used to avoid
@@ -269,6 +269,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         # based on menu selection.
         self._active_filter = FilterItem.create_group(FilterItem.FilterOp.AND)
 
+        # Set the active preset filter name to None, indicating no preset filter is active.
         self._active_preset_filter_name = None
 
     # ----------------------------------------------------------------------------------------
@@ -359,9 +360,19 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         return self.dock_widget if self.docked else self
 
     def set_preset_filters(self, preset_filters):
+        """
+        Set the preset filters that can be toggled on/off in the menu.
+        The preset filters are stored as a dictionary where the key is the preset filter name,
+        and the value is the filter data in the format the SG API accepts.
+        :param preset_filters:
+        """
         self._preset_filters = preset_filters
 
     def get_active_preset_filter(self):
+        """
+        Get the active preset filter data.
+        :return: The active filter array, or None if no preset filter is active.
+        """
         return self._preset_filters.get(self._active_preset_filter_name)
 
     def set_visible_fields(self, fields):
@@ -656,9 +667,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         if self.__more_filters_menu:
             self.__more_filters_menu.clear()
 
-    def clear_filters(self, filter_group_ids=None, clear_preset_filter=False):
+    def clear_filters(self, filter_group_ids=None, clear_active_preset_filter=False):
         """Clear any active filters that are set in the menu."""
-        if clear_preset_filter and self._active_preset_filter_name:
+        if clear_active_preset_filter and self._active_preset_filter_name:
             self._active_preset_filter_name = None
             self.preset_filter_changed.emit()
 
@@ -1493,6 +1504,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             del item
 
     def __add_preset_filters(self):
+        """
+        Adds all the preset filters to the menu as actions.
+        They are stored in an QActionGroup to ensure only one preset filter is active at a time.
+        """
         if not self._preset_filters or len(self._preset_filters) == 0:
             return
         # Add a section header for the preset filters
@@ -1553,7 +1568,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # Clear all filters action
             clear_action = self.addAction("Clear All Filters")
             clear_action.triggered.connect(
-                lambda: self.clear_filters(clear_preset_filter=True)
+                lambda: self.clear_filters(clear_active_preset_filter=True)
             )
 
             # More Filters menu
