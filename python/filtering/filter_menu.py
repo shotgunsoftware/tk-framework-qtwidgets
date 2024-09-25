@@ -366,6 +366,17 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         and the value is the filter data in the format the SG API accepts.
         :param preset_filters:
         """
+        if self._active_preset_filter_name and self._active_preset_filter_name not in preset_filters:
+            self.__clear_active_preset_filter()
+        elif self._active_preset_filter_name:
+            # It is possible that the new preset_filters contains the same preset filter name as the
+            # active preset filter but the filters have changed.
+            # In this case, we should emit that the preset filter has changed.
+            active_preset_filter = self.get_active_preset_filter()
+            new_filter_matching_active_name = preset_filters[self._active_preset_filter_name]
+            if active_preset_filter != new_filter_matching_active_name:
+                self.preset_filter_changed.emit()
+
         self._preset_filters = preset_filters
 
     def get_active_preset_filter(self):
@@ -670,8 +681,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     def clear_filters(self, filter_group_ids=None, clear_active_preset_filter=False):
         """Clear any active filters that are set in the menu."""
         if clear_active_preset_filter and self._active_preset_filter_name:
-            self._active_preset_filter_name = None
-            self.preset_filter_changed.emit()
+            self.__clear_active_preset_filter()
 
         if not self._filter_groups:
             # No filters to clear.
@@ -1510,6 +1520,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         """
         if not self._preset_filters or len(self._preset_filters) == 0:
             return
+
         # Add a section header for the preset filters
         label_action = QtGui.QAction("PRESETS", self)
         label_action.setCheckable(False)
@@ -1526,18 +1537,21 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 action.setChecked(True)
 
             action.triggered.connect(
-                lambda a=action, f=preset_filter, n=filter_name: self.__preset_filter_triggered(
-                    a, f,n
-                )
+                lambda checked=True, n=filter_name: self.__preset_filter_triggered(n)
             )
 
             action_group.addAction(action)
             self.addAction(action)
         self.addSeparator()
 
-    def __preset_filter_triggered(self, action, preset_filter, filter_name):
+    def __preset_filter_triggered(self, filter_name):
         """Callback triggered when a preset filter is selected."""
         self._active_preset_filter_name = filter_name if self._active_preset_filter_name != filter_name else None
+        self.preset_filter_changed.emit()
+
+    def __clear_active_preset_filter(self):
+        """Clear the active preset filter."""
+        self._active_preset_filter_name = None
         self.preset_filter_changed.emit()
 
     def __add_static_actions(self):
