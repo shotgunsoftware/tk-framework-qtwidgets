@@ -217,7 +217,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum
             )
             self.__clear_widget.setSizePolicy(sizePolicy)
-            # TODO should it be clearing preset filters here?
             self.__clear_widget.clicked.connect(self.clear_filters)
             # More Filters button for dock widget
             self.__more_filters_menu_button = SGQToolButton(self.dock_widget)
@@ -410,8 +409,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         Set the active preset filter by name. Pass a None value to clear the active preset filter.
         :param preset_filter_name: str or None
         """
-        # TODO: finish this and refactor everything to use this. check method above especially
-        #       This is also to use when restoring the state of the menu
         if preset_filter_name and preset_filter_name not in self._preset_filters:
             return
         self._active_preset_filter_name = preset_filter_name
