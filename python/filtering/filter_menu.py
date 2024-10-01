@@ -237,7 +237,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             self.__clear_widget = None
             self.__more_filters_menu_button = None
 
-        # The filter model and its source model, that the filters in this menu are built bsaed on.
+        # The filter model and its source model, that the filters in this menu are built based on.
         self._proxy_model = None
         self._source_model = None
 
@@ -245,7 +245,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         self._is_refreshing = False
 
         # Flag indicating that the menu is restoring its filter state. This is used to avoid
-        # menu refreshes for each filter state retored, and instead having a single refresh at
+        # menu refreshes for each filter state restored, and instead having a single refresh at
         # the end.
         self._block_signals = False
 
@@ -283,6 +283,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     @property
     def has_filtering(self):
         """Get whether or not the menu has any active filtering."""
+        # TODO: Do I need to add a check for preset filters here?
         return bool(self._active_filter and self._active_filter.filters)
 
     @property
@@ -308,6 +309,14 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         filters are shown in the dock widget, instead of the menu itself.
         """
         return self.__docked if self.dock_widget else False
+
+    @property
+    def active_preset_filter_name(self):
+        """
+        Get the active preset filter data.
+        :return: The active filter array, or None if no preset filter is active.
+        """
+        return self._active_preset_filter_name
 
     @property
     def dock_widget(self):
@@ -359,16 +368,31 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
         return self.dock_widget if self.docked else self
 
-    def set_preset_filters(self, preset_filters):
+    def set_preset_filters(self, preset_filters, new_active_preset_filter_name=None):
         """
         Set the preset filters that can be toggled on/off in the menu.
         The preset filters are stored as a dictionary where the key is the preset filter name,
         and the value is the filter data in the format the SG API accepts.
-        :param preset_filters:
+        :param preset_filters: dict of the preset filters to set.
+        :param new_active_preset_filter_name: string the name of the preset filter to activate if you want to change it.
         """
+        # - If a new active preset filter name is provided, and it is different from the current
+        #   active preset filter name, set the new active preset filter name and emit the signal.
+        if new_active_preset_filter_name and self._active_preset_filter_name != new_active_preset_filter_name:
+            self._preset_filters = preset_filters
+            self.set_active_preset_filter(new_active_preset_filter_name)
+            return
+
+        # - If there is a current active preset filter name, and it is not in the new preset filters,
+        #   clear the active preset filter.
         if self._active_preset_filter_name and self._active_preset_filter_name not in preset_filters:
-            self.__clear_active_preset_filter()
-        elif self._active_preset_filter_name:
+            self._preset_filters = preset_filters
+            self.set_active_preset_filter(None)
+            return
+
+        # - If there is a current active preset filter name, and it is in the new preset filters, but
+        #   the filters have changed, emit the signal.
+        if self._active_preset_filter_name:
             # It is possible that the new preset_filters contains the same preset filter name as the
             # active preset filter but the filters have changed.
             # In this case, we should emit that the preset filter has changed.
@@ -376,8 +400,23 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             new_filter_matching_active_name = preset_filters[self._active_preset_filter_name]
             if active_preset_filter != new_filter_matching_active_name:
                 self.preset_filter_changed.emit()
+            self._preset_filters = preset_filters
+            return
 
+        # No changes in active preset filter, just update the preset filters.
         self._preset_filters = preset_filters
+
+    def set_active_preset_filter(self, preset_filter_name):
+        """
+        Set the active preset filter by name. Pass a None value to clear the active preset filter.
+        :param preset_filter_name: str or None
+        """
+        # TODO: finish this and refactor everything to use this. check method above especially
+        #       This is also to use when restoring the state of the menu
+        if preset_filter_name and preset_filter_name not in self._preset_filters:
+            return
+        self._active_preset_filter_name = preset_filter_name
+        self.preset_filter_changed.emit()
 
     def get_active_preset_filter(self):
         """
@@ -681,7 +720,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     def clear_filters(self, filter_group_ids=None, clear_active_preset_filter=False):
         """Clear any active filters that are set in the menu."""
         if clear_active_preset_filter and self._active_preset_filter_name:
-            self.__clear_active_preset_filter()
+            self.set_active_preset_filter(None)
 
         if not self._filter_groups:
             # No filters to clear.
@@ -1546,13 +1585,8 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
     def __preset_filter_triggered(self, filter_name):
         """Callback triggered when a preset filter is selected."""
-        self._active_preset_filter_name = filter_name if self._active_preset_filter_name != filter_name else None
-        self.preset_filter_changed.emit()
-
-    def __clear_active_preset_filter(self):
-        """Clear the active preset filter."""
-        self._active_preset_filter_name = None
-        self.preset_filter_changed.emit()
+        new_active_preset_filter_name = filter_name if self._active_preset_filter_name != filter_name else None
+        self.set_active_preset_filter(new_active_preset_filter_name)
 
     def __add_static_actions(self):
         """Add the static actions to the menu. These actions appear at the top of hte menu."""
@@ -1615,7 +1649,7 @@ class ShotgunFilterMenu(FilterMenu):
         )
 
         # Use the SG_DATA_ROLE to extract the data from the ShotgunModel. This class fixes the
-        # filte roles to the ShotgunModel.SG_DATA_ROLE since it is designed to work with this
+        # filter roles to the ShotgunModel.SG_DATA_ROLE since it is designed to work with this
         # model only.
         self._filters_def.filter_roles = [ShotgunModel.SG_DATA_ROLE]
         self.__field_id_prefix = str(ShotgunModel.SG_DATA_ROLE)
