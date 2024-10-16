@@ -406,10 +406,18 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         if preset_filter_name and preset_filter_name not in self._preset_filters:
             return
 
+        # Handle the checked state of the actions
         if preset_filter_name != self._active_preset_filter_name:
-            action = self._preset_filter_actions.get(preset_filter_name, None)
+            action_name = preset_filter_name
+            new_checked_value = True
+            if preset_filter_name is None:
+                # If the preset filter name is None then we need to uncheck the current active preset filter
+                action_name = self._active_preset_filter_name
+                new_checked_value = False
+
+            action = self._preset_filter_actions.get(action_name, None)
             if action:
-                action.setChecked(True)
+                action.setChecked(new_checked_value)
 
         self._active_preset_filter_name = preset_filter_name
         self.preset_filter_changed.emit()
@@ -716,8 +724,6 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     def clear_filters(self, filter_group_ids=None, clear_active_preset_filter=False):
         """Clear any active filters that are set in the menu."""
         if clear_active_preset_filter and self._active_preset_filter_name:
-            # if self._active_preset_filter_name in self._preset_filter_actions:
-            #     self._preset_filter_actions[self._active_preset_filter_name].setChecked(False)
             self.set_active_preset_filter(None)
 
         if not self._filter_groups:
