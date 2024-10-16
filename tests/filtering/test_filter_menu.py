@@ -285,8 +285,8 @@ class TestFilterMenu(TankTestBase):
         fm = self.FilterMenu()
         fm.set_filter_model(self.proxy_model)
         presets = {
-            "preset1": [['field', 'is', 'value']],
-            "preset2": [['field_2', 'is', 'value']],
+            "preset1": [["field", "is", "value"]],
+            "preset2": [["field_2", "is", "value"]],
         }
         fm.set_preset_filters(presets)
         fm.set_active_preset_filter("preset1")
@@ -309,8 +309,8 @@ class TestFilterMenu(TankTestBase):
         fm = self.FilterMenu(dock_widget=dock_widget)
         fm.set_filter_model(self.proxy_model)
         presets = {
-            "preset1": [['field', 'is', 'value']],
-            "preset2": [['field_2', 'is', 'value']],
+            "preset1": [["field", "is", "value"]],
+            "preset2": [["field_2", "is", "value"]],
         }
         fm.set_preset_filters(presets)
         fm.set_active_preset_filter("preset1")
@@ -327,7 +327,6 @@ class TestFilterMenu(TankTestBase):
         assert fm.actions()[1].text() == "preset1"
         assert fm.actions()[1].isChecked() == False
         assert fm.get_active_preset_filter() is None
-
 
     def test_get_current_filters(self):
         """
@@ -413,8 +412,8 @@ class TestFilterMenu(TankTestBase):
         fm = self.FilterMenu()
         fm.set_filter_model(self.proxy_model)
         presets = {
-            "preset1": [['field','is','value']],
-            "preset2": [['field_2','is','value']],
+            "preset1": [["field", "is", "value"]],
+            "preset2": [["field_2", "is", "value"]],
         }
         fm.set_preset_filters(presets)
         fm.preset_filter_changed.connect(mock_callback)
@@ -436,8 +435,8 @@ class TestFilterMenu(TankTestBase):
         fm = self.FilterMenu()
         fm.set_filter_model(self.proxy_model)
         presets = {
-            "preset1": [['field', 'is', 'value']],
-            "preset2": [['field_2', 'is', 'value']],
+            "preset1": [["field", "is", "value"]],
+            "preset2": [["field_2", "is", "value"]],
         }
         fm.set_preset_filters(presets)
         fm.initialize_menu()
@@ -454,7 +453,7 @@ class TestFilterMenu(TankTestBase):
         assert fm.actions()[4].isChecked() == False
         assert fm.actions()[5].isChecked()
 
-    def test_presets_label_not_shown_when_presets_are_empty (self):
+    def test_presets_label_not_shown_when_presets_are_empty(self):
         fm = self.FilterMenu()
         fm.set_filter_model(self.proxy_model)
         fm.set_preset_filters({})
@@ -467,8 +466,8 @@ class TestFilterMenu(TankTestBase):
         fm = self.FilterMenu()
         fm.set_filter_model(self.proxy_model)
         presets = {
-            "preset1": [['field', 'is', 'value']],
-            "preset2": [['field_2', 'is', 'value']],
+            "preset1": [["field", "is", "value"]],
+            "preset2": [["field_2", "is", "value"]],
         }
         fm.preset_filter_changed.connect(mock_callback)
         fm.set_preset_filters(presets)
@@ -480,9 +479,11 @@ class TestFilterMenu(TankTestBase):
         assert fm.actions()[4].isChecked()
         assert fm.actions()[5].isChecked() == False
 
-        fm.set_preset_filters({
-            "preset3": [['field', 'is', 'value']],
-        })
+        fm.set_preset_filters(
+            {
+                "preset3": [["field", "is", "value"]],
+            }
+        )
         fm.initialize_menu()
 
         assert fm.get_active_preset_filter() is None
@@ -494,8 +495,8 @@ class TestFilterMenu(TankTestBase):
         fm = self.FilterMenu()
         fm.set_filter_model(self.proxy_model)
         presets = {
-            "preset1": [['field', 'is', 'value']],
-            "preset2": [['field_2', 'is', 'value']],
+            "preset1": [["field", "is", "value"]],
+            "preset2": [["field_2", "is", "value"]],
         }
         fm.set_preset_filters(presets)
         fm.set_active_preset_filter("preset1")
@@ -503,8 +504,8 @@ class TestFilterMenu(TankTestBase):
 
         fm.preset_filter_changed.connect(mock_callback)
         updated_presets = {
-            "preset1": [['field', 'is', 'value2']],
-            "preset2": [['field_2', 'is', 'value']],
+            "preset1": [["field", "is", "value2"]],
+            "preset2": [["field_2", "is", "value"]],
         }
         fm.set_preset_filters(updated_presets)
         fm.initialize_menu()
@@ -521,8 +522,8 @@ class TestFilterMenu(TankTestBase):
         fm = self.FilterMenu()
         fm.set_filter_model(self.proxy_model)
         presets = {
-            "preset1": [['field', 'is', 'value']],
-            "preset2": [['field_2', 'is', 'value']],
+            "preset1": [["field", "is", "value"]],
+            "preset2": [["field_2", "is", "value"]],
         }
         fm.preset_filter_changed.connect(mock_callback)
         fm.set_preset_filters(presets)

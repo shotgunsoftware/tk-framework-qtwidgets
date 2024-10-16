@@ -219,7 +219,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
                 QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum
             )
             self.__clear_widget.setSizePolicy(sizePolicy)
-            self.__clear_widget.clicked.connect(lambda: self.clear_filters(clear_active_preset_filter=True))
+            self.__clear_widget.clicked.connect(
+                lambda: self.clear_filters(clear_active_preset_filter=True)
+            )
             # More Filters button for dock widget
             self.__more_filters_menu_button = SGQToolButton(self.dock_widget)
             self.__more_filters_menu_button.setText("More Filters")
@@ -284,7 +286,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     @property
     def has_filtering(self):
         """Get whether or not the menu has any active filtering."""
-        return bool((self._active_filter and self._active_filter.filters) or self._active_preset_filter_name)
+        return bool(
+            (self._active_filter and self._active_filter.filters)
+            or self._active_preset_filter_name
+        )
 
     @property
     def more_filters_menu(self):
@@ -377,7 +382,10 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         """
         # - If there is a current active preset filter name, and it is not in the new preset filters,
         #   clear the active preset filter.
-        if self._active_preset_filter_name and self._active_preset_filter_name not in preset_filters:
+        if (
+            self._active_preset_filter_name
+            and self._active_preset_filter_name not in preset_filters
+        ):
             self._preset_filters = preset_filters
             self.set_active_preset_filter(None)
             return
@@ -389,7 +397,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
             # active preset filter but the filters have changed.
             # In this case, we should emit that the preset filter has changed.
             active_preset_filter = self.get_active_preset_filter()
-            new_filter_matching_active_name = preset_filters[self._active_preset_filter_name]
+            new_filter_matching_active_name = preset_filters[
+                self._active_preset_filter_name
+            ]
             if active_preset_filter != new_filter_matching_active_name:
                 self.preset_filter_changed.emit()
             self._preset_filters = preset_filters
@@ -1592,7 +1602,9 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
 
     def __preset_filter_triggered(self, filter_name):
         """Callback triggered when a preset filter is selected."""
-        new_active_preset_filter_name = filter_name if self._active_preset_filter_name != filter_name else None
+        new_active_preset_filter_name = (
+            filter_name if self._active_preset_filter_name != filter_name else None
+        )
         self.set_active_preset_filter(new_active_preset_filter_name)
 
     def __add_static_actions(self):
