@@ -281,6 +281,54 @@ class TestFilterMenu(TankTestBase):
                 assert not widget.has_value()
                 assert not filter_action.isChecked()
 
+    def test_clear_preset_filter(self):
+        fm = self.FilterMenu()
+        fm.set_filter_model(self.proxy_model)
+        presets = {
+            "preset1": [['field', 'is', 'value']],
+            "preset2": [['field_2', 'is', 'value']],
+        }
+        fm.set_preset_filters(presets)
+        fm.set_active_preset_filter("preset1")
+        fm.initialize_menu()
+
+        assert fm.actions()[4].text() == "preset1"
+        assert fm.actions()[4].isChecked()
+
+        fm.clear_filters(clear_active_preset_filter=True)
+
+        assert fm.actions()[4].text() == "preset1"
+        assert fm.actions()[4].isChecked() == False
+        assert fm.get_active_preset_filter() is None
+
+    def test_docked_filters_clear_filters_removes_active_preset(self):
+        dock_widget = QtGui.QWidget()
+        layout = QtGui.QVBoxLayout(dock_widget)
+        dock_widget.setLayout(layout)
+
+        fm = self.FilterMenu(dock_widget=dock_widget)
+        fm.set_filter_model(self.proxy_model)
+        presets = {
+            "preset1": [['field', 'is', 'value']],
+            "preset2": [['field_2', 'is', 'value']],
+        }
+        fm.set_preset_filters(presets)
+        fm.set_active_preset_filter("preset1")
+        fm.dock_filters()
+        fm.initialize_menu()
+
+        assert fm.actions()[1].text() == "preset1"
+        assert fm.actions()[1].isChecked()
+
+        # Get the clear all filters button from the docked widget and click it
+        widget = layout.children()[0].itemAt(0).widget()
+        widget.click()
+
+        assert fm.actions()[1].text() == "preset1"
+        assert fm.actions()[1].isChecked() == False
+        assert fm.get_active_preset_filter() is None
+
+
     def test_get_current_filters(self):
         """
         Test the 'clear_filters' method after setting a single filter.
@@ -414,23 +462,6 @@ class TestFilterMenu(TankTestBase):
 
         assert fm.actions()[3].text() != "PRESETS"
 
-    def test_set_preset_filters_with_active_name(self):
-        mock_callback = Mock()
-        fm = self.FilterMenu()
-        fm.set_filter_model(self.proxy_model)
-        presets = {
-            "preset1": [['field', 'is', 'value']],
-            "preset2": [['field_2', 'is', 'value']],
-        }
-        fm.preset_filter_changed.connect(mock_callback)
-        fm.set_preset_filters(presets, 'preset1')
-        fm.initialize_menu()
-
-        assert fm.get_active_preset_filter() == presets["preset1"]
-        mock_callback.assert_called_once()
-        assert fm.actions()[4].isChecked()
-        assert fm.actions()[5].isChecked() == False
-
     def test_set_preset_filters_clears_active_if_not_in_new_presets(self):
         mock_callback = Mock()
         fm = self.FilterMenu()
@@ -440,7 +471,8 @@ class TestFilterMenu(TankTestBase):
             "preset2": [['field_2', 'is', 'value']],
         }
         fm.preset_filter_changed.connect(mock_callback)
-        fm.set_preset_filters(presets, 'preset1')
+        fm.set_preset_filters(presets)
+        fm.set_active_preset_filter("preset1")
         fm.initialize_menu()
 
         assert fm.get_active_preset_filter() == presets["preset1"]
@@ -465,7 +497,8 @@ class TestFilterMenu(TankTestBase):
             "preset1": [['field', 'is', 'value']],
             "preset2": [['field_2', 'is', 'value']],
         }
-        fm.set_preset_filters(presets, 'preset1')
+        fm.set_preset_filters(presets)
+        fm.set_active_preset_filter("preset1")
         fm.initialize_menu()
 
         fm.preset_filter_changed.connect(mock_callback)
@@ -480,3 +513,31 @@ class TestFilterMenu(TankTestBase):
         mock_callback.assert_called_once()
         assert fm.actions()[4].isChecked()
         assert fm.actions()[5].isChecked() == False
+
+    def test_set_active_preset_filter(self):
+        # test the active filter is set correctly
+        # also test that it doesn't get set if the name is not in the presets
+        mock_callback = Mock()
+        fm = self.FilterMenu()
+        fm.set_filter_model(self.proxy_model)
+        presets = {
+            "preset1": [['field', 'is', 'value']],
+            "preset2": [['field_2', 'is', 'value']],
+        }
+        fm.preset_filter_changed.connect(mock_callback)
+        fm.set_preset_filters(presets)
+        fm.set_active_preset_filter("preset1")
+        fm.initialize_menu()
+
+        assert fm.get_active_preset_filter() == presets["preset1"]
+        mock_callback.assert_called_once()
+        assert fm.actions()[4].isChecked()
+        assert fm.actions()[5].isChecked() == False
+
+        mock_callback.reset_mock()
+        fm.set_active_preset_filter("preset2")
+
+        assert fm.get_active_preset_filter() == presets["preset2"]
+        assert fm.actions()[4].isChecked() == False
+        assert fm.actions()[5].isChecked()
+        mock_callback.assert_called_once()
