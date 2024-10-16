@@ -284,7 +284,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
     @property
     def has_filtering(self):
         """Get whether or not the menu has any active filtering."""
-        return bool(self._active_filter and self._active_filter.filters or self._active_preset_filter_name)
+        return bool((self._active_filter and self._active_filter.filters) or self._active_preset_filter_name)
 
     @property
     def more_filters_menu(self):
