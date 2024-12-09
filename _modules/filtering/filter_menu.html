@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.12.4 documentation</title>
+  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -276,6 +276,8 @@
 
     <span class="c1"># Signal emitted when the filters have changed by modifying the menu options/actions.</span>
     <span class="n">filters_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
+    <span class="c1"># Signal emitted when a preset filter has been toggled on/off.</span>
+    <span class="n">preset_filter_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
     <span class="c1"># Signal emitted when menu is about to do a complete refresh (e.g. call refresh method)</span>
     <span class="n">menu_about_to_be_refreshed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
     <span class="c1"># Signal emitted when menu is finished a complete refreshing (e.g. exit refresh method)</span>
@@ -323,6 +325,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># A mapping of field id to whether or not that group of filters is visible.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_field_visibility</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># A mapping of preset filter names to their filters. The filters should be stored in an SG API filter format.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># A mapping of preset filter names to their QAction objects.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filter_actions</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c1"># Set up the dock widget for the filters. Start in undocked state.</span>
         <span class="k">if</span> <span class="n">dock_widget</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dock_widget</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QScrollArea</span><span class="p">):</span>
@@ -344,7 +350,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">SGQIcon</span><span class="o">.</span><span class="n">red_bullet</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__undock_widget</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">undock_filters</span><span class="p">)</span>
-            <span class="c1"># Clear All Filtesr button for dock widget</span>
+            <span class="c1"># Clear All Filters button for dock widget</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span> <span class="o">=</span> <span class="n">SGQToolButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span>
                 <span class="s2">&quot;filter_menu_dock_widget_clear_all_filters_button&quot;</span>
@@ -356,8 +362,10 @@
                 <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">sizePolicy</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">)</span>
-            <span class="c1"># More Filtesr button for dock widget</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">(</span><span class="n">clear_active_preset_filter</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="c1"># More Filters button for dock widget</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span> <span class="o">=</span> <span class="n">SGQToolButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;More Filters&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span>
@@ -375,15 +383,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__clear_widget</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu_button</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="c1"># The filter model and its source model, that the filters in this menu are built bsaed on.</span>
+        <span class="c1"># The filter model and its source model, that the filters in this menu are built based on.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_model</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_source_model</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="c1"># Flag indicating the the menu is currently being refreshed</span>
+        <span class="c1"># Flag indicating the menu is currently being refreshed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_refreshing</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># Flag indicating that the menu is restoring its filter state. This is used to avoid</span>
-        <span class="c1"># menu refreshes for each filter state retored, and instead having a single refresh at</span>
+        <span class="c1"># menu refreshes for each filter state restored, and instead having a single refresh at</span>
         <span class="c1"># the end.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_block_signals</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -407,6 +415,9 @@
         <span class="c1"># based on menu selection.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span> <span class="o">=</span> <span class="n">FilterItem</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">FilterItem</span><span class="o">.</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">AND</span><span class="p">)</span>
 
+        <span class="c1"># Set the active preset filter name to None, indicating no preset filter is active.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="c1"># ----------------------------------------------------------------------------------------</span>
     <span class="c1"># Properties</span>
 
@@ -418,7 +429,10 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">has_filtering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get whether or not the menu has any active filtering.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">more_filters_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -443,6 +457,14 @@
 <span class="sd">        filters are shown in the dock widget, instead of the menu itself.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__docked</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span> <span class="k">else</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">active_preset_filter_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the active preset filter data.</span>
+<span class="sd">        :return: The active filter array, or None if no preset filter is active.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dock_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -493,6 +515,72 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span> <span class="k">else</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="FilterMenu.set_preset_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_preset_filters">[docs]</a>    <span class="k">def</span> <span class="nf">set_preset_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preset_filters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the preset filters that can be toggled on/off in the menu.</span>
+<span class="sd">        The preset filters are stored as a dictionary where the key is the preset filter name,</span>
+<span class="sd">        and the value is the filter data in the format the SG API accepts.</span>
+<span class="sd">        :param preset_filters: dict of the preset filters to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># - If there is a current active preset filter name, and it is not in the new preset filters,</span>
+        <span class="c1">#   clear the active preset filter.</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">preset_filters</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span> <span class="o">=</span> <span class="n">preset_filters</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_active_preset_filter</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># - If there is a current active preset filter name, and it is in the new preset filters, but</span>
+        <span class="c1">#   the filters have changed, emit the signal.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span><span class="p">:</span>
+            <span class="c1"># It is possible that the new preset_filters contains the same preset filter name as the</span>
+            <span class="c1"># active preset filter but the filters have changed.</span>
+            <span class="c1"># In this case, we should emit that the preset filter has changed.</span>
+            <span class="n">active_preset_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_active_preset_filter</span><span class="p">()</span>
+            <span class="n">new_filter_matching_active_name</span> <span class="o">=</span> <span class="n">preset_filters</span><span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">active_preset_filter</span> <span class="o">!=</span> <span class="n">new_filter_matching_active_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">preset_filter_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span> <span class="o">=</span> <span class="n">preset_filters</span>
+            <span class="k">return</span>
+
+        <span class="c1"># No changes in active preset filter, just update the preset filters.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span> <span class="o">=</span> <span class="n">preset_filters</span></div>
+
+<div class="viewcode-block" id="FilterMenu.set_active_preset_filter"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_active_preset_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_active_preset_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preset_filter_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the active preset filter by name. Pass a None value to clear the active preset filter.</span>
+<span class="sd">        :param preset_filter_name: str or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">preset_filter_name</span> <span class="ow">and</span> <span class="n">preset_filter_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Handle the checked state of the actions</span>
+        <span class="k">if</span> <span class="n">preset_filter_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span><span class="p">:</span>
+            <span class="n">action_name</span> <span class="o">=</span> <span class="n">preset_filter_name</span>
+            <span class="n">new_checked_value</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">preset_filter_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># If the preset filter name is None then we need to uncheck the current active preset filter</span>
+                <span class="n">action_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span>
+                <span class="n">new_checked_value</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filter_actions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">action</span><span class="p">:</span>
+                <span class="n">action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">new_checked_value</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span> <span class="o">=</span> <span class="n">preset_filter_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preset_filter_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FilterMenu.get_active_preset_filter"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_active_preset_filter">[docs]</a>    <span class="k">def</span> <span class="nf">get_active_preset_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the active preset filter data.</span>
+<span class="sd">        :return: The active filter array, or None if no preset filter is active.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterMenu.set_visible_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_visible_fields">[docs]</a>    <span class="k">def</span> <span class="nf">set_visible_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -786,8 +874,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FilterMenu.clear_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.clear_filters">[docs]</a>    <span class="k">def</span> <span class="nf">clear_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear any active filtesr that are set in the menu.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FilterMenu.clear_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.clear_filters">[docs]</a>    <span class="k">def</span> <span class="nf">clear_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clear_active_preset_filter</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear any active filters that are set in the menu.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">clear_active_preset_filter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_active_preset_filter</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span><span class="p">:</span>
             <span class="c1"># No filters to clear.</span>
@@ -796,7 +886,7 @@
         <span class="c1"># Do not trigger any signals while clearing the filters.</span>
         <span class="n">restore_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="c1"># Set our manual block signals flag since the Qt method to block does not work when</span>
-        <span class="c1"># we mnaully trigger signals (e.g. call setChecked on a checkbox)</span>
+        <span class="c1"># we manually trigger signals (e.g. call setChecked on a checkbox)</span>
         <span class="n">restore_block_signals_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_block_signals</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_block_signals</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -956,6 +1046,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the menu by building the menu action and widgets.&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__add_static_actions</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__add_preset_filters</span><span class="p">()</span>
 
         <span class="c1"># Build the filter menu actions and their widgets from the filter definition.</span>
         <span class="n">sorted_field_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">get_fields</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1163,7 +1255,7 @@
                 <span class="n">search_filter_item_and_action</span><span class="o">=</span><span class="n">search_filter_item_and_action</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="c1"># Update &quot;More Filters&quot; to include the newly added filter gorup.</span>
+            <span class="c1"># Update &quot;More Filters&quot; to include the newly added filter group.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_action_to_more_filters_menu</span><span class="p">(</span><span class="n">filter_group</span><span class="p">,</span> <span class="n">field_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
 
             <span class="c1"># Lastly, keep track of the filter group object by its id</span>
@@ -1617,6 +1709,47 @@
                     <span class="n">widget</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
             <span class="k">del</span> <span class="n">item</span>
 
+    <span class="k">def</span> <span class="nf">__add_preset_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds all the preset filters to the menu as actions.</span>
+<span class="sd">        They are stored in an QActionGroup to ensure only one preset filter is active at a time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filter_actions</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Add a section header for the preset filters</span>
+        <span class="n">label_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;PRESETS&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">label_action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">label_action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">label_action</span><span class="p">)</span>
+
+        <span class="n">action_group</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QActionGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">action_group</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">filter_name</span><span class="p">,</span> <span class="n">preset_filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">filter_name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">filter_name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span><span class="p">:</span>
+                <span class="n">action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">checked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">filter_name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__preset_filter_triggered</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="n">action_group</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filter_actions</span><span class="p">[</span><span class="n">filter_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__preset_filter_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback triggered when a preset filter is selected.&quot;&quot;&quot;</span>
+        <span class="n">new_active_preset_filter_name</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">filter_name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span> <span class="o">!=</span> <span class="n">filter_name</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_active_preset_filter</span><span class="p">(</span><span class="n">new_active_preset_filter_name</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__add_static_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add the static actions to the menu. These actions appear at the top of hte menu.&quot;&quot;&quot;</span>
 
@@ -1644,7 +1777,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
             <span class="c1"># Clear all filters action</span>
             <span class="n">clear_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Clear All Filters&quot;</span><span class="p">)</span>
-            <span class="n">clear_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">)</span>
+            <span class="n">clear_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">(</span><span class="n">clear_active_preset_filter</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">)</span>
+
             <span class="c1"># More Filters menu</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">)</span>
             <span class="c1"># Separate static actions from the filter actions</span>
@@ -1675,7 +1811,7 @@
         <span class="p">)</span>
 
         <span class="c1"># Use the SG_DATA_ROLE to extract the data from the ShotgunModel. This class fixes the</span>
-        <span class="c1"># filte roles to the ShotgunModel.SG_DATA_ROLE since it is designed to work with this</span>
+        <span class="c1"># filter roles to the ShotgunModel.SG_DATA_ROLE since it is designed to work with this</span>
         <span class="c1"># model only.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">filter_roles</span> <span class="o">=</span> <span class="p">[</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__field_id_prefix</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>

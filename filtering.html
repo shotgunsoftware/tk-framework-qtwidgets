@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Filtering &mdash; tk-framework-qtwidgets v2.12.4 documentation</title>
+  <title>Filtering &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -72,10 +72,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.more_filters_menu"><code class="docutils literal notranslate"><span class="pre">FilterMenu.more_filters_menu</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.refresh_on_show"><code class="docutils literal notranslate"><span class="pre">FilterMenu.refresh_on_show</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.docked"><code class="docutils literal notranslate"><span class="pre">FilterMenu.docked</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.active_preset_filter_name"><code class="docutils literal notranslate"><span class="pre">FilterMenu.active_preset_filter_name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.dock_widget"><code class="docutils literal notranslate"><span class="pre">FilterMenu.dock_widget</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_widget_action_default_widget_value"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_widget_action_default_widget_value()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.is_empty"><code class="docutils literal notranslate"><span class="pre">FilterMenu.is_empty()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.get_filters_container"><code class="docutils literal notranslate"><span class="pre">FilterMenu.get_filters_container()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_preset_filters"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_preset_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_active_preset_filter"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_active_preset_filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.get_active_preset_filter"><code class="docutils literal notranslate"><span class="pre">FilterMenu.get_active_preset_filter()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_visible_fields"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_visible_fields()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_accept_fields"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_accept_fields()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering.FilterMenu.set_ignore_fields"><code class="docutils literal notranslate"><span class="pre">FilterMenu.set_ignore_fields()</span></code></a></li>
@@ -183,7 +187,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.4.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -308,7 +312,7 @@ forced to be refreshed on calling the <cite>refresh</cite> method with param <ci
 refreshing the filters before showing. This will slow performance on menu open,
 but ensures the data is the most up to date. To only refresh the menu on show
 on demand, set the <cite>refresh_on_show</cite> property instead of this parm on init.</p></li>
-<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="https://developers.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – An instance of a Background Task Manager that could be used to perform
+<li><p><strong>bg_task_manager</strong> (<a class="reference external" href="https://developers.shotgridsoftware.com/tk-framework-shotgunutils/task_manager.html#task_manager.BackgroundTaskManager" title="(in tk-framework-shotgunutils vv5.10.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code></a>) – An instance of a Background Task Manager that could be used to perform
 background task processing.</p></li>
 <li><p><strong>dock_widget</strong> (<em>QtGui.QWidget</em><em> | </em><em>QtGui.QScrollArea</em>) – Optional widget that the filters can be shown in.</p></li>
 </ul>
@@ -347,6 +351,13 @@ filters are shown in the dock widget, instead of the menu itself.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="filtering.FilterMenu.active_preset_filter_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">active_preset_filter_name</span></span><a class="headerlink" href="#filtering.FilterMenu.active_preset_filter_name" title="Permalink to this definition"></a></dt>
+<dd><p>Get the active preset filter data.
+:return: The active filter array, or None if no preset filter is active.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="filtering.FilterMenu.dock_widget">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dock_widget</span></span><a class="headerlink" href="#filtering.FilterMenu.dock_widget" title="Permalink to this definition"></a></dt>
 <dd><p>Get the dock widget for the Filter Menu.</p>
@@ -373,6 +384,29 @@ triggered signal signatures between Qt versions.</p>
 <dd><p>Get the current parent widget for the filters.</p>
 <p>The filters may move between the menu itself and the dock widget, thus the parent
 widget will change depending on the dock state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="filtering.FilterMenu.set_preset_filters">
+<span class="sig-name descname"><span class="pre">set_preset_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preset_filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_preset_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.set_preset_filters" title="Permalink to this definition"></a></dt>
+<dd><p>Set the preset filters that can be toggled on/off in the menu.
+The preset filters are stored as a dictionary where the key is the preset filter name,
+and the value is the filter data in the format the SG API accepts.
+:param preset_filters: dict of the preset filters to set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="filtering.FilterMenu.set_active_preset_filter">
+<span class="sig-name descname"><span class="pre">set_active_preset_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preset_filter_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.set_active_preset_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.set_active_preset_filter" title="Permalink to this definition"></a></dt>
+<dd><p>Set the active preset filter by name. Pass a None value to clear the active preset filter.
+:param preset_filter_name: str or None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="filtering.FilterMenu.get_active_preset_filter">
+<span class="sig-name descname"><span class="pre">get_active_preset_filter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.get_active_preset_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.get_active_preset_filter" title="Permalink to this definition"></a></dt>
+<dd><p>Get the active preset filter data.
+:return: The active filter array, or None if no preset filter is active.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -525,8 +559,8 @@ remove all items from the menu.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="filtering.FilterMenu.clear_filters">
-<span class="sig-name descname"><span class="pre">clear_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.clear_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.clear_filters" title="Permalink to this definition"></a></dt>
-<dd><p>Clear any active filtesr that are set in the menu.</p>
+<span class="sig-name descname"><span class="pre">clear_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear_active_preset_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/filtering/filter_menu.html#FilterMenu.clear_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filtering.FilterMenu.clear_filters" title="Permalink to this definition"></a></dt>
+<dd><p>Clear any active filters that are set in the menu.</p>
 </dd></dl>
 
 <dl class="py method">
