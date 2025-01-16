@@ -46,7 +46,7 @@ class HierarchicalSearchCompleter(SearchCompleter):
         :param parent: Parent widget
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
-        super(HierarchicalSearchCompleter, self).__init__(parent)
+        super().__init__(parent)
         self.search_root = self._bundle.context.project
         self.show_entities_only = True
         self.seed_entity_field = "PublishedFile.entity"

@@ -48,7 +48,7 @@ class ContextWidget(QtGui.QWidget):
         :param parent: The model parent.
         :type parent: :class:`~PySide.QtGui.QObject`
         """
-        super(ContextWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self._bundle = sgtk.platform.current_bundle()
         project = self._bundle.context.project

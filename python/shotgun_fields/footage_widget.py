@@ -14,11 +14,9 @@ from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor import six
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class FootageWidget(LabelBaseWidget):
+class FootageWidget(LabelBaseWidget, metaclass=ShotgunFieldMeta):
     """
     Display a ``footage`` field value as returned by the Shotgun API.
     """
@@ -26,8 +24,7 @@ class FootageWidget(LabelBaseWidget):
     _DISPLAY_TYPE = "footage"
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class FootageEditorWidget(QtGui.QLineEdit):
+class FootageEditorWidget(QtGui.QLineEdit, metaclass=ShotgunFieldMeta):
     """
     Allows editing of a ``footage`` field value as returned by the Shotgun API.
 
@@ -53,7 +50,7 @@ class FootageEditorWidget(QtGui.QLineEdit):
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
             self.value_changed.emit()
         else:
-            super(FootageEditorWidget, self).keyPressEvent(event)
+            super().keyPressEvent(event)
 
     def setup_widget(self):
         """

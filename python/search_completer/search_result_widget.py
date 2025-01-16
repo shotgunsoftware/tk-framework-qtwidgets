@@ -114,7 +114,7 @@ class SearchResultWidget(QtGui.QWidget):
         """
 
         self._text_fade.setGeometry(self.rect())
-        super(SearchResultWidget, self).resizeEvent(event)
+        super().resizeEvent(event)
 
     def show_fade(self, show):
         """

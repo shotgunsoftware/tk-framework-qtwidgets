@@ -51,7 +51,7 @@ class FilterItemWidget(QtGui.QWidget):
         :type filter_data: dict
         """
 
-        super(FilterItemWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self._id = filter_id
         self._group_id = group_id
@@ -169,7 +169,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
 
-        super(ChoicesFilterItemWidget, self).__init__(
+        super().__init__(
             filter_id,
             group_id,
             parent=parent,
@@ -221,7 +221,7 @@ class ChoicesFilterItemWidget(FilterItemWidget):
         Highlight the background color on mouse hover.
         """
 
-        super(ChoicesFilterItemWidget, self).paintEvent(event)
+        super().paintEvent(event)
 
         option = QtGui.QStyleOption()
         option.initFrom(self)
@@ -331,7 +331,7 @@ class SearchFilterItemWidget(FilterItemWidget):
         :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`
         """
 
-        super(SearchFilterItemWidget, self).__init__(
+        super().__init__(
             filter_id,
             group_id,
             parent=parent,

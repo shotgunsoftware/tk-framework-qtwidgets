@@ -10,13 +10,11 @@
 
 import locale
 from sgtk.platform.qt import QtGui, QtCore
-from tank_vendor import six
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class NumberWidget(LabelBaseWidget):
+class NumberWidget(LabelBaseWidget, metaclass=ShotgunFieldMeta):
     """
     Display a ``number`` field value as returned by the Shotgun API.
     """
@@ -32,8 +30,7 @@ class NumberWidget(LabelBaseWidget):
         return locale.format("%d", value, grouping=True)
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class NumberEditorWidget(QtGui.QSpinBox):
+class NumberEditorWidget(QtGui.QSpinBox, metaclass=ShotgunFieldMeta):
     """
     Allows editing of a ``number`` field value as returned by the Shotgun API.
 
@@ -59,7 +56,7 @@ class NumberEditorWidget(QtGui.QSpinBox):
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
             self.value_changed.emit()
         else:
-            super(NumberEditorWidget, self).keyPressEvent(event)
+            super().keyPressEvent(event)
 
     def setup_widget(self):
         """

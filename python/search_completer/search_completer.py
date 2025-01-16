@@ -57,7 +57,7 @@ class SearchCompleter(QtGui.QCompleter):
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
 
-        super(SearchCompleter, self).__init__(parent)
+        super().__init__(parent)
 
         self._pixmaps = CompleterPixmaps()
 

@@ -49,7 +49,7 @@ class GlobalSearchCompleter(SearchCompleter):
         :param parent: Parent widget
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
-        super(GlobalSearchCompleter, self).__init__(parent)
+        super().__init__(parent)
 
         # the default entity search criteria. The calling code can override these
         # criterial by calling ``set_searchable_entity_types``.

@@ -34,7 +34,7 @@ class ScreenGrabber(QtGui.QDialog):
         """
         Constructor
         """
-        super(ScreenGrabber, self).__init__(parent)
+        super().__init__(parent)
 
         self._opacity = 1
         self._click_pos = None

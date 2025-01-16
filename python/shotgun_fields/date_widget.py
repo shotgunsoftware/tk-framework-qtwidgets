@@ -12,7 +12,6 @@ import datetime
 
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
-from tank_vendor import six
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -21,8 +20,7 @@ shotgun_globals = sgtk.platform.import_framework(
 )
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class DateWidget(LabelBaseWidget):
+class DateWidget(LabelBaseWidget, metaclass=ShotgunFieldMeta):
     """
     Display a ``date`` field value as returned by the Shotgun API.
     """
@@ -67,8 +65,7 @@ class DateWidget(LabelBaseWidget):
         return date.strftime("%x")
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class DateEditorWidget(QtGui.QDateEdit):
+class DateEditorWidget(QtGui.QDateEdit, metaclass=ShotgunFieldMeta):
     """
     Allows editing of a ``date`` field value as returned by the Shotgun API.
 
@@ -101,7 +98,7 @@ class DateEditorWidget(QtGui.QDateEdit):
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
             self.value_changed.emit()
         else:
-            super(DateEditorWidget, self).keyPressEvent(event)
+            super().keyPressEvent(event)
 
     def setup_widget(self):
         """

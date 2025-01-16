@@ -8,8 +8,6 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-from __future__ import with_statement
-
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.card_widget import Ui_ShotgunEntityCardWidget
@@ -36,7 +34,7 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                                       the widget will not construct field widgets until one
                                       is set later via the field_manager property.
         """
-        super(ShotgunEntityCardWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self.ui = Ui_ShotgunEntityCardWidget()
         self.ui.setupUi(self)

@@ -73,9 +73,9 @@ class SGQWidget(QtGui.QWidget):
         """
 
         if window_flags is None:
-            super(SGQWidget, self).__init__(parent)
+            super().__init__(parent)
         else:
-            super(SGQWidget, self).__init__(parent, window_flags)
+            super().__init__(parent, window_flags)
 
         widget_layout = QtGui.QBoxLayout(layout_direction)
         self.setLayout(widget_layout)
@@ -167,7 +167,7 @@ class SGQToolButton(QtGui.QToolButton):
         :type checkable: bool
         """
 
-        super(SGQToolButton, self).__init__(parent)
+        super().__init__(parent)
 
         if not icon:
             icon = SGQIcon(normal_off=icon_normal_off, normal_on=icon_normal_on)
@@ -425,7 +425,7 @@ class SGQSizeGrip(QtGui.QSizeGrip):
     """
 
     def __init__(self, parent):
-        super(SGQSizeGrip, self).__init__(parent)
+        super().__init__(parent)
 
 
 class SGQSlider(QtGui.QSlider):
@@ -580,7 +580,7 @@ class SGQSplitterHandle(QtGui.QSplitterHandle):
     """
 
     def __init__(self, orientation, splitter_parent):
-        super(SGQSplitterHandle, self).__init__(orientation, splitter_parent)
+        super().__init__(orientation, splitter_parent)
 
 
 class SGQStackedWidget(QtGui.QStackedWidget):

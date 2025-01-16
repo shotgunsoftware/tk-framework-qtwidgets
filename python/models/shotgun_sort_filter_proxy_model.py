@@ -34,7 +34,7 @@ class ShotgunSortFilterProxyModel(QtGui.QSortFilterProxyModel):
 
         :param parent: The Qt parent of the proxy model.
         """
-        super(ShotgunSortFilterProxyModel, self).__init__(parent)
+        super().__init__(parent)
 
         self._filter_by_fields = ["id"]
         self._sort_by_fields = ["id"]

@@ -11,13 +11,11 @@
 import locale
 
 from sgtk.platform.qt import QtGui, QtCore
-from tank_vendor import six
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class PercentWidget(LabelBaseWidget):
+class PercentWidget(LabelBaseWidget, metaclass=ShotgunFieldMeta):
     """
     Display a ``percent`` field value as returned by the Shotgun API.
     """
@@ -34,8 +32,7 @@ class PercentWidget(LabelBaseWidget):
         return locale.format("%d", value, grouping=True) + "%"
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class PercentEditorWidget(QtGui.QSpinBox):
+class PercentEditorWidget(QtGui.QSpinBox, metaclass=ShotgunFieldMeta):
     """
     Allows editing of a ``percent`` field value as returned by the Shotgun API.
 
@@ -61,7 +58,7 @@ class PercentEditorWidget(QtGui.QSpinBox):
         if event.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
             self.value_changed.emit()
         else:
-            super(PercentEditorWidget, self).keyPressEvent(event)
+            super().keyPressEvent(event)
 
     def setup_widget(self):
         """

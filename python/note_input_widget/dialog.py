@@ -21,7 +21,7 @@ class NoteInputDialog(QtGui.QDialog):
         """
         Constructor.
         """
-        super(NoteInputDialog, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint)
 

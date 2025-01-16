@@ -89,9 +89,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         mcl.take_over_if_not_defined("set_value", mcl.set_value, class_dict, parents)
 
         # create the class instance itself
-        field_class = super(ShotgunFieldMeta, mcl).__new__(
-            mcl, name, parents, class_dict
-        )
+        field_class = super().__new__(mcl, name, parents, class_dict)
 
         # register the field type this class implements with the field manager
         ShotgunFieldManager.register(class_dict["_FIELD_TYPE"], field_class)

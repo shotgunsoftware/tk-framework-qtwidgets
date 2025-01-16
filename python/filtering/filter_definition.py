@@ -1022,7 +1022,7 @@ class FilterMenuFiltersDefinition(FilterDefinition):
         Constructor.
         """
 
-        super(FilterMenuFiltersDefinition, self).__init__()
+        super().__init__()
 
         # The FilterMenu assoicated with this FilterDefinition.
         self._filter_menu = filter_menu
@@ -1035,14 +1035,14 @@ class FilterMenuFiltersDefinition(FilterDefinition):
     def clear(self):
         """Override the base method."""
 
-        super(FilterMenuFiltersDefinition, self).clear()
+        super().clear()
         self.__current_menu_filters_by_field = {}
 
     def update_filters(self, field_ids):
         """Override the base method."""
 
         self.__current_menu_filters_by_field = {}
-        super(FilterMenuFiltersDefinition, self).update_filters(field_ids)
+        super().update_filters(field_ids)
 
     def _proxy_filter_accepts_row(self, index):
         """

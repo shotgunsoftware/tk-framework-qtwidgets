@@ -76,7 +76,7 @@ class SGQIcon(QtGui.QIcon):
         :type selected_on: str
         """
 
-        super(SGQIcon, self).__init__()
+        super().__init__()
 
         # The pixmap for the mode Normal and state On is the default
         self.addPixmap(

@@ -99,9 +99,7 @@ class ShotgunFieldDelegateGeneric(views.WidgetDelegate):
         """
 
         # let the base class do all the heavy lifting
-        super(ShotgunFieldDelegateGeneric, self).paint(
-            painter, style_options, model_index
-        )
+        super().paint(painter, style_options, model_index)
 
         # clear out the paint widget's contents to prevent it from showing in
         # other places in the view (since the widget is shared)
@@ -421,7 +419,7 @@ class ShotgunFieldDelegate(ShotgunFieldDelegateGeneric):
 
         field_data_role = shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE
 
-        super(ShotgunFieldDelegate, self).__init__(
+        super().__init__(
             sg_entity_type,
             field_name,
             display_class,

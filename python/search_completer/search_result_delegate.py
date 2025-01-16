@@ -40,7 +40,7 @@ class SearchResultDelegate(views.WidgetDelegate):
         """
         :param view: The view where this delegate is being used
         """
-        super(SearchResultDelegate, self).__init__(view)
+        super().__init__(view)
 
         self._pixmaps = CompleterPixmaps()
         self._text = sgutils.ensure_str(text)

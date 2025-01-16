@@ -10,11 +10,9 @@
 
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
-from tank_vendor import six
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class TimecodeWidget(LabelBaseWidget):
+class TimecodeWidget(LabelBaseWidget, metaclass=ShotgunFieldMeta):
     """
     Display a ``timecode`` field value as returned by the Shotgun API.
     """

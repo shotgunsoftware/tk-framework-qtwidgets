@@ -39,7 +39,7 @@ class ElidedLabel(QtGui.QLabel):
 
     def sizeHint(self):
 
-        base_size_hint = super(ElidedLabel, self).sizeHint()
+        base_size_hint = super().sizeHint()
 
         return QtCore.QSize(self._get_width_hint(), base_size_hint.height())
 
@@ -106,7 +106,7 @@ class ElidedLabel(QtGui.QLabel):
         self._update_elided_text()
 
         # if we're elided, make the tooltip show the full text
-        if super(ElidedLabel, self).text() != self._actual_text:
+        if super().text() != self._actual_text:
             # wrap the actual text in a paragraph so that it wraps nicely
             self.setToolTip("<p>%s</p>" % (self._actual_text,))
         else:

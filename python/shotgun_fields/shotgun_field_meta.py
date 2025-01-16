@@ -58,13 +58,11 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
     Example::
 
-        @six.add_metaclass(ShotgunFieldMeta)
-        class FloatDisplayWidget(QtGui.QLabel):
+        class FloatDisplayWidget(QtGui.QLabel, metaclass=ShotgunFieldMeta):
             _DISPLAY_TYPE = "float"
             # ...
 
-        @six.add_metaclass(ShotgunFieldMeta)
-        class FloatEditorWidget(QtGui.QDoubleSpinBox):
+        class FloatEditorWidget(QtGui.QDoubleSpinBox, metaclass=ShotgunFieldMeta):
             _EDITOR_TYPE = "float"
             # ...
 
@@ -76,8 +74,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
 
     Example::
 
-        @six.add_metaclass(ShotgunFieldMeta)
-        class SpecialFloatDisplayWidget(QtGui.QLabel):
+        class SpecialFloatDisplayWidget(QtGui.QLabel, metaclass=ShotgunFieldMeta):
             _DISPLAY_TYPE = "float"
             _ENTITY_FIELDS = [
                 ("CustomEntity07", "my_float_field"),
@@ -167,9 +164,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         class_dict["value_changed"] = QtCore.Signal()
 
         # create the class instance itself
-        field_class = super(ShotgunFieldMeta, mcl).__new__(
-            mcl, name, parents, class_dict
-        )
+        field_class = super().__new__(mcl, name, parents, class_dict)
 
         # widgets can be used for multiple reasons (display, edit, editable, etc).
         # build a list of the different types for later registration.
@@ -241,7 +236,7 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         class' superclass.
         """
         # create the instance passing through just the QWidget compatible arguments
-        instance = super(ShotgunFieldMeta, cls).__call__(parent=parent, **kwargs)
+        instance = super().__call__(parent=parent, **kwargs)
 
         # set the default member variables
         instance._value = None

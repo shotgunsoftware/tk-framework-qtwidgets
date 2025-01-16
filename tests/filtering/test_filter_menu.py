@@ -44,7 +44,7 @@ class TestFilterMenu(TankTestBase):
         Start the test engine, import the necessary frameworks for testing, and initialize some basic model data.
         """
 
-        super(TestFilterMenu, self).setUp()
+        super().setUp()
         self.setup_fixtures()
         context = sgtk.Context(self.tk, project=self.project)
         self.engine = sgtk.platform.start_engine("tk-testengine", self.tk, context)
@@ -104,7 +104,7 @@ class TestFilterMenu(TankTestBase):
         """
 
         self.engine.destroy()
-        super(TestFilterMenu, self).tearDown()
+        super().tearDown()
 
     def test_filter_menu_constructor(self):
         """
