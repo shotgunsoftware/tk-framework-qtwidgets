@@ -65,8 +65,7 @@ class EntityWidget(ElidedLabelBaseWidget, metaclass=ShotgunFieldMeta):
 
 
 class EntityEditorWidget(
-    global_search_widget.GlobalSearchWidget,
-    metaclass=ShotgunFieldMeta
+    global_search_widget.GlobalSearchWidget, metaclass=ShotgunFieldMeta
 ):
     """
     Allows editing of a ``entity`` field value as returned by the Shotgun API.

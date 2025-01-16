@@ -1179,9 +1179,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             # Fall through to allow the base implementation to perform any other mouse move event handling
 
-        return super().editorEvent(
-            event, model, view_option, index
-        )
+        return super().editorEvent(event, model, view_option, index)
 
     def sizeHint(self, option, index):
         """
