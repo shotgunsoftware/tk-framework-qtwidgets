@@ -164,7 +164,9 @@ class ShotgunFieldMeta(type(QtGui.QWidget)):
         class_dict["value_changed"] = QtCore.Signal()
 
         # create the class instance itself
-        field_class = super().__new__(mcl, name, parents, class_dict)
+        field_class = super(ShotgunFieldMeta, mcl).__new__(
+            mcl, name, parents, class_dict
+        )
 
         # widgets can be used for multiple reasons (display, edit, editable, etc).
         # build a list of the different types for later registration.

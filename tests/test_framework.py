@@ -133,10 +133,9 @@ class TestFramework(TankTestBase):
                     continue
 
                 params = {}
-                getargspec = inspect.getfullargspec
 
                 try:
-                    spec = getargspec(attr.__init__)
+                    spec = inspect.getfullargspec(attr.__init__)
                 except TypeError as error:
                     # Failed to get the spec for the __init__ method, raise the error
                     raise error
