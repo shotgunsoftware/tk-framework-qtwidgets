@@ -1024,7 +1024,7 @@ class FilterMenuFiltersDefinition(FilterDefinition):
 
         super().__init__()
 
-        # The FilterMenu assoicated with this FilterDefinition.
+        # The FilterMenu associated with this FilterDefinition.
         self._filter_menu = filter_menu
 
         # Reset the current menu filters lookup map to ensure the filters reflect the
