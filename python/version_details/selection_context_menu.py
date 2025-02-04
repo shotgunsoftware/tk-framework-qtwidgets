@@ -28,7 +28,7 @@ class SelectionContextMenu(QtGui.QMenu):
         :param selected_entities:   The currently-selected entities.
         :type selected_entities:    A list of Shotgun entity dicts.
         """
-        super(SelectionContextMenu, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._selected_entities = selected_entities
         self._actions = dict()
 
@@ -81,7 +81,7 @@ class SelectionContextMenu(QtGui.QMenu):
             action.setEnabled(False)
 
         self._actions[action] = action_definition
-        return super(SelectionContextMenu, self).addAction(action)
+        return super().addAction(action)
 
     def execute_callback(self, action):
         """

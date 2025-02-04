@@ -9,7 +9,6 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor import six
 from .bubble_widget import BubbleEditWidget, BubbleWidget
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
@@ -17,8 +16,7 @@ from .shotgun_field_meta import ShotgunFieldMeta
 from .ui import resources_rc
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class TagsWidget(ElidedLabelBaseWidget):
+class TagsWidget(ElidedLabelBaseWidget, metaclass=ShotgunFieldMeta):
     """
     Display a ``tag_list`` field value as returned by the Shotgun API.
     """
@@ -122,7 +120,7 @@ class TagsEditorWidget(BubbleEditWidget):
             event.ignore()
             return
 
-        super(TagsEditorWidget, self).keyPressEvent(event)
+        super().keyPressEvent(event)
 
     def remove_tag(self, tag):
         """

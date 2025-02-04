@@ -45,7 +45,7 @@ class ShotgunEntityCardDelegate(views.EditSelectedWidgetDelegate):
                                         to pass to any constructed widgets.
         :type shotgun_field_manager:    :class:`~ShotgunFieldManager`
         """
-        super(ShotgunEntityCardDelegate, self).__init__(view)
+        super().__init__(view)
 
         self._fields = ["code", "entity"]
         self._widget_cache = dict()

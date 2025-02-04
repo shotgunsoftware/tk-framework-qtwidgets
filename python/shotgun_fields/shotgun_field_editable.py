@@ -39,7 +39,7 @@ class ShotgunFieldEditable(QtGui.QStackedWidget):
         :param parent: The parent widget or ``None``
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
-        super(ShotgunFieldEditable, self).__init__(parent)
+        super().__init__(parent)
 
         self._enabled = True
 
@@ -213,7 +213,7 @@ class ShotgunFieldNotEditable(QtGui.QWidget):
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
 
-        super(ShotgunFieldNotEditable, self).__init__(parent)
+        super().__init__(parent)
 
         self._display_widget = display_widget
 
@@ -289,7 +289,7 @@ class _DisplayWidget(QtGui.QWidget):
         :return:
         """
 
-        super(_DisplayWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self._enabled = True
 
@@ -379,7 +379,7 @@ class _EditorWidget(QtGui.QWidget):
         :type parent: :class:`~PySide.QtGui.QWidget`
         :return:
         """
-        super(_EditorWidget, self).__init__(parent)
+        super().__init__(parent)
         self._editor_widget = editor_widget
         self._editor_widget.setFocusPolicy(QtCore.Qt.StrongFocus)
 

@@ -12,7 +12,6 @@ import os
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor import six
 from .shotgun_field_meta import ShotgunFieldMeta
 
 from .ui import resources_rc
@@ -25,8 +24,7 @@ shotgun_globals = sgtk.platform.import_framework(
 )
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class ImageWidget(QtGui.QLabel):
+class ImageWidget(QtGui.QLabel, metaclass=ShotgunFieldMeta):
     """
     Display an ``image`` field value as returned by the Shotgun API.
 
@@ -59,7 +57,7 @@ class ImageWidget(QtGui.QLabel):
         self._image_path = None
         if not self._delegate:
             self._needs_download = True
-        super(ImageWidget, self).clear()
+        super().clear()
 
     def enable_editing(self, enable):
         """
@@ -108,7 +106,7 @@ class ImageWidget(QtGui.QLabel):
             ratio = float(width) / self._pixmap.width()
             return ratio * self._pixmap.height()
 
-        return super(ImageWidget, self).heightForWidth(width)
+        return super().heightForWidth(width)
 
     def minimumSizeHint(self):
         """
@@ -118,7 +116,7 @@ class ImageWidget(QtGui.QLabel):
         if self._pixmap:
             return QtCore.QSize(32, 32)
         else:
-            return super(ImageWidget, self).minimumSizeHint()
+            return super().minimumSizeHint()
 
     def resizeEvent(self, event):
         """
@@ -136,10 +134,10 @@ class ImageWidget(QtGui.QLabel):
             # used for display
             scaled_pixmap = self._scale_pixmap(self._pixmap)
             self._scaled_width = scaled_pixmap.width()
-            super(ImageWidget, self).setPixmap(scaled_pixmap)
+            super().setPixmap(scaled_pixmap)
             self._update_btn_position()
 
-        super(ImageWidget, self).resizeEvent(event)
+        super().resizeEvent(event)
 
     def setPixmap(self, pixmap):
         """
@@ -157,7 +155,7 @@ class ImageWidget(QtGui.QLabel):
         # available space the widget has.
         scaled_pixmap = self._scale_pixmap(pixmap)
         self._scaled_width = scaled_pixmap.width()
-        super(ImageWidget, self).setPixmap(scaled_pixmap)
+        super().setPixmap(scaled_pixmap)
         self._update_btn_position()
 
     def set_value(self, value):
@@ -279,7 +277,7 @@ class ImageWidget(QtGui.QLabel):
             w = self.width()
             return QtCore.QSize(w, self.heightForWidth(w))
 
-        return super(ImageWidget, self).sizeHint()
+        return super().sizeHint()
 
     def _clear_image(self):
         """

@@ -99,7 +99,7 @@ class VersionDetailsWidget(QtGui.QWidget):
         :param bg_task_manager: A :class:`~BackgroundTaskManager` object.
         :param entity:          A Shotgun Version entity dictionary.
         """
-        super(VersionDetailsWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self._current_entity = None
         self._pinned = False

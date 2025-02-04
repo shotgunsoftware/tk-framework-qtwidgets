@@ -47,7 +47,7 @@ class ShotgunMenu(QtGui.QMenu):
         :type parent: :class:`~PySide.QtGui.QWidget`
         """
 
-        super(ShotgunMenu, self).__init__(parent)
+        super().__init__(parent)
 
         self._typed_text = ""
 
@@ -200,7 +200,7 @@ class ShotgunMenu(QtGui.QMenu):
         else:
             # the typed key isn't one we recognize for matching. call the
             # default implementation
-            super(ShotgunMenu, self).keyReleaseEvent(event)
+            super().keyReleaseEvent(event)
             self._type_timer.start()
             return
 
@@ -221,7 +221,7 @@ class ShotgunMenu(QtGui.QMenu):
                 pass
 
         # didn't find a match, call the base class
-        super(ShotgunMenu, self).keyReleaseEvent(event)
+        super().keyReleaseEvent(event)
 
         # ensure the timer is started
         self._type_timer.start()

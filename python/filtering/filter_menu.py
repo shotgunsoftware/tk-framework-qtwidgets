@@ -52,11 +52,11 @@ class NoCloseOnActionTriggerShotgunMenu(ShotgunMenu):
         action = self.activeAction()
         if action and action.isEnabled():
             action.setEnabled(False)
-            super(NoCloseOnActionTriggerShotgunMenu, self).mouseReleaseEvent(event)
+            super().mouseReleaseEvent(event)
             action.setEnabled(True)
             action.trigger()
         else:
-            super(NoCloseOnActionTriggerShotgunMenu, self).mouseReleaseEvent(event)
+            super().mouseReleaseEvent(event)
 
 
 class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
@@ -160,7 +160,7 @@ class FilterMenu(NoCloseOnActionTriggerShotgunMenu):
         :type dock_widget: QtGui.QWidget | QtGui.QScrollArea
         """
 
-        super(FilterMenu, self).__init__(parent)
+        super().__init__(parent)
 
         # The filters definitions that are built based on the current model data, and which are used
         # to build the filter menu UI.
@@ -1660,7 +1660,7 @@ class ShotgunFilterMenu(FilterMenu):
         Set the filter_roles to the ShotgunModel role pointing to its PTR data.
         """
 
-        super(ShotgunFilterMenu, self).__init__(
+        super().__init__(
             parent,
             refresh_on_show=refresh_on_show,
             bg_task_manager=bg_task_manager,
@@ -1742,7 +1742,7 @@ class ShotgunFilterMenu(FilterMenu):
                 field_id = "{}.{}".format(self.__field_id_prefix, field_id)
             formatted_state[field_id] = field_state
 
-        super(ShotgunFilterMenu, self).restore_state(formatted_state)
+        super().restore_state(formatted_state)
 
     def set_filter_model(self, filter_model, connect_signals=True):
         """
@@ -1773,7 +1773,7 @@ class ShotgunFilterMenu(FilterMenu):
                 # Signals were never connected.
                 pass
 
-        super(ShotgunFilterMenu, self).set_filter_model(filter_model, connect_signals)
+        super().set_filter_model(filter_model, connect_signals)
 
         if connect_signals and self._source_model is not None:
             self._source_model.data_refreshing.connect(self._on_data_refreshing)

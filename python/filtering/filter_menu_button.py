@@ -37,7 +37,7 @@ class FilterMenuButton(SGQToolButton):
         :type icon: :class:`sgtk.platform.qt.QtGui.QIcon`
         """
 
-        super(FilterMenuButton, self).__init__(parent)
+        super().__init__(parent)
 
         self.__icon = icon if icon else SGQIcon.filter()
         self.__checked = False
@@ -78,7 +78,7 @@ class FilterMenuButton(SGQToolButton):
             self.menu().menu_refreshed.disconnect(lambda: self.set_enabled(True))
             self.menu().filters_changed.disconnect(self.update_button_checked)
 
-        super(FilterMenuButton, self).setMenu(menu)
+        super().setMenu(menu)
         self.update_button_checked()
 
         self.menu().filters_changed.connect(self.update_button_checked)
@@ -88,7 +88,7 @@ class FilterMenuButton(SGQToolButton):
     def setEnabled(self, enabled):
         """Override the base QToolButton method to ensure the check state is restored."""
 
-        super(FilterMenuButton, self).setEnabled(enabled)
+        super().setEnabled(enabled)
 
         if not enabled:
             # Uncheck the button while disabled so stylistically it looks disabled.

@@ -89,7 +89,7 @@ class EntityFieldMenu(ShotgunMenu):
                                cache location will be returned if the current
                                context does not have an associated project.
         """
-        super(EntityFieldMenu, self).__init__(parent)
+        super().__init__(parent)
 
         self._bundle = sgtk.platform.current_bundle()
         self._sg_entity_type = sg_entity_type

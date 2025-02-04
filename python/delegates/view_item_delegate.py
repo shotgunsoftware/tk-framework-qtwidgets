@@ -107,7 +107,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
         :type view: :class:`sgkt.platform.qt.QtGui.QAbstractItemView`
         """
 
-        super(ViewItemDelegate, self).__init__(view)
+        super().__init__(view)
 
         # Store the view widget to fall back on for older versions of Qt, where the QStyleOption does not
         # have a widget or styleObject property
@@ -1089,7 +1089,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
             -self.item_padding.bottom,
         )
 
-        super(ViewItemDelegate, self).initStyleOption(option, index)
+        super().initStyleOption(option, index)
 
     def createEditor(self, parent, option, index):
         """
@@ -1179,9 +1179,7 @@ class ViewItemDelegate(QtGui.QStyledItemDelegate):
 
             # Fall through to allow the base implementation to perform any other mouse move event handling
 
-        return super(ViewItemDelegate, self).editorEvent(
-            event, model, view_option, index
-        )
+        return super().editorEvent(event, model, view_option, index)
 
     def sizeHint(self, option, index):
         """

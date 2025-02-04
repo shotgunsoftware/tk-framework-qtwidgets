@@ -10,7 +10,6 @@
 
 import sgtk
 from sgtk.platform.qt import QtGui, QtCore
-from tank_vendor import six
 from .label_base_widget import LabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -19,8 +18,7 @@ shotgun_globals = sgtk.platform.import_framework(
 )
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class ListWidget(LabelBaseWidget):
+class ListWidget(LabelBaseWidget, metaclass=ShotgunFieldMeta):
     """
     Display a ``list`` field value as returned by the Shotgun API.
     """
@@ -28,8 +26,7 @@ class ListWidget(LabelBaseWidget):
     _DISPLAY_TYPE = "list"
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class ListEditorWidget(QtGui.QComboBox):
+class ListEditorWidget(QtGui.QComboBox, metaclass=ShotgunFieldMeta):
     """
     Allows editing of a ``list`` field value as returned by the Shotgun API.
     """

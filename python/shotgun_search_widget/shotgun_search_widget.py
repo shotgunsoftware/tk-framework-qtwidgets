@@ -28,7 +28,7 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
         """
 
         # first, call the base class and let it do its thing.
-        super(ShotgunSearchWidget, self).__init__(parent)
+        super().__init__(parent)
 
         # trigger the completer to popup as text changes
         self.textEdited.connect(self._search_edited)
@@ -134,4 +134,4 @@ class ShotgunSearchWidget(QtGui.QLineEdit):
             self.clear()
             self.completer().popup().close()
         else:
-            super(ShotgunSearchWidget, self).keyPressEvent(event)
+            super().keyPressEvent(event)

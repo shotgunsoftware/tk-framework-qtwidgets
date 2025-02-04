@@ -12,7 +12,6 @@ import os
 
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
-from tank_vendor import six
 from .label_base_widget import ElidedLabelBaseWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 
@@ -20,8 +19,7 @@ from .shotgun_field_meta import ShotgunFieldMeta
 from .ui import resources_rc
 
 
-@six.add_metaclass(ShotgunFieldMeta)
-class FileLinkWidget(ElidedLabelBaseWidget):
+class FileLinkWidget(ElidedLabelBaseWidget, metaclass=ShotgunFieldMeta):
     """
     Display a ``url`` field value as returned by the Shotgun API.
 
@@ -391,7 +389,7 @@ class _EditWebLinkDialog(QtGui.QDialog):
         :return:
         """
 
-        super(_EditWebLinkDialog, self).__init__(parent)
+        super().__init__(parent)
 
         self.setMinimumWidth(350)
 

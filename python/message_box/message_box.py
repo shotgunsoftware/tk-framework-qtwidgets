@@ -56,7 +56,7 @@ class MessageBox(sg_qwidgets.SGQDialog):
         :type parent: QWidget
         """
 
-        super(MessageBox, self).__init__(parent)
+        super().__init__(parent)
 
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.setModal(True)

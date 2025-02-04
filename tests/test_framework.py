@@ -15,7 +15,6 @@ import inspect
 from tank_test.tank_test_base import TankTestBase
 from tank_test.tank_test_base import setUpModule  # noqa
 
-from tank_vendor import six
 import sgtk
 
 try:
@@ -40,7 +39,7 @@ class TestFramework(TankTestBase):
         """
         Prepare a configuration with a config that uses the framework.
         """
-        super(TestFramework, self).setUp()
+        super().setUp()
         self.setup_fixtures()
         context = sgtk.Context(self.tk, project=self.project)
         self.engine = sgtk.platform.start_engine("tk-testengine", self.tk, context)
@@ -54,7 +53,7 @@ class TestFramework(TankTestBase):
         Terminate the engine and the rest of the test suite.
         """
         self.engine.destroy()
-        super(TestFramework, self).tearDown()
+        super().tearDown()
 
     def test_import_framework(self):
         """
@@ -134,20 +133,10 @@ class TestFramework(TankTestBase):
                     continue
 
                 params = {}
-                if six.PY2:
-                    getargspec = inspect.getargspec
-                else:
-                    getargspec = inspect.getfullargspec
 
                 try:
-                    spec = getargspec(attr.__init__)
+                    spec = inspect.getfullargspec(attr.__init__)
                 except TypeError as error:
-                    if six.PY2 and module_name == "sg_qwidgets":
-                        # Skip PTR wrapper classes for Qt widgets in python2 - the __init__
-                        # method cannot be found in python2 using the getargspec even though
-                        # there is no issue instantiating these widgets
-                        continue
-
                     # Failed to get the spec for the __init__ method, raise the error
                     raise error
 

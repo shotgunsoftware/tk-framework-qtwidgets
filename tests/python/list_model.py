@@ -34,7 +34,7 @@ class _TestListModel(QtCore.QAbstractListModel):
         Constructor.
         """
 
-        super(_TestListModel, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self._data = []
         self._map_role_to_column = {QtCore.Qt.DisplayRole: 0}

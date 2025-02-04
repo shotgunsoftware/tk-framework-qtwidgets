@@ -29,7 +29,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         :type parent: :class:`sgtk.platform.qt.QtGui.QAbstractItemView`
         """
 
-        super(ThumbnailViewItemDelegate, self).__init__(parent)
+        super().__init__(parent)
 
         self._thumbnail_size = QtCore.QSize(164, 128)
         self.thumbnail_position = (self.TOP,)
@@ -132,7 +132,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
                 self._get_header_text(index, option, rect)
             ] + self.get_display_values_list(index, self.short_text_role)
 
-        return super(ThumbnailViewItemDelegate, self)._get_text(index, option, rect)
+        return super()._get_text(index, option, rect)
 
     def _get_thumbnail_rect(self, option, index, thumbnail=None):
         """
@@ -192,7 +192,7 @@ class ThumbnailViewItemDelegate(ViewItemDelegate):
         """
 
         if not self._get_thumbnail(index):
-            return super(ThumbnailViewItemDelegate, self)._get_text_rect(option, index)
+            return super()._get_text_rect(option, index)
 
         rect = QtCore.QRect(option.rect)
         top_left = rect.topLeft()

@@ -28,7 +28,7 @@ class FilterItemTreeProxyModel(models.HierarchicalFilteringProxyModel):
         Constructor
         """
 
-        super(FilterItemTreeProxyModel, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         # Default to AND all of the filter items upon filtering.
         self._group_op = FilterItem.FilterOp.AND
