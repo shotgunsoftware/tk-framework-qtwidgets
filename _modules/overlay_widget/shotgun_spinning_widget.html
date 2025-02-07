@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>overlay_widget.shotgun_spinning_widget &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>overlay_widget.shotgun_spinning_widget &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -152,15 +152,15 @@
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
 
-<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
-<span class="kn">from</span> <span class="nn">tank.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tank.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 <span class="c1"># load resources</span>
-<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ui</span><span class="w"> </span><span class="kn">import</span> <span class="n">resources_rc</span>  <span class="c1"># noqa</span>
 
 
-<div class="viewcode-block" id="ShotgunSpinningWidget"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget">[docs]</a><span class="k">class</span> <span class="nc">ShotgunSpinningWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunSpinningWidget"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ShotgunSpinningWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Overlay widget that can be placed on top over any QT widget.</span>
 <span class="sd">    Once you have placed the overlay widget, you can use it to</span>
@@ -175,7 +175,7 @@
     <span class="c1"># Indicates how many times per second does the spinner update. This means every 40ms.</span>
     <span class="n">_UPDATES_PER_SECOND</span> <span class="o">=</span> <span class="mi">25</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent: Widget to attach the overlay to</span>
 <span class="sd">        :type parent: :class:`PySide.QtGui.QWidget`</span>
@@ -206,7 +206,7 @@
 
     <span class="c1">############################################################################################</span>
     <span class="c1"># public interface</span>
-<div class="viewcode-block" id="ShotgunSpinningWidget.start_spin"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget.start_spin">[docs]</a>    <span class="k">def</span> <span class="nf">start_spin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunSpinningWidget.start_spin"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget.start_spin">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">start_spin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enables the overlay and shows an animated spinner.</span>
 
@@ -216,7 +216,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODE_SPIN</span></div>
 
-<div class="viewcode-block" id="ShotgunSpinningWidget.start_progress"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget.start_progress">[docs]</a>    <span class="k">def</span> <span class="nf">start_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunSpinningWidget.start_progress"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget.start_progress">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">start_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enables the overlay and shows an animated progress arc.</span>
 
@@ -228,7 +228,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_spin_angle_to</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_spin_angle</span> <span class="o">=</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="ShotgunSpinningWidget.report_progress"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget.report_progress">[docs]</a>    <span class="k">def</span> <span class="nf">report_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunSpinningWidget.report_progress"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget.report_progress">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">report_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the widget current progress value.</span>
 
@@ -242,7 +242,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_spin_angle_to</span> <span class="o">=</span> <span class="mi">360</span> <span class="o">*</span> <span class="n">current</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ShotgunSpinningWidget.hide"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget.hide">[docs]</a>    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunSpinningWidget.hide"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunSpinningWidget.hide">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hides the overlay.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -253,7 +253,7 @@
     <span class="c1">############################################################################################</span>
     <span class="c1"># internal methods</span>
 
-    <span class="k">def</span> <span class="nf">_on_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Async callback to help animate the widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -277,7 +277,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_draw_opened_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">start_angle</span><span class="p">,</span> <span class="n">span_angle</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_opened_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">start_angle</span><span class="p">,</span> <span class="n">span_angle</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draws an arc around the PTR logo.</span>
 
@@ -299,7 +299,7 @@
         <span class="c1"># drawArc accepts 1/16th on angles.</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">drawArc</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">start_angle</span> <span class="o">*</span> <span class="mi">16</span><span class="p">,</span> <span class="n">span_angle</span> <span class="o">*</span> <span class="mi">16</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Render the UI.</span>
 
@@ -333,7 +333,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_draw_heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draws the heartbeat of the progress reporter so it doesn&#39;t look like</span>
 <span class="sd">        the UI has frozen when progress is not updated in a while.</span>
@@ -374,7 +374,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>elided_label.elided_label &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>elided_label.elided_label &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -156,17 +156,17 @@
 <span class="sd">correctly within the widget frame.  Handles rich-text.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">sgtk</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 
-<div class="viewcode-block" id="ElidedLabel"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel">[docs]</a><span class="k">class</span> <span class="nc">ElidedLabel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+<div class="viewcode-block" id="ElidedLabel"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ElidedLabel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Label that gracefully handles when the text doesn&#39;t fit</span>
 <span class="sd">    within the given space.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent:  The parent QWidget</span>
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
@@ -180,13 +180,13 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ElidedLabel.sizeHint"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ElidedLabel.sizeHint"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.sizeHint">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="n">base_size_hint</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ElidedLabel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
+        <span class="n">base_size_hint</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_width_hint</span><span class="p">(),</span> <span class="n">base_size_hint</span><span class="o">.</span><span class="n">height</span><span class="p">())</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_width_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_width_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ideal_width</span><span class="p">:</span>
 
@@ -203,7 +203,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ideal_width</span>
 
-    <span class="k">def</span> <span class="nf">_get_elide_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_elide_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns current elide mode</span>
 
@@ -211,7 +211,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_mode</span>
 
-    <span class="k">def</span> <span class="nf">_set_elide_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_elide_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the current elide mode.</span>
 
@@ -228,7 +228,7 @@
     <span class="c1">#: should be either QtCore.Qt.ElideLeft or QtCore.Qt.ElideRight</span>
     <span class="n">elide_mode</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_elide_mode</span><span class="p">,</span> <span class="n">_set_elide_mode</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ElidedLabel.text"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.text">[docs]</a>    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ElidedLabel.text"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.text">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overridden base method to return the original unmodified text</span>
 
@@ -236,7 +236,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span></div>
 
-<div class="viewcode-block" id="ElidedLabel.setText"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.setText">[docs]</a>    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<div class="viewcode-block" id="ElidedLabel.setText"><a class="viewcode-back" href="../../elided_label.html#elided_label.ElidedLabel.setText">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overridden base method to set the text on the label</span>
 
@@ -249,13 +249,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span>
 
         <span class="c1"># if we&#39;re elided, make the tooltip show the full text</span>
-        <span class="k">if</span> <span class="nb">super</span><span class="p">(</span><span class="n">ElidedLabel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span><span class="p">:</span>
             <span class="c1"># wrap the actual text in a paragraph so that it wraps nicely</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;&lt;p&gt;</span><span class="si">%s</span><span class="s2">&lt;/p&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span><span class="p">,))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overridden base method called when the widget is resized.</span>
 
@@ -264,14 +264,14 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_elided_text</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_update_elided_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_elided_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the elided text on the label</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_mode</span><span class="p">)</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">elide_mode</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">elide_mode</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Elide the specified text using the specified mode</span>
 
@@ -353,7 +353,7 @@
             <span class="k">pass</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">line_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">line_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        (:obj:`int`) width of the line of text in pixels</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -367,7 +367,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>views.grouped_list_view.grouped_list_view_item_delegate &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>views.grouped_list_view.grouped_list_view_item_delegate &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -155,14 +155,14 @@
 <span class="sd">Custom item delegate for use with the GroupedListView</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">sgtk</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
 
-<span class="kn">from</span> <span class="nn">..widget_delegate</span> <span class="kn">import</span> <span class="n">WidgetDelegate</span>
-<span class="kn">from</span> <span class="nn">.group_widget</span> <span class="kn">import</span> <span class="n">GroupWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..widget_delegate</span><span class="w"> </span><span class="kn">import</span> <span class="n">WidgetDelegate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.group_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">GroupWidget</span>
 
 
-<div class="viewcode-block" id="GroupedListViewItemDelegate"><a class="viewcode-back" href="../../../views.html#views.GroupedListViewItemDelegate">[docs]</a><span class="k">class</span> <span class="nc">GroupedListViewItemDelegate</span><span class="p">(</span><span class="n">WidgetDelegate</span><span class="p">):</span>
+<div class="viewcode-block" id="GroupedListViewItemDelegate"><a class="viewcode-back" href="../../../views.html#views.GroupedListViewItemDelegate">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">GroupedListViewItemDelegate</span><span class="p">(</span><span class="n">WidgetDelegate</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base delegate class for a delegate specifically to be used by a :class:`GroupedListView`.</span>
 
@@ -170,7 +170,7 @@
 <span class="sd">    delegate methods.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param view: The view this delegate is operating on</span>
 <span class="sd">        :type view:  :class:`~PySide.QtGui.QWidget`</span>
@@ -179,7 +179,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_calc_group_widget</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="GroupedListViewItemDelegate.create_group_widget"><a class="viewcode-back" href="../../../views.html#views.GroupedListViewItemDelegate.create_group_widget">[docs]</a>    <span class="k">def</span> <span class="nf">create_group_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<div class="viewcode-block" id="GroupedListViewItemDelegate.create_group_widget"><a class="viewcode-back" href="../../../views.html#views.GroupedListViewItemDelegate.create_group_widget">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_group_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a group header widget for the grouped list view</span>
 
@@ -192,7 +192,7 @@
         <span class="c1"># base implementation just returns the default group widget</span>
         <span class="k">return</span> <span class="n">GroupWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overriden base method returns the size hint for the specified model index</span>
 
@@ -241,7 +241,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

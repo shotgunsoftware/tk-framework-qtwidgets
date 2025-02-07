@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>activity_stream.activity_stream &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -151,20 +151,20 @@
 <span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
 
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
-<span class="kn">from</span> <span class="nn">.ui.activity_stream_widget</span> <span class="kn">import</span> <span class="n">Ui_ActivityStreamWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ui.activity_stream_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ui_ActivityStreamWidget</span>
 
-<span class="kn">from</span> <span class="nn">.widget_new_item</span> <span class="kn">import</span> <span class="n">NewItemWidget</span><span class="p">,</span> <span class="n">SimpleNewItemWidget</span>
-<span class="kn">from</span> <span class="nn">.widget_note</span> <span class="kn">import</span> <span class="n">NoteWidget</span>
-<span class="kn">from</span> <span class="nn">.widget_value_update</span> <span class="kn">import</span> <span class="n">ValueUpdateWidget</span>
-<span class="kn">from</span> <span class="nn">.dialog_reply</span> <span class="kn">import</span> <span class="n">ReplyDialog</span>
-<span class="kn">from</span> <span class="nn">.data_manager</span> <span class="kn">import</span> <span class="n">ActivityStreamDataHandler</span>
-<span class="kn">from</span> <span class="nn">.overlaywidget</span> <span class="kn">import</span> <span class="n">SmallOverlayWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.widget_new_item</span><span class="w"> </span><span class="kn">import</span> <span class="n">NewItemWidget</span><span class="p">,</span> <span class="n">SimpleNewItemWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.widget_note</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoteWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.widget_value_update</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValueUpdateWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.dialog_reply</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReplyDialog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActivityStreamDataHandler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.overlaywidget</span><span class="w"> </span><span class="kn">import</span> <span class="n">SmallOverlayWidget</span>
 
 <span class="n">note_input_widget</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;note_input_widget&quot;</span><span class="p">)</span>
 
@@ -173,7 +173,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ActivityStreamWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget">[docs]</a><span class="k">class</span> <span class="nc">ActivityStreamWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ActivityStreamWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    QT Widget that displays the Shotgun activity stream for an entity.</span>
 
@@ -211,7 +211,7 @@
     <span class="c1"># dict(entity_type=&quot;Note&quot;, id=1234)</span>
     <span class="n">entity_created</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent: QT parent object</span>
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
@@ -291,7 +291,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_entity_created</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ActivityStreamWidget.set_bg_task_manager"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span> <span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.set_bg_task_manager"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.set_bg_task_manager">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_bg_task_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify the background task manager to use to pull</span>
 <span class="sd">        data in the background. Data calls</span>
@@ -306,7 +306,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">set_bg_task_manager</span><span class="p">(</span><span class="n">task_manager</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActivityStreamWidget.destroy"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.destroy"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.destroy">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Should be called before the widget is closed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -317,7 +317,7 @@
     <span class="c1"># properties</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">note_threads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">note_threads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The currently loaded note threads, keyed by Note entity id and</span>
 <span class="sd">        containing a list of Shotgun entity dictionaries. All note threads</span>
@@ -413,7 +413,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">note_threads</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">note_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">note_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the :class:`~note_input_widget.NoteInputWidget` contained within</span>
 <span class="sd">        the ActivityStreamWidget. Note that this is the widget used for NEW note</span>
@@ -422,7 +422,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span>
 
-    <span class="k">def</span> <span class="nf">_get_clickable_user_icons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_clickable_user_icons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether user icons in the activity stream display as clickable.</span>
 <span class="sd">        If True, a pointing hand cursor will be shown when the mouse is</span>
@@ -431,7 +431,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clickable_user_icons</span>
 
-    <span class="k">def</span> <span class="nf">_set_clickable_user_icons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_clickable_user_icons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clickable_user_icons</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -445,7 +445,7 @@
         <span class="n">_get_clickable_user_icons</span><span class="p">,</span> <span class="n">_set_clickable_user_icons</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The pre-submit callback. This is None if one is not set, or a Python</span>
 <span class="sd">        callable if it is. This callable is run prior to submission of a new</span>
@@ -456,33 +456,33 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span>
 
-    <span class="k">def</span> <span class="nf">_set_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_pre_submit_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pre_submit_callback</span> <span class="o">=</span> <span class="n">callback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reply_dialog</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="n">callback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="n">callback</span>
 
     <span class="n">pre_submit_callback</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_pre_submit_callback</span><span class="p">,</span> <span class="n">_set_pre_submit_callback</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether this activity stream is allowed to give the user access to a</span>
 <span class="sd">        button that performs screenshot operations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span>
 
-    <span class="k">def</span> <span class="nf">_set_allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">allow_screenshots</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_allow_screenshots</span><span class="p">)</span>
 
     <span class="n">allow_screenshots</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_allow_screenshots</span><span class="p">,</span> <span class="n">_set_allow_screenshots</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_show_sg_stream_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_show_sg_stream_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether the button to navigate to Shotgun is shown in the stream.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_sg_stream_button</span>
 
-    <span class="k">def</span> <span class="nf">_set_show_sg_stream_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_show_sg_stream_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets whether to show the button to navigate to Shotgun.</span>
 
@@ -494,7 +494,7 @@
         <span class="n">_get_show_sg_stream_button</span><span class="p">,</span> <span class="n">_set_show_sg_stream_button</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_version_items_playable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_version_items_playable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether the label representing a created Version entity is shown</span>
 <span class="sd">        as being &quot;playable&quot; within the UI. If True, then a play icon is</span>
@@ -503,14 +503,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span>
 
-    <span class="k">def</span> <span class="nf">_set_version_items_playable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_version_items_playable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_version_items_playable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
     <span class="n">version_items_playable</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
         <span class="n">_get_version_items_playable</span><span class="p">,</span> <span class="n">_set_version_items_playable</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_show_note_links</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_show_note_links</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If True, lists out the parent entity as a list of clickable</span>
 <span class="sd">        items for each Note entity that is represented in the activity</span>
@@ -518,36 +518,36 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_note_links</span>
 
-    <span class="k">def</span> <span class="nf">_set_show_note_links</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_show_note_links</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_note_links</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
     <span class="n">show_note_links</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_show_note_links</span><span class="p">,</span> <span class="n">_set_show_note_links</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_highlight_new_arrivals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_highlight_new_arrivals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If True, highlights items in the activity stream that are new</span>
 <span class="sd">        since the last time data was loaded.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_highlight_new_arrivals</span>
 
-    <span class="k">def</span> <span class="nf">_set_highlight_new_arrivals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_highlight_new_arrivals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_highlight_new_arrivals</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
     <span class="n">highlight_new_arrivals</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
         <span class="n">_get_highlight_new_arrivals</span><span class="p">,</span> <span class="n">_set_highlight_new_arrivals</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_notes_are_selectable</span>
 
-    <span class="k">def</span> <span class="nf">_set_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_notes_are_selectable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_notes_are_selectable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
     <span class="n">notes_are_selectable</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
         <span class="n">_get_notes_are_selectable</span><span class="p">,</span> <span class="n">_set_notes_are_selectable</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_attachments_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_attachments_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If set to a compiled regular expression, attachment file names that match</span>
 <span class="sd">        will be filtered OUT and NOT shown.</span>
@@ -563,7 +563,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span>
 
-    <span class="k">def</span> <span class="nf">_set_attachments_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_attachments_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attachments_filter</span> <span class="o">=</span> <span class="n">regex</span>
 
     <span class="n">attachments_filter</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_attachments_filter</span><span class="p">,</span> <span class="n">_set_attachments_filter</span><span class="p">)</span>
@@ -571,7 +571,7 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># public interface</span>
 
-    <span class="k">def</span> <span class="nf">select_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
         <span class="n">selectedWidget</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">):</span>
@@ -583,7 +583,7 @@
         <span class="k">if</span> <span class="n">selectedWidget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">activity_stream_scroll_area</span><span class="o">.</span><span class="n">ensureWidgetVisible</span><span class="p">(</span><span class="n">selectedWidget</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ActivityStreamWidget.deselect_note"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.deselect_note">[docs]</a>    <span class="k">def</span> <span class="nf">deselect_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.deselect_note"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.deselect_note">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">deselect_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If a note is currently selected, it will be deselected. This will NOT</span>
 <span class="sd">        trigger a note_deselected signal to be emitted, as that is only emitted</span>
@@ -596,7 +596,7 @@
                 <span class="c1"># need to continue on once we&#39;ve hit a note that&#39;s selected.</span>
                 <span class="k">return</span></div>
 
-<div class="viewcode-block" id="ActivityStreamWidget.get_note_attachments"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.get_note_attachments">[docs]</a>    <span class="k">def</span> <span class="nf">get_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.get_note_attachments"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.get_note_attachments">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_note_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the Attachment entities associated with the given Note</span>
 <span class="sd">        entity. Only attachments from Notes currently loaded by the</span>
@@ -614,7 +614,7 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">NoteWidget</span><span class="p">)</span> <span class="ow">and</span> <span class="n">widget</span><span class="o">.</span><span class="n">note_id</span> <span class="o">==</span> <span class="n">note_id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">attachments</span></div>
 
-<div class="viewcode-block" id="ActivityStreamWidget.load_data"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.load_data"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.load_data">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the state of the widget and then load up the data</span>
 <span class="sd">        for a given entity.</span>
@@ -799,7 +799,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_manager</span><span class="o">.</span><span class="n">rescan</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActivityStreamWidget.show_new_note_dialog"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.show_new_note_dialog"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.show_new_note_dialog">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">show_new_note_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows a dialog that allows the user to input a new note.</span>
 
@@ -824,7 +824,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">note_dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ActivityStreamWidget.rescan"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.rescan">[docs]</a>    <span class="k">def</span> <span class="nf">rescan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_activity_stream_update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.rescan"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.rescan">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">rescan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_activity_stream_update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Triggers a rescan of the current activity stream data.</span>
 
@@ -841,7 +841,7 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># internals</span>
 
-    <span class="k">def</span> <span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_stylesheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads in a stylesheet from disk</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -854,7 +854,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear the widget. This will remove all items the UI</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -893,7 +893,7 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">note_widget</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_clear_loading_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_clear_loading_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove the loading widget from the widget list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -904,7 +904,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_widget</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_populate_note_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_widget</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_populate_note_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_widget</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load note content and replies into a note widget</span>
 
@@ -971,7 +971,7 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">reply_users</span><span class="p">,</span> <span class="n">attachment_requests</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_create_activity_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_activity_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a widget for a given activity id</span>
 <span class="sd">        If the activity id is not supported by the implementation,</span>
@@ -1073,7 +1073,7 @@
 
         <span class="k">return</span> <span class="n">widget</span>
 
-    <span class="k">def</span> <span class="nf">_note_selected_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_note_selected_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles a change in selection state for a given Note entity id.</span>
 
@@ -1085,7 +1085,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">note_deselected</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_process_new_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_ids</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_new_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_ids</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process new activity ids as they arrive from</span>
 <span class="sd">        the data manager.</span>
@@ -1164,7 +1164,7 @@
         <span class="c1"># (which only happens on a full load)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_process_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        New thumbnail has arrived from the data manager</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1172,7 +1172,7 @@
         <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activity_stream_data_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">apply_thumbnail</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_process_new_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_new_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity_id</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A new note has arrived from the data manager</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1199,7 +1199,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">note_arrived</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">note_id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_entity_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_entity_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback when an entity is created by an underlying widget.</span>
 
@@ -1208,7 +1208,7 @@
         <span class="k">if</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Note&quot;</span><span class="p">:</span>
 
             <span class="k">try</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">sgtk.util.metrics</span> <span class="kn">import</span> <span class="n">EventMetric</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.util.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventMetric</span>
 
                 <span class="n">fields</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># reserved for future use</span>
                 <span class="n">annotations</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># reserved for future use</span>
@@ -1235,7 +1235,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">entity_created</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_reply_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_reply_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback when someone clicks reply on a given note</span>
 
@@ -1266,7 +1266,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sg_entity_dict</span><span class="p">)</span>
 
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="kn">from</span> <span class="nn">sgtk.util.metrics</span> <span class="kn">import</span> <span class="n">EventMetric</span>
+                    <span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.util.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventMetric</span>
 
                     <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Source&quot;</span><span class="p">:</span> <span class="s2">&quot;Activity Stream&quot;</span><span class="p">}</span>
 
@@ -1283,7 +1283,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__small_overlay</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_load_shotgun_activity_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_shotgun_activity_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when someone clicks &#39;show activity stream in shotgun&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1297,7 +1297,7 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># events</span>
 
-<div class="viewcode-block" id="ActivityStreamWidget.mousePressEvent"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.mousePressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="ActivityStreamWidget.mousePressEvent"><a class="viewcode-back" href="../../activity_stream.html#activity_stream.ActivityStreamWidget.mousePressEvent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides the default event handler in Qt.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1323,7 +1323,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

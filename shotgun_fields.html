@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flow Production Tracking Field Widgets &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>Flow Production Tracking Field Widgets &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -252,7 +252,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -574,13 +574,11 @@ type that the class will be responsible for displaying or editing.</p></li>
 </li>
 </ul>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@six</span><span class="o">.</span><span class="n">add_metaclass</span><span class="p">(</span><span class="n">ShotgunFieldMeta</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">FloatDisplayWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">FloatDisplayWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ShotgunFieldMeta</span><span class="p">):</span>
     <span class="n">_DISPLAY_TYPE</span> <span class="o">=</span> <span class="s2">&quot;float&quot;</span>
     <span class="c1"># ...</span>
 
-<span class="nd">@six</span><span class="o">.</span><span class="n">add_metaclass</span><span class="p">(</span><span class="n">ShotgunFieldMeta</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">FloatEditorWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDoubleSpinBox</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FloatEditorWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDoubleSpinBox</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ShotgunFieldMeta</span><span class="p">):</span>
     <span class="n">_EDITOR_TYPE</span> <span class="o">=</span> <span class="s2">&quot;float&quot;</span>
     <span class="c1"># ...</span>
 </pre></div>
@@ -591,8 +589,7 @@ fields on specific entities. To achieve this, use the <code class="docutils lite
 class member to define a list of tuples that explicitly defined the entity
 fields the widget should be used to display.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@six</span><span class="o">.</span><span class="n">add_metaclass</span><span class="p">(</span><span class="n">ShotgunFieldMeta</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">SpecialFloatDisplayWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SpecialFloatDisplayWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ShotgunFieldMeta</span><span class="p">):</span>
     <span class="n">_DISPLAY_TYPE</span> <span class="o">=</span> <span class="s2">&quot;float&quot;</span>
     <span class="n">_ENTITY_FIELDS</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span><span class="s2">&quot;CustomEntity07&quot;</span><span class="p">,</span> <span class="s2">&quot;my_float_field&quot;</span><span class="p">),</span>
@@ -2986,8 +2983,8 @@ the item index.</p>
 <h2>Example Code<a class="headerlink" href="#example-code" title="Permalink to this heading"></a></h2>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">Populate a QTableWidget with the results of a Flow Production Tracking query</span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">ExampleTableWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-<span class="linenos"> 2</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span><span class="w"> </span><span class="nc">ExampleTableWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<span class="linenos"> 2</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="linenos"> 3</span>        <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 <span class="linenos"> 4</span>
 <span class="linenos"> 5</span>        <span class="c1"># grab the current app bundle for use later</span>
@@ -2998,7 +2995,7 @@ the item index.</p>
 </span><span class="hll"><span class="linenos">10</span>        <span class="bp">self</span><span class="o">.</span><span class="n">_fields_manager</span><span class="o">.</span><span class="n">initialized</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">populate_dialog</span><span class="p">)</span>
 </span><span class="hll"><span class="linenos">11</span>        <span class="bp">self</span><span class="o">.</span><span class="n">_fields_manager</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 </span><span class="linenos">12</span>
-<span class="linenos">13</span>    <span class="k">def</span> <span class="nf">populate_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">13</span>    <span class="k">def</span><span class="w"> </span><span class="nf">populate_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="linenos">14</span>        <span class="n">entity_type</span> <span class="o">=</span> <span class="s2">&quot;Version&quot;</span>
 <span class="linenos">15</span>        <span class="n">entity_query</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="linenos">16</span>
@@ -3043,8 +3040,8 @@ the item index.</p>
 </div>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">Display data from a ShotgunModel in a TableView</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">ExampleTableView</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-<span class="linenos"> 2</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span><span class="w"> </span><span class="nc">ExampleTableView</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<span class="linenos"> 2</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="linenos"> 3</span>        <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 <span class="linenos"> 4</span>
 <span class="linenos"> 5</span>        <span class="c1"># grab a field manager to get the delegate</span>
@@ -3052,7 +3049,7 @@ the item index.</p>
 </span><span class="hll"><span class="linenos"> 7</span>        <span class="bp">self</span><span class="o">.</span><span class="n">fields_manager</span><span class="o">.</span><span class="n">initialized</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_initialized</span><span class="p">)</span>
 </span><span class="hll"><span class="linenos"> 8</span>        <span class="bp">self</span><span class="o">.</span><span class="n">fields_manager</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 </span><span class="linenos"> 9</span>
-<span class="linenos">10</span>    <span class="k">def</span> <span class="nf">on_initialized</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">10</span>    <span class="k">def</span><span class="w"> </span><span class="nf">on_initialized</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="linenos">11</span>        <span class="n">entity_type</span> <span class="o">=</span> <span class="s2">&quot;Version&quot;</span>
 <span class="linenos">12</span>
 <span class="linenos">13</span>        <span class="c1"># grab all displayable fields on the entity type, with &quot;code&quot; first</span>
@@ -3099,7 +3096,7 @@ the item index.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

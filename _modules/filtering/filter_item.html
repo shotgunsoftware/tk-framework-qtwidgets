@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>filtering.filter_item &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>filtering.filter_item &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -150,15 +150,15 @@
 <span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
 <span class="c1"># agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Autodesk Inc.</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
 
-<span class="kn">import</span> <span class="nn">sgtk</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span>
-<span class="kn">from</span> <span class="nn">tank_vendor.shotgun_api3</span> <span class="kn">import</span> <span class="n">sg_timezone</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tank_vendor.shotgun_api3</span><span class="w"> </span><span class="kn">import</span> <span class="n">sg_timezone</span>
 
 
-<div class="viewcode-block" id="FilterItem"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem">[docs]</a><span class="k">class</span> <span class="nc">FilterItem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FilterItem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class object to encapsulate all the necessary data to filter model index data.</span>
 
@@ -194,7 +194,7 @@
 <span class="sd">    filters list.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="FilterItem.FilterOp"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.FilterOp">[docs]</a>    <span class="k">class</span> <span class="nc">FilterOp</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.FilterOp"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.FilterOp">[docs]</a>    <span class="k">class</span><span class="w"> </span><span class="nc">FilterOp</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enum class for filter operations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -228,7 +228,7 @@
             <span class="n">GREATER_THAN_OR_EQUAL</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="FilterItem.FilterType"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.FilterType">[docs]</a>    <span class="k">class</span> <span class="nc">FilterType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.FilterType"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.FilterType">[docs]</a>    <span class="k">class</span><span class="w"> </span><span class="nc">FilterType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enum class for filter types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -293,7 +293,7 @@
         <span class="s2">&quot;No Date&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">filter_id</span><span class="p">,</span>
         <span class="n">filter_type</span><span class="p">,</span>
@@ -355,7 +355,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">FilterType</span><span class="o">.</span><span class="n">DICT</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_dict_valid</span><span class="p">,</span>
         <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation for the FilterItem.&quot;&quot;&quot;</span>
 
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
@@ -371,17 +371,17 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the id for this FilterItem.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filter_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the filter type.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_type</span>
 
     <span class="nd">@filter_type</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">filter_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the value to be set as the filter&#39;s type. This is to ensure the simplist set of</span>
 <span class="sd">        filter types; for example, PTR has its own set of &quot;types&quot; for PTR data, this method will</span>
@@ -397,20 +397,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_type</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filter_op</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_op</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the filter operation.&quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_op</span>
 
     <span class="nd">@filter_op</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">filter_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">VALID_OPS</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid filter operation &#39;</span><span class="si">{}</span><span class="s2">&#39;.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_op</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the value for the filter that incoming data will be compared against to</span>
 <span class="sd">        check acceptance.</span>
@@ -418,11 +418,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_value</span>
 
     <span class="nd">@filter_value</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">filter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_filter_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the list of filter items for this group filter. This is a convenience property for</span>
 <span class="sd">        group filter items, and hides the internal implementation details of storing the filters in</span>
@@ -436,12 +436,12 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@filters</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_group</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filter_value</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filter_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the model item data role used to extract data from incoming indexes to be filtered.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -449,11 +449,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_role</span>
 
     <span class="nd">@filter_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">filter_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_role</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">data_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">data_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the function used to extract data from incoming indexes to be filtered.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -461,7 +461,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_func</span>
 
     <span class="nd">@data_func</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">data_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">data_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                 <span class="s2">&quot;Invalid data function &#39;</span><span class="si">{}</span><span class="s2">&#39;. Must be callable.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -470,7 +470,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_func</span> <span class="o">=</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="FilterItem.create"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.create">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience factory classmethod to create a new FilterItem object from the provided data.</span>
 
@@ -491,7 +491,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterItem.create_group"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.create_group">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_group</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">group_filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_group</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">group_filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience factory method to create a new FilterItem object that is a group.</span>
 
@@ -513,7 +513,7 @@
         <span class="k">return</span> <span class="n">FilterItem</span><span class="p">(</span><span class="n">filter_id</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">FilterType</span><span class="o">.</span><span class="n">GROUP</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">filter_value</span><span class="o">=</span><span class="n">filters</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterItem.get_data_type"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.get_data_type">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">get_data_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_data_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the FilterItem type for the given data.</span>
 
@@ -546,7 +546,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="FilterItem.default_op_for_type"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.default_op_for_type">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">default_op_for_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filter_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default_op_for_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filter_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the default operation for the given filter data type.</span>
 
@@ -560,7 +560,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEFAULT_OPS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">filter_type</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">EQUAL</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterItem.is_group_op"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_group_op">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">is_group_op</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_group_op</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if the filter item operation is valid.</span>
 
@@ -574,7 +574,7 @@
         <span class="k">return</span> <span class="n">op</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">AND</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterItem.do_filter"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.do_filter">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">do_filter</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">filter_items</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">AND</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_filter</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">filter_items</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">AND</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if the index is accepted by the list of filter items.</span>
 
@@ -620,7 +620,7 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="FilterItem.map_from_sg_data_type"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.map_from_sg_data_type">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">map_from_sg_data_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">sg_data_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_from_sg_data_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">sg_data_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Map the PTR data type to a valid filter type.</span>
 
@@ -638,7 +638,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">FilterType</span><span class="o">.</span><span class="n">MAP_TYPES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sg_data_type</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterItem.get_datetime_bucket"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.get_datetime_bucket">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_datetime_bucket</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_datetime_bucket</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This attempts to get the datetime bucket for the given datetime passed. Datetime buckets</span>
 <span class="sd">        follow the same logic as the ShotGrid Web UI.</span>
@@ -735,7 +735,7 @@
         <span class="p">),</span> <span class="s2">&quot;Datetime value was not able to be converted to bucket, will default to plain datetime string&quot;</span>
         <span class="k">return</span> <span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%x</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FilterItem.is_group"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_group">[docs]</a>    <span class="k">def</span> <span class="nf">is_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.is_group"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_group">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: True if this filter item is a group, else False.</span>
 <span class="sd">        :rtype: bool</span>
@@ -745,7 +745,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">filter_op</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="FilterItem.get_index_data"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.get_index_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_index_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.get_index_data"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.get_index_data">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_index_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the index&#39;s data based on the filter item. The index data will be first</span>
 <span class="sd">        attempted to be retrieved from the index&#39;s data method, using the filter role.</span>
@@ -772,7 +772,7 @@
         <span class="p">),</span> <span class="s2">&quot;FilterItem does not have a filter role or data function to retrieve index data to filter on&quot;</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="FilterItem.accepts"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.accepts">[docs]</a>    <span class="k">def</span> <span class="nf">accepts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.accepts"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.accepts">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">accepts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if this filter item accepts the given index.</span>
 
@@ -796,7 +796,7 @@
 
         <span class="k">return</span> <span class="n">filter_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_filter_value</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="FilterItem.is_bool_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_bool_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_bool_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.is_bool_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_bool_valid">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_bool_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter the incoming boolean value.</span>
 
@@ -824,7 +824,7 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="FilterItem.is_str_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_str_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_str_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.is_str_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_str_valid">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_str_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter the incoming string value.</span>
 
@@ -861,7 +861,7 @@
         <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Unsupported operation for filter type &#39;str&#39;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="FilterItem.is_number_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_number_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_number_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.is_number_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_number_valid">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_number_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter the incoming number value.</span>
 
@@ -900,7 +900,7 @@
         <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Unsupported operation for filter type &#39;number&#39;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="FilterItem.is_datetime_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_datetime_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_datetime_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.is_datetime_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_datetime_valid">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_datetime_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter the incoming datetime value.</span>
 
@@ -925,7 +925,7 @@
         <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Unsupported operation for filter type &#39;datetime&#39;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="FilterItem.is_list_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_list_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_list_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values_list</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.is_list_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_list_valid">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_list_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values_list</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter the incoming list value.</span>
 
@@ -986,7 +986,7 @@
         <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Unsupported operation for filter type &#39;list&#39;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="FilterItem.is_dict_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_dict_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_dict_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.is_dict_valid"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.is_dict_valid">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_dict_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter the incoming dictionary value.</span>
 
@@ -1008,7 +1008,7 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="FilterItem.validate_search"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.validate_search">[docs]</a>    <span class="k">def</span> <span class="nf">validate_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.validate_search"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.validate_search">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">validate_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the filter item matches the search value.</span>
 
@@ -1022,7 +1022,7 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="FilterItem.set_filter_value"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.set_filter_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_filter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItem.set_filter_value"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItem.set_filter_value">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_filter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the filter item&#39;s filter value.</span>
 
@@ -1042,7 +1042,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_value</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">_sanitize_filter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sanitize_filter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the raw value and sanitize it for the filter item to use.</span>
 
@@ -1169,7 +1169,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_search_widget.global_search_widget &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>shotgun_search_widget.global_search_widget &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -151,15 +151,15 @@
 <span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
-<span class="kn">import</span> <span class="nn">sgtk</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span>
 
-<span class="kn">from</span> <span class="nn">.shotgun_search_widget</span> <span class="kn">import</span> <span class="n">ShotgunSearchWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.shotgun_search_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShotgunSearchWidget</span>
 
 <span class="n">search_completer</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;search_completer&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="GlobalSearchWidget"><a class="viewcode-back" href="../../shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget">[docs]</a><span class="k">class</span> <span class="nc">GlobalSearchWidget</span><span class="p">(</span><span class="n">ShotgunSearchWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="GlobalSearchWidget"><a class="viewcode-back" href="../../shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">GlobalSearchWidget</span><span class="p">(</span><span class="n">ShotgunSearchWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A QT Widget deriving from :class:`~PySide.QtGui.QLineEdit` that creates</span>
 <span class="sd">    a global search input box with auto completion.</span>
@@ -176,7 +176,7 @@
     <span class="n">entity_selected</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
     <span class="n">entity_activated</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Uses the :class:`~search_completer.GlobalSearchCompleter` as the completer for searching</span>
 <span class="sd">        PTR entities.</span>
@@ -186,7 +186,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># first, call the base class and let it do its thing.</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">GlobalSearchWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="c1"># configure our popup completer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCompleter</span><span class="p">(</span><span class="n">search_completer</span><span class="o">.</span><span class="n">GlobalSearchCompleter</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
@@ -202,7 +202,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">QueuedConnection</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="GlobalSearchWidget.set_searchable_entity_types"><a class="viewcode-back" href="../../shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget.set_searchable_entity_types">[docs]</a>    <span class="k">def</span> <span class="nf">set_searchable_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">types_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="GlobalSearchWidget.set_searchable_entity_types"><a class="viewcode-back" href="../../shotgun_search_widget.html#shotgun_search_widget.GlobalSearchWidget.set_searchable_entity_types">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_searchable_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">types_dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify a dictionary of entity types with optional search filters to</span>
 <span class="sd">        limit the breadth of the widget&#39;s search.</span>
@@ -223,7 +223,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

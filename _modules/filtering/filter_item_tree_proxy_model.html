@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>filtering.filter_item_tree_proxy_model &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>filtering.filter_item_tree_proxy_model &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -151,14 +151,14 @@
 <span class="c1"># agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Autodesk Inc.</span>
 
-<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
 
-<span class="kn">from</span> <span class="nn">.filter_item</span> <span class="kn">import</span> <span class="n">FilterItem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.filter_item</span><span class="w"> </span><span class="kn">import</span> <span class="n">FilterItem</span>
 
 <span class="n">models</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;models&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="FilterItemTreeProxyModel"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItemTreeProxyModel">[docs]</a><span class="k">class</span> <span class="nc">FilterItemTreeProxyModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">HierarchicalFilteringProxyModel</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItemTreeProxyModel"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItemTreeProxyModel">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FilterItemTreeProxyModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">HierarchicalFilteringProxyModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A filter proxy model that filters the source tree model data using a list of</span>
 <span class="sd">    FilterItem objects. This provides similar functionality as the</span>
@@ -166,12 +166,12 @@
 <span class="sd">    HierarchicalfilteringProxyModel.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">FilterItemTreeProxyModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Default to AND all of the filter items upon filtering.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group_op</span> <span class="o">=</span> <span class="n">FilterItem</span><span class="o">.</span><span class="n">FilterOp</span><span class="o">.</span><span class="n">AND</span>
@@ -179,24 +179,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_items</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filter_group_op</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_group_op</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the operation applied to the list of filter items in this model upon filtering.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_op</span>
 
     <span class="nd">@filter_group_op</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">filter_group_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_group_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group_op</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filter_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the filter items used to filter the model data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_items</span>
 
-<div class="viewcode-block" id="FilterItemTreeProxyModel.set_filter_items"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItemTreeProxyModel.set_filter_items">[docs]</a>    <span class="k">def</span> <span class="nf">set_filter_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">emit_signal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterItemTreeProxyModel.set_filter_items"><a class="viewcode-back" href="../../filtering.html#filtering.FilterItemTreeProxyModel.set_filter_items">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_filter_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">emit_signal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the list of FilterItem objects used to filter the model data. If `emit_signal`, then also</span>
 <span class="sd">        invalidate the filter to immediately trigger re-filtering the model data.</span>
@@ -212,7 +212,7 @@
             <span class="k">finally</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">layoutChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_is_row_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_row</span><span class="p">,</span> <span class="n">src_parent_idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_row_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_row</span><span class="p">,</span> <span class="n">src_parent_idx</span><span class="p">,</span> <span class="n">parent_accepted</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base method implementation.</span>
 
@@ -250,7 +250,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

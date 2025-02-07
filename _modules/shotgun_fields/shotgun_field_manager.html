@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>shotgun_fields.shotgun_field_manager &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -151,17 +151,17 @@
 <span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
-<span class="kn">import</span> <span class="nn">sgtk</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
-<span class="kn">from</span> <span class="nn">.shotgun_field_delegate</span> <span class="kn">import</span> <span class="n">ShotgunFieldDelegateGeneric</span><span class="p">,</span> <span class="n">ShotgunFieldDelegate</span>
-<span class="kn">from</span> <span class="nn">.shotgun_field_editable</span> <span class="kn">import</span> <span class="n">ShotgunFieldEditable</span><span class="p">,</span> <span class="n">ShotgunFieldNotEditable</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.shotgun_field_delegate</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShotgunFieldDelegateGeneric</span><span class="p">,</span> <span class="n">ShotgunFieldDelegate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.shotgun_field_editable</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShotgunFieldEditable</span><span class="p">,</span> <span class="n">ShotgunFieldNotEditable</span>
 
 <span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
     <span class="s2">&quot;tk-framework-shotgunutils&quot;</span><span class="p">,</span> <span class="s2">&quot;shotgun_globals&quot;</span>
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ShotgunFieldManager"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager">[docs]</a><span class="k">class</span> <span class="nc">ShotgunFieldManager</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunFieldManager"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ShotgunFieldManager</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Inherited from a :class:`~PySide.QtCore.QObject`, this class acts as a factory</span>
 <span class="sd">    for the set of widgets that can display values from Shotgun in a way appropriate</span>
@@ -193,7 +193,7 @@
     <span class="c1"># class methods</span>
 
 <div class="viewcode-block" id="ShotgunFieldManager.get_class"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.get_class">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">get_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="n">DISPLAY</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="n">DISPLAY</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the registered class associated with the field name for the</span>
 <span class="sd">        supplied entity and widget type.</span>
@@ -236,7 +236,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__WIDGET_TYPE_CLS_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data_type</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">widget_type</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ShotgunFieldManager.register_class"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.register_class">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">register_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">field_type</span><span class="p">,</span> <span class="n">widget_class</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">field_type</span><span class="p">,</span> <span class="n">widget_class</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a widget class for the given Shotgun field type.</span>
 
@@ -269,7 +269,7 @@
         <span class="bp">cls</span><span class="o">.</span><span class="n">__WIDGET_TYPE_CLS_MAP</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">field_type</span><span class="p">,</span> <span class="p">{})[</span><span class="n">widget_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">widget_class</span></div>
 
 <div class="viewcode-block" id="ShotgunFieldManager.register_entity_field_class"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.register_entity_field_class">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">register_entity_field_class</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_entity_field_class</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">widget_class</span><span class="p">,</span> <span class="n">widget_type</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -302,7 +302,7 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># special methods</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the field manager factory.</span>
 
@@ -317,7 +317,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span> <span class="o">=</span> <span class="n">bg_task_manager</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Destructor.</span>
 
@@ -329,7 +329,7 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># public methods</span>
 
-<div class="viewcode-block" id="ShotgunFieldManager.create_delegate"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_delegate">[docs]</a>    <span class="k">def</span> <span class="nf">create_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunFieldManager.create_delegate"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_delegate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a delegate that can be used in the given view to show data from the given</span>
 <span class="sd">        field from the given entity type.  This delegate is designed to be used by items</span>
@@ -350,7 +350,7 @@
         <span class="n">display_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">display_class</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">.label_base_widget</span> <span class="kn">import</span> <span class="n">LabelBaseWidget</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">.label_base_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelBaseWidget</span>
 
             <span class="n">display_class</span> <span class="o">=</span> <span class="n">LabelBaseWidget</span>
 
@@ -364,7 +364,7 @@
             <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ShotgunFieldManager.create_generic_delegate"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_generic_delegate">[docs]</a>    <span class="k">def</span> <span class="nf">create_generic_delegate</span><span class="p">(</span>
+<div class="viewcode-block" id="ShotgunFieldManager.create_generic_delegate"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_generic_delegate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_generic_delegate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">view</span><span class="p">,</span> <span class="n">field_data_role</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -393,7 +393,7 @@
         <span class="n">display_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">display_class</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">.label_base_widget</span> <span class="kn">import</span> <span class="n">LabelBaseWidget</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">.label_base_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelBaseWidget</span>
 
             <span class="n">display_class</span> <span class="o">=</span> <span class="n">LabelBaseWidget</span>
 
@@ -408,7 +408,7 @@
             <span class="n">field_data_role</span><span class="o">=</span><span class="n">field_data_role</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ShotgunFieldManager.create_label"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_label">[docs]</a>    <span class="k">def</span> <span class="nf">create_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">postfix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunFieldManager.create_label"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_label">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">postfix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a widget that can be used as a label for the given field.</span>
 
@@ -428,7 +428,7 @@
             <span class="n">display_name</span> <span class="o">+=</span> <span class="n">postfix</span>
         <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">display_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ShotgunFieldManager.create_widget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_widget">[docs]</a>    <span class="k">def</span> <span class="nf">create_widget</span><span class="p">(</span>
+<div class="viewcode-block" id="ShotgunFieldManager.create_widget"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.create_widget">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">create_widget</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">sg_entity_type</span><span class="p">,</span>
         <span class="n">field_name</span><span class="p">,</span>
@@ -480,7 +480,7 @@
 
         <span class="k">return</span> <span class="n">widget</span></div>
 
-<div class="viewcode-block" id="ShotgunFieldManager.initialize"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunFieldManager.initialize"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.initialize">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the task manager.</span>
 
@@ -504,7 +504,7 @@
         <span class="n">shotgun_globals</span><span class="o">.</span><span class="n">run_on_schema_loaded</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__schema_loaded</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="ShotgunFieldManager.supported_fields"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.supported_fields">[docs]</a>    <span class="k">def</span> <span class="nf">supported_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_names</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunFieldManager.supported_fields"><a class="viewcode-back" href="../../shotgun_fields.html#shotgun_fields.ShotgunFieldManager.supported_fields">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">supported_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_names</span><span class="p">,</span> <span class="n">widget_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the subset of fields from field_names that have an associated widget class.</span>
 <span class="sd">        Field_names may be in &quot;bubbled&quot; notation, for example &quot;sg_task.Task.assignee&quot;.</span>
@@ -570,7 +570,7 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># protected methods</span>
 
-    <span class="k">def</span> <span class="nf">_create_display_widget</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_display_widget</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -614,7 +614,7 @@
 
         <span class="k">return</span> <span class="n">widget</span>
 
-    <span class="k">def</span> <span class="nf">_create_editor_widget</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_editor_widget</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -674,7 +674,7 @@
 
         <span class="k">return</span> <span class="n">widget</span>
 
-    <span class="k">def</span> <span class="nf">_create_editable_widget</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_editable_widget</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">sg_entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">entity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -752,7 +752,7 @@
     <span class="c1">############################################################################</span>
     <span class="c1"># private methods</span>
 
-    <span class="k">def</span> <span class="nf">__schema_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__schema_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal method that will be called when the schema is available.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -760,7 +760,7 @@
 
 
 <span class="c1"># import the actual field types to give them a chance to register</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">checkbox_widget</span><span class="p">,</span>
     <span class="n">currency_widget</span><span class="p">,</span>
     <span class="n">date_and_time_widget</span><span class="p">,</span>
@@ -782,11 +782,11 @@
 
 <span class="c1"># TODO: wait to register timecode field until the fps associated with this field</span>
 <span class="c1">#  is available from the API</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">timecode_widget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">timecode_widget</span>
 
 <span class="c1"># TODO: wait to register duration field until display options for hours versus</span>
 <span class="c1"># days and of hours in a day are available to the API</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration_widget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">duration_widget</span>
 </pre></div>
 
            </div>
@@ -796,7 +796,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

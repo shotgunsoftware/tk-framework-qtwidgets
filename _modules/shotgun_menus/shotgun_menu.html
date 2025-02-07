@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_menus.shotgun_menu &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>shotgun_menus.shotgun_menu &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -151,14 +151,14 @@
 <span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
-<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
-<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ui</span><span class="w"> </span><span class="kn">import</span> <span class="n">resources_rc</span>
 
 
-<div class="viewcode-block" id="ShotgunMenu"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu">[docs]</a><span class="k">class</span> <span class="nc">ShotgunMenu</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunMenu"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ShotgunMenu</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A base class with support for easily adding labels and groups of actions</span>
 <span class="sd">    with a consistent styling.</span>
@@ -182,7 +182,7 @@
 <span class="sd">    Image shows the results of the ``ShotgunMenu`` created in the example.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the menu.</span>
 
@@ -190,7 +190,7 @@
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
@@ -247,7 +247,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ShotgunMenu.get_label"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.get_label">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_label</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the label widget to add to the menu.&quot;&quot;&quot;</span>
 
         <span class="n">label</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
@@ -256,7 +256,7 @@
         <span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&lt;font style=&#39;</span><span class="si">%s</span><span class="s2">&#39;&gt;</span><span class="si">%s</span><span class="s2">&lt;/font&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">font_style</span><span class="p">,</span> <span class="n">title</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">label</span></div>
 
-<div class="viewcode-block" id="ShotgunMenu.add_group"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunMenu.add_group"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_group">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a group of items to the menu.</span>
 
@@ -305,7 +305,7 @@
 
         <span class="k">return</span> <span class="n">added_actions</span></div>
 
-<div class="viewcode-block" id="ShotgunMenu.add_label"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_label">[docs]</a>    <span class="k">def</span> <span class="nf">add_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunMenu.add_label"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.add_label">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a label with the given title to the menu</span>
 
@@ -320,7 +320,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">action</span></div>
 
-<div class="viewcode-block" id="ShotgunMenu.keyReleaseEvent"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.keyReleaseEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunMenu.keyReleaseEvent"><a class="viewcode-back" href="../../shotgun_menus.html#shotgun_menus.ShotgunMenu.keyReleaseEvent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">keyReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Allow users to type menu item names to highlight/select them.&quot;&quot;&quot;</span>
 
         <span class="c1"># stop the timer that clears the typed text</span>
@@ -343,7 +343,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># the typed key isn&#39;t one we recognize for matching. call the</span>
             <span class="c1"># default implementation</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">keyReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">keyReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
             <span class="k">return</span>
 
@@ -364,12 +364,12 @@
                 <span class="k">pass</span>
 
         <span class="c1"># didn&#39;t find a match, call the base class</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">keyReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">keyReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
         <span class="c1"># ensure the timer is started</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_type_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_on_type_timer_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_type_timer_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Timeout triggered after typing has ceased for a given interval.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_typed_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
 </pre></div>
@@ -381,7 +381,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

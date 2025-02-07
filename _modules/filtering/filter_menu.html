@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>filtering.filter_menu &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -151,17 +151,17 @@
 <span class="c1"># agreement to the ShotGrid Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Autodesk Inc.</span>
 
-<span class="kn">import</span> <span class="nn">sgtk</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
-<span class="kn">from</span> <span class="nn">sgtk.util</span> <span class="kn">import</span> <span class="n">sgre</span> <span class="k">as</span> <span class="n">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">sgre</span> <span class="k">as</span> <span class="n">re</span>
 
-<span class="kn">from</span> <span class="nn">.filter_definition</span> <span class="kn">import</span> <span class="n">FilterMenuFiltersDefinition</span>
-<span class="kn">from</span> <span class="nn">.filter_item</span> <span class="kn">import</span> <span class="n">FilterItem</span>
-<span class="kn">from</span> <span class="nn">.filter_item_widget</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.filter_definition</span><span class="w"> </span><span class="kn">import</span> <span class="n">FilterMenuFiltersDefinition</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.filter_item</span><span class="w"> </span><span class="kn">import</span> <span class="n">FilterItem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.filter_item_widget</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ChoicesFilterItemWidget</span><span class="p">,</span>
     <span class="n">SearchFilterItemWidget</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">.filter_menu_group</span> <span class="kn">import</span> <span class="n">FilterMenuGroup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.filter_menu_group</span><span class="w"> </span><span class="kn">import</span> <span class="n">FilterMenuGroup</span>
 
 <span class="n">shotgun_menus</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;shotgun_menus&quot;</span><span class="p">)</span>
 <span class="n">ShotgunMenu</span> <span class="o">=</span> <span class="n">shotgun_menus</span><span class="o">.</span><span class="n">ShotgunMenu</span>
@@ -179,10 +179,10 @@
 <span class="n">SGQToolButton</span> <span class="o">=</span> <span class="n">sg_qwidgets</span><span class="o">.</span><span class="n">SGQToolButton</span>
 
 
-<span class="k">class</span> <span class="nc">NoCloseOnActionTriggerShotgunMenu</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoCloseOnActionTriggerShotgunMenu</span><span class="p">(</span><span class="n">ShotgunMenu</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;ShotgunMenu subclass that prevents the menu from closing when an action is triggered.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">mouseReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mouseReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the QMenu method.</span>
 
@@ -195,14 +195,14 @@
         <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeAction</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">action</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">isEnabled</span><span class="p">():</span>
             <span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">NoCloseOnActionTriggerShotgunMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">mouseReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">mouseReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
             <span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">action</span><span class="o">.</span><span class="n">trigger</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">NoCloseOnActionTriggerShotgunMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">mouseReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">mouseReleaseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="FilterMenu"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu">[docs]</a><span class="k">class</span> <span class="nc">FilterMenu</span><span class="p">(</span><span class="n">NoCloseOnActionTriggerShotgunMenu</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FilterMenu</span><span class="p">(</span><span class="n">NoCloseOnActionTriggerShotgunMenu</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A menu that provides filtering functionality.</span>
 
@@ -283,7 +283,7 @@
     <span class="c1"># Signal emitted when menu is finished a complete refreshing (e.g. exit refresh method)</span>
     <span class="n">menu_refreshed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh_on_show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dock_widget</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -303,7 +303,7 @@
 <span class="sd">        :type dock_widget: QtGui.QWidget | QtGui.QScrollArea</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">FilterMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="c1"># The filters definitions that are built based on the current model data, and which are used</span>
         <span class="c1"># to build the filter menu UI.</span>
@@ -422,12 +422,12 @@
     <span class="c1"># Properties</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">active_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">active_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current active filters that are set within the menu.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">has_filtering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_filtering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get whether or not the menu has any active filtering.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_filter</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span>
@@ -435,21 +435,21 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">more_filters_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">more_filters_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the &#39;More Filters&#39; submenu in the filter menu.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">refresh_on_show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">refresh_on_show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the property to refresh menu before showing.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_on_show</span>
 
     <span class="nd">@refresh_on_show</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">refresh_on_show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">refresh</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">refresh_on_show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">refresh</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_on_show</span> <span class="o">=</span> <span class="n">refresh</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">docked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">docked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the docked state of the Filter Menu.</span>
 
@@ -459,7 +459,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__docked</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span> <span class="k">else</span> <span class="kc">False</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">active_preset_filter_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">active_preset_filter_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the active preset filter data.</span>
 <span class="sd">        :return: The active filter array, or None if no preset filter is active.</span>
@@ -467,7 +467,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dock_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dock_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the dock widget for the Filter Menu.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dock_widget</span>
 
@@ -475,7 +475,7 @@
     <span class="c1"># Static methods</span>
 
 <div class="viewcode-block" id="FilterMenu.set_widget_action_default_widget_value"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_widget_action_default_widget_value">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">set_widget_action_default_widget_value</span><span class="p">(</span><span class="n">widget_action</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_widget_action_default_widget_value</span><span class="p">(</span><span class="n">widget_action</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to set the QWidgetAction&#39;s default widget&#39;s value to the checked value</span>
 <span class="sd">        of the QWidgetAction.</span>
@@ -487,7 +487,7 @@
         <span class="n">widget_action</span><span class="o">.</span><span class="n">defaultWidget</span><span class="p">()</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">widget_action</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span></div>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_search_filter_field_id</span><span class="p">(</span><span class="n">filter_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_search_filter_field_id</span><span class="p">(</span><span class="n">filter_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get the field id from the filter id.</span>
 
@@ -502,11 +502,11 @@
     <span class="c1"># ----------------------------------------------------------------------------------------</span>
     <span class="c1"># Public methods</span>
 
-<div class="viewcode-block" id="FilterMenu.is_empty"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.is_empty">[docs]</a>    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.is_empty"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.is_empty">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return True if the menu has any filters to show.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FilterMenu.get_filters_container"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_filters_container">[docs]</a>    <span class="k">def</span> <span class="nf">get_filters_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.get_filters_container"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_filters_container">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_filters_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the current parent widget for the filters.</span>
 
@@ -516,7 +516,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span> <span class="k">else</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_preset_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_preset_filters">[docs]</a>    <span class="k">def</span> <span class="nf">set_preset_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preset_filters</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_preset_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_preset_filters">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_preset_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preset_filters</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the preset filters that can be toggled on/off in the menu.</span>
 <span class="sd">        The preset filters are stored as a dictionary where the key is the preset filter name,</span>
@@ -551,7 +551,7 @@
         <span class="c1"># No changes in active preset filter, just update the preset filters.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span> <span class="o">=</span> <span class="n">preset_filters</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_active_preset_filter"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_active_preset_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_active_preset_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preset_filter_name</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_active_preset_filter"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_active_preset_filter">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_active_preset_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preset_filter_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the active preset filter by name. Pass a None value to clear the active preset filter.</span>
 <span class="sd">        :param preset_filter_name: str or None</span>
@@ -575,14 +575,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span> <span class="o">=</span> <span class="n">preset_filter_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preset_filter_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FilterMenu.get_active_preset_filter"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_active_preset_filter">[docs]</a>    <span class="k">def</span> <span class="nf">get_active_preset_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.get_active_preset_filter"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_active_preset_filter">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_active_preset_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the active preset filter data.</span>
 <span class="sd">        :return: The active filter array, or None if no preset filter is active.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_visible_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_visible_fields">[docs]</a>    <span class="k">def</span> <span class="nf">set_visible_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_visible_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_visible_fields">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_visible_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the filters that belong to any of the given fields to be visible.</span>
 
@@ -596,7 +596,7 @@
         <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_field_visibility</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_accept_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_accept_fields">[docs]</a>    <span class="k">def</span> <span class="nf">set_accept_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_accept_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_accept_fields">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_accept_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the fields to ignore when building the filter definition for the menu.</span>
 
@@ -606,7 +606,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">accept_fields</span> <span class="o">=</span> <span class="n">fields</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_ignore_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_ignore_fields">[docs]</a>    <span class="k">def</span> <span class="nf">set_ignore_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_ignore_fields"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_ignore_fields">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_ignore_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the fields to ignore when building the filter definition for the menu.</span>
 
@@ -616,7 +616,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">ignore_fields</span> <span class="o">=</span> <span class="n">fields</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_use_fully_qualifiied_name"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_use_fully_qualifiied_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_use_fully_qualifiied_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_use_fully_qualifiied_name"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_use_fully_qualifiied_name">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_use_fully_qualifiied_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the flag to use the fully qualified name for filters. For example, a filter item</span>
 <span class="sd">        representing PTR data will prefix the filter name with the entity type.</span>
@@ -627,7 +627,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">use_fully_qualified_name</span> <span class="o">=</span> <span class="n">use</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_filter_roles"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_filter_roles">[docs]</a>    <span class="k">def</span> <span class="nf">set_filter_roles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_filter_roles"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_filter_roles">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_filter_roles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the list of model item data roles that are used to extract data from the model, in</span>
 <span class="sd">        order to build the menu filters.</span>
@@ -635,7 +635,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">filter_roles</span> <span class="o">=</span> <span class="n">roles</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_tree_level"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_tree_level">[docs]</a>    <span class="k">def</span> <span class="nf">set_tree_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_tree_level"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_tree_level">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_tree_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the model tree index level which the filters will be built from. This is to handle</span>
 <span class="sd">        tree models that defer loading data, set this to the expected leaf node level.</span>
@@ -643,7 +643,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">tree_level</span> <span class="o">=</span> <span class="n">level</span></div>
 
-<div class="viewcode-block" id="FilterMenu.has_role"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.has_role">[docs]</a>    <span class="k">def</span> <span class="nf">has_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">,</span> <span class="n">check_existence</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.has_role"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.has_role">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">has_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">,</span> <span class="n">check_existence</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the filter menu is built using the model item data roles.</span>
 
@@ -670,7 +670,7 @@
 
         <span class="k">return</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">check_existence</span> <span class="k">else</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="FilterMenu.save_state"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.save_state">[docs]</a>    <span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.save_state"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.save_state">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save the current menu filter state.</span>
 
@@ -719,7 +719,7 @@
 
         <span class="k">return</span> <span class="n">state</span></div>
 
-<div class="viewcode-block" id="FilterMenu.restore_state"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.restore_state">[docs]</a>    <span class="k">def</span> <span class="nf">restore_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.restore_state"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.restore_state">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">restore_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Restore the menu with the given state.</span>
 
@@ -737,7 +737,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_restore_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_restore_filter_definition</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_emit_filters_changed</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FilterMenu.set_filter_model"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_filter_model">[docs]</a>    <span class="k">def</span> <span class="nf">set_filter_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_model</span><span class="p">,</span> <span class="n">connect_signals</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.set_filter_model"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.set_filter_model">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_filter_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_model</span><span class="p">,</span> <span class="n">connect_signals</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the source and proxy models that define the filter menu options.</span>
 
@@ -786,7 +786,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_model</span><span class="o">.</span><span class="n">layoutChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_filters</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FilterMenu.refresh"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.refresh">[docs]</a>    <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
-    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Refresh the filter menu.</span>
 
@@ -833,7 +833,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_is_refreshing</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">menu_refreshed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FilterMenu.update_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.update_filters">[docs]</a>    <span class="k">def</span> <span class="nf">update_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.update_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.update_filters">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update only the active/visible filters in the menu.&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_block_signals</span><span class="p">:</span>
@@ -853,7 +853,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">update_filters</span><span class="p">(</span><span class="n">filter_group_ids</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_menu_widgets</span><span class="p">(</span><span class="n">field_ids</span><span class="o">=</span><span class="n">fields_to_refresh</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FilterMenu.clear_menu"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.clear_menu">[docs]</a>    <span class="k">def</span> <span class="nf">clear_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.clear_menu"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.clear_menu">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">clear_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear any active filters that are set in the menu. Clear the internal menu data and</span>
 <span class="sd">        remove all items from the menu.</span>
@@ -874,7 +874,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FilterMenu.clear_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.clear_filters">[docs]</a>    <span class="k">def</span> <span class="nf">clear_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clear_active_preset_filter</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.clear_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.clear_filters">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">clear_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clear_active_preset_filter</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear any active filters that are set in the menu.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">clear_active_preset_filter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_active_preset_filter</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -936,7 +936,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_refreshing</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_emit_filters_changed</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FilterMenu.undock_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.undock_filters">[docs]</a>    <span class="k">def</span> <span class="nf">undock_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.undock_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.undock_filters">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">undock_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Show filters in the menu.&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span><span class="p">:</span>
@@ -952,7 +952,7 @@
             <span class="n">filter_group</span><span class="o">.</span><span class="n">show_in_menu</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FilterMenu.dock_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.dock_filters">[docs]</a>    <span class="k">def</span> <span class="nf">dock_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.dock_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.dock_filters">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">dock_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Show filters in the dock widget.&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked</span><span class="p">:</span>
@@ -973,7 +973,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacer</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FilterMenu.get_current_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_current_filters">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclude_choices_from_fields</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.get_current_filters"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.get_current_filters">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclude_choices_from_fields</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the current filters that are active in the menu.</span>
 
@@ -1027,7 +1027,7 @@
 
         <span class="k">return</span> <span class="n">current_filters</span></div>
 
-<div class="viewcode-block" id="FilterMenu.initialize_menu"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.initialize_menu">[docs]</a>    <span class="k">def</span> <span class="nf">initialize_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FilterMenu.initialize_menu"><a class="viewcode-back" href="../../filtering.html#filtering.FilterMenu.initialize_menu">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">initialize_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the filter menu.</span>
 
@@ -1042,7 +1042,7 @@
     <span class="c1"># Protected methods</span>
 
     <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
-    <span class="k">def</span> <span class="nf">_build_menu_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_menu_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the menu by building the menu action and widgets.&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__add_static_actions</span><span class="p">()</span>
@@ -1060,7 +1060,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">dock_widget</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">spacer</span><span class="p">)</span>
 
     <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
-    <span class="k">def</span> <span class="nf">_refresh_menu_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_refresh_menu_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the menu actions and widgets based on the current filter definition.</span>
 
@@ -1133,7 +1133,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_block_signals</span> <span class="o">=</span> <span class="n">restore_block_signals_state</span>
 
-    <span class="k">def</span> <span class="nf">_restore_filter_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_restore_filter_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Restore the filter definition from the current menu state to restore.</span>
 
@@ -1187,7 +1187,7 @@
 
         <span class="k">return</span> <span class="n">not_restored</span>
 
-    <span class="k">def</span> <span class="nf">_add_filter_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_ids</span><span class="p">,</span> <span class="n">ignore_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_filter_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_ids</span><span class="p">,</span> <span class="n">ignore_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add new filter group to the menu for the given fields. If the field group already exists,</span>
 <span class="sd">        it will ignore that field.</span>
@@ -1261,7 +1261,7 @@
             <span class="c1"># Lastly, keep track of the filter group object by its id</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span><span class="p">[</span><span class="n">field_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">filter_group</span>
 
-    <span class="k">def</span> <span class="nf">_create_filter_item_and_action</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_filter_item_and_action</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">field_data</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">,</span> <span class="n">filter_value</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1327,7 +1327,7 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">filter_item</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_create_filter_action_widget</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_filter_action_widget</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">filter_item</span><span class="p">,</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">filter_data</span><span class="p">,</span> <span class="n">widget_class</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1387,7 +1387,7 @@
 
         <span class="k">return</span> <span class="n">widget_action</span>
 
-    <span class="k">def</span> <span class="nf">_remove_filter_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_ids</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remove_filter_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_ids</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove all filter items for each field group given.</span>
 
@@ -1405,7 +1405,7 @@
             <span class="k">for</span> <span class="n">filter_item</span> <span class="ow">in</span> <span class="n">filter_items</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_remove_filter_action</span><span class="p">(</span><span class="n">field_id</span><span class="p">,</span> <span class="n">filter_item</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_remove_filter_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">filter_item</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remove_filter_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">filter_item</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove an individual filter action from the menu corresponding to the field and filter</span>
 <span class="sd">        item object.</span>
@@ -1432,7 +1432,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filter_groups</span><span class="p">[</span><span class="n">field_id</span><span class="p">]</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">filter_item</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_add_action_to_more_filters_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_action_to_more_filters_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_group</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a new action to the `_more_filters_menu` for the given field. The &quot;More Filter Menu&quot;</span>
 <span class="sd">        is used to show/hide filter field groups.</span>
@@ -1490,7 +1490,7 @@
             <span class="n">insert_before_action</span> <span class="o">=</span> <span class="n">more_filters_actions</span><span class="p">[</span><span class="n">action_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="o">.</span><span class="n">insertAction</span><span class="p">(</span><span class="n">insert_before_action</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_emit_filters_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_emit_filters_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the active filter and emit a signal that the filters have changed.&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_block_signals</span><span class="p">:</span>
@@ -1500,7 +1500,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_model_filters</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filters_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_get_search_filter_item_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_search_filter_item_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to ensure the same filter id is used for text search filter item widgets.</span>
 
@@ -1515,7 +1515,7 @@
         <span class="c1"># it safe to use the widget class name as part of the id.</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">SearchFilterItemWidget</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_get_filter_group_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_filter_group_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get all filter items for a given group.</span>
 
@@ -1537,7 +1537,7 @@
 
         <span class="k">return</span> <span class="n">filter_items</span>
 
-    <span class="k">def</span> <span class="nf">_get_filter_group_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_filter_group_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_id</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get an action from a filter group.</span>
 
@@ -1560,7 +1560,7 @@
 
         <span class="k">return</span> <span class="n">filter_group</span><span class="o">.</span><span class="n">filter_actions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">filter_id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_adjust_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_adjust_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adjust the menu to ensure all actions are visible.&quot;&quot;&quot;</span>
 
         <span class="n">sz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">()</span>
@@ -1575,7 +1575,7 @@
     <span class="c1"># ----------------------------------------------------------------------------------------</span>
     <span class="c1"># Callbacks</span>
 
-    <span class="k">def</span> <span class="nf">_about_to_show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_about_to_show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback triggered when the menu is about to show.&quot;&quot;&quot;</span>
 
         <span class="c1"># Undock the menu if it is docked.</span>
@@ -1586,7 +1586,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">refresh_on_show</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_update_model_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_model_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the filter model to reflect the current filtering set based on the menu.&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_model</span><span class="p">:</span>
@@ -1594,7 +1594,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_model</span><span class="o">.</span><span class="n">set_filter_items</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">active_filter</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">_toggle_filter_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_toggle_filter_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback triggered when a filter widget action state has changed.</span>
 
@@ -1620,7 +1620,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_position</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_filter_widget_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_filter_widget_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback triggered when a FilterItemWidget `state_changed` signal emitted.</span>
 
@@ -1635,7 +1635,7 @@
         <span class="n">action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_emit_filters_changed</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_filter_widget_value_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_item</span><span class="p">,</span> <span class="n">search</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_filter_widget_value_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_item</span><span class="p">,</span> <span class="n">search</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback triggered when a FilterItemWidget `value_changed` signal emitted.</span>
 
@@ -1670,7 +1670,7 @@
     <span class="c1"># ----------------------------------------------------------------------------------------</span>
     <span class="c1"># Private methods</span>
 
-    <span class="k">def</span> <span class="nf">__set_docked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">docked</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__set_docked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">docked</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the docked state and show/hide the dock widget accordingly.</span>
 
@@ -1688,7 +1688,7 @@
         <span class="k">if</span> <span class="n">docked</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__clear_dock_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delete_widgets</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__clear_dock_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delete_widgets</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clear all the items in the dock widget layout.</span>
 
@@ -1709,7 +1709,7 @@
                     <span class="n">widget</span><span class="o">.</span><span class="n">deleteLater</span><span class="p">()</span>
             <span class="k">del</span> <span class="n">item</span>
 
-    <span class="k">def</span> <span class="nf">__add_preset_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__add_preset_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds all the preset filters to the menu as actions.</span>
 <span class="sd">        They are stored in an QActionGroup to ensure only one preset filter is active at a time.</span>
@@ -1743,14 +1743,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_preset_filter_actions</span><span class="p">[</span><span class="n">filter_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__preset_filter_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__preset_filter_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback triggered when a preset filter is selected.&quot;&quot;&quot;</span>
         <span class="n">new_active_preset_filter_name</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">filter_name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_preset_filter_name</span> <span class="o">!=</span> <span class="n">filter_name</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_active_preset_filter</span><span class="p">(</span><span class="n">new_active_preset_filter_name</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__add_static_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__add_static_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add the static actions to the menu. These actions appear at the top of hte menu.&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__more_filters_menu</span><span class="p">:</span>
@@ -1787,14 +1787,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span></div>
 
 
-<span class="k">class</span> <span class="nc">ShotgunFilterMenu</span><span class="p">(</span><span class="n">FilterMenu</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ShotgunFilterMenu</span><span class="p">(</span><span class="n">FilterMenu</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subclass of FilterMenu for models that inherit the ShotgunModel class. It is not necessary to use</span>
 <span class="sd">    this menu class, but it is a convenience class to set up the filter menu specificaly for data using</span>
 <span class="sd">    the ShotgunModel class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh_on_show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dock_widget</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1803,7 +1803,7 @@
 <span class="sd">        Set the filter_roles to the ShotgunModel role pointing to its PTR data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFilterMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">parent</span><span class="p">,</span>
             <span class="n">refresh_on_show</span><span class="o">=</span><span class="n">refresh_on_show</span><span class="p">,</span>
             <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">bg_task_manager</span><span class="p">,</span>
@@ -1816,13 +1816,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">filter_roles</span> <span class="o">=</span> <span class="p">[</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__field_id_prefix</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">set_filter_roles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_filter_roles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Override the base method to not allow manually setting the roles.&quot;&quot;&quot;</span>
 
         <span class="c1"># Do nothing. The filter roles are fixed. Use the FilterMenu class if the filter roles</span>
         <span class="c1"># need to be modified.</span>
 
-    <span class="k">def</span> <span class="nf">set_visible_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_visible_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base method to ensure field ids are prefixed with the role.</span>
 
@@ -1840,7 +1840,7 @@
                 <span class="n">field</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__field_id_prefix</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_field_visibility</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">set_accept_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_accept_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base method to ensure field ids are prefixed with the role.</span>
 
@@ -1858,7 +1858,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">accept_fields</span> <span class="o">=</span> <span class="n">fields</span>
 
-    <span class="k">def</span> <span class="nf">set_ignore_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_ignore_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base method to ensure field ids are prefixed with the role.</span>
 
@@ -1876,7 +1876,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters_def</span><span class="o">.</span><span class="n">ignore_fields</span> <span class="o">=</span> <span class="n">fields</span>
 
-    <span class="k">def</span> <span class="nf">restore_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">restore_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Override the base method to ensure field ids are prefixed with the role.&quot;&quot;&quot;</span>
 
         <span class="n">formatted_state</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1885,9 +1885,9 @@
                 <span class="n">field_id</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__field_id_prefix</span><span class="p">,</span> <span class="n">field_id</span><span class="p">)</span>
             <span class="n">formatted_state</span><span class="p">[</span><span class="n">field_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_state</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFilterMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">restore_state</span><span class="p">(</span><span class="n">formatted_state</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">restore_state</span><span class="p">(</span><span class="n">formatted_state</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">set_filter_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_model</span><span class="p">,</span> <span class="n">connect_signals</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_filter_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_model</span><span class="p">,</span> <span class="n">connect_signals</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the base implementation.</span>
 
@@ -1916,7 +1916,7 @@
                 <span class="c1"># Signals were never connected.</span>
                 <span class="k">pass</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFilterMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">set_filter_model</span><span class="p">(</span><span class="n">filter_model</span><span class="p">,</span> <span class="n">connect_signals</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_filter_model</span><span class="p">(</span><span class="n">filter_model</span><span class="p">,</span> <span class="n">connect_signals</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">connect_signals</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_source_model</span><span class="o">.</span><span class="n">data_refreshing</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_data_refreshing</span><span class="p">)</span>
@@ -1924,7 +1924,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_source_model</span><span class="o">.</span><span class="n">data_refreshed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_data_refreshed</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_source_model</span><span class="o">.</span><span class="n">cache_loaded</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_cache_loaded</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_data_refreshing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_data_refreshing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot triggered on PTR model `data_refreshing` signal.</span>
 
@@ -1933,7 +1933,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">menu_about_to_be_refreshed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_on_data_refresh_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_data_refresh_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot triggered on PTR model `data_refresh_fail` signal.</span>
 
@@ -1943,7 +1943,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">menu_refreshed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_on_data_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_data_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot triggered on PTR model `data_refreshed` signal.</span>
 
@@ -1952,7 +1952,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_cache_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_cache_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot triggered on PTR model `cache_loaded` signal.</span>
 
@@ -1969,7 +1969,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

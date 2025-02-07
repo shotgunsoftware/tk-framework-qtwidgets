@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>delegates.view_item_delegate &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -151,23 +151,23 @@
 <span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Autodesk, Inc.</span>
 
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
 
-<span class="kn">import</span> <span class="nn">sgtk</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
-<span class="kn">from</span> <span class="nn">tank.util</span> <span class="kn">import</span> <span class="n">sgre</span> <span class="k">as</span> <span class="n">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tank.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">sgre</span> <span class="k">as</span> <span class="n">re</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">tank_vendor</span> <span class="kn">import</span> <span class="n">sgutils</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tank_vendor</span><span class="w"> </span><span class="kn">import</span> <span class="n">sgutils</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">tank_vendor</span> <span class="kn">import</span> <span class="n">six</span> <span class="k">as</span> <span class="n">sgutils</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tank_vendor</span><span class="w"> </span><span class="kn">import</span> <span class="n">six</span> <span class="k">as</span> <span class="n">sgutils</span>
 
 <span class="n">utils</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;utils&quot;</span><span class="p">)</span>
 
 <span class="n">DEBUG_PAINT</span> <span class="o">=</span> <span class="kc">False</span>
 
 
-<div class="viewcode-block" id="ViewItemDelegate"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate">[docs]</a><span class="k">class</span> <span class="nc">ViewItemDelegate</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyledItemDelegate</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ViewItemDelegate</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyledItemDelegate</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A generic delegate to display items in a view.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -210,12 +210,12 @@
         <span class="n">CENTER</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">POSITIONS</span><span class="p">))</span>
 
-<div class="viewcode-block" id="ViewItemDelegate.Padding"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.Padding">[docs]</a>    <span class="k">class</span> <span class="nc">Padding</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.Padding"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.Padding">[docs]</a>    <span class="k">class</span><span class="w"> </span><span class="nc">Padding</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience class structure to store padding values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">left</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">left</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Create the Padding object.</span>
 
@@ -235,14 +235,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>
 
 <div class="viewcode-block" id="ViewItemDelegate.Padding.new"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.Padding.new">[docs]</a>        <span class="nd">@classmethod</span>
-        <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Factory method to create a padding object with equal padding all around.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span></div></div>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ViewItemDelegate constructor. Sets the default values.</span>
 
@@ -250,7 +250,7 @@
 <span class="sd">        :type view: :class:`sgkt.platform.qt.QtGui.QAbstractItemView`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">ViewItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
 
         <span class="c1"># Store the view widget to fall back on for older versions of Qt, where the QStyleOption does not</span>
         <span class="c1"># have a widget or styleObject property</span>
@@ -366,7 +366,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_hover_cursor</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">thumbnail_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data &#39;thumbnail&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        This role is used to retrieve the view item thumbnail; e.g. thumbnail = index.idata(thumbnail_role).</span>
@@ -374,11 +374,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_role</span>
 
     <span class="nd">@thumbnail_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">thumbnail_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">header_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">header_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data &#39;title&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        This role is used to retrieve the view item title text; e.g. text = index.data(header_role).</span>
@@ -386,11 +386,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_role</span>
 
     <span class="nd">@header_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">header_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">header_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_header_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">subtitle_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">subtitle_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data &#39;subtitle&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        This role is used to retrieve the view item subtitle text; e.g. text = index.data(subtitle_role).</span>
@@ -398,11 +398,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subtitle_role</span>
 
     <span class="nd">@subtitle_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">subtitle_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">subtitle_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_subtitle_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">text_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data &#39;text&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        This role is used to retrieve the view item main text; e.g. text = index.data(text_role).</span>
@@ -410,11 +410,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_role</span>
 
     <span class="nd">@text_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">text_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">short_text_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">short_text_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`). This</span>
 <span class="sd">        role is used to retrieve the view item shortened text; e.g. text = index.data(short_text_role).</span>
@@ -424,11 +424,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_text_role</span>
 
     <span class="nd">@short_text_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">short_text_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">short_text_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_short_text_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">icon_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">icon_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data &#39;icon&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        This role is used to retrieve the view item icons; e.g. icons = index.data(icon_role). Icons are</span>
@@ -437,33 +437,33 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icon_role</span>
 
     <span class="nd">@icon_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">icon_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">icon_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_icon_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">width_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">width_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data item &#39;width&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width_role</span>
 
     <span class="nd">@width_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">width_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">width_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_width_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">height_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">height_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data item &#39;height&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height_role</span>
 
     <span class="nd">@height_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">height_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">height_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_height_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">expand_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">expand_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data item &#39;expand&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        When this role is set, it will allow item rows to expand and collapse based on the text height.</span>
@@ -473,11 +473,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expand_role</span>
 
     <span class="nd">@expand_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">expand_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">expand_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_expand_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">loading_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loading_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data &#39;loading&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        The  data for this role will determine if a loading icon will be drawn for the view item.</span>
@@ -485,11 +485,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_role</span>
 
     <span class="nd">@loading_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">loading_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loading_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loading_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">separator_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">separator_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the index model data &#39;separator&#39; role (:class:`sgtk.platform.qt.QtCore.Qt.ItemDataRole`).</span>
 <span class="sd">        The data for this role will determine if a separator will be drawn for the view item.</span>
@@ -497,11 +497,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_separator_role</span>
 
     <span class="nd">@separator_role</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">separator_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">separator_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_separator_role</span> <span class="o">=</span> <span class="n">role</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">visible_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visible_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the number of text lines the view item should display. This will omit any text that</span>
 <span class="sd">        is beyond the number of visible lines.</span>
@@ -509,62 +509,62 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visible_lines</span>
 
     <span class="nd">@visible_lines</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">visible_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visible_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_visible_lines</span> <span class="o">=</span> <span class="n">lines</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">document_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">document_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the default qss for the text document style sheet. This will affect the text style and layout of the item.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_document_style_sheet</span>
 
     <span class="nd">@document_style_sheet</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">document_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qss</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">document_style_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qss</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_document_style_sheet</span> <span class="o">=</span> <span class="n">qss</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the flag indicating if the main text should be elided. If False, text will be wrapped.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span>
 
     <span class="nd">@elide_text</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elide_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_elide_text</span> <span class="o">=</span> <span class="n">on</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">elide_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elide_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the flag indicating if the header text should be elided. If False, text will be wrapped.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elide_header</span>
 
     <span class="nd">@elide_header</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">elide_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">elide_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_elide_header</span> <span class="o">=</span> <span class="n">on</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">item_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">item_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the view item width. Set to None to ignore this property.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_width</span>
 
     <span class="nd">@item_width</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">item_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">item_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_item_width</span> <span class="o">=</span> <span class="n">width</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">item_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">item_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the view item row height. If -1, this property is ignored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_height</span>
 
     <span class="nd">@item_height</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">item_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">item_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_item_height</span> <span class="o">=</span> <span class="n">height</span>
 
         <span class="k">if</span> <span class="p">(</span>
@@ -576,29 +576,29 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_height</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_scale_value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">min_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">min_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the minimum width for an item.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_width</span>
 
     <span class="nd">@min_width</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">min_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">min_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_min_width</span> <span class="o">=</span> <span class="n">width</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">min_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">min_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the minimum height for an item.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_height</span>
 
     <span class="nd">@min_height</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">min_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">min_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_min_height</span> <span class="o">=</span> <span class="n">height</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">thumbnail_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the property that affects how thumbnails are rendered.</span>
 
@@ -608,11 +608,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_uniform</span>
 
     <span class="nd">@thumbnail_uniform</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">thumbnail_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uniform</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uniform</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_uniform</span> <span class="o">=</span> <span class="n">uniform</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">thumbnail_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the preferred size for the view item thumbnail. The value will be used to</span>
 <span class="sd">        render the thumbnail, but the size of the thumbnail is not guaranteed to be the exact</span>
@@ -621,11 +621,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_size</span>
 
     <span class="nd">@thumbnail_size</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">thumbnail_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_size</span> <span class="o">=</span> <span class="n">size</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">thumbnail_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the preferred thumbnail width. Convenience property to set the width of the</span>
 <span class="sd">        `thumbnail_size` property.</span>
@@ -633,11 +633,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
 
     <span class="nd">@thumbnail_width</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">thumbnail_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_size</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">thumbnail_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the preferred thumbnail height. Convenience property to set the height of the</span>
 <span class="sd">        `thumbnail_size` property.</span>
@@ -645,11 +645,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_size</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
 
     <span class="nd">@thumbnail_height</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">thumbnail_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_size</span><span class="o">.</span><span class="n">setHeight</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pixmap_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pixmap_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the extent used when converting :class:`sgtk.platform.qt.QtGui.QIcon` to a</span>
 <span class="sd">        :class:`sgkt.platformqt.QtGui.QPixmap`.</span>
@@ -657,22 +657,22 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap_extent</span>
 
     <span class="nd">@pixmap_extent</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">pixmap_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pixmap_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extent</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pixmap_extent</span> <span class="o">=</span> <span class="n">extent</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">icon_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">icon_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the icon size for the view item action icons.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icon_size</span>
 
     <span class="nd">@icon_size</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">icon_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">icon_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_icon_size</span> <span class="o">=</span> <span class="n">size</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">badge_height_pct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">badge_height_pct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the percentage value used to calculate the maximum badge icon height (e.g. badge</span>
 <span class="sd">        icon is rendered over a rect, if that rect height is 100 and the `badge_height_pct` is 0.5,</span>
@@ -682,33 +682,33 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_badge_height_pct</span>
 
     <span class="nd">@badge_height_pct</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">badge_height_pct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pct</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">badge_height_pct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pct</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_badge_height_pct</span> <span class="o">=</span> <span class="n">pct</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">action_item_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_item_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the margin used for buttons.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_item_margin</span>
 
     <span class="nd">@action_item_margin</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">action_item_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_item_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_item_margin</span> <span class="o">=</span> <span class="n">margin</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">button_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">button_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the padding used for buttons.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_button_padding</span>
 
     <span class="nd">@button_padding</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">button_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">button_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_button_padding</span> <span class="o">=</span> <span class="n">padding</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">text_document_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_document_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the margin for the view item text. A :class:`sgtk.platform.qt.QtGui.QTextDocument` is used to</span>
 <span class="sd">        render the view item text, this value will be used to set the QTextDocument margin property.</span>
@@ -716,18 +716,18 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_document_margin</span>
 
     <span class="nd">@text_document_margin</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">text_document_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_document_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_document_margin</span> <span class="o">=</span> <span class="n">margin</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">item_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">item_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the view item padding. This value will add padding to the view item rect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_padding</span>
 
     <span class="nd">@item_padding</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">item_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">item_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_item_padding</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Padding</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_item_padding</span> <span class="o">=</span> <span class="n">padding</span>
@@ -737,14 +737,14 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid padding value </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">padding</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">thumbnail_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the padding for the item thumbnail.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_padding</span>
 
     <span class="nd">@thumbnail_padding</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">thumbnail_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">thumbnail_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_padding</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Padding</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_padding</span> <span class="o">=</span> <span class="n">padding</span>
@@ -754,14 +754,14 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid padding value </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">padding</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">text_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the padding for the item text.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_padding</span>
 
     <span class="nd">@text_padding</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">text_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_padding</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Padding</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_text_padding</span> <span class="o">=</span> <span class="n">padding</span>
@@ -771,7 +771,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid padding value </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">padding</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">text_rect_halign</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_rect_halign</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the text block horizontal alignment. This aligns the text block, not the text lines themselves (e.g. the</span>
 <span class="sd">        block of text will be aligned within the available space, but the text lines will remain aligned left). Horizontal</span>
@@ -781,7 +781,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_rect_halign</span>
 
     <span class="nd">@text_rect_halign</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">text_rect_halign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alignment</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_rect_halign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alignment</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">alignment</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CENTER</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Text horizontal alignment &#39;</span><span class="si">{align}</span><span class="s2">&#39; not supported. Must be one of &#39;LEFT&#39;, &#39;RIGHT, &#39;CENTER&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -791,14 +791,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_rect_halign</span> <span class="o">=</span> <span class="n">alignment</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">text_rect_valign</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_rect_valign</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the text block vertical alignment.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_rect_valign</span>
 
     <span class="nd">@text_rect_valign</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">text_rect_valign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alignment</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_rect_valign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alignment</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">alignment</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CENTER</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Text vertical alignment &#39;</span><span class="si">{align}</span><span class="s2">&#39; not supported. Must be one of &#39;TOP&#39;, &#39;BOTTOM, &#39;CENTER&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -808,7 +808,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_rect_valign</span> <span class="o">=</span> <span class="n">alignment</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the font used to render the item text. If not specified, the QStyleOptionViewItem font value</span>
 <span class="sd">        will be used.</span>
@@ -816,11 +816,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_font</span>
 
     <span class="nd">@font</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_font</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">background_pen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">background_pen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the :class:`sgtk.platform.qt.QGui.QPen` pen used to draw the view item background.</span>
 <span class="sd">        Setting this value will add a border around the view item.</span>
@@ -828,22 +828,22 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_background_pen</span>
 
     <span class="nd">@background_pen</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">background_pen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pen</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">background_pen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pen</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_background_pen</span> <span class="o">=</span> <span class="n">pen</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">loading_pen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loading_pen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the :class:`sgtk.platform.qt.QtGui.QPen` pen used to draw the item loading indicator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_pen</span>
 
     <span class="nd">@loading_pen</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">loading_pen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pen</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loading_pen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pen</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loading_pen</span> <span class="o">=</span> <span class="n">pen</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">loading_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loading_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the :class:`sgtk.platform.qt.QtGui.QBrush` brush used to paint the background of the item</span>
 <span class="sd">        loading rect.</span>
@@ -851,51 +851,51 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_brush</span>
 
     <span class="nd">@loading_brush</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">loading_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brush</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loading_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brush</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loading_brush</span> <span class="o">=</span> <span class="n">brush</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">selection_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selection_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the :class:`sgtk.platform.qt.QGui.QBrush` used to draw the view item selection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_brush</span>
 
     <span class="nd">@selection_brush</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">selection_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brush</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selection_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brush</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_selection_brush</span> <span class="o">=</span> <span class="n">brush</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">separator_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">separator_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the :class:`sgtk.platform.qt.QGui.QBrush` used to draw the view item separator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_separator_brush</span>
 
     <span class="nd">@separator_brush</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">separator_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brush</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">separator_brush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brush</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_separator_brush</span> <span class="o">=</span> <span class="n">brush</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">show_hover_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_hover_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the flag indicating to draw selection on hover or not. The default is set to True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_hover_selection</span>
 
     <span class="nd">@show_hover_selection</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">show_hover_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_hover_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_hover_selection</span> <span class="o">=</span> <span class="n">show</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">show_text_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_text_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the flag indicating to show a tooltip if the item text has been elided.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_text_tooltip</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">override_item_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">override_item_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the flag indicating to override the tooltip set on the QStandardItem object. Note that</span>
 <span class="sd">        this will only affect indexes that have an associated QStandardItem (e.g. the index model derives</span>
@@ -904,15 +904,15 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_override_item_tooltip</span>
 
     <span class="nd">@override_item_tooltip</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">override_item_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">override</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">override_item_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">override</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_override_item_tooltip</span> <span class="o">=</span> <span class="n">override</span>
 
     <span class="nd">@show_text_tooltip</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">show_text_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_text_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_text_tooltip</span> <span class="o">=</span> <span class="n">show</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">action_hover_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_hover_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set the cursor :class:`sgtk.platform.qt.QtGui.QCursor` for when an action button is</span>
 <span class="sd">        hovered over.</span>
@@ -920,11 +920,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_hover_cursor</span>
 
     <span class="nd">@action_hover_cursor</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">action_hover_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_hover_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_hover_cursor</span> <span class="o">=</span> <span class="n">cursor</span>
 
 <div class="viewcode-block" id="ViewItemDelegate.get_option_background_brush"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_option_background_brush">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_option_background_brush</span><span class="p">(</span><span class="n">option</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_option_background_brush</span><span class="p">(</span><span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the background brush for the QStyleOptionviewItem object.</span>
 
@@ -945,7 +945,7 @@
             <span class="k">return</span> <span class="n">option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">brush</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Background</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ViewItemDelegate.is_selected"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.is_selected">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">is_selected</span><span class="p">(</span><span class="n">option</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_selected</span><span class="p">(</span><span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if the item is selected.</span>
 
@@ -959,7 +959,7 @@
         <span class="k">return</span> <span class="n">option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Selected</span></div>
 
 <div class="viewcode-block" id="ViewItemDelegate.get_value"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_value">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the index.data for the given role. If the data returned is</span>
 <span class="sd">        a function, return the value of the executing the function.</span>
@@ -985,7 +985,7 @@
         <span class="k">return</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="ViewItemDelegate.get_display_values_list"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_display_values_list">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_display_values_list</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">join_char</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_display_values_list</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">join_char</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a list of display string values. Each return item in the list</span>
 <span class="sd">        represents a text line.</span>
@@ -1045,7 +1045,7 @@
         <span class="k">return</span> <span class="n">values_list</span></div>
 
 <div class="viewcode-block" id="ViewItemDelegate.split_html_lines"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.split_html_lines">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">split_html_lines</span><span class="p">(</span><span class="n">html_text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">split_html_lines</span><span class="p">(</span><span class="n">html_text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to split html text by line break tags.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1055,7 +1055,7 @@
     <span class="c1">######################################################################################################</span>
     <span class="c1"># Public methods</span>
 
-<div class="viewcode-block" id="ViewItemDelegate.is_hover"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.is_hover">[docs]</a>    <span class="k">def</span> <span class="nf">is_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.is_hover"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.is_hover">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if the mouse is over the item. This will always return</span>
 <span class="sd">        False if the option does not have a widget or the option&#39;s widget</span>
@@ -1072,7 +1072,7 @@
             <span class="n">option</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_MouseOver</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.has_mouse_tracking"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.has_mouse_tracking">[docs]</a>    <span class="k">def</span> <span class="nf">has_mouse_tracking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.has_mouse_tracking"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.has_mouse_tracking">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">has_mouse_tracking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if the item&#39;s option widget has mouse tracking enabled.</span>
 
@@ -1086,7 +1086,7 @@
         <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_option_widget</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">widget</span> <span class="ow">and</span> <span class="n">widget</span><span class="o">.</span><span class="n">hasMouseTracking</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.get_cursor_pos"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_cursor_pos">[docs]</a>    <span class="k">def</span> <span class="nf">get_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.get_cursor_pos"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_cursor_pos">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the mouse cursor position relative to the item&#39;s widget. This</span>
 <span class="sd">        will always return False if the option&#39;s widget does not have</span>
@@ -1105,7 +1105,7 @@
 
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.get_option_widget"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_option_widget">[docs]</a>    <span class="k">def</span> <span class="nf">get_option_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.get_option_widget"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_option_widget">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_option_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the widget for the QStyleOptionviewItem object.</span>
 
@@ -1133,7 +1133,7 @@
 
         <span class="k">return</span> <span class="n">widget</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.add_actions"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.add_actions">[docs]</a>    <span class="k">def</span> <span class="nf">add_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">FLOAT_BOTTOM_RIGHT</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.add_actions"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.add_actions">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">FLOAT_BOTTOM_RIGHT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add actions that will be made available to show for each item. This method should be used to</span>
 <span class="sd">        add actions to the `_actions` field instead of editing it directly.</span>
@@ -1149,7 +1149,7 @@
             <span class="n">item_action</span> <span class="o">=</span> <span class="n">ViewItemAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_action</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.add_action"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.add_action">[docs]</a>    <span class="k">def</span> <span class="nf">add_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">FLOAT_BOTTOM_RIGHT</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.add_action"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.add_action">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">FLOAT_BOTTOM_RIGHT</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to add an action. See `add_actions`.</span>
 
@@ -1162,7 +1162,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_actions</span><span class="p">([</span><span class="n">action</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.remove_actions"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.remove_actions">[docs]</a>    <span class="k">def</span> <span class="nf">remove_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.remove_actions"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.remove_actions">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">remove_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove the actions at the specified position. If positions are not specified, remove</span>
 <span class="sd">        all actions.</span>
@@ -1178,7 +1178,7 @@
             <span class="k">for</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span><span class="p">[</span><span class="n">position</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.scale_thumbnail_to_item_height"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.scale_thumbnail_to_item_height">[docs]</a>    <span class="k">def</span> <span class="nf">scale_thumbnail_to_item_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_value</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.scale_thumbnail_to_item_height"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.scale_thumbnail_to_item_height">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">scale_thumbnail_to_item_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If scale_value is not None, the thumbnail width will scale with the row height by a factor</span>
 <span class="sd">        of `scale_value` (e.g. thumbnail_width = item_height * scale_value). This is convenient when</span>
@@ -1191,7 +1191,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_thumbnail_scale_value</span> <span class="o">=</span> <span class="n">scale_value</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.get_displayed_text"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_displayed_text">[docs]</a>    <span class="k">def</span> <span class="nf">get_displayed_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.get_displayed_text"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.get_displayed_text">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_displayed_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the text that is displayed for the item. The text will be plain (not rich HTML).</span>
 <span class="sd">        This may be useful for filtering items displayed by this delegate, since the model data</span>
@@ -1211,7 +1211,7 @@
     <span class="c1">###############################################################################################</span>
     <span class="c1"># Override :class:`sgtk.platform.qt.QtGui.QStyledItemDelegate` methods</span>
 
-<div class="viewcode-block" id="ViewItemDelegate.initStyleOption"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.initStyleOption">[docs]</a>    <span class="k">def</span> <span class="nf">initStyleOption</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.initStyleOption"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.initStyleOption">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">initStyleOption</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides :class:`sgtk.platform.qt.QtGui.QStyledItemDelegate` method.</span>
 
@@ -1232,9 +1232,9 @@
             <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">item_padding</span><span class="o">.</span><span class="n">bottom</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">ViewItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">initStyleOption</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initStyleOption</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.createEditor"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.createEditor">[docs]</a>    <span class="k">def</span> <span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.createEditor"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.createEditor">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides :class:`sgtk.platform.qt.QtGui.QStyledItemDelegate` method.</span>
 
@@ -1252,7 +1252,7 @@
 
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.editorEvent"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.editorEvent">[docs]</a>    <span class="k">def</span> <span class="nf">editorEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.editorEvent"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.editorEvent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">editorEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides :class:`sgtk.platform.qt.QtGui.QStyledItemDelegate` method.</span>
 
@@ -1322,11 +1322,9 @@
 
             <span class="c1"># Fall through to allow the base implementation to perform any other mouse move event handling</span>
 
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ViewItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">editorEvent</span><span class="p">(</span>
-            <span class="n">event</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">editorEvent</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.sizeHint"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.sizeHint"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.sizeHint">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides :class:`sgtk.platform.qt.QtGui.QStyledItemDelegate` method.</span>
 
@@ -1423,7 +1421,7 @@
 
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ViewItemDelegate.paint"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.paint">[docs]</a>    <span class="k">def</span> <span class="nf">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="ViewItemDelegate.paint"><a class="viewcode-back" href="../../delegates.html#delegates.ViewItemDelegate.paint">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides :class:`sgtk.platform.qt.QtGui.QStyledItemDelegate` method.</span>
 
@@ -1492,7 +1490,7 @@
     <span class="c1"># Draw Methods</span>
     <span class="c1"># Override any of these draw methods to customize how that particular aspect of the item is rendered.</span>
 
-    <span class="k">def</span> <span class="nf">_draw_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the view item background. This default implementation will fill the option rect using the</span>
 <span class="sd">        option background brush. Modify the option background brush by returning a</span>
@@ -1510,7 +1508,7 @@
         <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundedRect</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_x_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_y_radius</span><span class="p">)</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_draw_loading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_loading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the animated loading indicator. This default implementation will render an arc rotating</span>
 <span class="sd">        in a circle for as long as the item data indicates that the item is in a loading state.</span>
@@ -1568,7 +1566,7 @@
             <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_draw_separator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_separator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw a line to separate this view item from the next. This default implementation will</span>
 <span class="sd">        render a line from the bottom left corner to the bottom right, in the same color used</span>
@@ -1621,7 +1619,7 @@
         <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_draw_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the view item selection. This default implementation will draw a border around</span>
 <span class="sd">        the item rect and a translucent background, in the color the the option palette</span>
@@ -1653,7 +1651,7 @@
         <span class="n">painter</span><span class="o">.</span><span class="n">drawRoundedRect</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_x_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_y_radius</span><span class="p">)</span>
         <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_draw_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the view item thumbnail. This default implementation will scale the thumbnail width</span>
 <span class="sd">        and height down to the thumbnail rect size, if larger, keeping the aspect ratio. The</span>
@@ -1776,7 +1774,7 @@
 
         <span class="k">return</span> <span class="n">thumbnail_rect</span>
 
-    <span class="k">def</span> <span class="nf">_draw_icon_badges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">bounding_rect</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_icon_badges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">bounding_rect</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the badges for this index item. This method supports drawing up to four</span>
 <span class="sd">        badges, one is each corner of the given `bounding_rect`.</span>
@@ -1920,7 +1918,7 @@
             <span class="n">badge_rect</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">pixmap</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">drawPixmap</span><span class="p">(</span><span class="n">badge_rect</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the view item text. This will get the whole text document and use the QTextDocument</span>
 <span class="sd">        method `drawContents` to render the text, in order to handle HTML/rich text.</span>
@@ -1985,7 +1983,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_draw_text_tooltip</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">elided</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Paint the actions for the view item. Actions are rendered using the option</span>
 <span class="sd">        widget&#39;s QStyle (or defaults to the application QStyle) as passing in QStyleOptionButton</span>
@@ -2036,7 +2034,7 @@
                 <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
                 <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_draw_action_push_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_action_push_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the action as a push button.</span>
 
@@ -2074,7 +2072,7 @@
                     <span class="p">),</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_action_radio_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_action_radio_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the action as a radio button.</span>
 
@@ -2115,7 +2113,7 @@
                     <span class="p">),</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_action_check_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_action_check_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the action as a check box.</span>
 
@@ -2158,7 +2156,7 @@
                     <span class="p">),</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_action_progress_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_action_progress_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the action as a progress bar.</span>
 
@@ -2199,7 +2197,7 @@
                     <span class="p">),</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_push_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_push_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">button_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw a push button.</span>
 
@@ -2234,7 +2232,7 @@
             <span class="p">)</span>
             <span class="n">style</span><span class="o">.</span><span class="n">proxy</span><span class="p">()</span><span class="o">.</span><span class="n">drawPrimitive</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">PE_FrameFocusRect</span><span class="p">,</span> <span class="n">fropt</span><span class="p">,</span> <span class="n">painter</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_init_style_option</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_init_style_option</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">style_option</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -2281,7 +2279,7 @@
             <span class="k">for</span> <span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span> <span class="ow">in</span> <span class="n">brushes</span><span class="p">:</span>
                 <span class="n">style_option</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">color_group</span><span class="p">,</span> <span class="n">color_role</span><span class="p">,</span> <span class="n">brush</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_action_progress_bar_option</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_action_progress_bar_option</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -2322,7 +2320,7 @@
 
         <span class="k">return</span> <span class="n">progress_bar_option</span>
 
-    <span class="k">def</span> <span class="nf">_get_action_button_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_action_button_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view_option</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index_data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the button style option to render the index action.</span>
 
@@ -2391,7 +2389,7 @@
 
         <span class="k">return</span> <span class="n">button_option</span>
 
-    <span class="k">def</span> <span class="nf">_draw_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show a tooltip at the current cursor position, if it is hovering over the given rect.</span>
 
@@ -2410,7 +2408,7 @@
             <span class="n">global_pos</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCursor</span><span class="p">()</span><span class="o">.</span><span class="n">pos</span><span class="p">()</span>
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QToolTip</span><span class="o">.</span><span class="n">showText</span><span class="p">(</span><span class="n">global_pos</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_text_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">elided</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_text_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">elided</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show a tooltip for the item&#39;s text if it has been elided or clipped. Text tooltips will</span>
 <span class="sd">        only be drawn if:</span>
@@ -2480,7 +2478,7 @@
     <span class="c1"># Getter methods to retrieve the item data to display. Override any of these methods to customize the</span>
     <span class="c1"># data that is rendered for an item.</span>
 
-    <span class="k">def</span> <span class="nf">_get_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the thumbnail for the item.</span>
 
@@ -2507,7 +2505,7 @@
 
         <span class="k">return</span> <span class="n">thumbnail</span>
 
-    <span class="k">def</span> <span class="nf">_get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rect</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rect</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the text data to display. The text data will be the concatentation of the</span>
 <span class="sd">        data retrieved from the header_role, subtitle_role and text_role.</span>
@@ -2529,7 +2527,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_header_text</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
         <span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_display_values_list</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_role</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_header_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_elided</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_header_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_elided</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the header text data to display.</span>
 
@@ -2682,7 +2680,7 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">formatted_header</span><span class="p">,</span> <span class="n">elided</span><span class="p">)</span> <span class="k">if</span> <span class="n">return_elided</span> <span class="k">else</span> <span class="n">formatted_header</span>
 
-    <span class="k">def</span> <span class="nf">_get_text_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_text_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the QTextDocument that contains the index text data to display. A</span>
 <span class="sd">        QTextDocument is used in order to support HTML/rich text, as well as</span>
@@ -2712,7 +2710,7 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">elided</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retun all of the actions that are valid for this item.</span>
 
@@ -2753,7 +2751,7 @@
 
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">def</span> <span class="nf">_get_action_and_rects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_action_and_rects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a list of tuples of the view item actions and their respective rect.</span>
 
@@ -2792,7 +2790,7 @@
     <span class="c1"># and positioning of the item data; e.g. see the ThumbnailViewItemDelegate that subclasses this base class</span>
     <span class="c1"># to reposition the thumbnail on top and text undernearth (instead of thumbnail left and text to the right.</span>
 
-    <span class="k">def</span> <span class="nf">_get_loading_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_loading_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the bounding rect for the item&#39;s loading icon. An invalid rect will be</span>
 <span class="sd">        returned if the item is not in a loading state. The bounding rect will be positioned</span>
@@ -2824,7 +2822,7 @@
 
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon_size</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_thumbnail_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">thumbnail</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_thumbnail_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">thumbnail</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the boudning rect for the item&#39;s thumbnail. The bounding rect will be</span>
 <span class="sd">        positioned on the left of the option rect.</span>
@@ -2870,7 +2868,7 @@
 
         <span class="k">return</span> <span class="n">rect</span>
 
-    <span class="k">def</span> <span class="nf">_get_text_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_text_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the bounding rect for the view item text. The rect will be</span>
 <span class="sd">        positioned to the right of the thumbnail rect and span the height</span>
@@ -2911,7 +2909,7 @@
         <span class="n">rect</span><span class="o">.</span><span class="n">adjust</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="o">-</span><span class="n">dx2</span><span class="p">,</span> <span class="o">-</span><span class="n">dy2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rect</span>
 
-    <span class="k">def</span> <span class="nf">_get_action_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_action_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the bounding rect for the view item action.</span>
 
@@ -3006,7 +3004,7 @@
 
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QRect</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_get_actions_position_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_actions_position_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the width of for all actions combined in the given position.</span>
 
@@ -3028,7 +3026,7 @@
 
         <span class="k">return</span> <span class="n">width</span>
 
-    <span class="k">def</span> <span class="nf">_get_actions_maximum_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_actions_maximum_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the maximum height of all actions.</span>
 
@@ -3048,7 +3046,7 @@
 
         <span class="k">return</span> <span class="n">height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_item_margin</span>
 
-    <span class="k">def</span> <span class="nf">_get_actions_left_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">include_margin</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_actions_left_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">include_margin</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get the offset from the left side actions. This will return the</span>
 <span class="sd">        horizontal offset from the left of the option rect, where the actions on the left side</span>
@@ -3070,7 +3068,7 @@
             <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOP_LEFT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM_LEFT</span><span class="p">),</span> <span class="n">include_margin</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_actions_right_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">include_margin</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_actions_right_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">include_margin</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get the offset from the right side actions. This will return the</span>
 <span class="sd">        horizontal offset from the right of the option rect, where the actions on the right side</span>
@@ -3092,7 +3090,7 @@
             <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOP_RIGHT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BOTTOM_RIGHT</span><span class="p">)</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_actions_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">include_margin</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_actions_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">include_margin</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get the offset for the actions in the given positions. This will</span>
 <span class="sd">        return the offset from the edge of the option rect, to how far the actions span.</span>
@@ -3127,7 +3125,7 @@
     <span class="c1">######################################################################################################</span>
     <span class="c1"># Private methods</span>
 
-    <span class="k">def</span> <span class="nf">_hit_box_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_hit_box_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if the current cursor position intersects the given rect. If mouse tracking</span>
 <span class="sd">        is not enabled on the option widget, this will always return False.</span>
@@ -3144,7 +3142,7 @@
         <span class="n">cursor_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_pos</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cursor_pos</span> <span class="ow">and</span> <span class="n">rect</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">cursor_pos</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_action_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_action_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the action at the given point `pos`.</span>
 
@@ -3168,7 +3166,7 @@
 
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">_convert_icon_to_pixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icon</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_icon_to_pixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icon</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the pixmap converted from the given icon.</span>
 
@@ -3181,7 +3179,7 @@
 
         <span class="k">return</span> <span class="n">icon</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixmap_extent</span><span class="p">)</span> <span class="k">if</span> <span class="n">icon</span> <span class="k">else</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">_update_index_expand_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_index_expand_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if an item expand state should change (expand to show all text or collapse</span>
 <span class="sd">        to hide text).</span>
@@ -3226,7 +3224,7 @@
 
         <span class="k">return</span> <span class="n">state_changed</span>
 
-    <span class="k">def</span> <span class="nf">_toggle_expand_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">expand_flag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_toggle_expand_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">expand_flag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Expand the item to display all text. To expand the item, the item index data</span>
 <span class="sd">        will be set to indicate that the item should expand to display all of its</span>
@@ -3245,7 +3243,7 @@
         <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">expand_flag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_role</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sizeHintChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_is_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the item is currently expanded to show all text.</span>
 
@@ -3258,7 +3256,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_role</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_role</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_create_text_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_text_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a new QTextDocument object. Whenever a QTextDocument is required, this</span>
 <span class="sd">        method should be used to create the object to ensure all QTextDocuments used</span>
@@ -3285,7 +3283,7 @@
 
         <span class="k">return</span> <span class="n">doc</span>
 
-    <span class="k">def</span> <span class="nf">_get_visible_lines_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">line_text</span><span class="o">=</span><span class="s2">&quot;placeholder&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_visible_lines_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">line_text</span><span class="o">=</span><span class="s2">&quot;placeholder&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the height based on the number of visible lines. A placeholder text is used</span>
 <span class="sd">        to calculate the height per line.</span>
@@ -3312,7 +3310,7 @@
         <span class="n">doc</span><span class="o">.</span><span class="n">setHtml</span><span class="p">(</span><span class="n">html_lines</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_html_text_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_html_text_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the width of the rendered HTML text.</span>
 
@@ -3332,7 +3330,7 @@
 
         <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">idealWidth</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_is_text_clipped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">text_lines</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_text_clipped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">text_lines</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the displayed text was vertically clipped to fit</span>
 <span class="sd">        to the view item bounding rect.</span>
@@ -3388,7 +3386,7 @@
         <span class="c1"># Text fits within the available rect height.</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_format_html_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">text_lines</span><span class="p">,</span> <span class="n">clip</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_format_html_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">text_lines</span><span class="p">,</span> <span class="n">clip</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Format the HTML text.</span>
 
@@ -3505,7 +3503,7 @@
         <span class="n">formatted_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">html_lines</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">formatted_str</span><span class="p">,</span> <span class="n">elided</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_elided_text</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_elided_text</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">elide_mode</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ElideRight</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -3595,7 +3593,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">doc</span><span class="o">.</span><span class="n">toHtml</span><span class="p">())</span></div>
 
 
-<span class="k">class</span> <span class="nc">ViewItemAction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ViewItemAction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class object to handle rendering item actions in the :class:`ViewItemDelegate`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -3718,7 +3716,7 @@
         <span class="p">},</span>
     <span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor. Use the data passed to initialize the object.</span>
 
@@ -3742,11 +3740,11 @@
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">checkable_types</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checkable_types</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a tuple icontaining the types that can be checked.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">TYPE_CHECK_BOX</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">TYPE_RADIO_BUTTON</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">set_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icon</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icon</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the action icon. If a string is given, create the icon from the string. The icon will be</span>
 <span class="sd">        set to None if an invalid value provided.</span>
@@ -3762,7 +3760,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">icon</span>
 
-    <span class="k">def</span> <span class="nf">is_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to check if the action is visible for the given index.</span>
 
@@ -3778,7 +3776,7 @@
         <span class="n">index_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visible&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get the state of the action for the given index.</span>
 
@@ -3796,7 +3794,7 @@
             <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Active</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStyle</span><span class="o">.</span><span class="n">State_Enabled</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method to get the current action name for the given index. The</span>
 <span class="sd">        particular index may want to override the default action name.</span>
@@ -3813,7 +3811,7 @@
         <span class="n">index_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">index_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">is_clickable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_clickable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        An action is clickable if:</span>
 <span class="sd">            1. It is visible and not a placeholder</span>
@@ -3838,7 +3836,7 @@
 
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">width_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">width_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the suggested width to display the action.</span>
 
@@ -3853,28 +3851,28 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_WIDTHS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_padding_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_padding_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the padding for above the action.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_top</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
 
-    <span class="k">def</span> <span class="nf">get_padding_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_padding_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the padding to the right of the action.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_right</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
 
-    <span class="k">def</span> <span class="nf">get_padding_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_padding_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the padding for below the action.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_bottom</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
 
-    <span class="k">def</span> <span class="nf">get_padding_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_padding_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the padding to the left of the action.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3889,7 +3887,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

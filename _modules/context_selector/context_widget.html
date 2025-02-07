@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>context_selector.context_widget &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -151,10 +151,10 @@
 <span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sgtk</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
-<span class="kn">from</span> <span class="nn">.ui.context_editor_widget</span> <span class="kn">import</span> <span class="n">Ui_ContextWidget</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sgtk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ui.context_editor_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ui_ContextWidget</span>
 
 <span class="c1"># framework imports</span>
 <span class="n">shotgun_globals</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span>
@@ -173,7 +173,7 @@
 <span class="n">TASK_QUERY_FIELDS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="ContextWidget"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget">[docs]</a><span class="k">class</span> <span class="nc">ContextWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ContextWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Widget which represents the current context and allows the user to search</span>
 <span class="sd">    for a different context via search completer. A menu is also provided for</span>
@@ -186,12 +186,12 @@
     <span class="c1"># emitted when a settings button is clicked on a node</span>
     <span class="n">context_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param parent: The model parent.</span>
 <span class="sd">        :type parent: :class:`~PySide.QtGui.QObject`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ContextWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
         <span class="n">project</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">project</span>
@@ -246,7 +246,7 @@
             <span class="c1"># apply to widget (and all its children)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter out and handle some key/click events on the search widgets.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -318,7 +318,7 @@
 
         <span class="k">return</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="ContextWidget.save_recent_contexts"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.save_recent_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">save_recent_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget.save_recent_contexts"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.save_recent_contexts">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">save_recent_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Should be called by the parent widget, typically when the dialog closes,</span>
 <span class="sd">        to ensure the recent contexts are saved to disk when closing.</span>
@@ -345,7 +345,7 @@
             <span class="n">scope</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">UserSettings</span><span class="o">.</span><span class="n">SCOPE_PROJECT</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ContextWidget.set_context"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_context">[docs]</a>    <span class="k">def</span> <span class="nf">set_context</span><span class="p">(</span>
+<div class="viewcode-block" id="ContextWidget.set_context"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_context">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_context</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">task_display_override</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">link_display_override</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -374,7 +374,7 @@
         <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_recents</span><span class="p">(</span><span class="n">context</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ContextWidget.set_up"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_up">[docs]</a>    <span class="k">def</span> <span class="nf">set_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget.set_up"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_up">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_manager</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles initial set up of the widget. Includes setting up menu, running</span>
 <span class="sd">        any background set up tasks, etc.</span>
@@ -439,7 +439,7 @@
         <span class="c1"># get recent contexts from user settings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_recent_contexts</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ContextWidget.restrict_entity_types_by_link"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.restrict_entity_types_by_link">[docs]</a>    <span class="k">def</span> <span class="nf">restrict_entity_types_by_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget.restrict_entity_types_by_link"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.restrict_entity_types_by_link">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">restrict_entity_types_by_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify what entries should show up in the list of links when</span>
 <span class="sd">        using the auto completer.</span>
@@ -473,7 +473,7 @@
             <span class="n">_query_entity_schema</span><span class="p">,</span> <span class="n">task_args</span><span class="o">=</span><span class="p">[</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">]</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ContextWidget.restrict_entity_types"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.restrict_entity_types">[docs]</a>    <span class="k">def</span> <span class="nf">restrict_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_types</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget.restrict_entity_types"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.restrict_entity_types">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">restrict_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_types</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Restrict which entity types should show up in the list of matches.</span>
 
@@ -492,13 +492,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span><span class="n">entity_types_dict</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">context_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">context_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The label for the context widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">label</span>
 
-<div class="viewcode-block" id="ContextWidget.set_task_tooltip"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_task_tooltip">[docs]</a>    <span class="k">def</span> <span class="nf">set_task_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tooltip</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget.set_task_tooltip"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_task_tooltip">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_task_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tooltip</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify a string (can be html) which should be shown</span>
 <span class="sd">        as the tooltip for the task selection widget</span>
@@ -507,7 +507,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_display</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">tooltip</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ContextWidget.set_link_tooltip"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_link_tooltip">[docs]</a>    <span class="k">def</span> <span class="nf">set_link_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tooltip</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget.set_link_tooltip"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.set_link_tooltip">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_link_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tooltip</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Specify a string (can be html) which should be shown</span>
 <span class="sd">        as the tooltip for the link selection widget</span>
@@ -516,7 +516,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">tooltip</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ContextWidget.enable_editing"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.enable_editing">[docs]</a>    <span class="k">def</span> <span class="nf">enable_editing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ContextWidget.enable_editing"><a class="viewcode-back" href="../../context_widget.html#context_selector.ContextWidget.enable_editing">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">enable_editing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show/hide the input widgets and display a message in the context label.</span>
 
@@ -530,7 +530,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">context_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">message</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_add_to_recents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_to_recents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the supplied context as an action in the list of recents context</span>
 <span class="sd">        actions</span>
@@ -567,7 +567,7 @@
         <span class="c1"># only keep the 5 most recent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Recent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recent_actions</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_build_actions</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_actions</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">tasks</span><span class="p">,</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">exclude_current_context</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -616,7 +616,7 @@
         <span class="c1"># store the actions list for use when building the menu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="n">group_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">task_actions</span>
 
-    <span class="k">def</span> <span class="nf">_get_qaction_for_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_qaction_for_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper method to build a QAction for the supplied context.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -634,7 +634,7 @@
 
         <span class="k">return</span> <span class="n">action</span>
 
-    <span class="k">def</span> <span class="nf">_get_recent_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_recent_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Pull the stored, serialized contexts from user settings and populate the</span>
 <span class="sd">        Recent actions list for use when building the contexts menu.</span>
@@ -659,21 +659,21 @@
                 <span class="n">recent_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_qaction_for_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_menu_actions</span><span class="p">[</span><span class="s2">&quot;Recent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">recent_action</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_manual_task_search_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_manual_task_search_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Small wrapper to manual toggle the task searching on/off</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search_btn</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search_btn</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_manual_link_search_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_manual_link_search_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Small wrapper to manual toggle the link searching on/off</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search_btn</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search_btn</span><span class="o">.</span><span class="n">setDown</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_about_to_show_contexts_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_about_to_show_contexts_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot called just before the contexts menu is shown. It handles</span>
 <span class="sd">        organizing the actions into menus.</span>
@@ -754,7 +754,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">actions</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_task_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;No Tasks to show&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_context_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_context_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when a new context is set via the menu or one of the completers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -766,7 +766,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_entity_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_entity_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot called when an entity is selected via one of the search completers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -781,7 +781,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_context_activated</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_task_search_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_task_search_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot called when the user clicks the task display or the task search</span>
 <span class="sd">        button.</span>
@@ -816,7 +816,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_menu_btn</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_on_link_search_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_link_search_toggled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot called when the user clicks the link display or the link search</span>
 <span class="sd">        button.</span>
@@ -847,7 +847,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_search</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link_display</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_on_task_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_task_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot called when a background task completes. Displatches methods to</span>
 <span class="sd">        handle the results depending on which task was completed.</span>
@@ -870,7 +870,7 @@
                 <span class="n">result</span><span class="p">,</span> <span class="s2">&quot;Related&quot;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclude_current_context</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_task_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">traceback_str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_task_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">traceback_str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If the schema query fails, add a log warning. It&#39;s not catastrophic, but</span>
 <span class="sd">        it shouldn&#39;t fail, so we need to make a record of it.</span>
@@ -897,7 +897,7 @@
                 <span class="s2">&quot;Error Message: </span><span class="si">%s</span><span class="s2">.</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">traceback_str</span><span class="p">)</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_query_related_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_query_related_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Method called via background task to query tasks related to the current</span>
 <span class="sd">        context&#39;s entity.</span>
@@ -931,7 +931,7 @@
 
         <span class="k">return</span> <span class="n">tasks</span>
 
-    <span class="k">def</span> <span class="nf">_restrict_searchable_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">published_file_entity_schema</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_restrict_searchable_entity_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">published_file_entity_schema</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called after successful lookup of valid PublishedFile.entity types.</span>
 <span class="sd">        The supplied field schema contains the valid entity names. Use these to</span>
@@ -972,7 +972,7 @@
         <span class="c1"># now update the types for the task completer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">task_search</span><span class="o">.</span><span class="n">set_searchable_entity_types</span><span class="p">(</span><span class="n">task_types_dict</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_show_context</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_show_context</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">task_display_override</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">link_display_override</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1006,7 +1006,7 @@
             <span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_get_task_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_task_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Build a display string for the task of the supplied context.</span>
 
@@ -1033,7 +1033,7 @@
     <span class="k">return</span> <span class="n">display_name</span>
 
 
-<span class="k">def</span> <span class="nf">_get_link_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_link_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Build a display string for the link of the supplied context.</span>
 
@@ -1065,7 +1065,7 @@
     <span class="k">return</span> <span class="n">display_name</span>
 
 
-<span class="k">def</span> <span class="nf">_get_context_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_context_display</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the full display string for the supplied context.</span>
 
@@ -1096,7 +1096,7 @@
     <span class="k">return</span> <span class="n">display_name</span>
 
 
-<span class="k">def</span> <span class="nf">_get_context_icon_path</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_context_icon_path</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the most appropriate icon for a given context.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1115,7 +1115,7 @@
         <span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
 
-<span class="k">def</span> <span class="nf">_query_my_tasks</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_query_my_tasks</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Called via bg task to query PTR for tasks assigned to the current user.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1150,7 +1150,7 @@
     <span class="k">return</span> <span class="n">bundle</span><span class="o">.</span><span class="n">shotgun</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;Task&quot;</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">task_fields</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_query_entity_schema</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_query_entity_schema</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Called as bg task to query PTR for the field schema</span>
 <span class="sd">    for the given type and field.</span>
@@ -1175,7 +1175,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

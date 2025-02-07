@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>overlay_widget.shotgun_model_overlay_widget &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>overlay_widget.shotgun_model_overlay_widget &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -97,7 +97,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -150,14 +150,14 @@
 <span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
 <span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
 <span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
-<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sgtk.platform.qt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 <span class="c1"># load resources</span>
-<span class="kn">from</span> <span class="nn">.ui</span> <span class="kn">import</span> <span class="n">resources_rc</span>
-<span class="kn">from</span> <span class="nn">.shotgun_overlay_widget</span> <span class="kn">import</span> <span class="n">ShotgunOverlayWidget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ui</span><span class="w"> </span><span class="kn">import</span> <span class="n">resources_rc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.shotgun_overlay_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShotgunOverlayWidget</span>
 
 
-<div class="viewcode-block" id="ShotgunModelOverlayWidget"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunModelOverlayWidget">[docs]</a><span class="k">class</span> <span class="nc">ShotgunModelOverlayWidget</span><span class="p">(</span><span class="n">ShotgunOverlayWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunModelOverlayWidget"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunModelOverlayWidget">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ShotgunModelOverlayWidget</span><span class="p">(</span><span class="n">ShotgunOverlayWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A convenience class specifically designed to work with a</span>
 <span class="sd">    :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`.</span>
@@ -166,7 +166,7 @@
 <span class="sd">    easily created and connected to the same shotgun model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param sg_model: Shotgun model that this widget should connect to</span>
 <span class="sd">        :type sg_model:  :class:`~tk-framework-shotgunutils:shotgun_model.ShotgunModel`</span>
@@ -179,7 +179,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connect_to_model</span><span class="p">(</span><span class="n">sg_model</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ShotgunModelOverlayWidget.set_model"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunModelOverlayWidget.set_model">[docs]</a>    <span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">):</span>
+<div class="viewcode-block" id="ShotgunModelOverlayWidget.set_model"><a class="viewcode-back" href="../../overlay_widget.html#overlay_widget.ShotgunModelOverlayWidget.set_model">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the model this widget should be connected to</span>
 
@@ -189,7 +189,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connect_to_model</span><span class="p">(</span><span class="n">sg_model</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_connect_to_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_connect_to_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_model</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Connect to the signals emitted by the specified model</span>
 
@@ -217,20 +217,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">data_refreshed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_refreshed</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">data_refresh_fail</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_refresh_failed</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_model_query_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_model_query_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot signaled when the query changes on the connected Shotgun model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="n">hide_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_model_refreshing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_model_refreshing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot signaled when the connected Shotgun model starts refreshing</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">is_data_cached</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">start_spin</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_model_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_changed</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_model_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_changed</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot signaled when the data from the connected Shotgun model has</span>
 <span class="sd">        been refreshed</span>
@@ -239,7 +239,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="n">hide_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_model_refresh_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_model_refresh_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Slot signaled when the connected Shotgun model refresh fails</span>
 
@@ -255,7 +255,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    

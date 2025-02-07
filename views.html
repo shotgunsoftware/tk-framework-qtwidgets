@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>View Related Classes &mdash; tk-framework-qtwidgets v2.12.5 documentation</title>
+  <title>View Related Classes &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -127,7 +127,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.5.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -205,15 +205,15 @@ Flow Production Tracking via the model into your widget.</p>
 <span class="n">shotgun_view</span> <span class="o">=</span> <span class="n">tank</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">import_framework</span><span class="p">(</span><span class="s2">&quot;tk-framework-qtwidgets&quot;</span><span class="p">,</span> <span class="s2">&quot;views&quot;</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">ExampleDelegate</span><span class="p">(</span><span class="n">shotgun_view</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleDelegate</span><span class="p">(</span><span class="n">shotgun_view</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">shotgun_view</span><span class="o">.</span><span class="n">WidgetDelegate</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_create_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the widget to be used when drawing items</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -222,7 +222,7 @@ Flow Production Tracking via the model into your widget.</p>
         <span class="c1"># and use this factory method to create it.</span>
         <span class="k">return</span> <span class="n">QLabel</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_before_paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_before_paint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when a cell is about to be painted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -245,7 +245,7 @@ Flow Production Tracking via the model into your widget.</p>
 
         <span class="c1"># QLabel is now ready to be used to paint this object on the screen</span>
 
-    <span class="k">def</span> <span class="nf">_on_before_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_before_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">model_index</span><span class="p">,</span> <span class="n">style_options</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when a cell is being selected.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -269,7 +269,7 @@ Flow Production Tracking via the model into your widget.</p>
         <span class="n">widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;{background-color: red;}&quot;</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_options</span><span class="p">,</span> <span class="n">model_index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Base the size on the icon size property of the view</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2646,7 +2646,7 @@ should be collapsed.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Autodesk.</p>
+    <p>&#169; Copyright 2025, Autodesk.</p>
   </div>
 
    
