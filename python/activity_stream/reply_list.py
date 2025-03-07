@@ -327,9 +327,9 @@ class ReplyListWidget(QtGui.QWidget):
         self.ui.reply_layout.addWidget(attachment_group)
 
         # add it to our mapping dict and increment the counter
-        self._attachment_group_widgets[
-            curr_attachment_group_widget_id
-        ] = attachment_group
+        self._attachment_group_widgets[curr_attachment_group_widget_id] = (
+            attachment_group
+        )
 
     def _add_replies_and_attachments(self, replies_and_attachments):
         """

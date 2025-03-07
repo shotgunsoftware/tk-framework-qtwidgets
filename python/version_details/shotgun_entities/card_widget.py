@@ -557,7 +557,7 @@ class _OrderedDict(object):
         self._keys = []
         self._dict = dict()
 
-        for (key, value) in kwargs.items():
+        for key, value in kwargs.items():
             self.__setitem__(key, value)
 
     def get(self, key, default=None):
