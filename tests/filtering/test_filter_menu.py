@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Autodesk Inc.
 
 from datetime import datetime
-from mock import Mock, patch
+from unittest.mock import Mock, patch
 import os
 import sys
 
