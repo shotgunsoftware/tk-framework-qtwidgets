@@ -13,8 +13,6 @@ Once a user selects an object, a signal fires to indicate the request.
 
 .. autoclass:: GlobalSearchWidget
     :members:
-    :inherited-members:
 
 .. autoclass:: HierarchicalSearchWidget
     :members:
-    :inherited-members:
