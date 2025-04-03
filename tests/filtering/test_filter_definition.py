@@ -12,8 +12,7 @@ from datetime import datetime
 import os
 import sys
 
-import mock
-from mock import Mock, patch
+from unittest.mock import Mock, patch
 import pytest
 
 import sgtk
