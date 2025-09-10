@@ -11,11 +11,6 @@
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 
-try:
-    from tank_vendor import sgutils
-except ImportError:
-    from tank_vendor import six as sgutils
-
 search_widget = sgtk.platform.current_bundle().import_module("search_widget")
 shotgun_search_widget = sgtk.platform.current_bundle().import_module(
     "shotgun_search_widget"
