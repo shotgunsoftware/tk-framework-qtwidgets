@@ -5,10 +5,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_fields.shotgun_field_meta &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
+  <title>shotgun_fields.shotgun_field_meta &mdash; tk-framework-qtwidgets v2.12.8 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -97,7 +98,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.8.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -331,13 +332,13 @@
             <span class="n">registration_types</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">field_type</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">))</span>
 
         <span class="c1"># register all the types for this widget class</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">field_type</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">)</span> <span class="ow">in</span> <span class="n">registration_types</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">field_type</span><span class="p">,</span> <span class="n">widget_type</span> <span class="ow">in</span> <span class="n">registration_types</span><span class="p">:</span>
 
             <span class="k">if</span> <span class="s2">&quot;_ENTITY_FIELDS&quot;</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">:</span>
                 <span class="c1"># this is an override widget, meaning it is to be used for specific</span>
                 <span class="c1"># entity+field combinations. Loop through those combinations and</span>
                 <span class="c1"># register this class for each.</span>
-                <span class="k">for</span> <span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;_ENTITY_FIELDS&quot;</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;_ENTITY_FIELDS&quot;</span><span class="p">]:</span>
                     <span class="n">ShotgunFieldManager</span><span class="o">.</span><span class="n">register_entity_field_class</span><span class="p">(</span>
                         <span class="n">entity_type</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_class</span><span class="p">,</span> <span class="n">widget_type</span>
                     <span class="p">)</span>

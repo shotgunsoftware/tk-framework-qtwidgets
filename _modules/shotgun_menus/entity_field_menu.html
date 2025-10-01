@@ -5,10 +5,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>shotgun_menus.entity_field_menu &mdash; tk-framework-qtwidgets v2.12.6 documentation</title>
+  <title>shotgun_menus.entity_field_menu &mdash; tk-framework-qtwidgets v2.12.8 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -97,7 +98,7 @@
                              text-decoration: underline; }
     </style>
 
-    <b>tk-framework-qtwidgets</b> v2.12.6.<br>
+    <b>tk-framework-qtwidgets</b> v2.12.8.<br>
     
         This documentation is part of the Flow Production Tracking.
     
@@ -441,7 +442,7 @@
         <span class="k">if</span> <span class="n">bubble_fields</span><span class="p">:</span>
 
             <span class="n">linked_menus</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">field_info</span><span class="p">)</span> <span class="ow">in</span> <span class="n">bubble_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">field_info</span> <span class="ow">in</span> <span class="n">bubble_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="c1"># pull all the bubbled field data in an order that sorts by display name</span>
                 <span class="n">sorted_items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
                     <span class="nb">zip</span><span class="p">(</span>
@@ -452,7 +453,7 @@
                 <span class="p">)</span>
 
                 <span class="n">entity_menus</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="p">(</span><span class="n">type_name</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">bubble_base</span><span class="p">)</span> <span class="ow">in</span> <span class="n">sorted_items</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">type_name</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">bubble_base</span> <span class="ow">in</span> <span class="n">sorted_items</span><span class="p">:</span>
                     <span class="c1"># build the menu for this entity passing on our state</span>
                     <span class="n">entity_menu</span> <span class="o">=</span> <span class="n">EntityFieldMenu</span><span class="p">(</span>
                         <span class="n">entity_type</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_task_manager</span>
@@ -473,7 +474,7 @@
                 <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">entity_menus</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="c1"># otherwise add an intermediate menu for each possible entity type</span>
                     <span class="n">bubble_menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="n">field_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
-                    <span class="k">for</span> <span class="p">(</span><span class="n">type_name</span><span class="p">,</span> <span class="n">entity_menu</span><span class="p">)</span> <span class="ow">in</span> <span class="n">entity_menus</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">type_name</span><span class="p">,</span> <span class="n">entity_menu</span> <span class="ow">in</span> <span class="n">entity_menus</span><span class="p">:</span>
                         <span class="n">entity_menu</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">type_name</span><span class="p">)</span>
                         <span class="n">bubble_menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="n">entity_menu</span><span class="p">)</span>
                     <span class="n">linked_menus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bubble_menu</span><span class="p">)</span>
