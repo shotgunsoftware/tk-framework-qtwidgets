@@ -138,7 +138,6 @@ EditSelectedWidgetDelegate
 .. autoclass:: EditSelectedWidgetDelegate
     :show-inheritance:
     :members:
-    :inherited-members:
     :private-members: _on_before_selection
     :exclude-members: createEditor, paint, updateEditorGeometry
 
@@ -204,4 +203,3 @@ GroupWidgetBase
 .. autoclass:: GroupWidgetBase
     :show-inheritance:
     :members:
-    :inherited-members:

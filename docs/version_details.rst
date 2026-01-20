@@ -26,4 +26,3 @@ VersionDetailsWidget
 .. autoclass:: VersionDetailsWidget
     :show-inheritance:
     :members:
-    :inherited-members:
