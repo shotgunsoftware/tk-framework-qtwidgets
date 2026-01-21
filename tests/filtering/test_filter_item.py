@@ -35,7 +35,6 @@ filtering_dir = os.path.abspath(os.path.join(base_dir, "filtering"))
 sys.path.extend([base_dir, filtering_dir])
 from filter_item import FilterItem
 
-
 ####################################################################################################
 # FilterITem Fixtures
 ####################################################################################################

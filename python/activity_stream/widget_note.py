@@ -369,9 +369,7 @@ class NoteWidget(ActivityStreamBaseWidget):
         <table cellpadding=5 cellspacing=2 >
         %s
         </table>
-        """ % "\n".join(
-            html_chunks
-        )
+        """ % "\n".join(html_chunks)
 
         return html
 

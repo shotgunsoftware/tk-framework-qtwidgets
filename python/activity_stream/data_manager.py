@@ -558,8 +558,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                 self._bundle.log_debug("Creating schema in sqlite db.")
 
                 # we have a brand new database. Create all tables and indices
-                c.executescript(
-                    """
+                c.executescript("""
                     CREATE TABLE entity (entity_type text, entity_id integer, activity_id integer, created_at datetime);
 
                     CREATE TABLE activity (activity_id integer, note_id integer default null, payload blob, created_at datetime);
@@ -573,8 +572,7 @@ class ActivityStreamDataHandler(QtCore.QObject):
                     CREATE INDEX activity_2 ON activity(activity_id, note_id);
 
                     CREATE INDEX note_1 ON activity(note_id);
-                    """
-                )
+                    """)
                 connection.commit()
         except:
             connection.close()

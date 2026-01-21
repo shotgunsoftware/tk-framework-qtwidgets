@@ -12,7 +12,6 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .shotgun_field_manager import ShotgunFieldManager
 
-
 # a list of class member names accumulated at import time. these names will be
 # taken over by deriving classes as new instances are created.
 TAKE_OVER_NAMES = []

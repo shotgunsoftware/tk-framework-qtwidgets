@@ -49,6 +49,7 @@ An example of how to use it is:
                 # action's data has the field that was selected
                 self.do_thing(action.data()["field"])
 """
+
 import sgtk
 from sgtk.platform.qt import QtGui
 

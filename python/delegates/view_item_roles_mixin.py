@@ -140,7 +140,7 @@ class ViewItemRolesMixin(object):
         data_method = self._role_methods.get(role)
 
         # Append any extra arguments that need to be collected at dynamically at this point in time.
-        (extra_args, extra_kwargs) = self._get_args_for_role_method(item, role)
+        extra_args, extra_kwargs = self._get_args_for_role_method(item, role)
         args += extra_args
         kwargs.update(extra_kwargs)
 

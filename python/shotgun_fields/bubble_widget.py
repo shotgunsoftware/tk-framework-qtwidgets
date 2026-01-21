@@ -44,16 +44,13 @@ class BubbleWidget(QtGui.QFrame):
 
         # style the look of the bubble
         self.setObjectName("bubble")
-        self.setStyleSheet(
-            """
+        self.setStyleSheet("""
             #bubble {
                 border: 1px solid black;
                 border-radius: 5px;
                 background-color: %s;
             }
-            """
-            % self.palette().color(QtGui.QPalette.Button).name()
-        )
+            """ % self.palette().color(QtGui.QPalette.Button).name())
 
         # create a remove button for the widget.
         # extract a close button icon from the style and use it
