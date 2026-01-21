@@ -254,26 +254,21 @@ class ShotgunEntityCardWidget(QtGui.QWidget):
                 highlight_col.blue(),
             )
 
-            self.ui.box.setStyleSheet(
-                """
+            self.ui.box.setStyleSheet("""
                 #box {
                     border: 1px solid %s;
                     margin-bottom: 2px;
                     margin-right: 2px;
                 }
-                """
-                % (highlight_str)
-            )
+                """ % (highlight_str))
         elif self._show_border:
-            self.ui.box.setStyleSheet(
-                """
+            self.ui.box.setStyleSheet("""
                 #box {
                     border: 1px solid rgb(50,50,50);
                     margin-bottom: 2px;
                     margin-right: 2px;
                 }
-                """
-            )
+                """)
         else:
             self.ui.box.setStyleSheet("")
 

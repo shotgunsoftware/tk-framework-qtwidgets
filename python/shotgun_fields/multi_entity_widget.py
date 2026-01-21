@@ -16,7 +16,6 @@ from .entity_widget import EntityWidget
 from .shotgun_field_meta import ShotgunFieldMeta
 from .util import check_project_search_supported
 
-
 shotgun_globals = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_globals"
 )

@@ -328,7 +328,7 @@ def sg_field_to_str(sg_type, sg_field, value, directive=None):
 
     elif sg_field_names & set(("created_at", "updated_at")):
         timestamp_format = directives[0] if directives else None
-        (str_val, _) = create_human_readable_timestamp(value, timestamp_format)
+        str_val, _ = create_human_readable_timestamp(value, timestamp_format)
 
     elif "sg_status_list" in sg_field_names:
         if not directives:

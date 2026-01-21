@@ -99,7 +99,7 @@ class ActivityStreamBaseWidget(QtGui.QWidget):
         signals to.
         """
         try:
-            (entity_type, entity_id) = url.split(":")
+            entity_type, entity_id = url.split(":")
             entity_id = int(entity_id)
             self.entity_requested.emit(entity_type, entity_id)
         except:

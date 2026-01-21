@@ -10,6 +10,7 @@
 """
 A collection of various subclassed QLabels used by the activity stream UI
 """
+
 from sgtk.platform.qt import QtCore, QtGui
 from . import utils
 import sgtk
@@ -78,13 +79,11 @@ class LargeAttachmentThumbnail(ClickableLabel):
             # no thumbnail for this guy
             self.setToolTip("Click to see full attachment.")
             self.setText(self._data["this_file"]["name"])
-            self.setStyleSheet(
-                """QLabel {
+            self.setStyleSheet("""QLabel {
                 border-radius: 2px;
                 border: 1px solid rgba(200, 200, 200, 40%);
                 padding: 8px;
-                }"""
-            )
+                }""")
 
     def set_thumbnail(self, image):
         """
