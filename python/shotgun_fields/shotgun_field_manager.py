@@ -389,9 +389,9 @@ class ShotgunFieldManager(QtCore.QObject):
 
             # handle bubbled field syntax
             if "." in field_name:
-                (resolved_entity_type, resolved_field_name) = field_name.split(".")[-2:]
+                resolved_entity_type, resolved_field_name = field_name.split(".")[-2:]
             else:
-                (resolved_entity_type, resolved_field_name) = (
+                resolved_entity_type, resolved_field_name = (
                     sg_entity_type,
                     field_name,
                 )

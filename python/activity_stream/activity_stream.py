@@ -1035,7 +1035,7 @@ class ActivityStreamWidget(QtGui.QWidget):
         """
         if activity_id in self._activity_stream_data_widgets:
             widget = self._activity_stream_data_widgets[activity_id]
-            (reply_users, attachment_requests) = self._populate_note_widget(
+            reply_users, attachment_requests = self._populate_note_widget(
                 widget, activity_id, note_id
             )
 

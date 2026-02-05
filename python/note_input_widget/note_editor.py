@@ -12,7 +12,6 @@ import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from sgtk import TankError
 
-
 shotgun_data = sgtk.platform.import_framework(
     "tk-framework-shotgunutils", "shotgun_data"
 )

@@ -11,6 +11,7 @@
 """
 Proxy model that provides efficient hierarhcical filtering of a tree-based source model
 """
+
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 

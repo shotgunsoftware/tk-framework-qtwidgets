@@ -60,8 +60,7 @@ class ShotgunMenu(QtGui.QMenu):
         self._type_timer.timeout.connect(self._on_type_timer_timeout)
 
         # styling to resemble PTR web menus
-        self.setStyleSheet(
-            """
+        self.setStyleSheet("""
             QMenu {
                 /*
                  * Ensure the menu only takes up one column and scrolls rather
@@ -100,8 +99,7 @@ class ShotgunMenu(QtGui.QMenu):
             QMenu::indicator:checked {
                 image: url(:tk_framework_qtwidgets.shotgun_menus/check.png);
             }
-            """
-        )
+            """)
 
     @staticmethod
     def get_label(title):

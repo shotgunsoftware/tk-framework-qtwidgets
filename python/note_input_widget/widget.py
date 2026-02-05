@@ -792,14 +792,12 @@ class NoteInputWidget(QtGui.QWidget):
         if self.ui.stacked_widget.currentIndex() == self._NEW_NOTE_WIDGET_INDEX:
             self.setMinimumSize(QtCore.QSize(0, 80))
             self.setMaximumSize(QtCore.QSize(16777215, 80))
-            self.ui.stacked_widget.setStyleSheet(
-                """
+            self.ui.stacked_widget.setStyleSheet("""
                 #stacked_widget {
                     border: 1px solid rgba(200, 200, 200, 25%);
                     border-radius: 3px;
                 }
-                """
-            )
+                """)
 
         elif self.ui.stacked_widget.currentIndex() == self._EDITOR_WIDGET_INDEX:
             self.setMinimumSize(QtCore.QSize(0, 120))
