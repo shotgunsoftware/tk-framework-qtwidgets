@@ -9,6 +9,5 @@ to text when it doesn't fit within a given space.
 
 .. autoclass:: ElidedLabel
     :show-inheritance:
-    :inherited-members:
     :members:
     :exclude-members: resizeEvent

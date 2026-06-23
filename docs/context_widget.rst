@@ -19,5 +19,4 @@ The widget includes the following features:
 
 .. autoclass:: ContextWidget
     :members:
-    :inherited-members:
     :exclude-members: eventFilter
