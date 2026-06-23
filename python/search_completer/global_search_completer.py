@@ -202,7 +202,7 @@ class GlobalSearchCompleter(SearchCompleter):
 
             item.setData(shotgun_model.sanitize_for_qt_model(d), self.SG_DATA_ROLE)
 
-            item.setIcon(self._pixmaps.no_thumbnail)
+            item.setIcon(QtGui.QIcon(self._pixmaps.no_thumbnail))
 
             if d.get("image") and self._sg_data_retriever:
                 uid = self._sg_data_retriever.request_thumbnail(
