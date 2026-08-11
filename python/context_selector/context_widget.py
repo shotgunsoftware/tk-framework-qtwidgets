@@ -9,6 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import os
+import json
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
 from .ui.context_editor_widget import Ui_ContextWidget
@@ -506,12 +507,24 @@ class ContextWidget(QtGui.QWidget):
             scope=settings.UserSettings.SCOPE_PROJECT,
         )
 
+        current_pc_path = self._bundle.sgtk.pipeline_configuration.get_path()
         # turn these into QActions to add to the list of recents in the menu
         for serialized_context in serialized_recent_contexts:
             try:
+                # peek at the pc path WITHOUT constructing a Tank instance
+                if serialized_context[0] in ("{", b"{"):
+                    peeked_data = json.loads(serialized_context)
+                else:
+                    peeked_data = sgtk.util.pickle.loads(serialized_context)
+                if peeked_data.get("_pc_path") != current_pc_path:
+                    logger.debug(
+                        "Skipping recent context from a different pipeline "
+                        "config: %s" % peeked_data.get("_pc_path")
+                    )
+                    continue
                 context = sgtk.Context.deserialize(serialized_context)
             except Exception as e:
-                logger.debug("Unable to deserialize stored context.")
+                logger.debug("Unable to deserialize stored context: %s" % e)
             else:
                 recent_action = self._get_qaction_for_context(context)
                 self._menu_actions["Recent"].append(recent_action)
