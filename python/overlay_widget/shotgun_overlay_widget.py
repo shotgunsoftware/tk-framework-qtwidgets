@@ -129,7 +129,7 @@ class ShotgunOverlayWidget(QtGui.QLabel):
         if mode == self.MODE_INFO_PIXMAP:
             self.setPixmap(payload)
         else:
-            self.setPixmap(None)
+            self.setPixmap(QtGui.QPixmap())  # i.e. self.pixmap().isNull()
 
         # Decide which kind of string we need to show.
         if mode == self.MODE_ERROR:
