@@ -8,6 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+from functools import partial
 import os
 import sgtk
 from sgtk.platform.qt import QtCore, QtGui
@@ -487,7 +488,12 @@ class ContextWidget(QtGui.QWidget):
         action.setText(context_display)
         action.setIcon(QtGui.QIcon(icon_path))
         action.setData(context)
-        action.triggered.connect(lambda: self._on_context_activated(context))
+
+        def run_on_context_activated(context):
+            self._on_context_activated(context)
+
+        func = partial(run_on_context_activated, context)
+        action.triggered.connect(func)
 
         return action
 
