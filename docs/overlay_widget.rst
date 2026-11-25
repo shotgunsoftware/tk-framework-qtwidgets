@@ -60,7 +60,6 @@ ShotgunOverlayWidget
 .. autoclass:: ShotgunOverlayWidget
     :show-inheritance:
     :members:
-    :inherited-members:
     :exclude-members: paintEvent
 
 ShotgunModelOverlayWidget

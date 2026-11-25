@@ -35,7 +35,6 @@ ActivityStreamWidget
 .. autoclass:: ActivityStreamWidget
     :show-inheritance:
     :members:
-    :inherited-members:
 
 ReplyListWidget
 ======================================
@@ -45,4 +44,3 @@ ReplyListWidget
 .. autoclass:: ReplyListWidget
     :show-inheritance:
     :members:
-    :inherited-members:
