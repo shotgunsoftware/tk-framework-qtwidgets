@@ -127,9 +127,9 @@ class TestFramework(TankTestBase):
                 if issubclass(attr, sgtk.platform.qt.QtGui.QWidget) is False:
                     continue
 
-                # Skip this particular widget, as it is the base class of other
-                # widgets and is unusable.
-                if attr_name in ["GroupWidgetBase"]:
+                # Skip these particular widgets, as they are base classes of other
+                # widgets and are unusable.
+                if attr_name in ["GroupWidgetBase", "ListBase"]:
                     continue
 
                 params = {}
@@ -147,6 +147,14 @@ class TestFramework(TankTestBase):
                     # of the right type.
                     if arg == "parent":
                         params["parent"] = parent
+
+                    elif arg == "app":
+                        # browser_widget ListItem/ListHeader
+                        params[arg] = self.engine.apps["tk-testapp"]
+
+                    elif arg == "worker":
+                        # browser_widget ListItem/ListHeader
+                        params[arg] = None
 
                     elif arg == "sg_model":
                         params["sg_model"] = shotgun_model.ShotgunModel(
