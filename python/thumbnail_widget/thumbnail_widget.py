@@ -13,9 +13,11 @@ import sys
 import tempfile
 import subprocess
 
+import sgtk
 from tank.platform.qt import QtCore, QtGui
-from .. import screen_grab
 from .ui.thumbnail_widget import Ui_ThumbnailWidget
+
+screen_grab = sgtk.platform.current_bundle().import_module("screen_grab")
 
 
 class ThumbnailWidget(QtGui.QWidget):
