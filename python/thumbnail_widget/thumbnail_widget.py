@@ -8,9 +8,7 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
-import os
 import sys
-import tempfile
 import subprocess
 
 import sgtk
@@ -235,14 +233,6 @@ class ThumbnailWidget(QtGui.QWidget):
             QtCore.QCoreApplication.flush()
 
         try:
-            # get temporary file to use:
-            # to be cross-platform and python 2.5 compliant, we can't use
-            # tempfile.NamedTemporaryFile with delete=False.  Instead, we
-            # use tempfile.mkstemp which does practically the same thing!
-            tf, path = tempfile.mkstemp(suffix=".png", prefix="tanktmp")
-            if tf:
-                os.close(tf)
-
             pm = screen_grab.screen_capture()
 
         finally:

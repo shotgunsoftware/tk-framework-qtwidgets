@@ -108,6 +108,11 @@ class Worker(Thread):
             item_to_process = None
             with self._queue_mutex:
                 if len(self._queue) == 0:
+                    # stop() may have run since the loop condition was checked,
+                    # in which case its notification was missed: don't wait.
+                    if not self._execute_tasks:
+                        break
+
                     # wait for some more work - this unlocks the mutex
                     # until the wait condition is signalled where it
                     # will then attempt to obtain a lock before returning
