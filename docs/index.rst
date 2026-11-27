@@ -12,6 +12,7 @@ Contents:
    elided_label
    search_completer
    shotgun_search_widget
+   browser_widget
    context_widget
    delegates
    filtering
@@ -26,6 +27,7 @@ Contents:
    shotgun_menus
    shotgun_widget
    spinner_widget
+   thumbnail_widget
    version_details
    views
 
